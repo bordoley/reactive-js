@@ -1,4 +1,4 @@
-import { ConcatWith, Container, ContainerOperator, FromReadonlyArray } from "../../../containers.js";
+import { Container, ContainerOperator } from "../../../containers.js";
 declare const Container_endWith: <C extends Container>(concatWith: <T>(snd: import("../../../containers.js").ContainerOf<C, T>, ...tail: readonly import("../../../containers.js").ContainerOf<C, T>[]) => ContainerOperator<C, T, T>, fromReadonlyArray: <T_1>(options?: {
     readonly start?: number | undefined;
     readonly count?: number | undefined;

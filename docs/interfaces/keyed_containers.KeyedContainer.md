@@ -8,7 +8,7 @@ Base type for all Containers.
 
 ## Hierarchy
 
-- [`Container`](containers.Container.md)
+- [`Container`](containers.Container-1.md)
 
   ↳ **`KeyedContainer`**
 

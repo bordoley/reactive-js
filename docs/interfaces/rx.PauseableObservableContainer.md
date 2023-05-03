@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Container`](containers.Container.md)
+- [`Container`](containers.Container-1.md)
 
   ↳ **`PauseableObservableContainer`**
 
@@ -24,4 +24,4 @@
 
 #### Overrides
 
-[Container](containers.Container.md).[[___Container_type]](containers.Container.md#[___container_type])
+[Container](containers.Container-1.md).[[___Container_type]](containers.Container-1.md#[___container_type])

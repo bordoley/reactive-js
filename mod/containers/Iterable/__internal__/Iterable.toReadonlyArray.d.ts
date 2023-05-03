@@ -1,3 +1,3 @@
-import { IterableContainer, ToReadonlyArray } from "../../../containers.js";
-declare const Iterable_toReadonlyArray: ToReadonlyArray<IterableContainer>["toReadonlyArray"];
+import { Container, IterableContainer } from "../../../containers.js";
+declare const Iterable_toReadonlyArray: Container.ToReadonlyArray<IterableContainer>["toReadonlyArray"];
 export default Iterable_toReadonlyArray;

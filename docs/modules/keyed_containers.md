@@ -63,7 +63,7 @@ Utility type for higher order programming with keyed-containers.
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/containers.Container.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container-1.md) |
 | `TKey` | `TKey` |
 | `T` | `T` |
 

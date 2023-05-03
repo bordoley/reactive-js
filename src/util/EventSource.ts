@@ -1,11 +1,4 @@
-import {
-  Empty,
-  ForEach,
-  IgnoreElements,
-  Keep,
-  Map,
-  Pick,
-} from "../containers.js";
+import { Container } from "../containers.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { ToObservable } from "../rx.js";
 import {
@@ -33,13 +26,16 @@ export const addEventHandler: <T>(
  */
 export const create = EventSource_create;
 
-export const empty: Empty<EventSourceContainer>["empty"] = EventSource_empty;
-export const forEach: ForEach<EventSourceContainer>["forEach"] =
+export const empty: Container.Empty<EventSourceContainer>["empty"] =
+  EventSource_empty;
+export const forEach: Container.ForEach<EventSourceContainer>["forEach"] =
   EventSource_forEach;
-export const ignoreElements: IgnoreElements<EventSourceContainer>["ignoreElements"] =
+export const ignoreElements: Container.IgnoreElements<EventSourceContainer>["ignoreElements"] =
   EventSource_ignoreElements;
-export const keep: Keep<EventSourceContainer>["keep"] = EventSource_keep;
-export const map: Map<EventSourceContainer>["map"] = EventSource_map;
-export const pick: Pick<EventSourceContainer>["pick"] = EventSource_pick;
+export const keep: Container.Keep<EventSourceContainer>["keep"] =
+  EventSource_keep;
+export const map: Container.Map<EventSourceContainer>["map"] = EventSource_map;
+export const pick: Container.Pick<EventSourceContainer>["pick"] =
+  EventSource_pick;
 export const toObservable: ToObservable<EventSourceContainer>["toObservable"] =
   EventSource_toObservable;

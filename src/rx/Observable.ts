@@ -1,36 +1,4 @@
-import {
-  Concat,
-  ConcatAll,
-  ConcatMap,
-  ConcatWith,
-  ContainerOperator,
-  DistinctUntilChanged,
-  EndWith,
-  EnumeratorLike,
-  FlatMapIterable,
-  ForEach,
-  ForkConcat,
-  ForkZip,
-  FromAsyncIterable,
-  Identity,
-  IgnoreElements,
-  Keep,
-  KeepType,
-  Map,
-  MapTo,
-  Pairwise,
-  Pick,
-  Repeat,
-  Scan,
-  SkipFirst,
-  StartWith,
-  TakeFirst,
-  TakeLast,
-  TakeWhile,
-  Zip,
-  ZipWith,
-} from "../containers.js";
-import * as Containers from "../containers.js";
+import { Container, ContainerOperator, EnumeratorLike } from "../containers.js";
 import AsyncIterable_toObservable from "../containers/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../containers/Iterable/__internal__/Iterable.toObservable.js";
@@ -201,16 +169,17 @@ export const combineLatest: CombineLatest<ObservableContainer>["combineLatest"] 
  */
 export const compute = Observable_compute;
 
-export const concat: Concat<ObservableContainer>["concat"] = Observable_concat;
+export const concat: Container.Concat<ObservableContainer>["concat"] =
+  Observable_concat;
 
-export const concatAll: ConcatAll<ObservableContainer>["concatAll"] =
+export const concatAll: Container.ConcatAll<ObservableContainer>["concatAll"] =
   Observable_concatAll;
 
-export const concatMap: ConcatMap<ObservableContainer>["concatMap"] =
+export const concatMap: Container.ConcatMap<ObservableContainer>["concatMap"] =
   Observable_concatMap;
 
-export const concatWith: ConcatWith<ObservableContainer>["concatWith"] =
-  Observable_concatWith as ConcatWith<ObservableContainer>["concatWith"];
+export const concatWith: Container.ConcatWith<ObservableContainer>["concatWith"] =
+  Observable_concatWith as Container.ConcatWith<ObservableContainer>["concatWith"];
 
 /**
  * @category Constructor
@@ -229,10 +198,10 @@ export const defer: Defer<ObservableContainer>["defer"] = Observable_defer;
 export const dispatchTo: DispatchTo<ObservableContainer>["dispatchTo"] =
   Observable_dispatchTo;
 
-export const distinctUntilChanged: DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"] =
+export const distinctUntilChanged: Container.DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-interface Empty extends Containers.Empty<ObservableContainer> {
+interface Empty extends Container.Empty<ObservableContainer> {
   /**
    * Return an Container that emits no items.
    *
@@ -248,7 +217,7 @@ export const encodeUtf8: EncodeUtf8<ObservableContainer>["encodeUtf8"] =
 export const enqueue: Enqueue<ObservableContainer>["enqueue"] =
   Observable_enqueue;
 
-export const endWith: EndWith<ObservableContainer>["endWith"] =
+export const endWith: Container.EndWith<ObservableContainer>["endWith"] =
   Observable_endWith;
 
 export const exhaust: Exhaust<ObservableContainer>["exhaust"] =
@@ -265,22 +234,22 @@ export const firstAsync: FirstAsync<ObservableContainer>["firstAsync"] =
  */
 export const flatMapAsync = Observable_flatMapAsync;
 
-export const flatMapIterable: FlatMapIterable<ObservableContainer>["flatMapIterable"] =
+export const flatMapIterable: Container.FlatMapIterable<ObservableContainer>["flatMapIterable"] =
   Observable_flatMapIterable;
 
-export const forEach: ForEach<ObservableContainer>["forEach"] =
+export const forEach: Container.ForEach<ObservableContainer>["forEach"] =
   Observable_forEach;
 
 export const forkCombineLatest: ForkCombineLatest<ObservableContainer>["forkCombineLatest"] =
   Observable_forkCombineLatest;
 
-export const forkConcat: ForkConcat<ObservableContainer>["forkConcat"] =
+export const forkConcat: Container.ForkConcat<ObservableContainer>["forkConcat"] =
   Observable_forkConcat;
 
 export const forkMerge: ForkMerge<ObservableContainer>["forkMerge"] =
   Observable_forkMerge;
 
-export const forkZip: ForkZip<ObservableContainer>["forkZip"] =
+export const forkZip: Container.ForkZip<ObservableContainer>["forkZip"] =
   Observable_forkZip;
 
 export const forkZipLatest: ForkZipLatest<ObservableContainer>["forkZipLatest"] =
@@ -291,11 +260,11 @@ export const forkZipLatest: ForkZipLatest<ObservableContainer>["forkZipLatest"] 
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
-export const fromAsyncIterable: FromAsyncIterable<ObservableContainer>["fromAsyncIterable"] =
+export const fromAsyncIterable: Container.FromAsyncIterable<ObservableContainer>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
 
 interface FromEnumeratorFactory
-  extends Containers.FromEnumeratorFactory<ObservableContainer> {
+  extends Container.FromEnumeratorFactory<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -310,7 +279,7 @@ interface FromEnumeratorFactory
 export const fromEnumeratorFactory: FromEnumeratorFactory["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-interface FromFactory extends Containers.FromFactory<ObservableContainer> {
+interface FromFactory extends Container.FromFactory<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -323,7 +292,7 @@ interface FromFactory extends Containers.FromFactory<ObservableContainer> {
 }
 export const fromFactory: FromFactory["fromFactory"] = Observable_fromFactory;
 
-interface FromIterable extends Containers.FromIterable<ObservableContainer> {
+interface FromIterable extends Container.FromIterable<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -334,7 +303,7 @@ interface FromIterable extends Containers.FromIterable<ObservableContainer> {
 }
 export const fromIterable: FromIterable["fromIterable"] = Iterable_toObservable;
 
-interface FromOptional extends Containers.FromOptional<ObservableContainer> {
+interface FromOptional extends Container.FromOptional<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -345,7 +314,7 @@ interface FromOptional extends Containers.FromOptional<ObservableContainer> {
 export const fromOptional: FromOptional["fromOptional"] = Optional_toObservable;
 
 interface FromReadonlyArray
-  extends Containers.FromReadonlyArray<ObservableContainer> {
+  extends Container.FromReadonlyArray<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -359,7 +328,7 @@ interface FromReadonlyArray
 export const fromReadonlyArray: FromReadonlyArray["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-interface Generate extends Containers.Generate<ObservableContainer> {
+interface Generate extends Container.Generate<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -374,23 +343,25 @@ interface Generate extends Containers.Generate<ObservableContainer> {
 }
 export const generate: Generate["generate"] = Observable_generate;
 
-export const identity: Identity<ObservableContainer>["identity"] =
+export const identity: Container.Identity<ObservableContainer>["identity"] =
   Container_identity;
 
-export const ignoreElements: IgnoreElements<ObservableContainer>["ignoreElements"] =
+export const ignoreElements: Container.IgnoreElements<ObservableContainer>["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Keep<ObservableContainer>["keep"] = Observable_keep;
+export const keep: Container.Keep<ObservableContainer>["keep"] =
+  Observable_keep;
 
-export const keepType: KeepType<ObservableContainer>["keepType"] =
-  Observable_keepType as KeepType<ObservableContainer>["keepType"];
+export const keepType: Container.KeepType<ObservableContainer>["keepType"] =
+  Observable_keepType as Container.KeepType<ObservableContainer>["keepType"];
 
 export const lastAsync: LastAsync<ObservableContainer>["lastAsync"] =
   Observable_lastAsync;
 
-export const map: Map<ObservableContainer>["map"] = Observable_map;
+export const map: Container.Map<ObservableContainer>["map"] = Observable_map;
 
-export const mapTo: MapTo<ObservableContainer>["mapTo"] = Observable_mapTo;
+export const mapTo: Container.MapTo<ObservableContainer>["mapTo"] =
+  Observable_mapTo;
 
 export const merge: Merge<ObservableContainer>["merge"] = Observable_merge;
 
@@ -415,16 +386,19 @@ export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
 ) => ContainerOperator<ObservableContainer, T, T> = Observable_onSubscribe;
 
-export const pairwise: Pairwise<ObservableContainer>["pairwise"] =
+export const pairwise: Container.Pairwise<ObservableContainer>["pairwise"] =
   Observable_pairwise;
 
-export const pick: Pick<ObservableContainer>["pick"] = Observable_pick;
+export const pick: Container.Pick<ObservableContainer>["pick"] =
+  Observable_pick;
 
-export const repeat: Repeat<ObservableContainer>["repeat"] = Observable_repeat;
+export const repeat: Container.Repeat<ObservableContainer>["repeat"] =
+  Observable_repeat;
 
 export const retry: Retry<ObservableContainer>["retry"] = Observable_retry;
 
-export const scan: Scan<ObservableContainer>["scan"] = Observable_scan;
+export const scan: Container.Scan<ObservableContainer>["scan"] =
+  Observable_scan;
 
 export const scanLast: ScanLast<ObservableContainer>["scanLast"] =
   Observable_scanLast;
@@ -434,10 +408,10 @@ export const scanMany: ScanMany<ObservableContainer>["scanMany"] =
 
 export const share: Share<ObservableContainer>["share"] = Observable_share;
 
-export const skipFirst: SkipFirst<ObservableContainer>["skipFirst"] =
+export const skipFirst: Container.SkipFirst<ObservableContainer>["skipFirst"] =
   Observable_skipFirst;
 
-export const startWith: StartWith<ObservableContainer>["startWith"] =
+export const startWith: Container.StartWith<ObservableContainer>["startWith"] =
   Observable_startWith;
 
 export const switchAll: SwitchAll<ObservableContainer>["switchAll"] =
@@ -459,16 +433,16 @@ export const subscribe: <T>(
  */
 export const subscribeOn = Observable_subscribeOn;
 
-export const takeFirst: TakeFirst<ObservableContainer>["takeFirst"] =
+export const takeFirst: Container.TakeFirst<ObservableContainer>["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: TakeLast<ObservableContainer>["takeLast"] =
+export const takeLast: Container.TakeLast<ObservableContainer>["takeLast"] =
   Observable_takeLast;
 
 export const takeUntil: TakeUntil<ObservableContainer>["takeUntil"] =
   Observable_takeUntil;
 
-export const takeWhile: TakeWhile<ObservableContainer>["takeWhile"] =
+export const takeWhile: Container.TakeWhile<ObservableContainer>["takeWhile"] =
   Observable_takeWhile;
 
 export const throttle: Throttle<ObservableContainer>["throttle"] =
@@ -511,12 +485,12 @@ export const withCurrentTime: WithCurrentTime<ObservableContainer>["withCurrentT
 export const withLatestFrom: WithLatestFrom<ObservableContainer>["withLatestFrom"] =
   Observable_withLatestFrom as WithLatestFrom<ObservableContainer>["withLatestFrom"];
 
-export const zip: Zip<ObservableContainer>["zip"] = Observable_zip;
+export const zip: Container.Zip<ObservableContainer>["zip"] = Observable_zip;
 
 export const zipLatest: ZipLatest<ObservableContainer>["zipLatest"] =
   Observable_zipLatest;
 
-export const zipWith: ZipWith<ObservableContainer>["zipWith"] =
+export const zipWith: Container.ZipWith<ObservableContainer>["zipWith"] =
   Observable_zipWith;
 
 export const zipWithLatestFrom: ZipWithLatestFrom<ObservableContainer>["zipWithLatestFrom"] =
