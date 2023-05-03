@@ -1,9 +1,10 @@
 /// <reference types="./Streamable.createAnimationEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { KeyedCollectionLike_get } from "../../../containers.js";
 import { none, pipe } from "../../../functions.js";
 import { StreamableLike_stream, } from "../../../rx.js";
-import { EventSourceLike_addEventListener, KeyedCollectionLike_get, } from "../../../util.js";
+import { EventSourceLike_addEventListener, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";

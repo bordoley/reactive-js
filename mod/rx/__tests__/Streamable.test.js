@@ -1,12 +1,13 @@
 /// <reference types="./Streamable.test.d.ts" />
 
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
+import { KeyedCollectionLike_get, } from "../../containers.js";
 import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions.js";
 import { StreamableLike_stream } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
-import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../util.js";
+import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as Scheduler from "../../util/Scheduler.js";
 import * as Streamable from "../Streamable.js";

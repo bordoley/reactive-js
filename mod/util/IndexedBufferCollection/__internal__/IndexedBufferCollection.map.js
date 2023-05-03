@@ -3,8 +3,9 @@
 import { MappingLike_selector, } from "../../../__internal__/containers.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import { none, unsafeCast } from "../../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, } from "../../../util.js";
+import { BufferLike_capacity, } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 const IndexedBufferCollection_map = /*@__PURE__*/ (() => {
     const createMappingIndexedBufferCollection = createInstanceFactory(mix(include(Delegating_mixin()), function MappingIndexedBufferCollection(instance, delegate, selector) {

@@ -14,6 +14,7 @@ import {
   IndexedQueueLike,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
+import { CollectionLike_count } from "../../../containers.js";
 import {
   Function2,
   call,
@@ -24,7 +25,6 @@ import {
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   DispatcherEventMap,
   DispatcherLike_complete,
   DisposableLike,

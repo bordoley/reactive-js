@@ -4,8 +4,9 @@ import { floor } from "../../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __PriorityQueueImpl_comparator } from "../../../__internal__/symbols.js";
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../../__internal__/util.js";
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
+import { BufferLike_capacity, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../../util.js";
 import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(Queue_indexedQueueMixin());

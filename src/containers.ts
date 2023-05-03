@@ -1,9 +1,12 @@
 import {
+  __AssociativeCollectionLike_keys as AssociativeCollectionLike_keys,
+  __CollectionLike_count as CollectionLike_count,
   __Container_T as Container_T,
   __Container_type as Container_type,
   __EnumeratorLike_current as EnumeratorLike_current,
   __EnumeratorLike_hasCurrent as EnumeratorLike_hasCurrent,
   __EnumeratorLike_move as EnumeratorLike_move,
+  __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __KeyedContainer_TKey as KeyedContainer_TKey,
 } from "./__internal__/symbols.js";
 import {
@@ -22,11 +25,14 @@ import {
 } from "./functions.js";
 
 export {
+  AssociativeCollectionLike_keys,
+  CollectionLike_count,
   Container_T,
   Container_type,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
+  KeyedCollectionLike_get,
   KeyedContainer_TKey,
 };
 
@@ -218,6 +224,59 @@ export type KeyOf<C extends KeyedContainer> = C extends {
   ? NonNullable<C[typeof KeyedContainer_TKey]>
   : // eslint-disable-next-line @typescript-eslint/ban-types
     {};
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface CollectionLike {
+  readonly [CollectionLike_count]: number;
+}
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface KeyedCollectionLike<TKey = unknown, T = unknown>
+  extends CollectionLike {
+  [KeyedCollectionLike_get](index: TKey): T;
+}
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
+  extends KeyedCollectionLike<TKey, T> {
+  readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface DictionaryLike<TKey = unknown, T = unknown>
+  extends AssociativeCollectionLike<TKey, Optional<T>> {}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DictionaryContainer extends KeyedContainer {
+  readonly [Container_type]?: DictionaryLike<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: unknown;
+}
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface IndexedCollectionLike<T = unknown>
+  extends KeyedCollectionLike<number, T> {}
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Container {

@@ -1,7 +1,8 @@
 /// <reference types="./IndexedBufferCollection.empty.d.ts" />
 
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import { raiseWithDebugMessage } from "../../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, } from "../../../util.js";
+import { BufferLike_capacity, } from "../../../util.js";
 const _empty = {
     [BufferLike_capacity]: 0,
     [CollectionLike_count]: 0,

@@ -1,9 +1,11 @@
-import { EnumeratorLike, KeyOf, KeyedContainer } from "../../../containers.js";
 import {
   AssociativeCollectionLike_keys,
   DictionaryContainer,
   DictionaryLike,
-} from "../../../util.js";
+  EnumeratorLike,
+  KeyOf,
+  KeyedContainer,
+} from "../../../containers.js";
 
 const Dictionary_keys: KeyedContainer.Keys<DictionaryContainer>["keys"] =
   <TKey extends KeyOf<DictionaryContainer> = KeyOf<DictionaryContainer>>() =>

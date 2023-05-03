@@ -127,7 +127,7 @@ ___
 
 ### useAnimationGroup
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
 #### Type parameters
 
@@ -151,9 +151,9 @@ ___
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
 #### Type parameters
 
@@ -177,9 +177,9 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
 #### Type parameters
 
@@ -203,9 +203,9 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
 #### Type parameters
 
@@ -228,7 +228,7 @@ readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`Eve
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/util.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
 
 ___
 

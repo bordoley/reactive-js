@@ -10,12 +10,14 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
+import {
+  CollectionLike_count,
+  KeyedCollectionLike_get,
+} from "../../../containers.js";
 import { unsafeCast } from "../../../functions.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   IndexedBufferCollectionLike,
-  KeyedCollectionLike_get,
 } from "../../../util.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import IndexedBufferCollection_empty from "./IndexedBufferCollection.empty.js";

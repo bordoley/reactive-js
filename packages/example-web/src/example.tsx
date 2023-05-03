@@ -33,13 +33,12 @@ import * as Streamable from "@reactive-js/core/rx/Streamable";
 import { ObservableLike, CacheLike, StreamOf } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
-  KeyedCollectionLike_get,
   EventSourceLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableLike_isPaused,
 } from "@reactive-js/core/util";
-import * as Dictionary from "@reactive-js/core/util/Dictionary";
+import * as Dictionary from "@reactive-js/core/containers/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
 import {
   __await,
@@ -57,7 +56,10 @@ import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/util/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
-import { ReadonlyObjectMapLike } from "@reactive-js/core/containers";
+import {
+  KeyedCollectionLike_get,
+  ReadonlyObjectMapLike,
+} from "@reactive-js/core/containers";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {

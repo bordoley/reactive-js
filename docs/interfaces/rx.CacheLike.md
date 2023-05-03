@@ -29,7 +29,7 @@ and observing the changing values of individual keys.
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/containers.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](util.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](rx.ObservableLike.md)<`T`\>\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/containers.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](containers.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](rx.ObservableLike.md)<`T`\>\>
 
 #### Overrides
 

@@ -10,7 +10,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../../__internal__/util.js";
-import { ContainerOperator } from "../../../containers.js";
+import {
+  CollectionLike_count,
+  ContainerOperator,
+} from "../../../containers.js";
 import {
   Optional,
   isNone,
@@ -36,7 +39,6 @@ import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   DispatcherEventMap,
   DispatcherLike,
   DispatcherLike_complete,

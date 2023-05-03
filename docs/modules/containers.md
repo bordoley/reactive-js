@@ -9,10 +9,19 @@
 - [Container](containers.Container.md)
 - [KeyedContainer](containers.KeyedContainer.md)
 
+### Collection Interfaces
+
+- [AssociativeCollectionLike](../interfaces/containers.AssociativeCollectionLike.md)
+- [CollectionLike](../interfaces/containers.CollectionLike.md)
+- [DictionaryLike](../interfaces/containers.DictionaryLike.md)
+- [IndexedCollectionLike](../interfaces/containers.IndexedCollectionLike.md)
+- [KeyedCollectionLike](../interfaces/containers.KeyedCollectionLike.md)
+
 ### Container Interfaces
 
 - [AsyncIterableContainer](../interfaces/containers.AsyncIterableContainer.md)
 - [Container](../interfaces/containers.Container-1.md)
+- [DictionaryContainer](../interfaces/containers.DictionaryContainer.md)
 - [EnumeratorContainer](../interfaces/containers.EnumeratorContainer.md)
 - [IterableContainer](../interfaces/containers.IterableContainer.md)
 - [KeyedContainer](../interfaces/containers.KeyedContainer-1.md)

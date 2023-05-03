@@ -1,9 +1,11 @@
+import {
+  CollectionLike_count,
+  KeyedCollectionLike_get,
+} from "../../../containers.js";
 import { raiseWithDebugMessage } from "../../../functions.js";
 import {
   BufferLike_capacity,
-  CollectionLike_count,
   IndexedBufferCollectionLike,
-  KeyedCollectionLike_get,
 } from "../../../util.js";
 
 const _empty: IndexedBufferCollectionLike = {

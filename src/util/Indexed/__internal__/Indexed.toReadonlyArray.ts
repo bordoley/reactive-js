@@ -1,9 +1,9 @@
-import { newInstance } from "../../../functions.js";
 import {
   CollectionLike_count,
   IndexedCollectionLike,
   KeyedCollectionLike_get,
-} from "../../../util.js";
+} from "../../../containers.js";
+import { newInstance } from "../../../functions.js";
 
 const Indexed_toReadonlyArray =
   <T>() =>

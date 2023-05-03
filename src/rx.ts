@@ -10,17 +10,17 @@ import {
   __StreamableLike_stream as StreamableLike_stream,
 } from "./__internal__/symbols.js";
 import {
+  AssociativeCollectionLike,
   Container,
   ContainerOf,
   ContainerOperator,
   Container_T,
   Container_type,
+  DictionaryLike,
   ReadonlyObjectMapLike,
 } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
 import {
-  AssociativeCollectionLike,
-  DictionaryLike,
   DispatcherEventMap,
   DispatcherLike,
   DisposableLike,
