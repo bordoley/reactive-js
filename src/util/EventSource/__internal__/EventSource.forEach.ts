@@ -13,7 +13,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import { ForEach } from "../../../containers.js";
+import { Container } from "../../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
@@ -25,7 +25,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_forEach: ForEach<EventSourceContainer>["forEach"] =
+const EventSource_forEach: Container.ForEach<EventSourceContainer>["forEach"] =
   /*@__PURE__*/ (() => {
     const createForEachEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -71,6 +71,6 @@ const EventSource_forEach: ForEach<EventSourceContainer>["forEach"] =
 
     return <T>(effect: SideEffect1<T>) =>
       pipe(createForEachEventListener, partial(effect), EventSource_lift);
-  })() as ForEach<EventSourceContainer>["forEach"];
+  })() as Container.ForEach<EventSourceContainer>["forEach"];
 
 export default EventSource_forEach;

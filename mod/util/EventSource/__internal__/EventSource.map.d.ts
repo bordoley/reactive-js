@@ -1,4 +1,4 @@
-import { Map } from "../../../containers.js";
+import { Container } from "../../../containers.js";
 import { EventSourceContainer } from "../../../util.js";
-declare const EventSource_map: Map<EventSourceContainer>["map"];
+declare const EventSource_map: Container.Map<EventSourceContainer>["map"];
 export default EventSource_map;

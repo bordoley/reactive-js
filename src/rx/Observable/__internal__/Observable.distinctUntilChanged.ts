@@ -15,10 +15,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../../__internal__/util.js";
-import {
-  ContainerOperator,
-  DistinctUntilChanged,
-} from "../../../containers.js";
+import { Container, ContainerOperator } from "../../../containers.js";
 import {
   Equality,
   none,
@@ -109,7 +106,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
         partial(equality),
         Enumerable_lift,
       );
-    }) as DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"];
+    }) as Container.DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

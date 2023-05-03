@@ -4,10 +4,14 @@
 
 ## Table of contents
 
+### Namespaces
+
+- [Container](containers.Container.md)
+
 ### Container Interfaces
 
 - [AsyncIterableContainer](../interfaces/containers.AsyncIterableContainer.md)
-- [Container](../interfaces/containers.Container.md)
+- [Container](../interfaces/containers.Container-1.md)
 - [EnumeratorContainer](../interfaces/containers.EnumeratorContainer.md)
 - [IterableContainer](../interfaces/containers.IterableContainer.md)
 - [PromiseContainer](../interfaces/containers.PromiseContainer.md)
@@ -16,55 +20,6 @@
 ### Other Interfaces
 
 - [EnumeratorLike](../interfaces/containers.EnumeratorLike.md)
-
-### TypeClass Interfaces
-
-- [Buffer](../interfaces/containers.Buffer.md)
-- [Concat](../interfaces/containers.Concat.md)
-- [ConcatAll](../interfaces/containers.ConcatAll.md)
-- [ConcatMap](../interfaces/containers.ConcatMap.md)
-- [ConcatWith](../interfaces/containers.ConcatWith.md)
-- [Contains](../interfaces/containers.Contains.md)
-- [DistinctUntilChanged](../interfaces/containers.DistinctUntilChanged.md)
-- [Empty](../interfaces/containers.Empty.md)
-- [EndWith](../interfaces/containers.EndWith.md)
-- [Enumerate](../interfaces/containers.Enumerate.md)
-- [EverySatisfy](../interfaces/containers.EverySatisfy.md)
-- [First](../interfaces/containers.First.md)
-- [FlatMapIterable](../interfaces/containers.FlatMapIterable.md)
-- [ForEach](../interfaces/containers.ForEach.md)
-- [ForkConcat](../interfaces/containers.ForkConcat.md)
-- [ForkZip](../interfaces/containers.ForkZip.md)
-- [FromAsyncIterable](../interfaces/containers.FromAsyncIterable.md)
-- [FromEnumeratorFactory](../interfaces/containers.FromEnumeratorFactory.md)
-- [FromFactory](../interfaces/containers.FromFactory.md)
-- [FromIterable](../interfaces/containers.FromIterable.md)
-- [FromOptional](../interfaces/containers.FromOptional.md)
-- [FromReadonlyArray](../interfaces/containers.FromReadonlyArray.md)
-- [Generate](../interfaces/containers.Generate.md)
-- [Identity](../interfaces/containers.Identity.md)
-- [IgnoreElements](../interfaces/containers.IgnoreElements.md)
-- [Keep](../interfaces/containers.Keep.md)
-- [KeepType](../interfaces/containers.KeepType.md)
-- [Last](../interfaces/containers.Last.md)
-- [Map](../interfaces/containers.Map.md)
-- [MapTo](../interfaces/containers.MapTo.md)
-- [NoneSatisfy](../interfaces/containers.NoneSatisfy.md)
-- [Pairwise](../interfaces/containers.Pairwise.md)
-- [Pick](../interfaces/containers.Pick.md)
-- [Reduce](../interfaces/containers.Reduce.md)
-- [Repeat](../interfaces/containers.Repeat.md)
-- [Scan](../interfaces/containers.Scan.md)
-- [SkipFirst](../interfaces/containers.SkipFirst.md)
-- [SomeSatisfy](../interfaces/containers.SomeSatisfy.md)
-- [StartWith](../interfaces/containers.StartWith.md)
-- [TakeFirst](../interfaces/containers.TakeFirst.md)
-- [TakeLast](../interfaces/containers.TakeLast.md)
-- [TakeWhile](../interfaces/containers.TakeWhile.md)
-- [ToIterable](../interfaces/containers.ToIterable.md)
-- [ToReadonlyArray](../interfaces/containers.ToReadonlyArray.md)
-- [Zip](../interfaces/containers.Zip.md)
-- [ZipWith](../interfaces/containers.ZipWith.md)
 
 ### Type Aliases
 
@@ -83,7 +38,7 @@ Utility type for higher order programming with Containers.
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/containers.Container.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container-1.md) |
 | `T` | `T` |
 
 ___
@@ -98,6 +53,6 @@ Utility type for a generic operator function that transforms a Container's inner
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/containers.Container.md) |
+| `C` | extends [`Container`](../interfaces/containers.Container-1.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |

@@ -1,4 +1,4 @@
-import { Map } from "../../../containers.js";
+import { Container } from "../../../containers.js";
 import { PauseableObservableContainer } from "../../../rx.js";
-declare const PauseableObservable_map: Map<PauseableObservableContainer>["map"];
+declare const PauseableObservable_map: Container.Map<PauseableObservableContainer>["map"];
 export default PauseableObservable_map;

@@ -1,3 +1,3 @@
-import { Last, ReadonlyArrayContainer } from "../../../containers.js";
-declare const ReadonlyArray_last: Last<ReadonlyArrayContainer>["last"];
+import { Container, ReadonlyArrayContainer } from "../../../containers.js";
+declare const ReadonlyArray_last: Container.Last<ReadonlyArrayContainer>["last"];
 export default ReadonlyArray_last;

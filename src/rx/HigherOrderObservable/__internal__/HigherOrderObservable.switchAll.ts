@@ -14,7 +14,7 @@ import {
   SerialDisposableLike_current,
 } from "../../../__internal__/util.js";
 import {
-  ConcatAll,
+  Container,
   ContainerOf,
   ContainerOperator,
 } from "../../../containers.js";
@@ -44,7 +44,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<C, T>>>,
   ) => ContainerOperator<C, ContainerOf<C, T>, T>,
-): ConcatAll<C>["concatAll"] => {
+): Container.ConcatAll<C>["concatAll"] => {
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
   ) => ObserverLike<ContainerOf<C, T>> = (<T>() => {

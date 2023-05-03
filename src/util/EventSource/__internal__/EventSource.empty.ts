@@ -1,4 +1,4 @@
-import { Empty } from "../../../containers.js";
+import { Container } from "../../../containers.js";
 import {
   DisposableLike_dispose,
   EventListenerLike,
@@ -15,7 +15,7 @@ const _empty: EventSourceLike = {
   },
 };
 
-const EventSource_empty: Empty<EventSourceContainer>["empty"] = <
+const EventSource_empty: Container.Empty<EventSourceContainer>["empty"] = <
   T,
 >(): EventSourceLike<T> => _empty as EventSourceLike<T>;
 

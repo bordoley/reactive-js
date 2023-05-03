@@ -1,7 +1,7 @@
-import { Last, ReadonlyArrayContainer } from "../../../containers.js";
+import { Container, ReadonlyArrayContainer } from "../../../containers.js";
 import { none } from "../../../functions.js";
 
-const ReadonlyArray_last: Last<ReadonlyArrayContainer>["last"] =
+const ReadonlyArray_last: Container.Last<ReadonlyArrayContainer>["last"] =
   <T>() =>
   (values: ReadonlyArray<T>) => {
     const count = values.length;

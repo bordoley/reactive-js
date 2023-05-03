@@ -1,15 +1,10 @@
-import {
-  ConcatMap,
-  Container,
-  ContainerOperator,
-  FromIterable,
-} from "../../../containers.js";
+import { Container, ContainerOperator } from "../../../containers.js";
 import { Function1, compose } from "../../../functions.js";
 
 const Container_flatMapIterable =
   <C extends Container>(
-    concatMap: ConcatMap<C>["concatMap"],
-    fromIterable: FromIterable<C>["fromIterable"],
+    concatMap: Container.ConcatMap<C>["concatMap"],
+    fromIterable: Container.FromIterable<C>["fromIterable"],
   ) =>
   <TA, TB>(
     selector: Function1<TA, Iterable<TB>>,

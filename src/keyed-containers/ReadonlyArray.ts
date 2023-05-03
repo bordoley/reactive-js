@@ -1,13 +1,4 @@
-import {
-  EnumeratorLike,
-  EverySatisfy,
-  First,
-  FromIterable,
-  FromOptional,
-  Last,
-  SomeSatisfy,
-} from "../containers.js";
-import type * as Containers from "../containers.js";
+import { Container, EnumeratorLike } from "../containers.js";
 import Container_identity from "../containers/Container/__internal__/Container.identity.js";
 import Iterable_toReadonlyArray from "../containers/Iterable/__internal__/Iterable.toReadonlyArray.js";
 import Optional_toReadonlyArray from "../containers/Optional/__internal__/Optional.toReadonlyArray.js";
@@ -69,7 +60,7 @@ export const empty: Empty<ReadonlyArrayContainer>["empty"] =
 export const entries: Entries<ReadonlyArrayContainer>["entries"] =
   ReadonlyArray_entries;
 
-interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainer> {
+interface Enumerate extends Container.Enumerate<ReadonlyArrayContainer> {
   /**
    *
    * @category Transform
@@ -82,10 +73,10 @@ interface Enumerate extends Containers.Enumerate<ReadonlyArrayContainer> {
 
 export const enumerate: Enumerate["enumerate"] = ReadonlyArray_enumerate;
 
-export const everySatisfy: EverySatisfy<ReadonlyArrayContainer>["everySatisfy"] =
+export const everySatisfy: Container.EverySatisfy<ReadonlyArrayContainer>["everySatisfy"] =
   ReadonlyArray_everySatisfy;
 
-export const first: First<ReadonlyArrayContainer>["first"] =
+export const first: Container.First<ReadonlyArrayContainer>["first"] =
   ReadonlyArray_first;
 
 interface Flow extends Rx.Flow<ReadonlyArrayContainer> {
@@ -113,10 +104,10 @@ export const forEachWithKey: ForEachWithKey<ReadonlyArrayContainer>["forEachWith
 export const fromEnumerable: FromEnumerable<ReadonlyArrayContainer>["fromEnumerable"] =
   Runnable_toReadonlyArray;
 
-export const fromIterable: FromIterable<ReadonlyArrayContainer>["fromIterable"] =
+export const fromIterable: Container.FromIterable<ReadonlyArrayContainer>["fromIterable"] =
   Iterable_toReadonlyArray;
 
-export const fromOptional: FromOptional<ReadonlyArrayContainer>["fromOptional"] =
+export const fromOptional: Container.FromOptional<ReadonlyArrayContainer>["fromOptional"] =
   Optional_toReadonlyArray;
 
 export const fromReadonlyArray: FromReadonlyArray<ReadonlyArrayContainer>["fromReadonlyArray"] =
@@ -140,14 +131,15 @@ export const keepType: KeepType<ReadonlyArrayContainer>["keepType"] =
 export const keepWithKey: KeepWithKey<ReadonlyArrayContainer>["keepWithKey"] =
   ReadonlyArray_keepWithKey;
 
-export const last: Last<ReadonlyArrayContainer>["last"] = ReadonlyArray_last;
+export const last: Container.Last<ReadonlyArrayContainer>["last"] =
+  ReadonlyArray_last;
 
 export const map: Map<ReadonlyArrayContainer>["map"] = ReadonlyArray_map;
 
 export const mapWithKey: MapWithKey<ReadonlyArrayContainer>["mapWithKey"] =
   ReadonlyArray_mapWithKey;
 
-export const someSatisfy: SomeSatisfy<ReadonlyArrayContainer>["someSatisfy"] =
+export const someSatisfy: Container.SomeSatisfy<ReadonlyArrayContainer>["someSatisfy"] =
   ReadonlyArray_someSatisfy;
 
 interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainer> {
@@ -162,7 +154,7 @@ interface ToEnumerable extends Rx.ToEnumerable<ReadonlyArrayContainer> {
 export const toEnumerable: ToEnumerable["toEnumerable"] =
   ReadonlyArray_toObservable;
 
-interface ToIterable extends Containers.ToIterable<ReadonlyArrayContainer> {
+interface ToIterable extends Container.ToIterable<ReadonlyArrayContainer> {
   /** @category Transform */
   toIterable<T>(options?: {
     readonly count?: number;

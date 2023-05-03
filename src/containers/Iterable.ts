@@ -1,10 +1,4 @@
-import {
-  Enumerate,
-  FromReadonlyArray,
-  Identity,
-  IterableContainer,
-  ToReadonlyArray,
-} from "../containers.js";
+import { Container, IterableContainer } from "../containers.js";
 import { Function1 } from "../functions.js";
 import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import type * as Rx from "../rx.js";
@@ -21,7 +15,7 @@ import Iterable_flow from "./Iterable/__internal__/Iterable.flow.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 
-export const enumerate: Enumerate<IterableContainer>["enumerate"] =
+export const enumerate: Container.Enumerate<IterableContainer>["enumerate"] =
   Iterable_enumerate;
 
 interface Flow extends Rx.Flow<IterableContainer> {
@@ -38,10 +32,10 @@ interface Flow extends Rx.Flow<IterableContainer> {
 }
 export const flow: Flow["flow"] = Iterable_flow;
 
-export const fromReadonlyArray: FromReadonlyArray<IterableContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: Container.FromReadonlyArray<IterableContainer>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const identity: Identity<IterableContainer>["identity"] =
+export const identity: Container.Identity<IterableContainer>["identity"] =
   Container_identity;
 
 export const toEnumerable: ToEnumerable<IterableContainer>["toEnumerable"] =
@@ -56,7 +50,7 @@ interface ToObservable extends Rx.ToObservable<IterableContainer> {
 }
 export const toObservable: ToObservable["toObservable"] = Iterable_toObservable;
 
-export const toReadonlyArray: ToReadonlyArray<IterableContainer>["toReadonlyArray"] =
+export const toReadonlyArray: Container.ToReadonlyArray<IterableContainer>["toReadonlyArray"] =
   Iterable_toReadonlyArray;
 
 interface ToRunnable extends Rx.ToRunnable<IterableContainer> {

@@ -1,4 +1,4 @@
-import { Container, ContainerOf, ContainerOperator, Zip } from "../../../containers.js";
+import { Container, ContainerOf, ContainerOperator } from "../../../containers.js";
 declare const Container_zipWith: <C extends Container>(zip: {
     <TA, TB>(a: ContainerOf<C, TA>, b: ContainerOf<C, TB>): ContainerOf<C, readonly [TA, TB]>;
     <TA_1, TB_1, TC>(a: ContainerOf<C, TA_1>, b: ContainerOf<C, TB_1>, c: ContainerOf<C, TC>): ContainerOf<C, readonly [TA_1, TB_1, TC]>;
