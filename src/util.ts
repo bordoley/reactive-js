@@ -65,6 +65,7 @@ export type DisposableOrTeardown =
  * Represents an unmanaged resource that can be disposed.
  *
  * @noInheritDoc
+ * @category Resource Management
  */
 export interface DisposableLike {
   /**
@@ -139,6 +140,7 @@ export interface IndexedBufferCollectionLike<T = unknown>
 
 /**
  * @noInheritDoc
+ * @category Event
  */
 export interface EventListenerLike<T = unknown> extends DisposableLike {
   readonly [EventListenerLike_isErrorSafe]: boolean;
@@ -148,6 +150,7 @@ export interface EventListenerLike<T = unknown> extends DisposableLike {
 
 /**
  * @noInheritDoc
+ * @category Event
  */
 export interface ErrorSafeEventListenerLike<T = unknown>
   extends EventListenerLike<T> {
@@ -156,6 +159,7 @@ export interface ErrorSafeEventListenerLike<T = unknown>
 
 /**
  * @noInheritDoc
+ * @category Event
  */
 export interface EventSourceLike<T = unknown> {
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
@@ -171,6 +175,7 @@ export interface EventSourceContainer extends Container {
 
 /**
  * @noInheritDoc
+ * @category Event
  */
 export interface EventPublisherLike<T = unknown>
   extends EventSourceLike<T>,
@@ -213,7 +218,7 @@ export interface PauseableEventMap {
 
 /**
  * @noInheritDoc
- * @category Scheduler
+ * @category Scheduling
  */
 export interface PauseableLike
   extends EventSourceLike<PauseableEventMap[keyof PauseableEventMap]> {
@@ -238,7 +243,7 @@ export interface PauseableLike
  * cooperative multi-tasking.
  *
  * @noInheritDoc
- * @category Scheduler
+ * @category Scheduling
  */
 export interface SchedulerLike {
   /**
@@ -304,7 +309,7 @@ export interface SchedulerLike {
  * of it's run loop.
  *
  * @noInheritDoc
- * @category Scheduler
+ * @category Scheduling
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
@@ -312,7 +317,7 @@ export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
  * A non-concurrent scheduler that simulates time but executes synchronously.
  *
  * @noInheritDoc
- * @category Scheduler
+ * @category Scheduling
  */
 export interface VirtualTimeSchedulerLike
   extends SchedulerLike,

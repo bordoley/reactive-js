@@ -8,18 +8,17 @@
 
 - [EventSourceContainer](../interfaces/util.EventSourceContainer.md)
 
-### EventMap Interfaces
+### Event Interfaces
 
-- [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
-- [PauseableEventMap](../interfaces/util.PauseableEventMap.md)
-
-### Other Interfaces
-
-- [DisposableLike](../interfaces/util.DisposableLike.md)
 - [ErrorSafeEventListenerLike](../interfaces/util.ErrorSafeEventListenerLike.md)
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/util.EventSourceLike.md)
+
+### EventMap Interfaces
+
+- [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
+- [PauseableEventMap](../interfaces/util.PauseableEventMap.md)
 
 ### Queueing Interfaces
 
@@ -28,7 +27,11 @@
 - [IndexedBufferCollectionLike](../interfaces/util.IndexedBufferCollectionLike.md)
 - [QueueableLike](../interfaces/util.QueueableLike.md)
 
-### Scheduler Interfaces
+### Resource Management Interfaces
+
+- [DisposableLike](../interfaces/util.DisposableLike.md)
+
+### Scheduling Interfaces
 
 - [PauseableLike](../interfaces/util.PauseableLike.md)
 - [PauseableSchedulerLike](../interfaces/util.PauseableSchedulerLike.md)
