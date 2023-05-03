@@ -7,6 +7,7 @@
 ### AnimationConfig Interfaces
 
 - [DelayAnimationConfig](../interfaces/rx.DelayAnimationConfig.md)
+- [FrameAnimationConfig](../interfaces/rx.FrameAnimationConfig.md)
 - [KeyFrameAnimationConfig](../interfaces/rx.KeyFrameAnimationConfig.md)
 - [LoopAnimationConfig](../interfaces/rx.LoopAnimationConfig.md)
 - [SpringAnimationConfig](../interfaces/rx.SpringAnimationConfig.md)
@@ -18,16 +19,18 @@
 - [PauseableObservableContainer](../interfaces/rx.PauseableObservableContainer.md)
 - [RunnableContainer](../interfaces/rx.RunnableContainer.md)
 
-### Other Interfaces
+### Observable Interfaces
 
 - [EnumerableLike](../interfaces/rx.EnumerableLike.md)
-- [FrameAnimationConfig](../interfaces/rx.FrameAnimationConfig.md)
 - [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/rx.ObservableLike.md)
-- [ObserverLike](../interfaces/rx.ObserverLike.md)
 - [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
+
+### Other Interfaces
+
+- [ObserverLike](../interfaces/rx.ObserverLike.md)
 
 ### TypeClass Interfaces
 

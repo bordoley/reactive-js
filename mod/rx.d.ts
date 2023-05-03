@@ -23,6 +23,7 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, Disposable
  * The source of notifications which can be consumed by an `ObserverLike` instance.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface ObservableLike<T = unknown> {
     /**
@@ -52,6 +53,7 @@ export interface ObservableContainer extends Container {
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface RunnableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
@@ -67,6 +69,7 @@ export interface RunnableContainer extends Container {
  * An `ObservableLike` that supports interactive enumeration.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
@@ -82,6 +85,7 @@ export interface EnumerableContainer extends Container {
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface MulticastObservableLike<T> extends ObservableLike<T> {
     readonly [ObservableLike_isEnumerable]: false;
@@ -92,6 +96,7 @@ export interface MulticastObservableLike<T> extends ObservableLike<T> {
  * An `EventListener` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T>, MulticastObservableLike<T> {
     /**
@@ -104,6 +109,7 @@ export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T
  * via the pause and resume methods.
  *
  * @noInheritDoc
+ * @category Observable
  */
 export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>, PauseableLike {
     readonly [ObservableLike_isEnumerable]: false;
@@ -135,6 +141,10 @@ export interface KeyFrameAnimationConfig {
     readonly duration: number;
     readonly easing?: Function1<number, number>;
 }
+/**
+ * @noInheritDoc
+ * @category AnimationConfig
+ */
 export interface FrameAnimationConfig {
     readonly type: "frame";
     readonly value: number;
