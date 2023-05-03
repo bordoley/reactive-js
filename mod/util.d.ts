@@ -33,7 +33,7 @@ export interface DisposableLike {
 }
 /**
  * @noInheritDoc
- * @category Collection
+ * @category Queueing
  */
 export interface BufferLike {
     /**
@@ -45,7 +45,7 @@ export interface BufferLike {
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
- * @category Collection
+ * @category Queueing
  */
 export interface QueueableLike<T = unknown> extends BufferLike {
     /**
@@ -62,7 +62,7 @@ export interface QueueableLike<T = unknown> extends BufferLike {
 }
 /**
  * @noInheritDoc
- * @category Collection
+ * @category Queueing
  */
 export interface IndexedBufferCollectionLike<T = unknown> extends BufferLike, IndexedCollectionLike<T> {
 }
@@ -117,6 +117,7 @@ export interface DispatcherEventMap {
  * be dispatched from any execution constext.
  *
  * @noInheritDoc
+ * @category Queueing
  */
 export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap]> {
     /**
