@@ -11,7 +11,10 @@ import {
   DelegatingLike_delegate,
   QueueLike_dequeue,
 } from "../../../__internal__/util.js";
-import { EnumeratorLike } from "../../../containers.js";
+import { EnumeratorLike, ReadonlyObjectMapLike } from "../../../containers.js";
+import ReadonlyMap_keys from "../../../containers/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
+import * as ReadonlyObjectMap from "../../../containers/ReadonlyObjectMap.js";
+import ReadonlyObjectMap_union from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import {
   Function1,
   Optional,
@@ -26,10 +29,6 @@ import {
   pipe,
   unsafeCast,
 } from "../../../functions.js";
-import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
-import ReadonlyMap_keys from "../../../keyed-containers/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
-import * as ReadonlyObjectMap from "../../../keyed-containers/ReadonlyObjectMap.js";
-import ReadonlyObjectMap_union from "../../../keyed-containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.union.js";
 import {
   CacheLike,
   DisposableStreamOf,

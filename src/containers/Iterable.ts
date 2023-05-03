@@ -1,6 +1,6 @@
 import { Container, IterableContainer } from "../containers.js";
+import ReadonlyArray_toReadonlyArray from "../containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import { Function1 } from "../functions.js";
-import ReadonlyArray_toReadonlyArray from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import type * as Rx from "../rx.js";
 import { ObservableLike, RunnableLike, ToEnumerable } from "../rx.js";
 import {

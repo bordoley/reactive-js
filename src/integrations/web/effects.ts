@@ -1,3 +1,5 @@
+import { ReadonlyObjectMapLike } from "../../containers.js";
+import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
   Optional,
   SideEffect1,
@@ -8,8 +10,6 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
-import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   __constant,
   __memo,

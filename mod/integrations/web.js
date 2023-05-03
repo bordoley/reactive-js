@@ -1,8 +1,8 @@
 /// <reference types="./web.d.ts" />
 
 import { __WindowLocationLike_canGoBack as WindowLocationLike_canGoBack, __WindowLocationLike_goBack as WindowLocationLike_goBack, __WindowLocationLike_push as WindowLocationLike_push, __WindowLocationLike_replace as WindowLocationLike_replace, } from "../__internal__/symbols.js";
+import * as ReadonlyArray from "../containers/ReadonlyArray.js";
 import { error, newInstance, pipe } from "../functions.js";
-import * as ReadonlyArray from "../keyed-containers/ReadonlyArray.js";
 import * as Observable from "../rx/Observable.js";
 import { DisposableLike_dispose, QueueableLike_enqueue } from "../util.js";
 import * as Disposable from "../util/Disposable.js";

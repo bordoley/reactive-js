@@ -8,6 +8,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { ReadonlyObjectMapLike } from "../../containers.js";
+import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
   Optional,
   SideEffect1,
@@ -18,8 +20,6 @@ import {
   none,
   pipe,
 } from "../../functions.js";
-import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
-import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import {
   DisposableLike_dispose,
   EventListenerLike,

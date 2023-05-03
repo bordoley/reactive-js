@@ -4,6 +4,9 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import { ReadonlyObjectMapLike } from "../../containers.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
   SideEffect,
   arrayEquality,
@@ -12,9 +15,6 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { ReadonlyObjectMapLike } from "../../keyed-containers.js";
-import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import { StreamableLike_stream } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import {

@@ -1,5 +1,5 @@
+import { ReadonlyObjectMapLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { ReadonlyObjectMapLike } from "../../../keyed-containers.js";
 import { AnimationConfig, AnimationGroupEventHandlerLike } from "../../../rx.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../util.js";
 interface CreateAnimationGroupEventHandler {

@@ -1,7 +1,7 @@
 /// <reference types="./mixins.d.ts" />
 
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { isFunction, } from "../functions.js";
-import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
 import { __Object_init, __Object_private_initializedProperties, __Object_properties, __Object_prototype, } from "./symbols.js";

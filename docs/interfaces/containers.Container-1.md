@@ -16,15 +16,13 @@ Base type for all Containers.
 
   ↳ [`PromiseContainer`](containers.PromiseContainer.md)
 
-  ↳ [`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer.md)
-
   ↳ [`EnumeratorContainer`](containers.EnumeratorContainer.md)
 
-  ↳ [`KeyedContainer`](keyed_containers.KeyedContainer.md)
+  ↳ [`KeyedContainer`](containers.KeyedContainer-1.md)
 
-  ↳ [`ReadonlyMapContainer`](keyed_containers.ReadonlyMapContainer.md)
+  ↳ [`ReadonlyMapContainer`](containers.ReadonlyMapContainer.md)
 
-  ↳ [`ReadonlyObjectMapContainer`](keyed_containers.ReadonlyObjectMapContainer.md)
+  ↳ [`ReadonlyObjectMapContainer`](containers.ReadonlyObjectMapContainer.md)
 
   ↳ [`ObservableContainer`](rx.ObservableContainer.md)
 

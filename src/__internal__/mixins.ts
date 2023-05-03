@@ -1,3 +1,4 @@
+import ReadonlyArray_getLength from "../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Factory,
   Function1,
@@ -9,7 +10,6 @@ import {
   Optional,
   isFunction,
 } from "../functions.js";
-import ReadonlyArray_getLength from "../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import * as Obj from "./Object.js";
 import { __DEV__ } from "./constants.js";
 import {

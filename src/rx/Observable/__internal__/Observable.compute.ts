@@ -21,6 +21,7 @@ import {
   __MemoOrUsingEffect_func,
   __MemoOrUsingEffect_value,
 } from "../../../__internal__/symbols.js";
+import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Factory,
   Optional,
@@ -35,7 +36,6 @@ import {
   raiseError,
   raiseWithDebugMessage,
 } from "../../../functions.js";
-import ReadonlyArray_getLength from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   EnumerableLike,
   ObservableContainer,

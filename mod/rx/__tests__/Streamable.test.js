@@ -1,9 +1,9 @@
 /// <reference types="./Streamable.test.d.ts" />
 
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
+import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
+import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import { arrayEquality, bindMethod, none, pipe, returns, } from "../../functions.js";
-import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import { StreamableLike_stream } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../util.js";

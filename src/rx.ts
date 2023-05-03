@@ -15,9 +15,9 @@ import {
   ContainerOperator,
   Container_T,
   Container_type,
+  ReadonlyObjectMapLike,
 } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { ReadonlyObjectMapLike } from "./keyed-containers.js";
 import {
   AssociativeCollectionLike,
   DictionaryLike,

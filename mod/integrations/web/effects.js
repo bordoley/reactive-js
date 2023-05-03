@@ -1,7 +1,7 @@
 /// <reference types="./effects.d.ts" />
 
+import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import { compose, identity, none, pipe, returns, } from "../../functions.js";
-import * as ReadonlyObjectMap from "../../keyed-containers/ReadonlyObjectMap.js";
 import { __constant, __memo, __observe, __state, __using, } from "../../rx/effects.js";
 import { QueueableLike_enqueue, } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";

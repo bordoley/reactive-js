@@ -1,7 +1,6 @@
-import { EnumeratorLike } from "../../../containers.js";
+import { EnumeratorLike, KeyOf } from "../../../containers.js";
 import Enumerator_map from "../../../containers/Enumerator/__internal__/Enumerator.map.js";
 import { pipe } from "../../../functions.js";
-import { KeyOf } from "../../../keyed-containers.js";
 import {
   DictionaryContainer,
   DictionaryLike,

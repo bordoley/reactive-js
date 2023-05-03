@@ -1,6 +1,6 @@
 import { ContainerOperator } from "../../../containers.js";
+import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { pipe } from "../../../functions.js";
-import ReadonlyArray_map from "../../../keyed-containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   ForkZipLatest,
   ObservableContainer,
