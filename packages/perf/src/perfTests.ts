@@ -119,10 +119,7 @@ export const filterMapReduce = (n: number) =>
     createFilterMapReducePerfTest("Runnable", Runnable),
     benchmarkTest(
       "array methods",
-      async src => () =>
-        src
-          .filter(isEven)
-          .map(increment)
+      async src => () => src.filter(isEven).map(increment),
     ),
     benchmarkTest("most", async src => {
       const { map, filter } = await import("@most/core");

@@ -12,7 +12,7 @@ import {
 } from "../../__internal__/testing.js";
 import { Optional, pipe, raise } from "../../functions.js";
 import * as ReadonlyArray from "../../keyed-containers/ReadonlyArray.js";
-import * as Streamable from "../../streaming/Streamable.js";
+import * as Streamable from "../../rx/Streamable.js";
 import {
   DisposableLike_error,
   QueueableLike_enqueue,

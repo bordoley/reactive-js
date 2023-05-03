@@ -31,24 +31,22 @@ import {
 import { ReadonlyObjectMapLike } from "../keyed-containers.js";
 import {
   AnimationConfig,
+  AnimationGroupEventHandlerLike,
+  DisposableStreamOf,
   EnumerableLike,
   ObservableLike,
   PauseableObservableLike,
   PublisherLike,
   RunnableLike,
+  StreamOf,
+  StreamableLike,
+  StreamableLike_stream,
 } from "../rx.js";
 import * as Enumerable from "../rx/Enumerable.js";
 import * as Observable from "../rx/Observable.js";
 import * as Publisher from "../rx/Publisher.js";
 import * as Runnable from "../rx/Runnable.js";
-import {
-  AnimationGroupEventHandlerLike,
-  DisposableStreamOf,
-  StreamOf,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../streaming.js";
-import * as Streamable from "../streaming/Streamable.js";
+import * as Streamable from "../rx/Streamable.js";
 import {
   DictionaryLike,
   DispatcherLike,

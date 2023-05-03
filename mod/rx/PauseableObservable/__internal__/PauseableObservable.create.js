@@ -5,7 +5,7 @@ import { DelegatingLike_delegate, } from "../../../__internal__/util.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
 import { compose, pipe } from "../../../functions.js";
 import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../rx.js";
-import Stream_create from "../../../streaming/Stream/__internal__/Stream.create.js";
+import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import { EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";

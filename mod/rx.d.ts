@@ -1,8 +1,9 @@
-import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount } from "./__internal__/symbols.js";
+import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStream as StreamableLike_TStream, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { Container, ContainerOf, ContainerOperator, Container_T, Container_type } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
-export { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, };
+import { ReadonlyObjectMapLike } from "./keyed-containers.js";
+import { AssociativeCollectionLike, DictionaryLike, DispatcherEventMap, DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, IndexedBufferCollectionLike, PauseableEventMap, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+export { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, StreamableLike_stream, StreamLike_scheduler, StreamableLike_TStream, };
 /**
  * A consumer of push-based notifications.
  *
@@ -121,6 +122,80 @@ export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>,
  */
 export interface PauseableObservableContainer extends Container {
     readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+}
+/**
+ * Represents a duplex stream
+ *
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+    readonly [StreamLike_scheduler]: SchedulerLike;
+}
+/**
+ * A container that supports bi-directional streaming.
+ *
+ * @typeparam TReq
+ * @typeparam T
+ * @typeparam TStream
+ *
+ * @noInheritDoc
+ * @category Streamable
+ */
+export interface StreamableLike<TReq = unknown, T = unknown> {
+    readonly [StreamableLike_TStream]?: StreamLike<TReq, T>;
+    /**
+     * Subscribe to the Streamable.
+     *
+     * @param scheduler - The scheduler to subscribe to the stream with.
+     * @param options
+     */
+    [StreamableLike_stream](scheduler: SchedulerLike, options?: {
+        /**
+         * The number of items to buffer for replay when an observer subscribes
+         * to the stream.
+         */
+        readonly replay?: number;
+        /**
+         * The capacity of the stream's request queue.
+         */
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): DisposableStreamOf<this>;
+}
+export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
+export type DisposableStreamOf<TStreamable extends StreamableLike> = StreamOf<TStreamable> & DisposableLike;
+/**
+ * A cache stream that support transaction updates of a collection of keys
+ * and observing the changing values of individual keys.
+ *
+ * @noInheritDoc
+ *  @category Streamable
+ */
+export interface CacheLike<T> extends StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> {
+    readonly [StreamableLike_TStream]?: StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeCollectionLike<string, ObservableLike<T>>;
+}
+/**
+ *
+ * @noInheritDoc
+ * @category Streamable
+ */
+export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & DictionaryLike<TKey, EventSourceLike<{
+        type: TEventType;
+        value: T;
+    }>> & EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
+}
+/**
+ *
+ * @noInheritDoc
+ *  @category Streamable
+ */
+export interface AnimationEventHandlerLike<TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>, T> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & EventSourceLike<{
+        type: TEventType;
+        value: T;
+    } | DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
 }
 /**
  * @noInheritDoc

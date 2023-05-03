@@ -35,14 +35,12 @@ import {
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-} from "../rx.js";
-import {
   StreamLike,
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
-} from "../streaming.js";
-import Streamable_createStateStore from "../streaming/Streamable/__internal__/Streamable.createStateStore.js";
+} from "../rx.js";
+import Streamable_createStateStore from "../rx/Streamable/__internal__/Streamable.createStateStore.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

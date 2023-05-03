@@ -29,8 +29,8 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import * as Streamable from "@reactive-js/core/streaming/Streamable";
-import { ObservableLike } from "@reactive-js/core/rx";
+import * as Streamable from "@reactive-js/core/rx/Streamable";
+import { ObservableLike, CacheLike, StreamOf } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   KeyedCollectionLike_get,
@@ -58,7 +58,6 @@ import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocati
 import * as Scheduler from "@reactive-js/core/util/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import { ReadonlyObjectMapLike } from "@reactive-js/core/keyed-containers";
-import { CacheLike, StreamOf } from "@reactive-js/core/streaming";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {

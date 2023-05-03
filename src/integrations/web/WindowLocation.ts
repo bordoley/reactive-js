@@ -30,12 +30,13 @@ import {
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
+  StreamLike,
+  StreamableLike_stream,
 } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
-import { StreamLike, StreamableLike_stream } from "../../streaming.js";
-import * as Stream from "../../streaming/Stream.js";
-import Stream_delegatingMixin from "../../streaming/Stream/__internal__/Stream.delegatingMixin.js";
-import * as Streamable from "../../streaming/Streamable.js";
+import * as Stream from "../../rx/Stream.js";
+import Stream_delegatingMixin from "../../rx/Stream/__internal__/Stream.delegatingMixin.js";
+import * as Streamable from "../../rx/Streamable.js";
 import {
   DisposableLike,
   IndexedBufferCollectionLike,

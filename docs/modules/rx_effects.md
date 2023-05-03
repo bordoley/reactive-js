@@ -478,7 +478,7 @@ ___
 
 ### \_\_state
 
-▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+▸ **__state**<`T`\>(`initialState`, `options?`): [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -499,19 +499,19 @@ ___
 
 #### Returns
 
-[`StreamLike`](../interfaces/streaming.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+[`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
 
 ___
 
 ### \_\_stream
 
-▸ **__stream**<`TStreamable`\>(`streamable`, `«destructured»?`): [`StreamOf`](streaming.md#streamof)<`TStreamable`\>
+▸ **__stream**<`TStreamable`\>(`streamable`, `«destructured»?`): [`StreamOf`](rx.md#streamof)<`TStreamable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
@@ -526,7 +526,7 @@ ___
 
 #### Returns
 
-[`StreamOf`](streaming.md#streamof)<`TStreamable`\>
+[`StreamOf`](rx.md#streamof)<`TStreamable`\>
 
 ___
 

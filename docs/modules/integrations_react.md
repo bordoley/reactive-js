@@ -469,13 +469,13 @@ ___
 
 ### useStream
 
-▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
@@ -490,15 +490,15 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
 
-▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
 
 #### Parameters
 
@@ -514,7 +514,7 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](streaming.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
 
 ___
 
@@ -533,7 +533,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\> |
+| `streamable` | [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -557,7 +557,7 @@ readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.m
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/streaming.StreamableLike.md)<`TReq`, `T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

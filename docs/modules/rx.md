@@ -27,10 +27,18 @@
 - [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/rx.PublisherLike.md)
 - [RunnableLike](../interfaces/rx.RunnableLike.md)
+- [StreamLike](../interfaces/rx.StreamLike.md)
 
 ### Other Interfaces
 
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
+
+### Streamable Interfaces
+
+- [AnimationEventHandlerLike](../interfaces/rx.AnimationEventHandlerLike.md)
+- [AnimationGroupEventHandlerLike](../interfaces/rx.AnimationGroupEventHandlerLike.md)
+- [CacheLike](../interfaces/rx.CacheLike.md)
+- [StreamableLike](../interfaces/rx.StreamableLike.md)
 
 ### TypeClass Interfaces
 
@@ -82,6 +90,8 @@
 ### Type Aliases
 
 - [AnimationConfig](rx.md#animationconfig)
+- [DisposableStreamOf](rx.md#disposablestreamof)
+- [StreamOf](rx.md#streamof)
 
 ## Type Aliases
 
@@ -94,3 +104,27 @@
 | Name | Type |
 | :------ | :------ |
 | `T` | `number` |
+
+___
+
+### DisposableStreamOf
+
+Ƭ **DisposableStreamOf**<`TStreamable`\>: [`StreamOf`](rx.md#streamof)<`TStreamable`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md) |
+
+___
+
+### StreamOf
+
+Ƭ **StreamOf**<`TStreamable`\>: `NonNullable`<`TStreamable`[typeof `StreamableLike_TStream`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md) |
