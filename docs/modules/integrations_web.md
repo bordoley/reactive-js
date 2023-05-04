@@ -16,29 +16,8 @@
 
 - [CSSStyleKey](integrations_web.md#cssstylekey)
 
-### Functions
-
-- [createEventSource](integrations_web.md#createeventsource)
-
 ## Type Aliases
 
 ### CSSStyleKey
 
 Ƭ **CSSStyleKey**: keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>
-
-## Functions
-
-### createEventSource
-
-▸ **createEventSource**(`url`, `options?`): [`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` \| `URL` |
-| `options?` | `EventSourceInit` & { `events?`: readonly `string`[]  } |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/rx.ObservableLike.md)<{ `data`: `string` ; `id`: `string` ; `type`: `string`  }\>

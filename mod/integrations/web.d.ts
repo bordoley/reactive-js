@@ -20,13 +20,6 @@ export interface WindowLocationLike extends MulticastObservableLike<WindowLocati
     [WindowLocationLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;
     [WindowLocationLike_replace](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;
 }
-export declare const createEventSource: (url: string | URL, options?: EventSourceInit & {
-    readonly events?: readonly string[];
-}) => ObservableLike<{
-    readonly id: string;
-    readonly type: string;
-    readonly data: string;
-}>;
 export type CSSStyleKey = keyof Omit<CSSStyleDeclaration, "item" | "length" | "parentRule" | "getPropertyPriority" | "getPropertyValue" | "removeProperty" | "setProperty" | number | typeof Symbol.iterator>;
 export interface ScrollState {
     readonly current: number;
