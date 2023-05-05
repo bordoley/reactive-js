@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useAnimation } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
+import * as Streamable from "@reactive-js/core/rx/Streamable";
+import {
+  useDispatcher,
+  useDisposable,
+  useStream,
+  useSubscribe,
+} from "@reactive-js/core/integrations/react";
+import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
+import { Optional, pipeLazy } from "@reactive-js/core/functions";
+import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as Scheduler from "@reactive-js/core/util/Scheduler";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -45,7 +55,7 @@ const AnimatedBox = ({
   index,
 }: {
   label: string;
-  animation: EventSourceLike<{ type: boolean; value: number }>;
+  animation: Optional<EventSourceLike<{ type: boolean; value: number }>>;
   index: number;
 }) => {
   const frontBox = useAnimateEvent<HTMLDivElement, number, boolean>(
@@ -101,21 +111,32 @@ const AnimatedBox = ({
 export const Wordle = () => {
   const [state, updateState] = useState(false);
 
-  const [animation, { dispatch }, { isAnimationRunning }] = useAnimation<
-    number,
-    boolean
-  >(
-    () => ({
-      type: "spring",
-      stiffness: 0.0005,
-      damping: 0.0026,
-      precision: 0.1,
-      from: 0,
-      to: 180 * items.length,
-    }),
+  const animationScheduler = useDisposable(
+    pipeLazy(getScheduler(), Scheduler.createAnimationFrameScheduler),
     [],
-    { mode: "blocking" },
   );
+
+  const animationGroup = useStream(
+    () =>
+      Streamable.createAnimationGroupEventHandler(
+        {
+          value: () => ({
+            type: "spring",
+            stiffness: 0.0005,
+            damping: 0.0026,
+            precision: 0.1,
+            from: 0,
+            to: 180 * items.length,
+          }),
+        },
+        { mode: "blocking", scheduler: animationScheduler },
+      ),
+    [animationScheduler],
+  );
+
+  const animation = animationGroup?.[KeyedCollectionLike_get]("value");
+  const { dispatch } = useDispatcher(animationGroup);
+  const isAnimationRunning = useSubscribe(animationGroup) ?? false;
 
   useEffect(() => {
     dispatch(state);

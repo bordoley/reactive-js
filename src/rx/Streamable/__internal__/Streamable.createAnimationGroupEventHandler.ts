@@ -51,8 +51,6 @@ import {
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  PauseableLike_resume,
-  PauseableSchedulerLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -60,8 +58,6 @@ import {
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
-import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
-import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
@@ -77,11 +73,12 @@ const createAnimationGroupEventHandlerStream: <
       Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >
   >,
-  creationOptions: Optional<{
-    readonly mode?: "switching" | "blocking" | "queueing";
+  creationOptions: {
+    readonly mode: "switching" | "blocking" | "queueing";
+    readonly schedule?: SchedulerLike;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-  }>,
+  },
   scheduler: SchedulerLike,
   streamOptions: Optional<{
     readonly replay?: number;
@@ -103,7 +100,6 @@ const createAnimationGroupEventHandlerStream: <
         include(
           Stream_delegatingMixin<TEventType, boolean>(),
           Delegating_mixin(),
-          Pauseable_delegatingMixin,
         ),
         function AnimationEventHandlerStream(
           instance: TProperties &
@@ -123,11 +119,12 @@ const createAnimationGroupEventHandlerStream: <
               | readonly Reactive.AnimationConfig<T>[]
             >
           >,
-          creationOptions: Optional<{
-            readonly mode?: "switching" | "blocking" | "queueing";
+          creationOptions: {
+            readonly mode: "switching" | "blocking" | "queueing";
+            readonly scheduler?: SchedulerLike;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
             readonly capacity?: number;
-          }>,
+          },
           scheduler: SchedulerLike,
           streamOptions: Optional<{
             readonly replay?: number;
@@ -205,12 +202,8 @@ const createAnimationGroupEventHandlerStream: <
             ),
           );
 
-          const animationScheduler: PauseableSchedulerLike = pipe(
-            scheduler,
-            Scheduler_toPauseableScheduler,
-            Disposable_addTo(instance),
-          );
-          init(Pauseable_delegatingMixin, instance, animationScheduler);
+          const animationScheduler: SchedulerLike =
+            creationOptions?.scheduler ?? scheduler;
 
           instance[CollectionLike_count] = pipe(
             publishers,
@@ -221,8 +214,6 @@ const createAnimationGroupEventHandlerStream: <
           );
 
           init(Delegating_mixin(), instance, publishers);
-
-          animationScheduler[PauseableLike_resume]();
 
           return instance;
         },
@@ -269,7 +260,7 @@ interface CreateAnimationGroupEventHandler {
         Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
       >
     >,
-    options: { readonly mode: "switching" },
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
     TEventType = unknown,
@@ -283,7 +274,7 @@ interface CreateAnimationGroupEventHandler {
         Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
       >
     >,
-    options: { readonly mode: "blocking" },
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
     TEventType = unknown,
@@ -299,22 +290,10 @@ interface CreateAnimationGroupEventHandler {
     >,
     options: {
       readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
-  createAnimationGroupEventHandler<
-    TEventType = unknown,
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
-    animationGroup: ReadonlyObjectMapLike<
-      TKey,
-      Function1<
-        TEventType,
-        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
-      >
-    >,
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
 }
 const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHandler["createAnimationGroupEventHandler"] =
@@ -332,6 +311,7 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";
+      readonly scheduler?: SchedulerLike;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },

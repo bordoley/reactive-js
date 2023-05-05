@@ -8,9 +8,9 @@ A stateful ObservableLike resource.
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 ## Hierarchy
 

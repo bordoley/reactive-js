@@ -6,15 +6,14 @@
 
 ### Hook Functions
 
-- [useAnimation](integrations_react.md#useanimation)
-- [useAnimationGroup](integrations_react.md#useanimationgroup)
+- [useDispatcher](integrations_react.md#usedispatcher)
+- [useDisposable](integrations_react.md#usedisposable)
 - [useEnumerate](integrations_react.md#useenumerate)
-- [useEventPublisher](integrations_react.md#useeventpublisher)
-- [useEventSource](integrations_react.md#useeventsource)
-- [useFlow](integrations_react.md#useflow)
-- [useObservable](integrations_react.md#useobservable)
+- [useEnumerator](integrations_react.md#useenumerator)
+- [useListen](integrations_react.md#uselisten)
+- [usePauseable](integrations_react.md#usepauseable)
 - [useStream](integrations_react.md#usestream)
-- [useStreamable](integrations_react.md#usestreamable)
+- [useSubscribe](integrations_react.md#usesubscribe)
 
 ### Other Functions
 
@@ -22,219 +21,59 @@
 
 ## Hook Functions
 
-### useAnimation
+### useDispatcher
 
-▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
+| Name |
+| :------ |
+| `TReq` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"switching"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`TReq`\>\> |
 
 #### Returns
 
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
+`Object`
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"blocking"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"queueing"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimation**<`T`, `TEventType`\>(`animationFactory`, `deps`, `options?`): readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationFactory` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+| `complete` | [`SideEffect`](functions.md#sideeffect) |
+| `dispatch` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
 
 ___
 
-### useAnimationGroup
+### useDisposable
 
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\>\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"switching"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+▸ **useDisposable**<`TDisposable`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\>\> |
+| `factory` | () => `TDisposable` |
 | `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"blocking"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
 
 #### Returns
 
-readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\>\> |
-| `deps` | readonly `unknown`[] |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.mode` | ``"queueing"`` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-▸ **useAnimationGroup**<`T`, `TEventType`, `TKey`\>(`animationGroupFactory`, `deps`, `options?`): readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-| `TEventType` | `unknown` |
-| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroupFactory` | [`Factory`](functions.md#factory)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\>\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-readonly [[`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>, { `dispatch`: [`SideEffect1`](functions.md#sideeffect1)<`TEventType`\> ; `pause`: [`SideEffect`](functions.md#sideeffect) ; `resume`: [`SideEffect`](functions.md#sideeffect)  }, { `isAnimationPaused`: `boolean` ; `isAnimationRunning`: `boolean`  }]
+[`Optional`](functions.md#optional)<`TDisposable`\>
 
 ___
 
 ### useEnumerate
 
-▸ **useEnumerate**<`T`\>(`enumerable`): `Object`
+▸ **useEnumerate**<`T`\>(`enumerable`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -250,15 +89,9 @@ ___
 
 #### Returns
 
-`Object`
+[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
-| Name | Type |
-| :------ | :------ |
-| `current` | `T` |
-| `hasCurrent` | `boolean` |
-| `move` | () => `boolean` |
-
-▸ **useEnumerate**<`T`\>(`factory`, `deps`): `Object`
+▸ **useEnumerate**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -275,19 +108,41 @@ ___
 
 #### Returns
 
+[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+
+___
+
+### useEnumerator
+
+▸ **useEnumerator**<`T`\>(`enumerator`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerator` | [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\> |
+
+#### Returns
+
 `Object`
 
 | Name | Type |
 | :------ | :------ |
 | `current` | `T` |
 | `hasCurrent` | `boolean` |
-| `move` | () => `boolean` |
+| `move` | [`Factory`](functions.md#factory)<`boolean`\> |
 
 ___
 
-### useEventPublisher
+### useListen
 
-▸ **useEventPublisher**<`T`\>(`«destructured»?`): [`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
+▸ **useListen**<`T`\>(`eventSource`): [`Optional`](functions.md#optional)<`T`\>
 
 #### Type parameters
 
@@ -299,36 +154,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | `Object` |
-| › `replay?` | `number` |
-
-#### Returns
-
-[`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
-
-___
-
-### useEventSource
-
-▸ **useEventSource**<`T`\>(`eventSource`): [`Optional`](functions.md#optional)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `eventSource` | [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\> |
+| `eventSource` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\> |
 
 #### Returns
 
 [`Optional`](functions.md#optional)<`T`\>
 
-▸ **useEventSource**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`T`\>
+▸ **useListen**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<`T`\>
 
 #### Type parameters
 
@@ -349,26 +181,15 @@ ___
 
 ___
 
-### useFlow
+### usePauseable
 
-▸ **useFlow**<`T`\>(`runnable`, `options?`): `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+▸ **usePauseable**(`pauseable`): `Object`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `runnable` | [`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-| `options.replay?` | `number` |
+| `pauseable` | [`Optional`](functions.md#optional)<[`PauseableLike`](../interfaces/util.PauseableLike.md)\> |
 
 #### Returns
 
@@ -379,91 +200,6 @@ ___
 | `isPaused` | `boolean` |
 | `pause` | [`SideEffect`](functions.md#sideeffect) |
 | `resume` | [`SideEffect`](functions.md#sideeffect) |
-| `value` | [`Optional`](functions.md#optional)<`T`\> |
-
-▸ **useFlow**<`T`\>(`factory`, `deps`, `options?`): `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`RunnableLike`](../interfaces/rx.RunnableLike.md)<`T`\>\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `isPaused` | `boolean` |
-| `pause` | [`SideEffect`](functions.md#sideeffect) |
-| `resume` | [`SideEffect`](functions.md#sideeffect) |
-| `value` | [`Optional`](functions.md#optional)<`T`\> |
-
-___
-
-### useObservable
-
-▸ **useObservable**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
-
-Returns the current value, if defined, of `observable`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\> | The `ObservableLike` to subscribe to. |
-| `options?` | `Object` | - |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` | - |
-| `options.capacity?` | `number` | - |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` | - |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`T`\>
-
-▸ **useObservable**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
-
-Returns the current value, if defined, of `observable`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`T`\>
 
 ___
 
@@ -518,56 +254,52 @@ ___
 
 ___
 
-### useStreamable
+### useSubscribe
 
-▸ **useStreamable**<`TReq`, `T`\>(`streamable`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+▸ **useSubscribe**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TReq` |
 | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `streamable` | [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\> |
+| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-| `options.replay?` | `number` |
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+[`Optional`](functions.md#optional)<`T`\>
 
-▸ **useStreamable**<`TReq`, `T`\>(`factory`, `deps`, `options?`): readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+▸ **useSubscribe**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `TReq` |
 | `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-| `options.replay?` | `number` |
 
 #### Returns
 
-readonly [[`Optional`](functions.md#optional)<`T`\>, [`SideEffect1`](functions.md#sideeffect1)<`TReq`\>]
+[`Optional`](functions.md#optional)<`T`\>
 
 ___
 

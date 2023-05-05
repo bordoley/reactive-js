@@ -21,7 +21,6 @@ import {
 } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
 import {
-  DispatcherEventMap,
   DispatcherLike,
   DisposableLike,
   ErrorSafeEventListenerLike,
@@ -141,7 +140,8 @@ export interface EnumerableContainer extends Container {
  * @noInheritDoc
  * @category Observable
  */
-export interface MulticastObservableLike<T> extends ObservableLike<T> {
+export interface MulticastObservableLike<T = unknown>
+  extends ObservableLike<T> {
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 
@@ -272,24 +272,7 @@ export interface AnimationGroupEventHandlerLike<
   TKey extends string | number | symbol,
 > extends StreamableLike<TEventType, boolean> {
   readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
-    PauseableLike &
     DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>;
-}
-/**
- *
- * @noInheritDoc
- *  @category Streamable
- */
-export interface AnimationEventHandlerLike<
-  TEventType extends Exclude<string | symbol, keyof DispatcherEventMap>,
-  T,
-> extends StreamableLike<TEventType, boolean> {
-  readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
-    PauseableLike &
-    EventSourceLike<
-      | { type: TEventType; value: T }
-      | DispatcherEventMap[keyof DispatcherEventMap]
-    >;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace

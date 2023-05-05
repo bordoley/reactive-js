@@ -2,45 +2,56 @@ import {
   Optional,
   compose,
   isSome,
-  pipe,
-  pipeLazy,
   pipeSome,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
-  useAnimation,
-  useObservable,
+  useDispatcher,
+  useStream,
+  useSubscribe,
 } from "@reactive-js/core/integrations/react";
 import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
+import * as Streamable from "@reactive-js/core/rx/Streamable";
+import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
-  const [animation, { dispatch }] = useAnimation<
-    number,
-    { prevWidth?: number; width: number }
-  >(
-    ({ prevWidth, width }) =>
-      isSome(prevWidth)
-        ? {
-            type: "spring",
-            from: prevWidth,
-            to: width,
-            precision: 0.2,
-          }
-        : {
-            type: "frame",
-            value: width,
-          },
+  const animationGroup = useStream(
+    () =>
+      Streamable.createAnimationGroupEventHandler<{
+        prevWidth?: number;
+        width: number;
+      }>(
+        {
+          value: ({ prevWidth, width }) =>
+            isSome(prevWidth)
+              ? {
+                  type: "spring",
+                  from: prevWidth,
+                  to: width,
+                  precision: 0.2,
+                }
+              : {
+                  type: "frame",
+                  value: width,
+                },
+        },
+        { mode: "switching" },
+      ),
     [],
-    { mode: "switching", capacity: 1, backpressureStrategy: "drop-oldest" },
+    { capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
-  const { width: boxWidth } = useObservable<Rect>(
+  const animation = animationGroup?.[KeyedCollectionLike_get]("value");
+
+  const { dispatch } = useDispatcher(animationGroup);
+
+  const { width: boxWidth } = useSubscribe<Rect>(
     () =>
       pipeSome(
         container,
@@ -51,7 +62,11 @@ const Measure = () => {
         Observable.forkMerge(
           compose(
             Observable.withLatestFrom(
-              pipe(animation, EventSource.toObservable()),
+              pipeSome(animation, EventSource.toObservable()) ??
+                Observable.empty<{
+                  type: any;
+                  value: number;
+                }>(),
               ({ width: boxWidth }, ev) => [boxWidth, ev.value],
             ),
             Observable.forEach(([boxWidth, width]) => {
@@ -68,14 +83,15 @@ const Measure = () => {
   ) ?? { width: 0 };
 
   const width =
-    useObservable(
-      pipeLazy(
-        animation,
-        EventSource.toObservable(),
-        Observable.throttle(50),
-        Observable.pick<{ value: number }, "value">("value"),
-        Observable.map(Math.floor),
-      ),
+    useSubscribe(
+      () =>
+        pipeSome(
+          animation,
+          EventSource.toObservable(),
+          Observable.throttle(50),
+          Observable.pick<{ value: number }, "value">("value"),
+          Observable.map(Math.floor),
+        ) ?? Observable.empty(),
       [animation],
     ) ?? 0;
 

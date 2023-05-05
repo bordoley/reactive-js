@@ -9,14 +9,14 @@ import {
   pipeLazy,
   pipeSome,
 } from "@reactive-js/core/functions";
-import { useEventSource } from "@reactive-js/core/integrations/react";
+import { useListen } from "@reactive-js/core/integrations/react";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 
 const IntersectionApp = () => {
   const [count, updateCount] = useState(10);
   const [endOfPageRef, setEndOfPage] = useState<Optional<HTMLDivElement>>();
 
-  useEventSource(
+  useListen(
     () =>
       pipeSome(
         endOfPageRef,

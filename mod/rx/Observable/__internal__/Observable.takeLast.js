@@ -8,7 +8,7 @@ import { invoke, none, partial, pipe } from "../../../functions.js";
 import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { QueueableLike_enqueue } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
+import IndexedCollection_toReadonlyArray from "../../../util/IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
@@ -18,7 +18,7 @@ const Observable_takeLast = /*@__PURE__*/ (() => {
         Observer_mixin_initFromDelegate(instance, delegate);
         instance[__TakeLastObserver_takeLastQueue] = Queue_createIndexedQueue(takeLastCount, "drop-oldest");
         pipe(instance, Disposable_onComplete(() => {
-            pipe(instance[__TakeLastObserver_takeLastQueue], Indexed_toReadonlyArray(), ReadonlyArray_toObservable(), invoke(ObservableLike_observe, delegate));
+            pipe(instance[__TakeLastObserver_takeLastQueue], IndexedCollection_toReadonlyArray(), ReadonlyArray_toObservable(), invoke(ObservableLike_observe, delegate));
         }));
         return instance;
     }, props({

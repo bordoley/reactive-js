@@ -256,7 +256,7 @@ const Scheduler_toPauseableScheduler: Function1<
         instance[__PauseableScheduler_resumedTime] =
           instance[__PauseableScheduler_initialTime];
 
-        instance[PauseableLike_isPaused] = Store_createMutable(true);
+        instance[PauseableLike_isPaused] = Store_createMutable(false);
 
         return instance;
       },

@@ -5,11 +5,13 @@ import * as Runnable from "@reactive-js/core/rx/Runnable";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   createComponent,
+  useDispatcher,
+  useDisposable,
   useEnumerate,
-  useFlow,
-  useObservable,
+  useEnumerator,
+  usePauseable,
   useStream,
-  useAnimationGroup,
+  useSubscribe,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimateEvent,
@@ -27,16 +29,20 @@ import {
   isSome,
   Optional,
   pipe,
+  pipeLazy,
+  pipeSome,
   returns,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/rx/Streamable";
-import { ObservableLike, CacheLike, StreamOf } from "@reactive-js/core/rx";
+import { ObservableLike, CacheLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   EventSourceLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableLike_isPaused,
+  SchedulerLike,
+  StoreLike_value,
 } from "@reactive-js/core/util";
 import * as Dictionary from "@reactive-js/core/containers/Dictionary";
 import * as Enumerator from "@reactive-js/core/containers/Enumerator";
@@ -61,35 +67,6 @@ import {
   ReadonlyObjectMapLike,
 } from "@reactive-js/core/containers";
 import * as Store from "@reactive-js/core/util/Store";
-
-const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {
-  const values = cache[KeyedCollectionLike_get]("a");
-  const value = useObservable(values) ?? "";
-
-  const onChange = useCallback(
-    (ev: React.ChangeEvent<HTMLInputElement>) => {
-      const next = ev.target.value;
-      cache[QueueableLike_enqueue]({ a: _ => next });
-    },
-    [values],
-  );
-
-  return (
-    <div>
-      <input type="text" onChange={onChange} value={value}></input>
-      <span>{value}</span>
-    </div>
-  );
-};
-
-const CacheComponent = () => {
-  const cacheStream = useStream(
-    () => Streamable.createInMemoryCache<string>(),
-    [],
-  );
-
-  return isSome(cacheStream) ? <CacheInner cache={cacheStream} /> : null;
-};
 
 const AnimatedBox = ({
   animation,
@@ -117,7 +94,158 @@ const AnimatedBox = ({
   );
 };
 
-const Root = () => {
+const AnimationGroup = () => {
+  const animationScheduler = useDisposable(
+    pipeLazy(getScheduler(), Scheduler.createAnimationFrameScheduler),
+    [],
+  );
+
+  const animationStream = useStream(
+    () =>
+      Streamable.createAnimationGroupEventHandler(
+        {
+          abc: () => ({
+            type: "loop",
+            count: 2,
+            animation: [
+              { type: "keyframe", duration: 500, from: 0, to: 1 },
+              { type: "delay", duration: 250 },
+              { type: "keyframe", duration: 500, from: 1, to: 0 },
+            ],
+          }),
+
+          def: () => [
+            { type: "keyframe", duration: 500, from: 0, to: 1 },
+            { type: "delay", duration: 250 },
+            { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
+          ],
+        },
+        { mode: "blocking", scheduler: animationScheduler },
+      ),
+    [animationScheduler],
+  );
+
+  const animationDispatcher = useDispatcher(animationStream);
+  const isAnimationRunning = useSubscribe(animationStream) ?? false;
+
+  return (
+    <div>
+      <div>
+        {pipeSome(
+          animationStream,
+          Dictionary.entries(),
+          Enumerator.map(([key, animation]) => (
+            <AnimatedBox key={key} animation={animation} />
+          )),
+          Enumerator.toReadonlyArray(),
+        )}{" "}
+      </div>
+      <div>
+        <button
+          onClick={animationDispatcher.dispatch}
+          disabled={isAnimationRunning}
+        >
+          Run Animation
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const Cache = () => {
+  const cache = useStream<CacheLike<string>>(
+    () => Streamable.createInMemoryCache<string>(),
+    [],
+  );
+
+  const values = cache?.[KeyedCollectionLike_get]("a");
+  const value = useSubscribe(values) ?? "";
+
+  const onChange = useCallback(
+    (ev: React.ChangeEvent<HTMLInputElement>) => {
+      const next = ev.target.value;
+      cache?.[QueueableLike_enqueue]({ a: _ => next });
+    },
+    [values],
+  );
+
+  return (
+    <div>
+      <input type="text" onChange={onChange} value={value}></input>
+      <span>{value}</span>
+    </div>
+  );
+};
+
+const EnumeratorComponent = () => {
+  const enumerator = useEnumerate(
+    () => Enumerable.generate(increment, () => -1),
+    [],
+  );
+
+  const enumeratorContoller = useEnumerator(enumerator);
+
+  return (
+    <div>
+      <button onClick={enumeratorContoller.move}>Move the Enumerator</button>
+      <span>
+        {" "}
+        {enumeratorContoller.hasCurrent
+          ? enumeratorContoller.current
+          : "no value"}
+      </span>
+    </div>
+  );
+};
+
+const Counter = () => {
+  const history = useWindowLocation();
+  const [counterInitialValue, setCounterInitialValue] =
+    useState<Optional<number>>();
+
+  useEffect(() => {
+    if (isSome(history.uri?.query) && isNone(counterInitialValue)) {
+      const counterHistoryValue = new URLSearchParams(history.uri?.query);
+      setCounterInitialValue(
+        Number.parseInt(counterHistoryValue.get("v") ?? "-1"),
+      );
+    }
+  }, [history.uri, counterInitialValue, setCounterInitialValue]);
+
+  const counter = useDisposable(
+    () =>
+      pipe(
+        Runnable.generate(increment, returns(counterInitialValue ?? -1)),
+        Runnable.forEach<number>(value =>
+          history.replace((uri: WindowLocationURI) => ({
+            ...uri,
+            query: `v=${value}`,
+          })),
+        ),
+        Runnable.flow(getScheduler()),
+      ),
+    [history.replace, counterInitialValue],
+  );
+  const counterController = usePauseable(counter);
+  const counterValue = useSubscribe(counter) ?? counterInitialValue;
+
+  return (
+    <div>
+      <button
+        onClick={
+          counterController.isPaused
+            ? counterController.resume
+            : counterController.pause
+        }
+      >
+        {counterController.isPaused ? "Resume Counter" : "Pause Counter"}
+      </button>
+      <span>{counterValue}</span>
+    </div>
+  );
+};
+
+const History = () => {
   const history = useWindowLocation();
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,59 +257,6 @@ const Root = () => {
       }));
     },
     [history.push],
-  );
-
-  const [counterInitialValue, setCounterInitialValue] =
-    useState<Optional<number>>();
-  useEffect(() => {
-    if (isSome(history.uri?.query) && isNone(counterInitialValue)) {
-      const counterHistoryValue = new URLSearchParams(history.uri?.query);
-      setCounterInitialValue(
-        Number.parseInt(counterHistoryValue.get("v") ?? "-1"),
-      );
-    }
-  }, [history.uri, counterInitialValue, setCounterInitialValue]);
-
-  const counter = useFlow(
-    () =>
-      pipe(
-        Runnable.generate(increment, returns(counterInitialValue ?? -1)),
-        Runnable.forEach<number>(value =>
-          history.replace((uri: WindowLocationURI) => ({
-            ...uri,
-            query: `v=${value}`,
-          })),
-        ),
-      ),
-    [history.replace, counterInitialValue],
-  );
-
-  const [animations, animationActions, { isAnimationRunning }] =
-    useAnimationGroup<number>(
-      () => ({
-        abc: () => ({
-          type: "loop",
-          count: 2,
-          animation: [
-            { type: "keyframe", duration: 500, from: 0, to: 1 },
-            { type: "delay", duration: 250 },
-            { type: "keyframe", duration: 500, from: 1, to: 0 },
-          ],
-        }),
-
-        def: () => [
-          { type: "keyframe", duration: 500, from: 0, to: 1 },
-          { type: "delay", duration: 250 },
-          { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
-        ],
-      }),
-      [],
-      { mode: "blocking" },
-    );
-
-  const enumerator = useEnumerate(
-    () => Enumerable.generate(increment, () => -1),
-    [],
   );
 
   return (
@@ -196,37 +271,6 @@ const Root = () => {
           Back
         </button>
       </div>
-
-      <div>
-        <button onClick={enumerator.move}>Move the Enumerator</button>
-        <span> {enumerator.hasCurrent ? enumerator.current : "no value"}</span>
-      </div>
-
-      <div>
-        <button onClick={counter.isPaused ? counter.resume : counter.pause}>
-          {counter.isPaused ? "Resume Counter" : "Pause Counter"}
-        </button>
-        <span>{counter.value ?? counterInitialValue}</span>
-      </div>
-      <div>
-        {pipe(
-          animations,
-          Dictionary.entries(),
-          Enumerator.map(([key, animation]) => (
-            <AnimatedBox key={key} animation={animation} />
-          )),
-          Enumerator.toReadonlyArray(),
-        )}
-      </div>
-      <div>
-        <button
-          onClick={animationActions.dispatch}
-          disabled={isAnimationRunning}
-        >
-          Run Animation
-        </button>
-      </div>
-      <CacheComponent />
     </div>
   );
 };
@@ -237,40 +281,45 @@ const RxComponent = createComponent(
       windowLocation: WindowLocationLike;
     }>,
   ) => {
-    const createAnimationEventHandler = Streamable.createAnimationEventHandler<
-      "animate" | "cancel",
-      ReadonlyObjectMapLike<CSSStyleKey, string>
-    >(
-      ev =>
-        ev === "animate"
-          ? [
-              {
-                type: "keyframe",
-                duration: 1000,
-                from: 0,
-                to: 50,
-                selector: (v: number) => ({
-                  "background-color": "blue",
-                  margin: `${50 - v}px`,
-                  padding: `${v}px`,
-                }),
-              },
-              {
-                type: "spring",
-                stiffness: 0.01,
-                damping: 0.1,
-                from: 50,
-                to: 0,
-                selector: (v: number) => ({
-                  "background-color": "green",
-                  margin: `${50 - v}px`,
-                  padding: `${v}px`,
-                }),
-              },
-            ]
-          : [],
-      { mode: "switching" },
-    );
+    const createAnimationGroupEventHandler = (
+      animationFrameScheduler: SchedulerLike,
+    ) =>
+      Streamable.createAnimationGroupEventHandler<
+        "animate" | "cancel",
+        ReadonlyObjectMapLike<CSSStyleKey, string>
+      >(
+        {
+          value: ev =>
+            ev === "animate"
+              ? [
+                  {
+                    type: "keyframe",
+                    duration: 1000,
+                    from: 0,
+                    to: 50,
+                    selector: (v: number) => ({
+                      "background-color": "blue",
+                      margin: `${50 - v}px`,
+                      padding: `${v}px`,
+                    }),
+                  },
+                  {
+                    type: "spring",
+                    stiffness: 0.01,
+                    damping: 0.1,
+                    from: 50,
+                    to: 0,
+                    selector: (v: number) => ({
+                      "background-color": "green",
+                      margin: `${50 - v}px`,
+                      padding: `${v}px`,
+                    }),
+                  },
+                ]
+              : [],
+        },
+        { mode: "switching", scheduler: animationFrameScheduler },
+      );
 
     return Observable.compute(() => {
       const { windowLocation } = __await(props);
@@ -281,35 +330,46 @@ const RxComponent = createComponent(
         Scheduler.createAnimationFrameScheduler,
         scheduler,
       );
-      const animationEventHandler = __stream(createAnimationEventHandler, {
-        scheduler: animationScheduler,
-      });
-      const isAnimationRunning = __observe(animationEventHandler) ?? false;
+
+      const pauseableScheduler = __using(
+        Scheduler.toPausableScheduler,
+        animationScheduler,
+      );
+
+      const streamableAnimation = __memo(
+        createAnimationGroupEventHandler,
+        pauseableScheduler,
+      );
+      const animationGroupEventHandler = __stream(streamableAnimation);
+
+      const isAnimationRunning = __observe(animationGroupEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
-        pipe(
-          animationEventHandler[PauseableLike_isPaused],
-          Store.toObservable(),
-        ),
+        pipe(pauseableScheduler[PauseableLike_isPaused], Store.toObservable()),
       );
 
       const isAnimationPaused =
         __observe(isAnimationPausedObservable) ??
-        animationEventHandler[PauseableLike_isPaused];
+        pauseableScheduler[PauseableLike_isPaused][StoreLike_value];
       const runAnimation = __bindMethod(
-        animationEventHandler,
+        animationGroupEventHandler,
         QueueableLike_enqueue,
       );
 
       const pauseAnimation = __bindMethod(
-        animationEventHandler,
+        pauseableScheduler,
         PauseableLike_pause,
       );
       const resumeAnimation = __bindMethod(
-        animationEventHandler,
+        pauseableScheduler,
         PauseableLike_resume,
       );
 
-      const animatedDivRef = __animateEvent(animationEventHandler, ["animate"]);
+      const animatedDivRef = __animateEvent(
+        animationGroupEventHandler[KeyedCollectionLike_get](
+          "value",
+        ) as any /*nonnull*/,
+        ["animate"],
+      );
 
       return (
         <div>
@@ -352,7 +412,11 @@ const rootElement = document.getElementById("root");
 
 ReactDOMClient.createRoot(rootElement as any).render(
   <WindowLocationProvider windowLocation={windowLocation}>
-    <Root />
+    <History />
+    <Counter />
+    <AnimationGroup />
+    <EnumeratorComponent />
+    <Cache />
     <RxComponent windowLocation={windowLocation} />
     <Wordle />
     <Measure />

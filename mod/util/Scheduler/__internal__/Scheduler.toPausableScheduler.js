@@ -98,7 +98,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
         instance[__PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
-        instance[PauseableLike_isPaused] = Store_createMutable(true);
+        instance[PauseableLike_isPaused] = Store_createMutable(false);
         return instance;
     }, props({
         [__PauseableScheduler_delayed]: none,

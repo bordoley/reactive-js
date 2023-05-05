@@ -7,7 +7,6 @@
 ### Constructor Functions
 
 - [create](rx_Streamable.md#create)
-- [createAnimationEventHandler](rx_Streamable.md#createanimationeventhandler)
 - [createAnimationGroupEventHandler](rx_Streamable.md#createanimationgroupeventhandler)
 - [createEventHandler](rx_Streamable.md#createeventhandler)
 - [createInMemoryCache](rx_Streamable.md#createinmemorycache)
@@ -40,97 +39,6 @@
 
 ___
 
-### createAnimationEventHandler
-
-▸ **createAnimationEventHandler**<`TEventType`, `T`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TEventType` | extends `string` \| `symbol` |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animation` | [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\> |
-| `options` | `Object` |
-| `options.concurrency?` | `number` |
-| `options.mode` | ``"switching"`` |
-
-#### Returns
-
-[`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType`, `T`\>
-
-▸ **createAnimationEventHandler**<`TEventType_1`, `T_1`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_1`, `T_1`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TEventType_1` | extends `string` \| `symbol` |
-| `T_1` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animation` | [`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\>[]\> |
-| `options` | `Object` |
-| `options.concurrency?` | `number` |
-| `options.mode` | ``"blocking"`` |
-
-#### Returns
-
-[`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_1`, `T_1`\>
-
-▸ **createAnimationEventHandler**<`TEventType_2`, `T_2`\>(`animation`, `options`): [`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_2`, `T_2`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TEventType_2` | extends `string` \| `symbol` |
-| `T_2` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animation` | [`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\>[]\> |
-| `options` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-| `options.mode` | ``"queueing"`` |
-
-#### Returns
-
-[`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_2`, `T_2`\>
-
-▸ **createAnimationEventHandler**<`TEventType_3`, `T_3`\>(`animation`): [`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_3`, `T_3`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TEventType_3` | extends `string` \| `symbol` |
-| `T_3` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animation` | [`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\>[]\> |
-
-#### Returns
-
-[`AnimationEventHandlerLike`](../interfaces/rx.AnimationEventHandlerLike.md)<`TEventType_3`, `T_3`\>
-
-___
-
 ### createAnimationGroupEventHandler
 
 ▸ **createAnimationGroupEventHandler**<`TEventType`, `T`, `TKey`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
@@ -150,6 +58,7 @@ ___
 | `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
@@ -172,6 +81,7 @@ ___
 | `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
@@ -196,30 +106,11 @@ ___
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.mode` | ``"queueing"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
 [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
-
-▸ **createAnimationGroupEventHandler**<`TEventType_3`, `T_3`, `TKey_3`\>(`animationGroup`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TEventType_3` | `unknown` |
-| `T_3` | `number` |
-| `TKey_3` | extends `string` \| `number` \| `symbol` = `string` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_3`, [`Function1`](functions.md#function1)<`TEventType_3`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\>[]\>\> |
-
-#### Returns
-
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_3`, `T_3`, `TKey_3`\>
 
 ___
 
