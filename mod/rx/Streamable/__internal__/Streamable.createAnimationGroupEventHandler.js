@@ -18,17 +18,15 @@ import Observable_ignoreElements from "../../../rx/Observable/__internal__/Obser
 import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
-import { EventListenerLike_notify, PauseableLike_resume, } from "../../../util.js";
+import { EventListenerLike_notify, } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
-import Pauseable_delegatingMixin from "../../../util/Pauseable/__internal__/Pauseable.delegatingMixin.js";
-import Scheduler_toPauseableScheduler from "../../../util/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 const createAnimationGroupEventHandlerStream = 
 /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin(), Pauseable_delegatingMixin), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
+    return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(factory(type)), Observable_map(value => ({ type, value })), Observable_forEach(value => {
                 const publisher = publishers[key];
@@ -40,11 +38,9 @@ const createAnimationGroupEventHandlerStream =
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
         const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));
-        const animationScheduler = pipe(scheduler, Scheduler_toPauseableScheduler, Disposable_addTo(instance));
-        init(Pauseable_delegatingMixin, instance, animationScheduler);
+        const animationScheduler = creationOptions?.scheduler ?? scheduler;
         instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap_reduce(incrementBy(1), returns(0)));
         init(Delegating_mixin(), instance, publishers);
-        animationScheduler[PauseableLike_resume]();
         return instance;
     }, props({
         [CollectionLike_count]: 0,

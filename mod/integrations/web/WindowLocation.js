@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/util.js";
-import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
+import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { MulticastObservableLike_buffer, ObservableLike_observe, StreamableLike_stream, } from "../../rx.js";
 import * as Observable from "../../rx/Observable.js";
 import * as Stream from "../../rx/Stream.js";
@@ -51,15 +51,13 @@ export const subscribe = /*@__PURE__*/ (() => {
     const createWindowLocationObservable = createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[MulticastObservableLike_buffer] = pipe(instance[DelegatingLike_delegate][MulticastObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
+        instance[MulticastObservableLike_buffer] = pipe(delegate[MulticastObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
+        instance[WindowLocationLike_canGoBack] = pipe(delegate, Observable.map(({ counter }) => counter > 0));
         return instance;
     }, props({
         [MulticastObservableLike_buffer]: none,
+        [WindowLocationLike_canGoBack]: none,
     }), {
-        get [WindowLocationLike_canGoBack]() {
-            unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], Observable.map(({ counter }) => counter > 0));
-        },
         [WindowLocationLike_push](stateOrUpdater) {
             this[DelegatingLike_delegate][QueueableLike_enqueue]((prevState) => {
                 const uri = createWindowLocationURIWithPrototype(isFunction(stateOrUpdater)

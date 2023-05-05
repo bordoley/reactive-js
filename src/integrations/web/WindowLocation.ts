@@ -23,7 +23,6 @@ import {
   pipe,
   raiseWithDebugMessage,
   returns,
-  unsafeCast,
 } from "../../functions.js";
 import {
   MulticastObservableLike_buffer,
@@ -144,13 +143,13 @@ export const subscribe: (
       function WindowLocationStream(
         instance: Pick<
           WindowLocationLike,
-          | typeof WindowLocationLike_canGoBack
           | typeof WindowLocationLike_goBack
           | typeof WindowLocationLike_push
           | typeof WindowLocationLike_replace
           | typeof ObservableLike_observe
         > & {
           [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+          [WindowLocationLike_canGoBack]: ObservableLike<boolean>;
         },
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       ): WindowLocationLike & DisposableLike {
@@ -162,25 +161,25 @@ export const subscribe: (
         );
 
         instance[MulticastObservableLike_buffer] = pipe(
-          instance[DelegatingLike_delegate][MulticastObservableLike_buffer],
+          delegate[MulticastObservableLike_buffer],
           IndexedBufferCollection_map(location => location.uri),
         );
+
+        instance[WindowLocationLike_canGoBack] = pipe(
+          delegate,
+          Observable.map<TState, boolean>(({ counter }) => counter > 0),
+        );
+
         return instance;
       },
       props<{
         [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+        [WindowLocationLike_canGoBack]: ObservableLike<boolean>;
       }>({
         [MulticastObservableLike_buffer]: none,
+        [WindowLocationLike_canGoBack]: none,
       }),
       {
-        get [WindowLocationLike_canGoBack](): ObservableLike<boolean> {
-          unsafeCast<DelegatingLike<StreamLike<Updater<TState>, TState>>>(this);
-          return pipe(
-            this[DelegatingLike_delegate],
-            Observable.map<TState, boolean>(({ counter }) => counter > 0),
-          );
-        },
-
         [WindowLocationLike_push](
           this: DelegatingLike<StreamLike<Updater<TState>, TState>>,
           stateOrUpdater: WindowLocationURI | Updater<WindowLocationURI>,

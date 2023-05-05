@@ -31,7 +31,6 @@
 
 ### Streamable Interfaces
 
-- [AnimationEventHandlerLike](../interfaces/rx.AnimationEventHandlerLike.md)
 - [AnimationGroupEventHandlerLike](../interfaces/rx.AnimationGroupEventHandlerLike.md)
 - [CacheLike](../interfaces/rx.CacheLike.md)
 - [StreamableLike](../interfaces/rx.StreamableLike.md)

@@ -14,19 +14,16 @@ import {
   Optional,
   SideEffect1,
   Updater,
-  bindMethod,
   isNone,
   isSome,
   none,
   pipe,
+  pipeSome,
 } from "../../functions.js";
-import {
-  DisposableLike_dispose,
-  EventListenerLike,
-  EventSourceLike,
-} from "../../util.js";
+import { EventListenerLike, EventSourceLike } from "../../util.js";
+import * as Disposable from "../../util/Disposable.js";
 import * as EventSource from "../../util/EventSource.js";
-import { useObservable } from "../react.js";
+import { useDisposable, useSubscribe } from "../react.js";
 import {
   CSSStyleKey,
   ScrollValue,
@@ -55,7 +52,7 @@ export const useWindowLocation = (): {
 } => {
   const windowLocation = useContext(WindowLocationContext);
 
-  const uri = useObservable(windowLocation);
+  const uri = useSubscribe(windowLocation);
 
   const stableWindowLocationRef = useRef<Optional<WindowLocationLike>>(none);
   useEffect(() => {
@@ -90,7 +87,7 @@ export const useWindowLocation = (): {
   }, [stableWindowLocationRef]);
 
   const canGoBack =
-    useObservable(windowLocation[WindowLocationLike_canGoBack]) ?? false;
+    useSubscribe(windowLocation[WindowLocationLike_canGoBack]) ?? false;
 
   return {
     uri,
@@ -130,28 +127,26 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
   const ref = useRef<TElement>(null);
   const selectorMemoized = useCallback(selector, deps);
 
-  useEffect(() => {
-    if (isNone(animation)) {
-      return;
-    }
-
-    const disposable = pipe(
-      animation,
-      EventSource.addEventHandler(v => {
-        const element = ref.current;
-        if (element != null) {
-          pipe(
-            selectorMemoized(v),
-            ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
-              element.style[key] = v ?? "";
-            }),
-          );
-        }
-      }),
-    );
-
-    return bindMethod(disposable, DisposableLike_dispose);
-  }, [animation, selectorMemoized, ref]);
+  useDisposable(
+    () =>
+      pipeSome(
+        animation,
+        EventSource.addEventHandler(v => {
+          const element = ref.current;
+          if (element != null) {
+            pipe(
+              selectorMemoized(v),
+              ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>(
+                (v, key) => {
+                  element.style[key] = v ?? "";
+                },
+              ),
+            );
+          }
+        }),
+      ) ?? Disposable.disposed,
+    [animation, selectorMemoized],
+  );
 
   return ref;
 };
@@ -182,15 +177,17 @@ export const useAnimateEvent = <
  * @category Hook
  */
 export const useScroll = <TElement extends HTMLElement>(
-  eventListener: EventListenerLike<{
-    type: "scroll";
-    value: ScrollValue;
-  }>,
+  eventListener: Optional<
+    EventListenerLike<{
+      type: "scroll";
+      value: ScrollValue;
+    }>
+  >,
 ): React.Ref<TElement> => {
   const [element, setElement] = useState<Optional<TElement>>();
 
   useEffect(() => {
-    if (isNone(element)) {
+    if (isNone(element) || isNone(eventListener)) {
       return;
     }
 

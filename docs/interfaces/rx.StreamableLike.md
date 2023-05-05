@@ -33,8 +33,6 @@ TStream
 
   ↳ [`AnimationGroupEventHandlerLike`](rx.AnimationGroupEventHandlerLike.md)
 
-  ↳ [`AnimationEventHandlerLike`](rx.AnimationEventHandlerLike.md)
-
 ## Table of contents
 
 ### Properties

@@ -5,20 +5,24 @@ import {
   useScroll,
 } from "@reactive-js/core/integrations/react/web";
 import {
-  useAnimation,
-  useEventPublisher,
-  useEventSource,
+  useDispatcher,
+  useDisposable,
+  useListen,
+  useStream,
 } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { bindMethod, pipeLazy } from "@reactive-js/core/functions";
+import { Optional, pipeSome } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import { EventListenerLike_notify } from "@reactive-js/core/util";
+import * as EventPublisher from "@reactive-js/core/util/EventPublisher";
+import * as Streamable from "@reactive-js/core/rx/Streamable";
+import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 
 const AnimatedCircle = ({
   animation,
 }: {
-  animation: EventSourceLike<number>;
+  animation: Optional<EventSourceLike<number>>;
 }) => {
   const circleRef = useAnimate<HTMLDivElement>(animation, progress => ({
     clipPath: `circle(${progress * 25 + 5}%)`,
@@ -42,87 +46,95 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const scrollAnimation = useEventPublisher<{
-    type: "scroll";
-    value: ScrollValue;
-  }>();
+  const scrollAnimation = useDisposable(EventPublisher.create, []);
+
   const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
 
-  const [spring, springActions] = useAnimation<number, boolean>(
-    direction =>
-      direction
-        ? [
-            {
-              type: "spring",
-              precision: 0.1,
-              from: 1,
-              to: 1.2,
-            },
-            {
-              type: "spring",
-              precision: 0.1,
-              from: 1.2,
-              to: 1,
-            },
-          ]
-        : [
-            {
-              type: "spring",
-              precision: 0.1,
-              from: 0,
-              to: -0.01,
-            },
-            {
-              type: "spring",
-              precision: 0.1,
-              from: -0.01,
-              to: 0,
-            },
-          ],
-    [],
-    { mode: "switching" },
-  );
-
-  const publishedAnimation = useEventPublisher<number>();
-
-  useEventSource(
-    pipeLazy(
-      scrollAnimation,
-      EventSource.forEach(({ value }: { value: ScrollValue }) => {
-        const pos = value.y.progress;
-        const velocity = value.y.velocity;
-
-        publishedAnimation[EventListenerLike_notify](pos);
-
-        if (pos === 1 && Math.abs(velocity) > 0.5) {
-          // FIXME: To make this really right, we should measure the velocity
-          // and dispatch that so we can adjust the size of the overshoot
-          // in the animation.
-          springActions.dispatch(true);
-        }
-
-        if (pos === 0 && Math.abs(velocity) > 0.5) {
-          // FIXME: To make this really right, we should measure the velocity
-          // and dispatch that so we can adjust the size of the overshoot
-          // in the animation.
-          springActions.dispatch(false);
-        }
-      }),
-      EventSource.ignoreElements(),
-    ),
-    [scrollAnimation, springActions.dispatch],
-  );
-
-  useEventSource(
-    pipeLazy(
-      spring,
-      EventSource.pick("value"),
-      EventSource.forEach(
-        bindMethod(publishedAnimation, EventListenerLike_notify),
+  const animationGroup = useStream(
+    () =>
+      Streamable.createAnimationGroupEventHandler(
+        {
+          value: direction =>
+            direction
+              ? [
+                  {
+                    type: "spring",
+                    precision: 0.1,
+                    from: 1,
+                    to: 1.2,
+                  },
+                  {
+                    type: "spring",
+                    precision: 0.1,
+                    from: 1.2,
+                    to: 1,
+                  },
+                ]
+              : [
+                  {
+                    type: "spring",
+                    precision: 0.1,
+                    from: 0,
+                    to: -0.01,
+                  },
+                  {
+                    type: "spring",
+                    precision: 0.1,
+                    from: -0.01,
+                    to: 0,
+                  },
+                ],
+        },
+        { mode: "switching" },
       ),
-      EventSource.ignoreElements(),
-    ),
-    [spring, publishedAnimation],
+    [],
+  );
+  const { dispatch } = useDispatcher(animationGroup);
+
+  const springAnimation = animationGroup?.[KeyedCollectionLike_get]("value");
+
+  const publishedAnimation = useDisposable(EventPublisher.create, []);
+
+  useListen(
+    () =>
+      pipeSome(
+        scrollAnimation,
+        EventSource.forEach(({ value }: { value: ScrollValue }) => {
+          const pos = value.y.progress;
+          const velocity = value.y.velocity;
+
+          publishedAnimation?.[EventListenerLike_notify](pos);
+
+          if (pos === 1 && Math.abs(velocity) > 0.5) {
+            // FIXME: To make this really right, we should measure the velocity
+            // and dispatch that so we can adjust the size of the overshoot
+            // in the animation.
+            dispatch(true);
+          }
+
+          if (pos === 0 && Math.abs(velocity) > 0.5) {
+            // FIXME: To make this really right, we should measure the velocity
+            // and dispatch that so we can adjust the size of the overshoot
+            // in the animation.
+            dispatch(false);
+          }
+        }),
+        EventSource.ignoreElements(),
+      ) ?? EventSource.empty(),
+    [scrollAnimation, dispatch],
+  );
+
+  useListen(
+    () =>
+      pipeSome(
+        springAnimation,
+        EventSource.pick("value"),
+        EventSource.forEach(v =>
+          publishedAnimation?.[EventListenerLike_notify](v),
+        ),
+        EventSource.ignoreElements(),
+      ) ?? EventSource.empty(),
+    [springAnimation, publishedAnimation],
   );
 
   return (

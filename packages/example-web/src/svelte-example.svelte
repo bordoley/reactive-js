@@ -13,8 +13,7 @@ import {
   PauseableLike_pause, 
   PauseableLike_resume
 } from "@reactive-js/core/util";
-import * as EventSource from "@reactive-js/core/util/EventSource";
-
+import * as Store from "@reactive-js/core/util/Store";
   const scheduler = Scheduler.createHostScheduler();
 
   const counter = pipe(
@@ -26,10 +25,9 @@ import * as EventSource from "@reactive-js/core/util/EventSource";
   const resume = bindMethod(counter, PauseableLike_resume);
 
   const isPaused = pipe(
-    counter,
-    EventSource.keep(ev => ev.type === "paused" || ev.type === "resumed"),
-    EventSource.map(ev => ev.type === "paused"),
-    EventSource.toObservable(),
+    counter[PauseableLike_isPaused],
+    // FIXME: Maybe we should add a function to avoid the need for scheduling?
+    Store.toObservable(),
     subscribe(scheduler),
   );
 

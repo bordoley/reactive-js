@@ -82,7 +82,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventListener` | [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `type`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\> |
+| `eventListener` | [`Optional`](functions.md#optional)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `type`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\>\> |
 
 #### Returns
 

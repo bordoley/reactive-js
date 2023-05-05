@@ -19,7 +19,7 @@ import {
 } from "../../../rx.js";
 import { DisposableLike, QueueableLike_enqueue } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
-import Indexed_toReadonlyArray from "../../../util/Indexed/__internal__/Indexed.toReadonlyArray.js";
+import IndexedCollection_toReadonlyArray from "../../../util/IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
@@ -54,7 +54,7 @@ const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
           Disposable_onComplete(() => {
             pipe(
               instance[__TakeLastObserver_takeLastQueue],
-              Indexed_toReadonlyArray<T>(),
+              IndexedCollection_toReadonlyArray<T>(),
               ReadonlyArray_toObservable(),
               invoke(ObservableLike_observe, delegate),
             );

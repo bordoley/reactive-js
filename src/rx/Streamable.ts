@@ -1,5 +1,4 @@
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
-import Streamable_createAnimationEventHandler from "./Streamable/__internal__/Streamable.createAnimationEventHandler.js";
 import Streamable_createAnimationGroupEventHandler from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
 import Streamable_createEventHandler from "./Streamable/__internal__/Streamable.createEventHandler.js";
 import Streamable_createInMemoryCache from "./Streamable/__internal__/Streamable.createInMemoryCache.js";
@@ -11,12 +10,6 @@ import Streamable_identity from "./Streamable/__internal__/Streamable.identity.j
  * @category Constructor
  */
 export const create = Streamable_create;
-
-/**
- * @category Constructor
- */
-export const createAnimationEventHandler =
-  Streamable_createAnimationEventHandler;
 
 /**
  * @category Constructor

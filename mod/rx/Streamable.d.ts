@@ -5,39 +5,21 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
 /**
  * @category Constructor
  */
-export declare const createAnimationEventHandler: {
-    <TEventType extends string | symbol, T = number>(animation: import("../functions.js").Function1<TEventType, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>, options: {
-        readonly mode: "switching";
-        readonly concurrency?: number | undefined;
-    }): import("../rx.js").AnimationEventHandlerLike<TEventType, T>;
-    <TEventType_1 extends string | symbol, T_1 = number>(animation: import("../functions.js").Function1<TEventType_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>, options: {
-        readonly mode: "blocking";
-        readonly concurrency?: number | undefined;
-    }): import("../rx.js").AnimationEventHandlerLike<TEventType_1, T_1>;
-    <TEventType_2 extends string | symbol, T_2 = number>(animation: import("../functions.js").Function1<TEventType_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>, options: {
-        readonly mode: "queueing";
-        readonly concurrency?: number | undefined;
-        readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
-        readonly capacity?: number | undefined;
-    }): import("../rx.js").AnimationEventHandlerLike<TEventType_2, T_2>;
-    <TEventType_3 extends string | symbol, T_3 = number>(animation: import("../functions.js").Function1<TEventType_3, import("../rx.js").Reactive.AnimationConfig<T_3> | readonly import("../rx.js").Reactive.AnimationConfig<T_3>[]>): import("../rx.js").AnimationEventHandlerLike<TEventType_3, T_3>;
-};
-/**
- * @category Constructor
- */
 export declare const createAnimationGroupEventHandler: {
     <TEventType = unknown, T = number, TKey extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey, import("../functions.js").Function1<TEventType, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";
+        readonly scheduler?: import("../util.js").SchedulerLike | undefined;
     }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType, T, TKey>;
     <TEventType_1 = unknown, T_1 = number, TKey_1 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_1, import("../functions.js").Function1<TEventType_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>>, options: {
         readonly mode: "blocking";
+        readonly scheduler?: import("../util.js").SchedulerLike | undefined;
     }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_1, T_1, TKey_1>;
     <TEventType_2 = unknown, T_2 = number, TKey_2 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_2, import("../functions.js").Function1<TEventType_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>>, options: {
         readonly mode: "queueing";
+        readonly scheduler?: import("../util.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_2, T_2, TKey_2>;
-    <TEventType_3 = unknown, T_3 = number, TKey_3 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_3, import("../functions.js").Function1<TEventType_3, import("../rx.js").Reactive.AnimationConfig<T_3> | readonly import("../rx.js").Reactive.AnimationConfig<T_3>[]>>): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_3, T_3, TKey_3>;
 };
 /**
  * Returns an event handler that invokes the observable function.
