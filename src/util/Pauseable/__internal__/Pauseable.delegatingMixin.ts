@@ -2,9 +2,6 @@ import { Mixin1, mix, props } from "../../../__internal__/mixins.js";
 import { __DelegatingPauseableMixin_delegate } from "../../../__internal__/symbols.js";
 import { Function2, none, unsafeCast } from "../../../functions.js";
 import {
-  EventListenerLike,
-  EventSourceLike_addEventListener,
-  PauseableEventMap,
   PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
@@ -45,16 +42,6 @@ const Pauseable_delegatingMixin: Mixin1<PauseableLike, PauseableLike> =
         },
         [PauseableLike_resume](this: TProperties): void {
           this[__DelegatingPauseableMixin_delegate][PauseableLike_resume]();
-        },
-        [EventSourceLike_addEventListener](
-          this: TProperties,
-          listener: EventListenerLike<
-            PauseableEventMap[keyof PauseableEventMap]
-          >,
-        ) {
-          this[__DelegatingPauseableMixin_delegate][
-            EventSourceLike_addEventListener
-          ](listener);
         },
       },
     );

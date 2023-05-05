@@ -27,7 +27,6 @@ import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
   IndexedBufferCollectionLike,
-  PauseableEventMap,
   PauseableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -274,11 +273,7 @@ export interface AnimationGroupEventHandlerLike<
 > extends StreamableLike<TEventType, boolean> {
   readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
     PauseableLike &
-    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>> &
-    EventSourceLike<
-      | DispatcherEventMap[keyof DispatcherEventMap]
-      | PauseableEventMap[keyof PauseableEventMap]
-    >;
+    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>;
 }
 /**
  *
@@ -294,7 +289,6 @@ export interface AnimationEventHandlerLike<
     EventSourceLike<
       | { type: TEventType; value: T }
       | DispatcherEventMap[keyof DispatcherEventMap]
-      | PauseableEventMap[keyof PauseableEventMap]
     >;
 }
 

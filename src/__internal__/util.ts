@@ -4,7 +4,13 @@ import {
   KeyedCollectionLike,
 } from "../containers.js";
 import { Optional } from "../functions.js";
-import { DisposableLike, QueueableLike, SchedulerLike } from "../util.js";
+import {
+  DisposableLike,
+  QueueableLike,
+  SchedulerLike,
+  StoreLike,
+  StoreLike_value,
+} from "../util.js";
 import {
   __ContinuationLike_activeChild as ContinuationLike_activeChild,
   __ContinuationLike_parent as ContinuationLike_parent,
@@ -104,4 +110,8 @@ export interface SchedulerTaskLike {
   readonly [SchedulerTaskLike_continuation]: ContinuationLike;
   [SchedulerTaskLike_dueTime]: number;
   [SchedulerTaskLike_id]: number;
+}
+
+export interface MutableStoreLike<T = unknown> extends StoreLike<T> {
+  [StoreLike_value]: T;
 }

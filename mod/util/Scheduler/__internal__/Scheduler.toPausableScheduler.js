@@ -8,12 +8,12 @@ import { QueueLike_dequeue, QueueLike_head, SchedulerTaskLike_continuation, Sche
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../containers.js";
 import MutableEnumerator_mixin from "../../../containers/Enumerator/__internal__/MutableEnumerator.mixin.js";
 import { isNone, isSome, none, unsafeCast, } from "../../../functions.js";
-import { DisposableLike_isDisposed, EventListenerLike_notify, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../../util.js";
+import { DisposableLike_isDisposed, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, StoreLike_value, } from "../../../util.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import SerialDisposable_mixin from "../../../util/Disposable/__internal__/SerialDisposable.mixin.js";
 import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../../../util/Queue/__internal__/Queue.createPriorityQueue.js";
-import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import Store_createMutable from "../../Store/__internal__/Store.createMutable.js";
 import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "./SchedulerImplementation.mixin.js";
 const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
     const delayedComparator = (a, b) => {
@@ -63,7 +63,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
             instance[__PauseableScheduler_dueTime] <= task[SchedulerTaskLike_dueTime];
         if (isNone(task) ||
             continuationActive ||
-            instance[PauseableLike_isPaused]) {
+            instance[PauseableLike_isPaused][StoreLike_value]) {
             return;
         }
         const dueTime = task[SchedulerTaskLike_dueTime];
@@ -88,24 +88,24 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
         instance[__PauseableScheduler_hostContinuation] = continuation;
         instance[SerialDisposableLike_current] = instance[__PauseableScheduler_hostScheduler][SchedulerLike_schedule](continuation, { delay });
     };
-    return createInstanceFactory(mix(include(SchedulerImplementation_mixin, MutableEnumerator_mixin(), SerialDisposable_mixin(), EventPublisher_lazyInitMixin()), function PauseableScheduler(instance, host) {
+    return createInstanceFactory(mix(include(SchedulerImplementation_mixin, MutableEnumerator_mixin(), SerialDisposable_mixin()), function PauseableScheduler(instance, host) {
         init(SchedulerImplementation_mixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(MutableEnumerator_mixin(), instance);
         init(SerialDisposable_mixin(), instance, Disposable_disposed);
-        init(EventPublisher_lazyInitMixin(), instance);
         instance[__PauseableScheduler_delayed] = Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
         instance[__PauseableScheduler_queue] = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
         instance[__PauseableScheduler_hostScheduler] = host;
         instance[__PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
+        instance[PauseableLike_isPaused] = Store_createMutable(true);
         return instance;
     }, props({
         [__PauseableScheduler_delayed]: none,
         [__PauseableScheduler_dueTime]: 0,
         [__PauseableScheduler_hostScheduler]: none,
         [__PauseableScheduler_hostContinuation]: none,
-        [PauseableLike_isPaused]: true,
+        [PauseableLike_isPaused]: none,
         [__PauseableScheduler_queue]: none,
         [__PauseableScheduler_taskIDCounter]: 0,
         [__PauseableScheduler_initialTime]: 0,
@@ -121,7 +121,7 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
             unsafeCast(this);
             const next = peek(this);
             return (!this[EnumeratorLike_hasCurrent] ||
-                this[PauseableLike_isPaused] ||
+                this[PauseableLike_isPaused][StoreLike_value] ||
                 (isSome(next) &&
                     this[EnumeratorLike_current] !== next &&
                     next[SchedulerTaskLike_dueTime] <= this[SchedulerLike_now]) ||
@@ -129,16 +129,14 @@ const Scheduler_toPauseableScheduler = /*@__PURE__*/ (() => {
         },
         [PauseableLike_pause]() {
             this[__PauseableScheduler_initialTime] = this[SchedulerLike_now];
-            this[PauseableLike_isPaused] = true;
             this[SerialDisposableLike_current] = Disposable_disposed;
-            this[EventListenerLike_notify]({ type: "paused" });
+            this[PauseableLike_isPaused][StoreLike_value] = true;
         },
         [PauseableLike_resume]() {
             this[__PauseableScheduler_resumedTime] =
                 this[__PauseableScheduler_hostScheduler][SchedulerLike_now];
-            this[PauseableLike_isPaused] = false;
+            this[PauseableLike_isPaused][StoreLike_value] = false;
             scheduleOnHost(this);
-            this[EventListenerLike_notify]({ type: "resumed" });
         },
         [EnumeratorLike_move]() {
             // First fast forward through disposed tasks.

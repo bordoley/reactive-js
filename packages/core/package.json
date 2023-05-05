@@ -81,7 +81,8 @@
     "./util/EventListener": "./util/EventListener.js",
     "./util/EventPublisher": "./util/EventPublisher.js",
     "./util/EventSource": "./util/EventSource.js",
-    "./util/Scheduler": "./util/Scheduler.js"
+    "./util/Scheduler": "./util/Scheduler.js",
+    "./util/Store": "./util/Store.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

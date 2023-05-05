@@ -60,7 +60,7 @@ import {
   KeyedCollectionLike_get,
   ReadonlyObjectMapLike,
 } from "@reactive-js/core/containers";
-import * as EventSource from "@reactive-js/core/util/EventSource";
+import * as Store from "@reactive-js/core/util/Store";
 
 const CacheInner = ({ cache }: { cache: StreamOf<CacheLike<string>> }) => {
   const values = cache[KeyedCollectionLike_get]("a");
@@ -287,11 +287,8 @@ const RxComponent = createComponent(
       const isAnimationRunning = __observe(animationEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
         pipe(
-          animationEventHandler,
-          EventSource.pick("type"),
-          EventSource.keep(type => type === "paused" || type === "resumed"),
-          EventSource.map(type => type === "paused"),
-          EventSource.toObservable(),
+          animationEventHandler[PauseableLike_isPaused],
+          Store.toObservable(),
         ),
       );
 

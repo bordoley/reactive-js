@@ -76,6 +76,8 @@ export const __SchedulerLike_shouldYield = /*@__PURE__*/ symbol("SchedulerLike_s
 /** @type {unique symbol} */
 export const __SchedulerLike_yield = /*@__PURE__*/ symbol("SchedulerLike_yield");
 /** @type {unique symbol} */
+export const __StoreLike_value = /*@__PURE__*/ symbol("StoreLike_value");
+/** @type {unique symbol} */
 export const __StreamLike_scheduler = /*@__PURE__*/ symbol("StreamLike_scheduler");
 /** @type {unique symbol} */
 export const __StreamableLike_stream = /*@__PURE__*/ symbol("StreamableLike_stream");
@@ -191,8 +193,6 @@ export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol("WithLatestLike_h
 export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike_otherLatest");
 /** @type {unique symbol} */
 export const __WithLatestLike_selector = /*@__PURE__*/ symbol("WithLatestLike_selector");
-/** @type {unique symbol} */
-export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol("AnimationGroupEventHandler_eventPublisher");
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol("AwaitOrObserveEffect_observable");
 /** @type {unique symbol} */

@@ -73,6 +73,8 @@ export const __SchedulerLike_shouldYield: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerLike_yield: unique symbol;
 /** @type {unique symbol} */
+export const __StoreLike_value: unique symbol;
+/** @type {unique symbol} */
 export const __StreamLike_scheduler: unique symbol;
 /** @type {unique symbol} */
 export const __StreamableLike_stream: unique symbol;
@@ -182,8 +184,6 @@ export const __WithLatestLike_hasLatest: unique symbol;
 export const __WithLatestLike_otherLatest: unique symbol;
 /** @type {unique symbol} */
 export const __WithLatestLike_selector: unique symbol;
-/** @type {unique symbol} */
-export const __AnimationGroupEventHandler_eventPublisher: unique symbol;
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_observable: unique symbol;
 /** @type {unique symbol} */

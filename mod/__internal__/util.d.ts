@@ -1,6 +1,6 @@
 import { CollectionLike, IndexedCollectionLike, KeyedCollectionLike } from "../containers.js";
 import { Optional } from "../functions.js";
-import { DisposableLike, QueueableLike, SchedulerLike } from "../util.js";
+import { DisposableLike, QueueableLike, SchedulerLike, StoreLike, StoreLike_value } from "../util.js";
 import { __ContinuationLike_activeChild as ContinuationLike_activeChild, __ContinuationLike_parent as ContinuationLike_parent, __ContinuationLike_run as ContinuationLike_run, __ContinuationLike_scheduler as ContinuationLike_scheduler, __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule, __DelegatingLike_delegate as DelegatingLike_delegate, __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __SchedulerTaskLike_continuation as SchedulerTaskLike_continuation, __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime, __SchedulerTaskLike_id as SchedulerTaskLike_id, __SerialDisposableLike_current as SerialDisposableLike_current, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop } from "./symbols.js";
 export { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, DelegatingLike_delegate, MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SerialDisposableLike_current, StackLike_pop, StackLike_head, };
 export interface DelegatingLike<T> {
@@ -42,4 +42,7 @@ export interface SchedulerTaskLike {
     readonly [SchedulerTaskLike_continuation]: ContinuationLike;
     [SchedulerTaskLike_dueTime]: number;
     [SchedulerTaskLike_id]: number;
+}
+export interface MutableStoreLike<T = unknown> extends StoreLike<T> {
+    [StoreLike_value]: T;
 }

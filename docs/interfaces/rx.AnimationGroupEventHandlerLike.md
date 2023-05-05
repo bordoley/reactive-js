@@ -28,7 +28,7 @@
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<`TEventType`, `boolean`\> & [`PauseableLike`](util.PauseableLike.md) & [`DictionaryLike`](containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\> & [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: ``"wait"``  } \| { `type`: ``"drain"``  } \| { `type`: ``"complete"``  } \| { `type`: ``"paused"``  } \| { `type`: ``"resumed"``  }\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<`TEventType`, `boolean`\> & [`PauseableLike`](util.PauseableLike.md) & [`DictionaryLike`](containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>
 
 #### Overrides
 

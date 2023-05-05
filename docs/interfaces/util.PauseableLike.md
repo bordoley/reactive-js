@@ -6,13 +6,11 @@
 
 ## Hierarchy
 
-- [`EventSourceLike`](util.EventSourceLike.md)<[`PauseableEventMap`](util.PauseableEventMap.md)[keyof [`PauseableEventMap`](util.PauseableEventMap.md)]\>
+- **`PauseableLike`**
 
-  ↳ **`PauseableLike`**
+  ↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
 
-  ↳↳ [`PauseableObservableLike`](rx.PauseableObservableLike.md)
-
-  ↳↳ [`PauseableSchedulerLike`](util.PauseableSchedulerLike.md)
+  ↳ [`PauseableSchedulerLike`](util.PauseableSchedulerLike.md)
 
 ## Table of contents
 
@@ -29,7 +27,7 @@
 
 ### [\_\_\_PauseableLike\_isPaused]
 
-• `Readonly` **[\_\_\_PauseableLike\_isPaused]**: `boolean`
+• `Readonly` **[\_\_\_PauseableLike\_isPaused]**: [`StoreLike`](util.StoreLike.md)<`boolean`\>
 
 Boolean flag indicating if the PauseableLike is currently paused or not.
 

@@ -72,6 +72,8 @@ export declare const __SchedulerLike_shouldYield: unique symbol;
 
 export declare const __SchedulerLike_yield: unique symbol;
 
+export declare const __StoreLike_value: unique symbol;
+
 export declare const __StreamLike_scheduler: unique symbol;
 
 export declare const __StreamableLike_stream: unique symbol;
@@ -181,8 +183,6 @@ export declare const __WithLatestLike_hasLatest: unique symbol;
 export declare const __WithLatestLike_otherLatest: unique symbol;
 
 export declare const __WithLatestLike_selector: unique symbol;
-
-export declare const __AnimationGroupEventHandler_eventPublisher: unique symbol;
 
 export declare const __AwaitOrObserveEffect_observable: unique symbol;
 

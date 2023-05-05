@@ -21,6 +21,7 @@ import {
   __SchedulerLike_schedule as SchedulerLike_schedule,
   __SchedulerLike_shouldYield as SchedulerLike_shouldYield,
   __SchedulerLike_yield as SchedulerLike_yield,
+  __StoreLike_value as StoreLike_value,
   __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run,
 } from "./__internal__/symbols.js";
 import {
@@ -54,6 +55,7 @@ export {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
+  StoreLike_value,
   VirtualTimeSchedulerLike_run,
 };
 
@@ -184,6 +186,14 @@ export interface EventPublisherLike<T = unknown>
 }
 
 /**
+ * @noInheritDoc
+ * @category Event
+ */
+export interface StoreLike<T = unknown> extends EventSourceLike<T> {
+  readonly [StoreLike_value]: T;
+}
+
+/**
  * @category EventMap
  */
 export interface DispatcherEventMap {
@@ -209,23 +219,14 @@ export interface DispatcherLike<T = unknown>
 }
 
 /**
- * @category EventMap
- */
-export interface PauseableEventMap {
-  paused: { type: "paused" };
-  resumed: { type: "resumed" };
-}
-
-/**
  * @noInheritDoc
  * @category Scheduling
  */
-export interface PauseableLike
-  extends EventSourceLike<PauseableEventMap[keyof PauseableEventMap]> {
+export interface PauseableLike {
   /**
    * Boolean flag indicating if the PauseableLike is currently paused or not.
    */
-  readonly [PauseableLike_isPaused]: boolean;
+  readonly [PauseableLike_isPaused]: StoreLike<boolean>;
 
   /**
    * Imperatively pause the source.

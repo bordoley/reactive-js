@@ -8,10 +8,11 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
+  MutableStoreLike,
 } from "../../../__internal__/util.js";
 import { ContainerOperator } from "../../../containers.js";
 import Optional_toObservable from "../../../containers/Optional/__internal__/Optional.toObservable.js";
-import { Updater, compose, pipe } from "../../../functions.js";
+import { Updater, compose, none, pipe } from "../../../functions.js";
 import {
   ObservableContainer,
   ObservableLike_isEnumerable,
@@ -24,8 +25,6 @@ import {
 import Stream_create from "../../../rx/Stream/__internal__/Stream.create.js";
 import {
   DisposableLike,
-  EventListenerLike_notify,
-  EventSourceLike_addEventListener,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -33,10 +32,12 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike,
+  StoreLike_value,
 } from "../../../util.js";
 import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../util/Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventPublisher_lazyInitMixin from "../../../util/EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import Store_createMutable from "../../../util/Store/__internal__/Store.createMutable.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -51,7 +52,7 @@ const PauseableObservable_create: <T>(
   },
 ) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [PauseableLike_isPaused]: boolean;
+    [PauseableLike_isPaused]: MutableStoreLike<boolean>;
   };
 
   return createInstanceFactory(
@@ -62,11 +63,7 @@ const PauseableObservable_create: <T>(
         EventPublisher_lazyInitMixin(),
       ),
       function PauseableObservable(
-        instance: TProperties &
-          Omit<
-            PauseableObservableLike<T>,
-            typeof EventSourceLike_addEventListener
-          >,
+        instance: PauseableObservableLike<T> & TProperties,
         op: ContainerOperator<ObservableContainer, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
@@ -84,9 +81,9 @@ const PauseableObservable_create: <T>(
             pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<ObservableContainer, boolean>(),
-          Observable_forEach<ObservableContainer, boolean>(isPaused =>
-            notifyPauseState(isPaused),
-          ),
+          Observable_forEach<ObservableContainer, boolean>(isPaused => {
+            instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
+          }),
           op,
         );
 
@@ -95,17 +92,12 @@ const PauseableObservable_create: <T>(
         init(Delegating_mixin(), instance, stream);
         init(EventPublisher_lazyInitMixin(), instance);
 
-        const notifyPauseState = (isPause: boolean) => {
-          instance[PauseableLike_isPaused] = isPause;
-          instance[EventListenerLike_notify](
-            isPause ? { type: "paused" } : { type: "resumed" },
-          );
-        };
+        instance[PauseableLike_isPaused] = Store_createMutable(true);
 
         return instance;
       },
       props<TProperties>({
-        [PauseableLike_isPaused]: true,
+        [PauseableLike_isPaused]: none,
       }),
       {
         [ObservableLike_isEnumerable]: false as const,

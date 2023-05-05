@@ -20,7 +20,6 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
-  PauseableEventMap,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -59,7 +58,6 @@ const createAnimationEventHandlerStream: <
       publisher: EventPublisherLike<
         | { type: TEventType; value: T }
         | DispatcherEventMap[keyof DispatcherEventMap]
-        | PauseableEventMap[keyof PauseableEventMap]
       >;
     };
 
@@ -131,7 +129,6 @@ const createAnimationEventHandlerStream: <
             listener: EventListenerLike<
               | { type: TEventType; value: T }
               | DispatcherEventMap[keyof DispatcherEventMap]
-              | PauseableEventMap[keyof PauseableEventMap]
             >,
           ) {
             this.publisher[EventSourceLike_addEventListener](listener);

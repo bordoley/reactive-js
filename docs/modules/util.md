@@ -14,11 +14,11 @@
 - [EventListenerLike](../interfaces/util.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/util.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/util.EventSourceLike.md)
+- [StoreLike](../interfaces/util.StoreLike.md)
 
 ### EventMap Interfaces
 
 - [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
-- [PauseableEventMap](../interfaces/util.PauseableEventMap.md)
 
 ### Queueing Interfaces
 

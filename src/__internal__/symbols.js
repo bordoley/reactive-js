@@ -178,6 +178,9 @@ export const __SchedulerLike_yield = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __StoreLike_value = /*@__PURE__*/ symbol("StoreLike_value");
+
+/** @type {unique symbol} */
 export const __StreamLike_scheduler = /*@__PURE__*/ symbol(
   "StreamLike_scheduler",
 );
@@ -432,11 +435,6 @@ export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
   "WithLatestLike_selector",
-);
-
-/** @type {unique symbol} */
-export const __AnimationGroupEventHandler_eventPublisher = /*@__PURE__*/ symbol(
-  "AnimationGroupEventHandler_eventPublisher",
 );
 
 /** @type {unique symbol} */

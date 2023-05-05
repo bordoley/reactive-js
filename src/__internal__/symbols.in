@@ -35,6 +35,7 @@ SchedulerLike_requestYield
 SchedulerLike_schedule
 SchedulerLike_shouldYield
 SchedulerLike_yield
+StoreLike_value
 StreamLike_scheduler
 StreamableLike_stream
 StreamableLike_TStream
@@ -94,7 +95,6 @@ WithLatestLike_hasLatest
 WithLatestLike_otherLatest
 WithLatestLike_selector
 
-AnimationGroupEventHandler_eventPublisher
 AwaitOrObserveEffect_observable
 AwaitOrObserveEffect_subscription
 AwaitOrObserveEffect_value

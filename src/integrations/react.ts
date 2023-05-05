@@ -29,6 +29,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  pipeSome,
   raiseError,
   returns,
 } from "../functions.js";
@@ -56,7 +57,6 @@ import {
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  PauseableEventMap,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -68,6 +68,7 @@ import * as Disposable from "../util/Disposable.js";
 import * as EventPublisher from "../util/EventPublisher.js";
 import * as EventSource from "../util/EventSource.js";
 import * as Scheduler from "../util/Scheduler.js";
+import * as Store from "../util/Store.js";
 import { getScheduler } from "./scheduler.js";
 
 interface UseEventSource {
@@ -456,13 +457,11 @@ export const useFlow: UseFlow["useFlow"] = <T>(
   );
 
   const isPausedObservable = useMemo(
-    pipeLazy(
-      pauseableObservable ??
-        EventSource.empty<PauseableEventMap[keyof PauseableEventMap]>(),
-      EventSource.pick("type"),
-      EventSource.map(type => type === "paused"),
-      EventSource.toObservable(),
-    ),
+    () =>
+      pipeSome(
+        pauseableObservable?.[PauseableLike_isPaused],
+        Store.toObservable<boolean>(),
+      ) ?? Observable.empty<boolean>(),
     [pauseableObservable],
   );
 
@@ -828,20 +827,16 @@ export const useAnimationGroup: UseAnimationGroup["useAnimationGroup"] = (<
     useObservable<boolean>(stream ?? emptyObservable, options) ?? false;
 
   const isAnimationPausedObservable = useMemo(
-    pipeLazy(
-      stream ?? EventSource.empty<{ type: unknown }>(),
-      EventSource.pick("type"),
-      EventSource.keep(type => type === "paused" || type === "resumed"),
-      EventSource.map(type => type === "paused"),
-      EventSource.toObservable(),
-    ),
+    () =>
+      pipeSome(
+        stream?.[PauseableLike_isPaused],
+        Store.toObservable<boolean>(),
+      ) ?? Observable.empty<boolean>(),
     [stream],
   );
 
   const isAnimationPaused =
-    useObservable<boolean>(isAnimationPausedObservable, options) ??
-    streamRef.current?.[PauseableLike_isPaused] ??
-    false;
+    useObservable<boolean>(isAnimationPausedObservable, options) ?? false;
 
   const controller = {
     dispatch,

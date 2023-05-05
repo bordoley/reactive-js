@@ -5,7 +5,6 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { __AnimationGroupEventHandler_eventPublisher } from "../../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -30,7 +29,6 @@ import {
   Optional,
   incrementBy,
   isSome,
-  none,
   pipe,
   returns,
   unsafeCast,
@@ -41,7 +39,6 @@ import {
   ObservableContainer,
   ObservableLike,
   Reactive,
-  StreamOf,
   StreamableLike_stream,
 } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
@@ -51,13 +48,9 @@ import Observable_map from "../../../rx/Observable/__internal__/Observable.map.j
 import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
 import {
-  DispatcherEventMap,
-  EventListenerLike,
   EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
-  EventSourceLike_addEventListener,
-  PauseableEventMap,
   PauseableLike_resume,
   PauseableSchedulerLike,
   QueueableLike,
@@ -102,10 +95,6 @@ const createAnimationGroupEventHandlerStream: <
     TKey extends string | symbol | number = string,
   >() => {
     type TProperties = {
-      [__AnimationGroupEventHandler_eventPublisher]: EventPublisherLike<
-        | DispatcherEventMap[keyof DispatcherEventMap]
-        | PauseableEventMap[keyof PauseableEventMap]
-      >;
       [CollectionLike_count]: number;
     };
 
@@ -125,10 +114,6 @@ const createAnimationGroupEventHandlerStream: <
               >,
               | typeof AssociativeCollectionLike_keys
               | typeof KeyedCollectionLike_get
-            > &
-            Pick<
-              StreamOf<AnimationGroupEventHandlerLike<TEventType, T, TKey>>,
-              typeof EventSourceLike_addEventListener
             >,
           animationGroup: ReadonlyObjectMapLike<
             TKey,
@@ -237,24 +222,11 @@ const createAnimationGroupEventHandlerStream: <
 
           init(Delegating_mixin(), instance, publishers);
 
-          const eventPublisher = pipe(
-            EventPublisher_create<
-              | DispatcherEventMap[keyof DispatcherEventMap]
-              | PauseableEventMap[keyof PauseableEventMap]
-            >(),
-            Disposable_addTo(instance),
-          );
-          instance[__AnimationGroupEventHandler_eventPublisher] =
-            eventPublisher;
-          animationScheduler[EventSourceLike_addEventListener](eventPublisher);
-          streamDelegate[EventSourceLike_addEventListener](eventPublisher);
-
           animationScheduler[PauseableLike_resume]();
 
           return instance;
         },
         props<TProperties>({
-          [__AnimationGroupEventHandler_eventPublisher]: none,
           [CollectionLike_count]: 0,
         }),
         {
@@ -266,18 +238,6 @@ const createAnimationGroupEventHandlerStream: <
               this[DelegatingLike_delegate],
               ReadonlyObjectMap_keys(),
             );
-          },
-
-          [EventSourceLike_addEventListener](
-            this: TProperties,
-            listener: EventListenerLike<
-              | DispatcherEventMap[keyof DispatcherEventMap]
-              | PauseableEventMap[keyof PauseableEventMap]
-            >,
-          ): void {
-            this[__AnimationGroupEventHandler_eventPublisher][
-              EventSourceLike_addEventListener
-            ](listener);
           },
 
           [KeyedCollectionLike_get](

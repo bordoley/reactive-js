@@ -41,3 +41,4 @@ Reactive-JS
 - [util/EventPublisher](modules/util_EventPublisher.md)
 - [util/EventSource](modules/util_EventSource.md)
 - [util/Scheduler](modules/util_Scheduler.md)
+- [util/Store](modules/util_Store.md)

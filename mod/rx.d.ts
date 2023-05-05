@@ -1,7 +1,7 @@
 import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStream as StreamableLike_TStream, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
 import { AssociativeCollectionLike, Container, ContainerOf, ContainerOperator, Container_T, Container_type, DictionaryLike, ReadonlyObjectMapLike } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { DispatcherEventMap, DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, IndexedBufferCollectionLike, PauseableEventMap, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { DispatcherEventMap, DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, StreamableLike_stream, StreamLike_scheduler, StreamableLike_TStream, };
 /**
  * A consumer of push-based notifications.
@@ -183,7 +183,7 @@ export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends stri
     readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & DictionaryLike<TKey, EventSourceLike<{
         type: TEventType;
         value: T;
-    }>> & EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
+    }>>;
 }
 /**
  *
@@ -194,7 +194,7 @@ export interface AnimationEventHandlerLike<TEventType extends Exclude<string | s
     readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & PauseableLike & EventSourceLike<{
         type: TEventType;
         value: T;
-    } | DispatcherEventMap[keyof DispatcherEventMap] | PauseableEventMap[keyof PauseableEventMap]>;
+    } | DispatcherEventMap[keyof DispatcherEventMap]>;
 }
 export declare namespace Reactive {
     /**

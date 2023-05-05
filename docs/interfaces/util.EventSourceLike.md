@@ -16,9 +16,9 @@
 
   ↳ [`EventPublisherLike`](util.EventPublisherLike.md)
 
-  ↳ [`DispatcherLike`](util.DispatcherLike.md)
+  ↳ [`StoreLike`](util.StoreLike.md)
 
-  ↳ [`PauseableLike`](util.PauseableLike.md)
+  ↳ [`DispatcherLike`](util.DispatcherLike.md)
 
 ## Table of contents
 
