@@ -310,7 +310,7 @@ export const useEnumerate: UseEnumerate["useEnumerate"] = <T>(
 export const useDispatcher = <TReq>(
   dispatcher: Optional<DispatcherLike<TReq>>,
 ): {
-  dispatch: Function1<TReq, boolean>;
+  enqueue: Function1<TReq, boolean>;
   complete: SideEffect;
 } => {
   const stableDispatcherRef = useRef<Optional<DispatcherLike<TReq>>>(none);
@@ -319,7 +319,7 @@ export const useDispatcher = <TReq>(
     stableDispatcherRef.current = dispatcher;
   }, [dispatcher]);
 
-  const dispatch = useCallback(
+  const enqueue = useCallback(
     (req: TReq) =>
       isSome(stableDispatcherRef.current)
         ? stableDispatcherRef.current[QueueableLike_enqueue](req)
@@ -335,7 +335,7 @@ export const useDispatcher = <TReq>(
     [stableDispatcherRef],
   );
 
-  return { dispatch, complete };
+  return { enqueue, complete };
 };
 
 /**

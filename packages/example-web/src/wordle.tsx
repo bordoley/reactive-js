@@ -135,12 +135,12 @@ export const Wordle = () => {
   );
 
   const animation = animationGroup?.[KeyedCollectionLike_get]("value");
-  const { dispatch } = useDispatcher(animationGroup);
+  const { enqueue } = useDispatcher(animationGroup);
   const isAnimationRunning = useSubscribe(animationGroup) ?? false;
 
   useEffect(() => {
-    dispatch(state);
-  }, [state]);
+    enqueue(state);
+  }, [enqueue, state]);
 
   return (
     <div

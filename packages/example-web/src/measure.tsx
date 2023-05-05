@@ -49,7 +49,7 @@ const Measure = () => {
 
   const animation = animationGroup?.[KeyedCollectionLike_get]("value");
 
-  const { dispatch } = useDispatcher(animationGroup);
+  const { enqueue } = useDispatcher(animationGroup);
 
   const { width: boxWidth } = useSubscribe<Rect>(
     () =>
@@ -71,7 +71,7 @@ const Measure = () => {
             ),
             Observable.forEach(([boxWidth, width]) => {
               if (width > 0) {
-                dispatch({ width: boxWidth });
+                enqueue({ width: boxWidth });
               }
             }),
             Observable.ignoreElements(),
@@ -79,7 +79,7 @@ const Measure = () => {
           Observable.throttle(50, { mode: "interval" }),
         ),
       ) ?? Observable.empty<Rect>(),
-    [container, animation, dispatch],
+    [container, animation, enqueue],
   ) ?? { width: 0 };
 
   const width =
@@ -120,9 +120,9 @@ const Measure = () => {
         }}
         onClick={() => {
           if (width > 0) {
-            dispatch({ prevWidth: width, width: 0 });
+            enqueue({ prevWidth: width, width: 0 });
           } else {
-            dispatch({ prevWidth: 0, width: boxWidth });
+            enqueue({ prevWidth: 0, width: boxWidth });
           }
         }}
       >

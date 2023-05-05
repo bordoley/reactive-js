@@ -46,10 +46,6 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
-  const scrollAnimation = useDisposable(EventPublisher.create, []);
-
-  const containerRef = useScroll<HTMLDivElement>(scrollAnimation);
-
   const animationGroup = useStream(
     () =>
       Streamable.createAnimationGroupEventHandler(
@@ -89,39 +85,34 @@ const ScrollApp = () => {
       ),
     [],
   );
-  const { dispatch } = useDispatcher(animationGroup);
+  const { enqueue } = useDispatcher(animationGroup);
 
   const springAnimation = animationGroup?.[KeyedCollectionLike_get]("value");
 
   const publishedAnimation = useDisposable(EventPublisher.create, []);
 
-  useListen(
-    () =>
-      pipeSome(
-        scrollAnimation,
-        EventSource.forEach(({ value }: { value: ScrollValue }) => {
-          const pos = value.y.progress;
-          const velocity = value.y.velocity;
+  const containerRef = useScroll<HTMLDivElement>(
+    ({ value }: { value: ScrollValue }) => {
+      const pos = value.y.progress;
+      const velocity = value.y.velocity;
 
-          publishedAnimation?.[EventListenerLike_notify](pos);
+      publishedAnimation?.[EventListenerLike_notify](pos);
 
-          if (pos === 1 && Math.abs(velocity) > 0.5) {
-            // FIXME: To make this really right, we should measure the velocity
-            // and dispatch that so we can adjust the size of the overshoot
-            // in the animation.
-            dispatch(true);
-          }
+      if (pos === 1 && Math.abs(velocity) > 0.5) {
+        // FIXME: To make this really right, we should measure the velocity
+        // and dispatch that so we can adjust the size of the overshoot
+        // in the animation.
+        enqueue(true);
+      }
 
-          if (pos === 0 && Math.abs(velocity) > 0.5) {
-            // FIXME: To make this really right, we should measure the velocity
-            // and dispatch that so we can adjust the size of the overshoot
-            // in the animation.
-            dispatch(false);
-          }
-        }),
-        EventSource.ignoreElements(),
-      ) ?? EventSource.empty(),
-    [scrollAnimation, dispatch],
+      if (pos === 0 && Math.abs(velocity) > 0.5) {
+        // FIXME: To make this really right, we should measure the velocity
+        // and dispatch that so we can adjust the size of the overshoot
+        // in the animation.
+        enqueue(false);
+      }
+    },
+    [publishedAnimation, enqueue],
   );
 
   useListen(

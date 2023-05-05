@@ -44,7 +44,7 @@
 | Name | Type |
 | :------ | :------ |
 | `complete` | [`SideEffect`](functions.md#sideeffect) |
-| `dispatch` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
+| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
 
 ___
 

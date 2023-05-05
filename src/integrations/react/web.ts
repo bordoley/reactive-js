@@ -14,13 +14,12 @@ import {
   Optional,
   SideEffect1,
   Updater,
-  isNone,
   isSome,
   none,
   pipe,
   pipeSome,
 } from "../../functions.js";
-import { EventListenerLike, EventSourceLike } from "../../util.js";
+import { EventSourceLike } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as EventSource from "../../util/EventSource.js";
 import { useDisposable, useSubscribe } from "../react.js";
@@ -177,22 +176,22 @@ export const useAnimateEvent = <
  * @category Hook
  */
 export const useScroll = <TElement extends HTMLElement>(
-  eventListener: Optional<
-    EventListenerLike<{
-      type: "scroll";
-      value: ScrollValue;
-    }>
-  >,
+  callback: SideEffect1<{
+    type: "scroll";
+    value: ScrollValue;
+  }>,
+  deps: readonly unknown[],
 ): React.Ref<TElement> => {
   const [element, setElement] = useState<Optional<TElement>>();
 
-  useEffect(() => {
-    if (isNone(element) || isNone(eventListener)) {
-      return;
-    }
+  const memoizedCallback = useCallback(callback, deps);
 
-    pipe(element, WebElement.addScrollListener(eventListener));
-  }, [element, eventListener]);
+  useDisposable(
+    () =>
+      pipeSome(element, WebElement.addScrollHandler(memoizedCallback)) ??
+      Disposable.disposed,
+    [element, memoizedCallback],
+  );
 
   return setElement as React.Ref<TElement>;
 };

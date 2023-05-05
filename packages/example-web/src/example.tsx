@@ -142,7 +142,7 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={animationDispatcher.dispatch}
+          onClick={animationDispatcher.enqueue}
           disabled={isAnimationRunning}
         >
           Run Animation

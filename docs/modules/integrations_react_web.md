@@ -70,7 +70,7 @@ ___
 
 ### useScroll
 
-▸ **useScroll**<`TElement`\>(`eventListener`): `Ref`<`TElement`\>
+▸ **useScroll**<`TElement`\>(`callback`, `deps`): `Ref`<`TElement`\>
 
 #### Type parameters
 
@@ -82,7 +82,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventListener` | [`Optional`](functions.md#optional)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<{ `type`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\>\> |
+| `callback` | [`SideEffect1`](functions.md#sideeffect1)<{ `type`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\> |
+| `deps` | readonly `unknown`[] |
 
 #### Returns
 
