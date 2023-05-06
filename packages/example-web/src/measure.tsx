@@ -76,14 +76,11 @@ const Measure = () => {
           compose(
             Observable.withLatestFrom(
               pipeSome(animation, EventSource.toObservable()) ??
-                Observable.empty<{
-                  type: any;
-                  value: number;
-                }>(),
-              ({ width: boxWidth }, ev) => [boxWidth, ev.value],
+                Observable.empty<number>(),
+              ({ width: boxWidth }, currentWidth) => [boxWidth, currentWidth],
             ),
-            Observable.forEach(([boxWidth, width]) => {
-              if (width > 0) {
+            Observable.forEach(([boxWidth, currentWidth]) => {
+              if (currentWidth > 0) {
                 enqueue({ width: boxWidth });
               }
             }),
@@ -102,7 +99,6 @@ const Measure = () => {
           animation,
           EventSource.toObservable(),
           Observable.throttle(50),
-          Observable.pick<{ value: number }, "value">("value"),
           Observable.map(Math.floor),
         ),
       [animation],
@@ -110,8 +106,8 @@ const Measure = () => {
 
   const fillRef: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ev => ({
-      width: `${ev.value}px`,
+    value => ({
+      width: `${value}px`,
     }),
     [],
   );

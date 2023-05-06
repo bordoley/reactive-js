@@ -268,11 +268,11 @@ export interface CacheLike<T>
  */
 export interface AnimationGroupEventHandlerLike<
   TEventType,
-  T,
   TKey extends string | number | symbol,
+  T,
 > extends StreamableLike<TEventType, boolean> {
   readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> &
-    DictionaryLike<TKey, EventSourceLike<{ type: TEventType; value: T }>>;
+    DictionaryLike<TKey, EventSourceLike<T>>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace

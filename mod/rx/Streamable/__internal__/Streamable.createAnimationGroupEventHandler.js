@@ -15,7 +15,6 @@ import { StreamableLike_stream, } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
 import { EventListenerLike_notify, } from "../../../util.js";
@@ -28,7 +27,7 @@ const createAnimationGroupEventHandlerStream =
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
-            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(type) : factory), Observable_map(value => ({ type, value })), Observable_forEach(value => {
+            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(type) : factory), Observable_forEach(value => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
                     publisher[EventListenerLike_notify](value);

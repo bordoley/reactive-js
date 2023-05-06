@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / AnimationGroupEventHandlerLike
 
-# Interface: AnimationGroupEventHandlerLike<TEventType, T, TKey\>
+# Interface: AnimationGroupEventHandlerLike<TEventType, TKey, T\>
 
 [rx](../modules/rx.md).AnimationGroupEventHandlerLike
 
@@ -9,8 +9,8 @@
 | Name | Type |
 | :------ | :------ |
 | `TEventType` | `TEventType` |
-| `T` | `T` |
 | `TKey` | extends `string` \| `number` \| `symbol` |
+| `T` | `T` |
 
 ## Hierarchy
 
@@ -28,7 +28,7 @@
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<{ `type`: `TEventType` ; `value`: `T`  }\>\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](util.EventSourceLike.md)<`T`\>\>
 
 #### Overrides
 

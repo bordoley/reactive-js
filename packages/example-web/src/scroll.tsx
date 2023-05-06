@@ -7,7 +7,6 @@ import {
 import {
   useDispatcher,
   useDisposable,
-  useListen,
   useStream,
 } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
@@ -126,16 +125,14 @@ const ScrollApp = () => {
     [publishedAnimation, enqueue],
   );
 
-  useListen(
+  useDisposable(
     () =>
       pipeSome(
         springAnimation,
-        EventSource.pick("value"),
-        EventSource.forEach(v =>
+        EventSource.addEventHandler(v =>
           publishedAnimation?.[EventListenerLike_notify](v),
         ),
-        EventSource.ignoreElements(),
-      ) ?? EventSource.empty(),
+      ),
     [springAnimation, publishedAnimation],
   );
 

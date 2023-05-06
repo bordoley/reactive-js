@@ -72,11 +72,11 @@ import * as Store from "@reactive-js/core/util/Store";
 const AnimatedBox = ({
   animation,
 }: {
-  animation?: EventSourceLike<{ type: unknown; value: number }>;
+  animation?: EventSourceLike<number>;
 }) => {
   const ref: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ({ value }) => ({
+    value => ({
       margin: `${50 - value * 50}px`,
       padding: `${value * 50}px`,
     }),
@@ -142,7 +142,7 @@ const AnimationGroup = () => {
             <AnimatedBox key={key} animation={animation} />
           )),
           Enumerator.toReadonlyArray(),
-        )}{" "}
+        )}
       </div>
       <div>
         <button
@@ -290,8 +290,8 @@ const RxComponent = createComponent(
     ) =>
       Streamable.createAnimationGroupEventHandler<
         "animate" | "cancel",
-        ReadonlyObjectMapLike<CSSStyleKey, string>,
-        number
+        number,
+        ReadonlyObjectMapLike<CSSStyleKey, string>
       >(
         [
           ev =>
@@ -372,7 +372,6 @@ const RxComponent = createComponent(
 
       const animatedDivRef = __animate(
         animationGroupEventHandler[KeyedCollectionLike_get](0)!,
-        __constant(({ value }) => value),
       );
 
       return (

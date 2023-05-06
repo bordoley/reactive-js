@@ -6,34 +6,34 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
  * @category Constructor
  */
 export declare const createAnimationGroupEventHandler: {
-    <TEventType, T = number, TKey extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey, import("../functions.js").Function1<TEventType, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>>, options: {
+    <TEventType, TKey extends string | number | symbol, T>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey, import("../functions.js").Function1<TEventType, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType, T, TKey>;
-    <TEventType_1, T_1 = number, TKey_1 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_1, import("../functions.js").Function1<TEventType_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>>, options: {
+    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType, TKey, T>;
+    <TEventType_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_1, import("../functions.js").Function1<TEventType_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_1, T_1, TKey_1>;
-    <TEventType_2, T_2 = number, TKey_2 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_2, import("../functions.js").Function1<TEventType_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>>, options: {
+    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_1, TKey_1, T_1>;
+    <TEventType_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_2, import("../functions.js").Function1<TEventType_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_2, T_2, TKey_2>;
-    <T_3 = number, TKey_3 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_3, import("../rx.js").Reactive.AnimationConfig<T_3> | readonly import("../rx.js").Reactive.AnimationConfig<T_3>[]>, options: {
+    }): import("../rx.js").AnimationGroupEventHandlerLike<TEventType_2, TKey_2, T_2>;
+    <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_3, import("../rx.js").Reactive.AnimationConfig<T_3> | readonly import("../rx.js").Reactive.AnimationConfig<T_3>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<void, T_3, TKey_3>;
-    <T_4 = number, TKey_4 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_4, import("../rx.js").Reactive.AnimationConfig<T_4> | readonly import("../rx.js").Reactive.AnimationConfig<T_4>[]>, options: {
+    }): import("../rx.js").AnimationGroupEventHandlerLike<void, TKey_3, T_3>;
+    <TKey_4 extends string | number | symbol, T_4>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_4, import("../rx.js").Reactive.AnimationConfig<T_4> | readonly import("../rx.js").Reactive.AnimationConfig<T_4>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<void, T_4, TKey_4>;
-    <T_5 = number, TKey_5 extends string | number | symbol = string>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_5, import("../rx.js").Reactive.AnimationConfig<T_5> | readonly import("../rx.js").Reactive.AnimationConfig<T_5>[]>, options: {
+    }): import("../rx.js").AnimationGroupEventHandlerLike<void, TKey_4, T_4>;
+    <TKey_5 extends string | number | symbol, T_5>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_5, import("../rx.js").Reactive.AnimationConfig<T_5> | readonly import("../rx.js").Reactive.AnimationConfig<T_5>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../rx.js").AnimationGroupEventHandlerLike<void, T_5, TKey_5>;
+    }): import("../rx.js").AnimationGroupEventHandlerLike<void, TKey_5, T_5>;
 };
 /**
  * Returns an event handler that invokes the observable function.

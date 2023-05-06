@@ -179,11 +179,8 @@ export interface CacheLike<T> extends StreamableLike<ReadonlyObjectMapLike<strin
  * @noInheritDoc
  * @category Streamable
  */
-export interface AnimationGroupEventHandlerLike<TEventType, T, TKey extends string | number | symbol> extends StreamableLike<TEventType, boolean> {
-    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & DictionaryLike<TKey, EventSourceLike<{
-        type: TEventType;
-        value: T;
-    }>>;
+export interface AnimationGroupEventHandlerLike<TEventType, TKey extends string | number | symbol, T> extends StreamableLike<TEventType, boolean> {
+    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & DictionaryLike<TKey, EventSourceLike<T>>;
 }
 export declare namespace Reactive {
     /**

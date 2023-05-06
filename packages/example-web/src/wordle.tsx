@@ -44,9 +44,9 @@ const Box = (props: any) => (
 const clamp = (min: number, v: number, max: number): number =>
   v > max ? max : v < min ? min : v;
 
-const calcXRotation = (state: boolean, value: number, i: number) => {
+const calcXRotation = (direction: boolean, value: number, i: number) => {
   const clamped = clamp(0, value / (i + 1), 180);
-  return state ? clamped : 180 - clamped;
+  return direction ? clamped : 180 - clamped;
 };
 
 const AnimatedBox = ({
@@ -55,14 +55,14 @@ const AnimatedBox = ({
   index,
 }: {
   label: string;
-  animation: Optional<EventSourceLike<{ type: boolean; value: number }>>;
+  animation: Optional<EventSourceLike<{ direction: boolean; value: number }>>;
   index: number;
 }) => {
   const frontBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ({ type, value }) => ({
+    ({ direction, value }) => ({
       transform: `perspective(600px) rotateX(${
-        180 - calcXRotation(type, value, index)
+        180 - calcXRotation(direction, value, index)
       }deg)`,
     }),
     [index],
@@ -70,9 +70,9 @@ const AnimatedBox = ({
 
   const backBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
-    ({ type, value }) => ({
+    ({ direction, value }) => ({
       transform: `perspective(600px) rotateX(${calcXRotation(
-        type,
+        direction,
         value,
         index,
       )}deg)`,
@@ -118,15 +118,20 @@ export const Wordle = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<boolean, number, number>(
+      Streamable.createAnimationGroupEventHandler<
+        boolean,
+        number,
+        { direction: boolean; value: number }
+      >(
         [
-          (_: boolean) => ({
+          (direction: boolean) => ({
             type: "spring",
             stiffness: 0.0005,
             damping: 0.0026,
             precision: 0.1,
             from: 0,
             to: 180 * items.length,
+            selector: value => ({ direction, value }),
           }),
         ],
         { mode: "blocking", scheduler: animationScheduler },

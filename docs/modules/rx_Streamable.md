@@ -41,15 +41,15 @@ ___
 
 ### createAnimationGroupEventHandler
 
-▸ **createAnimationGroupEventHandler**<`TEventType`, `T`, `TKey`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
+▸ **createAnimationGroupEventHandler**<`TEventType`, `TKey`, `T`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `TKey`, `T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TEventType` | `TEventType` |
-| `T` | `number` |
-| `TKey` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+| `T` | `T` |
 
 #### Parameters
 
@@ -62,17 +62,17 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `T`, `TKey`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `TKey`, `T`\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_1`, `T_1`, `TKey_1`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_1`, `TKey_1`, `T_1`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `TKey_1`, `T_1`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TEventType_1` | `TEventType_1` |
-| `T_1` | `number` |
-| `TKey_1` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey_1` | extends `string` \| `number` \| `symbol` |
+| `T_1` | `T_1` |
 
 #### Parameters
 
@@ -85,17 +85,17 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `T_1`, `TKey_1`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `TKey_1`, `T_1`\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_2`, `T_2`, `TKey_2`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_2`, `TKey_2`, `T_2`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `TKey_2`, `T_2`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TEventType_2` | `TEventType_2` |
-| `T_2` | `number` |
-| `TKey_2` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey_2` | extends `string` \| `number` \| `symbol` |
+| `T_2` | `T_2` |
 
 #### Parameters
 
@@ -110,16 +110,16 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `TKey_2`, `T_2`\>
 
-▸ **createAnimationGroupEventHandler**<`T_3`, `TKey_3`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_3`, `TKey_3`\>
+▸ **createAnimationGroupEventHandler**<`TKey_3`, `T_3`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_3`, `T_3`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T_3` | `number` |
-| `TKey_3` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey_3` | extends `string` \| `number` \| `symbol` |
+| `T_3` | `T_3` |
 
 #### Parameters
 
@@ -132,16 +132,16 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_3`, `TKey_3`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_3`, `T_3`\>
 
-▸ **createAnimationGroupEventHandler**<`T_4`, `TKey_4`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_4`, `TKey_4`\>
+▸ **createAnimationGroupEventHandler**<`TKey_4`, `T_4`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_4`, `T_4`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T_4` | `number` |
-| `TKey_4` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey_4` | extends `string` \| `number` \| `symbol` |
+| `T_4` | `T_4` |
 
 #### Parameters
 
@@ -154,16 +154,16 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_4`, `TKey_4`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_4`, `T_4`\>
 
-▸ **createAnimationGroupEventHandler**<`T_5`, `TKey_5`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_5`, `TKey_5`\>
+▸ **createAnimationGroupEventHandler**<`TKey_5`, `T_5`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_5`, `T_5`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T_5` | `number` |
-| `TKey_5` | extends `string` \| `number` \| `symbol` = `string` |
+| `TKey_5` | extends `string` \| `number` \| `symbol` |
+| `T_5` | `T_5` |
 
 #### Parameters
 
@@ -178,7 +178,7 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_5`, `TKey_5`\>
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_5`, `T_5`\>
 
 ___
 

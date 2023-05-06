@@ -26,7 +26,6 @@ import {
   none,
   pipeSome,
   raiseError,
-  returns,
 } from "../functions.js";
 import {
   EnumerableLike,
@@ -457,9 +456,7 @@ export const createComponent = <TProps>(
 
     return (
       useSubscribe(
-        returns(
-          pipeSome(propsPublisher, fn) ?? Observable.empty<ReactElement>(),
-        ),
+        () => pipeSome(propsPublisher, fn),
         [propsPublisher],
         options,
       ) ?? null

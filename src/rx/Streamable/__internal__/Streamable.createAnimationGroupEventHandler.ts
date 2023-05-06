@@ -45,7 +45,6 @@ import {
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../rx/Observable/__internal__/Observable.ignoreElements.js";
-import Observable_map from "../../../rx/Observable/__internal__/Observable.map.js";
 import Observable_mergeObservables from "../../../rx/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../rx/Observable/__internal__/Observable.subscribeOn.js";
 import {
@@ -63,9 +62,9 @@ import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingM
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
 const createAnimationGroupEventHandlerStream: <
-  TEventType = unknown,
-  T = number,
-  TKey extends string | number | symbol = string,
+  TEventType,
+  TKey extends string | number | symbol,
+  T,
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
@@ -88,12 +87,8 @@ const createAnimationGroupEventHandlerStream: <
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   }>,
-) => DisposableStreamOf<AnimationGroupEventHandlerLike<TEventType, T, TKey>> =
-  /*@__PURE__*/ (<
-    TEventType,
-    T,
-    TKey extends string | symbol | number = string,
-  >() => {
+) => DisposableStreamOf<AnimationGroupEventHandlerLike<TEventType, TKey, T>> =
+  /*@__PURE__*/ (<TEventType, TKey extends string | symbol | number, T>() => {
     type TProperties = {
       [CollectionLike_count]: number;
     };
@@ -107,10 +102,7 @@ const createAnimationGroupEventHandlerStream: <
         function AnimationEventHandlerStream(
           instance: TProperties &
             Pick<
-              DictionaryLike<
-                TKey,
-                EventSourceLike<{ type: TEventType; value: T }>
-              >,
+              DictionaryLike<TKey, EventSourceLike<T>>,
               | typeof AssociativeCollectionLike_keys
               | typeof KeyedCollectionLike_get
             >,
@@ -139,7 +131,7 @@ const createAnimationGroupEventHandlerStream: <
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
           }>,
         ): DisposableStreamOf<
-          AnimationGroupEventHandlerLike<TEventType, T, TKey>
+          AnimationGroupEventHandlerLike<TEventType, TKey, T>
         > {
           const streamDelegate = Streamable_createEventHandler(
             (type: TEventType) => {
@@ -163,15 +155,7 @@ const createAnimationGroupEventHandlerStream: <
                     Observable_animate<T>(
                       isFunction(factory) ? factory(type) : factory,
                     ),
-                    Observable_map<
-                      ObservableContainer,
-                      T,
-                      { type: TEventType; value: T }
-                    >(value => ({ type, value })),
-                    Observable_forEach<
-                      ObservableContainer,
-                      { type: TEventType; value: T }
-                    >(value => {
+                    Observable_forEach<ObservableContainer, T>(value => {
                       const publisher = publishers[key];
                       if (isSome(publisher)) {
                         publisher[EventListenerLike_notify](value);
@@ -201,15 +185,8 @@ const createAnimationGroupEventHandlerStream: <
 
           const publishers = pipe(
             animationGroup,
-            ReadonlyObjectMap_map<
-              unknown,
-              EventPublisherLike<{ type: TEventType; value: T }>,
-              string
-            >(_ =>
-              pipe(
-                EventPublisher_create<{ type: TEventType; value: T }>(),
-                Disposable_addTo(instance),
-              ),
+            ReadonlyObjectMap_map<unknown, EventPublisherLike<T>, string>(_ =>
+              pipe(EventPublisher_create<T>(), Disposable_addTo(instance)),
             ),
           );
 
@@ -244,13 +221,10 @@ const createAnimationGroupEventHandlerStream: <
 
           [KeyedCollectionLike_get](
             this: DelegatingLike<
-              ReadonlyObjectMapLike<
-                TKey,
-                EventSourceLike<{ type: TEventType; value: T }>
-              >
+              ReadonlyObjectMapLike<TKey, EventSourceLike<T>>
             >,
             index: TKey,
-          ): Optional<EventSourceLike<{ type: TEventType; value: T }>> {
+          ): Optional<EventSourceLike<T>> {
             return this[DelegatingLike_delegate][index];
           },
         },
@@ -261,8 +235,8 @@ const createAnimationGroupEventHandlerStream: <
 interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<
     TEventType,
-    T = number,
-    TKey extends string | symbol | number = string,
+    TKey extends string | symbol | number,
+    T,
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -272,11 +246,11 @@ interface CreateAnimationGroupEventHandler {
       >
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
-  ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
+  ): AnimationGroupEventHandlerLike<TEventType, TKey, T>;
   createAnimationGroupEventHandler<
     TEventType,
-    T = number,
-    TKey extends string | symbol | number = string,
+    TKey extends string | symbol | number,
+    T,
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -286,11 +260,11 @@ interface CreateAnimationGroupEventHandler {
       >
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
-  ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
+  ): AnimationGroupEventHandlerLike<TEventType, TKey, T>;
   createAnimationGroupEventHandler<
     TEventType,
-    T = number,
-    TKey extends string | symbol | number = string,
+    TKey extends string | symbol | number,
+    T,
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
@@ -305,32 +279,23 @@ interface CreateAnimationGroupEventHandler {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
+  ): AnimationGroupEventHandlerLike<TEventType, TKey, T>;
 
-  createAnimationGroupEventHandler<
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
+  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
-  ): AnimationGroupEventHandlerLike<void, T, TKey>;
-  createAnimationGroupEventHandler<
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
+  ): AnimationGroupEventHandlerLike<void, TKey, T>;
+  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
-  ): AnimationGroupEventHandlerLike<void, T, TKey>;
-  createAnimationGroupEventHandler<
-    T = number,
-    TKey extends string | symbol | number = string,
-  >(
+  ): AnimationGroupEventHandlerLike<void, TKey, T>;
+  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
@@ -341,10 +306,10 @@ interface CreateAnimationGroupEventHandler {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationGroupEventHandlerLike<void, T, TKey>;
+  ): AnimationGroupEventHandlerLike<void, TKey, T>;
 }
 const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHandler["createAnimationGroupEventHandler"] =
-  (<TEventType, T, TKey extends string | symbol | number = string>(
+  (<TEventType, TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       | Function1<
@@ -360,7 +325,7 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): AnimationGroupEventHandlerLike<TEventType, T, TKey> => ({
+  ): AnimationGroupEventHandlerLike<TEventType, TKey, T> => ({
     [StreamableLike_stream]: (scheduler, options) =>
       createAnimationGroupEventHandlerStream(
         animationGroup,
