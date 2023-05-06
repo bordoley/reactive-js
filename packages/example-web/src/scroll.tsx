@@ -48,9 +48,9 @@ const AnimatedCircle = ({
 const ScrollApp = () => {
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler(
-        {
-          value: direction =>
+      Streamable.createAnimationGroupEventHandler<boolean, number, number>(
+        [
+          direction =>
             direction
               ? [
                   {
@@ -80,14 +80,14 @@ const ScrollApp = () => {
                     to: 0,
                   },
                 ],
-        },
+        ],
         { mode: "switching" },
       ),
     [],
   );
   const { enqueue } = useDispatcher(animationGroup);
 
-  const springAnimation = animationGroup?.[KeyedCollectionLike_get]("value");
+  const springAnimation = animationGroup?.[KeyedCollectionLike_get](0);
 
   const publishedAnimation = useDisposable(EventPublisher.create, []);
 
@@ -118,12 +118,12 @@ const ScrollApp = () => {
   useListen(
     () =>
       pipeSome(
-        springAnimation,
-        EventSource.pick("value"),
-        EventSource.forEach(v =>
-          publishedAnimation?.[EventListenerLike_notify](v),
-        ),
-        EventSource.ignoreElements(),
+      springAnimation,
+      EventSource.pick("value"),
+      EventSource.forEach(v =>
+        publishedAnimation?.[EventListenerLike_notify](v),
+      ),
+      EventSource.ignoreElements(),
       ) ?? EventSource.empty(),
     [springAnimation, publishedAnimation],
   );

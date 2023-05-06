@@ -23,12 +23,16 @@ const Measure = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<{
-        prevWidth?: number;
-        width: number;
-      }>(
+      Streamable.createAnimationGroupEventHandler<
         {
-          value: ({ prevWidth, width }) =>
+          prevWidth?: number;
+          width: number;
+        },
+        number,
+        number
+      >(
+        [
+          ({ prevWidth, width }) =>
             isSome(prevWidth)
               ? {
                   type: "spring",
@@ -40,14 +44,14 @@ const Measure = () => {
                   type: "frame",
                   value: width,
                 },
-        },
+        ],
         { mode: "switching" },
       ),
     [],
     { capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
-  const animation = animationGroup?.[KeyedCollectionLike_get]("value");
+  const animation = animationGroup?.[KeyedCollectionLike_get](0);
 
   const { enqueue } = useDispatcher(animationGroup);
 

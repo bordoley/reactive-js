@@ -102,9 +102,9 @@ const AnimationGroup = () => {
 
   const animationStream = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler(
-        {
-          abc: {
+      Streamable.createAnimationGroupEventHandler<number, number>(
+        [
+          {
             type: "loop",
             count: 2,
             animation: [
@@ -113,12 +113,12 @@ const AnimationGroup = () => {
               { type: "keyframe", duration: 500, from: 1, to: 0 },
             ],
           },
-          def: [
+          [
             { type: "keyframe", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
             { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
           ],
-        },
+        ],
         { mode: "blocking", scheduler: animationScheduler },
       ),
     [animationScheduler],
@@ -285,10 +285,11 @@ const RxComponent = createComponent(
     ) =>
       Streamable.createAnimationGroupEventHandler<
         "animate" | "cancel",
-        ReadonlyObjectMapLike<CSSStyleKey, string>
+        ReadonlyObjectMapLike<CSSStyleKey, string>,
+        number
       >(
-        {
-          value: ev =>
+        [
+          ev =>
             ev === "animate"
               ? [
                   {
@@ -316,7 +317,7 @@ const RxComponent = createComponent(
                   },
                 ]
               : [],
-        },
+        ],
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 
@@ -365,10 +366,7 @@ const RxComponent = createComponent(
       );
 
       const animatedDivRef = __animateEvent(
-        animationGroupEventHandler[KeyedCollectionLike_get](
-          "value",
-        ) as any /*nonnull*/,
-        ["animate"],
+        animationGroupEventHandler[KeyedCollectionLike_get](0)!,
       );
 
       return (

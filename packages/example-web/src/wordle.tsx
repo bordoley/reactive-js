@@ -118,9 +118,9 @@ export const Wordle = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler(
-        {
-          0: (_: boolean) => ({
+      Streamable.createAnimationGroupEventHandler<boolean, number, number>(
+        [
+          (_: boolean) => ({
             type: "spring",
             stiffness: 0.0005,
             damping: 0.0026,
@@ -128,7 +128,7 @@ export const Wordle = () => {
             from: 0,
             to: 180 * items.length,
           }),
-        },
+        ],
         { mode: "blocking", scheduler: animationScheduler },
       ),
     [animationScheduler],
