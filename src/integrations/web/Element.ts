@@ -496,12 +496,7 @@ export const addEventHandler: AddEventHandler["addEventHandler"] =
     DisposableLike
   > =>
   source => {
-    const listener = pipe(
-      eventHandler,
-      EventListener.create,
-      EventListener.toErrorSafeEventListener(),
-    );
-
+    const listener = EventListener.create(eventHandler, { errorSafe: true });
     pipe(source, (addEventListener as any)(eventName, listener));
 
     return listener;
@@ -1589,59 +1584,60 @@ export const addScrollListener: <TElement extends HTMLElement>(
       let yVelocityPrev = 0;
 
       const eventListener = pipe(
-        (ev: Event) => {
-          if (ev.type === "resize") {
-            prevTime = MIN_VALUE;
-            xPrev = 0;
-            yPrev = 0;
-            xVelocityPrev = 0;
-            yVelocityPrev = 0;
-          }
+        EventListener.create(
+          (ev: Event) => {
+            if (ev.type === "resize") {
+              prevTime = MIN_VALUE;
+              xPrev = 0;
+              yPrev = 0;
+              xVelocityPrev = 0;
+              yVelocityPrev = 0;
+            }
 
-          const now = CurrentTime.now();
-          const dt = clamp(0, now - prevTime, MAX_VALUE);
+            const now = CurrentTime.now();
+            const dt = clamp(0, now - prevTime, MAX_VALUE);
 
-          // FIXME: Nearly every production implementation seems to reuse an
-          // event object to avoid memory allocations.
+            // FIXME: Nearly every production implementation seems to reuse an
+            // event object to avoid memory allocations.
 
-          const xCurrent = element.scrollLeft;
-          const xScrollLength = element.scrollWidth - element.clientWidth;
-          const xVelocity = (xCurrent - xPrev) / dt;
-          const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
+            const xCurrent = element.scrollLeft;
+            const xScrollLength = element.scrollWidth - element.clientWidth;
+            const xVelocity = (xCurrent - xPrev) / dt;
+            const xAcceleration = dt > 0 ? (xVelocity - xVelocityPrev) / dt : 0;
 
-          const yCurrent = element.scrollTop;
-          const yScrollLength = element.scrollHeight - element.clientHeight;
-          const yVelocity = (yCurrent - yPrev) / dt;
-          const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
+            const yCurrent = element.scrollTop;
+            const yScrollLength = element.scrollHeight - element.clientHeight;
+            const yVelocity = (yCurrent - yPrev) / dt;
+            const yAcceleration = dt > 0 ? (yVelocity - yVelocityPrev) / dt : 0;
 
-          const x = {
-            current: xCurrent,
-            scrollLength: xScrollLength,
-            progress: calcProgress(0, xScrollLength, xCurrent),
-            velocity: xVelocity,
-            acceleration: xAcceleration,
-          };
-          const y = {
-            current: yCurrent,
-            scrollLength: yScrollLength,
-            progress: calcProgress(0, yScrollLength, yCurrent),
-            velocity: yVelocity,
-            acceleration: yAcceleration,
-          };
+            const x = {
+              current: xCurrent,
+              scrollLength: xScrollLength,
+              progress: calcProgress(0, xScrollLength, xCurrent),
+              velocity: xVelocity,
+              acceleration: xAcceleration,
+            };
+            const y = {
+              current: yCurrent,
+              scrollLength: yScrollLength,
+              progress: calcProgress(0, yScrollLength, yCurrent),
+              velocity: yVelocity,
+              acceleration: yAcceleration,
+            };
 
-          prevTime = now;
-          xPrev = xCurrent;
-          xVelocityPrev = xVelocity;
-          yPrev = yCurrent;
-          yVelocityPrev = yVelocity;
+            prevTime = now;
+            xPrev = xCurrent;
+            xVelocityPrev = xVelocity;
+            yPrev = yCurrent;
+            yVelocityPrev = yVelocity;
 
-          listener[EventListenerLike_notify]({
-            type: "scroll",
-            value: { x, y },
-          });
-        },
-        EventListener.create,
-        EventListener.toErrorSafeEventListener(),
+            listener[EventListenerLike_notify]({
+              type: "scroll",
+              value: { x, y },
+            });
+          },
+          { errorSafe: true },
+        ),
         Disposable.bindTo(listener),
       );
 
@@ -1754,32 +1750,33 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
 
   return listener => element => {
     const eventListener = pipe(
-      () => {
-        const { left, top, width, height, bottom, right, x, y }: DOMRect =
-          element.getBoundingClientRect();
+      EventListener.create(
+        () => {
+          const { left, top, width, height, bottom, right, x, y }: DOMRect =
+            element.getBoundingClientRect();
 
-        const rect: Rect = {
-          left,
-          top,
-          width,
-          height,
-          bottom,
-          right,
-          x,
-          y,
-        };
+          const rect: Rect = {
+            left,
+            top,
+            width,
+            height,
+            bottom,
+            right,
+            x,
+            y,
+          };
 
-        /*
+          /*
             if (state.current.element instanceof HTMLElement && offsetSize) {
               size.height = state.current.element.offsetHeight
               size.width = state.current.element.offsetWidth
             }
             */
 
-        listener[EventListenerLike_notify](rect);
-      },
-      EventListener.create,
-      EventListener.toErrorSafeEventListener(),
+          listener[EventListenerLike_notify](rect);
+        },
+        { errorSafe: true },
+      ),
       Disposable.bindTo(listener),
     );
 

@@ -1,4 +1,12 @@
-import { Method1 } from "../../../functions.js";
-import { EventListenerLike } from "../../../util.js";
-declare const EventListener_create: <T>(notify: Method1<EventListenerLike<T>, T, void>) => EventListenerLike<T>;
+import { ErrorSafeEventListenerLike, EventListenerLike } from "../../../util.js";
+interface EventListenerCreate {
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void): EventListenerLike<T>;
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void, options: {
+        errorSafe: true;
+    }): ErrorSafeEventListenerLike<T>;
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void, options?: {
+        errorSafe?: boolean;
+    }): EventListenerLike<T>;
+}
+declare const EventListener_create: EventListenerCreate["create"];
 export default EventListener_create;

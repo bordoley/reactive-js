@@ -11,7 +11,7 @@ import * as EventListener from "../../util/EventListener.js";
 import * as EventPublisher from "../../util/EventPublisher.js";
 import * as EventSource from "../../util/EventSource.js";
 export const addEventHandler = (eventName, eventHandler) => source => {
-    const listener = pipe(eventHandler, EventListener.create, EventListener.toErrorSafeEventListener());
+    const listener = EventListener.create(eventHandler, { errorSafe: true });
     pipe(source, addEventListener(eventName, listener));
     return listener;
 };
@@ -50,7 +50,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
         let yPrev = 0;
         let xVelocityPrev = 0;
         let yVelocityPrev = 0;
-        const eventListener = pipe((ev) => {
+        const eventListener = pipe(EventListener.create((ev) => {
             if (ev.type === "resize") {
                 prevTime = MIN_VALUE;
                 xPrev = 0;
@@ -93,7 +93,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
                 type: "scroll",
                 value: { x, y },
             });
-        }, EventListener.create, EventListener.toErrorSafeEventListener(), Disposable.bindTo(listener));
+        }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addEventListener("scroll", eventListener));
         pipe(window, addEventListener("resize", eventListener));
         return element;
@@ -156,7 +156,7 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
             : result;
     };
     return listener => element => {
-        const eventListener = pipe(() => {
+        const eventListener = pipe(EventListener.create(() => {
             const { left, top, width, height, bottom, right, x, y } = element.getBoundingClientRect();
             const rect = {
                 left,
@@ -169,13 +169,13 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
                 y,
             };
             /*
-                if (state.current.element instanceof HTMLElement && offsetSize) {
-                  size.height = state.current.element.offsetHeight
-                  size.width = state.current.element.offsetWidth
-                }
-                */
+              if (state.current.element instanceof HTMLElement && offsetSize) {
+                size.height = state.current.element.offsetHeight
+                size.width = state.current.element.offsetWidth
+              }
+              */
             listener[EventListenerLike_notify](rect);
-        }, EventListener.create, EventListener.toErrorSafeEventListener(), Disposable.bindTo(listener));
+        }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addResizeListener(eventListener));
         for (const scrollContainer of findScrollContainers(element)) {
             pipe(scrollContainer, addEventListener("scroll", eventListener));

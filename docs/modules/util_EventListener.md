@@ -7,7 +7,6 @@
 ### Functions
 
 - [create](util_EventListener.md#create)
-- [toErrorSafeEventListener](util_EventListener.md#toerrorsafeeventlistener)
 
 ## Functions
 
@@ -25,24 +24,48 @@
 
 | Name | Type |
 | :------ | :------ |
-| `notify` | [`Method1`](functions.md#method1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>, `T`, `void`\> |
+| `notify` | (`this`: [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>, `a`: `T`) => `void` |
 
 #### Returns
 
 [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>
 
-___
-
-### toErrorSafeEventListener
-
-▸ **toErrorSafeEventListener**<`T`\>(): [`Function1`](functions.md#function1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>, [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`T`\>\>
+▸ **create**<`T_1`\>(`notify`, `options`): [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`T_1`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T` |
+| `T_1` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notify` | (`this`: [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T_1`\>, `a`: `T_1`) => `void` |
+| `options` | `Object` |
+| `options.errorSafe` | ``true`` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>, [`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`T`\>\>
+[`ErrorSafeEventListenerLike`](../interfaces/util.ErrorSafeEventListenerLike.md)<`T_1`\>
+
+▸ **create**<`T_2`\>(`notify`, `options?`): [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T_2`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T_2` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notify` | (`this`: [`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T_2`\>, `a`: `T_2`) => `void` |
+| `options?` | `Object` |
+| `options.errorSafe?` | `boolean` |
+
+#### Returns
+
+[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T_2`\>
