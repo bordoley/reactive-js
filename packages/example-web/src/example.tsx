@@ -104,7 +104,7 @@ const AnimationGroup = () => {
     () =>
       Streamable.createAnimationGroupEventHandler(
         {
-          abc: () => ({
+          abc: {
             type: "loop",
             count: 2,
             animation: [
@@ -112,9 +112,8 @@ const AnimationGroup = () => {
               { type: "delay", duration: 250 },
               { type: "keyframe", duration: 500, from: 1, to: 0 },
             ],
-          }),
-
-          def: () => [
+          },
+          def: [
             { type: "keyframe", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
             { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
@@ -142,7 +141,7 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={animationDispatcher.enqueue}
+          onClick={() => animationDispatcher.enqueue()}
           disabled={isAnimationRunning}
         >
           Run Animation

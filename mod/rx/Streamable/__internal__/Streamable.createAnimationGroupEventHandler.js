@@ -10,7 +10,7 @@ import ReadonlyObjectMap_map from "../../../containers/ReadonlyObjectMap/__inter
 import ReadonlyObjectMap_mapWithKey from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../../containers/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { incrementBy, isSome, pipe, returns, unsafeCast, } from "../../../functions.js";
+import { incrementBy, isFunction, isSome, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { StreamableLike_stream, } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../rx/Observable/__internal__/Observable.forEach.js";
@@ -28,7 +28,7 @@ const createAnimationGroupEventHandlerStream =
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
-            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(factory(type)), Observable_map(value => ({ type, value })), Observable_forEach(value => {
+            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(type) : factory), Observable_map(value => ({ type, value })), Observable_forEach(value => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
                     publisher[EventListenerLike_notify](value);

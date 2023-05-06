@@ -28,6 +28,7 @@ import {
   Function1,
   Optional,
   incrementBy,
+  isFunction,
   isSome,
   pipe,
   returns,
@@ -68,10 +69,12 @@ const createAnimationGroupEventHandlerStream: <
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    Function1<
-      TEventType,
-      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
-    >
+    | Function1<
+        TEventType,
+        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+      >
+    | Reactive.AnimationConfig<T>
+    | readonly Reactive.AnimationConfig<T>[]
   >,
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -113,11 +116,15 @@ const createAnimationGroupEventHandlerStream: <
             >,
           animationGroup: ReadonlyObjectMapLike<
             TKey,
-            Function1<
-              TEventType,
-              | Reactive.AnimationConfig<T>
-              | readonly Reactive.AnimationConfig<T>[]
-            >
+            | Function1<
+                TEventType,
+                | Reactive.AnimationConfig<T>
+                | readonly Reactive.AnimationConfig<T>[]
+              >
+            | (
+                | Reactive.AnimationConfig<T>
+                | readonly Reactive.AnimationConfig<T>[]
+              )
           >,
           creationOptions: {
             readonly mode: "switching" | "blocking" | "queueing";
@@ -142,16 +149,20 @@ const createAnimationGroupEventHandlerStream: <
               > = pipe(
                 animationGroup,
                 ReadonlyObjectMap_mapWithKey<
-                  Function1<
-                    TEventType,
-                    | Reactive.AnimationConfig<T>
-                    | readonly Reactive.AnimationConfig<T>[]
-                  >,
+                  | Function1<
+                      TEventType,
+                      | Reactive.AnimationConfig<T>
+                      | readonly Reactive.AnimationConfig<T>[]
+                    >
+                  | Reactive.AnimationConfig<T>
+                  | readonly Reactive.AnimationConfig<T>[],
                   ObservableLike<T>,
                   string
                 >((factory, key: string) =>
                   pipe(
-                    Observable_animate<T>(factory(type)),
+                    Observable_animate<T>(
+                      isFunction(factory) ? factory(type) : factory,
+                    ),
                     Observable_map<
                       ObservableContainer,
                       T,
@@ -249,7 +260,7 @@ const createAnimationGroupEventHandlerStream: <
 
 interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<
-    TEventType = unknown,
+    TEventType,
     T = number,
     TKey extends string | symbol | number = string,
   >(
@@ -263,7 +274,7 @@ interface CreateAnimationGroupEventHandler {
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
-    TEventType = unknown,
+    TEventType,
     T = number,
     TKey extends string | symbol | number = string,
   >(
@@ -277,7 +288,7 @@ interface CreateAnimationGroupEventHandler {
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
   createAnimationGroupEventHandler<
-    TEventType = unknown,
+    TEventType,
     T = number,
     TKey extends string | symbol | number = string,
   >(
@@ -295,19 +306,53 @@ interface CreateAnimationGroupEventHandler {
       readonly capacity?: number;
     },
   ): AnimationGroupEventHandlerLike<TEventType, T, TKey>;
-}
-const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHandler["createAnimationGroupEventHandler"] =
-  (<
-    TEventType = unknown,
+
+  createAnimationGroupEventHandler<
     T = number,
     TKey extends string | symbol | number = string,
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<
-        TEventType,
-        Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
-      >
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+    >,
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
+  ): AnimationGroupEventHandlerLike<void, T, TKey>;
+  createAnimationGroupEventHandler<
+    T = number,
+    TKey extends string | symbol | number = string,
+  >(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+    >,
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
+  ): AnimationGroupEventHandlerLike<void, T, TKey>;
+  createAnimationGroupEventHandler<
+    T = number,
+    TKey extends string | symbol | number = string,
+  >(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+    >,
+    options: {
+      readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): AnimationGroupEventHandlerLike<void, T, TKey>;
+}
+const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHandler["createAnimationGroupEventHandler"] =
+  (<TEventType, T, TKey extends string | symbol | number = string>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      | Function1<
+          TEventType,
+          Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]
+        >
+      | Reactive.AnimationConfig<T>
+      | readonly Reactive.AnimationConfig<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

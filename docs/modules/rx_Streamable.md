@@ -47,7 +47,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType` | `unknown` |
+| `TEventType` | `TEventType` |
 | `T` | `number` |
 | `TKey` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -70,7 +70,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_1` | `unknown` |
+| `TEventType_1` | `TEventType_1` |
 | `T_1` | `number` |
 | `TKey_1` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -93,7 +93,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_2` | `unknown` |
+| `TEventType_2` | `TEventType_2` |
 | `T_2` | `number` |
 | `TKey_2` | extends `string` \| `number` \| `symbol` = `string` |
 
@@ -111,6 +111,74 @@ ___
 #### Returns
 
 [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `T_2`, `TKey_2`\>
+
+▸ **createAnimationGroupEventHandler**<`T_3`, `TKey_3`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_3`, `TKey_3`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T_3` | `number` |
+| `TKey_3` | extends `string` \| `number` \| `symbol` = `string` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_3`\>[]\> |
+| `options` | `Object` |
+| `options.mode` | ``"switching"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
+
+#### Returns
+
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_3`, `TKey_3`\>
+
+▸ **createAnimationGroupEventHandler**<`T_4`, `TKey_4`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_4`, `TKey_4`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T_4` | `number` |
+| `TKey_4` | extends `string` \| `number` \| `symbol` = `string` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_4`\>[]\> |
+| `options` | `Object` |
+| `options.mode` | ``"blocking"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
+
+#### Returns
+
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_4`, `TKey_4`\>
+
+▸ **createAnimationGroupEventHandler**<`T_5`, `TKey_5`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_5`, `TKey_5`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T_5` | `number` |
+| `TKey_5` | extends `string` \| `number` \| `symbol` = `string` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_5`\>[]\> |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.mode` | ``"queueing"`` |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
+
+#### Returns
+
+[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `T_5`, `TKey_5`\>
 
 ___
 
