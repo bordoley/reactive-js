@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import * as React from "react";
-import { ReadonlyObjectMapLike } from "../../containers.js";
 import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
   Function1,
@@ -26,7 +25,7 @@ import { EventSourceLike } from "../../util.js";
 import * as EventSource from "../../util/EventSource.js";
 import { useDisposable, useSubscribe } from "../react.js";
 import {
-  CSSStyleKey,
+  CSSStyleMapLike,
   ScrollValue,
   WindowLocationLike,
   WindowLocationLike_canGoBack,
@@ -119,14 +118,12 @@ export const WindowLocationProvider: React.FunctionComponent<{
 
 interface UseAnimate {
   useAnimate<TElement extends HTMLElement>(
-    animation: Optional<
-      EventSourceLike<ReadonlyObjectMapLike<CSSStyleKey, string>>
-    >,
+    animation: Optional<EventSourceLike<CSSStyleMapLike>>,
   ): React.Ref<TElement>;
 
   useAnimate<TElement extends HTMLElement, T>(
     animation: Optional<EventSourceLike<T>>,
-    selector: Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>,
+    selector: Function1<T, CSSStyleMapLike>,
     deps: readonly unknown[],
   ): React.Ref<TElement>;
 }
@@ -139,14 +136,14 @@ export const useAnimate: UseAnimate["useAnimate"] = <
   T,
 >(
   animation: Optional<EventSourceLike<T>>,
-  selector?: Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>,
+  selector?: Function1<T, CSSStyleMapLike>,
   deps?: readonly unknown[],
 ): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
 
   const memoizedSelector = isFunction(selector)
     ? useCallback(selector, deps ?? [])
-    : (identity as Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>);
+    : (identity as Function1<T, CSSStyleMapLike>);
 
   useDisposable(
     pipeSomeLazy(
@@ -156,9 +153,11 @@ export const useAnimate: UseAnimate["useAnimate"] = <
         if (element != null) {
           pipe(
             memoizedSelector(v),
-            ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
-              element.style[key] = v ?? "";
-            }),
+            ReadonlyObjectMap.forEachWithKey<string, keyof CSSStyleMapLike>(
+              (v, key) => {
+                element.style[key] = v ?? "";
+              },
+            ),
           );
         }
       }),

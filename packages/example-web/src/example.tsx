@@ -19,7 +19,7 @@ import {
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
 import {
-  CSSStyleKey,
+  CSSStyleMapLike,
   WindowLocationLike,
   WindowLocationURI,
 } from "@reactive-js/core/integrations/web";
@@ -63,10 +63,7 @@ import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocati
 import * as Scheduler from "@reactive-js/core/util/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
-import {
-  KeyedCollectionLike_get,
-  ReadonlyObjectMapLike,
-} from "@reactive-js/core/containers";
+import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 import * as Store from "@reactive-js/core/util/Store";
 
 const AnimatedBox = ({
@@ -288,7 +285,7 @@ const RxComponent = createComponent(
       Streamable.createAnimationGroupEventHandler<
         "animate" | "cancel",
         number,
-        ReadonlyObjectMapLike<CSSStyleKey, string>
+        CSSStyleMapLike
       >(
         [
           ev =>

@@ -1,4 +1,3 @@
-import { ReadonlyObjectMapLike } from "../../containers.js";
 import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
   Optional,
@@ -25,7 +24,7 @@ import {
 } from "../../util.js";
 import * as Disposable from "../../util/Disposable.js";
 import * as EventSource from "../../util/EventSource.js";
-import { CSSStyleKey } from "../web.js";
+import { CSSStyleMapLike } from "../web.js";
 
 const returnsNone = returns(none);
 const makeRefSetter =
@@ -38,7 +37,7 @@ const makeRefSetter =
 const animateHtmlElement = <T>(
   element: Optional<HTMLElement | null>,
   animation: EventSourceLike<T>,
-  selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
+  selector: (ev: T) => CSSStyleMapLike,
 ): DisposableLike =>
   // Just in case a caller sets it to null instead of undefined
   element != null
@@ -47,9 +46,11 @@ const animateHtmlElement = <T>(
         EventSource.addEventHandler(
           compose(
             selector,
-            ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
-              element.style[key] = v ?? "";
-            }),
+            ReadonlyObjectMap.forEachWithKey<string, keyof CSSStyleMapLike>(
+              (v, key) => {
+                element.style[key] = v ?? "";
+              },
+            ),
           ),
         ),
       )
@@ -57,17 +58,17 @@ const animateHtmlElement = <T>(
 
 interface Animate {
   __animate(
-    animation: EventSourceLike<ReadonlyObjectMapLike<CSSStyleKey, string>>,
+    animation: EventSourceLike<CSSStyleMapLike>,
   ): SideEffect1<Optional<HTMLElement | null>>;
 
   __animate<T>(
     animation: EventSourceLike<T>,
-    selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
+    selector: (ev: T) => CSSStyleMapLike,
   ): SideEffect1<Optional<HTMLElement | null>>;
 }
 export const __animate: Animate["__animate"] = (
   animation: EventSourceLike,
-  selector?: (ev: unknown) => ReadonlyObjectMapLike<CSSStyleKey, string>,
+  selector?: (ev: unknown) => CSSStyleMapLike,
 ): SideEffect1<Optional<HTMLElement | null>> => {
   const memoizedSelector = __constant(selector);
   const htmlElementState = __state<Optional<HTMLElement | null>>(returnsNone);
