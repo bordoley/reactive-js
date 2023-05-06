@@ -5,4 +5,3 @@ export declare const create: <T>(options?: {
 export declare const createRefCounted: <T>(options?: {
     readonly replay?: number;
 }) => EventPublisherLike<T>;
-export declare const disposed: <T>() => EventPublisherLike<T>;

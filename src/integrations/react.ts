@@ -83,8 +83,8 @@ export const useDisposable = <TDisposable extends DisposableLike>(
   return disposable;
 };
 
-interface UseSubscribe {
-  useSubscribe<T>(
+interface UseObserve {
+  useObserve<T>(
     observable: Optional<ObservableLike<T>>,
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -93,7 +93,7 @@ interface UseSubscribe {
     },
   ): Optional<T>;
 
-  useSubscribe<T>(
+  useObserve<T>(
     factory: Factory<Optional<ObservableLike<T>>>,
     deps: readonly unknown[],
     options?: {
@@ -107,7 +107,7 @@ interface UseSubscribe {
 /**
  * @category Hook
  */
-export const useSubscribe: UseSubscribe["useSubscribe"] = <T>(
+export const useObserve: UseObserve["useObserve"] = <T>(
   observableOrFactory:
     | Optional<ObservableLike<T>>
     | Factory<Optional<ObservableLike<T>>>,
@@ -452,11 +452,8 @@ export const createComponent = <TProps>(
     }, [propsPublisher, props]);
 
     return (
-      useSubscribe(
-        pipeSomeLazy(propsPublisher, fn),
-        [propsPublisher],
-        options,
-      ) ?? null
+      useObserve(pipeSomeLazy(propsPublisher, fn), [propsPublisher], options) ??
+      null
     );
   };
 

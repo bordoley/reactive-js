@@ -8,7 +8,6 @@
 
 - [create](util_EventPublisher.md#create)
 - [createRefCounted](util_EventPublisher.md#createrefcounted)
-- [disposed](util_EventPublisher.md#disposed)
 
 ## Functions
 
@@ -51,22 +50,6 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.replay?` | `number` |
-
-#### Returns
-
-[`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
-
-___
-
-### disposed
-
-▸ **disposed**<`T`\>(): [`EventPublisherLike`](../interfaces/util.EventPublisherLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
 
 #### Returns
 

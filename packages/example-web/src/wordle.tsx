@@ -7,7 +7,7 @@ import {
   useDispatcher,
   useDisposable,
   useStream,
-  useSubscribe,
+  useObserve,
 } from "@reactive-js/core/integrations/react";
 import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 import { Optional, pipeLazy } from "@reactive-js/core/functions";
@@ -141,7 +141,7 @@ export const Wordle = () => {
 
   const animation = animationGroup?.[KeyedCollectionLike_get](0);
   const { enqueue } = useDispatcher(animationGroup);
-  const isAnimationRunning = useSubscribe(animationGroup) ?? false;
+  const isAnimationRunning = useObserve(animationGroup) ?? false;
 
   useEffect(() => {
     enqueue(state);

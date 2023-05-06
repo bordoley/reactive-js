@@ -12,7 +12,7 @@ import {
   useDispatcher,
   useDisposable,
   useStream,
-  useSubscribe,
+  useObserve,
 } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
@@ -65,7 +65,7 @@ const Measure = () => {
 
   const { enqueue } = useDispatcher(animationGroup);
 
-  const { width: boxWidth } = useSubscribe<Rect>(
+  const { width: boxWidth } = useObserve<Rect>(
     pipeSomeLazy(
       container,
       WebElement.observeMeasure(),
@@ -93,7 +93,7 @@ const Measure = () => {
   ) ?? { width: 0 };
 
   const width =
-    useSubscribe(
+    useObserve(
       pipeSomeLazy(
         animation,
         EventSource.toObservable(),

@@ -11,7 +11,7 @@ import {
   useEnumerator,
   usePauseable,
   useStream,
-  useSubscribe,
+  useObserve,
 } from "@reactive-js/core/integrations/react";
 import {
   useAnimate,
@@ -127,7 +127,7 @@ const AnimationGroup = () => {
   );
 
   const animationDispatcher = useDispatcher(animationStream);
-  const isAnimationRunning = useSubscribe(animationStream) ?? false;
+  const isAnimationRunning = useObserve(animationStream) ?? false;
 
   return (
     <div>
@@ -157,7 +157,7 @@ const Cache = () => {
   const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
 
   const values = cache?.[KeyedCollectionLike_get]("a");
-  const value = useSubscribe(values) ?? "";
+  const value = useObserve(values) ?? "";
 
   const onChange = useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,7 +225,7 @@ const Counter = () => {
     [history.replace, counterInitialValue],
   );
   const counterController = usePauseable(counter);
-  const counterValue = useSubscribe(counter) ?? counterInitialValue;
+  const counterValue = useObserve(counter) ?? counterInitialValue;
 
   return (
     <div>

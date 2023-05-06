@@ -11,9 +11,9 @@
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useEnumerator](integrations_react.md#useenumerator)
 - [useListen](integrations_react.md#uselisten)
+- [useObserve](integrations_react.md#useobserve)
 - [usePauseable](integrations_react.md#usepauseable)
 - [useStream](integrations_react.md#usestream)
-- [useSubscribe](integrations_react.md#usesubscribe)
 
 ### Other Functions
 
@@ -181,6 +181,55 @@ ___
 
 ___
 
+### useObserve
+
+▸ **useObserve**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`T`\>
+
+▸ **useObserve**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\> |
+| `deps` | readonly `unknown`[] |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+[`Optional`](functions.md#optional)<`T`\>
+
+___
+
 ### usePauseable
 
 ▸ **usePauseable**(`pauseable`): `Object`
@@ -251,55 +300,6 @@ ___
 #### Returns
 
 [`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
-
-___
-
-### useSubscribe
-
-▸ **useSubscribe**<`T`\>(`observable`, `options?`): [`Optional`](functions.md#optional)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`T`\>
-
-▸ **useSubscribe**<`T`\>(`factory`, `deps`, `options?`): [`Optional`](functions.md#optional)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\> |
-| `deps` | readonly `unknown`[] |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-[`Optional`](functions.md#optional)<`T`\>
 
 ___
 

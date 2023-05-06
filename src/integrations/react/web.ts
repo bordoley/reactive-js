@@ -23,7 +23,7 @@ import {
 } from "../../functions.js";
 import { EventSourceLike } from "../../util.js";
 import * as EventSource from "../../util/EventSource.js";
-import { useDisposable, useSubscribe } from "../react.js";
+import { useDisposable, useObserve } from "../react.js";
 import {
   CSSStyleMapLike,
   ScrollValue,
@@ -52,7 +52,7 @@ export const useWindowLocation = (): {
 } => {
   const windowLocation = useContext(WindowLocationContext);
 
-  const uri = useSubscribe(windowLocation);
+  const uri = useObserve(windowLocation);
 
   const stableWindowLocationRef = useRef<Optional<WindowLocationLike>>(none);
   useEffect(() => {
@@ -87,7 +87,7 @@ export const useWindowLocation = (): {
   }, [stableWindowLocationRef]);
 
   const canGoBack =
-    useSubscribe(windowLocation[WindowLocationLike_canGoBack]) ?? false;
+    useObserve(windowLocation[WindowLocationLike_canGoBack]) ?? false;
 
   return {
     uri,
