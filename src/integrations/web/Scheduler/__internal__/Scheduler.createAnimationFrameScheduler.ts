@@ -1,20 +1,20 @@
-import * as CurrentTime from "../../../__internal__/CurrentTime.js";
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
+import { MAX_SAFE_INTEGER } from "../../../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
   init,
   mix,
   props,
-} from "../../../__internal__/mixins.js";
+} from "../../../../__internal__/mixins.js";
 import {
   ContinuationLike,
   ContinuationSchedulerLike_schedule,
   DelegatingLike,
   DelegatingLike_delegate,
   QueueLike_dequeue,
-} from "../../../__internal__/util.js";
-import { CollectionLike_count } from "../../../containers.js";
+} from "../../../../__internal__/util.js";
+import { CollectionLike_count } from "../../../../containers.js";
 import {
   Optional,
   SideEffect,
@@ -23,7 +23,7 @@ import {
   none,
   pipe,
   pipeLazy,
-} from "../../../functions.js";
+} from "../../../../functions.js";
 import {
   DisposableLike,
   QueueableLike_enqueue,
@@ -31,17 +31,17 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-} from "../../../util.js";
-import Delegating_mixin from "../../../util/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
-import Queue_createIndexedQueue from "../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
+} from "../../../../util.js";
+import Delegating_mixin from "../../../../util/Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../../../util/Disposable/__internal__/Disposable.addTo.js";
+import Queue_createIndexedQueue from "../../../../util/Queue/__internal__/Queue.createIndexedQueue.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,
   SchedulerImplementationLike_scheduleContinuation,
   SchedulerImplementationLike_shouldYield,
   SchedulerImplementation_mixin,
-} from "./SchedulerImplementation.mixin.js";
+} from "../../../../util/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
   let rafQueue = Queue_createIndexedQueue<SideEffect>(

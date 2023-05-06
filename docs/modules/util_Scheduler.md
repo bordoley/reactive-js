@@ -6,28 +6,11 @@
 
 ### Functions
 
-- [createAnimationFrameScheduler](util_Scheduler.md#createanimationframescheduler)
 - [createHostScheduler](util_Scheduler.md#createhostscheduler)
 - [createVirtualTimeScheduler](util_Scheduler.md#createvirtualtimescheduler)
 - [toPausableScheduler](util_Scheduler.md#topausablescheduler)
 
 ## Functions
-
-### createAnimationFrameScheduler
-
-▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/util.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
-
-#### Returns
-
-[`SchedulerLike`](../interfaces/util.SchedulerLike.md) & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-___
 
 ### createHostScheduler
 

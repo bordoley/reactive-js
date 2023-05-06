@@ -2,12 +2,14 @@ import {
   Optional,
   compose,
   isSome,
+  pipeLazy,
   pipeSome,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/rx/Observable";
 import {
   useDispatcher,
+  useDisposable,
   useStream,
   useSubscribe,
 } from "@reactive-js/core/integrations/react";
@@ -17,9 +19,16 @@ import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
 import * as Streamable from "@reactive-js/core/rx/Streamable";
 import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
+import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
+
+  const animationScheduler = useDisposable(
+    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
+    [],
+  );
 
   const animationGroup = useStream(
     () =>
@@ -45,7 +54,7 @@ const Measure = () => {
                   value: width,
                 },
         ],
-        { mode: "switching" },
+        { mode: "switching", scheduler: animationScheduler },
       ),
     [],
     { capacity: 1, backpressureStrategy: "drop-oldest" },

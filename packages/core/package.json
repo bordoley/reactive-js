@@ -65,6 +65,7 @@
     "./integrations/web": "./integrations/web.js",
     "./integrations/web/effects": "./integrations/web/effects.js",
     "./integrations/web/Element": "./integrations/web/Element.js",
+    "./integrations/web/Scheduler": "./integrations/web/Scheduler.js",
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./rx": "./rx.js",
     "./rx/effects": "./rx/effects.js",

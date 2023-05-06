@@ -23,6 +23,7 @@ Reactive-JS
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/Element](modules/integrations_web_Element.md)
+- [integrations/web/Scheduler](modules/integrations_web_Scheduler.md)
 - [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
 - [integrations/web/effects](modules/integrations_web_effects.md)
 - [rx](modules/rx.md)

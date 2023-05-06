@@ -61,6 +61,7 @@ import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import {
   KeyedCollectionLike_get,
@@ -100,7 +101,7 @@ const AnimatedBox = ({
 
 const AnimationGroup = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(getScheduler(), Scheduler.createAnimationFrameScheduler),
+    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
     [],
   );
 
@@ -331,7 +332,7 @@ const RxComponent = createComponent(
 
       const scheduler = __currentScheduler();
       const animationScheduler = __using(
-        Scheduler.createAnimationFrameScheduler,
+        WebScheduler.createAnimationFrameScheduler,
         scheduler,
       );
 

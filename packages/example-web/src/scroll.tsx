@@ -12,12 +12,14 @@ import {
 } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { Optional, pipeSome } from "@reactive-js/core/functions";
+import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import { EventListenerLike_notify } from "@reactive-js/core/util";
 import * as EventPublisher from "@reactive-js/core/util/EventPublisher";
 import * as Streamable from "@reactive-js/core/rx/Streamable";
 import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
+import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 
 const AnimatedCircle = ({
   animation,
@@ -50,6 +52,11 @@ const AnimatedCircle = ({
 };
 
 const ScrollApp = () => {
+  const animationScheduler = useDisposable(
+    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
+    [],
+  );
+
   const animationGroup = useStream(
     () =>
       Streamable.createAnimationGroupEventHandler<boolean, number, number>(
@@ -85,7 +92,7 @@ const ScrollApp = () => {
                   },
                 ],
         ],
-        { mode: "switching" },
+        { mode: "switching", scheduler: animationScheduler },
       ),
     [],
   );

@@ -12,7 +12,7 @@ import {
 import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 import { Optional, pipeLazy } from "@reactive-js/core/functions";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
-import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -112,7 +112,7 @@ export const Wordle = () => {
   const [state, updateState] = useState(false);
 
   const animationScheduler = useDisposable(
-    pipeLazy(getScheduler(), Scheduler.createAnimationFrameScheduler),
+    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
     [],
   );
 
