@@ -15,11 +15,11 @@ interface AnimateEvent {
     __animateEvent<TEvent extends {
         type: TEventType;
         value: ReadonlyObjectMapLike<CSSStyleKey, string>;
-    }, TEventType extends string | symbol>(animation: EventSourceLike<TEvent>, events: readonly TEventType[]): SideEffect1<Optional<HTMLElement | null>>;
+    }, TEventType extends string | symbol>(animation: EventSourceLike<TEvent>): SideEffect1<Optional<HTMLElement | null>>;
     __animateEvent<TEvent extends {
         type: TEventType;
         value: ReadonlyObjectMapLike<CSSStyleKey, string>;
-    }, TEventType extends string | symbol, T>(animation: EventSourceLike<TEvent>, events: ReadonlyArray<unknown>, selector: (ev: {
+    }, TEventType extends string | symbol, T>(animation: EventSourceLike<TEvent>, selector: (ev: {
         type: TEventType;
         value: T;
     }) => ReadonlyObjectMapLike<CSSStyleKey, string>): SideEffect1<Optional<HTMLElement | null>>;

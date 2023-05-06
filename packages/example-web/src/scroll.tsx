@@ -118,12 +118,12 @@ const ScrollApp = () => {
   useListen(
     () =>
       pipeSome(
-      springAnimation,
-      EventSource.pick("value"),
-      EventSource.forEach(v =>
-        publishedAnimation?.[EventListenerLike_notify](v),
-      ),
-      EventSource.ignoreElements(),
+        springAnimation,
+        EventSource.pick("value"),
+        EventSource.forEach(v =>
+          publishedAnimation?.[EventListenerLike_notify](v),
+        ),
+        EventSource.ignoreElements(),
       ) ?? EventSource.empty(),
     [springAnimation, publishedAnimation],
   );

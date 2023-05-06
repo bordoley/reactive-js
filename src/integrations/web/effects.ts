@@ -85,15 +85,6 @@ export const __animate: Animate["__animate"] = (
 };
 const defaultSelector = <T>(ev: { type: unknown; value: T }) => ev.value;
 
-const filterEvents = (
-  animation: EventSourceLike<{ type: unknown }>,
-  events?: readonly unknown[],
-) =>
-  pipe(
-    animation,
-    EventSource.keep(ev => events?.includes(ev.type) ?? true),
-  );
-
 interface AnimateEvent {
   __animateEvent(
     animation: EventSourceLike<{
@@ -110,7 +101,6 @@ interface AnimateEvent {
     TEventType extends string | symbol,
   >(
     animation: EventSourceLike<TEvent>,
-    events: readonly TEventType[],
   ): SideEffect1<Optional<HTMLElement | null>>;
 
   __animateEvent<
@@ -122,7 +112,6 @@ interface AnimateEvent {
     T,
   >(
     animation: EventSourceLike<TEvent>,
-    events: ReadonlyArray<unknown>,
     selector: (ev: {
       type: TEventType;
       value: T;
@@ -131,14 +120,10 @@ interface AnimateEvent {
 }
 export const __animateEvent: AnimateEvent["__animateEvent"] = <TEventType, T>(
   animation: EventSourceLike<{ type: TEventType; value: T }>,
-  events?: ReadonlyArray<unknown>,
   selector?: (ev: {
     type: TEventType;
     value: T;
   }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
 ): SideEffect1<Optional<HTMLElement | null>> => {
-  const memoizedEvents = __constant(events);
-  const filteredAnimations = __memo(filterEvents, animation, memoizedEvents);
-
-  return __animate(filteredAnimations, selector ?? (defaultSelector as any));
+  return __animate(animation, selector ?? (defaultSelector as any));
 };

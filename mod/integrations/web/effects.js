@@ -24,9 +24,6 @@ export const __animate = (animation, selector) => {
     return setRef;
 };
 const defaultSelector = (ev) => ev.value;
-const filterEvents = (animation, events) => pipe(animation, EventSource.keep(ev => events?.includes(ev.type) ?? true));
-export const __animateEvent = (animation, events, selector) => {
-    const memoizedEvents = __constant(events);
-    const filteredAnimations = __memo(filterEvents, animation, memoizedEvents);
-    return __animate(filteredAnimations, selector ?? defaultSelector);
+export const __animateEvent = (animation, selector) => {
+    return __animate(animation, selector ?? defaultSelector);
 };
