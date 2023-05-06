@@ -1832,6 +1832,21 @@ export const observeMeasure: <
           Disposable.bindTo(observer),
         );
         pipe(element, addMeasureListener(listener));
+
+        const { left, top, width, height, bottom, right, x, y }: DOMRect =
+          element.getBoundingClientRect();
+
+        const rect: Rect = {
+          left,
+          top,
+          width,
+          height,
+          bottom,
+          right,
+          x,
+          y,
+        };
+        observer[QueueableLike_enqueue](rect);
       }),
       Observable.distinctUntilChanged({ equality: areBoundsEqual }),
     ),

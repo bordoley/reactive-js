@@ -201,6 +201,18 @@ export const observeMeasure = /*@__PURE__*/ (() => {
     return returns(element => pipe(Observable.create(observer => {
         const listener = pipe(EventListener.create(bindMethod(observer, QueueableLike_enqueue)), Disposable.bindTo(observer));
         pipe(element, addMeasureListener(listener));
+        const { left, top, width, height, bottom, right, x, y } = element.getBoundingClientRect();
+        const rect = {
+            left,
+            top,
+            width,
+            height,
+            bottom,
+            right,
+            x,
+            y,
+        };
+        observer[QueueableLike_enqueue](rect);
     }), Observable.distinctUntilChanged({ equality: areBoundsEqual })));
 })();
 export const intersectionWith = 
