@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [rx](../modules/rx.md) / StreamableLike
 
-# Interface: StreamableLike<TReq, T\>
+# Interface: StreamableLike<TReq, T, TStream\>
 
 [rx](../modules/rx.md).StreamableLike
 
@@ -24,14 +24,7 @@ TStream
 | :------ | :------ |
 | `TReq` | `unknown` |
 | `T` | `unknown` |
-
-## Hierarchy
-
-- **`StreamableLike`**
-
-  ↳ [`CacheLike`](rx.CacheLike.md)
-
-  ↳ [`AnimationGroupEventHandlerLike`](rx.AnimationGroupEventHandlerLike.md)
+| `TStream` | extends [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> = [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> |
 
 ## Table of contents
 
@@ -47,13 +40,13 @@ TStream
 
 ### [\_\_\_StreamableLike\_TStream]
 
-• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\>
+• `Optional` `Readonly` **[\_\_\_StreamableLike\_TStream]**: `TStream`
 
 ## Methods
 
 ### [\_\_\_StreamableLike\_stream]
 
-▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): [`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> & [`DisposableLike`](util.DisposableLike.md)
+▸ **[___StreamableLike_stream]**(`scheduler`, `options?`): `TStream` & [`DisposableLike`](util.DisposableLike.md)
 
 Subscribe to the Streamable.
 
@@ -69,4 +62,4 @@ Subscribe to the Streamable.
 
 #### Returns
 
-[`StreamLike`](rx.StreamLike.md)<`TReq`, `T`\> & [`DisposableLike`](util.DisposableLike.md)
+`TStream` & [`DisposableLike`](util.DisposableLike.md)

@@ -1,7 +1,8 @@
-import { ReadonlyObjectMapLike } from "../../../containers.js";
+import { DictionaryLike, ReadonlyObjectMapLike } from "../../../containers.js";
 import { Function1 } from "../../../functions.js";
-import { AnimationGroupEventHandlerLike, Reactive } from "../../../rx.js";
-import { QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
+import { Reactive, StreamLike, StreamableLike } from "../../../rx.js";
+import { EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../../util.js";
+type AnimationGroupEventHandlerLike<TEventType, TKey extends string | number | symbol, T> = StreamableLike<TEventType, boolean, StreamLike<TEventType, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
 interface CreateAnimationGroupEventHandler {
     createAnimationGroupEventHandler<TEventType, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEventType, Reactive.AnimationConfig<T> | readonly Reactive.AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";

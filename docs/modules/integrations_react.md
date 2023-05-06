@@ -211,7 +211,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
 
 #### Parameters
 
@@ -234,7 +234,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
 
 #### Parameters
 

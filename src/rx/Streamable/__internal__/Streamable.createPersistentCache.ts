@@ -1,5 +1,5 @@
 import { Optional } from "../../../functions.js";
-import { CacheLike, ObservableLike } from "../../../rx.js";
+import { ObservableLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../util.js";
 import Streamable_createCache from "./Streamable.createCache.js";
 
@@ -14,6 +14,7 @@ const Streamable_createPersistentCache = <T>(
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
   } = {},
-): CacheLike<T> => Streamable_createCache<T>(persistentStore, options);
+): ReturnType<typeof Streamable_createCache<T>> =>
+  Streamable_createCache<T>(persistentStore, options);
 
 export default Streamable_createPersistentCache;

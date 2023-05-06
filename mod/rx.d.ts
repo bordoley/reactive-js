@@ -1,7 +1,7 @@
 import { __MulticastObservableLike_buffer as MulticastObservableLike_buffer, __ObservableLike_isEnumerable as ObservableLike_isEnumerable, __ObservableLike_isRunnable as ObservableLike_isRunnable, __ObservableLike_observe as ObservableLike_observe, __ObserverLike_notify as ObserverLike_notify, __PublisherLike_observerCount as PublisherLike_observerCount, __StreamLike_scheduler as StreamLike_scheduler, __StreamableLike_TStream as StreamableLike_TStream, __StreamableLike_stream as StreamableLike_stream } from "./__internal__/symbols.js";
-import { AssociativeCollectionLike, Container, ContainerOf, ContainerOperator, Container_T, Container_type, DictionaryLike, ReadonlyObjectMapLike } from "./containers.js";
+import { Container, ContainerOf, ContainerOperator, Container_T, Container_type } from "./containers.js";
 import { Factory, Function1, Function2, Optional } from "./functions.js";
-import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
+import { DispatcherLike, DisposableLike, ErrorSafeEventListenerLike, IndexedBufferCollectionLike, PauseableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./util.js";
 export { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, PublisherLike_observerCount, StreamableLike_stream, StreamLike_scheduler, StreamableLike_TStream, };
 /**
  * A consumer of push-based notifications.
@@ -141,8 +141,8 @@ export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObse
  * @noInheritDoc
  * @category Streamable
  */
-export interface StreamableLike<TReq = unknown, T = unknown> {
-    readonly [StreamableLike_TStream]?: StreamLike<TReq, T>;
+export interface StreamableLike<TReq = unknown, T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
+    readonly [StreamableLike_TStream]?: TStream;
     /**
      * Subscribe to the Streamable.
      *
@@ -164,24 +164,6 @@ export interface StreamableLike<TReq = unknown, T = unknown> {
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
 export type DisposableStreamOf<TStreamable extends StreamableLike> = StreamOf<TStreamable> & DisposableLike;
-/**
- * A cache stream that support transaction updates of a collection of keys
- * and observing the changing values of individual keys.
- *
- * @noInheritDoc
- *  @category Streamable
- */
-export interface CacheLike<T> extends StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> {
-    readonly [StreamableLike_TStream]?: StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeCollectionLike<string, ObservableLike<T>>;
-}
-/**
- *
- * @noInheritDoc
- * @category Streamable
- */
-export interface AnimationGroupEventHandlerLike<TEventType, TKey extends string | number | symbol, T> extends StreamableLike<TEventType, boolean> {
-    readonly [StreamableLike_TStream]?: StreamLike<TEventType, boolean> & DictionaryLike<TKey, EventSourceLike<T>>;
-}
 export declare namespace Reactive {
     /**
      * @noInheritDoc

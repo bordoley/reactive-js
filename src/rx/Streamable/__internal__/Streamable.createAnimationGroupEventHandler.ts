@@ -35,11 +35,12 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  AnimationGroupEventHandlerLike,
   DisposableStreamOf,
   ObservableContainer,
   ObservableLike,
   Reactive,
+  StreamLike,
+  StreamableLike,
   StreamableLike_stream,
 } from "../../../rx.js";
 import Observable_animate from "../../../rx/Observable/__internal__/Observable.animate.js";
@@ -60,6 +61,16 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
+
+type AnimationGroupEventHandlerLike<
+  TEventType,
+  TKey extends string | number | symbol,
+  T,
+> = StreamableLike<
+  TEventType,
+  boolean,
+  StreamLike<TEventType, boolean> & DictionaryLike<TKey, EventSourceLike<T>>
+>;
 
 const createAnimationGroupEventHandlerStream: <
   TEventType,

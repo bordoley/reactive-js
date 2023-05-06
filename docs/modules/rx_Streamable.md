@@ -18,7 +18,7 @@
 
 ### create
 
-▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\>
+▸ **create**<`TReq`, `T`\>(`op`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\>
 
 #### Type parameters
 
@@ -35,13 +35,13 @@
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TReq`, `T`\>\>
 
 ___
 
 ### createAnimationGroupEventHandler
 
-▸ **createAnimationGroupEventHandler**<`TEventType`, `TKey`, `T`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `TKey`, `T`\>
+▸ **createAnimationGroupEventHandler**<`TEventType`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -62,9 +62,9 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType`, `TKey`, `T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_1`, `TKey_1`, `T_1`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `TKey_1`, `T_1`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_1`, `TKey_1`, `T_1`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
 
 #### Type parameters
 
@@ -85,9 +85,9 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_1`, `TKey_1`, `T_1`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_2`, `TKey_2`, `T_2`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `TKey_2`, `T_2`\>
+▸ **createAnimationGroupEventHandler**<`TEventType_2`, `TKey_2`, `T_2`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
 
 #### Type parameters
 
@@ -110,9 +110,9 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`TEventType_2`, `TKey_2`, `T_2`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey_3`, `T_3`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_3`, `T_3`\>
+▸ **createAnimationGroupEventHandler**<`TKey_3`, `T_3`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_3`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_3`\>\>\>
 
 #### Type parameters
 
@@ -132,9 +132,9 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_3`, `T_3`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_3`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_3`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey_4`, `T_4`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_4`, `T_4`\>
+▸ **createAnimationGroupEventHandler**<`TKey_4`, `T_4`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_4`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_4`\>\>\>
 
 #### Type parameters
 
@@ -154,9 +154,9 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_4`, `T_4`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_4`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_4`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey_5`, `T_5`\>(`animationGroup`, `options`): [`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_5`, `T_5`\>
+▸ **createAnimationGroupEventHandler**<`TKey_5`, `T_5`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_5`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_5`\>\>\>
 
 #### Type parameters
 
@@ -178,13 +178,13 @@ ___
 
 #### Returns
 
-[`AnimationGroupEventHandlerLike`](../interfaces/rx.AnimationGroupEventHandlerLike.md)<`void`, `TKey_5`, `T_5`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_5`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_5`\>\>\>
 
 ___
 
 ### createEventHandler
 
-▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`\>
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -204,9 +204,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\>\>
 
-▸ **createEventHandler**<`TEventType_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`\>
+▸ **createEventHandler**<`TEventType_1`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -226,9 +226,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\>\>
 
-▸ **createEventHandler**<`TEventType_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`\>
+▸ **createEventHandler**<`TEventType_2`\>(`op`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -250,9 +250,9 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\>\>
 
-▸ **createEventHandler**<`TEventType_3`\>(`op`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_3`, `boolean`\>
+▸ **createEventHandler**<`TEventType_3`\>(`op`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_3`, `boolean`\>\>
 
 Returns an event handler that invokes the observable function.
 
@@ -270,13 +270,13 @@ Returns an event handler that invokes the observable function.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_3`, `boolean`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_3`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_3`, `boolean`\>\>
 
 ___
 
 ### createInMemoryCache
 
-▸ **createInMemoryCache**<`T`\>(`options?`): [`CacheLike`](../interfaces/rx.CacheLike.md)<`T`\>
+▸ **createInMemoryCache**<`T`\>(`options?`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](../interfaces/containers.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -294,13 +294,13 @@ ___
 
 #### Returns
 
-[`CacheLike`](../interfaces/rx.CacheLike.md)<`T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](../interfaces/containers.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\>
 
 ___
 
 ### createPersistentCache
 
-▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`CacheLike`](../interfaces/rx.CacheLike.md)<`T`\>
+▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](../interfaces/containers.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -321,13 +321,13 @@ ___
 
 #### Returns
 
-[`CacheLike`](../interfaces/rx.CacheLike.md)<`T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`string`, [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeCollectionLike`](../interfaces/containers.AssociativeCollectionLike.md)<`string`, [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\>
 
 ___
 
 ### createStateStore
 
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 Returns a new `StateStoreLike` instance that stores state which can
 be updated by notifying the instance with a `StateUpdater` that computes a
@@ -349,13 +349,13 @@ new state based upon the previous state.
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`T`, `T`\>
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -365,4 +365,4 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`T`, `T`\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`T`, `T`\>\>

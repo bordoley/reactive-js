@@ -1,5 +1,4 @@
 import { none } from "../../../functions.js";
-import { CacheLike } from "../../../rx.js";
 import { SchedulerLike } from "../../../util.js";
 import Streamable_createCache from "./Streamable.createCache.js";
 
@@ -8,6 +7,7 @@ const Streamable_createInMemoryCache = <T>(
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;
   } = {},
-): CacheLike<T> => Streamable_createCache<T>(none, options);
+): ReturnType<typeof Streamable_createCache<T>> =>
+  Streamable_createCache<T>(none, options);
 
 export default Streamable_createInMemoryCache;

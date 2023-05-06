@@ -37,10 +37,11 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  CacheLike,
   DisposableStreamOf,
   ObservableLike,
   PublisherLike,
+  StreamLike,
+  StreamableLike,
   StreamableLike_stream,
 } from "../../../rx.js";
 import * as Observable from "../../../rx/Observable.js";
@@ -71,6 +72,16 @@ interface ReactiveCachePersistentStorageLike<T> {
     updates: ReadonlyObjectMapLike<string, Optional<T>>,
   ): ObservableLike<void>;
 }
+
+type CacheLike<T> = StreamableLike<
+  ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
+  never,
+  StreamLike<
+    ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
+    never
+  > &
+    AssociativeCollectionLike<string, ObservableLike<T>>
+>;
 
 const createCacheStream: <T>(
   scheduler: SchedulerLike,

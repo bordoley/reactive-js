@@ -34,7 +34,7 @@ import {
   returns,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/rx/Streamable";
-import { ObservableLike, CacheLike } from "@reactive-js/core/rx";
+import { ObservableLike } from "@reactive-js/core/rx";
 import {
   QueueableLike_enqueue,
   EventSourceLike,
@@ -157,7 +157,7 @@ const AnimationGroup = () => {
 };
 
 const Cache = () => {
-  const cache = useStream<CacheLike<string>>(
+  const cache = useStream(
     () => Streamable.createInMemoryCache<string>(),
     [],
   );
