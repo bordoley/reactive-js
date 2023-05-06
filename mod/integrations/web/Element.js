@@ -9,7 +9,7 @@ import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLi
 import * as Disposable from "../../util/Disposable.js";
 import * as EventListener from "../../util/EventListener.js";
 import * as EventPublisher from "../../util/EventPublisher.js";
-import * as RxEventSource from "../../util/EventSource.js";
+import * as EventSource from "../../util/EventSource.js";
 export const addEventHandler = (eventName, eventHandler) => source => {
     const listener = pipe(eventHandler, EventListener.create, EventListener.toErrorSafeEventListener());
     pipe(source, addEventListener(eventName, listener));
@@ -219,7 +219,7 @@ export const intersectionWith =
 /*@__PURE__*/ (() => {
     const intersectionObservers = newInstance(Map);
     const eventPublishers = newInstance(Map);
-    return (root = document) => child => RxEventSource.create(listener => {
+    return (root = document) => child => EventSource.create(listener => {
         const publisher = eventPublishers.get(root)?.get(child) ??
             (() => {
                 const publisher = EventPublisher.createRefCounted();

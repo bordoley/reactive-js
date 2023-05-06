@@ -27,7 +27,7 @@ import {
 import * as Disposable from "../../util/Disposable.js";
 import * as EventListener from "../../util/EventListener.js";
 import * as EventPublisher from "../../util/EventPublisher.js";
-import * as RxEventSource from "../../util/EventSource.js";
+import * as EventSource from "../../util/EventSource.js";
 import type { Rect, ScrollValue } from "../web.js";
 
 interface AddEventHandler {
@@ -1870,7 +1870,7 @@ export const intersectionWith: (
 
     return (root = document) =>
       child =>
-        RxEventSource.create(listener => {
+        EventSource.create(listener => {
           const publisher =
             eventPublishers.get(root)?.get(child) ??
             (() => {

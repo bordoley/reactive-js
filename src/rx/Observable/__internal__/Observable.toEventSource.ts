@@ -21,14 +21,14 @@ const Observable_toEventSource =
     } = {},
   ): Function1<ObservableLike<T>, EventSourceLike<T>> =>
   obs =>
-    EventSource_create(publisher =>
+    EventSource_create(listener =>
       pipe(
         obs,
         Observable_forEach<ObservableContainer, T>(
-          bindMethod(publisher, EventListenerLike_notify),
+          bindMethod(listener, EventListenerLike_notify),
         ),
         Observable_subscribe(scheduler, options),
-        Disposable_bindTo(publisher),
+        Disposable_bindTo(listener),
       ),
     );
 

@@ -7,7 +7,6 @@
 ### Constructor Functions
 
 - [create](util_EventSource.md#create)
-- [empty](util_EventSource.md#empty)
 
 ### Operator Functions
 
@@ -42,24 +41,6 @@
 | Name | Type |
 | :------ | :------ |
 | `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/util.EventListenerLike.md)<`T`\>\> |
-
-#### Returns
-
-[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
-
-___
-
-### empty
-
-▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
 
 #### Returns
 

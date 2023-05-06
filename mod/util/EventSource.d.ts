@@ -7,7 +7,6 @@ export declare const addEventHandler: <T>(handler: SideEffect1<T>) => Function1<
  * @category Constructor
  */
 export declare const create: <T>(setup: SideEffect1<import("../util.js").EventListenerLike<T>>) => EventSourceLike<T>;
-export declare const empty: Container.Empty<EventSourceContainer>["empty"];
 export declare const forEach: Container.ForEach<EventSourceContainer>["forEach"];
 export declare const ignoreElements: Container.IgnoreElements<EventSourceContainer>["ignoreElements"];
 export declare const keep: Container.Keep<EventSourceContainer>["keep"];
