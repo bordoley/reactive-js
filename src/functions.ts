@@ -943,6 +943,130 @@ export const pipeSome: PipeSome["pipeSome"] = (
 ): Optional<unknown> =>
   isSome(source) ? pipeUnsafe(source, ...operators) : none;
 
+interface PipeSomeLazy {
+  pipeSomeLazy<T, A>(src: Optional<T>, op1: Function1<T, A>): Factory<A>;
+  pipeSomeLazy<T, A, B>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Factory<B>;
+  pipeSomeLazy<T, A, B, C>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): Factory<C>;
+  pipeSomeLazy<T, A, B, C, D>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): Factory<D>;
+  pipeSomeLazy<T, A, B, C, D, E>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): Factory<E>;
+  pipeSomeLazy<T, A, B, C, D, E, F>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): Factory<F>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): Factory<G>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): Factory<H>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): Factory<I>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): Factory<J>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): Factory<K>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): Factory<L>;
+}
+/**
+ * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+ */
+export const pipeSomeLazy: PipeSomeLazy["pipeSomeLazy"] =
+  (
+    source: Optional,
+    ...operators: Function1<unknown, unknown>[]
+  ): Factory<unknown> =>
+  () =>
+    isSome(source) ? pipeUnsafe(source, ...operators) : none;
+
 export const error = (message?: unknown): Error => {
   const messageIsString = isString(message);
   const messageIsError = message instanceof Error;

@@ -4,6 +4,7 @@ import {
   isSome,
   pipeLazy,
   pipeSome,
+  pipeSomeLazy,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/rx/Observable";
@@ -65,42 +66,40 @@ const Measure = () => {
   const { enqueue } = useDispatcher(animationGroup);
 
   const { width: boxWidth } = useSubscribe<Rect>(
-    () =>
-      pipeSome(
-        container,
-        WebElement.observeMeasure(),
-        Observable.distinctUntilChanged({
-          equality: (a, b) => a.width === b.width,
-        }),
-        Observable.forkMerge(
-          compose(
-            Observable.withLatestFrom(
-              pipeSome(animation, EventSource.toObservable()) ??
-                Observable.empty<number>(),
-              ({ width: boxWidth }, currentWidth) => [boxWidth, currentWidth],
-            ),
-            Observable.forEach(([boxWidth, currentWidth]) => {
-              if (currentWidth > 0) {
-                enqueue({ width: boxWidth });
-              }
-            }),
-            Observable.ignoreElements(),
+    pipeSomeLazy(
+      container,
+      WebElement.observeMeasure(),
+      Observable.distinctUntilChanged({
+        equality: (a, b) => a.width === b.width,
+      }),
+      Observable.forkMerge(
+        compose(
+          Observable.withLatestFrom(
+            pipeSome(animation, EventSource.toObservable()) ??
+              Observable.empty<number>(),
+            ({ width: boxWidth }, currentWidth) => [boxWidth, currentWidth],
           ),
-          Observable.throttle(50, { mode: "interval" }),
+          Observable.forEach(([boxWidth, currentWidth]) => {
+            if (currentWidth > 0) {
+              enqueue({ width: boxWidth });
+            }
+          }),
+          Observable.ignoreElements(),
         ),
+        Observable.throttle(50, { mode: "interval" }),
       ),
+    ),
     [container, animation, enqueue],
   ) ?? { width: 0 };
 
   const width =
     useSubscribe(
-      () =>
-        pipeSome(
-          animation,
-          EventSource.toObservable(),
-          Observable.throttle(50),
-          Observable.map(Math.floor),
-        ),
+      pipeSomeLazy(
+        animation,
+        EventSource.toObservable(),
+        Observable.throttle(50),
+        Observable.map(Math.floor),
+      ),
       [animation],
     ) ?? 0;
 

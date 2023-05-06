@@ -259,6 +259,24 @@ interface PipeSome {
  * Pipes `source` through a series of unary functions if it is not undefined.
  */
 export declare const pipeSome: PipeSome["pipeSome"];
+interface PipeSomeLazy {
+    pipeSomeLazy<T, A>(src: Optional<T>, op1: Function1<T, A>): Factory<A>;
+    pipeSomeLazy<T, A, B>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;
+    pipeSomeLazy<T, A, B, C>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Factory<C>;
+    pipeSomeLazy<T, A, B, C, D>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>): Factory<D>;
+    pipeSomeLazy<T, A, B, C, D, E>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>): Factory<E>;
+    pipeSomeLazy<T, A, B, C, D, E, F>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>): Factory<F>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>): Factory<G>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G, H>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>): Factory<H>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G, H, I>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>): Factory<I>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>): Factory<J>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Factory<K>;
+    pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Factory<L>;
+}
+/**
+ * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+ */
+export declare const pipeSomeLazy: PipeSomeLazy["pipeSomeLazy"];
 export declare const error: (message?: unknown) => Error;
 export declare const errorWithDebugMessage: (message: string) => Error;
 export declare const raiseError: <T>(e: Error) => T;

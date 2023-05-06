@@ -24,7 +24,7 @@ import {
   isNone,
   isSome,
   none,
-  pipeSome,
+  pipeSomeLazy,
   raiseError,
 } from "../functions.js";
 import {
@@ -141,16 +141,15 @@ export const useSubscribe: UseSubscribe["useSubscribe"] = <T>(
         }>)) ?? {};
 
   useDisposable(
-    () =>
-      pipeSome(
-        observable,
-        Observable.forEach<T>(v => updateState(_ => v)),
-        Observable.subscribe(getScheduler({ priority }), {
-          backpressureStrategy,
-          capacity,
-        }),
-        Disposable.onError(updateError),
-      ),
+    pipeSomeLazy(
+      observable,
+      Observable.forEach<T>(v => updateState(_ => v)),
+      Observable.subscribe(getScheduler({ priority }), {
+        backpressureStrategy,
+        capacity,
+      }),
+      Disposable.onError(updateError),
+    ),
     [
       observable,
       updateState,
@@ -198,12 +197,11 @@ export const useListen: UseListen["useListen"] = <T>(
     : eventSourceOrFactory;
 
   useDisposable(
-    () =>
-      pipeSome(
-        eventSource,
-        EventSource.addEventHandler(v => updateState(_ => v)),
-        Disposable.onError(updateError),
-      ),
+    pipeSomeLazy(
+      eventSource,
+      EventSource.addEventHandler(v => updateState(_ => v)),
+      Disposable.onError(updateError),
+    ),
     [eventSource, updateState, updateError],
   );
 
@@ -306,10 +304,9 @@ export const useEnumerate: UseEnumerate["useEnumerate"] = <T>(
   const enumerable = isFunction(enumerableOrFactory)
     ? useMemo(enumerableOrFactory, depsOrNone)
     : enumerableOrFactory;
-  return useDisposable(
-    () => pipeSome(enumerable, Enumerable.enumerate()),
-    [enumerable],
-  );
+  return useDisposable(pipeSomeLazy(enumerable, Enumerable.enumerate()), [
+    enumerable,
+  ]);
 };
 
 /**
@@ -456,7 +453,7 @@ export const createComponent = <TProps>(
 
     return (
       useSubscribe(
-        () => pipeSome(propsPublisher, fn),
+        pipeSomeLazy(propsPublisher, fn),
         [propsPublisher],
         options,
       ) ?? null

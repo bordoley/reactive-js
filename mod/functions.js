@@ -145,6 +145,10 @@ export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...op
  * Pipes `source` through a series of unary functions if it is not undefined.
  */
 export const pipeSome = (source, ...operators) => isSome(source) ? pipeUnsafe(source, ...operators) : none;
+/**
+ * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+ */
+export const pipeSomeLazy = (source, ...operators) => () => isSome(source) ? pipeUnsafe(source, ...operators) : none;
 export const error = (message) => {
     const messageIsString = isString(message);
     const messageIsError = message instanceof Error;

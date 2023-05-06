@@ -157,10 +157,7 @@ const AnimationGroup = () => {
 };
 
 const Cache = () => {
-  const cache = useStream(
-    () => Streamable.createInMemoryCache<string>(),
-    [],
-  );
+  const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
 
   const values = cache?.[KeyedCollectionLike_get]("a");
   const value = useSubscribe(values) ?? "";

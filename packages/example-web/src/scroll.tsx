@@ -11,7 +11,7 @@ import {
 } from "@reactive-js/core/integrations/react";
 import { EventSourceLike } from "@reactive-js/core/util";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
-import { Optional, pipeLazy, pipeSome } from "@reactive-js/core/functions";
+import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import { EventListenerLike_notify } from "@reactive-js/core/util";
 import * as EventPublisher from "@reactive-js/core/util/EventPublisher";
@@ -126,13 +126,12 @@ const ScrollApp = () => {
   );
 
   useDisposable(
-    () =>
-      pipeSome(
-        springAnimation,
-        EventSource.addEventHandler(v =>
-          publishedAnimation?.[EventListenerLike_notify](v),
-        ),
+    pipeSomeLazy(
+      springAnimation,
+      EventSource.addEventHandler(v =>
+        publishedAnimation?.[EventListenerLike_notify](v),
       ),
+    ),
     [springAnimation, publishedAnimation],
   );
 

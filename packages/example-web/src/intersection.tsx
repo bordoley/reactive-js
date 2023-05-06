@@ -7,7 +7,7 @@ import {
   isTrue,
   none,
   pipeLazy,
-  pipeSome,
+  pipeSomeLazy,
 } from "@reactive-js/core/functions";
 import { useDisposable } from "@reactive-js/core/integrations/react";
 import * as EventSource from "@reactive-js/core/util/EventSource";
@@ -17,14 +17,13 @@ const IntersectionApp = () => {
   const [endOfPageRef, setEndOfPage] = useState<Optional<HTMLDivElement>>();
 
   useDisposable(
-    () =>
-      pipeSome(
-        endOfPageRef,
-        WebElement.intersectionWith(document),
-        EventSource.pick("isIntersecting"),
-        EventSource.keep(isTrue),
-        EventSource.addEventHandler(pipeLazy(incrementBy(10), updateCount)),
-      ),
+    pipeSomeLazy(
+      endOfPageRef,
+      WebElement.intersectionWith(document),
+      EventSource.pick("isIntersecting"),
+      EventSource.keep(isTrue),
+      EventSource.addEventHandler(pipeLazy(incrementBy(10), updateCount)),
+    ),
     [endOfPageRef],
   );
 

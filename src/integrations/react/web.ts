@@ -20,7 +20,7 @@ import {
   isSome,
   none,
   pipe,
-  pipeSome,
+  pipeSomeLazy,
 } from "../../functions.js";
 import { EventSourceLike } from "../../util.js";
 import * as EventSource from "../../util/EventSource.js";
@@ -149,23 +149,20 @@ export const useAnimate: UseAnimate["useAnimate"] = <
     : (identity as Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>);
 
   useDisposable(
-    () =>
-      pipeSome(
-        animation,
-        EventSource.addEventHandler(v => {
-          const element = ref.current;
-          if (element != null) {
-            pipe(
-              memoizedSelector(v),
-              ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>(
-                (v, key) => {
-                  element.style[key] = v ?? "";
-                },
-              ),
-            );
-          }
-        }),
-      ),
+    pipeSomeLazy(
+      animation,
+      EventSource.addEventHandler(v => {
+        const element = ref.current;
+        if (element != null) {
+          pipe(
+            memoizedSelector(v),
+            ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>((v, key) => {
+              element.style[key] = v ?? "";
+            }),
+          );
+        }
+      }),
+    ),
     [animation, memoizedSelector],
   );
 
@@ -187,7 +184,7 @@ export const useScroll = <TElement extends HTMLElement>(
   const memoizedCallback = useCallback(callback, deps);
 
   useDisposable(
-    () => pipeSome(element, WebElement.addScrollHandler(memoizedCallback)),
+    pipeSomeLazy(element, WebElement.addScrollHandler(memoizedCallback)),
     [element, memoizedCallback],
   );
 
