@@ -62,7 +62,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | () => `TDisposable` |
+| `factory` | () => [`Optional`](functions.md#optional)<`TDisposable`\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
@@ -172,7 +172,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
@@ -290,7 +290,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |

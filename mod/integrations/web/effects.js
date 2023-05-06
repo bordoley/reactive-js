@@ -23,7 +23,3 @@ export const __animate = (animation, selector) => {
     __using(animateHtmlElement, htmlElement, animation, memoizedSelector ?? identity);
     return setRef;
 };
-const defaultSelector = (ev) => ev.value;
-export const __animateEvent = (animation, selector) => {
-    return __animate(animation, selector ?? defaultSelector);
-};

@@ -11,7 +11,7 @@ import {
   useStream,
   useSubscribe,
 } from "@reactive-js/core/integrations/react";
-import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
+import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import * as EventSource from "@reactive-js/core/util/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
@@ -82,7 +82,7 @@ const Measure = () => {
           ),
           Observable.throttle(50, { mode: "interval" }),
         ),
-      ) ?? Observable.empty<Rect>(),
+      ),
     [container, animation, enqueue],
   ) ?? { width: 0 };
 
@@ -95,13 +95,17 @@ const Measure = () => {
           Observable.throttle(50),
           Observable.pick<{ value: number }, "value">("value"),
           Observable.map(Math.floor),
-        ) ?? Observable.empty(),
+        ),
       [animation],
     ) ?? 0;
 
-  const fillRef = useAnimateEvent<HTMLDivElement, number>(animation, ev => ({
-    width: `${ev.value}px`,
-  }));
+  const fillRef: React.Ref<HTMLDivElement> = useAnimate(
+    animation,
+    ev => ({
+      width: `${ev.value}px`,
+    }),
+    [],
+  );
 
   return (
     <div

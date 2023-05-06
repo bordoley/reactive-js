@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   createContext,
   createElement,
@@ -8,19 +7,22 @@ import {
   useRef,
   useState,
 } from "react";
+import * as React from "react";
 import { ReadonlyObjectMapLike } from "../../containers.js";
 import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
 import {
+  Function1,
   Optional,
   SideEffect1,
   Updater,
+  identity,
+  isFunction,
   isSome,
   none,
   pipe,
   pipeSome,
 } from "../../functions.js";
 import { EventSourceLike } from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
 import * as EventSource from "../../util/EventSource.js";
 import { useDisposable, useSubscribe } from "../react.js";
 import {
@@ -115,16 +117,36 @@ export const WindowLocationProvider: React.FunctionComponent<{
     children,
   );
 
+interface UseAnimate {
+  useAnimate<TElement extends HTMLElement>(
+    animation: Optional<
+      EventSourceLike<ReadonlyObjectMapLike<CSSStyleKey, string>>
+    >,
+  ): React.Ref<TElement>;
+
+  useAnimate<TElement extends HTMLElement, T>(
+    animation: Optional<EventSourceLike<T>>,
+    selector: Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>,
+    deps: readonly unknown[],
+  ): React.Ref<TElement>;
+}
+
 /**
  * @category Hook
  */
-export const useAnimate = <TElement extends HTMLElement, T = number>(
+export const useAnimate: UseAnimate["useAnimate"] = <
+  TElement extends HTMLElement,
+  T,
+>(
   animation: Optional<EventSourceLike<T>>,
-  selector: (ev: T) => ReadonlyObjectMapLike<CSSStyleKey, string>,
-  deps: readonly unknown[] = [],
+  selector?: Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>,
+  deps?: readonly unknown[],
 ): React.Ref<TElement> => {
   const ref = useRef<TElement>(null);
-  const selectorMemoized = useCallback(selector, deps);
+
+  const memoizedSelector = isFunction(selector)
+    ? useCallback(selector, deps ?? [])
+    : (identity as Function1<T, ReadonlyObjectMapLike<CSSStyleKey, string>>);
 
   useDisposable(
     () =>
@@ -134,7 +156,7 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
           const element = ref.current;
           if (element != null) {
             pipe(
-              selectorMemoized(v),
+              memoizedSelector(v),
               ReadonlyObjectMap.forEachWithKey<string, CSSStyleKey>(
                 (v, key) => {
                   element.style[key] = v ?? "";
@@ -143,33 +165,11 @@ export const useAnimate = <TElement extends HTMLElement, T = number>(
             );
           }
         }),
-      ) ?? Disposable.disposed,
-    [animation, selectorMemoized],
+      ),
+    [animation, memoizedSelector],
   );
 
   return ref;
-};
-
-/**
- * @category Hook
- */
-export const useAnimateEvent = <
-  TElement extends HTMLElement,
-  T = number,
-  TEventType = unknown,
->(
-  animation: Optional<EventSourceLike<{ type: TEventType; value: T }>>,
-  selector: (ev: {
-    type: TEventType;
-    value: T;
-  }) => ReadonlyObjectMapLike<CSSStyleKey, string>,
-  deps: readonly unknown[] = [],
-): React.Ref<TElement> => {
-  return useAnimate<TElement, { type: TEventType; value: T }>(
-    animation,
-    selector,
-    deps,
-  );
 };
 
 /**
@@ -187,9 +187,7 @@ export const useScroll = <TElement extends HTMLElement>(
   const memoizedCallback = useCallback(callback, deps);
 
   useDisposable(
-    () =>
-      pipeSome(element, WebElement.addScrollHandler(memoizedCallback)) ??
-      Disposable.disposed,
+    () => pipeSome(element, WebElement.addScrollHandler(memoizedCallback)),
     [element, memoizedCallback],
   );
 

@@ -21,9 +21,9 @@ import {
   SideEffect,
   bindMethod,
   isFunction,
+  isNone,
   isSome,
   none,
-  pipeLazy,
   pipeSome,
   raiseError,
   returns,
@@ -65,13 +65,18 @@ import { getScheduler } from "./scheduler.js";
  * @category Hook
  */
 export const useDisposable = <TDisposable extends DisposableLike>(
-  factory: () => TDisposable,
+  factory: () => Optional<TDisposable>,
   deps: readonly unknown[],
 ): Optional<TDisposable> => {
   const [disposable, setDisposable] = useState<Optional<TDisposable>>(none);
 
   useEffect(() => {
     const disposable = factory();
+
+    if (isNone(disposable)) {
+      return;
+    }
+
     setDisposable(disposable);
     return bindMethod(disposable, DisposableLike_dispose);
   }, [...deps, setDisposable]);
@@ -90,7 +95,7 @@ interface UseSubscribe {
   ): Optional<T>;
 
   useSubscribe<T>(
-    factory: Factory<ObservableLike<T>>,
+    factory: Factory<Optional<ObservableLike<T>>>,
     deps: readonly unknown[],
     options?: {
       readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -104,7 +109,9 @@ interface UseSubscribe {
  * @category Hook
  */
 export const useSubscribe: UseSubscribe["useSubscribe"] = <T>(
-  observableOrFactory: Optional<ObservableLike<T>> | Factory<ObservableLike<T>>,
+  observableOrFactory:
+    | Optional<ObservableLike<T>>
+    | Factory<Optional<ObservableLike<T>>>,
   optionsOrDeps:
     | Optional<{
         readonly priority?: 1 | 2 | 3 | 4 | 5;
@@ -144,7 +151,7 @@ export const useSubscribe: UseSubscribe["useSubscribe"] = <T>(
           capacity,
         }),
         Disposable.onError(updateError),
-      ) ?? Disposable.disposed,
+      ),
     [
       observable,
       updateState,
@@ -170,7 +177,7 @@ interface UseListen {
   useListen<T>(eventSource: Optional<EventSourceLike<T>>): Optional<T>;
 
   useListen<T>(
-    factory: Factory<EventSourceLike<T>>,
+    factory: Factory<Optional<EventSourceLike<T>>>,
     deps: readonly unknown[],
   ): Optional<T>;
 }
@@ -181,7 +188,7 @@ interface UseListen {
 export const useListen: UseListen["useListen"] = <T>(
   eventSourceOrFactory:
     | Optional<EventSourceLike<T>>
-    | Factory<EventSourceLike<T>>,
+    | Factory<Optional<EventSourceLike<T>>>,
   depsOrNone?: readonly unknown[],
 ): Optional<T> => {
   const [state, updateState] = useState<Optional<T>>(none);
@@ -197,7 +204,7 @@ export const useListen: UseListen["useListen"] = <T>(
         eventSource,
         EventSource.addEventHandler(v => updateState(_ => v)),
         Disposable.onError(updateError),
-      ) ?? Disposable.disposed,
+      ),
     [eventSource, updateState, updateError],
   );
 
@@ -292,14 +299,16 @@ interface UseEnumerate {
  * @category Hook
  */
 export const useEnumerate: UseEnumerate["useEnumerate"] = <T>(
-  enumerableOrFactory: Optional<EnumerableLike<T>> | Factory<EnumerableLike<T>>,
+  enumerableOrFactory:
+    | Optional<EnumerableLike<T>>
+    | Factory<Optional<EnumerableLike<T>>>,
   depsOrNone?: readonly unknown[],
 ): Optional<EnumeratorLike<T>> => {
   const enumerable = isFunction(enumerableOrFactory)
     ? useMemo(enumerableOrFactory, depsOrNone)
     : enumerableOrFactory;
   return useDisposable(
-    pipeLazy(enumerable ?? Enumerable.empty<T>(), Enumerable.enumerate()),
+    () => pipeSome(enumerable, Enumerable.enumerate()),
     [enumerable],
   );
 };

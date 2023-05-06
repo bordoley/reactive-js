@@ -24,9 +24,13 @@ const AnimatedCircle = ({
 }: {
   animation: Optional<EventSourceLike<number>>;
 }) => {
-  const circleRef = useAnimate<HTMLDivElement>(animation, progress => ({
-    clipPath: `circle(${progress * 25 + 5}%)`,
-  }));
+  const circleRef: React.Ref<HTMLDivElement> = useAnimate(
+    animation,
+    progress => ({
+      clipPath: `circle(${progress * 25 + 5}%)`,
+    }),
+    [],
+  );
 
   return (
     <div

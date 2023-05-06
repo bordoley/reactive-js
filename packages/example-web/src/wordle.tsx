@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { EventSourceLike } from "@reactive-js/core/util";
-import { useAnimateEvent } from "@reactive-js/core/integrations/react/web";
+import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
 import * as Streamable from "@reactive-js/core/rx/Streamable";
 import {
@@ -58,7 +58,7 @@ const AnimatedBox = ({
   animation: Optional<EventSourceLike<{ type: boolean; value: number }>>;
   index: number;
 }) => {
-  const frontBox = useAnimateEvent<HTMLDivElement, number, boolean>(
+  const frontBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
     ({ type, value }) => ({
       transform: `perspective(600px) rotateX(${
@@ -68,7 +68,7 @@ const AnimatedBox = ({
     [index],
   );
 
-  const backBox = useAnimateEvent<HTMLDivElement, number, boolean>(
+  const backBox: React.Ref<HTMLDivElement> = useAnimate(
     animation,
     ({ type, value }) => ({
       transform: `perspective(600px) rotateX(${calcXRotation(

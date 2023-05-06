@@ -14,7 +14,7 @@ import {
   useSubscribe,
 } from "@reactive-js/core/integrations/react";
 import {
-  useAnimateEvent,
+  useAnimate,
   useWindowLocation,
   WindowLocationProvider,
 } from "@reactive-js/core/integrations/react/web";
@@ -56,7 +56,7 @@ import {
   __stream,
   __using,
 } from "@reactive-js/core/rx/effects";
-import { __animateEvent } from "@reactive-js/core/integrations/web/effects";
+import { __animate } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle";
 import Measure from "./measure";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
@@ -73,10 +73,14 @@ const AnimatedBox = ({
 }: {
   animation?: EventSourceLike<{ type: unknown; value: number }>;
 }) => {
-  const ref = useAnimateEvent<HTMLDivElement>(animation, ({ value }) => ({
-    margin: `${50 - value * 50}px`,
-    padding: `${value * 50}px`,
-  }));
+  const ref: React.Ref<HTMLDivElement> = useAnimate(
+    animation,
+    ({ value }) => ({
+      margin: `${50 - value * 50}px`,
+      padding: `${value * 50}px`,
+    }),
+    [],
+  );
 
   return (
     <div
@@ -365,8 +369,9 @@ const RxComponent = createComponent(
         PauseableLike_resume,
       );
 
-      const animatedDivRef = __animateEvent(
+      const animatedDivRef = __animate(
         animationGroupEventHandler[KeyedCollectionLike_get](0)!,
+        __constant(({ value }) => value),
       );
 
       return (

@@ -25,7 +25,7 @@ const IntersectionApp = () => {
         EventSource.keep(isTrue),
         EventSource.forEach(pipeLazy(incrementBy(10), updateCount)),
         EventSource.ignoreElements(),
-      ) ?? EventSource.empty(),
+      ),
     [endOfPageRef],
   );
 
