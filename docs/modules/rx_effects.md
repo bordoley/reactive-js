@@ -92,7 +92,7 @@ ___
 
 ### \_\_constant
 
-▸ **__constant**<`T`\>(`value`): `T`
+▸ **__constant**<`T`\>(`value`, `...args`): `T`
 
 #### Type parameters
 
@@ -105,6 +105,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `T` |
+| `...args` | `unknown`[] |
 
 #### Returns
 

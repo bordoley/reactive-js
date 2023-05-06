@@ -115,7 +115,7 @@ ComputeContext_awaitOrObserve
 ComputeContext_constant
 ComputeContext_memoOrUse
 ComputeEffect_type
-ConstantEffect_hasValue
+ConstantEffect_args
 ConstantEffect_value
 Continuation_effect
 CreateEventSource_createDelegate

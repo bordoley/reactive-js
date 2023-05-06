@@ -235,7 +235,7 @@ export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol("ComputeContext_m
 /** @type {unique symbol} */
 export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 /** @type {unique symbol} */
-export const __ConstantEffect_hasValue = /*@__PURE__*/ symbol("ConstantEffect_hasValue");
+export const __ConstantEffect_args = /*@__PURE__*/ symbol("ConstantEffect_args");
 /** @type {unique symbol} */
 export const __ConstantEffect_value = /*@__PURE__*/ symbol("ConstantEffect_value");
 /** @type {unique symbol} */

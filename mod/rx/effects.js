@@ -19,9 +19,9 @@ export const __await = (observable) => {
     const ctx = assertCurrentContext();
     return ctx[__ComputeContext_awaitOrObserve](observable, true);
 };
-export const __constant = (value) => {
+export const __constant = (value, ...args) => {
     const ctx = assertCurrentContext();
-    return ctx[__ComputeContext_constant](value);
+    return ctx[__ComputeContext_constant](value, ...args);
 };
 export const __observe = (observable) => {
     const ctx = assertCurrentContext();

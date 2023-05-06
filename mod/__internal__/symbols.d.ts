@@ -225,7 +225,7 @@ export const __ComputeContext_memoOrUse: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeEffect_type: unique symbol;
 /** @type {unique symbol} */
-export const __ConstantEffect_hasValue: unique symbol;
+export const __ConstantEffect_args: unique symbol;
 /** @type {unique symbol} */
 export const __ConstantEffect_value: unique symbol;
 /** @type {unique symbol} */

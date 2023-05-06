@@ -1,13 +1,16 @@
 /// <reference types="./Observable.compute.d.ts" />
 
-import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_hasValue, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
+import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
+import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
+import { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import IndexedBufferCollection_empty from "../../../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import MulticastObservable_isMulticastObservable from "../../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -56,7 +59,7 @@ const validateComputeEffect = ((ctx, type) => {
                         ? {
                             [__ComputeEffect_type]: type,
                             [__ConstantEffect_value]: none,
-                            [__ConstantEffect_hasValue]: false,
+                            [__ConstantEffect_args]: [],
                         }
                         : raiseWithDebugMessage("invalid effect type");
         if (isSome(effect)) {
@@ -126,21 +129,31 @@ class ComputeContext {
                             : scheduledComputationSubscription;
                 }
             }), Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer), Disposable_onComplete(this[__ComputeContext_cleanup]));
+            const buffer = MulticastObservable_isMulticastObservable(observable)
+                ? observable[MulticastObservableLike_buffer]
+                : IndexedBufferCollection_empty();
+            const hasDefaultValue = buffer[CollectionLike_count] > 0;
+            const defaultValue = hasDefaultValue
+                ? buffer[KeyedCollectionLike_get](0)
+                : none;
             effect[__AwaitOrObserveEffect_observable] = observable;
             effect[__AwaitOrObserveEffect_subscription] = subscription;
-            effect[__AwaitOrObserveEffect_value] = none;
-            effect[__AwaitOrObserveEffect_hasValue] = false;
-            return shouldAwait ? raiseError(awaiting) : none;
+            effect[__AwaitOrObserveEffect_value] = defaultValue;
+            effect[__AwaitOrObserveEffect_hasValue] = hasDefaultValue;
+            return shouldAwait && !hasDefaultValue
+                ? raiseError(awaiting)
+                : defaultValue;
         }
     }
-    [__ComputeContext_constant](value) {
+    [__ComputeContext_constant](value, ...args) {
         const effect = validateComputeEffect(this, Constant);
-        if (effect[__ConstantEffect_hasValue]) {
+        if (isSome(effect[__ConstantEffect_value]) &&
+            arrayStrictEquality(args, effect[__ConstantEffect_args])) {
             return effect[__ConstantEffect_value];
         }
         else {
             effect[__ConstantEffect_value] = value;
-            effect[__ConstantEffect_hasValue] = true;
+            effect[__ConstantEffect_args] = args;
             return value;
         }
     }

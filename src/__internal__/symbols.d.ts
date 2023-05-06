@@ -224,7 +224,7 @@ export declare const __ComputeContext_memoOrUse: unique symbol;
 
 export declare const __ComputeEffect_type: unique symbol;
 
-export declare const __ConstantEffect_hasValue: unique symbol;
+export declare const __ConstantEffect_args: unique symbol;
 
 export declare const __ConstantEffect_value: unique symbol;
 

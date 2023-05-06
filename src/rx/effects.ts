@@ -99,9 +99,9 @@ export const __await = <T>(observable: ObservableLike<T>): T => {
   return ctx[__ComputeContext_awaitOrObserve](observable, true) as T;
 };
 
-export const __constant = <T>(value: T): T => {
+export const __constant = <T>(value: T, ...args: unknown[]): T => {
   const ctx = assertCurrentContext();
-  return ctx[__ComputeContext_constant](value);
+  return ctx[__ComputeContext_constant](value, ...args);
 };
 
 export const __observe = <T>(observable: ObservableLike<T>): Optional<T> => {

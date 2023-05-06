@@ -15,12 +15,16 @@ import {
   __ComputeContext_runComputation,
   __ComputeContext_scheduledComputationSubscription,
   __ComputeEffect_type,
-  __ConstantEffect_hasValue,
+  __ConstantEffect_args,
   __ConstantEffect_value,
   __MemoOrUsingEffect_args,
   __MemoOrUsingEffect_func,
   __MemoOrUsingEffect_value,
 } from "../../../__internal__/symbols.js";
+import {
+  CollectionLike_count,
+  KeyedCollectionLike_get,
+} from "../../../containers.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Factory,
@@ -38,6 +42,7 @@ import {
 } from "../../../functions.js";
 import {
   EnumerableLike,
+  MulticastObservableLike_buffer,
   ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -55,6 +60,8 @@ import {
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
+import IndexedBufferCollection_empty from "../../../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import MulticastObservable_isMulticastObservable from "../../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -108,7 +115,7 @@ type AwaitEffect = {
 type ConstantEffect<T = unknown> = {
   readonly [__ComputeEffect_type]: typeof Constant;
   [__ConstantEffect_value]: T;
-  [__ConstantEffect_hasValue]: boolean;
+  [__ConstantEffect_args]: unknown[];
 };
 
 type ComputeEffect =
@@ -181,7 +188,7 @@ const validateComputeEffect: ValidateComputeEffect["validateComputeEffect"] = ((
         ? {
             [__ComputeEffect_type]: type,
             [__ConstantEffect_value]: none,
-            [__ConstantEffect_hasValue]: false,
+            [__ConstantEffect_args]: [],
           }
         : raiseWithDebugMessage("invalid effect type");
 
@@ -274,7 +281,7 @@ class ComputeContext {
       : validateComputeEffect(this, Observe);
 
     if (effect[__AwaitOrObserveEffect_observable] === observable) {
-      return effect[__AwaitOrObserveEffect_value] as T;
+      return effect[__AwaitOrObserveEffect_value] as Optional<T>;
     } else {
       effect[__AwaitOrObserveEffect_subscription][DisposableLike_dispose]();
 
@@ -311,22 +318,35 @@ class ComputeContext {
         Disposable_onComplete(this[__ComputeContext_cleanup]),
       );
 
+      const buffer = MulticastObservable_isMulticastObservable<T>(observable)
+        ? observable[MulticastObservableLike_buffer]
+        : IndexedBufferCollection_empty<T>();
+      const hasDefaultValue = buffer[CollectionLike_count] > 0;
+      const defaultValue = hasDefaultValue
+        ? buffer[KeyedCollectionLike_get](0)
+        : none;
+
       effect[__AwaitOrObserveEffect_observable] = observable;
       effect[__AwaitOrObserveEffect_subscription] = subscription;
-      effect[__AwaitOrObserveEffect_value] = none;
-      effect[__AwaitOrObserveEffect_hasValue] = false;
+      effect[__AwaitOrObserveEffect_value] = defaultValue;
+      effect[__AwaitOrObserveEffect_hasValue] = hasDefaultValue;
 
-      return shouldAwait ? raiseError(awaiting) : none;
+      return shouldAwait && !hasDefaultValue
+        ? raiseError(awaiting)
+        : defaultValue;
     }
   }
 
-  [__ComputeContext_constant]<T>(value: T): T {
+  [__ComputeContext_constant]<T>(value: T, ...args: unknown[]): T {
     const effect = validateComputeEffect<T>(this, Constant);
-    if (effect[__ConstantEffect_hasValue]) {
+    if (
+      isSome(effect[__ConstantEffect_value]) &&
+      arrayStrictEquality(args, effect[__ConstantEffect_args])
+    ) {
       return effect[__ConstantEffect_value];
     } else {
       effect[__ConstantEffect_value] = value;
-      effect[__ConstantEffect_hasValue] = true;
+      effect[__ConstantEffect_args] = args;
       return value;
     }
   }
