@@ -29,7 +29,6 @@ Reactive-JS
 - [rx](modules/rx.md)
 - [rx/Enumerable](modules/rx_Enumerable.md)
 - [rx/Observable](modules/rx_Observable.md)
-- [rx/Observer](modules/rx_Observer.md)
 - [rx/PauseableObservable](modules/rx_PauseableObservable.md)
 - [rx/Publisher](modules/rx_Publisher.md)
 - [rx/Runnable](modules/rx_Runnable.md)

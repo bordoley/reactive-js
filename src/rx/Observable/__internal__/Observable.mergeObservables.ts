@@ -1,10 +1,13 @@
 import { __MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { pipe } from "../../../functions.js";
-import { ObservableLike, ObserverLike } from "../../../rx.js";
+import { bindMethod, pipe } from "../../../functions.js";
+import {
+  ObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
+} from "../../../rx.js";
 import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -40,7 +43,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
       for (const observable of observables) {
         pipe(
           createMergeObserver(observer, count, ctx),
-          Observer_sourceFrom(observable),
+          bindMethod(observable, ObservableLike_observe),
         );
       }
     };

@@ -1,1 +1,0 @@
-export declare const sourceFrom: <C extends import("../rx.js").ObservableLike<unknown>, TObserver extends import("../rx.js").ObserverLike<T>, T>(source: C) => import("../functions.js").Function1<TObserver, TObserver>;

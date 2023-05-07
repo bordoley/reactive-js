@@ -21,6 +21,7 @@ import {
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -29,7 +30,6 @@ import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposa
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -45,33 +45,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     [__LatestCtx_observers]: TProperties[];
   };
 
-  const add = (instance: LatestCtx, observer: TProperties): void => {
-    instance[__LatestCtx_observers].push(observer);
-  };
-
-  const onNotify = (instance: LatestCtx) => {
-    const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers } =
-      instance;
-
-    const isReady = observers.every(x => x[__LatestObserver_ready]);
-
-    if (isReady) {
-      const result = pipe(
-        observers,
-        ReadonlyArray_map(observer => observer[__LatestObserver_latest]),
-      );
-      instance[__LatestCtx_delegate][ObserverLike_notify](result);
-
-      if (mode === zipMode) {
-        for (const sub of observers) {
-          sub[__LatestObserver_ready] = false;
-          sub[__LatestObserver_latest] = none as any;
-        }
-      }
-    }
-  };
-
-  const onCompleted = (instance: LatestCtx) => {
+  const onCompleted = (instance: LatestCtx) => () => {
     instance[__LatestCtx_completedCount]++;
 
     if (
@@ -115,7 +89,27 @@ const Observable_latest = /*@__PURE__*/ (() => {
           this[__LatestObserver_latest] = next;
           this[__LatestObserver_ready] = true;
 
-          onNotify(ctx);
+          const {
+            [__LatestCtx_mode]: mode,
+            [__LatestCtx_observers]: observers,
+          } = ctx;
+
+          const isReady = observers.every(x => x[__LatestObserver_ready]);
+
+          if (isReady) {
+            const result = pipe(
+              observers,
+              ReadonlyArray_map(observer => observer[__LatestObserver_latest]),
+            );
+            ctx[__LatestCtx_delegate][ObserverLike_notify](result);
+
+            if (mode === zipMode) {
+              for (const sub of observers) {
+                sub[__LatestObserver_ready] = false;
+                sub[__LatestObserver_latest] = none as any;
+              }
+            }
+          }
         },
       },
     ),
@@ -136,13 +130,11 @@ const Observable_latest = /*@__PURE__*/ (() => {
       for (const observable of observables) {
         const innerObserver = pipe(
           createLatestObserver(ctx, delegate),
-          Disposable_onComplete(() => {
-            onCompleted(ctx);
-          }),
-          Observer_sourceFrom(observable),
+          Disposable_onComplete(onCompleted(ctx)),
         );
 
-        add(ctx, innerObserver);
+        ctx[__LatestCtx_observers].push(innerObserver);
+        observable[ObservableLike_observe](innerObserver);
       }
     };
 

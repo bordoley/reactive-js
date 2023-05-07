@@ -5,36 +5,18 @@ import { __LatestCtx_completedCount, __LatestCtx_delegate, __LatestCtx_mode, __L
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { none, pipe } from "../../../functions.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, } from "../../../rx.js";
+import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
 const Observable_latest = /*@__PURE__*/ (() => {
-    const add = (instance, observer) => {
-        instance[__LatestCtx_observers].push(observer);
-    };
-    const onNotify = (instance) => {
-        const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers } = instance;
-        const isReady = observers.every(x => x[__LatestObserver_ready]);
-        if (isReady) {
-            const result = pipe(observers, ReadonlyArray_map(observer => observer[__LatestObserver_latest]));
-            instance[__LatestCtx_delegate][ObserverLike_notify](result);
-            if (mode === zipMode) {
-                for (const sub of observers) {
-                    sub[__LatestObserver_ready] = false;
-                    sub[__LatestObserver_latest] = none;
-                }
-            }
-        }
-    };
-    const onCompleted = (instance) => {
+    const onCompleted = (instance) => () => {
         instance[__LatestCtx_completedCount]++;
         if (instance[__LatestCtx_completedCount] ===
             ReadonlyArray_getLength(instance[__LatestCtx_observers])) {
@@ -55,7 +37,18 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const { [__LatestObserver_ctx]: ctx } = this;
             this[__LatestObserver_latest] = next;
             this[__LatestObserver_ready] = true;
-            onNotify(ctx);
+            const { [__LatestCtx_mode]: mode, [__LatestCtx_observers]: observers, } = ctx;
+            const isReady = observers.every(x => x[__LatestObserver_ready]);
+            if (isReady) {
+                const result = pipe(observers, ReadonlyArray_map(observer => observer[__LatestObserver_latest]));
+                ctx[__LatestCtx_delegate][ObserverLike_notify](result);
+                if (mode === zipMode) {
+                    for (const sub of observers) {
+                        sub[__LatestObserver_ready] = false;
+                        sub[__LatestObserver_latest] = none;
+                    }
+                }
+            }
         },
     }));
     return (observables, mode) => {
@@ -67,10 +60,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 [__LatestCtx_mode]: mode,
             };
             for (const observable of observables) {
-                const innerObserver = pipe(createLatestObserver(ctx, delegate), Disposable_onComplete(() => {
-                    onCompleted(ctx);
-                }), Observer_sourceFrom(observable));
-                add(ctx, innerObserver);
+                const innerObserver = pipe(createLatestObserver(ctx, delegate), Disposable_onComplete(onCompleted(ctx)));
+                ctx[__LatestCtx_observers].push(innerObserver);
+                observable[ObservableLike_observe](innerObserver);
             }
         };
         const isEnumerable = Observable_allAreEnumerable(observables);

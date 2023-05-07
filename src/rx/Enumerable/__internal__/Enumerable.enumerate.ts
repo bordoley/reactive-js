@@ -27,7 +27,6 @@ import MutableEnumerator_mixin, {
 import {
   isSome,
   none,
-  pipe,
   raiseWithDebugMessage,
   returns,
   unsafeCast,
@@ -35,11 +34,11 @@ import {
 import {
   EnumerableLike,
   ObservableLike_isEnumerable,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
 import Observer_assertState from "../../../rx/Observer/__internal__/Observer.assertState.js";
-import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import {
   BufferLike_capacity,
   DisposableLike,
@@ -164,7 +163,9 @@ const Enumerable_enumerate: <T>() => (
           "Enumerable.enumerate() invoked with a non-enumerable ObservableLike",
         );
       }
-      return pipe(createEnumeratorScheduler(), Observer_sourceFrom(enumerable));
+      const observer = createEnumeratorScheduler();
+      enumerable[ObservableLike_observe](observer);
+      return observer;
     },
   );
 })();

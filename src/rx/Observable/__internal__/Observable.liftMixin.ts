@@ -4,7 +4,13 @@ import {
   LiftedLike_source,
 } from "../../../__internal__/containers.js";
 import { Mixin4, mix, props } from "../../../__internal__/mixins.js";
-import { Function1, none, pipeUnsafe, returns } from "../../../functions.js";
+import {
+  Function1,
+  bindMethod,
+  none,
+  pipeUnsafe,
+  returns,
+} from "../../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -12,7 +18,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../rx.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 
 const Observable_liftMixin: <TIn, TOut>() => Mixin4<
   LiftedLike<ObservableLike<TIn>, ObserverLike> & ObservableLike<TOut>,
@@ -60,7 +65,7 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin4<
           pipeUnsafe(
             observer,
             ...this[LiftedLike_operators],
-            Observer_sourceFrom(this[LiftedLike_source]),
+            bindMethod(this[LiftedLike_source], ObservableLike_observe),
           );
         },
       },

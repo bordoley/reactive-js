@@ -31,6 +31,7 @@ import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
 import {
   EnumerableLike,
   ObservableLike,
+  ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
 } from "../../../rx.js";
@@ -57,7 +58,6 @@ import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.inde
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -294,7 +294,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
           pipe(
             createZipObserver(observer, enumerators, enumerator),
             Disposable_addTo(observer),
-            Observer_sourceFrom(next),
+            bindMethod(next, ObservableLike_observe),
           );
         }
       }

@@ -2,10 +2,10 @@
 
 import { __MergeObserverCtx_completedCount } from "../../../__internal__/symbols.js";
 import ReadonlyArray_getLength from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { pipe } from "../../../functions.js";
+import { bindMethod, pipe } from "../../../functions.js";
+import { ObservableLike_observe, } from "../../../rx.js";
 import Enumerablee_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Observable_create from "../../../rx/Observable/__internal__/Observable.create.js";
-import Observer_sourceFrom from "../../../rx/Observer/__internal__/Observer.sourceFrom.js";
 import { DisposableLike_dispose } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../util/Disposable/__internal__/Disposable.onComplete.js";
@@ -25,7 +25,7 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
             const count = ReadonlyArray_getLength(observables);
             const ctx = { [__MergeObserverCtx_completedCount]: 0 };
             for (const observable of observables) {
-                pipe(createMergeObserver(observer, count, ctx), Observer_sourceFrom(observable));
+                pipe(createMergeObserver(observer, count, ctx), bindMethod(observable, ObservableLike_observe));
             }
         };
         const isEnumerable = Observable_allAreEnumerable(observables);

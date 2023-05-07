@@ -9,7 +9,7 @@ import ReadonlyArray_forEach from "../../../containers/ReadonlyArray/__internal_
 import ReadonlyArray_map from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_someSatisfy from "../../../containers/ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
-import { ObserverLike_notify, } from "../../../rx.js";
+import { ObservableLike_observe, ObserverLike_notify, } from "../../../rx.js";
 import Enumerable_create from "../../../rx/Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../../rx/Enumerable/__internal__/Enumerable.enumerate.js";
 import { BufferLike_capacity, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
@@ -22,7 +22,6 @@ import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.inde
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Observer_sourceFrom from "../../Observer/__internal__/Observer.sourceFrom.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -123,7 +122,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
             else {
                 const enumerator = pipe(QueuedEnumerator_create(observer[BufferLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer));
                 enumerators.push(enumerator);
-                pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), Observer_sourceFrom(next));
+                pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), bindMethod(next, ObservableLike_observe));
             }
         }
     };

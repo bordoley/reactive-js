@@ -71,7 +71,6 @@
     "./rx/effects": "./rx/effects.js",
     "./rx/Enumerable": "./rx/Enumerable.js",
     "./rx/Observable": "./rx/Observable.js",
-    "./rx/Observer": "./rx/Observer.js",
     "./rx/PauseableObservable": "./rx/PauseableObservable.js",
     "./rx/Publisher": "./rx/Publisher.js",
     "./rx/Runnable": "./rx/Runnable.js",
