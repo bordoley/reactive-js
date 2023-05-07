@@ -37,10 +37,10 @@ import {
   unsafeCast,
 } from "../../../functions.js";
 import {
-  DisposableStreamOf,
   ObservableLike,
   PublisherLike,
   StreamLike,
+  StreamOf,
   StreamableLike,
   StreamableLike_stream,
 } from "../../../rx.js";
@@ -93,7 +93,7 @@ const createCacheStream: <T>(
   capacity: number,
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-) => DisposableStreamOf<CacheLike<T>> = /*@__PURE__*/ (<T>() => {
+) => StreamOf<CacheLike<T>> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties<T> = {
     scheduleCleanup: SideEffect1<string>;
     store: Map<string, T>;
@@ -126,7 +126,7 @@ const createCacheStream: <T>(
         capacity: number,
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): DisposableStreamOf<CacheLike<T>> {
+      ): StreamOf<CacheLike<T>> & DisposableLike {
         instance.store = new Map();
         instance.subscriptions = new Map();
 

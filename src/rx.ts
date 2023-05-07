@@ -108,7 +108,7 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableContainer extends Container {
+export interface RunnableContainer extends ObservableContainer {
   readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 
@@ -126,7 +126,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface EnumerableContainer extends Container {
+export interface EnumerableContainer extends RunnableContainer {
   readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 
@@ -177,7 +177,7 @@ export interface PauseableObservableLike<T = unknown>
  * @noInheritDoc
  * @category Container
  */
-export interface PauseableObservableContainer extends Container {
+export interface PauseableObservableContainer extends ObservableContainer {
   readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
 }
 
@@ -201,7 +201,6 @@ export interface StreamLike<TReq, T>
  * @typeparam TStream
  *
  * @noInheritDoc
- * @category Streamable
  */
 export interface StreamableLike<
   TReq = unknown,
@@ -232,15 +231,12 @@ export interface StreamableLike<
 
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): DisposableStreamOf<this>;
+  ): TStream & DisposableLike;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
-
-export type DisposableStreamOf<TStreamable extends StreamableLike> =
-  StreamOf<TStreamable> & DisposableLike;
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Reactive {
@@ -320,7 +316,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Animate<C extends Container> {
+  export interface Animate<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -333,7 +329,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface BackpressureStrategy<C extends Container> {
+  export interface BackpressureStrategy<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -347,7 +343,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface CatchError<C extends Container> {
+  export interface CatchError<C extends ObservableContainer> {
     /**
      * Returns a Container which catches errors produced by the source and either continues with
      * the Container returned from the `onError` callback or swallows the error if
@@ -367,7 +363,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface CombineLatest<C extends Container> {
+  export interface CombineLatest<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -437,7 +433,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface CurrentTime<C extends Container> {
+  export interface CurrentTime<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -451,7 +447,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface DecodeWithCharset<C extends Container> {
+  export interface DecodeWithCharset<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -464,7 +460,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Defer<C extends Container> {
+  export interface Defer<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -475,7 +471,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface DispatchTo<C extends Container> {
+  export interface DispatchTo<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -487,7 +483,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface EncodeUtf8<C extends Container> {
+  export interface EncodeUtf8<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -498,7 +494,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Enqueue<C extends Container> {
+  export interface Enqueue<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -510,7 +506,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Exhaust<C extends Container> {
+  export interface Exhaust<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -522,7 +518,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ExhaustMap<C extends Container> {
+  export interface ExhaustMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -535,7 +531,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface FirstAsync<C extends Container> {
+  export interface FirstAsync<C extends ObservableContainer> {
     /**
      *
      * @category Transform
@@ -579,7 +575,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ForkCombineLatest<C extends Container> {
+  export interface ForkCombineLatest<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -649,7 +645,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ForkMerge<C extends Container> {
+  export interface ForkMerge<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -664,7 +660,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ForkZipLatest<C extends Container> {
+  export interface ForkZipLatest<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -756,7 +752,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface LastAsync<C extends Container> {
+  export interface LastAsync<C extends ObservableContainer> {
     /**
      *
      * @category Transform
@@ -780,7 +776,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Merge<C extends Container> {
+  export interface Merge<C extends ObservableContainer> {
     /**
      *
      * @category Constructor
@@ -796,7 +792,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface MergeAll<C extends Container> {
+  export interface MergeAll<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -812,7 +808,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface MergeMap<C extends Container> {
+  export interface MergeMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -830,7 +826,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface MergeWith<C extends Container> {
+  export interface MergeWith<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -844,7 +840,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Multicast<C extends Container> {
+  export interface Multicast<C extends ObservableContainer> {
     /**
      * Returns a `MulticastObservableLike` backed by a single subscription to the source.
      *
@@ -876,7 +872,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Never<C extends Container> {
+  export interface Never<C extends ObservableContainer> {
     /**
      * Returns a Container instance that emits no items and never disposes its state.
      *
@@ -889,7 +885,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Retry<C extends Container> {
+  export interface Retry<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` that mirrors the source, re-subscribing
      * if the source completes with an error.
@@ -915,7 +911,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ScanLast<C extends Container> {
+  export interface ScanLast<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -929,7 +925,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ScanMany<C extends Container> {
+  export interface ScanMany<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -943,7 +939,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Share<C extends Container> {
+  export interface Share<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` backed by a shared refcounted subscription to the
      * source. When the refcount goes to 0, the underlying subscription
@@ -967,7 +963,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface SwitchAll<C extends Container> {
+  export interface SwitchAll<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -979,7 +975,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface SwitchMap<C extends Container> {
+  export interface SwitchMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -992,7 +988,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface TakeUntil<C extends Container> {
+  export interface TakeUntil<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -1003,7 +999,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Throttle<C extends Container> {
+  export interface Throttle<C extends ObservableContainer> {
     /**
      * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
      *
@@ -1037,7 +1033,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ThrowIfEmpty<C extends Container> {
+  export interface ThrowIfEmpty<C extends ObservableContainer> {
     /**
      * Returns a Container that emits an error if the source completes without emitting a value.
      *
@@ -1052,7 +1048,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Throws<C extends Container> {
+  export interface Throws<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -1063,7 +1059,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface Timeout<C extends Container> {
+  export interface Timeout<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` that completes with an error if the source
      * does not emit a value in given time span.
@@ -1120,7 +1116,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface WithCurrentTime<C extends Container> {
+  export interface WithCurrentTime<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -1133,7 +1129,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface WithLatestFrom<C extends Container> {
+  export interface WithLatestFrom<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -1147,7 +1143,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ZipLatest<C extends Container> {
+  export interface ZipLatest<C extends ObservableContainer> {
     /**
      * Returns a container that zips the latest values from
      * multiple sources.
@@ -1220,7 +1216,7 @@ export namespace Reactive {
    * @noInheritDoc
    * @category TypeClass
    */
-  export interface ZipWithLatestFrom<C extends Container> {
+  export interface ZipWithLatestFrom<C extends ObservableContainer> {
     /**
      * @category Operator
      */

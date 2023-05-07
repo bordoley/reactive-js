@@ -6,9 +6,11 @@
 
 ## Hierarchy
 
-- [`Container`](containers.Container-1.md)
+- [`ObservableContainer`](rx.ObservableContainer.md)
 
   ↳ **`RunnableContainer`**
+
+  ↳↳ [`EnumerableContainer`](rx.EnumerableContainer.md)
 
 ## Table of contents
 
@@ -24,4 +26,4 @@
 
 #### Overrides
 
-[Container](containers.Container-1.md).[[___Container_type]](containers.Container-1.md#[___container_type])
+[ObservableContainer](rx.ObservableContainer.md).[[___Container_type]](rx.ObservableContainer.md#[___container_type])

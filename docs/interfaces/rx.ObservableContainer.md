@@ -10,6 +10,10 @@
 
   ↳ **`ObservableContainer`**
 
+  ↳↳ [`RunnableContainer`](rx.RunnableContainer.md)
+
+  ↳↳ [`PauseableObservableContainer`](rx.PauseableObservableContainer.md)
+
 ## Table of contents
 
 ### Properties

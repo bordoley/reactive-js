@@ -28,29 +28,13 @@
 ### Other Interfaces
 
 - [ObserverLike](../interfaces/rx.ObserverLike.md)
-
-### Streamable Interfaces
-
 - [StreamableLike](../interfaces/rx.StreamableLike.md)
 
 ### Type Aliases
 
-- [DisposableStreamOf](rx.md#disposablestreamof)
 - [StreamOf](rx.md#streamof)
 
 ## Type Aliases
-
-### DisposableStreamOf
-
-Ƭ **DisposableStreamOf**<`TStreamable`\>: [`StreamOf`](rx.md#streamof)<`TStreamable`\> & [`DisposableLike`](../interfaces/util.DisposableLike.md)
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md) |
-
-___
 
 ### StreamOf
 

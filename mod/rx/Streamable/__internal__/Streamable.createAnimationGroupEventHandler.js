@@ -23,8 +23,7 @@ import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.a
 import EventPublisher_create from "../../../util/EventPublisher/__internal__/EventPublisher.create.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
-const createAnimationGroupEventHandlerStream = 
-/*@__PURE__*/ (() => {
+const createAnimationGroupEventHandlerStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
         const streamDelegate = Streamable_createEventHandler((type) => {
             const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(type) : factory), Observable_forEach(value => {

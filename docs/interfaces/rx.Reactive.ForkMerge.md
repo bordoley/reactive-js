@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container-1.md) |
+| `C` | extends [`ObservableContainer`](rx.ObservableContainer.md) |
 
 ## Table of contents
 

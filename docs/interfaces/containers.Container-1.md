@@ -26,12 +26,6 @@ Base type for all Containers.
 
   ↳ [`ObservableContainer`](rx.ObservableContainer.md)
 
-  ↳ [`RunnableContainer`](rx.RunnableContainer.md)
-
-  ↳ [`EnumerableContainer`](rx.EnumerableContainer.md)
-
-  ↳ [`PauseableObservableContainer`](rx.PauseableObservableContainer.md)
-
   ↳ [`EventSourceContainer`](util.EventSourceContainer.md)
 
 ## Table of contents
