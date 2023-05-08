@@ -1,50 +1,50 @@
 import {
-  __AssociativeCollectionLike_keys as AssociativeCollectionLike_keys,
-  __BufferLike_capacity as BufferLike_capacity,
-  __CollectionLike_count as CollectionLike_count,
-  __Container_T as Container_T,
-  __Container_type as Container_type,
-  __DispatcherLikeEvent_capacityExceeded as DispatcherLikeEvent_capacityExceeded,
-  __DispatcherLikeEvent_completed as DispatcherLikeEvent_completed,
-  __DispatcherLikeEvent_ready as DispatcherLikeEvent_ready,
-  __DispatcherLike_complete as DispatcherLike_complete,
-  __DisposableLike_add as DisposableLike_add,
-  __DisposableLike_dispose as DisposableLike_dispose,
-  __DisposableLike_error as DisposableLike_error,
-  __DisposableLike_isDisposed as DisposableLike_isDisposed,
-  __EnumeratorLike_current as EnumeratorLike_current,
-  __EnumeratorLike_hasCurrent as EnumeratorLike_hasCurrent,
-  __EnumeratorLike_move as EnumeratorLike_move,
-  __EventListenerLike_isErrorSafe as EventListenerLike_isErrorSafe,
-  __EventListenerLike_notify as EventListenerLike_notify,
-  __EventPublisherLike_listenerCount as EventPublisherLike_listenerCount,
-  __EventSourceLike_addEventListener as EventSourceLike_addEventListener,
-  __KeyedCollectionLike_get as KeyedCollectionLike_get,
-  __KeyedContainer_TKey as KeyedContainer_TKey,
-  __MulticastObservableLike_buffer as MulticastObservableLike_buffer,
-  __ObservableLike_isDeferred as ObservableLike_isDeferred,
-  __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
-  __ObservableLike_isRunnable as ObservableLike_isRunnable,
-  __ObservableLike_observe as ObservableLike_observe,
-  __ObserverLike_notify as ObserverLike_notify,
-  __PauseableLike_isPaused as PauseableLike_isPaused,
-  __PauseableLike_pause as PauseableLike_pause,
-  __PauseableLike_resume as PauseableLike_resume,
-  __PublisherLike_observerCount as PublisherLike_observerCount,
-  __QueueableLike_backpressureStrategy as QueueableLike_backpressureStrategy,
-  __QueueableLike_enqueue as QueueableLike_enqueue,
-  __SchedulerLike_inContinuation as SchedulerLike_inContinuation,
-  __SchedulerLike_maxYieldInterval as SchedulerLike_maxYieldInterval,
-  __SchedulerLike_now as SchedulerLike_now,
-  __SchedulerLike_requestYield as SchedulerLike_requestYield,
-  __SchedulerLike_schedule as SchedulerLike_schedule,
-  __SchedulerLike_shouldYield as SchedulerLike_shouldYield,
-  __SchedulerLike_yield as SchedulerLike_yield,
-  __StoreLike_value as StoreLike_value,
-  __StreamLike_scheduler as StreamLike_scheduler,
-  __StreamableLike_TStream as StreamableLike_TStream,
-  __StreamableLike_stream as StreamableLike_stream,
-  __VirtualTimeSchedulerLike_run as VirtualTimeSchedulerLike_run,
+  __AssociativeCollectionLike_keys,
+  __BufferLike_capacity,
+  __CollectionLike_count,
+  __Container_T,
+  __Container_type,
+  __DispatcherLikeEvent_capacityExceeded,
+  __DispatcherLikeEvent_completed,
+  __DispatcherLikeEvent_ready,
+  __DispatcherLike_complete,
+  __DisposableLike_add,
+  __DisposableLike_dispose,
+  __DisposableLike_error,
+  __DisposableLike_isDisposed,
+  __EnumeratorLike_current,
+  __EnumeratorLike_hasCurrent,
+  __EnumeratorLike_move,
+  __EventListenerLike_isErrorSafe,
+  __EventListenerLike_notify,
+  __EventPublisherLike_listenerCount,
+  __EventSourceLike_addEventListener,
+  __KeyedCollectionLike_get,
+  __KeyedContainer_TKey,
+  __MulticastObservableLike_buffer,
+  __ObservableLike_isDeferred,
+  __ObservableLike_isEnumerable,
+  __ObservableLike_isRunnable,
+  __ObservableLike_observe,
+  __ObserverLike_notify,
+  __PauseableLike_isPaused,
+  __PauseableLike_pause,
+  __PauseableLike_resume,
+  __PublisherLike_observerCount,
+  __QueueableLike_backpressureStrategy,
+  __QueueableLike_enqueue,
+  __SchedulerLike_inContinuation,
+  __SchedulerLike_maxYieldInterval,
+  __SchedulerLike_now,
+  __SchedulerLike_requestYield,
+  __SchedulerLike_schedule,
+  __SchedulerLike_shouldYield,
+  __SchedulerLike_yield,
+  __StoreLike_value,
+  __StreamLike_scheduler,
+  __StreamableLike_TStream,
+  __StreamableLike_stream,
+  __VirtualTimeSchedulerLike_run,
 } from "./__internal__/symbols.js";
 import {
   Equality,
@@ -61,54 +61,95 @@ import {
   Updater,
 } from "./functions.js";
 
-export {
-  AssociativeCollectionLike_keys,
-  CollectionLike_count,
-  Container_T,
-  Container_type,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
-  KeyedCollectionLike_get,
-  KeyedContainer_TKey,
-  MulticastObservableLike_buffer,
-  ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-  ObservableLike_observe,
-  ObserverLike_notify,
-  PublisherLike_observerCount,
-  StreamableLike_stream,
-  StreamLike_scheduler,
-  StreamableLike_TStream,
-  BufferLike_capacity,
-  DispatcherLikeEvent_ready,
-  DispatcherLikeEvent_capacityExceeded,
-  DispatcherLikeEvent_completed,
-  DispatcherLike_complete,
-  DisposableLike_add,
-  DisposableLike_dispose,
-  DisposableLike_error,
-  DisposableLike_isDisposed,
-  EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
-  EventPublisherLike_listenerCount,
-  EventSourceLike_addEventListener,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
-  SchedulerLike_yield,
-  SchedulerLike_inContinuation,
-  SchedulerLike_maxYieldInterval,
-  SchedulerLike_now,
-  SchedulerLike_requestYield,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-  StoreLike_value,
-  VirtualTimeSchedulerLike_run,
-};
+export const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys =
+  __AssociativeCollectionLike_keys;
+export const CollectionLike_count: typeof __CollectionLike_count =
+  __CollectionLike_count;
+export const Container_T: typeof __Container_T = __Container_T;
+export const Container_type: typeof __Container_type = __Container_type;
+export const EnumeratorLike_current: typeof __EnumeratorLike_current =
+  __EnumeratorLike_current;
+export const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurrent =
+  __EnumeratorLike_hasCurrent;
+export const EnumeratorLike_move: typeof __EnumeratorLike_move =
+  __EnumeratorLike_move;
+export const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get =
+  __KeyedCollectionLike_get;
+export const KeyedContainer_TKey: typeof __KeyedContainer_TKey =
+  __KeyedContainer_TKey;
+export const MulticastObservableLike_buffer: typeof __MulticastObservableLike_buffer =
+  __MulticastObservableLike_buffer;
+export const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred =
+  __ObservableLike_isDeferred;
+export const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable =
+  __ObservableLike_isEnumerable;
+export const ObservableLike_isRunnable: typeof __ObservableLike_isRunnable =
+  __ObservableLike_isRunnable;
+export const ObservableLike_observe: typeof __ObservableLike_observe =
+  __ObservableLike_observe;
+export const ObserverLike_notify: typeof __ObserverLike_notify =
+  __ObserverLike_notify;
+export const PublisherLike_observerCount: typeof __PublisherLike_observerCount =
+  __PublisherLike_observerCount;
+export const StreamableLike_stream: typeof __StreamableLike_stream =
+  __StreamableLike_stream;
+export const StreamLike_scheduler: typeof __StreamLike_scheduler =
+  __StreamLike_scheduler;
+export const StreamableLike_TStream: typeof __StreamableLike_TStream =
+  __StreamableLike_TStream;
+export const BufferLike_capacity: typeof __BufferLike_capacity =
+  __BufferLike_capacity;
+export const DispatcherLikeEvent_ready: typeof __DispatcherLikeEvent_ready =
+  __DispatcherLikeEvent_ready;
+export const DispatcherLikeEvent_capacityExceeded: typeof __DispatcherLikeEvent_capacityExceeded =
+  __DispatcherLikeEvent_capacityExceeded;
+export const DispatcherLikeEvent_completed: typeof __DispatcherLikeEvent_completed =
+  __DispatcherLikeEvent_completed;
+export const DispatcherLike_complete: typeof __DispatcherLike_complete =
+  __DispatcherLike_complete;
+export const DisposableLike_add: typeof __DisposableLike_add =
+  __DisposableLike_add;
+export const DisposableLike_dispose: typeof __DisposableLike_dispose =
+  __DisposableLike_dispose;
+export const DisposableLike_error: typeof __DisposableLike_error =
+  __DisposableLike_error;
+export const DisposableLike_isDisposed: typeof __DisposableLike_isDisposed =
+  __DisposableLike_isDisposed;
+export const EventListenerLike_isErrorSafe: typeof __EventListenerLike_isErrorSafe =
+  __EventListenerLike_isErrorSafe;
+export const EventListenerLike_notify: typeof __EventListenerLike_notify =
+  __EventListenerLike_notify;
+export const EventPublisherLike_listenerCount: typeof __EventPublisherLike_listenerCount =
+  __EventPublisherLike_listenerCount;
+export const EventSourceLike_addEventListener: typeof __EventSourceLike_addEventListener =
+  __EventSourceLike_addEventListener;
+export const PauseableLike_isPaused: typeof __PauseableLike_isPaused =
+  __PauseableLike_isPaused;
+export const PauseableLike_pause: typeof __PauseableLike_pause =
+  __PauseableLike_pause;
+export const PauseableLike_resume: typeof __PauseableLike_resume =
+  __PauseableLike_resume;
+export const QueueableLike_backpressureStrategy: typeof __QueueableLike_backpressureStrategy =
+  __QueueableLike_backpressureStrategy;
+export const QueueableLike_enqueue: typeof __QueueableLike_enqueue =
+  __QueueableLike_enqueue;
+export const SchedulerLike_yield: typeof __SchedulerLike_yield =
+  __SchedulerLike_yield;
+export const SchedulerLike_inContinuation: typeof __SchedulerLike_inContinuation =
+  __SchedulerLike_inContinuation;
+export const SchedulerLike_maxYieldInterval: typeof __SchedulerLike_maxYieldInterval =
+  __SchedulerLike_maxYieldInterval;
+export const SchedulerLike_now: typeof __SchedulerLike_now =
+  __SchedulerLike_now;
+export const SchedulerLike_requestYield: typeof __SchedulerLike_requestYield =
+  __SchedulerLike_requestYield;
+export const SchedulerLike_schedule: typeof __SchedulerLike_schedule =
+  __SchedulerLike_schedule;
+export const SchedulerLike_shouldYield: typeof __SchedulerLike_shouldYield =
+  __SchedulerLike_shouldYield;
+export const StoreLike_value: typeof __StoreLike_value = __StoreLike_value;
+export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run =
+  __VirtualTimeSchedulerLike_run;
 
 /**
  * Base type for all Containers.
