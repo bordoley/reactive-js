@@ -1,17 +1,17 @@
 import {
-  Container,
+  Containers,
   ObservableContainer,
   ObservableLike,
-  ReactiveContainer,
+  ReactiveContainers,
 } from "../../../core.js";
 import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { pipe } from "../../../functions.js";
 import Observable_latest from "./Observable.latest.js";
 
-const Observable_forkZipLatest: ReactiveContainer.TypeClass<ObservableContainer>["forkZipLatest"] =
+const Observable_forkZipLatest: ReactiveContainers.TypeClass<ObservableContainer>["forkZipLatest"] =
   (<T>(
-      ...ops: readonly Container.Operator<ObservableContainer, T, unknown>[]
-    ): Container.Operator<ObservableContainer, T, readonly any[]> =>
+      ...ops: readonly Containers.Operator<ObservableContainer, T, unknown>[]
+    ): Containers.Operator<ObservableContainer, T, readonly any[]> =>
     (obs: ObservableLike<T>) =>
       Observable_latest(
         pipe(
@@ -19,6 +19,6 @@ const Observable_forkZipLatest: ReactiveContainer.TypeClass<ObservableContainer>
           ReadonlyArray_map(op => op(obs)),
         ),
         2,
-      )) as ReactiveContainer.TypeClass<ObservableContainer>["forkZipLatest"];
+      )) as ReactiveContainers.TypeClass<ObservableContainer>["forkZipLatest"];
 
 export default Observable_forkZipLatest;

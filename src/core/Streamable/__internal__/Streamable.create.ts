@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   ObservableContainer,
   StreamableLike,
   StreamableLike_stream,
@@ -7,9 +7,9 @@ import {
 import Stream_create from "../../../core/Stream/__internal__/Stream.create.js";
 
 const Streamable_create: <TReq, T>(
-  op: Container.Operator<ObservableContainer, TReq, T>,
+  op: Containers.Operator<ObservableContainer, TReq, T>,
 ) => StreamableLike<TReq, T> = <TReq, T>(
-  op: Container.Operator<ObservableContainer, TReq, T>,
+  op: Containers.Operator<ObservableContainer, TReq, T>,
 ): StreamableLike<TReq, T> => ({
   [StreamableLike_stream]: (scheduler, options) =>
     Stream_create<TReq, T>(op, scheduler, options),

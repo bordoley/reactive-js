@@ -1,16 +1,16 @@
 import { create, hasOwn } from "../../../__internal__/Object.js";
 import {
-  KeyedContainer,
+  KeyedContainers,
   ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "../../../core.js";
 import { Function1, Function2 } from "../../../functions.js";
 
-const ReadonlyObjectMap_keepWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keepWithKey"] =
+const ReadonlyObjectMap_keepWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["keepWithKey"] =
 
     <
       T,
-      TKey extends KeyedContainer.KeyOf<ReadonlyObjectMapContainer> = KeyedContainer.KeyOf<ReadonlyObjectMapContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyObjectMapContainer> = KeyedContainers.KeyOf<ReadonlyObjectMapContainer>,
     >(
       predicate: Function2<T, TKey, boolean>,
     ): Function1<

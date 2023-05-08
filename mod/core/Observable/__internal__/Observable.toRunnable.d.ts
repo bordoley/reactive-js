@@ -1,3 +1,3 @@
-import { Container, ObservableContainer } from "../../../core.js";
-declare const Observable_toRunnable: Container.TypeClass<ObservableContainer>["toRunnable"];
+import { ObservableContainer, RunnableContainers } from "../../../core.js";
+declare const Observable_toRunnable: RunnableContainers.TypeClass<ObservableContainer>["toRunnable"];
 export default Observable_toRunnable;

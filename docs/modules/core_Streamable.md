@@ -31,7 +31,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Operator`](core.Container.md#operator)<[`ObservableContainer`](../interfaces/core.ObservableContainer.md), `TReq`, `T`\> |
+| `op` | [`Operator`](core.Containers.md#operator)<[`ObservableContainer`](../interfaces/core.ObservableContainer.md), `TReq`, `T`\> |
 
 #### Returns
 
@@ -55,7 +55,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -78,7 +78,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_1`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -101,7 +101,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_2`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_2`\>[]\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -125,7 +125,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_3`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_3`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -147,7 +147,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_4`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_4`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -169,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](core.ReactiveContainer.md#animationconfig)<`T_5`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_5`\>[]\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

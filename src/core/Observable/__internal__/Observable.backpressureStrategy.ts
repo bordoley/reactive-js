@@ -11,7 +11,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   BufferLike_capacity,
-  Container,
+  Containers,
   ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
@@ -27,7 +27,7 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 type ObservableBackpressureStrategy = <C extends ObservableContainer, T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 
 const Observable_backpressureStrategy: ObservableBackpressureStrategy =
   /*@__PURE__*/ (<T>() => {

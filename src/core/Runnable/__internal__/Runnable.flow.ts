@@ -1,5 +1,5 @@
 import {
-  Container,
+  DeferredContainers,
   ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
@@ -21,7 +21,7 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 
-const Runnable_flow: Container.TypeClass<RunnableContainer>["flow"] =
+const Runnable_flow: DeferredContainers.TypeClass<RunnableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {

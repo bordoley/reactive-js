@@ -1,6 +1,6 @@
-import { Container, ReadonlyArrayContainer } from "../../../core.js";
+import { ReadonlyArrayContainer, RunnableContainers } from "../../../core.js";
 
-const ReadonlyArray_first: Container.TypeClass<ReadonlyArrayContainer>["first"] =
+const ReadonlyArray_first: RunnableContainers.TypeClass<ReadonlyArrayContainer>["first"] =
 
     <T>() =>
     (values: ReadonlyArray<T>) =>

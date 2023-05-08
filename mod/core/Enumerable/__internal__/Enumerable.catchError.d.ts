@@ -1,3 +1,3 @@
-import { EnumerableContainer, ReactiveContainer } from "../../../core.js";
-declare const Enumerable_catchError: ReactiveContainer.TypeClass<EnumerableContainer>["catchError"];
+import { EnumerableContainer, ReactiveContainers } from "../../../core.js";
+declare const Enumerable_catchError: ReactiveContainers.TypeClass<EnumerableContainer>["catchError"];
 export default Enumerable_catchError;

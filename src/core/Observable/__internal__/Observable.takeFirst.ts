@@ -16,7 +16,7 @@ import {
   __TakeFirstObserver_takeCount,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObserverLike,
@@ -30,7 +30,7 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 
 type ObservableTakeFirst = <C extends ObservableContainer, T>(options?: {
   readonly count?: number;
-}) => Container.Operator<C, T, T>;
+}) => Containers.Operator<C, T, T>;
 const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
   const createTakeFirstObserver: <T>(
     delegate: ObserverLike<T>,

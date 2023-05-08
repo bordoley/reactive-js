@@ -21,7 +21,7 @@ import {
   __ThrottleObserver_value,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_isDisposed,
   ObservableContainer,
   ObservableLike,
@@ -180,10 +180,10 @@ const createThrottleObserver: <T>(
 const throttleImpl = <C extends ObservableContainer, T>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
-  ) => Container.Operator<C, T, T>,
-  duration: Function1<T, Container.Of<C, unknown>>,
+  ) => Containers.Operator<C, T, T>,
+  duration: Function1<T, Containers.Of<C, unknown>>,
   mode: "first" | "last" | "interval",
-): Container.Operator<C, T, T> => {
+): Containers.Operator<C, T, T> => {
   return pipe(
     createThrottleObserver,
     partial<
@@ -203,15 +203,15 @@ const HigherOrderObservable_throttle =
       readonly delay?: number;
       readonly delayStart?: boolean;
       readonly start?: number;
-    }) => Function1<readonly T[], Container.Of<C, T>>,
+    }) => Function1<readonly T[], Containers.Of<C, T>>,
     lift: <T>(
       f: Function1<ObserverLike<T>, ObserverLike<T>>,
-    ) => Container.Operator<C, T, T>,
+    ) => Containers.Operator<C, T, T>,
   ) =>
   (
-    duration: Function1<T, Container.Of<C, unknown>> | number,
+    duration: Function1<T, Containers.Of<C, unknown>> | number,
     options: { readonly mode?: "first" | "last" | "interval" } = {},
-  ): Container.Operator<C, T, T> => {
+  ): Containers.Operator<C, T, T> => {
     const { mode = "interval" } = options;
 
     const durationFunction = isNumber(duration)
@@ -231,7 +231,7 @@ const HigherOrderObservable_throttle =
           // all the valid subtypes of ObservableLike
           (Runnable_lift as unknown as <T>(
             f: Function1<ObserverLike<T>, ObserverLike<T>>,
-          ) => Container.Operator<C, T, T>)
+          ) => Containers.Operator<C, T, T>)
         : lift,
       durationFunction,
       mode,

@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   DispatcherLike,
   ObservableContainer,
 } from "../../../core.js";
@@ -9,7 +9,7 @@ import Observer_createDispatchToObserver from "../../Observer/__internal__/Obser
 
 type ObservableDispatchTo = <C extends ObservableContainer, T = unknown>(
   dispatcher: DispatcherLike<T>,
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 const Observable_dispatchTo: ObservableDispatchTo = (<T>(
   dispatcher: DispatcherLike<T>,
 ) =>

@@ -1,3 +1,3 @@
-import { KeyedContainer, ReadonlyObjectMapContainer } from "../../../core.js";
-declare const ReadonlyObjectMap_keepType: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keepType"];
+import { KeyedContainers, ReadonlyObjectMapContainer } from "../../../core.js";
+declare const ReadonlyObjectMap_keepType: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["keepType"];
 export default ReadonlyObjectMap_keepType;

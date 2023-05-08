@@ -13,7 +13,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObserverLike,
@@ -35,7 +35,7 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 type ObservableScan = <C extends ObservableContainer, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => Container.Operator<C, T, TAcc>;
+) => Containers.Operator<C, T, TAcc>;
 const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
   const createScanObserver: (
     delegate: ObserverLike<TAcc>,

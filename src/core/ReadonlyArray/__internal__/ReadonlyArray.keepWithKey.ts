@@ -1,11 +1,11 @@
-import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
+import { KeyedContainers, ReadonlyArrayContainer } from "../../../core.js";
 import { Function2 } from "../../../functions.js";
 
-const ReadonlyArray_keepWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["keepWithKey"] =
+const ReadonlyArray_keepWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["keepWithKey"] =
 
     <
       T,
-      TKey extends KeyedContainer.KeyOf<ReadonlyArrayContainer> = KeyedContainer.KeyOf<ReadonlyArrayContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
     >(
       predicate: Function2<T, TKey, boolean>,
     ) =>

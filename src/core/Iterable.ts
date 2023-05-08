@@ -1,12 +1,13 @@
 import {
-  Container,
+  Containers,
   DisposableLike,
-  EnumerableContainer,
+  EnumerableContainers,
   IterableContainer,
   ObservableLike,
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  RunnableContainers,
   RunnableLike,
   SchedulerLike,
 } from "../core.js";
@@ -18,10 +19,10 @@ import Iterable_flow from "./Iterable/__internal__/Iterable.flow.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 
-export const enumerate: EnumerableContainer.TypeClass<IterableContainer>["enumerate"] =
+export const enumerate: EnumerableContainers.TypeClass<IterableContainer>["enumerate"] =
   Iterable_enumerate;
 
-interface Flow extends Container.TypeClass<IterableContainer> {
+interface Flow extends Containers.TypeClass<IterableContainer> {
   /** @category Transform */
   flow<T>(
     scheduler: SchedulerLike,
@@ -35,16 +36,16 @@ interface Flow extends Container.TypeClass<IterableContainer> {
 }
 export const flow: Flow["flow"] = Iterable_flow;
 
-export const fromReadonlyArray: Container.TypeClass<IterableContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: Containers.TypeClass<IterableContainer>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const identity: Container.TypeClass<IterableContainer>["identity"] =
+export const identity: Containers.TypeClass<IterableContainer>["identity"] =
   Container_identity;
 
-export const toEnumerable: Container.TypeClass<IterableContainer>["toEnumerable"] =
+export const toEnumerable: EnumerableContainers.TypeClass<IterableContainer>["toEnumerable"] =
   Iterable_toObservable;
 
-interface ToObservable extends Container.TypeClass<IterableContainer> {
+interface ToObservable extends Containers.TypeClass<IterableContainer> {
   /** @category Transform */
   toObservable: <T>(options?: {
     readonly delay?: number;
@@ -53,10 +54,10 @@ interface ToObservable extends Container.TypeClass<IterableContainer> {
 }
 export const toObservable: ToObservable["toObservable"] = Iterable_toObservable;
 
-export const toReadonlyArray: Container.TypeClass<IterableContainer>["toReadonlyArray"] =
+export const toReadonlyArray: RunnableContainers.TypeClass<IterableContainer>["toReadonlyArray"] =
   Iterable_toReadonlyArray;
 
-interface ToRunnable extends Container.TypeClass<IterableContainer> {
+interface ToRunnable extends Containers.TypeClass<IterableContainer> {
   /** @category Transform */
   toRunnable: <T>(options?: {
     readonly delay?: number;

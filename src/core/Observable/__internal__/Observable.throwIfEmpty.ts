@@ -12,7 +12,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __ThrowIfEmptyObserver_isEmpty } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike,
   DisposableLike_dispose,
   ObservableContainer,
@@ -37,7 +37,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 type ObservableThrowIfEmpty = <C extends ObservableContainer, T>(
   factory: Factory<unknown>,
   options?: undefined,
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
   const createThrowIfEmptyObserver = (<T>() => {
     type TProperties = {

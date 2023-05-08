@@ -1,3 +1,3 @@
-import { Container } from "../../core.js";
-declare const Containers_test: <C extends Container>(m: Container.TypeClass<C>) => import("../../__internal__/testing.js").Describe;
+import { Container, Containers, DeferredContainers, RunnableContainers } from "../../core.js";
+declare const Containers_test: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../../__internal__/testing.js").Describe;
 export default Containers_test;

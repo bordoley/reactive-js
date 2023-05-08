@@ -16,7 +16,7 @@ import {
   __SkipFirstObserver_skipCount,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
@@ -32,7 +32,7 @@ import Observable_lift from "./Observable.lift.js";
 
 type ObservableSkipFirst = <C extends ObservableContainer, T>(options?: {
   readonly count?: number;
-}) => Container.Operator<C, T, T>;
+}) => Containers.Operator<C, T, T>;
 
 const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
   const createSkipFirstObserver: <T>(

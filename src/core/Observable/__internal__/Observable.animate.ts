@@ -1,6 +1,6 @@
 import {
-  Container,
-  ReactiveContainer,
+  Containers,
+  ReactiveContainers,
   RunnableContainer,
   RunnableLike,
 } from "../../../core.js";
@@ -20,7 +20,7 @@ const scale = (start: number, end: number) => (v: number) => {
 };
 
 const parseAnimationConfig = <T = number>(
-  config: ReactiveContainer.AnimationConfig<T>,
+  config: ReactiveContainers.AnimationConfig<T>,
 ): RunnableLike<T> =>
   config.type === "loop"
     ? pipe(
@@ -35,7 +35,7 @@ const parseAnimationConfig = <T = number>(
         Optional_toObservable(),
         isSome(config.selector)
           ? Observable_map<RunnableContainer, number, T>(config.selector)
-          : (identity as Container.Operator<RunnableContainer, number, T>),
+          : (identity as Containers.Operator<RunnableContainer, number, T>),
       )
     : pipe(
         config.type === "keyframe"
@@ -46,16 +46,16 @@ const parseAnimationConfig = <T = number>(
         ),
         isSome(config.selector)
           ? Observable_map<RunnableContainer, number, T>(config.selector)
-          : (identity as Container.Operator<RunnableContainer, number, T>),
+          : (identity as Containers.Operator<RunnableContainer, number, T>),
       );
 
-const Observable_animate: ReactiveContainer.TypeClass<RunnableContainer>["animate"] =
+const Observable_animate: ReactiveContainers.TypeClass<RunnableContainer>["animate"] =
   <T = number>(
     config:
-      | ReactiveContainer.AnimationConfig<T>
-      | readonly ReactiveContainer.AnimationConfig<T>[],
+      | ReactiveContainers.AnimationConfig<T>
+      | readonly ReactiveContainers.AnimationConfig<T>[],
   ) => {
-    const configs = isReadonlyArray<ReactiveContainer.AnimationConfig<T>>(
+    const configs = isReadonlyArray<ReactiveContainers.AnimationConfig<T>>(
       config,
     )
       ? config

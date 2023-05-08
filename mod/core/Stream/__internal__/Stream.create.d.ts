@@ -1,5 +1,5 @@
-import { Container, DisposableLike, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "../../../core.js";
-declare const Stream_create: <TReq, T>(op: Container.Operator<ObservableContainer, TReq, T>, scheduler: SchedulerLike, options?: {
+import { Containers, DisposableLike, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "../../../core.js";
+declare const Stream_create: <TReq, T>(op: Containers.Operator<ObservableContainer, TReq, T>, scheduler: SchedulerLike, options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly replay?: number;
     readonly capacity?: number;

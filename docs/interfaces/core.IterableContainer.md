@@ -8,7 +8,7 @@ A compile time only type for using a Javascript `Iterable` as a `Container`.
 
 ## Hierarchy
 
-- [`Container`](core.Container-1.md)
+- [`Container`](core.Container.md)
 
   ↳ **`IterableContainer`**
 
@@ -26,4 +26,4 @@ A compile time only type for using a Javascript `Iterable` as a `Container`.
 
 #### Overrides
 
-[Container](core.Container-1.md).[[___Container_type]](core.Container-1.md#[___container_type])
+[Container](core.Container.md).[[___Container_type]](core.Container.md#[___container_type])

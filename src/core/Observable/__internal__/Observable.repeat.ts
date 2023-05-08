@@ -1,17 +1,17 @@
-import { Container, ObservableContainer } from "../../../core.js";
+import { Containers, ObservableContainer } from "../../../core.js";
 import { Predicate, isNone, isNumber } from "../../../functions.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface RepeatObservable {
   repeat<C extends ObservableContainer, T>(
     predicate: Predicate<number>,
-  ): Container.Operator<C, T, T>;
+  ): Containers.Operator<C, T, T>;
 
   repeat<C extends ObservableContainer, T>(
     count?: number,
-  ): Container.Operator<C, T, T>;
+  ): Containers.Operator<C, T, T>;
 
-  repeat<C extends ObservableContainer, T>(): Container.Operator<C, T, T>;
+  repeat<C extends ObservableContainer, T>(): Containers.Operator<C, T, T>;
 }
 const Observable_repeat: RepeatObservable["repeat"] = /*@__PURE__*/ (() => {
   const defaultRepeatPredicate = (_: number, e?: Error): boolean => isNone(e);

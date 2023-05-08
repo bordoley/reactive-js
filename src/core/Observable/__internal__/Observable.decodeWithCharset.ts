@@ -12,7 +12,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __DecodeWithCharsetObserver_textDecoder } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObservableLike_observe,
@@ -36,7 +36,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableDecodeWithCharset = <C extends ObservableContainer>(options?: {
   readonly charset?: string;
-}) => Container.Operator<C, ArrayBuffer, string>;
+}) => Containers.Operator<C, ArrayBuffer, string>;
 
 const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {

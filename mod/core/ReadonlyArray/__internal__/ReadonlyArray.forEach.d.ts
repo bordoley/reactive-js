@@ -1,3 +1,3 @@
-import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
-declare const ReadonlyArray_forEach: KeyedContainer.TypeClass<ReadonlyArrayContainer>["forEach"];
+import { KeyedContainers, ReadonlyArrayContainer } from "../../../core.js";
+declare const ReadonlyArray_forEach: KeyedContainers.TypeClass<ReadonlyArrayContainer>["forEach"];
 export default ReadonlyArray_forEach;

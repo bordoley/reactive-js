@@ -1,7 +1,7 @@
 import {
-  Container,
   ObservableContainer,
   ObservableLike,
+  RunnableContainers,
 } from "../../../core.js";
 import { errorWithDebugMessage } from "../../../functions.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -11,7 +11,7 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
 
-const Observable_toRunnable: Container.TypeClass<ObservableContainer>["toRunnable"] =
+const Observable_toRunnable: RunnableContainers.TypeClass<ObservableContainer>["toRunnable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

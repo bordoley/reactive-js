@@ -1,11 +1,11 @@
-import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
+import { KeyedContainers, ReadonlyArrayContainer } from "../../../core.js";
 import { Function1, SideEffect2 } from "../../../functions.js";
 
-const ReadonlyArray_forEachWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
+const ReadonlyArray_forEachWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
 
     <
       T,
-      TKey extends KeyedContainer.KeyOf<ReadonlyArrayContainer> = KeyedContainer.KeyOf<ReadonlyArrayContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
     >(
       effect: SideEffect2<T, TKey>,
     ): Function1<readonly T[], readonly T[]> =>

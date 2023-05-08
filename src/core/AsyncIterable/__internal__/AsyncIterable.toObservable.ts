@@ -1,6 +1,6 @@
 import {
   AsyncIterableContainer,
-  Container,
+  Containers,
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -14,7 +14,7 @@ import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.a
 import { error, pipe } from "../../../functions.js";
 import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 
-const AsyncIterable_toObservable: Container.TypeClass<AsyncIterableContainer>["toObservable"] =
+const AsyncIterable_toObservable: Containers.TypeClass<AsyncIterableContainer>["toObservable"] =
 
     <T>() =>
     (iterable: AsyncIterable<T>) =>

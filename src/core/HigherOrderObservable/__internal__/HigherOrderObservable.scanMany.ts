@@ -1,10 +1,10 @@
 import {
-  Container,
+  Containers,
   EventListenerLike_notify,
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
-  ReactiveContainer,
+  ReactiveContainers,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import {
@@ -29,12 +29,12 @@ const HigherOrderObservable_scanMany =
   <C extends ObservableContainer>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
-    ) => Container.Of<C, T>,
-  ): ReactiveContainer.TypeClass<C>["scanMany"] =>
+    ) => Containers.Of<C, T>,
+  ): ReactiveContainers.TypeClass<C>["scanMany"] =>
   <T, TAcc>(
-    scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
+    scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,
-  ): Container.Operator<C, T, TAcc> =>
+  ): Containers.Operator<C, T, TAcc> =>
   observable =>
     createObservable((observer: ObserverLike<TAcc>) => {
       const accFeedbackStream = pipe(
@@ -47,7 +47,7 @@ const HigherOrderObservable_scanMany =
         Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
           scanner(acc, next),
         ),
-        Observable_forkMerge<Container.Of<ObservableContainer, TAcc>, TAcc>(
+        Observable_forkMerge<Containers.Of<ObservableContainer, TAcc>, TAcc>(
           compose(
             Observable_concatMap(Observable_takeLast<C, TAcc>()),
             Observable_forEach<ObservableContainer, TAcc>(

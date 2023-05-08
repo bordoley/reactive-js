@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainer`](core.KeyedContainer-1.md)
+- [`KeyedContainers`](core.KeyedContainers-1.md)
 
   ↳ **`DictionaryContainer`**
 
@@ -25,7 +25,7 @@
 
 #### Overrides
 
-KeyedContainer.\_\_@\_\_\_Container\_type@22120
+KeyedContainers.\_\_@\_\_\_Container\_type@22120
 
 ___
 
@@ -35,4 +35,4 @@ ___
 
 #### Overrides
 
-[KeyedContainer](core.KeyedContainer-1.md).[[___KeyedContainer_TKey]](core.KeyedContainer-1.md#[___keyedcontainer_tkey])
+[KeyedContainers](core.KeyedContainers-1.md).[[___KeyedContainer_TKey]](core.KeyedContainers-1.md#[___keyedcontainer_tkey])

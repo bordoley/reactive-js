@@ -1,5 +1,5 @@
 import {
-  Container,
+  EnumerableContainers,
   ObservableContainer,
   ObservableLike,
 } from "../../../core.js";
@@ -11,7 +11,7 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Enumerable"),
 };
 
-const Observable_toEnumerable: Container.TypeClass<ObservableContainer>["toEnumerable"] =
+const Observable_toEnumerable: EnumerableContainers.TypeClass<ObservableContainer>["toEnumerable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

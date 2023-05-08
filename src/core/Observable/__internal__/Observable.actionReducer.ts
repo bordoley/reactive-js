@@ -1,4 +1,4 @@
-import { Container, ObservableContainer } from "../../../core.js";
+import { Containers, ObservableContainer } from "../../../core.js";
 import Optional_toObservable from "../../../core/Optional/__internal__/Optional.toObservable.js";
 import {
   Equality,
@@ -17,7 +17,7 @@ const Observable_actionReducer =
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
-  ): Container.Operator<ObservableContainer, TAction, T> =>
+  ): Containers.Operator<ObservableContainer, TAction, T> =>
   obs =>
     Observable_defer(() => {
       const acc = initialState();

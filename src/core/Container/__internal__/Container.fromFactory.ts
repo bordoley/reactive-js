@@ -1,14 +1,14 @@
-import { Container } from "../../../core.js";
+import { Container, Containers } from "../../../core.js";
 import { Factory, Function1, Optional, pipe } from "../../../functions.js";
 
 const Container_fromFactory =
   <C extends Container, O = never>(
     fromOptional: <T>(
       options?: O,
-    ) => Function1<Optional<T>, Container.Of<C, T>>,
-    map: Container.TypeClass<C>["map"],
+    ) => Function1<Optional<T>, Containers.Of<C, T>>,
+    map: Containers.TypeClass<C>["map"],
   ) =>
-  <T>(factory: Factory<T>, options?: O): Container.Of<C, T> =>
+  <T>(factory: Factory<T>, options?: O): Containers.Of<C, T> =>
     pipe(
       factory,
       fromOptional(options),

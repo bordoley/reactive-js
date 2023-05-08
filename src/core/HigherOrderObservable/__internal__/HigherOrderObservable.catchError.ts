@@ -10,13 +10,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
-  ReactiveContainer,
+  ReactiveContainers,
 } from "../../../core.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onComplete from "../../../core/Disposable/__internal__/Disposable.onComplete.js";
@@ -35,8 +35,8 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 const HigherOrderObservable_catchError = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
-  ) => Container.Operator<C, T, T>,
-): ReactiveContainer.TypeClass<C>["catchError"] => {
+  ) => Containers.Operator<C, T, T>,
+): ReactiveContainers.TypeClass<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
@@ -44,7 +44,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
         function CatchErrorObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
           delegate: ObserverLike<T>,
-          errorHandler: Function1<unknown, Container.Of<C, T> | void>,
+          errorHandler: Function1<unknown, Containers.Of<C, T> | void>,
         ): ObserverLike<T> {
           init(Observer_mixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
@@ -54,7 +54,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
             Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)),
             Disposable_onError((err: Error) => {
               try {
-                const result = errorHandler(err) as Container.Of<C, T>;
+                const result = errorHandler(err) as Containers.Of<C, T>;
                 if (isSome(result)) {
                   result[ObservableLike_observe](delegate);
                 } else {
@@ -82,12 +82,12 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
     );
   })();
 
-  return (<T>(errorHandler: Function1<unknown, Container.Of<C, T> | void>) =>
+  return (<T>(errorHandler: Function1<unknown, Containers.Of<C, T> | void>) =>
     pipe(
       createCatchErrorObserver,
       partial(errorHandler),
       lift,
-    )) as ReactiveContainer.TypeClass<C>["catchError"];
+    )) as ReactiveContainers.TypeClass<C>["catchError"];
 };
 
 export default HigherOrderObservable_catchError;

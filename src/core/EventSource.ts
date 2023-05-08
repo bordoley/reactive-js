@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   DisposableLike,
   EventSourceContainer,
   EventSourceLike,
@@ -24,15 +24,15 @@ export const addEventHandler: <T>(
  */
 export const create = EventSource_create;
 
-export const forEach: Container.TypeClass<EventSourceContainer>["forEach"] =
+export const forEach: Containers.TypeClass<EventSourceContainer>["forEach"] =
   EventSource_forEach;
-export const ignoreElements: Container.TypeClass<EventSourceContainer>["ignoreElements"] =
+export const ignoreElements: Containers.TypeClass<EventSourceContainer>["ignoreElements"] =
   EventSource_ignoreElements;
-export const keep: Container.TypeClass<EventSourceContainer>["keep"] =
+export const keep: Containers.TypeClass<EventSourceContainer>["keep"] =
   EventSource_keep;
-export const map: Container.TypeClass<EventSourceContainer>["map"] =
+export const map: Containers.TypeClass<EventSourceContainer>["map"] =
   EventSource_map;
-export const pick: Container.TypeClass<EventSourceContainer>["pick"] =
+export const pick: Containers.TypeClass<EventSourceContainer>["pick"] =
   EventSource_pick;
-export const toObservable: Container.TypeClass<EventSourceContainer>["toObservable"] =
+export const toObservable: Containers.TypeClass<EventSourceContainer>["toObservable"] =
   EventSource_toObservable;

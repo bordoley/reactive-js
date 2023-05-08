@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   ObservableContainer,
   QueueableLike,
 } from "../../../core.js";
@@ -9,7 +9,7 @@ import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer
 
 type ObservableEnqueue = <C extends ObservableContainer, T = unknown>(
   queue: QueueableLike<T>,
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 const Observable_enqueue: ObservableEnqueue = (<T>(queue: QueueableLike<T>) =>
   pipe(
     Observer_createEnqueueObserver,

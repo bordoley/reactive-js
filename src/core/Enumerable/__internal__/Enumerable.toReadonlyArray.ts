@@ -1,15 +1,15 @@
 import {
-  Container,
   DisposableLike_dispose,
   DisposableLike_error,
   EnumerableContainer,
   EnumerableLike,
+  RunnableContainers,
 } from "../../../core.js";
 import Enumerator_toReadonlyArray from "../../../core/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import { isSome, pipe, raiseError } from "../../../functions.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
-const Enumerable_toReadonlyArray: Container.TypeClass<EnumerableContainer>["toReadonlyArray"] =
+const Enumerable_toReadonlyArray: RunnableContainers.TypeClass<EnumerableContainer>["toReadonlyArray"] =
 
     <T>() =>
     (enumerable: EnumerableLike<T>) => {

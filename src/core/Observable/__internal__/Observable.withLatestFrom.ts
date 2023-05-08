@@ -16,7 +16,7 @@ import {
   __WithLatestLike_selector,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableContainer,
@@ -35,9 +35,9 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type ObservableWithLastestFrom = <C extends ObservableContainer, TA, TB, T>(
-  other: Container.Of<C, TB>,
+  other: Containers.Of<C, TB>,
   selector: Function2<TA, TB, T>,
-) => Container.Operator<C, TA, T>;
+) => Containers.Operator<C, TA, T>;
 const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   TA,
   TB,

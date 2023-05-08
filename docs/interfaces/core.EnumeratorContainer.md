@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Container`](core.Container-1.md)
+- [`Container`](core.Container.md)
 
   ↳ **`EnumeratorContainer`**
 
@@ -24,4 +24,4 @@
 
 #### Overrides
 
-[Container](core.Container-1.md).[[___Container_type]](core.Container-1.md#[___container_type])
+[Container](core.Container.md).[[___Container_type]](core.Container.md#[___container_type])

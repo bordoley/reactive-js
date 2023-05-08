@@ -14,7 +14,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __TakeWhileObserver_inclusive } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObserverLike,
@@ -31,7 +31,7 @@ type ObservableTakeWhile = <C extends ObservableContainer, T>(
   options?: {
     readonly inclusive?: boolean;
   },
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 
 const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
   const createTakeWhileObserver: (

@@ -16,7 +16,7 @@ import {
   __DistinctUntilChangedObserver_prev,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
@@ -38,7 +38,7 @@ type ObservableDistinctUntilChanged = <
   T,
 >(options?: {
   readonly equality?: Equality<T>;
-}) => Container.Operator<C, T, T>;
+}) => Containers.Operator<C, T, T>;
 
 const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
   /*@__PURE__*/ (<T>() => {
@@ -106,7 +106,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
         partial(equality),
         Enumerable_lift,
       );
-    }) as Container.TypeClass<ObservableContainer>["distinctUntilChanged"];
+    }) as Containers.TypeClass<ObservableContainer>["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

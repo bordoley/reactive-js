@@ -12,7 +12,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -22,7 +22,7 @@ import {
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import { Predicate, none, unsafeCast } from "../../../functions.js";
 
-const Enumerator_keep: Container.TypeClass<EnumeratorContainer>["keep"] =
+const Enumerator_keep: Containers.TypeClass<EnumeratorContainer>["keep"] =
   /*@__PURE__*/ (<T>() => {
     const createKeepEnumerator = createInstanceFactory(
       mix(

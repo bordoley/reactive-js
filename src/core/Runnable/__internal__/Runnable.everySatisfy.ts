@@ -1,11 +1,15 @@
-import { Container, RunnableContainer, RunnableLike } from "../../../core.js";
+import {
+  RunnableContainer,
+  RunnableContainers,
+  RunnableLike,
+} from "../../../core.js";
 import { Predicate, isTrue, pipe } from "../../../functions.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_everySatisfy: Container.TypeClass<RunnableContainer>["everySatisfy"] =
+const Runnable_everySatisfy: RunnableContainers.TypeClass<RunnableContainer>["everySatisfy"] =
 
     <T>(predicate: Predicate<T>) =>
     (runnable: RunnableLike<T>) => {

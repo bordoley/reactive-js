@@ -1,15 +1,15 @@
 import {
-  Container,
-  ReactiveContainer,
+  Containers,
+  ReactiveContainers,
   RunnableContainer,
 } from "../../../core.js";
 import HigherOrderObservable_encodeUtf8 from "../../HigherOrderObservable/__internal__/HigherOrderObservable.encodeUtf8.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Runnable_defer from "./Runnable.defer.js";
 
-const map: Container.TypeClass<RunnableContainer>["map"] = Observable_map;
+const map: Containers.TypeClass<RunnableContainer>["map"] = Observable_map;
 
-const Runnable_encodeUtf8: ReactiveContainer.TypeClass<RunnableContainer>["encodeUtf8"] =
+const Runnable_encodeUtf8: ReactiveContainers.TypeClass<RunnableContainer>["encodeUtf8"] =
   /*@__PURE__*/ HigherOrderObservable_encodeUtf8<RunnableContainer>(
     Runnable_defer,
     map,
