@@ -17,7 +17,7 @@ import {
   __timeoutError,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike,
   DisposableLike_dispose,
   ObservableContainer,
@@ -44,13 +44,13 @@ import Observable_throws from "./Observable.throws.js";
 interface ObservableTimeout {
   timeout<C extends ObservableContainer, T>(
     duration: number,
-  ): Container.Operator<C, T, T>;
+  ): Containers.Operator<C, T, T>;
   timeout<T>(
     duration: RunnableLike,
-  ): Container.Operator<RunnableContainer, T, T>;
+  ): Containers.Operator<RunnableContainer, T, T>;
   timeout<T>(
     duration: ObservableLike,
-  ): Container.Operator<ObservableContainer, T, T>;
+  ): Containers.Operator<ObservableContainer, T, T>;
 }
 
 const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<

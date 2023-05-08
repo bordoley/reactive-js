@@ -1,4 +1,4 @@
-import { AsyncIterableContainer, Container } from "../core.js";
-export declare const flow: Container.TypeClass<AsyncIterableContainer>["flow"];
-export declare const identity: Container.TypeClass<AsyncIterableContainer>["identity"];
-export declare const toObservable: Container.TypeClass<AsyncIterableContainer>["toObservable"];
+import { AsyncIterableContainer, Containers, DeferredContainers } from "../core.js";
+export declare const flow: DeferredContainers.TypeClass<AsyncIterableContainer>["flow"];
+export declare const identity: Containers.TypeClass<AsyncIterableContainer>["identity"];
+export declare const toObservable: Containers.TypeClass<AsyncIterableContainer>["toObservable"];

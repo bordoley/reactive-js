@@ -3,7 +3,7 @@ import {
   DictionaryLike,
   EnumeratorLike,
   KeyedCollectionLike_get,
-  KeyedContainer,
+  KeyedContainers,
 } from "../../../core.js";
 import Enumerator_map from "../../../core/Enumerator/__internal__/Enumerator.map.js";
 import { pipe } from "../../../functions.js";
@@ -12,7 +12,7 @@ import Dictionary_keys from "./Dictionary.keys.js";
 const Dictionary_entries =
   <
     T,
-    TKey extends KeyedContainer.KeyOf<DictionaryContainer> = KeyedContainer.KeyOf<DictionaryContainer>,
+    TKey extends KeyedContainers.KeyOf<DictionaryContainer> = KeyedContainers.KeyOf<DictionaryContainer>,
   >() =>
   (dict: DictionaryLike<TKey, T>): EnumeratorLike<[TKey, T]> =>
     pipe(

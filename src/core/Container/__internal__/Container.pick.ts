@@ -1,10 +1,10 @@
-import { Container } from "../../../core.js";
+import { Container, Containers } from "../../../core.js";
 
 const Container_pick =
   <C extends Container>(
-    map: Container.TypeClass<C>["map"],
-  ): Container.TypeClass<C>["pick"] =>
-  (...keys: any[]): Container.Operator<C, any, unknown> =>
+    map: Containers.TypeClass<C>["map"],
+  ): Containers.TypeClass<C>["pick"] =>
+  (...keys: any[]): Containers.Operator<C, any, unknown> =>
     map<any, unknown>((value: any) => {
       let result: any = value;
       for (const key of keys) {

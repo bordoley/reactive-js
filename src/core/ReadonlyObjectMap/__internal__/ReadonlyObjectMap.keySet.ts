@@ -1,14 +1,14 @@
 import { hasOwn } from "../../../__internal__/Object.js";
 import {
-  KeyedContainer,
+  KeyedContainers,
   ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "../../../core.js";
 
-const ReadonlyObjectMap_keySet: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keySet"] =
+const ReadonlyObjectMap_keySet: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["keySet"] =
 
     <
-      TKey extends KeyedContainer.KeyOf<ReadonlyObjectMapContainer> = KeyedContainer.KeyOf<ReadonlyObjectMapContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyObjectMapContainer> = KeyedContainers.KeyOf<ReadonlyObjectMapContainer>,
     >() =>
     (obj: ReadonlyObjectMapLike<TKey, unknown>): ReadonlySet<TKey> => {
       const keys = new Set<TKey>();

@@ -12,7 +12,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
@@ -23,7 +23,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_map: Container.TypeClass<EventSourceContainer>["map"] =
+const EventSource_map: Containers.TypeClass<EventSourceContainer>["map"] =
   /*@__PURE__*/ (() => {
     const createMapEventListener: <TA, TB>(
       delegate: EventListenerLike<TB>,
@@ -69,6 +69,6 @@ const EventSource_map: Container.TypeClass<EventSourceContainer>["map"] =
 
     return <TA, TB>(selector: Function1<TA, TB>) =>
       pipe(createMapEventListener, partial(selector), EventSource_lift);
-  })() as Container.TypeClass<EventSourceContainer>["map"];
+  })() as Containers.TypeClass<EventSourceContainer>["map"];
 
 export default EventSource_map;

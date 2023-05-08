@@ -1,6 +1,7 @@
 import {
   CollectionLike,
   Container,
+  Containers,
   DisposableLike,
   IndexedCollectionLike,
   KeyedCollectionLike,
@@ -165,7 +166,7 @@ export interface ReducerAccumulatorLike<T, TAcc> {
 export interface Lift<C extends Container> {
   lift<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): Container.Operator<C, TA, TB>;
+  ): Containers.Operator<C, TA, TB>;
 }
 
 export interface WithLatestLike<TA, TB, T> {

@@ -13,7 +13,7 @@ import { __DispatchedObservable_observer } from "../../../__internal__/symbols.j
 import {
   BufferLike_capacity,
   CollectionLike_count,
-  Container,
+  Containers,
   DispatcherLike,
   DispatcherLikeEventMap,
   DispatcherLike_complete,
@@ -198,7 +198,7 @@ type TProperties = {
 
 const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  Container.Operator<ObservableContainer, TReq, T>,
+  Containers.Operator<ObservableContainer, TReq, T>,
   SchedulerLike,
   Optional<{
     replay?: number;
@@ -215,7 +215,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       ),
       function StreamMixin(
         instance: TProperties,
-        op: Container.Operator<ObservableContainer, TReq, T>,
+        op: Containers.Operator<ObservableContainer, TReq, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           replay?: number;

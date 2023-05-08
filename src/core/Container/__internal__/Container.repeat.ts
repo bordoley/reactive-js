@@ -1,5 +1,5 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
-import { Container } from "../../../core.js";
+import { Container, Containers } from "../../../core.js";
 import {
   Predicate,
   alwaysTrue,
@@ -11,9 +11,9 @@ import {
 const Container_repeat =
   <C extends Container, T>(
     repeat: (
-      c: Container.Of<C, T>,
+      c: Containers.Of<C, T>,
       predicate: Predicate<number>,
-    ) => Container.Of<C, T>,
+    ) => Containers.Of<C, T>,
   ) =>
   (predicate?: Predicate<number> | number) => {
     const shouldRepeat: Predicate<number> = isNone(predicate)
@@ -22,7 +22,7 @@ const Container_repeat =
       ? lessThan(clampPositiveInteger(predicate))
       : predicate;
 
-    return (c: Container.Of<C, T>) => repeat(c, shouldRepeat);
+    return (c: Containers.Of<C, T>) => repeat(c, shouldRepeat);
   };
 
 export default Container_repeat;

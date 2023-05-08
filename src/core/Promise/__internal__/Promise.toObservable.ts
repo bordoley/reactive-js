@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   DispatcherLike_complete,
   DisposableLike_isDisposed,
   ObservableLike,
@@ -9,7 +9,7 @@ import {
 import Disposable_toErrorHandler from "../../../core/Disposable/__internal__/Disposable.toErrorHandler.js";
 import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 
-const Promise_toObservable: Container.TypeClass<PromiseContainer>["toObservable"] =
+const Promise_toObservable: Containers.TypeClass<PromiseContainer>["toObservable"] =
 
     <T>() =>
     (promise: PromiseLike<T>): ObservableLike<T> =>

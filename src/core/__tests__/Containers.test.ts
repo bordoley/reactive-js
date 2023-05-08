@@ -5,7 +5,12 @@ import {
   expectToThrowError,
   test,
 } from "../../__internal__/testing.js";
-import { Container } from "../../core.js";
+import {
+  Container,
+  Containers,
+  DeferredContainers,
+  RunnableContainers,
+} from "../../core.js";
 import {
   Optional,
   alwaysFalse,
@@ -20,7 +25,11 @@ import {
   returns,
 } from "../../functions.js";
 
-const Containers_test = <C extends Container>(m: Container.TypeClass<C>) =>
+const Containers_test = <C extends Container>(
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
+) =>
   describe(
     "container",
     describe(

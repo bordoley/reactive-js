@@ -6,10 +6,12 @@
 
 ### Namespaces
 
-- [Container](core.Container.md)
-- [EnumerableContainer](core.EnumerableContainer.md)
-- [KeyedContainer](core.KeyedContainer.md)
-- [ReactiveContainer](core.ReactiveContainer.md)
+- [Containers](core.Containers.md)
+- [DeferredContainers](core.DeferredContainers.md)
+- [EnumerableContainers](core.EnumerableContainers.md)
+- [KeyedContainers](core.KeyedContainers.md)
+- [ReactiveContainers](core.ReactiveContainers.md)
+- [RunnableContainers](core.RunnableContainers.md)
 
 ### Collection Interfaces
 
@@ -22,9 +24,9 @@
 ### Container Interfaces
 
 - [AsyncIterableContainer](../interfaces/core.AsyncIterableContainer.md)
-- [Container](../interfaces/core.Container-1.md)
+- [Container](../interfaces/core.Container.md)
 - [DeferredObservableContainer](../interfaces/core.DeferredObservableContainer.md)
-- [EnumerableContainer](../interfaces/core.EnumerableContainer-1.md)
+- [EnumerableContainer](../interfaces/core.EnumerableContainer.md)
 - [EnumeratorContainer](../interfaces/core.EnumeratorContainer.md)
 - [EventSourceContainer](../interfaces/core.EventSourceContainer.md)
 - [IterableContainer](../interfaces/core.IterableContainer.md)
@@ -51,10 +53,10 @@
 - [EnumeratorLike](../interfaces/core.EnumeratorLike.md)
 - [StreamLike](../interfaces/core.StreamLike.md)
 
-### KeyedContainer Interfaces
+### KeyedContainers Interfaces
 
 - [DictionaryContainer](../interfaces/core.DictionaryContainer.md)
-- [KeyedContainer](../interfaces/core.KeyedContainer-1.md)
+- [KeyedContainers](../interfaces/core.KeyedContainers-1.md)
 - [ReadonlyArrayContainer](../interfaces/core.ReadonlyArrayContainer.md)
 - [ReadonlyMapContainer](../interfaces/core.ReadonlyMapContainer.md)
 - [ReadonlyObjectMapContainer](../interfaces/core.ReadonlyObjectMapContainer.md)

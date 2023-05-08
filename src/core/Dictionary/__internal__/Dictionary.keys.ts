@@ -3,12 +3,12 @@ import {
   DictionaryContainer,
   DictionaryLike,
   EnumeratorLike,
-  KeyedContainer,
+  KeyedContainers,
 } from "../../../core.js";
 
-const Dictionary_keys: KeyedContainer.TypeClass<DictionaryContainer>["keys"] =
+const Dictionary_keys: KeyedContainers.TypeClass<DictionaryContainer>["keys"] =
   <
-    TKey extends KeyedContainer.KeyOf<DictionaryContainer> = KeyedContainer.KeyOf<DictionaryContainer>,
+    TKey extends KeyedContainers.KeyOf<DictionaryContainer> = KeyedContainers.KeyOf<DictionaryContainer>,
   >() =>
   (dict: DictionaryLike<TKey, unknown>): EnumeratorLike<TKey> =>
     dict[AssociativeCollectionLike_keys];

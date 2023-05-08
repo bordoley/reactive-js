@@ -1,13 +1,16 @@
 import {
-  Container,
+  Containers,
+  DeferredContainers,
   DisposableLike,
   DisposableOrTeardown,
+  EnumerableContainers,
   ObservableContainer,
   ObservableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  ReactiveContainer,
+  ReactiveContainers,
+  RunnableContainers,
   SchedulerLike,
 } from "../core.js";
 import AsyncIterable_toObservable from "../core/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
@@ -95,10 +98,10 @@ import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js"
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Runnable_fromEnumeratorFactory from "./Runnable/__internal__/Runnable.fromEnumeratorFactory.js";
 
-export const animate: ReactiveContainer.TypeClass<ObservableContainer>["animate"] =
+export const animate: ReactiveContainers.TypeClass<ObservableContainer>["animate"] =
   Observable_animate;
 
-export const backpressureStrategy: ReactiveContainer.TypeClass<ObservableContainer>["backpressureStrategy"] =
+export const backpressureStrategy: ReactiveContainers.TypeClass<ObservableContainer>["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
 /**
@@ -107,13 +110,13 @@ export const backpressureStrategy: ReactiveContainer.TypeClass<ObservableContain
 export const buffer: <T>(options?: {
   readonly duration?: number | Function1<T, ObservableContainer>;
   readonly count?: number;
-}) => Container.Operator<ObservableContainer, T, readonly T[]> =
+}) => Containers.Operator<ObservableContainer, T, readonly T[]> =
   Observable_buffer;
 
-export const catchError: ReactiveContainer.TypeClass<ObservableContainer>["catchError"] =
+export const catchError: ReactiveContainers.TypeClass<ObservableContainer>["catchError"] =
   Observable_catchError;
 
-export const combineLatest: ReactiveContainer.TypeClass<ObservableContainer>["combineLatest"] =
+export const combineLatest: ReactiveContainers.TypeClass<ObservableContainer>["combineLatest"] =
   Observable_combineLatest;
 
 /**
@@ -121,17 +124,17 @@ export const combineLatest: ReactiveContainer.TypeClass<ObservableContainer>["co
  */
 export const compute = Observable_compute;
 
-export const concat: Container.TypeClass<ObservableContainer>["concat"] =
+export const concat: DeferredContainers.TypeClass<ObservableContainer>["concat"] =
   Observable_concat;
 
-export const concatAll: Container.TypeClass<ObservableContainer>["concatAll"] =
+export const concatAll: DeferredContainers.TypeClass<ObservableContainer>["concatAll"] =
   Observable_concatAll;
 
-export const concatMap: Container.TypeClass<ObservableContainer>["concatMap"] =
+export const concatMap: DeferredContainers.TypeClass<ObservableContainer>["concatMap"] =
   Observable_concatMap;
 
-export const concatWith: Container.TypeClass<ObservableContainer>["concatWith"] =
-  Observable_concatWith as Container.TypeClass<ObservableContainer>["concatWith"];
+export const concatWith: DeferredContainers.TypeClass<ObservableContainer>["concatWith"] =
+  Observable_concatWith as DeferredContainers.TypeClass<ObservableContainer>["concatWith"];
 
 /**
  * @category Constructor
@@ -139,40 +142,40 @@ export const concatWith: Container.TypeClass<ObservableContainer>["concatWith"] 
 export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
   Observable_create;
 
-export const currentTime: ReactiveContainer.TypeClass<ObservableContainer>["currentTime"] =
+export const currentTime: ReactiveContainers.TypeClass<ObservableContainer>["currentTime"] =
   Observable_currentTime;
 
-export const decodeWithCharset: ReactiveContainer.TypeClass<ObservableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: ReactiveContainers.TypeClass<ObservableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: ReactiveContainer.TypeClass<ObservableContainer>["defer"] =
+export const defer: ReactiveContainers.TypeClass<ObservableContainer>["defer"] =
   Observable_defer;
 
-export const dispatchTo: ReactiveContainer.TypeClass<ObservableContainer>["dispatchTo"] =
+export const dispatchTo: ReactiveContainers.TypeClass<ObservableContainer>["dispatchTo"] =
   Observable_dispatchTo;
 
-export const distinctUntilChanged: Container.TypeClass<ObservableContainer>["distinctUntilChanged"] =
+export const distinctUntilChanged: Containers.TypeClass<ObservableContainer>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: ReactiveContainer.TypeClass<ObservableContainer>["empty"] =
+export const empty: ReactiveContainers.TypeClass<ObservableContainer>["empty"] =
   Observable_empty;
 
-export const encodeUtf8: ReactiveContainer.TypeClass<ObservableContainer>["encodeUtf8"] =
+export const encodeUtf8: ReactiveContainers.TypeClass<ObservableContainer>["encodeUtf8"] =
   Observable_encodeUtf8;
 
-export const enqueue: ReactiveContainer.TypeClass<ObservableContainer>["enqueue"] =
+export const enqueue: ReactiveContainers.TypeClass<ObservableContainer>["enqueue"] =
   Observable_enqueue;
 
-export const endWith: Container.TypeClass<ObservableContainer>["endWith"] =
+export const endWith: DeferredContainers.TypeClass<ObservableContainer>["endWith"] =
   Observable_endWith;
 
-export const exhaust: ReactiveContainer.TypeClass<ObservableContainer>["exhaust"] =
+export const exhaust: ReactiveContainers.TypeClass<ObservableContainer>["exhaust"] =
   Observable_exhaust;
 
-export const exhaustMap: ReactiveContainer.TypeClass<ObservableContainer>["exhaustMap"] =
+export const exhaustMap: ReactiveContainers.TypeClass<ObservableContainer>["exhaustMap"] =
   Observable_exhaustMap;
 
-export const firstAsync: ReactiveContainer.TypeClass<ObservableContainer>["firstAsync"] =
+export const firstAsync: ReactiveContainers.TypeClass<ObservableContainer>["firstAsync"] =
   Observable_firstAsync;
 
 /**
@@ -180,25 +183,25 @@ export const firstAsync: ReactiveContainer.TypeClass<ObservableContainer>["first
  */
 export const flatMapAsync = Observable_flatMapAsync;
 
-export const flatMapIterable: Container.TypeClass<ObservableContainer>["flatMapIterable"] =
+export const flatMapIterable: Containers.TypeClass<ObservableContainer>["flatMapIterable"] =
   Observable_flatMapIterable;
 
-export const forEach: Container.TypeClass<ObservableContainer>["forEach"] =
+export const forEach: Containers.TypeClass<ObservableContainer>["forEach"] =
   Observable_forEach;
 
-export const forkCombineLatest: ReactiveContainer.TypeClass<ObservableContainer>["forkCombineLatest"] =
+export const forkCombineLatest: ReactiveContainers.TypeClass<ObservableContainer>["forkCombineLatest"] =
   Observable_forkCombineLatest;
 
-export const forkConcat: Container.TypeClass<ObservableContainer>["forkConcat"] =
+export const forkConcat: DeferredContainers.TypeClass<ObservableContainer>["forkConcat"] =
   Observable_forkConcat;
 
-export const forkMerge: ReactiveContainer.TypeClass<ObservableContainer>["forkMerge"] =
+export const forkMerge: ReactiveContainers.TypeClass<ObservableContainer>["forkMerge"] =
   Observable_forkMerge;
 
-export const forkZip: Container.TypeClass<ObservableContainer>["forkZip"] =
+export const forkZip: Containers.TypeClass<ObservableContainer>["forkZip"] =
   Observable_forkZip;
 
-export const forkZipLatest: ReactiveContainer.TypeClass<ObservableContainer>["forkZipLatest"] =
+export const forkZipLatest: ReactiveContainers.TypeClass<ObservableContainer>["forkZipLatest"] =
   Observable_forkZipLatest;
 
 /**
@@ -206,64 +209,64 @@ export const forkZipLatest: ReactiveContainer.TypeClass<ObservableContainer>["fo
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
-export const fromAsyncIterable: Container.TypeClass<ObservableContainer>["fromAsyncIterable"] =
+export const fromAsyncIterable: Containers.TypeClass<ObservableContainer>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
 
-export const fromEnumeratorFactory: ReactiveContainer.TypeClass<ObservableContainer>["fromEnumeratorFactory"] =
+export const fromEnumeratorFactory: ReactiveContainers.TypeClass<ObservableContainer>["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-export const fromFactory: ReactiveContainer.TypeClass<ObservableContainer>["fromFactory"] =
+export const fromFactory: ReactiveContainers.TypeClass<ObservableContainer>["fromFactory"] =
   Observable_fromFactory;
 
-export const fromIterable: ReactiveContainer.TypeClass<ObservableContainer>["fromIterable"] =
+export const fromIterable: ReactiveContainers.TypeClass<ObservableContainer>["fromIterable"] =
   Iterable_toObservable;
 
-export const fromOptional: ReactiveContainer.TypeClass<ObservableContainer>["fromOptional"] =
+export const fromOptional: ReactiveContainers.TypeClass<ObservableContainer>["fromOptional"] =
   Optional_toObservable;
 
-export const fromReadonlyArray: ReactiveContainer.TypeClass<ObservableContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: ReactiveContainers.TypeClass<ObservableContainer>["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-export const generate: ReactiveContainer.TypeClass<ObservableContainer>["generate"] =
+export const generate: ReactiveContainers.TypeClass<ObservableContainer>["generate"] =
   Observable_generate;
 
-export const identity: Container.TypeClass<ObservableContainer>["identity"] =
+export const identity: Containers.TypeClass<ObservableContainer>["identity"] =
   Container_identity;
 
-export const ignoreElements: Container.TypeClass<ObservableContainer>["ignoreElements"] =
+export const ignoreElements: Containers.TypeClass<ObservableContainer>["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Container.TypeClass<ObservableContainer>["keep"] =
+export const keep: Containers.TypeClass<ObservableContainer>["keep"] =
   Observable_keep;
 
-export const keepType: Container.TypeClass<ObservableContainer>["keepType"] =
-  Observable_keepType as Container.TypeClass<ObservableContainer>["keepType"];
+export const keepType: Containers.TypeClass<ObservableContainer>["keepType"] =
+  Observable_keepType as Containers.TypeClass<ObservableContainer>["keepType"];
 
-export const lastAsync: ReactiveContainer.TypeClass<ObservableContainer>["lastAsync"] =
+export const lastAsync: ReactiveContainers.TypeClass<ObservableContainer>["lastAsync"] =
   Observable_lastAsync;
 
-export const map: Container.TypeClass<ObservableContainer>["map"] =
+export const map: Containers.TypeClass<ObservableContainer>["map"] =
   Observable_map;
 
-export const mapTo: Container.TypeClass<ObservableContainer>["mapTo"] =
+export const mapTo: Containers.TypeClass<ObservableContainer>["mapTo"] =
   Observable_mapTo;
 
-export const merge: ReactiveContainer.TypeClass<ObservableContainer>["merge"] =
+export const merge: ReactiveContainers.TypeClass<ObservableContainer>["merge"] =
   Observable_merge;
 
-export const mergeAll: ReactiveContainer.TypeClass<ObservableContainer>["mergeAll"] =
+export const mergeAll: ReactiveContainers.TypeClass<ObservableContainer>["mergeAll"] =
   Observable_mergeAll;
 
-export const mergeMap: ReactiveContainer.TypeClass<ObservableContainer>["mergeMap"] =
+export const mergeMap: ReactiveContainers.TypeClass<ObservableContainer>["mergeMap"] =
   Observable_mergeMap;
 
-export const mergeWith: ReactiveContainer.TypeClass<ObservableContainer>["mergeWith"] =
-  Observable_mergeWith as ReactiveContainer.TypeClass<ObservableContainer>["mergeWith"];
+export const mergeWith: ReactiveContainers.TypeClass<ObservableContainer>["mergeWith"] =
+  Observable_mergeWith as ReactiveContainers.TypeClass<ObservableContainer>["mergeWith"];
 
-export const multicast: ReactiveContainer.TypeClass<ObservableContainer>["multicast"] =
+export const multicast: ReactiveContainers.TypeClass<ObservableContainer>["multicast"] =
   Observable_multicast;
 
-export const never: ReactiveContainer.TypeClass<ObservableContainer>["never"] =
+export const never: ReactiveContainers.TypeClass<ObservableContainer>["never"] =
   Observable_never;
 
 /**
@@ -271,42 +274,42 @@ export const never: ReactiveContainer.TypeClass<ObservableContainer>["never"] =
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => Container.Operator<ObservableContainer, T, T> = Observable_onSubscribe;
+) => Containers.Operator<ObservableContainer, T, T> = Observable_onSubscribe;
 
-export const pairwise: Container.TypeClass<ObservableContainer>["pairwise"] =
+export const pairwise: Containers.TypeClass<ObservableContainer>["pairwise"] =
   Observable_pairwise;
 
-export const pick: Container.TypeClass<ObservableContainer>["pick"] =
+export const pick: Containers.TypeClass<ObservableContainer>["pick"] =
   Observable_pick;
 
-export const repeat: Container.TypeClass<ObservableContainer>["repeat"] =
+export const repeat: DeferredContainers.TypeClass<ObservableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: ReactiveContainer.TypeClass<ObservableContainer>["retry"] =
+export const retry: ReactiveContainers.TypeClass<ObservableContainer>["retry"] =
   Observable_retry;
 
-export const scan: Container.TypeClass<ObservableContainer>["scan"] =
+export const scan: Containers.TypeClass<ObservableContainer>["scan"] =
   Observable_scan;
 
-export const scanLast: ReactiveContainer.TypeClass<ObservableContainer>["scanLast"] =
+export const scanLast: ReactiveContainers.TypeClass<ObservableContainer>["scanLast"] =
   Observable_scanLast;
 
-export const scanMany: ReactiveContainer.TypeClass<ObservableContainer>["scanMany"] =
+export const scanMany: ReactiveContainers.TypeClass<ObservableContainer>["scanMany"] =
   Observable_scanLast;
 
-export const share: ReactiveContainer.TypeClass<ObservableContainer>["share"] =
+export const share: ReactiveContainers.TypeClass<ObservableContainer>["share"] =
   Observable_share;
 
-export const skipFirst: Container.TypeClass<ObservableContainer>["skipFirst"] =
+export const skipFirst: Containers.TypeClass<ObservableContainer>["skipFirst"] =
   Observable_skipFirst;
 
-export const startWith: Container.TypeClass<ObservableContainer>["startWith"] =
+export const startWith: DeferredContainers.TypeClass<ObservableContainer>["startWith"] =
   Observable_startWith;
 
-export const switchAll: ReactiveContainer.TypeClass<ObservableContainer>["switchAll"] =
+export const switchAll: ReactiveContainers.TypeClass<ObservableContainer>["switchAll"] =
   Observable_switchAll;
 
-export const switchMap: ReactiveContainer.TypeClass<ObservableContainer>["switchMap"] =
+export const switchMap: ReactiveContainers.TypeClass<ObservableContainer>["switchMap"] =
   Observable_switchMap;
 
 export const subscribe: <T>(
@@ -322,25 +325,25 @@ export const subscribe: <T>(
  */
 export const subscribeOn = Observable_subscribeOn;
 
-export const takeFirst: Container.TypeClass<ObservableContainer>["takeFirst"] =
+export const takeFirst: Containers.TypeClass<ObservableContainer>["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: Container.TypeClass<ObservableContainer>["takeLast"] =
+export const takeLast: Containers.TypeClass<ObservableContainer>["takeLast"] =
   Observable_takeLast;
 
-export const takeUntil: ReactiveContainer.TypeClass<ObservableContainer>["takeUntil"] =
+export const takeUntil: ReactiveContainers.TypeClass<ObservableContainer>["takeUntil"] =
   Observable_takeUntil;
 
-export const takeWhile: Container.TypeClass<ObservableContainer>["takeWhile"] =
+export const takeWhile: Containers.TypeClass<ObservableContainer>["takeWhile"] =
   Observable_takeWhile;
 
-export const throttle: ReactiveContainer.TypeClass<ObservableContainer>["throttle"] =
+export const throttle: ReactiveContainers.TypeClass<ObservableContainer>["throttle"] =
   Observable_throttle;
 
-export const throwIfEmpty: ReactiveContainer.TypeClass<ObservableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: ReactiveContainers.TypeClass<ObservableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-interface Throws extends ReactiveContainer.TypeClass<ObservableContainer> {
+interface Throws extends ReactiveContainers.TypeClass<ObservableContainer> {
   /**
    * @category Constructor
    */
@@ -351,10 +354,10 @@ interface Throws extends ReactiveContainer.TypeClass<ObservableContainer> {
 }
 export const throws: Throws["throws"] = Observable_throws;
 
-export const timeout: ReactiveContainer.TypeClass<ObservableContainer>["timeout"] =
+export const timeout: ReactiveContainers.TypeClass<ObservableContainer>["timeout"] =
   Observable_timeout;
 
-export const toEnumerable: Container.TypeClass<ObservableContainer>["toEnumerable"] =
+export const toEnumerable: EnumerableContainers.TypeClass<ObservableContainer>["toEnumerable"] =
   Observable_toEnumerable;
 
 /**
@@ -362,26 +365,26 @@ export const toEnumerable: Container.TypeClass<ObservableContainer>["toEnumerabl
  */
 export const toEventSource = Observable_toEventSource;
 
-export const toObservable: Container.TypeClass<ObservableContainer>["toObservable"] =
+export const toObservable: Containers.TypeClass<ObservableContainer>["toObservable"] =
   identity;
 
-export const toRunnable: Container.TypeClass<ObservableContainer>["toRunnable"] =
+export const toRunnable: RunnableContainers.TypeClass<ObservableContainer>["toRunnable"] =
   Observable_toRunnable;
 
-export const withCurrentTime: ReactiveContainer.TypeClass<ObservableContainer>["withCurrentTime"] =
+export const withCurrentTime: ReactiveContainers.TypeClass<ObservableContainer>["withCurrentTime"] =
   Observable_withCurrentTime;
 
-export const withLatestFrom: ReactiveContainer.TypeClass<ObservableContainer>["withLatestFrom"] =
-  Observable_withLatestFrom as ReactiveContainer.TypeClass<ObservableContainer>["withLatestFrom"];
+export const withLatestFrom: ReactiveContainers.TypeClass<ObservableContainer>["withLatestFrom"] =
+  Observable_withLatestFrom as ReactiveContainers.TypeClass<ObservableContainer>["withLatestFrom"];
 
-export const zip: Container.TypeClass<ObservableContainer>["zip"] =
+export const zip: Containers.TypeClass<ObservableContainer>["zip"] =
   Observable_zip;
 
-export const zipLatest: ReactiveContainer.TypeClass<ObservableContainer>["zipLatest"] =
+export const zipLatest: ReactiveContainers.TypeClass<ObservableContainer>["zipLatest"] =
   Observable_zipLatest;
 
-export const zipWith: Container.TypeClass<ObservableContainer>["zipWith"] =
+export const zipWith: Containers.TypeClass<ObservableContainer>["zipWith"] =
   Observable_zipWith;
 
-export const zipWithLatestFrom: ReactiveContainer.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
+export const zipWithLatestFrom: ReactiveContainers.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
   Observable_zipWithLatestFrom;

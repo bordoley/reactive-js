@@ -21,7 +21,7 @@ import {
   __BufferObserver_durationSubscription,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableContainer,
@@ -53,7 +53,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 type ObservableBuffer = <C extends ObservableContainer, T>(options?: {
   readonly duration?: number | Function1<T, C>;
   readonly count?: number;
-}) => Container.Operator<C, T, readonly T[]>;
+}) => Containers.Operator<C, T, readonly T[]>;
 
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   type TProperties = {

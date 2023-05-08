@@ -1,12 +1,12 @@
-import { KeyedContainer, ReadonlyMapContainer } from "../../../core.js";
+import { KeyedContainers, ReadonlyMapContainer } from "../../../core.js";
 import { Function2 } from "../../../functions.js";
 
-const ReadonlyMap_mapWithKey: KeyedContainer.TypeClass<ReadonlyMapContainer>["mapWithKey"] =
+const ReadonlyMap_mapWithKey: KeyedContainers.TypeClass<ReadonlyMapContainer>["mapWithKey"] =
 
     <
       TA,
       TB,
-      TKey extends KeyedContainer.KeyOf<ReadonlyMapContainer> = KeyedContainer.KeyOf<ReadonlyMapContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyMapContainer> = KeyedContainers.KeyOf<ReadonlyMapContainer>,
     >(
       selector: Function2<TA, TKey, TB>,
     ) =>

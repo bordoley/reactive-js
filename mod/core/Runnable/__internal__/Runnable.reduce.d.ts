@@ -1,3 +1,3 @@
-import { Container, RunnableContainer } from "../../../core.js";
-declare const Runnable_reduce: Container.TypeClass<RunnableContainer>["reduce"];
+import { RunnableContainer, RunnableContainers } from "../../../core.js";
+declare const Runnable_reduce: RunnableContainers.TypeClass<RunnableContainer>["reduce"];
 export default Runnable_reduce;

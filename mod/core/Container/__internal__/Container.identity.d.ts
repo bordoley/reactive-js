@@ -1,3 +1,3 @@
-import { Container } from "../../../core.js";
-declare const Container_identity: <C extends Container, T>() => Container.Operator<C, T, T>;
+import { Container, Containers } from "../../../core.js";
+declare const Container_identity: <C extends Container, T>() => Containers.Operator<C, T, T>;
 export default Container_identity;

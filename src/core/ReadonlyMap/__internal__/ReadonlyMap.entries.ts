@@ -1,8 +1,8 @@
-import { KeyedContainer, ReadonlyMapContainer } from "../../../core.js";
+import { KeyedContainers, ReadonlyMapContainer } from "../../../core.js";
 import Iterator_enumerate from "../../../core/Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../../functions.js";
 
-const ReadonlyMap_entries: KeyedContainer.TypeClass<ReadonlyMapContainer>["entries"] =
+const ReadonlyMap_entries: KeyedContainers.TypeClass<ReadonlyMapContainer>["entries"] =
   () => map => pipe(map.entries(), Iterator_enumerate());
 
 export default ReadonlyMap_entries;

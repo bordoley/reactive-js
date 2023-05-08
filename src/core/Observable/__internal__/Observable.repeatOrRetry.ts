@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   DisposableLike_dispose,
   ObservableContainer,
   ObservableLike,
@@ -24,7 +24,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <C extends ObservableContainer, T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Container.Operator<C, T, T>;
+) => Containers.Operator<C, T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   C extends ObservableContainer,
@@ -71,7 +71,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   };
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: Container.Of<C, T>) => {
+    (observable: Containers.Of<C, T>) => {
       const operator = pipe(
         createRepeatObserver,
         partial(observable, shouldRepeat),

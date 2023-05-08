@@ -1,16 +1,16 @@
 import {
   EnumeratorLike,
-  KeyedContainer,
+  KeyedContainers,
   ReadonlyArrayContainer,
 } from "../../../core.js";
 import Iterator_enumerate from "../../../core/Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../../functions.js";
 
-const ReadonlyArray_entries: KeyedContainer.TypeClass<ReadonlyArrayContainer>["entries"] =
+const ReadonlyArray_entries: KeyedContainers.TypeClass<ReadonlyArrayContainer>["entries"] =
 
     <
       T,
-      TKey extends KeyedContainer.KeyOf<ReadonlyArrayContainer> = KeyedContainer.KeyOf<ReadonlyArrayContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
     >() =>
     (arr: ReadonlyArray<T>): EnumeratorLike<[TKey, T]> => {
       const count = arr.length;

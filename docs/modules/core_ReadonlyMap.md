@@ -43,9 +43,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -72,15 +72,15 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -107,7 +107,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyMapContainer`](../interfaces/core.ReadonlyMapContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 

@@ -1,5 +1,5 @@
 import {
-  Container,
+  Containers,
   EnumerableContainer,
   EnumerableLike,
   ObservableContainer,
@@ -19,13 +19,13 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 interface ObservableTakeUntil {
   takeUntil<T>(
     notifier: EnumerableLike,
-  ): Container.Operator<EnumerableContainer, T, T>;
+  ): Containers.Operator<EnumerableContainer, T, T>;
   takeUntil<T>(
     notifier: RunnableLike,
-  ): Container.Operator<RunnableContainer, T, T>;
+  ): Containers.Operator<RunnableContainer, T, T>;
   takeUntil<T>(
     notifier: ObservableLike,
-  ): Container.Operator<ObservableContainer, T, T>;
+  ): Containers.Operator<ObservableContainer, T, T>;
 }
 const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
   notifier: ObservableLike,

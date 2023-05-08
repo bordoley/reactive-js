@@ -15,7 +15,7 @@ import {
   __PairwiseObserver_prev,
 } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
@@ -29,7 +29,7 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 type ObservablePairwise = <
   C extends ObservableContainer,
   T,
->() => Container.Operator<C, T, readonly [T, T]>;
+>() => Containers.Operator<C, T, readonly [T, T]>;
 const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
   const createPairwiseObserver: <T>(
     delegate: ObserverLike<readonly [T, T]>,

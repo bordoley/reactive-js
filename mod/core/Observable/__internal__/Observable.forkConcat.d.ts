@@ -1,3 +1,3 @@
-import { Container, ObservableContainer } from "../../../core.js";
-declare const Observable_forkConcat: Container.TypeClass<ObservableContainer>["forkConcat"];
+import { DeferredContainers, ObservableContainer } from "../../../core.js";
+declare const Observable_forkConcat: DeferredContainers.TypeClass<ObservableContainer>["forkConcat"];
 export default Observable_forkConcat;

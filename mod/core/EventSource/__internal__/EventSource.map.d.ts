@@ -1,3 +1,3 @@
-import { Container, EventSourceContainer } from "../../../core.js";
-declare const EventSource_map: Container.TypeClass<EventSourceContainer>["map"];
+import { Containers, EventSourceContainer } from "../../../core.js";
+declare const EventSource_map: Containers.TypeClass<EventSourceContainer>["map"];
 export default EventSource_map;

@@ -1,12 +1,12 @@
 import {
-  Container,
   EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
+  RunnableContainers,
 } from "../../../core.js";
 
-const Enumerator_toReadonlyArray: Container.TypeClass<EnumeratorContainer>["toReadonlyArray"] =
+const Enumerator_toReadonlyArray: RunnableContainers.TypeClass<EnumeratorContainer>["toReadonlyArray"] =
 
     <T>() =>
     (enumerator: EnumeratorLike<T>) => {

@@ -1,14 +1,15 @@
 import {
-  Container,
+  Containers,
   DisposableLike,
   EnumerableLike,
   EnumeratorLike,
-  KeyedContainer,
+  KeyedContainers,
   ObservableLike,
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReadonlyArrayContainer,
+  RunnableContainers,
   RunnableLike,
   SchedulerLike,
 } from "../core.js";
@@ -37,13 +38,13 @@ import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 
-export const empty: KeyedContainer.TypeClass<ReadonlyArrayContainer>["empty"] =
+export const empty: KeyedContainers.TypeClass<ReadonlyArrayContainer>["empty"] =
   ReadonlyArray_empty;
 
-export const entries: KeyedContainer.TypeClass<ReadonlyArrayContainer>["entries"] =
+export const entries: KeyedContainers.TypeClass<ReadonlyArrayContainer>["entries"] =
   ReadonlyArray_entries;
 
-interface Enumerate extends Container.TypeClass<ReadonlyArrayContainer> {
+interface Enumerate extends Containers.TypeClass<ReadonlyArrayContainer> {
   /**
    *
    * @category Transform
@@ -56,13 +57,13 @@ interface Enumerate extends Container.TypeClass<ReadonlyArrayContainer> {
 
 export const enumerate: Enumerate["enumerate"] = ReadonlyArray_enumerate;
 
-export const everySatisfy: Container.TypeClass<ReadonlyArrayContainer>["everySatisfy"] =
+export const everySatisfy: RunnableContainers.TypeClass<ReadonlyArrayContainer>["everySatisfy"] =
   ReadonlyArray_everySatisfy;
 
-export const first: Container.TypeClass<ReadonlyArrayContainer>["first"] =
+export const first: RunnableContainers.TypeClass<ReadonlyArrayContainer>["first"] =
   ReadonlyArray_first;
 
-interface Flow extends Container.TypeClass<ReadonlyArrayContainer> {
+interface Flow extends Containers.TypeClass<ReadonlyArrayContainer> {
   /** @category Transform */
   flow<T>(
     scheduler: SchedulerLike,
@@ -78,56 +79,56 @@ interface Flow extends Container.TypeClass<ReadonlyArrayContainer> {
 }
 export const flow: Flow["flow"] = ReadonlyArray_flow;
 
-export const forEach: KeyedContainer.TypeClass<ReadonlyArrayContainer>["forEach"] =
+export const forEach: KeyedContainers.TypeClass<ReadonlyArrayContainer>["forEach"] =
   ReadonlyArray_forEach;
 
-export const forEachWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
+export const forEachWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
 
-export const fromEnumerable: Container.TypeClass<ReadonlyArrayContainer>["fromEnumerable"] =
+export const fromEnumerable: Containers.TypeClass<ReadonlyArrayContainer>["fromEnumerable"] =
   Runnable_toReadonlyArray;
 
-export const fromIterable: Container.TypeClass<ReadonlyArrayContainer>["fromIterable"] =
+export const fromIterable: Containers.TypeClass<ReadonlyArrayContainer>["fromIterable"] =
   Iterable_toReadonlyArray;
 
-export const fromOptional: Container.TypeClass<ReadonlyArrayContainer>["fromOptional"] =
+export const fromOptional: Containers.TypeClass<ReadonlyArrayContainer>["fromOptional"] =
   Optional_toReadonlyArray;
 
-export const fromReadonlyArray: KeyedContainer.TypeClass<ReadonlyArrayContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-export const fromRunnable: Container.TypeClass<ReadonlyArrayContainer>["fromRunnable"] =
+export const fromRunnable: Containers.TypeClass<ReadonlyArrayContainer>["fromRunnable"] =
   Runnable_toReadonlyArray;
 
 export const getLength = ReadonlyArray_getLength;
 
-export const identity: KeyedContainer.TypeClass<ReadonlyArrayContainer>["identity"] =
-  Container_identity as KeyedContainer.TypeClass<ReadonlyArrayContainer>["identity"];
+export const identity: KeyedContainers.TypeClass<ReadonlyArrayContainer>["identity"] =
+  Container_identity as KeyedContainers.TypeClass<ReadonlyArrayContainer>["identity"];
 
 export const isEmpty = ReadonlyArray_isEmpty;
 
-export const keep: KeyedContainer.TypeClass<ReadonlyArrayContainer>["keep"] =
+export const keep: KeyedContainers.TypeClass<ReadonlyArrayContainer>["keep"] =
   ReadonlyArray_keep;
 
-export const keepType: KeyedContainer.TypeClass<ReadonlyArrayContainer>["keepType"] =
+export const keepType: KeyedContainers.TypeClass<ReadonlyArrayContainer>["keepType"] =
   ReadonlyArray_keepType;
 
-export const keepWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["keepWithKey"] =
+export const keepWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["keepWithKey"] =
   ReadonlyArray_keepWithKey;
 
-export const last: Container.TypeClass<ReadonlyArrayContainer>["last"] =
+export const last: RunnableContainers.TypeClass<ReadonlyArrayContainer>["last"] =
   ReadonlyArray_last;
 
-export const map: KeyedContainer.TypeClass<ReadonlyArrayContainer>["map"] =
+export const map: KeyedContainers.TypeClass<ReadonlyArrayContainer>["map"] =
   ReadonlyArray_map;
 
-export const mapWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["mapWithKey"] =
+export const mapWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["mapWithKey"] =
   ReadonlyArray_mapWithKey;
 
-export const someSatisfy: Container.TypeClass<ReadonlyArrayContainer>["someSatisfy"] =
+export const someSatisfy: RunnableContainers.TypeClass<ReadonlyArrayContainer>["someSatisfy"] =
   ReadonlyArray_someSatisfy;
 
-interface ToEnumerable extends Container.TypeClass<ReadonlyArrayContainer> {
+interface ToEnumerable extends Containers.TypeClass<ReadonlyArrayContainer> {
   /**
    * @category Transform
    */
@@ -139,7 +140,7 @@ interface ToEnumerable extends Container.TypeClass<ReadonlyArrayContainer> {
 export const toEnumerable: ToEnumerable["toEnumerable"] =
   ReadonlyArray_toObservable;
 
-interface ToIterable extends Container.TypeClass<ReadonlyArrayContainer> {
+interface ToIterable extends Containers.TypeClass<ReadonlyArrayContainer> {
   /** @category Transform */
   toIterable<T>(options?: {
     readonly count?: number;
@@ -149,7 +150,7 @@ interface ToIterable extends Container.TypeClass<ReadonlyArrayContainer> {
 export const toIterable: ToIterable["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToObservable extends Container.TypeClass<ReadonlyArrayContainer> {
+interface ToObservable extends Containers.TypeClass<ReadonlyArrayContainer> {
   /** @category Transform */
   toObservable: <T>(options?: {
     readonly count?: number;
@@ -161,10 +162,10 @@ interface ToObservable extends Container.TypeClass<ReadonlyArrayContainer> {
 export const toObservable: ToObservable["toObservable"] =
   ReadonlyArray_toObservable;
 
-export const toReadonlyArray: KeyedContainer.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"] =
+export const toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 
-interface ToRunnable extends Container.TypeClass<ReadonlyArrayContainer> {
+interface ToRunnable extends Containers.TypeClass<ReadonlyArrayContainer> {
   /** @category Transform */
   toRunnable: <T>(options?: {
     readonly count?: number;

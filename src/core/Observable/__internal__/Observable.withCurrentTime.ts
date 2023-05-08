@@ -12,7 +12,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __WithCurrentTimeObserver_selector } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
@@ -26,7 +26,7 @@ import Observer_delegatingMixin from "../../Observer/__internal__/Observer.deleg
 
 type ObservableWithCurrentTime = <C extends ObservableContainer, TA, TB>(
   selector: Function2<number, TA, TB>,
-) => Container.Operator<C, TA, TB>;
+) => Containers.Operator<C, TA, TB>;
 const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
   TA,
   TB,

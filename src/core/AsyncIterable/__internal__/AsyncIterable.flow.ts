@@ -1,6 +1,6 @@
 import {
   AsyncIterableContainer,
-  Container,
+  DeferredContainers,
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -23,78 +23,83 @@ import Observable_subscribeWithConfig from "../../../core/Observable/__internal_
 import PauseableObservable_create from "../../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 
-const AsyncIterable_flow: Container.TypeClass<AsyncIterableContainer>["flow"] =
-  <T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ) =>
-  (iterable: AsyncIterable<T>) => {
-    const op = (modeObs: ObservableLike<boolean>) =>
-      Observable_create((observer: ObserverLike<T>) => {
-        const iterator = iterable[Symbol.asyncIterator]();
-        const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
+const AsyncIterable_flow: DeferredContainers.TypeClass<AsyncIterableContainer>["flow"] =
 
-        let isPaused = true;
+    <T>(
+      scheduler: SchedulerLike,
+      options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+      },
+    ) =>
+    (iterable: AsyncIterable<T>) => {
+      const op = (modeObs: ObservableLike<boolean>) =>
+        Observable_create((observer: ObserverLike<T>) => {
+          const iterator = iterable[Symbol.asyncIterator]();
+          const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 
-        const continuation = async () => {
-          const startTime = observer[SchedulerLike_now];
+          let isPaused = true;
 
-          try {
-            while (
-              !observer[DisposableLike_isDisposed] &&
-              !isPaused &&
-              observer[SchedulerLike_now] - startTime < maxYieldInterval
-            ) {
-              const next = await iterator.next();
+          const continuation = async () => {
+            const startTime = observer[SchedulerLike_now];
 
-              if (next.done) {
-                observer[DispatcherLike_complete]();
-                break;
-              } else if (!observer[QueueableLike_enqueue](next.value)) {
-                // An async iterable can produce resolved promises which are immediately
-                // scheduled on the microtask queue. This prevents the observer's scheduler
-                // from running and draining dispatched events.
-                //
-                // Check the observer's buffer size so we can avoid queueing forever
-                // in this situation.
-                break;
+            try {
+              while (
+                !observer[DisposableLike_isDisposed] &&
+                !isPaused &&
+                observer[SchedulerLike_now] - startTime < maxYieldInterval
+              ) {
+                const next = await iterator.next();
+
+                if (next.done) {
+                  observer[DispatcherLike_complete]();
+                  break;
+                } else if (!observer[QueueableLike_enqueue](next.value)) {
+                  // An async iterable can produce resolved promises which are immediately
+                  // scheduled on the microtask queue. This prevents the observer's scheduler
+                  // from running and draining dispatched events.
+                  //
+                  // Check the observer's buffer size so we can avoid queueing forever
+                  // in this situation.
+                  break;
+                }
               }
+            } catch (e) {
+              observer[DisposableLike_dispose](error(e));
             }
-          } catch (e) {
-            observer[DisposableLike_dispose](error(e));
-          }
 
-          if (!isPaused) {
-            pipe(
-              observer[SchedulerLike_schedule](continuation),
-              Disposable_addTo(observer),
-            );
-          }
-        };
-
-        pipe(
-          modeObs,
-          Observable_forEach<ObservableContainer, boolean>((mode: boolean) => {
-            const wasPaused = isPaused;
-            isPaused = mode;
-
-            if (!isPaused && wasPaused) {
+            if (!isPaused) {
               pipe(
                 observer[SchedulerLike_schedule](continuation),
                 Disposable_addTo(observer),
               );
             }
-          }),
-          Observable_subscribeWithConfig(observer, observer),
-          Disposable_addTo(observer),
-          Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),
-        );
-      });
+          };
 
-    return PauseableObservable_create<T>(op, scheduler, options);
-  };
+          pipe(
+            modeObs,
+            Observable_forEach<ObservableContainer, boolean>(
+              (mode: boolean) => {
+                const wasPaused = isPaused;
+                isPaused = mode;
+
+                if (!isPaused && wasPaused) {
+                  pipe(
+                    observer[SchedulerLike_schedule](continuation),
+                    Disposable_addTo(observer),
+                  );
+                }
+              },
+            ),
+            Observable_subscribeWithConfig(observer, observer),
+            Disposable_addTo(observer),
+            Disposable_onComplete(
+              bindMethod(observer, DispatcherLike_complete),
+            ),
+          );
+        });
+
+      return PauseableObservable_create<T>(op, scheduler, options);
+    };
 
 export default AsyncIterable_flow;

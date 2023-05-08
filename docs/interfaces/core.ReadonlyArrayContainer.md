@@ -8,7 +8,7 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `Container`
 
 ## Hierarchy
 
-- [`KeyedContainer`](core.KeyedContainer-1.md)
+- [`KeyedContainers`](core.KeyedContainers-1.md)
 
   ↳ **`ReadonlyArrayContainer`**
 
@@ -27,7 +27,7 @@ A compile time only type for using a Javascript `ReadonlyArray` as a `Container`
 
 #### Overrides
 
-KeyedContainer.\_\_@\_\_\_Container\_type@22120
+KeyedContainers.\_\_@\_\_\_Container\_type@22120
 
 ___
 
@@ -37,4 +37,4 @@ ___
 
 #### Overrides
 
-[KeyedContainer](core.KeyedContainer-1.md).[[___KeyedContainer_TKey]](core.KeyedContainer-1.md#[___keyedcontainer_tkey])
+[KeyedContainers](core.KeyedContainers-1.md).[[___KeyedContainer_TKey]](core.KeyedContainers-1.md#[___keyedcontainer_tkey])

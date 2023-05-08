@@ -12,7 +12,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -25,7 +25,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_map: Container.TypeClass<EnumeratorContainer>["map"] =
+const Enumerator_map: Containers.TypeClass<EnumeratorContainer>["map"] =
   /*@__PURE__*/ (<TA, TB>() => {
     const createMapEnumerator = createInstanceFactory(
       mix(

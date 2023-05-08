@@ -1,3 +1,3 @@
-import { Container, ReadonlyArrayContainer } from "../../../core.js";
-declare const ReadonlyArray_first: Container.TypeClass<ReadonlyArrayContainer>["first"];
+import { ReadonlyArrayContainer, RunnableContainers } from "../../../core.js";
+declare const ReadonlyArray_first: RunnableContainers.TypeClass<ReadonlyArrayContainer>["first"];
 export default ReadonlyArray_first;

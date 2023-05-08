@@ -4,12 +4,21 @@ import {
   expectToThrowError,
   test,
 } from "../__internal__/testing.js";
-import { Container } from "../core.js";
+import {
+  Container,
+  Containers,
+  EnumerableContainers,
+  RunnableContainers,
+} from "../core.js";
 import * as Enumerable from "../core/Enumerable.js";
 import * as Runnable from "../core/Runnable.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
-export const forEachTests = <C extends Container>(m: Container.TypeClass<C>) =>
+export const forEachTests = <C extends Container>(
+  m: Containers.TypeClass<C> &
+    EnumerableContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
+) =>
   describe(
     "forEach",
     test("invokes the effect for each notified value", () => {
@@ -46,7 +55,7 @@ export const forEachTests = <C extends Container>(m: Container.TypeClass<C>) =>
   );
 
 export const fromReadonlyArrayTests = <C extends Container>(
-  m: Container.TypeClass<C>,
+  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -106,7 +115,9 @@ export const fromReadonlyArrayTests = <C extends Container>(
     }),
   );
 
-export const keepTests = <C extends Container>(m: Container.TypeClass<C>) =>
+export const keepTests = <C extends Container>(
+  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+) =>
   describe(
     "keep",
     test(
@@ -139,7 +150,9 @@ export const keepTests = <C extends Container>(m: Container.TypeClass<C>) =>
     }),
   );
 
-export const mapTests = <C extends Container>(m: Container.TypeClass<C>) =>
+export const mapTests = <C extends Container>(
+  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+) =>
   describe(
     "map",
     test(
@@ -173,7 +186,7 @@ export const mapTests = <C extends Container>(m: Container.TypeClass<C>) =>
   );
 
 export const toEnumerableTests = <C extends Container>(
-  m: Container.TypeClass<C>,
+  m: Containers.TypeClass<C> & EnumerableContainers.TypeClass<C>,
 ) =>
   describe(
     "toEnumerable",
@@ -190,7 +203,7 @@ export const toEnumerableTests = <C extends Container>(
   );
 
 export const toRunnableTest = <C extends Container>(
-  m: Container.TypeClass<C>,
+  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
 ) =>
   test(
     "without delay",

@@ -158,9 +158,9 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
-Returns a Container.Operator that applies the side effect function to each
+Returns a Containers.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -178,15 +178,15 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
-Returns a KeyedContainer.Operator that applies the side effect function to each
+Returns a KeyedContainers.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -204,13 +204,13 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`, `TKey`\>(): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+▸ **identity**<`T`, `TKey`\>(): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 #### Type parameters
 
@@ -221,15 +221,15 @@ ___
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
-Returns a Container.Operator that only emits items produced by the
+Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -247,13 +247,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -271,15 +271,15 @@ ___
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
-Returns a Container.Operator that only emits items produced by the
+Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -297,15 +297,15 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -332,15 +332,15 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -367,7 +367,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](core.KeyedContainer.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
+[`Operator`](core.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](../interfaces/core.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -454,7 +454,7 @@ ___
 
 Determines whether all the members of an Container satisfy the predicate.
 The predicate function is invoked for each element in the Container until the
-it returns false, or until the end of the Container.
+it returns false, or until the end of the Containers.
 
 #### Type parameters
 

@@ -1,3 +1,3 @@
-import { Container } from "../../../core.js";
-declare const Container_concatWith: <C extends Container>(concat: <T>(fst: Container.Of<C, T>, snd: Container.Of<C, T>, ...tail: readonly Container.Of<C, T>[]) => Container.Of<C, T>) => <T_1>(snd: Container.Of<C, T_1>, ...tail: readonly Container.Of<C, T_1>[]) => Container.Operator<C, T_1, T_1>;
+import { Container, Containers, DeferredContainers } from "../../../core.js";
+declare const Container_concatWith: <C extends Container>(concat: <T>(fst: Containers.Of<C, T>, snd: Containers.Of<C, T>, ...tail: readonly Containers.Of<C, T>[]) => Containers.Of<C, T>) => <T_1>(snd: Containers.Of<C, T_1>, ...tail: readonly Containers.Of<C, T_1>[]) => Containers.Operator<C, T_1, T_1>;
 export default Container_concatWith;

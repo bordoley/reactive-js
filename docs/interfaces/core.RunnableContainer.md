@@ -10,7 +10,7 @@
 
   ↳ **`RunnableContainer`**
 
-  ↳↳ [`EnumerableContainer`](core.EnumerableContainer-1.md)
+  ↳↳ [`EnumerableContainer`](core.EnumerableContainer.md)
 
 ## Table of contents
 

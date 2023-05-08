@@ -1,10 +1,10 @@
 import {
-  Container,
+  Containers,
   EventListenerLike_notify,
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
-  ReactiveContainer,
+  ReactiveContainers,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import {
@@ -25,12 +25,12 @@ const HigherOrderObservable_scanLast =
   <C extends ObservableContainer>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
-    ) => Container.Of<C, T>,
-  ): ReactiveContainer.TypeClass<C>["scanLast"] =>
+    ) => Containers.Of<C, T>,
+  ): ReactiveContainers.TypeClass<C>["scanLast"] =>
   <T, TAcc>(
-    scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
+    scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,
-  ): Container.Operator<C, T, TAcc> =>
+  ): Containers.Operator<C, T, TAcc> =>
   observable =>
     createObservable((observer: ObserverLike<TAcc>) => {
       const accFeedbackStream = pipe(

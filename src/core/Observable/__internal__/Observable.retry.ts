@@ -1,12 +1,12 @@
-import { Container, ObservableContainer } from "../../../core.js";
+import { Containers, ObservableContainer } from "../../../core.js";
 import { Function2, isNone, isSome } from "../../../functions.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface ObservableRetry {
-  retry<C extends ObservableContainer, T>(): Container.Operator<C, T, T>;
+  retry<C extends ObservableContainer, T>(): Containers.Operator<C, T, T>;
   retry<C extends ObservableContainer, T>(
     predicate: Function2<number, unknown, boolean>,
-  ): Container.Operator<C, T, T>;
+  ): Containers.Operator<C, T, T>;
 }
 const Observable_retry: ObservableRetry["retry"] = /*@__PURE__*/ (() => {
   const defaultRetryPredicate = (_: number, error?: Error): boolean =>

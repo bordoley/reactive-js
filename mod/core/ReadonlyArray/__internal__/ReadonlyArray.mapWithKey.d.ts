@@ -1,3 +1,3 @@
-import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
-declare const ReadonlyArray_mapWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["mapWithKey"];
+import { KeyedContainers, ReadonlyArrayContainer } from "../../../core.js";
+declare const ReadonlyArray_mapWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["mapWithKey"];
 export default ReadonlyArray_mapWithKey;

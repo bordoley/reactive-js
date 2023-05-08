@@ -1,3 +1,3 @@
-import { ObservableContainer, ReactiveContainer } from "../../../core.js";
-declare const Observable_exhaust: ReactiveContainer.TypeClass<ObservableContainer>["exhaust"];
+import { ObservableContainer, ReactiveContainers } from "../../../core.js";
+declare const Observable_exhaust: ReactiveContainers.TypeClass<ObservableContainer>["exhaust"];
 export default Observable_exhaust;

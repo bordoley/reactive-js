@@ -1,5 +1,6 @@
 import {
-  Container,
+  Containers,
+  DeferredContainers,
   ObservableContainer,
   ObservableLike,
 } from "../../../core.js";
@@ -7,10 +8,10 @@ import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/Readonly
 import { pipe } from "../../../functions.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
 
-const Observable_forkConcat: Container.TypeClass<ObservableContainer>["forkConcat"] =
+const Observable_forkConcat: DeferredContainers.TypeClass<ObservableContainer>["forkConcat"] =
 
     <TIn, TOut>(
-      ...ops: readonly Container.Operator<ObservableContainer, TIn, TOut>[]
+      ...ops: readonly Containers.Operator<ObservableContainer, TIn, TOut>[]
     ) =>
     (obs: ObservableLike<TIn>) =>
       pipe(

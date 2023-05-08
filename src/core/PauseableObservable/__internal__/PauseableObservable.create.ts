@@ -11,7 +11,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  Container,
+  Containers,
   DisposableLike,
   ObservableContainer,
   ObservableLike_isDeferred,
@@ -43,7 +43,7 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 
 const PauseableObservable_create: <T>(
-  op: Container.Operator<ObservableContainer, boolean, T>,
+  op: Containers.Operator<ObservableContainer, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -63,7 +63,7 @@ const PauseableObservable_create: <T>(
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: Container.Operator<ObservableContainer, boolean, T>,
+        op: Containers.Operator<ObservableContainer, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;

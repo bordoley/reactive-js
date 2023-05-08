@@ -1,10 +1,10 @@
 import {
-  Container,
+  Containers,
   DispatcherLike,
   ObservableLike,
   PauseableObservableContainer,
   PauseableObservableLike,
-  ReactiveContainer,
+  ReactiveContainers,
 } from "../core.js";
 import { Function1 } from "../functions.js";
 import PauseableObservable_dispatchTo from "./PauseableObservable/__internal__/PauseableObservable.dispatchTo.js";
@@ -15,17 +15,17 @@ import PauseableObservable_map from "./PauseableObservable/__internal__/Pauseabl
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
 
-export const dispatchTo: ReactiveContainer.TypeClass<PauseableObservableContainer>["dispatchTo"] =
+export const dispatchTo: ReactiveContainers.TypeClass<PauseableObservableContainer>["dispatchTo"] =
   PauseableObservable_dispatchTo;
-export const enqueue: ReactiveContainer.TypeClass<PauseableObservableContainer>["enqueue"] =
+export const enqueue: ReactiveContainers.TypeClass<PauseableObservableContainer>["enqueue"] =
   PauseableObservable_enqueue;
-export const forEach: Container.TypeClass<PauseableObservableContainer>["forEach"] =
+export const forEach: Containers.TypeClass<PauseableObservableContainer>["forEach"] =
   PauseableObservable_forEach;
-export const keep: Container.TypeClass<PauseableObservableContainer>["keep"] =
+export const keep: Containers.TypeClass<PauseableObservableContainer>["keep"] =
   PauseableObservable_keep;
-export const map: Container.TypeClass<PauseableObservableContainer>["map"] =
+export const map: Containers.TypeClass<PauseableObservableContainer>["map"] =
   PauseableObservable_map;
-export const pick: Container.TypeClass<PauseableObservableContainer>["pick"] =
+export const pick: Containers.TypeClass<PauseableObservableContainer>["pick"] =
   PauseableObservable_pick;
 export const sinkInto: <T>(
   sink: DispatcherLike<T>,

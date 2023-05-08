@@ -1,7 +1,7 @@
-import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
+import { KeyedContainers, ReadonlyArrayContainer } from "../../../core.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
-const ReadonlyArray_toReadonlyArray: KeyedContainer.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"] =
+const ReadonlyArray_toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"] =
   /*@__PURE__*/ ReadonlyArray_toContainer<ReadonlyArrayContainer>(
     <T>(values: readonly T[], startIndex: number, count: number) =>
       startIndex === 0 && count === values.length

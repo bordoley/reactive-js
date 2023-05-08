@@ -9,7 +9,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { __TakeLastObserver_takeLastQueue } from "../../../__internal__/symbols.js";
 import {
-  Container,
+  Containers,
   DisposableLike,
   ObservableContainer,
   ObservableLike_observe,
@@ -28,7 +28,7 @@ import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 
 type ObservableTakeLast = <C extends ObservableContainer, T>(options?: {
   readonly count?: number;
-}) => Container.Operator<C, T, T>;
+}) => Containers.Operator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     readonly [__TakeLastObserver_takeLastQueue]: IndexedQueueLike<T>;
