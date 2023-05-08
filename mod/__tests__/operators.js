@@ -1,9 +1,9 @@
 /// <reference types="./operators.d.ts" />
 
 import { describe, expectArrayEquals, expectToThrowError, test, } from "../__internal__/testing.js";
+import * as Enumerable from "../core/Enumerable.js";
+import * as Runnable from "../core/Runnable.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
-import * as Enumerable from "../rx/Enumerable.js";
-import * as Runnable from "../rx/Runnable.js";
 export const forEachTests = (m) => describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach(x => {

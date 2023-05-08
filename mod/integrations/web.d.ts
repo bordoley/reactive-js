@@ -1,7 +1,6 @@
 import { __WindowLocationLike_canGoBack as WindowLocationLike_canGoBack, __WindowLocationLike_goBack as WindowLocationLike_goBack, __WindowLocationLike_push as WindowLocationLike_push, __WindowLocationLike_replace as WindowLocationLike_replace } from "../__internal__/symbols.js";
-import { ReadonlyObjectMapLike } from "../containers.js";
+import { MulticastObservableLike, ObservableLike, ReadonlyObjectMapLike } from "../core.js";
 import { Updater } from "../functions.js";
-import { MulticastObservableLike, ObservableLike } from "../rx.js";
 export { WindowLocationLike_push, WindowLocationLike_goBack, WindowLocationLike_canGoBack, WindowLocationLike_replace, };
 /**
  * @noInheritDoc

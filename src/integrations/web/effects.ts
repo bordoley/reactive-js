@@ -1,4 +1,19 @@
-import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
+import {
+  DisposableLike,
+  EventSourceLike,
+  QueueableLike,
+  QueueableLike_enqueue,
+} from "../../core.js";
+import * as Disposable from "../../core/Disposable.js";
+import * as EventSource from "../../core/EventSource.js";
+import {
+  __constant,
+  __memo,
+  __observe,
+  __state,
+  __using,
+} from "../../core/Observable/effects.js";
+import * as ReadonlyObjectMap from "../../core/ReadonlyObjectMap.js";
 import {
   Optional,
   SideEffect1,
@@ -9,21 +24,6 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import {
-  __constant,
-  __memo,
-  __observe,
-  __state,
-  __using,
-} from "../../rx/effects.js";
-import {
-  DisposableLike,
-  EventSourceLike,
-  QueueableLike,
-  QueueableLike_enqueue,
-} from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
-import * as EventSource from "../../util/EventSource.js";
 import { CSSStyleMapLike } from "../web.js";
 
 const returnsNone = returns(none);

@@ -2,6 +2,22 @@ import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
 import {
+  DisposableLike,
+  ErrorSafeEventListenerLike,
+  EventListenerLike,
+  EventListenerLike_notify,
+  EventPublisherLike,
+  EventSourceLike,
+  EventSourceLike_addEventListener,
+  ObservableLike,
+  QueueableLike_enqueue,
+} from "../../core.js";
+import * as Disposable from "../../core/Disposable.js";
+import * as EventListener from "../../core/EventListener.js";
+import * as EventPublisher from "../../core/EventPublisher.js";
+import * as EventSource from "../../core/EventSource.js";
+import * as Observable from "../../core/Observable.js";
+import {
   Function1,
   Optional,
   SideEffect1,
@@ -12,22 +28,6 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { ObservableLike } from "../../rx.js";
-import * as Observable from "../../rx/Observable.js";
-import {
-  DisposableLike,
-  ErrorSafeEventListenerLike,
-  EventListenerLike,
-  EventListenerLike_notify,
-  EventPublisherLike,
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-  QueueableLike_enqueue,
-} from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
-import * as EventListener from "../../util/EventListener.js";
-import * as EventPublisher from "../../util/EventPublisher.js";
-import * as EventSource from "../../util/EventSource.js";
 import type { Rect, ScrollValue } from "../web.js";
 
 interface AddEventHandler {

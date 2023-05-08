@@ -1,17 +1,16 @@
 /// <reference types="./WindowLocation.d.ts" />
 
+import { DelegatingLike_delegate, } from "../../__internal__/core.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { DelegatingLike_delegate, } from "../../__internal__/util.js";
+import { MulticastObservableLike_buffer, ObservableLike_observe, QueueableLike_enqueue, StreamableLike_stream, } from "../../core.js";
+import Delegating_mixin from "../../core/Delegating/__internal__/Delegating.mixin.js";
+import * as Disposable from "../../core/Disposable.js";
+import IndexedBufferCollection_map from "../../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
+import * as Observable from "../../core/Observable.js";
+import * as Stream from "../../core/Stream.js";
+import Stream_delegatingMixin from "../../core/Stream/__internal__/Stream.delegatingMixin.js";
+import * as Streamable from "../../core/Streamable.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
-import { MulticastObservableLike_buffer, ObservableLike_observe, StreamableLike_stream, } from "../../rx.js";
-import * as Observable from "../../rx/Observable.js";
-import * as Stream from "../../rx/Stream.js";
-import Stream_delegatingMixin from "../../rx/Stream/__internal__/Stream.delegatingMixin.js";
-import * as Streamable from "../../rx/Streamable.js";
-import { QueueableLike_enqueue, } from "../../util.js";
-import Delegating_mixin from "../../util/Delegating/__internal__/Delegating.mixin.js";
-import * as Disposable from "../../util/Disposable.js";
-import IndexedBufferCollection_map from "../../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;

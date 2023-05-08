@@ -5,6 +5,7 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
+import { ContinuationLike } from "../__internal__/core.js";
 import {
   createInstanceFactory,
   include,
@@ -12,22 +13,21 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import { ContinuationLike } from "../__internal__/util.js";
-import { newInstance, none, pipe, pipeLazy } from "../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   SchedulerLike,
   SchedulerLike_now,
-} from "../util.js";
-import * as Disposable from "../util/Disposable.js";
+} from "../core.js";
+import * as Disposable from "../core/Disposable.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,
   SchedulerImplementationLike_scheduleContinuation,
   SchedulerImplementationLike_shouldYield,
   SchedulerImplementation_mixin,
-} from "../util/Scheduler/__internal__/SchedulerImplementation.mixin.js";
+} from "../core/Scheduler/__internal__/SchedulerImplementation.mixin.js";
+import { newInstance, none, pipe, pipeLazy } from "../functions.js";
 
 const createReactScheduler = /*@__PURE__*/ (() => {
   type TProperties = {

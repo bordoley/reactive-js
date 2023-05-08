@@ -7,7 +7,16 @@ import {
   testAsync,
   testModule,
 } from "../../__internal__/testing.js";
-import * as ReadonlyArray from "../../containers/ReadonlyArray.js";
+import {
+  DisposableLike,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../core.js";
+import * as Disposable from "../../core/Disposable.js";
+import * as Observable from "../../core/Observable.js";
+import * as PauseableObservable from "../../core/PauseableObservable.js";
+import * as ReadonlyArray from "../../core/ReadonlyArray.js";
+import * as Scheduler from "../../core/Scheduler.js";
 import {
   Optional,
   bindMethod,
@@ -16,15 +25,6 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import * as Observable from "../../rx/Observable.js";
-import * as PauseableObservable from "../../rx/PauseableObservable.js";
-import {
-  DisposableLike,
-  PauseableLike_resume,
-  SchedulerLike,
-} from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
-import * as Scheduler from "../../util/Scheduler.js";
 import * as NodeStream from "../node/Stream.js";
 
 testModule(

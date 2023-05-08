@@ -8,7 +8,7 @@
 
 ## Hierarchy
 
-- [`ReadonlyObjectMapLike`](../modules/containers.md#readonlyobjectmaplike)<keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>, `string`\>
+- [`ReadonlyObjectMapLike`](../modules/core.md#readonlyobjectmaplike)<keyof `Omit`<`CSSStyleDeclaration`, ``"item"`` \| ``"length"`` \| ``"parentRule"`` \| ``"getPropertyPriority"`` \| ``"getPropertyValue"`` \| ``"removeProperty"`` \| ``"setProperty"`` \| `number` \| typeof `Symbol.iterator`\>, `string`\>
 
   ↳ **`CSSStyleMapLike`**
 

@@ -18,7 +18,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
+| `animation` | [`EventSourceLike`](../interfaces/core.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
 
 #### Returns
 
@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\> |
+| `animation` | [`EventSourceLike`](../interfaces/core.EventSourceLike.md)<`T`\> |
 | `selector` | (`ev`: `T`) => [`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md) |
 
 #### Returns

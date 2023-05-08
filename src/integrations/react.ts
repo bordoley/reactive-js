@@ -9,11 +9,38 @@ import {
 } from "react";
 import {
   CollectionLike_count,
+  DispatcherLike,
+  DispatcherLike_complete,
+  DisposableLike,
+  DisposableLike_dispose,
+  EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
+  EventListenerLike_notify,
+  EventSourceLike,
   KeyedCollectionLike_get,
-} from "../containers.js";
+  MulticastObservableLike_buffer,
+  ObservableLike,
+  PauseableLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_enqueue,
+  StoreLike_value,
+  StreamOf,
+  StreamableLike,
+  StreamableLike_stream,
+} from "../core.js";
+import * as Disposable from "../core/Disposable.js";
+import * as Enumerable from "../core/Enumerable.js";
+import * as EventSource from "../core/EventSource.js";
+import IndexedBufferCollection_empty from "../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import MulticastObservable_isMulticastObservable from "../core/MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
+import * as Observable from "../core/Observable.js";
+import * as Publisher from "../core/Publisher.js";
 import {
   Factory,
   Function1,
@@ -27,37 +54,6 @@ import {
   pipeSomeLazy,
   raiseError,
 } from "../functions.js";
-import {
-  EnumerableLike,
-  MulticastObservableLike_buffer,
-  ObservableLike,
-  StreamOf,
-  StreamableLike,
-  StreamableLike_stream,
-} from "../rx.js";
-import * as Enumerable from "../rx/Enumerable.js";
-import MulticastObservable_isMulticastObservable from "../rx/MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
-import * as Observable from "../rx/Observable.js";
-import * as Publisher from "../rx/Publisher.js";
-import {
-  DispatcherLike,
-  DispatcherLike_complete,
-  DisposableLike,
-  DisposableLike_dispose,
-  EventListenerLike_notify,
-  EventSourceLike,
-  PauseableLike,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
-  StoreLike_value,
-} from "../util.js";
-import * as Disposable from "../util/Disposable.js";
-import * as EventSource from "../util/EventSource.js";
-import IndexedBufferCollection_empty from "../util/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 import { getScheduler } from "./scheduler.js";
 
 /**
