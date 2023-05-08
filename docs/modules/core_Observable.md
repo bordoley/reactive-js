@@ -347,7 +347,7 @@ ___
 
 ### compute
 
-▸ **compute**<`T`\>(`computation`, `options?`): [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>
+▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -365,7 +365,7 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>
+[`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`T`\>
 
 ___
 

@@ -25,10 +25,23 @@ via the pause and resume methods.
 
 ### Properties
 
+- [[\_\_\_ObservableLike\_isDeferred]](core.PauseableObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](core.PauseableObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](core.PauseableObservableLike.md#[___observablelike_isrunnable])
 
 ## Properties
+
+### [\_\_\_ObservableLike\_isDeferred]
+
+• `Readonly` **[\_\_\_ObservableLike\_isDeferred]**: ``false``
+
+Indicates if the `ObservableLike` is deferred, ie. cold.
+
+#### Overrides
+
+[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isDeferred]](core.ObservableLike.md#[___observablelike_isdeferred])
+
+___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 

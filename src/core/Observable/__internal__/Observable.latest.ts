@@ -17,6 +17,7 @@ import {
 import {
   DisposableLike_dispose,
   ObservableLike,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -30,6 +31,7 @@ import { none, pipe } from "../../../functions.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
+import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -138,10 +140,12 @@ const Observable_latest = /*@__PURE__*/ (() => {
       }
     };
 
+    const isDeferred = Observable_allAreDeferred(observables);
     const isEnumerable = Observable_allAreEnumerable(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
     return Observable_createWithConfig(onSubscribe, {
+      [ObservableLike_isDeferred]: isDeferred,
       [ObservableLike_isEnumerable]: isEnumerable,
       [ObservableLike_isRunnable]: isRunnable,
     });

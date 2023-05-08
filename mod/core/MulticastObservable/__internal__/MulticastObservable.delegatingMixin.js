@@ -2,7 +2,7 @@
 
 import { mix, props } from "../../../__internal__/mixins.js";
 import { __DelegatingMulticastObservableMixin_delegate } from "../../../__internal__/symbols.js";
-import { MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../core.js";
+import { MulticastObservableLike_buffer, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../core.js";
 import { none, returns, unsafeCast } from "../../../functions.js";
 const MulticastObservable_delegatingMixin = /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingMulticastObservableMixin(instance, delegate) {
@@ -11,17 +11,12 @@ const MulticastObservable_delegatingMixin = /*@__PURE__*/ (() => {
     }, props({
         [__DelegatingMulticastObservableMixin_delegate]: none,
     }), {
+        [ObservableLike_isDeferred]: false,
+        [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isRunnable]: false,
         get [MulticastObservableLike_buffer]() {
             unsafeCast(this);
             return this[__DelegatingMulticastObservableMixin_delegate][MulticastObservableLike_buffer];
-        },
-        get [ObservableLike_isEnumerable]() {
-            unsafeCast(this);
-            return this[__DelegatingMulticastObservableMixin_delegate][ObservableLike_isEnumerable];
-        },
-        get [ObservableLike_isRunnable]() {
-            unsafeCast(this);
-            return this[__DelegatingMulticastObservableMixin_delegate][ObservableLike_isRunnable];
         },
         [ObservableLike_observe](observer) {
             this[__DelegatingMulticastObservableMixin_delegate][ObservableLike_observe](observer);

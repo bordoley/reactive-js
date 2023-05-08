@@ -2,7 +2,7 @@
 
 import { LiftedLike_operators, LiftedLike_source, } from "../../../__internal__/core.js";
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../core.js";
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../../core.js";
 import Observable_liftMixin from "./Observable.liftMixin.js";
 const Observable_lift = (() => {
     const createLiftedObservable = createInstanceFactory(Observable_liftMixin());
@@ -17,7 +17,12 @@ const Observable_lift = (() => {
         const isLiftedRunnable = (config[ObservableLike_isEnumerable] ||
             config[ObservableLike_isRunnable]) &&
             sourceSource[ObservableLike_isRunnable];
-        return createLiftedObservable(sourceSource, allFunctions, isLiftedEnumerable, isLiftedRunnable);
+        const isLiftedDeferred = sourceSource[ObservableLike_isDeferred];
+        return createLiftedObservable(sourceSource, allFunctions, {
+            [ObservableLike_isDeferred]: isLiftedDeferred,
+            [ObservableLike_isRunnable]: isLiftedRunnable,
+            [ObservableLike_isEnumerable]: isLiftedEnumerable,
+        });
     };
 })();
 export default Observable_lift;

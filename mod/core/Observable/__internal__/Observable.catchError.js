@@ -4,7 +4,9 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../.
 import HigherOrderObservable_catchError from "../../HigherOrderObservable/__internal__/HigherOrderObservable.catchError.js";
 import Observable_lift from "./Observable.lift.js";
 const Observable_catchError = 
-/*@__PURE__*/ HigherOrderObservable_catchError(Observable_lift({
+/*@__PURE__*/ HigherOrderObservable_catchError(
+// FIXME: should just be DeferredObservable_lift
+Observable_lift({
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
 }));

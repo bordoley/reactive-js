@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../../__internal__/symbols.js";
-import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventSourceLike_addEventListener, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, StreamLike_scheduler, } from "../../../core.js";
+import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventSourceLike_addEventListener, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, StreamLike_scheduler, } from "../../../core.js";
 import Dispatcher_delegatingMixin from "../../../core/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../core/Disposable/__internal__/Disposable.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../core/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
@@ -16,6 +16,7 @@ const DispatchedObservable_create =
     }, props({
         [__DispatchedObservable_observer]: none,
     }), {
+        [ObservableLike_isDeferred]: false,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [QueueableLike_backpressureStrategy]() {

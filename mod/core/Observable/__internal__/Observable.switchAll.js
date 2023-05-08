@@ -4,7 +4,9 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../.
 import HigherOrderObservable_switchAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.switchAll.js";
 import Observable_lift from "./Observable.lift.js";
 const Observable_switchAll = 
-/*@__PURE__*/ HigherOrderObservable_switchAll(Observable_lift({
+/*@__PURE__*/ HigherOrderObservable_switchAll(
+// FIXME: should just be DeferredObservable_lift
+Observable_lift({
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
 }));

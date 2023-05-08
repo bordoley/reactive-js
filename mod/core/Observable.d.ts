@@ -16,7 +16,7 @@ export declare const combineLatest: ReactiveContainer.TypeClass<ObservableContai
  */
 export declare const compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest" | undefined;
-}) => ObservableLike<T>;
+}) => import("../core.js").DeferredObservableLike<T>;
 export declare const concat: Container.TypeClass<ObservableContainer>["concat"];
 export declare const concatAll: Container.TypeClass<ObservableContainer>["concatAll"];
 export declare const concatMap: Container.TypeClass<ObservableContainer>["concatMap"];

@@ -2,7 +2,7 @@
 
 import { DelegatingLike_delegate, } from "../../../__internal__/core.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, StoreLike_value, } from "../../../core.js";
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, StoreLike_value, } from "../../../core.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../../core/Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventPublisher_lazyInitMixin from "../../../core/EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
@@ -30,6 +30,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
     }, props({
         [PauseableLike_isPaused]: none,
     }), {
+        [ObservableLike_isDeferred]: false,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         [ObservableLike_observe](observer) {

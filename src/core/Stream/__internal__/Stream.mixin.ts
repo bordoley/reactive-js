@@ -23,6 +23,7 @@ import {
   EventSourceLike_addEventListener,
   ObservableContainer,
   ObservableLike,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -72,6 +73,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [__DispatchedObservable_observer]: none,
         }),
         {
+          [ObservableLike_isDeferred]: false,
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
 

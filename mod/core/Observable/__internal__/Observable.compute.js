@@ -1,7 +1,7 @@
 /// <reference types="./Observable.compute.d.ts" />
 
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../../__internal__/symbols.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, KeyedCollectionLike_get, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../core.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, KeyedCollectionLike_get, MulticastObservableLike_buffer, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../core/Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../../core/Disposable/__internal__/Disposable.onComplete.js";
@@ -249,14 +249,17 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
     pipe(observer[SchedulerLike_schedule](runComputation), Disposable_addTo(observer));
 }, config));
 export const Observable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isDeferred]: true,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
 }, options);
 export const Runnable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isDeferred]: true,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: true,
 }, options);
 export const Enumerable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isDeferred]: true,
     [ObservableLike_isEnumerable]: true,
     [ObservableLike_isRunnable]: true,
 }, options);

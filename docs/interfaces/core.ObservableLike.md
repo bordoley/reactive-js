@@ -16,7 +16,7 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 - **`ObservableLike`**
 
-  ↳ [`RunnableLike`](core.RunnableLike.md)
+  ↳ [`DeferredObservableLike`](core.DeferredObservableLike.md)
 
   ↳ [`MulticastObservableLike`](core.MulticastObservableLike.md)
 
@@ -26,6 +26,7 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 ### Properties
 
+- [[\_\_\_ObservableLike\_isDeferred]](core.ObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](core.ObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](core.ObservableLike.md#[___observablelike_isrunnable])
 
@@ -34,6 +35,14 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 - [[\_\_\_ObservableLike\_observe]](core.ObservableLike.md#[___observablelike_observe])
 
 ## Properties
+
+### [\_\_\_ObservableLike\_isDeferred]
+
+• `Readonly` **[\_\_\_ObservableLike\_isDeferred]**: `boolean`
+
+Indicates if the `ObservableLike` is deferred, ie. cold.
+
+___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 

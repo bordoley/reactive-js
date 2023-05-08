@@ -23,6 +23,7 @@ KeyedContainer_TKey
 MulticastObservableLike_buffer
 ObserverLike_notify
 ObservableLike_observe
+ObservableLike_isDeferred
 ObservableLike_isEnumerable
 ObservableLike_isRunnable
 PauseableLike_isPaused

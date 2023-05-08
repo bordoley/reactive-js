@@ -3,6 +3,7 @@ import { __DelegatingMulticastObservableMixin_delegate } from "../../../__intern
 import {
   MulticastObservableLike,
   MulticastObservableLike_buffer,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -34,24 +35,14 @@ const MulticastObservable_delegatingMixin: <T>() => Mixin1<
         [__DelegatingMulticastObservableMixin_delegate]: none,
       }),
       {
+        [ObservableLike_isDeferred]: false as const,
+        [ObservableLike_isEnumerable]: false as const,
+        [ObservableLike_isRunnable]: false as const,
+
         get [MulticastObservableLike_buffer]() {
           unsafeCast<TProperties>(this);
           return this[__DelegatingMulticastObservableMixin_delegate][
             MulticastObservableLike_buffer
-          ];
-        },
-
-        get [ObservableLike_isEnumerable]() {
-          unsafeCast<TProperties>(this);
-          return this[__DelegatingMulticastObservableMixin_delegate][
-            ObservableLike_isEnumerable
-          ];
-        },
-
-        get [ObservableLike_isRunnable]() {
-          unsafeCast<TProperties>(this);
-          return this[__DelegatingMulticastObservableMixin_delegate][
-            ObservableLike_isRunnable
           ];
         },
 
