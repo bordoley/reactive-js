@@ -848,7 +848,10 @@ export declare namespace Containers {
     }
 }
 export declare namespace AsynchronousContainers {
-    interface TypeClass<C extends Container> {
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass<C extends Container> extends Containers.TypeClass<C> {
         /**
          * @category Constructor
          */
@@ -856,7 +859,10 @@ export declare namespace AsynchronousContainers {
     }
 }
 export declare namespace DeferredContainers {
-    interface TypeClass<C extends Container> {
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass<C extends Container> extends Containers.TypeClass<C> {
         /**
          * Returns a Container which emits all values from each source sequentially.
          *
@@ -922,7 +928,10 @@ export declare namespace DeferredContainers {
     }
 }
 export declare namespace RunnableContainers {
-    interface TypeClass<C extends Container> {
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass<C extends Container> extends Containers.TypeClass<C> {
         /**
          * @category Transform
          */
@@ -973,7 +982,10 @@ export declare namespace RunnableContainers {
     }
 }
 export declare namespace StatefulContainers {
-    interface TypeClass<C extends Container> {
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass<C extends Container> extends Containers.TypeClass<C> {
         /**
          * Returns a Container which catches errors produced by the source and either continues with
          * the Container returned from the `onError` callback or swallows the error if
@@ -1032,7 +1044,10 @@ export declare namespace StatefulContainers {
     }
 }
 export declare namespace EnumerableContainers {
-    interface TypeClass<C extends Container, CEnumerator extends EnumeratorContainer = EnumeratorContainer> {
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass<C extends Container, CEnumerator extends EnumeratorContainer = EnumeratorContainer> extends Containers.TypeClass<C> {
         /**
          *
          * @category Transform
@@ -1070,7 +1085,6 @@ export declare namespace KeyedContainers {
     type Operator<C extends KeyedContainers, TKey, TA, TB> = Function1<KeyedContainers.Of<C, TKey, TA>, KeyedContainers.Of<C, TKey, TB>>;
     /**
      * @noInheritDoc
-  
      */
     interface TypeClass<C extends KeyedContainers> {
         /**
@@ -1242,7 +1256,7 @@ export declare namespace ReactiveContainers {
     /**
      * @noInheritDoc
      */
-    interface TypeClass<C extends ObservableContainer> {
+    interface TypeClass<C extends ObservableContainer> extends Containers.TypeClass<C>, DeferredContainers.TypeClass<C> {
         /**
          * @category Constructor
          */
@@ -1298,6 +1312,7 @@ export declare namespace ReactiveContainers {
          *
          * @category Transform
          */
+        firstAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
         firstAsync<T>(scheduler: SchedulerLike, options?: {
             capacity?: number;
             backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1374,6 +1389,7 @@ export declare namespace ReactiveContainers {
          *
          * @category Transform
          */
+        lastAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
         lastAsync<T>(scheduler: SchedulerLike, options?: {
             capacity?: number;
             backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

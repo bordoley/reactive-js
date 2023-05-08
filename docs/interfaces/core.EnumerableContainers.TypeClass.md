@@ -11,6 +11,12 @@
 | `C` | extends [`Container`](core.Container.md) |
 | `CEnumerator` | extends [`EnumeratorContainer`](core.EnumeratorContainer.md) = [`EnumeratorContainer`](core.EnumeratorContainer.md) |
 
+## Hierarchy
+
+- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+
+  ↳ **`TypeClass`**
+
 ## Table of contents
 
 ### Transform Methods

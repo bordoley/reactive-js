@@ -1302,7 +1302,11 @@ export namespace Containers {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AsynchronousContainers {
-  export interface TypeClass<C extends Container> {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends Container>
+    extends Containers.TypeClass<C> {
     /**
      * @category Constructor
      */
@@ -1312,7 +1316,11 @@ export namespace AsynchronousContainers {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DeferredContainers {
-  export interface TypeClass<C extends Container> {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends Container>
+    extends Containers.TypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -1411,7 +1419,11 @@ export namespace DeferredContainers {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RunnableContainers {
-  export interface TypeClass<C extends Container> {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends Container>
+    extends Containers.TypeClass<C> {
     /**
      * @category Transform
      */
@@ -1484,7 +1496,11 @@ export namespace RunnableContainers {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace StatefulContainers {
-  export interface TypeClass<C extends Container> {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends Container>
+    extends Containers.TypeClass<C> {
     /**
      * Returns a Container which catches errors produced by the source and either continues with
      * the Container returned from the `onError` callback or swallows the error if
@@ -1554,10 +1570,13 @@ export namespace StatefulContainers {
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumerableContainers {
+  /**
+   * @noInheritDoc
+   */
   export interface TypeClass<
     C extends Container,
     CEnumerator extends EnumeratorContainer = EnumeratorContainer,
-  > {
+  > extends Containers.TypeClass<C> {
     /**
      *
      * @category Transform
@@ -1615,7 +1634,6 @@ export namespace KeyedContainers {
 
   /**
    * @noInheritDoc
-
    */
   export interface TypeClass<C extends KeyedContainers> {
     /**
@@ -1896,7 +1914,9 @@ export namespace ReactiveContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends ObservableContainer> {
+  export interface TypeClass<C extends ObservableContainer>
+    extends Containers.TypeClass<C>,
+      DeferredContainers.TypeClass<C> {
     /**
      * @category Constructor
      */
@@ -2018,6 +2038,7 @@ export namespace ReactiveContainers {
      *
      * @category Transform
      */
+    firstAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
     firstAsync<T>(
       scheduler: SchedulerLike,
       options?: {
@@ -2225,6 +2246,7 @@ export namespace ReactiveContainers {
      *
      * @category Transform
      */
+    lastAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
     lastAsync<T>(
       scheduler: SchedulerLike,
       options?: {
