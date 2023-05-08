@@ -10,6 +10,9 @@ import {
   mix,
 } from "../../../__internal__/mixins.js";
 import {
+  ObservableLike_isDeferred,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   ObserverLike,
   PauseableObservableContainer,
   PauseableObservableLike,
@@ -30,14 +33,11 @@ const createLiftedPauseableObservable: <TIn, TOut>(
         source: PauseableObservableLike<TIn>,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
       ): PauseableObservableLike<TOut> {
-        init(
-          Observable_liftMixin<TIn, TOut>(),
-          instance,
-          source,
-          ops,
-          false,
-          false,
-        );
+        init(Observable_liftMixin<TIn, TOut>(), instance, source, ops, {
+          [ObservableLike_isDeferred]: false,
+          [ObservableLike_isEnumerable]: false,
+          [ObservableLike_isRunnable]: false,
+        });
         init(Pauseable_delegatingMixin, instance, source);
 
         return instance as PauseableObservableLike<TOut>;

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ObservableContainer`](core.ObservableContainer.md)
+- [`DeferredObservableContainer`](core.DeferredObservableContainer.md)
 
   ↳ **`RunnableContainer`**
 
@@ -26,4 +26,4 @@
 
 #### Overrides
 
-[ObservableContainer](core.ObservableContainer.md).[[___Container_type]](core.ObservableContainer.md#[___container_type])
+[DeferredObservableContainer](core.DeferredObservableContainer.md).[[___Container_type]](core.DeferredObservableContainer.md#[___container_type])

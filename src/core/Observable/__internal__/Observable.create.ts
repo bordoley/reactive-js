@@ -1,5 +1,6 @@
 import {
   ObservableLike,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -11,6 +12,7 @@ const Observable_create = <T>(
   f: SideEffect1<ObserverLike>,
 ): ObservableLike<T> =>
   Observable_createWithConfig(f, {
+    [ObservableLike_isDeferred]: false,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
   });

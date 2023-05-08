@@ -1,5 +1,5 @@
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../../__internal__/symbols.js";
-import { DisposableLike, EnumerableLike, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../../core.js";
+import { DeferredObservableLike, DisposableLike, EnumerableLike, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../../core.js";
 import { Factory, Optional } from "../../../functions.js";
 type EffectsMode = "batched" | "combine-latest";
 declare const Memo = 1;
@@ -62,7 +62,7 @@ declare class ComputeContext {
 export declare const assertCurrentContext: () => ComputeContext;
 export declare const Observable_compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest";
-}) => ObservableLike<T>;
+}) => DeferredObservableLike<T>;
 export declare const Runnable_compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest";
 }) => RunnableLike<T>;

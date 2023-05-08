@@ -48,6 +48,8 @@ export declare const __ObserverLike_notify: unique symbol;
 
 export declare const __ObservableLike_observe: unique symbol;
 
+export declare const __ObservableLike_isDeferred: unique symbol;
+
 export declare const __ObservableLike_isEnumerable: unique symbol;
 
 export declare const __ObservableLike_isRunnable: unique symbol;

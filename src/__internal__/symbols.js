@@ -120,6 +120,11 @@ export const __ObservableLike_observe = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol(
+  "ObservableLike_isDeferred",
+);
+
+/** @type {unique symbol} */
 export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol(
   "ObservableLike_isEnumerable",
 );

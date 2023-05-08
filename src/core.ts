@@ -22,6 +22,7 @@ import {
   __KeyedCollectionLike_get as KeyedCollectionLike_get,
   __KeyedContainer_TKey as KeyedContainer_TKey,
   __MulticastObservableLike_buffer as MulticastObservableLike_buffer,
+  __ObservableLike_isDeferred as ObservableLike_isDeferred,
   __ObservableLike_isEnumerable as ObservableLike_isEnumerable,
   __ObservableLike_isRunnable as ObservableLike_isRunnable,
   __ObservableLike_observe as ObservableLike_observe,
@@ -71,6 +72,7 @@ export {
   KeyedCollectionLike_get,
   KeyedContainer_TKey,
   MulticastObservableLike_buffer,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -593,6 +595,11 @@ export interface ObserverLike<T = unknown>
  */
 export interface ObservableLike<T = unknown> {
   /**
+   * Indicates if the `ObservableLike` is deferred, ie. cold.
+   */
+  readonly [ObservableLike_isDeferred]: boolean;
+
+  /**
    * Indicates if the `ObservableLike` supports interactive enumeration.
    */
   readonly [ObservableLike_isEnumerable]: boolean;
@@ -625,7 +632,25 @@ export interface ObservableContainer extends Container {
  * @noInheritDoc
  * @category Reactive
  */
-export interface RunnableLike<T = unknown> extends ObservableLike<T> {
+export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: true;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableContainer extends ObservableContainer {
+  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+ *
+ * @noInheritDoc
+ * @category Reactive
+ */
+export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
@@ -633,7 +658,7 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableContainer extends ObservableContainer {
+export interface RunnableContainer extends DeferredObservableContainer {
   readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 
@@ -663,6 +688,7 @@ export interface EnumerableContainer extends RunnableContainer {
  */
 export interface MulticastObservableLike<T = unknown>
   extends ObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 
@@ -694,6 +720,7 @@ export interface PublisherLike<T = unknown>
 export interface PauseableObservableLike<T = unknown>
   extends ObservableLike<T>,
     PauseableLike {
+  readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 }

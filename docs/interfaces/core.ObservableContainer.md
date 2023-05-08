@@ -10,7 +10,7 @@
 
   ↳ **`ObservableContainer`**
 
-  ↳↳ [`RunnableContainer`](core.RunnableContainer.md)
+  ↳↳ [`DeferredObservableContainer`](core.DeferredObservableContainer.md)
 
   ↳↳ [`PauseableObservableContainer`](core.PauseableObservableContainer.md)
 

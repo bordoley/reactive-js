@@ -4,7 +4,9 @@ import { ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../.
 import HigherOrderObservable_mergeAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.mergeAll.js";
 import Observable_lift from "./Observable.lift.js";
 const Observable_mergeAll = 
-/*@__PURE__*/ (() => HigherOrderObservable_mergeAll(Observable_lift({
+/*@__PURE__*/ (() => HigherOrderObservable_mergeAll(
+// FIXME: should just be DeferredObservable_lift
+Observable_lift({
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
 })))();

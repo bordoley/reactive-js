@@ -20,6 +20,7 @@ import {
   EventListenerLike_notify,
   KeyedCollectionLike_get,
   MulticastObservableLike_buffer,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -56,6 +57,7 @@ const Publisher_create: <T>(options?: {
         instance: Pick<
           PublisherLike<T>,
           | typeof ObservableLike_observe
+          | typeof ObservableLike_isDeferred
           | typeof ObservableLike_isEnumerable
           | typeof ObservableLike_isRunnable
           | typeof PublisherLike_observerCount
@@ -102,6 +104,7 @@ const Publisher_create: <T>(options?: {
       }),
       {
         [EventListenerLike_isErrorSafe]: true as const,
+        [ObservableLike_isDeferred]: false as const,
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 

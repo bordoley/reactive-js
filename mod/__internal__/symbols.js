@@ -52,6 +52,8 @@ export const __ObserverLike_notify = /*@__PURE__*/ symbol("ObserverLike_notify")
 /** @type {unique symbol} */
 export const __ObservableLike_observe = /*@__PURE__*/ symbol("ObservableLike_observe");
 /** @type {unique symbol} */
+export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol("ObservableLike_isDeferred");
+/** @type {unique symbol} */
 export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol("ObservableLike_isEnumerable");
 /** @type {unique symbol} */
 export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol("ObservableLike_isRunnable");

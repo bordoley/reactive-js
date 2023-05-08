@@ -14,6 +14,7 @@ import {
   Container,
   DisposableLike,
   ObservableContainer,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
@@ -98,6 +99,7 @@ const PauseableObservable_create: <T>(
         [PauseableLike_isPaused]: none,
       }),
       {
+        [ObservableLike_isDeferred]: false as const,
         [ObservableLike_isEnumerable]: false as const,
         [ObservableLike_isRunnable]: false as const,
 

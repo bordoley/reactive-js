@@ -3,7 +3,7 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { __Publisher_observers } from "../../../__internal__/symbols.js";
-import { CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, EventListenerLike_notify, KeyedCollectionLike_get, MulticastObservableLike_buffer, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_observerCount, QueueableLike_enqueue, } from "../../../core.js";
+import { CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, EventListenerLike_notify, KeyedCollectionLike_get, MulticastObservableLike_buffer, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_observerCount, QueueableLike_enqueue, } from "../../../core.js";
 import Disposable_mixin from "../../../core/Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../../core/Disposable/__internal__/Disposable.onDisposed.js";
 import Iterable_enumerate from "../../../core/Iterable/__internal__/Iterable.enumerate.js";
@@ -32,6 +32,7 @@ const Publisher_create = /*@__PURE__*/ (() => {
         [MulticastObservableLike_buffer]: none,
     }), {
         [EventListenerLike_isErrorSafe]: true,
+        [ObservableLike_isDeferred]: false,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [PublisherLike_observerCount]() {

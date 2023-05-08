@@ -49,6 +49,8 @@ export const __ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_observe: unique symbol;
 /** @type {unique symbol} */
+export const __ObservableLike_isDeferred: unique symbol;
+/** @type {unique symbol} */
 export const __ObservableLike_isEnumerable: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_isRunnable: unique symbol;

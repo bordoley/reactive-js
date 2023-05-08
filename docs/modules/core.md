@@ -23,6 +23,7 @@
 
 - [AsyncIterableContainer](../interfaces/core.AsyncIterableContainer.md)
 - [Container](../interfaces/core.Container-1.md)
+- [DeferredObservableContainer](../interfaces/core.DeferredObservableContainer.md)
 - [EnumerableContainer](../interfaces/core.EnumerableContainer-1.md)
 - [EnumeratorContainer](../interfaces/core.EnumeratorContainer.md)
 - [EventSourceContainer](../interfaces/core.EventSourceContainer.md)
@@ -71,6 +72,7 @@
 
 ### Reactive Interfaces
 
+- [DeferredObservableLike](../interfaces/core.DeferredObservableLike.md)
 - [MulticastObservableLike](../interfaces/core.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/core.ObservableLike.md)
 - [ObserverLike](../interfaces/core.ObserverLike.md)

@@ -14,7 +14,7 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 ## Hierarchy
 
-- [`ObservableLike`](core.ObservableLike.md)<`T`\>
+- [`DeferredObservableLike`](core.DeferredObservableLike.md)<`T`\>
 
   ↳ **`RunnableLike`**
 
@@ -32,9 +32,6 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 • `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``true``
 
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
-
 #### Overrides
 
-[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isRunnable]](core.ObservableLike.md#[___observablelike_isrunnable])
+DeferredObservableLike.\_\_@\_\_\_ObservableLike\_isRunnable@22143

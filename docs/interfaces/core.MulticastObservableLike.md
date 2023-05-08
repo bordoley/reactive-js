@@ -29,6 +29,7 @@ A stateful ObservableLike resource.
 ### Properties
 
 - [[\_\_\_MulticastObservableLike\_buffer]](core.MulticastObservableLike.md#[___multicastobservablelike_buffer])
+- [[\_\_\_ObservableLike\_isDeferred]](core.MulticastObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](core.MulticastObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](core.MulticastObservableLike.md#[___observablelike_isrunnable])
 
@@ -37,6 +38,18 @@ A stateful ObservableLike resource.
 ### [\_\_\_MulticastObservableLike\_buffer]
 
 • `Readonly` **[\_\_\_MulticastObservableLike\_buffer]**: [`IndexedBufferCollectionLike`](core.IndexedBufferCollectionLike.md)<`T`\>
+
+___
+
+### [\_\_\_ObservableLike\_isDeferred]
+
+• `Readonly` **[\_\_\_ObservableLike\_isDeferred]**: ``false``
+
+Indicates if the `ObservableLike` is deferred, ie. cold.
+
+#### Overrides
+
+[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isDeferred]](core.ObservableLike.md#[___observablelike_isdeferred])
 
 ___
 

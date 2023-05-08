@@ -4,8 +4,10 @@ import {
 } from "../../../__internal__/core.js";
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
+  DeferredObservableLike,
   EnumerableLike,
   ObservableLike,
+  ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
@@ -29,6 +31,13 @@ interface ObservableLift {
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<RunnableLike<TA>, RunnableLike<TB>>;
 
+  lift<C extends RunnableLike>(config: {
+    [ObservableLike_isEnumerable]: true;
+    [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<DeferredObservableLike<TA>, DeferredObservableLike<TB>>;
+
   lift<C extends ObservableLike>(config: {
     [ObservableLike_isEnumerable]: true;
     [ObservableLike_isRunnable]: true;
@@ -43,6 +52,13 @@ interface ObservableLift {
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<RunnableLike<TA>, RunnableLike<TB>>;
 
+  lift<C extends RunnableLike>(config: {
+    [ObservableLike_isEnumerable]: false;
+    [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<DeferredObservableLike<TA>, DeferredObservableLike<TB>>;
+
   lift<C extends ObservableLike>(config: {
     [ObservableLike_isEnumerable]: false;
     [ObservableLike_isRunnable]: true;
@@ -55,7 +71,21 @@ interface ObservableLift {
     [ObservableLike_isRunnable]: false;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<DeferredObservableLike<TA>, DeferredObservableLike<TB>>;
+
+  lift(config: {
+    [ObservableLike_isEnumerable]: false;
+    [ObservableLike_isRunnable]: false;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
+
+  lift(config: {
+    [ObservableLike_isEnumerable]: boolean;
+    [ObservableLike_isRunnable]: boolean;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => Function1<DeferredObservableLike<TA>, DeferredObservableLike<TB>>;
 
   lift(config: {
     [ObservableLike_isEnumerable]: boolean;
@@ -90,13 +120,13 @@ const Observable_lift: ObservableLift["lift"] = (<TA, TB>() => {
         (config[ObservableLike_isEnumerable] ||
           config[ObservableLike_isRunnable]) &&
         sourceSource[ObservableLike_isRunnable];
+      const isLiftedDeferred = sourceSource[ObservableLike_isDeferred];
 
-      return createLiftedObservable(
-        sourceSource,
-        allFunctions,
-        isLiftedEnumerable,
-        isLiftedRunnable,
-      );
+      return createLiftedObservable(sourceSource, allFunctions, {
+        [ObservableLike_isDeferred]: isLiftedDeferred,
+        [ObservableLike_isRunnable]: isLiftedRunnable,
+        [ObservableLike_isEnumerable]: isLiftedEnumerable,
+      });
     };
 })() as ObservableLift["lift"];
 
