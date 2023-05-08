@@ -46,12 +46,12 @@ import {
   none,
   pipe,
 } from "../../functions.js";
+import DeferredObservable_create from "../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import { assertCurrentContext } from "./__internal__/Observable.compute.js";
-import Observable_create from "./__internal__/Observable.create.js";
 import Observable_subscribe from "./__internal__/Observable.subscribe.js";
 
 interface __Memo {
@@ -169,7 +169,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
         ? Enumerable_create
         : observableConfig[ObservableLike_isRunnable]
         ? Runnable_create
-        : Observable_create,
+        : DeferredObservable_create,
       f,
       ...args,
     );

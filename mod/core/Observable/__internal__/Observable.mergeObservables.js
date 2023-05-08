@@ -8,6 +8,7 @@ import Enumerablee_create from "../../../core/Enumerable/__internal__/Enumerable
 import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 import ReadonlyArray_getLength from "../../../core/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { bindMethod, pipe } from "../../../functions.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -27,13 +28,16 @@ const Observable_mergeObservables = /*@__PURE__*/ (() => {
                 pipe(createMergeObserver(observer, count, ctx), bindMethod(observable, ObservableLike_observe));
             }
         };
+        const isDeferred = Observable_allAreEnumerable(observables);
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return isEnumerable
             ? Enumerablee_create(onSubscribe)
             : isRunnable
                 ? Runnable_create(onSubscribe)
-                : Observable_create(onSubscribe);
+                : isDeferred
+                    ? DeferredObservable_create(onSubscribe)
+                    : Observable_create(onSubscribe);
     };
 })();
 export default Observable_mergeObservables;

@@ -482,7 +482,7 @@ ___
 
 ### fromAsyncFactory
 
-▸ **fromAsyncFactory**<`T`\>(`f`): [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>
+▸ **fromAsyncFactory**<`T`\>(`f`): [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -498,7 +498,7 @@ ___
 
 #### Returns
 
-[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>
+[`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`T`\>
 
 ___
 

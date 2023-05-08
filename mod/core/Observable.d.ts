@@ -51,7 +51,7 @@ export declare const forkZipLatest: ReactiveContainer.TypeClass<ObservableContai
 /**
  * @category Constructor
  */
-export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => ObservableLike<T>;
+export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => import("../core.js").DeferredObservableLike<T>;
 export declare const fromAsyncIterable: Container.TypeClass<ObservableContainer>["fromAsyncIterable"];
 export declare const fromEnumeratorFactory: ReactiveContainer.TypeClass<ObservableContainer>["fromEnumeratorFactory"];
 export declare const fromFactory: ReactiveContainer.TypeClass<ObservableContainer>["fromFactory"];
