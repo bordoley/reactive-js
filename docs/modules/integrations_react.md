@@ -35,7 +35,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/util.DispatcherLike.md)<`TReq`\>\> |
+| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/core.DispatcherLike.md)<`TReq`\>\> |
 
 #### Returns
 
@@ -56,7 +56,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TDisposable` | extends [`DisposableLike`](../interfaces/util.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/core.DisposableLike.md) |
 
 #### Parameters
 
@@ -73,7 +73,7 @@ ___
 
 ### useEnumerate
 
-▸ **useEnumerate**<`T`\>(`enumerable`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **useEnumerate**<`T`\>(`enumerable`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/core.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -85,13 +85,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerable` | [`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\> |
+| `enumerable` | [`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\> |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/core.EnumeratorLike.md)<`T`\>\>
 
-▸ **useEnumerate**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+▸ **useEnumerate**<`T`\>(`factory`, `deps`): [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/core.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -103,12 +103,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`EnumerableLike`](../interfaces/rx.EnumerableLike.md)<`T`\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\>
+[`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/core.EnumeratorLike.md)<`T`\>\>
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `enumerator` | [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/containers.EnumeratorLike.md)<`T`\>\> |
+| `enumerator` | [`Optional`](functions.md#optional)<[`EnumeratorLike`](../interfaces/core.EnumeratorLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -154,7 +154,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `eventSource` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\> |
+| `eventSource` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/core.EventSourceLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -172,7 +172,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/core.EventSourceLike.md)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
@@ -195,7 +195,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\> |
+| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -217,7 +217,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/rx.ObservableLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -238,7 +238,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `pauseable` | [`Optional`](functions.md#optional)<[`PauseableLike`](../interfaces/util.PauseableLike.md)\> |
+| `pauseable` | [`Optional`](functions.md#optional)<[`PauseableLike`](../interfaces/core.PauseableLike.md)\> |
 
 #### Returns
 
@@ -254,13 +254,13 @@ ___
 
 ### useStream
 
-▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](core.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/core.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/core.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
 
 #### Parameters
 
@@ -275,15 +275,15 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<[`StreamOf`](core.md#streamof)<`TStreamable`\>\>
 
-▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](core.md#streamof)<`TStreamable`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
+| `TStreamable` | extends [`StreamableLike`](../interfaces/core.StreamableLike.md)<`unknown`, `unknown`, [`StreamLike`](../interfaces/core.StreamLike.md)<`unknown`, `unknown`\>, `TStreamable`\> |
 
 #### Parameters
 
@@ -299,7 +299,7 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](rx.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<[`StreamOf`](core.md#streamof)<`TStreamable`\>\>
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | (`props`: [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/rx.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `fn` | (`props`: [`ObservableLike`](../interfaces/core.ObservableLike.md)<`TProps`\>) => [`ObservableLike`](../interfaces/core.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

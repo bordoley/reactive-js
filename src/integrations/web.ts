@@ -4,9 +4,12 @@ import {
   __WindowLocationLike_push as WindowLocationLike_push,
   __WindowLocationLike_replace as WindowLocationLike_replace,
 } from "../__internal__/symbols.js";
-import { ReadonlyObjectMapLike } from "../containers.js";
+import {
+  MulticastObservableLike,
+  ObservableLike,
+  ReadonlyObjectMapLike,
+} from "../core.js";
 import { Updater } from "../functions.js";
-import { MulticastObservableLike, ObservableLike } from "../rx.js";
 
 export {
   WindowLocationLike_push,

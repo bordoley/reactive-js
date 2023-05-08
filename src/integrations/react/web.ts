@@ -8,7 +8,9 @@ import {
   useState,
 } from "react";
 import * as React from "react";
-import * as ReadonlyObjectMap from "../../containers/ReadonlyObjectMap.js";
+import { EventSourceLike } from "../../core.js";
+import * as EventSource from "../../core/EventSource.js";
+import * as ReadonlyObjectMap from "../../core/ReadonlyObjectMap.js";
 import {
   Function1,
   Optional,
@@ -21,8 +23,6 @@ import {
   pipe,
   pipeSomeLazy,
 } from "../../functions.js";
-import { EventSourceLike } from "../../util.js";
-import * as EventSource from "../../util/EventSource.js";
 import { useDisposable, useObserve } from "../react.js";
 import {
   CSSStyleMapLike,

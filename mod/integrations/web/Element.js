@@ -3,13 +3,13 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
+import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLike_enqueue, } from "../../core.js";
+import * as Disposable from "../../core/Disposable.js";
+import * as EventListener from "../../core/EventListener.js";
+import * as EventPublisher from "../../core/EventPublisher.js";
+import * as EventSource from "../../core/EventSource.js";
+import * as Observable from "../../core/Observable.js";
 import { bindMethod, isNone, newInstance, none, pipe, returns, } from "../../functions.js";
-import * as Observable from "../../rx/Observable.js";
-import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLike_enqueue, } from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
-import * as EventListener from "../../util/EventListener.js";
-import * as EventPublisher from "../../util/EventPublisher.js";
-import * as EventSource from "../../util/EventSource.js";
 export const addEventHandler = (eventName, eventHandler, options) => source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
     pipe(source, addEventListener(eventName, listener, options));

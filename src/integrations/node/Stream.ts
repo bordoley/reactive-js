@@ -1,5 +1,21 @@
 import { Readable, Transform, Writable } from "stream";
 import {
+  DispatcherLike_complete,
+  DisposableLike,
+  DisposableLike_dispose,
+  ObservableLike,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  PauseableObservableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_enqueue,
+  SchedulerLike,
+} from "../../core.js";
+import * as Disposable from "../../core/Disposable.js";
+import * as Observable from "../../core/Observable.js";
+import PauseableObservable_create from "../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
+import {
   Factory,
   Function1,
   bindMethod,
@@ -7,21 +23,6 @@ import {
   isFunction,
   pipe,
 } from "../../functions.js";
-import { ObservableLike, PauseableObservableLike } from "../../rx.js";
-import * as Observable from "../../rx/Observable.js";
-import PauseableObservable_create from "../../rx/PauseableObservable/__internal__/PauseableObservable.create.js";
-import {
-  DispatcherLike_complete,
-  DisposableLike,
-  DisposableLike_dispose,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
-  SchedulerLike,
-} from "../../util.js";
-import * as Disposable from "../../util/Disposable.js";
 
 type NodeStream = Readable | Writable | Transform;
 

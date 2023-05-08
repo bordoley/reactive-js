@@ -1,5 +1,5 @@
+import { EventSourceLike } from "../../core.js";
 import { Optional, SideEffect1 } from "../../functions.js";
-import { EventSourceLike } from "../../util.js";
 import { CSSStyleMapLike } from "../web.js";
 interface Animate {
     __animate(animation: EventSourceLike<CSSStyleMapLike>): SideEffect1<Optional<HTMLElement | null>>;

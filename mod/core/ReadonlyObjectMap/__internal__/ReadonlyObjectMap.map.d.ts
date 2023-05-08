@@ -1,0 +1,3 @@
+import { KeyedContainer, ReadonlyObjectMapContainer } from "../../../core.js";
+declare const ReadonlyObjectMap_map: KeyedContainer.Map<ReadonlyObjectMapContainer>["map"];
+export default ReadonlyObjectMap_map;

@@ -1,0 +1,25 @@
+import {
+  DispatcherLike_complete,
+  DisposableLike_dispose,
+  ObserverLike,
+  QueueableLike_enqueue,
+} from "../../../core.js";
+import Disposable_toAbortSignal from "../../../core/Disposable/__internal__/Disposable.toAbortSignal.js";
+import { error } from "../../../functions.js";
+import Observable_create from "./Observable.create.js";
+
+const Observable_fromAsyncFactory = <T>(
+  f: (abortSignal: AbortSignal) => Promise<T>,
+) =>
+  Observable_create<T>(async (observer: ObserverLike<T>) => {
+    const abortSignal = Disposable_toAbortSignal(observer);
+    try {
+      const result = await f(abortSignal);
+      observer[QueueableLike_enqueue](result);
+      observer[DispatcherLike_complete]();
+    } catch (e) {
+      observer[DisposableLike_dispose](error(e));
+    }
+  });
+
+export default Observable_fromAsyncFactory;
