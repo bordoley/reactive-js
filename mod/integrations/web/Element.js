@@ -26,16 +26,10 @@ export const addEventListener = ((eventName, eventListener) => target => {
     return target;
 });
 export const observeEvent = ((eventName, selector) => target => Observable.create(observer => {
-    pipe(observer, Disposable.onDisposed(_ => {
-        target.removeEventListener(eventName, listener);
-    }));
-    const listener = (event) => {
-        const result = selector(event);
+    pipe(target, addEventHandler(eventName, ev => {
+        const result = selector(ev);
         observer[QueueableLike_enqueue](result);
-    };
-    target.addEventListener(eventName, listener, {
-        passive: true,
-    });
+    }), Disposable.bindTo(observer));
 }));
 export const addScrollHandler = (handler) => element => {
     const listener = EventListener.create(handler);

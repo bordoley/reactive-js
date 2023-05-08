@@ -1532,20 +1532,13 @@ export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
   target =>
     Observable.create(observer => {
       pipe(
-        observer,
-        Disposable.onDisposed(_ => {
-          target.removeEventListener(eventName, listener);
+        target as any,
+        addEventHandler(eventName as any, ev => {
+          const result = selector(ev);
+          observer[QueueableLike_enqueue](result);
         }),
+        Disposable.bindTo(observer),
       );
-
-      const listener = (event: unknown) => {
-        const result = selector(event);
-        observer[QueueableLike_enqueue](result);
-      };
-
-      target.addEventListener(eventName, listener, {
-        passive: true,
-      } as any);
     })) as ObserveEvent["observeEvent"];
 
 export const addScrollHandler =
