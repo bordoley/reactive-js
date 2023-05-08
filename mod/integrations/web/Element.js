@@ -89,10 +89,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
             xVelocityPrev = xVelocity;
             yPrev = yCurrent;
             yVelocityPrev = yVelocity;
-            listener[EventListenerLike_notify]({
-                type: "scroll",
-                value: { x, y },
-            });
+            listener[EventListenerLike_notify]({ x, y });
         }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addEventListener("scroll", eventListener));
         pipe(window, addEventListener("resize", eventListener));

@@ -14,6 +14,12 @@ export const __Container_type = /*@__PURE__*/ symbol("Container_type");
 /** @type {unique symbol} */
 export const __DispatcherLike_complete = /*@__PURE__*/ symbol("DispatcherLike_complete");
 /** @type {unique symbol} */
+export const __DispatcherLikeEvent_capacityExceeded = /*@__PURE__*/ symbol("DispatcherLikeEvent_capacityExceeded");
+/** @type {unique symbol} */
+export const __DispatcherLikeEvent_completed = /*@__PURE__*/ symbol("DispatcherLikeEvent_completed");
+/** @type {unique symbol} */
+export const __DispatcherLikeEvent_ready = /*@__PURE__*/ symbol("DispatcherLikeEvent_ready");
+/** @type {unique symbol} */
 export const __DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 /** @type {unique symbol} */
 export const __DisposableLike_dispose = /*@__PURE__*/ symbol("DisposableLike_dispose");

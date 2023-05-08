@@ -25,7 +25,10 @@ import {
 import { ObserverLike, ObserverLike_notify } from "../../../rx.js";
 import {
   BufferLike_capacity,
-  DispatcherEventMap,
+  DispatcherLikeEventMap,
+  DispatcherLikeEvent_capacityExceeded,
+  DispatcherLikeEvent_completed,
+  DispatcherLikeEvent_ready,
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
@@ -57,10 +60,6 @@ const Observer_baseMixin: <T>() => Mixin1<
   },
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
-  const completeEvent: { type: "complete" } = { type: "complete" };
-  const drainEvent: { type: "drain" } = { type: "drain" };
-  const waitEvent: { type: "wait" } = { type: "wait" };
-
   type TProperties = {
     [__ObserverMixin_isCompleted]: boolean;
     [__ObserverMixin_dispatchSubscription]: DisposableLike;
@@ -70,7 +69,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     observer: TProperties &
       ObserverLike<T> &
       IndexedQueueLike<T> &
-      EventListenerLike<DispatcherEventMap[keyof DispatcherEventMap]>,
+      EventListenerLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>,
   ) => {
     if (
       observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
@@ -90,7 +89,7 @@ const Observer_baseMixin: <T>() => Mixin1<
         if (observer[__ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[EventListenerLike_notify](drainEvent);
+          observer[EventListenerLike_notify](DispatcherLikeEvent_ready);
         }
       };
 
@@ -157,7 +156,9 @@ const Observer_baseMixin: <T>() => Mixin1<
           this: TProperties &
             ObserverLike<T> &
             IndexedQueueLike<T> &
-            EventListenerLike<DispatcherEventMap[keyof DispatcherEventMap]>,
+            EventListenerLike<
+              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+            >,
           next: T,
         ): boolean {
           if (
@@ -171,7 +172,9 @@ const Observer_baseMixin: <T>() => Mixin1<
             );
 
             if (!result) {
-              this[EventListenerLike_notify](waitEvent);
+              this[EventListenerLike_notify](
+                DispatcherLikeEvent_capacityExceeded,
+              );
             }
 
             scheduleDrainQueue(this);
@@ -184,13 +187,15 @@ const Observer_baseMixin: <T>() => Mixin1<
           this: TProperties &
             ObserverLike<T> &
             IndexedQueueLike<T> &
-            EventListenerLike<DispatcherEventMap[keyof DispatcherEventMap]>,
+            EventListenerLike<
+              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
+            >,
         ) {
           const isCompleted = this[__ObserverMixin_isCompleted];
           this[__ObserverMixin_isCompleted] = true;
 
           if (!isCompleted) {
-            this[EventListenerLike_notify](completeEvent);
+            this[EventListenerLike_notify](DispatcherLikeEvent_completed);
           }
 
           if (

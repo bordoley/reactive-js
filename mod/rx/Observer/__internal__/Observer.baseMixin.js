@@ -6,15 +6,12 @@ import { QueueLike_dequeue, } from "../../../__internal__/util.js";
 import { CollectionLike_count } from "../../../containers.js";
 import { call, pipe, returns, unsafeCast, } from "../../../functions.js";
 import { ObserverLike_notify } from "../../../rx.js";
-import { BufferLike_capacity, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
+import { BufferLike_capacity, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EventListenerLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, } from "../../../util.js";
 import Disposable_addTo from "../../../util/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../../util/Disposable/__internal__/Disposable.disposed.js";
 import EventPublisher_lazyInitMixin from "../../../util/EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
 import Queue_indexedQueueMixin from "../../../util/Queue/__internal__/Queue.indexedQueueMixin.js";
 const Observer_baseMixin = /*@__PURE__*/ (() => {
-    const completeEvent = { type: "complete" };
-    const drainEvent = { type: "drain" };
-    const waitEvent = { type: "wait" };
     const scheduleDrainQueue = (observer) => {
         if (observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (scheduler) => {
@@ -30,7 +27,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
                     observer[DisposableLike_dispose]();
                 }
                 else {
-                    observer[EventListenerLike_notify](drainEvent);
+                    observer[EventListenerLike_notify](DispatcherLikeEvent_ready);
                 }
             };
             observer[__ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
@@ -52,7 +49,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
                 !this[DisposableLike_isDisposed]) {
                 const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
                 if (!result) {
-                    this[EventListenerLike_notify](waitEvent);
+                    this[EventListenerLike_notify](DispatcherLikeEvent_capacityExceeded);
                 }
                 scheduleDrainQueue(this);
                 return result;
@@ -63,7 +60,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
             const isCompleted = this[__ObserverMixin_isCompleted];
             this[__ObserverMixin_isCompleted] = true;
             if (!isCompleted) {
-                this[EventListenerLike_notify](completeEvent);
+                this[EventListenerLike_notify](DispatcherLikeEvent_completed);
             }
             if (this[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
                 !isCompleted) {

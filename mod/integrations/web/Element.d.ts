@@ -200,14 +200,8 @@ interface ObserveEvent {
     observeEvent<TEventTarget extends XMLHttpRequestEventTarget, K extends keyof XMLHttpRequestEventTargetEventMap, T>(eventName: K, selector: Function1<XMLHttpRequestEventTargetEventMap[K], T>): Function1<TEventTarget, ObservableLike<T>>;
 }
 export declare const observeEvent: ObserveEvent["observeEvent"];
-export declare const addScrollHandler: <TElement extends HTMLElement>(handler: SideEffect1<{
-    type: "scroll";
-    value: ScrollValue;
-}>) => Function1<TElement, DisposableLike>;
-export declare const addScrollListener: <TElement extends HTMLElement>(listener: EventListenerLike<{
-    type: "scroll";
-    value: ScrollValue;
-}>) => Function1<TElement, TElement>;
+export declare const addScrollHandler: <TElement extends HTMLElement>(handler: SideEffect1<ScrollValue>) => Function1<TElement, DisposableLike>;
+export declare const addScrollListener: <TElement extends HTMLElement>(listener: EventListenerLike<ScrollValue>) => Function1<TElement, TElement>;
 export declare const addResizeHandler: <TElement extends Element>(handler: SideEffect1<ResizeObserverEntry>) => Function1<TElement, DisposableLike>;
 export declare const addResizeListener: <TElement extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<TElement, TElement>;
 export declare const addMeasureHandler: <TElement extends HTMLElement>(handler: SideEffect1<Rect>) => Function1<TElement, DisposableLike>;

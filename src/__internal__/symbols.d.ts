@@ -10,6 +10,12 @@ export declare const __Container_type: unique symbol;
 
 export declare const __DispatcherLike_complete: unique symbol;
 
+export declare const __DispatcherLikeEvent_capacityExceeded: unique symbol;
+
+export declare const __DispatcherLikeEvent_completed: unique symbol;
+
+export declare const __DispatcherLikeEvent_ready: unique symbol;
+
 export declare const __DisposableLike_add: unique symbol;
 
 export declare const __DisposableLike_dispose: unique symbol;

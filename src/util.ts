@@ -1,5 +1,8 @@
 import {
   __BufferLike_capacity as BufferLike_capacity,
+  __DispatcherLikeEvent_capacityExceeded as DispatcherLikeEvent_capacityExceeded,
+  __DispatcherLikeEvent_completed as DispatcherLikeEvent_completed,
+  __DispatcherLikeEvent_ready as DispatcherLikeEvent_ready,
   __DispatcherLike_complete as DispatcherLike_complete,
   __DisposableLike_add as DisposableLike_add,
   __DisposableLike_dispose as DisposableLike_dispose,
@@ -34,6 +37,9 @@ import { Optional, SideEffect1 } from "./functions.js";
 
 export {
   BufferLike_capacity,
+  DispatcherLikeEvent_ready,
+  DispatcherLikeEvent_capacityExceeded,
+  DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   DisposableLike_add,
   DisposableLike_dispose,
@@ -196,10 +202,10 @@ export interface StoreLike<T = unknown> extends EventSourceLike<T> {
 /**
  * @category EventMap
  */
-export interface DispatcherEventMap {
-  wait: { type: "wait" };
-  drain: { type: "drain" };
-  complete: { type: "complete" };
+export interface DispatcherLikeEventMap {
+  [DispatcherLikeEvent_ready]: typeof DispatcherLikeEvent_ready;
+  [DispatcherLikeEvent_capacityExceeded]: typeof DispatcherLikeEvent_capacityExceeded;
+  [DispatcherLikeEvent_completed]: typeof DispatcherLikeEvent_completed;
 }
 
 /**
@@ -211,7 +217,7 @@ export interface DispatcherEventMap {
  */
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
-    EventSourceLike<DispatcherEventMap[keyof DispatcherEventMap]> {
+    EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]> {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */

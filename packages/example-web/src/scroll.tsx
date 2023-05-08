@@ -102,9 +102,9 @@ const ScrollApp = () => {
   const publishedAnimation = useDisposable(EventPublisher.create, []);
 
   const containerRef = useScroll<HTMLDivElement>(
-    ({ value }: { value: ScrollValue }) => {
-      const pos = value.y.progress;
-      const velocity = value.y.velocity;
+    ({ y }: ScrollValue) => {
+      const pos = y.progress;
+      const velocity = y.velocity;
 
       publishedAnimation?.[EventListenerLike_notify](pos);
 

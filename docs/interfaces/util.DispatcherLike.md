@@ -17,7 +17,7 @@ be dispatched from any execution constext.
 
 - [`QueueableLike`](util.QueueableLike.md)<`T`\>
 
-- [`EventSourceLike`](util.EventSourceLike.md)<[`DispatcherEventMap`](util.DispatcherEventMap.md)[keyof [`DispatcherEventMap`](util.DispatcherEventMap.md)]\>
+- [`EventSourceLike`](util.EventSourceLike.md)<[`DispatcherLikeEventMap`](util.DispatcherLikeEventMap.md)[keyof [`DispatcherLikeEventMap`](util.DispatcherLikeEventMap.md)]\>
 
   ↳ **`DispatcherLike`**
 

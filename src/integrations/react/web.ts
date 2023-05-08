@@ -172,10 +172,7 @@ export const useAnimate: UseAnimate["useAnimate"] = <
  * @category Hook
  */
 export const useScroll = <TElement extends HTMLElement>(
-  callback: SideEffect1<{
-    type: "scroll";
-    value: ScrollValue;
-  }>,
+  callback: SideEffect1<ScrollValue>,
   deps: readonly unknown[],
 ): React.Ref<TElement> => {
   const [element, setElement] = useState<Optional<TElement>>();

@@ -4,6 +4,9 @@ CollectionLike_count
 Container_T
 Container_type
 DispatcherLike_complete
+DispatcherLikeEvent_capacityExceeded
+DispatcherLikeEvent_completed
+DispatcherLikeEvent_ready
 DisposableLike_add
 DisposableLike_dispose
 DisposableLike_error

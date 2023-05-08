@@ -41,13 +41,13 @@ ___
 
 ### createAnimationGroupEventHandler
 
-▸ **createAnimationGroupEventHandler**<`TEventType`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
+▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType` | `TEventType` |
+| `TEvent` | `TEvent` |
 | `TKey` | extends `string` \| `number` \| `symbol` |
 | `T` | `T` |
 
@@ -55,22 +55,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEventType`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_1`, `TKey_1`, `T_1`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
+▸ **createAnimationGroupEventHandler**<`TEvent_1`, `TKey_1`, `T_1`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_1` | `TEventType_1` |
+| `TEvent_1` | `TEvent_1` |
 | `TKey_1` | extends `string` \| `number` \| `symbol` |
 | `T_1` | `T_1` |
 
@@ -78,22 +78,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEventType_1`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/util.SchedulerLike.md) |
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent_1`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_1`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_1`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_1`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEventType_2`, `TKey_2`, `T_2`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
+▸ **createAnimationGroupEventHandler**<`TEvent_2`, `TKey_2`, `T_2`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TEventType_2` | `TEventType_2` |
+| `TEvent_2` | `TEvent_2` |
 | `TKey_2` | extends `string` \| `number` \| `symbol` |
 | `T_2` | `T_2` |
 
@@ -101,7 +101,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEventType_2`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](containers.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](rx.Reactive.md#animationconfig)<`T_2`\>[]\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -110,7 +110,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEventType_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEventType_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
+[`StreamableLike`](../interfaces/rx.StreamableLike.md)<`TEvent_2`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`TEvent_2`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_2`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_2`\>\>\>
 
 ▸ **createAnimationGroupEventHandler**<`TKey_3`, `T_3`\>(`animationGroup`, `options`): [`StreamableLike`](../interfaces/rx.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/rx.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/containers.DictionaryLike.md)<`TKey_3`, [`EventSourceLike`](../interfaces/util.EventSourceLike.md)<`T_3`\>\>\>
 

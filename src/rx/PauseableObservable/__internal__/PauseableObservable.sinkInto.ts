@@ -5,8 +5,11 @@ import {
   PauseableObservableLike,
 } from "../../../rx.js";
 import {
-  DispatcherEventMap,
   DispatcherLike,
+  DispatcherLikeEventMap,
+  DispatcherLikeEvent_capacityExceeded,
+  DispatcherLikeEvent_completed,
+  DispatcherLikeEvent_ready,
   PauseableLike_pause,
   PauseableLike_resume,
 } from "../../../util.js";
@@ -25,10 +28,13 @@ const PauseableObservable_sinkInto =
       pipe(
         sink,
         EventSource_addEventHandler(
-          ({ type }: DispatcherEventMap[keyof DispatcherEventMap]) => {
-            if (type === "wait" || type === "complete") {
+          (ev: DispatcherLikeEventMap[keyof DispatcherLikeEventMap]) => {
+            if (
+              ev === DispatcherLikeEvent_capacityExceeded ||
+              ev === DispatcherLikeEvent_completed
+            ) {
               pauseableObservable[PauseableLike_pause]();
-            } else if (type === "drain") {
+            } else if (ev === DispatcherLikeEvent_ready) {
               pauseableObservable[PauseableLike_resume]();
             }
           },

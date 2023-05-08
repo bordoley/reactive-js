@@ -11,6 +11,12 @@ export const __Container_type: unique symbol;
 /** @type {unique symbol} */
 export const __DispatcherLike_complete: unique symbol;
 /** @type {unique symbol} */
+export const __DispatcherLikeEvent_capacityExceeded: unique symbol;
+/** @type {unique symbol} */
+export const __DispatcherLikeEvent_completed: unique symbol;
+/** @type {unique symbol} */
+export const __DispatcherLikeEvent_ready: unique symbol;
+/** @type {unique symbol} */
 export const __DisposableLike_add: unique symbol;
 /** @type {unique symbol} */
 export const __DisposableLike_dispose: unique symbol;

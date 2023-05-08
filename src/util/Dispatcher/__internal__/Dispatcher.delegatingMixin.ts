@@ -8,8 +8,8 @@ import {
 import { __DelegatingDispatcherMixin_delegate } from "../../../__internal__/symbols.js";
 import { none, returns } from "../../../functions.js";
 import {
-  DispatcherEventMap,
   DispatcherLike,
+  DispatcherLikeEventMap,
   DispatcherLike_complete,
   EventListenerLike,
   EventSourceLike_addEventListener,
@@ -52,7 +52,7 @@ const Dispatcher_delegatingMixin: <TReq>() => Mixin1<
         [EventSourceLike_addEventListener](
           this: TProperties,
           listener: EventListenerLike<
-            DispatcherEventMap[keyof DispatcherEventMap]
+            DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
           >,
         ): void {
           this[__DelegatingDispatcherMixin_delegate][

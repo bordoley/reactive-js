@@ -1550,10 +1550,7 @@ export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
 
 export const addScrollHandler =
   <TElement extends HTMLElement>(
-    handler: SideEffect1<{
-      type: "scroll";
-      value: ScrollValue;
-    }>,
+    handler: SideEffect1<ScrollValue>,
   ): Function1<TElement, DisposableLike> =>
   element => {
     const listener = EventListener.create(handler);
@@ -1562,19 +1559,13 @@ export const addScrollHandler =
   };
 
 export const addScrollListener: <TElement extends HTMLElement>(
-  listener: EventListenerLike<{
-    type: "scroll";
-    value: ScrollValue;
-  }>,
+  listener: EventListenerLike<ScrollValue>,
 ) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
   const calcProgress = (min: number, max: number, value: number) =>
     max - min === 0 ? 1 : (value - min) / (max - min);
 
   return <TElement extends HTMLElement>(
-      listener: EventListenerLike<{
-        type: "scroll";
-        value: ScrollValue;
-      }>,
+      listener: EventListenerLike<ScrollValue>,
     ) =>
     (element: TElement): TElement => {
       let prevTime = MIN_VALUE;
@@ -1631,10 +1622,7 @@ export const addScrollListener: <TElement extends HTMLElement>(
             yPrev = yCurrent;
             yVelocityPrev = yVelocity;
 
-            listener[EventListenerLike_notify]({
-              type: "scroll",
-              value: { x, y },
-            });
+            listener[EventListenerLike_notify]({ x, y });
           },
           { errorSafe: true },
         ),

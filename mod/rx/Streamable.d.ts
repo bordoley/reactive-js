@@ -6,20 +6,20 @@ export declare const create: <TReq, T>(op: import("../containers.js").ContainerO
  * @category Constructor
  */
 export declare const createAnimationGroupEventHandler: {
-    <TEventType, TKey extends string | number | symbol, T>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey, import("../functions.js").Function1<TEventType, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>>, options: {
+    <TEvent, TKey extends string | number | symbol, T>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey, import("../functions.js").Function1<TEvent, import("../rx.js").Reactive.AnimationConfig<T> | readonly import("../rx.js").Reactive.AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").StreamableLike<TEventType, boolean, import("../rx.js").StreamLike<TEventType, boolean> & import("../containers.js").DictionaryLike<TKey, import("../util.js").EventSourceLike<T>>>;
-    <TEventType_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_1, import("../functions.js").Function1<TEventType_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>>, options: {
+    }): import("../rx.js").StreamableLike<TEvent, boolean, import("../rx.js").StreamLike<TEvent, boolean> & import("../containers.js").DictionaryLike<TKey, import("../util.js").EventSourceLike<T>>>;
+    <TEvent_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_1, import("../functions.js").Function1<TEvent_1, import("../rx.js").Reactive.AnimationConfig<T_1> | readonly import("../rx.js").Reactive.AnimationConfig<T_1>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
-    }): import("../rx.js").StreamableLike<TEventType_1, boolean, import("../rx.js").StreamLike<TEventType_1, boolean> & import("../containers.js").DictionaryLike<TKey_1, import("../util.js").EventSourceLike<T_1>>>;
-    <TEventType_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_2, import("../functions.js").Function1<TEventType_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>>, options: {
+    }): import("../rx.js").StreamableLike<TEvent_1, boolean, import("../rx.js").StreamLike<TEvent_1, boolean> & import("../containers.js").DictionaryLike<TKey_1, import("../util.js").EventSourceLike<T_1>>>;
+    <TEvent_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_2, import("../functions.js").Function1<TEvent_2, import("../rx.js").Reactive.AnimationConfig<T_2> | readonly import("../rx.js").Reactive.AnimationConfig<T_2>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
-    }): import("../rx.js").StreamableLike<TEventType_2, boolean, import("../rx.js").StreamLike<TEventType_2, boolean> & import("../containers.js").DictionaryLike<TKey_2, import("../util.js").EventSourceLike<T_2>>>;
+    }): import("../rx.js").StreamableLike<TEvent_2, boolean, import("../rx.js").StreamLike<TEvent_2, boolean> & import("../containers.js").DictionaryLike<TKey_2, import("../util.js").EventSourceLike<T_2>>>;
     <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("../containers.js").ReadonlyObjectMapLike<TKey_3, import("../rx.js").Reactive.AnimationConfig<T_3> | readonly import("../rx.js").Reactive.AnimationConfig<T_3>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("../util.js").SchedulerLike | undefined;

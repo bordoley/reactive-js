@@ -25,8 +25,8 @@ import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingM
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 const createAnimationGroupEventHandlerStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
-        const streamDelegate = Streamable_createEventHandler((type) => {
-            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(type) : factory), Observable_forEach(value => {
+        const streamDelegate = Streamable_createEventHandler((event) => {
+            const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(event) : factory), Observable_forEach(value => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
                     publisher[EventListenerLike_notify](value);

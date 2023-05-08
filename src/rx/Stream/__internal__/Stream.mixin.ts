@@ -39,8 +39,8 @@ import MulticastObservable_delegatingMixin from "../../../rx/MulticastObservable
 import Observable_multicast from "../../../rx/Observable/__internal__/Observable.multicast.js";
 import {
   BufferLike_capacity,
-  DispatcherEventMap,
   DispatcherLike,
+  DispatcherLikeEventMap,
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_isDisposed,
@@ -171,7 +171,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [EventSourceLike_addEventListener](
             this: TProperties,
             listener: EventListenerLike<
-              DispatcherEventMap[keyof DispatcherEventMap]
+              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
             >,
           ): void {
             const observer = this[

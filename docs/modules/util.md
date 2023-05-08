@@ -18,7 +18,7 @@
 
 ### EventMap Interfaces
 
-- [DispatcherEventMap](../interfaces/util.DispatcherEventMap.md)
+- [DispatcherLikeEventMap](../interfaces/util.DispatcherLikeEventMap.md)
 
 ### Queueing Interfaces
 

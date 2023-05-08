@@ -73,7 +73,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `callback` | [`SideEffect1`](functions.md#sideeffect1)<{ `type`: ``"scroll"`` ; `value`: [`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)  }\> |
+| `callback` | [`SideEffect1`](functions.md#sideeffect1)<[`ScrollValue`](../interfaces/integrations_web.ScrollValue.md)\> |
 | `deps` | readonly `unknown`[] |
 
 #### Returns
