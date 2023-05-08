@@ -7,7 +7,7 @@ import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/Readonly
 import { pipe } from "../../../functions.js";
 import Observable_zipObservables from "./Observable.zipObservables.js";
 
-const Observable_forkZip: Container.ForkZip<ObservableContainer>["forkZip"] =
+const Observable_forkZip: Container.TypeClass<ObservableContainer>["forkZip"] =
   <TIn, TOut>(
     ...ops: readonly Container.Operator<ObservableContainer, TIn, TOut>[]
   ) =>

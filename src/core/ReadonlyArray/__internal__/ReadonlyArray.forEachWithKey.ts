@@ -1,7 +1,7 @@
 import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
 import { Function1, SideEffect2 } from "../../../functions.js";
 
-const ReadonlyArray_forEachWithKey: KeyedContainer.ForEachWithKey<ReadonlyArrayContainer>["forEachWithKey"] =
+const ReadonlyArray_forEachWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
 
     <
       T,

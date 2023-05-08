@@ -8,7 +8,7 @@ import {
 import Iterator_enumerate from "../../../core/Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../../functions.js";
 
-const ReadonlyObjectMap_keys: KeyedContainer.Keys<ReadonlyObjectMapContainer>["keys"] =
+const ReadonlyObjectMap_keys: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keys"] =
 
     <
       TKey extends KeyedContainer.KeyOf<ReadonlyObjectMapContainer> = KeyedContainer.KeyOf<ReadonlyObjectMapContainer>,

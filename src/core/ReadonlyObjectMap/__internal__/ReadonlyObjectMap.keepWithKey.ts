@@ -6,7 +6,7 @@ import {
 } from "../../../core.js";
 import { Function1, Function2 } from "../../../functions.js";
 
-const ReadonlyObjectMap_keepWithKey: KeyedContainer.KeepWithKey<ReadonlyObjectMapContainer>["keepWithKey"] =
+const ReadonlyObjectMap_keepWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keepWithKey"] =
 
     <
       T,

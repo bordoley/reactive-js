@@ -17,29 +17,29 @@ import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyO
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 
-export const empty: KeyedContainer.Empty<ReadonlyObjectMapContainer>["empty"] =
+export const empty: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["empty"] =
   ReadonlyObjectMap_empty;
-export const entries: KeyedContainer.Entries<ReadonlyObjectMapContainer>["entries"] =
+export const entries: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["entries"] =
   ReadonlyObjectMap_entries;
-export const forEachWithKey: KeyedContainer.ForEachWithKey<ReadonlyObjectMapContainer>["forEachWithKey"] =
+export const forEachWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["forEachWithKey"] =
   ReadonlyObjectMap_forEachWithKey;
-export const keep: KeyedContainer.Keep<ReadonlyObjectMapContainer>["keep"] =
+export const keep: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keep"] =
   ReadonlyObjectMap_keep;
-export const keepType: KeyedContainer.KeepType<ReadonlyObjectMapContainer>["keepType"] =
+export const keepType: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keepType"] =
   ReadonlyObjectMap_keepType;
-export const keepWithKey: KeyedContainer.KeepWithKey<ReadonlyObjectMapContainer>["keepWithKey"] =
+export const keepWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keepWithKey"] =
   ReadonlyObjectMap_keepWithKey;
-export const keys: KeyedContainer.Keys<ReadonlyObjectMapLike>["keys"] =
+export const keys: KeyedContainer.TypeClass<ReadonlyObjectMapLike>["keys"] =
   ReadonlyObjectMap_keys;
-export const keySet: KeyedContainer.KeySet<ReadonlyObjectMapLike>["keySet"] =
+export const keySet: KeyedContainer.TypeClass<ReadonlyObjectMapLike>["keySet"] =
   ReadonlyObjectMap_keySet;
-export const map: KeyedContainer.Map<ReadonlyObjectMapContainer>["map"] =
+export const map: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["map"] =
   ReadonlyObjectMap_map;
-export const mapWithKey: KeyedContainer.MapWithKey<ReadonlyObjectMapContainer>["mapWithKey"] =
+export const mapWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["mapWithKey"] =
   ReadonlyObjectMap_mapWithKey;
-export const reduce: KeyedContainer.Reduce<ReadonlyObjectMapContainer>["reduce"] =
+export const reduce: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["reduce"] =
   ReadonlyObjectMap_reduce;
-export const reduceWithKey: KeyedContainer.ReduceWithKey<ReadonlyObjectMapContainer>["reduceWithKey"] =
+export const reduceWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["reduceWithKey"] =
   ReadonlyObjectMap_reduceWithKey;
-export const values: KeyedContainer.Values<ReadonlyObjectMapContainer>["values"] =
+export const values: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["values"] =
   ReadonlyObjectMap_values;

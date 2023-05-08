@@ -25,7 +25,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_map: Container.Map<EnumeratorContainer>["map"] =
+const Enumerator_map: Container.TypeClass<EnumeratorContainer>["map"] =
   /*@__PURE__*/ (<TA, TB>() => {
     const createMapEnumerator = createInstanceFactory(
       mix(

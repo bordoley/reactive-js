@@ -6,7 +6,7 @@ import {
 } from "../../../core.js";
 import { Factory, Function3 } from "../../../functions.js";
 
-const ReadonlyObjectMap_reduceWithKey: KeyedContainer.ReduceWithKey<ReadonlyObjectMapContainer>["reduceWithKey"] =
+const ReadonlyObjectMap_reduceWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["reduceWithKey"] =
 
     <
       T,

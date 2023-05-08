@@ -6,7 +6,7 @@ import {
 } from "../../../core.js";
 import { Function1, SideEffect2 } from "../../../functions.js";
 
-const ReadonlyObjectMap_forEachWithKey: KeyedContainer.ForEachWithKey<ReadonlyObjectMapContainer>["forEachWithKey"] =
+const ReadonlyObjectMap_forEachWithKey: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["forEachWithKey"] =
 
     <
       T,

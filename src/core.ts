@@ -791,9 +791,9 @@ export namespace Container {
 
   /**
    * @noInheritDoc
-   * @category TypeClass
+
    */
-  export interface Buffer<C extends Container> {
+  export interface TypeClass<C extends Container> {
     /**
      * Returns a Container which buffers items produced by the source until the
      * number of items reaches the specified maximum buffer size.
@@ -803,13 +803,7 @@ export namespace Container {
     buffer: <T>(options?: {
       readonly count?: number;
     }) => Container.Operator<C, T, readonly T[]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Concat<C extends Container> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -820,13 +814,7 @@ export namespace Container {
       snd: Container.Of<C, T>,
       ...tail: readonly Container.Of<C, T>[]
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ConcatAll<C extends Container> {
     /**
      * Converts a higher-order Container into a first-order
      * Container by concatenating the inner sources in order.
@@ -834,26 +822,14 @@ export namespace Container {
      * @category Operator
      */
     concatAll: <T>() => Container.Operator<C, Container.Of<C, T>, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ConcatMap<C extends Container> {
     /**
      * @category Operator
      */
     concatMap: <TA, TB>(
       selector: Function1<TA, Container.Of<C, TB>>,
     ) => Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ConcatWith<C extends Container> {
     /**
      * @category Operator
      */
@@ -861,13 +837,7 @@ export namespace Container {
       snd: Container.Of<C, T>,
       ...tail: readonly Container.Of<C, T>[]
     ) => Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Contains<C extends Container> {
     /**
      * @category Transform
      */
@@ -877,13 +847,7 @@ export namespace Container {
         readonly equality?: Equality<T>;
       },
     ) => Function1<Container.Of<C, T>, boolean>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface DistinctUntilChanged<C extends Container> {
     /**
      * Returns a Container.Operator that emits all items emitted by the source that
      * are distinct by comparison from the previous item.
@@ -893,52 +857,19 @@ export namespace Container {
     distinctUntilChanged<T>(options?: {
       readonly equality?: Equality<T>;
     }): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Empty<C extends Container> {
     /**
      * Return an Container that emits no items.
      *
      * @category Constructor
      */
     empty<T>(): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface EndWith<C extends Container> {
     /**
      * @category Operator
      */
     endWith<T>(value: T, ...values: readonly T[]): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Enumerate<
-    C extends Container,
-    CEnumerator extends EnumeratorContainer = EnumeratorContainer,
-  > {
-    /**
-     *
-     * @category Transform
-     */
-    enumerate<T>(): Function1<Container.Of<C, T>, Container.Of<CEnumerator, T>>;
-  }
-
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface EverySatisfy<C extends Container> {
     /**
      * Determines whether all the members of an Container satisfy the predicate.
      * The predicate function is invoked for each element in the Container until the
@@ -950,38 +881,20 @@ export namespace Container {
     everySatisfy<T>(
       predicate: Predicate<T>,
     ): Function1<Container.Of<C, T>, boolean>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface First<C extends Container> {
     /**
      *
      * @category Transform
      */
     first<T>(): Function1<Container.Of<C, T>, Optional<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FlatMapIterable<C extends Container> {
     /**
      * @category Operator
      */
     flatMapIterable: <TA, TB>(
       selector: Function1<TA, Iterable<TB>>,
     ) => Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Flow<C extends Container> {
     /**
      * @category Transform
      */
@@ -995,13 +908,7 @@ export namespace Container {
       Container.Of<C, T>,
       PauseableObservableLike<T> & DisposableLike
     >;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForEach<C extends Container> {
     /**
      * Returns a Container.Operator that applies the side effect function to each
      * value emitted by the source.
@@ -1009,13 +916,7 @@ export namespace Container {
      * @category Operator
      */
     forEach<T>(effect: SideEffect1<T>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForkConcat<C extends Container> {
     /**
      * @category Operator
      */
@@ -1024,13 +925,7 @@ export namespace Container {
       snd: Container.Operator<C, TIn, TOut>,
       ...tail: readonly Container.Operator<C, TIn, TOut>[]
     ): Container.Operator<C, TIn, TOut>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForkZip<C extends Container> {
     /**
      * @category Operator
      */
@@ -1094,81 +989,39 @@ export namespace Container {
       h: Container.Operator<C, T, TH>,
       i: Container.Operator<C, T, TI>,
     ): Container.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromAsyncIterable<C extends Container> {
     /**
      * @category Constructor
      */
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromEnumerable<C extends Container> {
     /**
      * @category Constructor
      */
     fromEnumerable<T>(): Function1<EnumerableLike<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromEnumeratorFactory<C extends Container> {
     /**
      * @category Constructor
      */
     fromEnumeratorFactory<T>(
       factory: Factory<EnumeratorLike<T>>,
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromFactory<C extends Container> {
     /**
      * @category Constructor
      */
     fromFactory<T>(factory: Factory<T>): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromIterable<C extends Container> {
     /**
      * @category Constructor
      */
     fromIterable<T>(): Function1<Iterable<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromOptional<C extends Container> {
     /**
      * @category Constructor
      */
     fromOptional<T>(): Function1<Optional<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromReadonlyArray<C extends Container> {
     /**
      * @category Constructor
      */
@@ -1176,23 +1029,12 @@ export namespace Container {
       readonly start?: number;
       readonly count?: number;
     }): Function1<readonly T[], Container.Of<C, T>>;
-  }
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromRunnable<C extends Container> {
+
     /**
      * @category Constructor
      */
     fromRunnable: <T>() => Function1<RunnableLike<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Generate<C extends Container> {
     /**
      * Generates a Container from a generator function
      * that is applied to an accumulator value between emitted items.
@@ -1206,35 +1048,17 @@ export namespace Container {
       generator: Updater<T>,
       initialValue: Factory<T>,
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Identity<C extends Container> {
     /**
      * @category Operator
      */
     identity<T>(): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface IgnoreElements<C extends Container> {
     /**
      * @category Operator
      */
     ignoreElements<T>(): Container.Operator<C, unknown, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Keep<C extends Container> {
     /**
      * Returns a Container.Operator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -1242,13 +1066,7 @@ export namespace Container {
      * @category Operator
      */
     keep<T>(predicate: Predicate<T>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface KeepType<C extends Container> {
     /**
      *
      * @category Operator
@@ -1256,25 +1074,13 @@ export namespace Container {
     keepType<TA, TB extends TA>(
       predicate: TypePredicate<TA, TB>,
     ): Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Last<C extends Container> {
     /**
      *
      * @category Transform
      */
     last<T>(): Function1<Container.Of<C, T>, Optional<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Map<C extends Container> {
     /**
      * Returns a Container.Operator that applies the `selector` function to each
      * value emitted by the source.
@@ -1286,47 +1092,24 @@ export namespace Container {
      * @category Operator
      */
     map<TA, TB>(selector: Function1<TA, TB>): Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface MapTo<C extends Container> {
     /**
      * @category Operator
      */
     mapTo<TA, TB>(value: TB): Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface NoneSatisfy<C extends Container> {
     /**
      * @category Transform
      */
     noneSatisfy<T>(
       predicate: Predicate<T>,
     ): Function1<Container.Of<C, T>, boolean>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Pairwise<C extends Container> {
     /**
      * @category Operator
      */
     pairwise<T>(): Container.Operator<C, T, readonly [T, T]>;
-  }
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Pick<C extends Container> {
+
     /**
      * @category Operator
      */
@@ -1345,13 +1128,7 @@ export namespace Container {
       keyB: TKeyB,
       keyC: TKeyC,
     ): Container.Operator<C, T, T[TKeyA][TKeyB][TKeyC]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Reduce<C extends Container> {
     /**
      * @category Transform
      */
@@ -1359,13 +1136,7 @@ export namespace Container {
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): Function1<Container.Of<C, T>, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Repeat<C extends Container> {
     /**
      * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
      *
@@ -1389,13 +1160,7 @@ export namespace Container {
      * @category Operator
      */
     repeat<T>(): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Scan<C extends Container> {
     /**
      * Returns a Container that applies an accumulator function over the source,
      * and emits each intermediate result.
@@ -1409,13 +1174,7 @@ export namespace Container {
       scanner: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): Container.Operator<C, T, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface SkipFirst<C extends Container> {
     /**
      * Returns a Container that skips the first count items emitted by the source.
      *
@@ -1424,26 +1183,14 @@ export namespace Container {
     skipFirst<T>(options?: {
       readonly count?: number;
     }): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface SomeSatisfy<C extends Container> {
     /**
      * @category Transform
      */
     someSatisfy<T>(
       predicate: Predicate<T>,
     ): Function1<Container.Of<C, T>, boolean>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface StartWith<C extends Container> {
     /**
      * @category Operator
      */
@@ -1451,13 +1198,7 @@ export namespace Container {
       value: T,
       ...values: readonly T[]
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface TakeFirst<C extends Container> {
     /**
      * Returns a Container that only emits the first `count` values emitted by the source.
      *
@@ -1466,13 +1207,7 @@ export namespace Container {
     takeFirst<T>(options?: {
       readonly count?: number;
     }): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface TakeLast<C extends Container> {
     /**
      *  Returns a Container that only emits the last `count` items emitted by the source.
      *
@@ -1481,13 +1216,7 @@ export namespace Container {
     takeLast<T>(options?: {
       readonly count?: number;
     }): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface TakeWhile<C extends Container> {
     /**
      * Returns a Container which emits values emitted by the source as long
      * as each value satisfies the given predicate, and then completes as soon as
@@ -1501,71 +1230,36 @@ export namespace Container {
       predicate: Predicate<T>,
       options?: { readonly inclusive?: boolean },
     ): Container.Operator<C, T, T>;
-  }
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToEnumerable<C extends Container> {
+
     /**
      * @category Transform
      */
     toEnumerable<T>(): Function1<Container.Of<C, T>, EnumerableLike<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToIterable<C extends Container> {
     /**
      * Converts the Container to a `IterableLike`.
      *
      * @category Transform
      */
     toIterable<T>(): Function1<Container.Of<C, T>, Iterable<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToObservable<C extends Container> {
     /**
      * @category Transform
      */
     toObservable: <T>() => Function1<Container.Of<C, T>, ObservableLike<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToReadonlyArray<C extends Container> {
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
      * @category Transform
      */
     toReadonlyArray<T>(): Function1<Container.Of<C, T>, ReadonlyArray<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToRunnable<C extends Container> {
     /**
      * @category Transform
      */
     toRunnable: <T>() => Function1<Container.Of<C, T>, RunnableLike<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Zip<C extends Container> {
     /**
      * Combines multiple sources to create a Container whose values are calculated from the values,
      * in order, of each of its input sources.
@@ -1632,13 +1326,7 @@ export namespace Container {
       h: Container.Of<C, TH>,
       i: Container.Of<C, TI>,
     ): Container.Of<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ZipWith<C extends Container> {
     /**
      * @category Operator
      */
@@ -1731,9 +1419,9 @@ export namespace KeyedContainer {
 
   /**
    * @noInheritDoc
-   * @category TypeClass
+
    */
-  export interface Empty<C extends KeyedContainer> {
+  export interface TypeClass<C extends KeyedContainer> {
     /**
      * Return an Container that emits no items.
      *
@@ -1743,13 +1431,7 @@ export namespace KeyedContainer {
       T,
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): KeyedContainer.Of<C, TKey, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Entries<C extends KeyedContainer> {
     /**
      *
      * @category Transform
@@ -1758,13 +1440,7 @@ export namespace KeyedContainer {
       T,
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): Function1<KeyedContainer.Of<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForEach<C extends KeyedContainer> {
     /**
      * Returns a Container.Operator that applies the side effect function to each
      * value emitted by the source.
@@ -1774,13 +1450,7 @@ export namespace KeyedContainer {
     forEach<T, TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>>(
       effect: SideEffect1<T>,
     ): KeyedContainer.Operator<C, TKey, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForEachWithKey<C extends KeyedContainer> {
     /**
      * Returns a KeyedContainer.Operator that applies the side effect function to each
      * value emitted by the source.
@@ -1793,13 +1463,7 @@ export namespace KeyedContainer {
     >(
       effect: SideEffect2<T, TKey>,
     ): KeyedContainer.Operator<C, TKey, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromEntries<C extends KeyedContainer> {
     /**
      * @category Constructor
      */
@@ -1807,13 +1471,7 @@ export namespace KeyedContainer {
       T,
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainer.Of<C, TKey, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromReadonlyArray<C extends KeyedContainer> {
     /**
      * @category Constructor
      */
@@ -1824,13 +1482,7 @@ export namespace KeyedContainer {
       readonly start?: number;
       readonly count?: number;
     }): Function1<readonly T[], KeyedContainer.Of<C, TKey, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Identity<C extends KeyedContainer> {
     /**
      * @category Operator
      */
@@ -1838,13 +1490,7 @@ export namespace KeyedContainer {
       T,
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): KeyedContainer.Operator<C, TKey, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Keep<C extends KeyedContainer> {
     /**
      * Returns a Container.Operator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -1854,13 +1500,7 @@ export namespace KeyedContainer {
     keep<T, TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>>(
       predicate: Predicate<T>,
     ): KeyedContainer.Operator<C, TKey, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface KeepType<C extends KeyedContainer> {
     /**
      *
      * @category Operator
@@ -1872,13 +1512,7 @@ export namespace KeyedContainer {
     >(
       predicate: TypePredicate<TA, TB>,
     ): KeyedContainer.Operator<C, TKey, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface KeepWithKey<C extends KeyedContainer> {
     /**
      * Returns a Container.Operator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -1891,13 +1525,7 @@ export namespace KeyedContainer {
     >(
       predicate: Function2<T, TKey, boolean>,
     ): KeyedContainer.Operator<C, TKey, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Keys<C extends KeyedContainer> {
     /**
      *
      * @category Transform
@@ -1905,13 +1533,7 @@ export namespace KeyedContainer {
     keys<
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): Function1<KeyedContainer.Of<C, TKey, unknown>, EnumeratorLike<TKey>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface KeySet<C extends KeyedContainer> {
     /**
      *
      * @category Transform
@@ -1919,13 +1541,7 @@ export namespace KeyedContainer {
     keySet<
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): Function1<KeyedContainer.Of<C, TKey, unknown>, ReadonlySet<TKey>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Map<C extends KeyedContainer> {
     /**
      * Returns a Container.Operator that applies the `selector` function to each
      * value emitted by the source.
@@ -1939,13 +1555,7 @@ export namespace KeyedContainer {
     map<TA, TB, TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>>(
       selector: Function1<TA, TB>,
     ): KeyedContainer.Operator<C, TKey, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface MapWithKey<C extends KeyedContainer> {
     /**
      * Returns a Container.Operator that applies the `selector` function to each
      * value emitted by the source.
@@ -1963,13 +1573,7 @@ export namespace KeyedContainer {
     >(
       selector: Function2<TA, TKey, TB>,
     ): KeyedContainer.Operator<C, TKey, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Reduce<C extends KeyedContainer> {
     /**
      * @category Transform
      */
@@ -1981,13 +1585,7 @@ export namespace KeyedContainer {
       reducer: Reducer<T, TAcc>,
       initialValue: Factory<TAcc>,
     ): Function1<KeyedContainer.Of<C, TKey, T>, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ReduceWithKey<C extends KeyedContainer> {
     /**
      * @category Transform
      */
@@ -1999,13 +1597,7 @@ export namespace KeyedContainer {
       reducer: Function3<TAcc, T, TKey, TAcc>,
       initialValue: Factory<TAcc>,
     ): Function1<KeyedContainer.Of<C, TKey, T>, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ToReadonlyArray<C extends KeyedContainer> {
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
@@ -2015,13 +1607,7 @@ export namespace KeyedContainer {
       T,
       TKey extends KeyedContainer.KeyOf<C> = KeyedContainer.KeyOf<C>,
     >(): Function1<KeyedContainer.Of<C, TKey, T>, ReadonlyArray<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Values<C extends KeyedContainer> {
     /**
      *
      * @category Transform
@@ -2106,22 +1692,16 @@ export namespace ReactiveContainer {
 
   /**
    * @noInheritDoc
-   * @category TypeClass
    */
-  export interface Animate<C extends ObservableContainer> {
+  export interface TypeClass<C extends ObservableContainer>
+    extends Container.TypeClass<C> {
     /**
      * @category Constructor
      */
     animate<T = number>(
       configs: AnimationConfig<T> | readonly AnimationConfig<T>[],
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface BackpressureStrategy<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2129,13 +1709,7 @@ export namespace ReactiveContainer {
       capacity: number,
       backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface CatchError<C extends ObservableContainer> {
     /**
      * Returns a Container which catches errors produced by the source and either continues with
      * the Container returned from the `onError` callback or swallows the error if
@@ -2149,13 +1723,7 @@ export namespace ReactiveContainer {
     catchError<T>(
       onError: Function1<unknown, Container.Of<C, T> | void>,
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface CombineLatest<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -2219,13 +1787,7 @@ export namespace ReactiveContainer {
       h: Container.Of<C, TH>,
       i: Container.Of<C, TI>,
     ): Container.Of<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface CurrentTime<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
@@ -2233,109 +1795,54 @@ export namespace ReactiveContainer {
       readonly delay?: number;
       readonly delayStart?: boolean;
     }): Container.Of<C, number>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface DecodeWithCharset<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     decodeWithCharset(options?: {
       charset?: string;
     }): Container.Operator<C, ArrayBuffer, string>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Defer<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
     defer<T>(factory: Factory<Container.Of<C, T>>): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface DispatchTo<C extends ObservableContainer> {
     /**
      *
      * @category Operator
      */
     dispatchTo<T>(dispatcher: DispatcherLike<T>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Empty<C extends ObservableContainer>
-    extends Container.Empty<C> {
     /**
      * @category Constructor
      */
     empty<T>(options?: { delay?: number }): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface EncodeUtf8<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     encodeUtf8(): Container.Operator<C, string, Uint8Array>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Enqueue<C extends ObservableContainer> {
     /**
      *
      * @category Operator
      */
     enqueue<T>(queue: QueueableLike<T>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Exhaust<C extends ObservableContainer> {
     /**
      *
      * @category Operator
      */
     exhaust: <T>() => Container.Operator<C, Container.Of<C, T>, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ExhaustMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     exhaustMap: <TA, TB>(
       selector: Function1<TA, Container.Of<C, TB>>,
     ) => Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FirstAsync<C extends ObservableContainer> {
     /**
      *
      * @category Transform
@@ -2353,13 +1860,7 @@ export namespace ReactiveContainer {
         backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       },
     ): Function1<Container.Of<C, T>, PromiseLike<Optional<T>>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForkCombineLatest<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2423,13 +1924,7 @@ export namespace ReactiveContainer {
       h: Container.Operator<C, T, TH>,
       i: Container.Operator<C, T, TI>,
     ): Container.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForkMerge<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2438,13 +1933,7 @@ export namespace ReactiveContainer {
       snd: Container.Operator<C, TIn, TOut>,
       ...tail: readonly Container.Operator<C, TIn, TOut>[]
     ): Container.Operator<C, TIn, TOut>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ForkZipLatest<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2508,14 +1997,7 @@ export namespace ReactiveContainer {
       h: Container.Operator<C, T, TH>,
       i: Container.Operator<C, T, TI>,
     ): Container.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromEnumeratorFactory<C extends ObservableContainer>
-    extends Container.FromEnumeratorFactory<C> {
     /**
      * @category Constructor
      */
@@ -2526,14 +2008,7 @@ export namespace ReactiveContainer {
         readonly delayStart?: boolean;
       },
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromFactory<C extends ObservableContainer>
-    extends Container.FromFactory<C> {
     /**
      * @category Constructor
      */
@@ -2543,14 +2018,7 @@ export namespace ReactiveContainer {
         readonly delay?: number;
       },
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromIterable<C extends ObservableContainer>
-    extends Container.FromIterable<C> {
     /**
      * @category Constructor
      */
@@ -2558,28 +2026,14 @@ export namespace ReactiveContainer {
       readonly delay?: number;
       readonly delayStart?: boolean;
     }): Function1<Iterable<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromOptional<C extends ObservableContainer>
-    extends Container.FromOptional<C> {
     /**
      * @category Constructor
      */
     fromOptional<T>(options?: {
       readonly delay?: number;
     }): Function1<Optional<T>, Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface FromReadonlyArray<C extends ObservableContainer>
-    extends Container.FromReadonlyArray<C> {
     /**
      * @category Constructor
      */
@@ -2589,14 +2043,7 @@ export namespace ReactiveContainer {
       readonly delayStart?: boolean;
       readonly start?: number;
     }): Function1<readonly T[], Container.Of<C, T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Generate<C extends ObservableContainer>
-    extends Container.Generate<C> {
     /**
      * @category Constructor
      */
@@ -2608,13 +2055,7 @@ export namespace ReactiveContainer {
         readonly delayStart?: boolean;
       },
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface LastAsync<C extends ObservableContainer> {
     /**
      *
      * @category Transform
@@ -2632,13 +2073,7 @@ export namespace ReactiveContainer {
         backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       },
     ): Function1<Container.Of<C, T>, PromiseLike<Optional<T>>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Merge<C extends ObservableContainer> {
     /**
      *
      * @category Constructor
@@ -2648,13 +2083,7 @@ export namespace ReactiveContainer {
       snd: Container.Of<C, T>,
       ...tail: readonly Container.Of<C, T>[]
     ): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface MergeAll<C extends ObservableContainer> {
     /**
      *
      * @category Operator
@@ -2664,13 +2093,7 @@ export namespace ReactiveContainer {
       readonly capacity?: number;
       readonly concurrency?: number;
     }) => Container.Operator<C, Container.Of<C, T>, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface MergeMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2682,13 +2105,7 @@ export namespace ReactiveContainer {
         readonly concurrency?: number;
       },
     ) => Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface MergeWith<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2696,13 +2113,7 @@ export namespace ReactiveContainer {
       snd: Container.Of<C, T>,
       ...tail: readonly Container.Of<C, T>[]
     ) => Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Multicast<C extends ObservableContainer> {
     /**
      * Returns a `MulticastObservableLike` backed by a single subscription to the source.
      *
@@ -2728,26 +2139,14 @@ export namespace ReactiveContainer {
       Container.Of<C, T>,
       MulticastObservableLike<T> & DisposableLike
     >;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Never<C extends ObservableContainer> {
     /**
      * Returns a Container instance that emits no items and never disposes its state.
      *
      * @category Constructor
      */
     never<T>(): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Retry<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` that mirrors the source, re-subscribing
      * if the source completes with an error.
@@ -2767,13 +2166,7 @@ export namespace ReactiveContainer {
     retry<T>(
       predicate: Function2<number, unknown, boolean>,
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ScanLast<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2781,13 +2174,7 @@ export namespace ReactiveContainer {
       scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
       initialValue: Factory<TAcc>,
     ) => Container.Operator<C, T, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ScanMany<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2795,13 +2182,7 @@ export namespace ReactiveContainer {
       scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
       initialValue: Factory<TAcc>,
     ) => Container.Operator<C, T, TAcc>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Share<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` backed by a shared refcounted subscription to the
      * source. When the refcount goes to 0, the underlying subscription
@@ -2819,51 +2200,27 @@ export namespace ReactiveContainer {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       },
     ): Function1<Container.Of<C, T>, ObservableLike<T>>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface SwitchAll<C extends ObservableContainer> {
     /**
      *
      * @category Operator
      */
     switchAll: <T>() => Container.Operator<C, Container.Of<C, T>, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface SwitchMap<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     switchMap: <TA, TB>(
       selector: Function1<TA, Container.Of<C, TB>>,
     ) => Container.Operator<C, TA, TB>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface TakeUntil<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     takeUntil<T>(
       notifier: Container.Of<C, unknown>,
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Throttle<C extends ObservableContainer> {
     /**
      * Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
      *
@@ -2891,13 +2248,7 @@ export namespace ReactiveContainer {
       duration: number,
       options?: { readonly mode?: "first" | "last" | "interval" },
     ): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ThrowIfEmpty<C extends ObservableContainer> {
     /**
      * Returns a Container that emits an error if the source completes without emitting a value.
      *
@@ -2906,24 +2257,12 @@ export namespace ReactiveContainer {
      * @category Operator
      */
     throwIfEmpty<T>(factory: Factory<unknown>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Throws<C extends ObservableContainer> {
     /**
      * @category Constructor
      */
     throws<T>(options?: { raise?: Factory<unknown> }): Container.Of<C, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface Timeout<C extends ObservableContainer> {
     /**
      * Returns an `ObservableLike` that completes with an error if the source
      * does not emit a value in given time span.
@@ -2941,26 +2280,14 @@ export namespace ReactiveContainer {
      * @category Operator
      */
     timeout<T>(duration: Container.Of<C, unknown>): Container.Operator<C, T, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface WithCurrentTime<C extends ObservableContainer> {
     /**
      * @category Operator
      */
     withCurrentTime<T, TOut>(
       selector: Function2<number, T, TOut>,
     ): Container.Operator<C, T, TOut>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface WithLatestFrom<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -2968,13 +2295,7 @@ export namespace ReactiveContainer {
       other: Container.Of<C, TB>,
       selector: Function2<TA, TB, T>,
     ): Container.Operator<C, TA, T>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ZipLatest<C extends ObservableContainer> {
     /**
      * Returns a container that zips the latest values from
      * multiple sources.
@@ -3041,13 +2362,7 @@ export namespace ReactiveContainer {
       h: Container.Of<C, TH>,
       i: Container.Of<C, TI>,
     ): Container.Of<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-  }
 
-  /**
-   * @noInheritDoc
-   * @category TypeClass
-   */
-  export interface ZipWithLatestFrom<C extends ObservableContainer> {
     /**
      * @category Operator
      */
@@ -3055,5 +2370,19 @@ export namespace ReactiveContainer {
       other: Container.Of<C, TB>,
       selector: Function2<TA, TB, T>,
     ): Container.Operator<C, TA, T>;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace EnumerableContainer {
+  export interface TypeClass<
+    C extends Container,
+    CEnumerator extends EnumeratorContainer = EnumeratorContainer,
+  > {
+    /**
+     *
+     * @category Transform
+     */
+    enumerate<T>(): Function1<Container.Of<C, T>, Container.Of<CEnumerator, T>>;
   }
 }

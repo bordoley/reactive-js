@@ -6,26 +6,9 @@
 
 ## Table of contents
 
-### TypeClass Interfaces
+### Interfaces
 
-- [Empty](../interfaces/core.KeyedContainer.Empty.md)
-- [Entries](../interfaces/core.KeyedContainer.Entries.md)
-- [ForEach](../interfaces/core.KeyedContainer.ForEach.md)
-- [ForEachWithKey](../interfaces/core.KeyedContainer.ForEachWithKey.md)
-- [FromEntries](../interfaces/core.KeyedContainer.FromEntries.md)
-- [FromReadonlyArray](../interfaces/core.KeyedContainer.FromReadonlyArray.md)
-- [Identity](../interfaces/core.KeyedContainer.Identity.md)
-- [Keep](../interfaces/core.KeyedContainer.Keep.md)
-- [KeepType](../interfaces/core.KeyedContainer.KeepType.md)
-- [KeepWithKey](../interfaces/core.KeyedContainer.KeepWithKey.md)
-- [KeySet](../interfaces/core.KeyedContainer.KeySet.md)
-- [Keys](../interfaces/core.KeyedContainer.Keys.md)
-- [Map](../interfaces/core.KeyedContainer.Map.md)
-- [MapWithKey](../interfaces/core.KeyedContainer.MapWithKey.md)
-- [Reduce](../interfaces/core.KeyedContainer.Reduce.md)
-- [ReduceWithKey](../interfaces/core.KeyedContainer.ReduceWithKey.md)
-- [ToReadonlyArray](../interfaces/core.KeyedContainer.ToReadonlyArray.md)
-- [Values](../interfaces/core.KeyedContainer.Values.md)
+- [TypeClass](../interfaces/core.KeyedContainer.TypeClass.md)
 
 ### Type Aliases
 

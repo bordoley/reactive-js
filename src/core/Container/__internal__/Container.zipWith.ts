@@ -1,7 +1,7 @@
 import { Container } from "../../../core.js";
 
 const Container_zipWith =
-  <C extends Container>(zip: Container.Zip<C>["zip"]) =>
+  <C extends Container>(zip: Container.TypeClass<C>["zip"]) =>
   (
     snd: Container.Of<C, any>,
     ...tail: readonly Container.Of<C, any>[]

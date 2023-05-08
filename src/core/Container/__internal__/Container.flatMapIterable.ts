@@ -3,8 +3,8 @@ import { Function1, compose } from "../../../functions.js";
 
 const Container_flatMapIterable =
   <C extends Container>(
-    concatMap: Container.ConcatMap<C>["concatMap"],
-    fromIterable: Container.FromIterable<C>["fromIterable"],
+    concatMap: Container.TypeClass<C>["concatMap"],
+    fromIterable: Container.TypeClass<C>["fromIterable"],
   ) =>
   <TA, TB>(
     selector: Function1<TA, Iterable<TB>>,

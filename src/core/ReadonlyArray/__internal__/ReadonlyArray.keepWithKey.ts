@@ -1,7 +1,7 @@
 import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
 import { Function2 } from "../../../functions.js";
 
-const ReadonlyArray_keepWithKey: KeyedContainer.KeepWithKey<ReadonlyArrayContainer>["keepWithKey"] =
+const ReadonlyArray_keepWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["keepWithKey"] =
 
     <
       T,

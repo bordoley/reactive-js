@@ -14,7 +14,7 @@ import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.a
 import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 import { error, pipe } from "../../../functions.js";
 
-const AsyncIterable_toObservable: Container.ToObservable<AsyncIterableContainer>["toObservable"] =
+const AsyncIterable_toObservable: Container.TypeClass<AsyncIterableContainer>["toObservable"] =
 
     <T>() =>
     (iterable: AsyncIterable<T>) =>

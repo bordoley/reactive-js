@@ -6,7 +6,7 @@ import {
 import Iterator_enumerate from "../../../core/Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../../functions.js";
 
-const ReadonlyArray_entries: KeyedContainer.Entries<ReadonlyArrayContainer>["entries"] =
+const ReadonlyArray_entries: KeyedContainer.TypeClass<ReadonlyArrayContainer>["entries"] =
 
     <
       T,

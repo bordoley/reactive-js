@@ -6,7 +6,7 @@ import {
   KeyedContainer,
 } from "../../../core.js";
 
-const Dictionary_keys: KeyedContainer.Keys<DictionaryContainer>["keys"] =
+const Dictionary_keys: KeyedContainer.TypeClass<DictionaryContainer>["keys"] =
   <
     TKey extends KeyedContainer.KeyOf<DictionaryContainer> = KeyedContainer.KeyOf<DictionaryContainer>,
   >() =>

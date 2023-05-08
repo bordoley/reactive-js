@@ -5,12 +5,13 @@ import Enumerator_map from "./Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_pick from "./Enumerator/__internal__/Enumerator.pick.js";
 import Enumerator_toReadonlyArray from "./Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 
-export const empty: Container.Empty<EnumeratorContainer>["empty"] =
+export const empty: Container.TypeClass<EnumeratorContainer>["empty"] =
   Enumerator_empty;
-export const keep: Container.Keep<EnumeratorContainer>["keep"] =
+export const keep: Container.TypeClass<EnumeratorContainer>["keep"] =
   Enumerator_keep;
-export const map: Container.Map<EnumeratorContainer>["map"] = Enumerator_map;
-export const pick: Container.Pick<EnumeratorContainer>["pick"] =
+export const map: Container.TypeClass<EnumeratorContainer>["map"] =
+  Enumerator_map;
+export const pick: Container.TypeClass<EnumeratorContainer>["pick"] =
   Enumerator_pick;
-export const toReadonlyArray: Container.ToReadonlyArray<EnumeratorContainer>["toReadonlyArray"] =
+export const toReadonlyArray: Container.TypeClass<EnumeratorContainer>["toReadonlyArray"] =
   Enumerator_toReadonlyArray;

@@ -22,7 +22,7 @@ import {
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import { Predicate, none, unsafeCast } from "../../../functions.js";
 
-const Enumerator_keep: Container.Keep<EnumeratorContainer>["keep"] =
+const Enumerator_keep: Container.TypeClass<EnumeratorContainer>["keep"] =
   /*@__PURE__*/ (<T>() => {
     const createKeepEnumerator = createInstanceFactory(
       mix(

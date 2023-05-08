@@ -9,7 +9,7 @@ import Enumerator_toReadonlyArray from "../../../core/Enumerator/__internal__/En
 import { isSome, pipe, raiseError } from "../../../functions.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
-const Enumerable_toReadonlyArray: Container.ToReadonlyArray<EnumerableContainer>["toReadonlyArray"] =
+const Enumerable_toReadonlyArray: Container.TypeClass<EnumerableContainer>["toReadonlyArray"] =
 
     <T>() =>
     (enumerable: EnumerableLike<T>) => {

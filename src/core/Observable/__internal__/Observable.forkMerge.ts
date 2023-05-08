@@ -8,7 +8,7 @@ import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/Readonly
 import { pipe } from "../../../functions.js";
 import Observable_mergeObservables from "./Observable.mergeObservables.js";
 
-const Observable_forkMerge: ReactiveContainer.ForkMerge<ObservableContainer>["forkMerge"] =
+const Observable_forkMerge: ReactiveContainer.TypeClass<ObservableContainer>["forkMerge"] =
 
     <TIn, TOut>(
       ...ops: readonly Container.Operator<ObservableContainer, TIn, TOut>[]

@@ -11,7 +11,7 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
 
-const Observable_toRunnable: Container.ToRunnable<ObservableContainer>["toRunnable"] =
+const Observable_toRunnable: Container.TypeClass<ObservableContainer>["toRunnable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

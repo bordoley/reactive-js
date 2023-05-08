@@ -36,7 +36,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => Container.Operator<C, T, T>,
-): ReactiveContainer.CatchError<C>["catchError"] => {
+): ReactiveContainer.TypeClass<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
@@ -87,7 +87,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
       createCatchErrorObserver,
       partial(errorHandler),
       lift,
-    )) as ReactiveContainer.CatchError<C>["catchError"];
+    )) as ReactiveContainer.TypeClass<C>["catchError"];
 };
 
 export default HigherOrderObservable_catchError;

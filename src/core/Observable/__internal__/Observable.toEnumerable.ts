@@ -11,7 +11,7 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Enumerable"),
 };
 
-const Observable_toEnumerable: Container.ToEnumerable<ObservableContainer>["toEnumerable"] =
+const Observable_toEnumerable: Container.TypeClass<ObservableContainer>["toEnumerable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

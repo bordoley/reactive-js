@@ -9,11 +9,7 @@ import * as Enumerable from "../core/Enumerable.js";
 import * as Runnable from "../core/Runnable.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
-export const forEachTests = <C extends Container>(
-  m: Container.ForEach<C> &
-    Container.FromReadonlyArray<C> &
-    Container.ToRunnable<C>,
-) =>
+export const forEachTests = <C extends Container>(m: Container.TypeClass<C>) =>
   describe(
     "forEach",
     test("invokes the effect for each notified value", () => {
@@ -50,7 +46,7 @@ export const forEachTests = <C extends Container>(
   );
 
 export const fromReadonlyArrayTests = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & Container.ToRunnable<C>,
+  m: Container.TypeClass<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -110,11 +106,7 @@ export const fromReadonlyArrayTests = <C extends Container>(
     }),
   );
 
-export const keepTests = <C extends Container>(
-  m: Container.Keep<C> &
-    Container.FromReadonlyArray<C> &
-    Container.ToRunnable<C>,
-) =>
+export const keepTests = <C extends Container>(m: Container.TypeClass<C>) =>
   describe(
     "keep",
     test(
@@ -147,11 +139,7 @@ export const keepTests = <C extends Container>(
     }),
   );
 
-export const mapTests = <C extends Container>(
-  m: Container.Map<C> &
-    Container.FromReadonlyArray<C> &
-    Container.ToRunnable<C>,
-) =>
+export const mapTests = <C extends Container>(m: Container.TypeClass<C>) =>
   describe(
     "map",
     test(
@@ -185,7 +173,7 @@ export const mapTests = <C extends Container>(
   );
 
 export const toEnumerableTests = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & Container.ToEnumerable<C>,
+  m: Container.TypeClass<C>,
 ) =>
   describe(
     "toEnumerable",
@@ -202,7 +190,7 @@ export const toEnumerableTests = <C extends Container>(
   );
 
 export const toRunnableTest = <C extends Container>(
-  m: Container.FromReadonlyArray<C> & Container.ToRunnable<C>,
+  m: Container.TypeClass<C>,
 ) =>
   test(
     "without delay",

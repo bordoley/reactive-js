@@ -3,7 +3,7 @@ import Container_flatMapIterable from "../../../core/Container/__internal__/Cont
 import Iterable_toObservable from "../../../core/Iterable/__internal__/Iterable.toObservable.js";
 import Enumerable_concatMap from "./Enumerable.concatMap.js";
 
-const Enumerable_flatMapIterable: Container.FlatMapIterable<EnumerableContainer>["flatMapIterable"] =
+const Enumerable_flatMapIterable: Container.TypeClass<EnumerableContainer>["flatMapIterable"] =
   /*@__PURE__*/ Container_flatMapIterable(
     Enumerable_concatMap,
     Iterable_toObservable,

@@ -7,6 +7,7 @@
 ### Namespaces
 
 - [Container](core.Container.md)
+- [EnumerableContainer](core.EnumerableContainer.md)
 - [KeyedContainer](core.KeyedContainer.md)
 - [ReactiveContainer](core.ReactiveContainer.md)
 
@@ -22,7 +23,7 @@
 
 - [AsyncIterableContainer](../interfaces/core.AsyncIterableContainer.md)
 - [Container](../interfaces/core.Container-1.md)
-- [EnumerableContainer](../interfaces/core.EnumerableContainer.md)
+- [EnumerableContainer](../interfaces/core.EnumerableContainer-1.md)
 - [EnumeratorContainer](../interfaces/core.EnumeratorContainer.md)
 - [EventSourceContainer](../interfaces/core.EventSourceContainer.md)
 - [IterableContainer](../interfaces/core.IterableContainer.md)

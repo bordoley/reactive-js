@@ -38,7 +38,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Container.Of<C, T>>>,
   ) => Container.Operator<C, Container.Of<C, T>, T>,
-): Container.ConcatAll<C>["concatAll"] => {
+): Container.TypeClass<C>["concatAll"] => {
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
   ) => ObserverLike<Container.Of<C, T>> = (<T>() => {

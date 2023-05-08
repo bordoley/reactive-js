@@ -11,7 +11,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 
-const EventSource_toObservable: Container.ToObservable<EventSourceContainer>["toObservable"] =
+const EventSource_toObservable: Container.TypeClass<EventSourceContainer>["toObservable"] =
 
     <T>() =>
     (eventSource: EventSourceLike<T>) =>
