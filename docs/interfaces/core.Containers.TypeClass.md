@@ -10,6 +10,22 @@
 | :------ | :------ |
 | `C` | extends [`Container`](core.Container.md) |
 
+## Hierarchy
+
+- **`TypeClass`**
+
+  ↳ [`TypeClass`](core.AsynchronousContainers.TypeClass.md)
+
+  ↳ [`TypeClass`](core.DeferredContainers.TypeClass.md)
+
+  ↳ [`TypeClass`](core.RunnableContainers.TypeClass.md)
+
+  ↳ [`TypeClass`](core.StatefulContainers.TypeClass.md)
+
+  ↳ [`TypeClass`](core.EnumerableContainers.TypeClass.md)
+
+  ↳ [`TypeClass`](core.ReactiveContainers.TypeClass.md)
+
 ## Table of contents
 
 ### Constructor Properties

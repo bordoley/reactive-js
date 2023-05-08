@@ -10,6 +10,14 @@
 | :------ | :------ |
 | `C` | extends [`Container`](core.Container.md) |
 
+## Hierarchy
+
+- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+
+  ↳ **`TypeClass`**
+
+  ↳↳ [`TypeClass`](core.ReactiveContainers.TypeClass.md)
+
 ## Table of contents
 
 ### Operator Properties

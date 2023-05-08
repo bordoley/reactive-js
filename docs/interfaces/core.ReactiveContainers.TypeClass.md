@@ -10,6 +10,14 @@
 | :------ | :------ |
 | `C` | extends [`ObservableContainer`](core.ObservableContainer.md) |
 
+## Hierarchy
+
+- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+
+- [`TypeClass`](core.DeferredContainers.TypeClass.md)<`C`\>
+
+  ↳ **`TypeClass`**
+
 ## Table of contents
 
 ### Operator Properties
@@ -553,6 +561,10 @@ ___
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
 
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[empty](core.Containers.TypeClass.md#empty)
+
 ___
 
 ### fromEnumeratorFactory
@@ -578,6 +590,10 @@ ___
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
 
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[fromEnumeratorFactory](core.Containers.TypeClass.md#fromenumeratorfactory)
+
 ___
 
 ### fromFactory
@@ -601,6 +617,10 @@ ___
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[fromFactory](core.Containers.TypeClass.md#fromfactory)
 
 ___
 
@@ -626,6 +646,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
 
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[fromIterable](core.Containers.TypeClass.md#fromiterable)
+
 ___
 
 ### fromOptional
@@ -648,6 +672,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[fromOptional](core.Containers.TypeClass.md#fromoptional)
 
 ___
 
@@ -675,6 +703,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
 
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[fromReadonlyArray](core.Containers.TypeClass.md#fromreadonlyarray)
+
 ___
 
 ### generate
@@ -700,6 +732,10 @@ ___
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[generate](core.Containers.TypeClass.md#generate)
 
 ___
 
@@ -1709,6 +1745,22 @@ ___
 
 ### firstAsync
 
+▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[firstAsync](core.Containers.TypeClass.md#firstasync)
+
 ▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
@@ -1730,9 +1782,29 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
+#### Overrides
+
+Containers.TypeClass.firstAsync
+
 ___
 
 ### lastAsync
+
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Overrides
+
+[TypeClass](core.Containers.TypeClass.md).[lastAsync](core.Containers.TypeClass.md#lastasync)
 
 ▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
@@ -1754,6 +1826,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Overrides
+
+Containers.TypeClass.lastAsync
 
 ___
 
