@@ -8,8 +8,8 @@ import {
   EnumerableContainer,
   EnumerableContainers,
   EnumeratorLike,
-  ReactiveContainers,
   RunnableContainers,
+  StatefulContainers,
 } from "../core.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
 import Enumerable_catchError from "../core/Enumerable/__internal__/Enumerable.catchError.js";
@@ -54,10 +54,7 @@ import ReadonlyArray_toObservable from "../core/ReadonlyArray/__internal__/Reado
 import Runnable_flow from "../core/Runnable/__internal__/Runnable.flow.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
-import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
-import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
@@ -71,13 +68,10 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
-export const backpressureStrategy: ReactiveContainers.TypeClass<EnumerableContainer>["backpressureStrategy"] =
-  Observable_backpressureStrategy;
-
 export const buffer: Containers.TypeClass<EnumerableContainer>["buffer"] =
   Observable_buffer;
 
-export const catchError: ReactiveContainers.TypeClass<EnumerableContainer>["catchError"] =
+export const catchError: StatefulContainers.TypeClass<EnumerableContainer>["catchError"] =
   Enumerable_catchError;
 
 /**
@@ -100,14 +94,11 @@ export const concatWith: DeferredContainers.TypeClass<EnumerableContainer>["conc
 export const contains: RunnableContainers.TypeClass<EnumerableContainer>["contains"] =
   Runnable_contains;
 
-export const decodeWithCharset: ReactiveContainers.TypeClass<EnumerableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: StatefulContainers.TypeClass<EnumerableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: ReactiveContainers.TypeClass<EnumerableContainer>["defer"] =
+export const defer: StatefulContainers.TypeClass<EnumerableContainer>["defer"] =
   Enumerable_defer;
-
-export const dispatchTo: ReactiveContainers.TypeClass<EnumerableContainer>["dispatchTo"] =
-  Observable_dispatchTo;
 
 export const distinctUntilChanged: Containers.TypeClass<EnumerableContainer>["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
@@ -115,11 +106,8 @@ export const distinctUntilChanged: Containers.TypeClass<EnumerableContainer>["di
 export const empty: Containers.TypeClass<EnumerableContainer>["empty"] =
   Observable_empty;
 
-export const encodeUtf8: ReactiveContainers.TypeClass<EnumerableContainer>["encodeUtf8"] =
+export const encodeUtf8: StatefulContainers.TypeClass<EnumerableContainer>["encodeUtf8"] =
   Enumerable_encodeUtf8;
-
-export const enqueue: ReactiveContainers.TypeClass<EnumerableContainer>["enqueue"] =
-  Observable_enqueue;
 
 export const endWith: DeferredContainers.TypeClass<EnumerableContainer>["endWith"] =
   Observable_endWith;
@@ -139,7 +127,8 @@ export const everySatisfy: RunnableContainers.TypeClass<EnumerableContainer>["ev
 export const first: RunnableContainers.TypeClass<EnumerableContainer>["first"] =
   Runnable_first;
 
-export const firstAsync: ReactiveContainers.TypeClass<EnumerableContainer>["firstAsync"] =
+// FIXME: use a custom implementation that doesn't schedule
+export const firstAsync: Containers.TypeClass<EnumerableContainer>["firstAsync"] =
   Observable_firstAsync;
 
 export const flatMapIterable: Containers.TypeClass<EnumerableContainer>["flatMapIterable"] =
@@ -190,7 +179,8 @@ export const keepType: Containers.TypeClass<EnumerableContainer>["keepType"] =
 export const last: RunnableContainers.TypeClass<EnumerableContainer>["last"] =
   Runnable_last;
 
-export const lastAsync: ReactiveContainers.TypeClass<EnumerableContainer>["lastAsync"] =
+// FIXME: use a custom implementation that doesn't use a vts
+export const lastAsync: Containers.TypeClass<EnumerableContainer>["lastAsync"] =
   Observable_lastAsync;
 
 export const map: Containers.TypeClass<EnumerableContainer>["map"] =
@@ -214,13 +204,13 @@ export const reduce: RunnableContainers.TypeClass<EnumerableContainer>["reduce"]
 export const repeat: DeferredContainers.TypeClass<EnumerableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: ReactiveContainers.TypeClass<EnumerableContainer>["retry"] =
+export const retry: StatefulContainers.TypeClass<EnumerableContainer>["retry"] =
   Observable_retry;
 
 export const scan: Containers.TypeClass<EnumerableContainer>["scan"] =
   Observable_scan;
 
-export const scanLast: ReactiveContainers.TypeClass<EnumerableContainer>["scanLast"] =
+export const scanLast: Containers.TypeClass<EnumerableContainer>["scanLast"] =
   Enumerable_scanLast;
 
 export const skipFirst: Containers.TypeClass<EnumerableContainer>["skipFirst"] =
@@ -241,10 +231,10 @@ export const takeLast: Containers.TypeClass<EnumerableContainer>["takeLast"] =
 export const takeWhile: Containers.TypeClass<EnumerableContainer>["takeWhile"] =
   Observable_takeWhile;
 
-export const throws: ReactiveContainers.TypeClass<EnumerableContainer>["throws"] =
+export const throws: StatefulContainers.TypeClass<EnumerableContainer>["throws"] =
   Observable_throws;
 
-export const throwIfEmpty: ReactiveContainers.TypeClass<EnumerableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: StatefulContainers.TypeClass<EnumerableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
 export const toReadonlyArray: RunnableContainers.TypeClass<EnumerableContainer>["toReadonlyArray"] =

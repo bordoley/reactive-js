@@ -16,7 +16,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
-  ReactiveContainers,
+  StatefulContainers,
 } from "../../../core.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onComplete from "../../../core/Disposable/__internal__/Disposable.onComplete.js";
@@ -36,7 +36,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => Containers.Operator<C, T, T>,
-): ReactiveContainers.TypeClass<C>["catchError"] => {
+): StatefulContainers.TypeClass<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
@@ -87,7 +87,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer>(
       createCatchErrorObserver,
       partial(errorHandler),
       lift,
-    )) as ReactiveContainers.TypeClass<C>["catchError"];
+    )) as StatefulContainers.TypeClass<C>["catchError"];
 };
 
 export default HigherOrderObservable_catchError;

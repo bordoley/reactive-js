@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`ObservableContainer`](core.ObservableContainer.md) |
 
-## Hierarchy
-
-- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
-
-  ↳ **`TypeClass`**
-
 ## Table of contents
 
 ### Operator Properties
@@ -25,7 +19,6 @@
 - [mergeAll](core.ReactiveContainers.TypeClass.md#mergeall)
 - [mergeMap](core.ReactiveContainers.TypeClass.md#mergemap)
 - [mergeWith](core.ReactiveContainers.TypeClass.md#mergewith)
-- [scanLast](core.ReactiveContainers.TypeClass.md#scanlast)
 - [scanMany](core.ReactiveContainers.TypeClass.md#scanmany)
 - [switchAll](core.ReactiveContainers.TypeClass.md#switchall)
 - [switchMap](core.ReactiveContainers.TypeClass.md#switchmap)
@@ -35,7 +28,6 @@
 - [animate](core.ReactiveContainers.TypeClass.md#animate)
 - [combineLatest](core.ReactiveContainers.TypeClass.md#combinelatest)
 - [currentTime](core.ReactiveContainers.TypeClass.md#currenttime)
-- [defer](core.ReactiveContainers.TypeClass.md#defer)
 - [empty](core.ReactiveContainers.TypeClass.md#empty)
 - [fromEnumeratorFactory](core.ReactiveContainers.TypeClass.md#fromenumeratorfactory)
 - [fromFactory](core.ReactiveContainers.TypeClass.md#fromfactory)
@@ -45,24 +37,18 @@
 - [generate](core.ReactiveContainers.TypeClass.md#generate)
 - [merge](core.ReactiveContainers.TypeClass.md#merge)
 - [never](core.ReactiveContainers.TypeClass.md#never)
-- [throws](core.ReactiveContainers.TypeClass.md#throws)
 - [zipLatest](core.ReactiveContainers.TypeClass.md#ziplatest)
 
 ### Operator Methods
 
 - [backpressureStrategy](core.ReactiveContainers.TypeClass.md#backpressurestrategy)
-- [catchError](core.ReactiveContainers.TypeClass.md#catcherror)
-- [decodeWithCharset](core.ReactiveContainers.TypeClass.md#decodewithcharset)
 - [dispatchTo](core.ReactiveContainers.TypeClass.md#dispatchto)
-- [encodeUtf8](core.ReactiveContainers.TypeClass.md#encodeutf8)
 - [enqueue](core.ReactiveContainers.TypeClass.md#enqueue)
 - [forkCombineLatest](core.ReactiveContainers.TypeClass.md#forkcombinelatest)
 - [forkMerge](core.ReactiveContainers.TypeClass.md#forkmerge)
 - [forkZipLatest](core.ReactiveContainers.TypeClass.md#forkziplatest)
-- [retry](core.ReactiveContainers.TypeClass.md#retry)
 - [takeUntil](core.ReactiveContainers.TypeClass.md#takeuntil)
 - [throttle](core.ReactiveContainers.TypeClass.md#throttle)
-- [throwIfEmpty](core.ReactiveContainers.TypeClass.md#throwifempty)
 - [timeout](core.ReactiveContainers.TypeClass.md#timeout)
 - [withCurrentTime](core.ReactiveContainers.TypeClass.md#withcurrenttime)
 - [withLatestFrom](core.ReactiveContainers.TypeClass.md#withlatestfrom)
@@ -208,34 +194,6 @@ ___
 ##### Returns
 
 [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
-### scanLast
-
-• **scanLast**: <T, TAcc\>(`scanner`: [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`Of`](../modules/core.Containers.md#of)<`C`, `TAcc`\>\>, `initialValue`: [`Factory`](../modules/functions.md#factory)<`TAcc`\>) => [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
-
-#### Type declaration
-
-▸ <`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`Of`](../modules/core.Containers.md#of)<`C`, `TAcc`\>\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-##### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
 
 ___
 
@@ -574,28 +532,6 @@ ___
 
 ___
 
-### defer
-
-▸ **defer**<`T`\>(`factory`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\> |
-
-#### Returns
-
-[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-___
-
 ### empty
 
 ▸ **empty**<`T`\>(`options?`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
@@ -616,10 +552,6 @@ ___
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[empty](core.Containers.TypeClass.md#empty)
 
 ___
 
@@ -646,10 +578,6 @@ ___
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
 
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[fromEnumeratorFactory](core.Containers.TypeClass.md#fromenumeratorfactory)
-
 ___
 
 ### fromFactory
@@ -673,10 +601,6 @@ ___
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[fromFactory](core.Containers.TypeClass.md#fromfactory)
 
 ___
 
@@ -702,10 +626,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
 
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[fromIterable](core.Containers.TypeClass.md#fromiterable)
-
 ___
 
 ### fromOptional
@@ -728,10 +648,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
-
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[fromOptional](core.Containers.TypeClass.md#fromoptional)
 
 ___
 
@@ -759,10 +675,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
 
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[fromReadonlyArray](core.Containers.TypeClass.md#fromreadonlyarray)
-
 ___
 
 ### generate
@@ -788,10 +700,6 @@ ___
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-#### Overrides
-
-[TypeClass](core.Containers.TypeClass.md).[generate](core.Containers.TypeClass.md#generate)
 
 ___
 
@@ -830,29 +738,6 @@ Returns a Container instance that emits no items and never disposes its state.
 | Name |
 | :------ |
 | `T` |
-
-#### Returns
-
-[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
 
 #### Returns
 
@@ -1108,49 +993,6 @@ ___
 
 ___
 
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-Returns a Container which catches errors produced by the source and either continues with
-the Container returned from the `onError` callback or swallows the error if
-void is returned.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `onError` | [`Function1`](../modules/functions.md#function1)<`unknown`, `void` \| [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\> | A function that takes source error and either returns a Container to continue with or void if the error should be propagated. |
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
-### decodeWithCharset
-
-▸ **decodeWithCharset**(`options?`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `ArrayBuffer`, `string`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.charset?` | `string` |
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `ArrayBuffer`, `string`\>
-
-___
-
 ### dispatchTo
 
 ▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
@@ -1170,16 +1012,6 @@ ___
 #### Returns
 
 [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
-### encodeUtf8
-
-▸ **encodeUtf8**(): [`Operator`](../modules/core.Containers.md#operator)<`C`, `string`, `Uint8Array`\>
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `string`, `Uint8Array`\>
 
 ___
 
@@ -1686,46 +1518,6 @@ ___
 
 ___
 
-### retry
-
-▸ **retry**<`T`\>(): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, re-subscribing
-if the source completes with an error.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, resubscrbing
-if the source completes with an error which satisfies the predicate function.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](../modules/functions.md#function2)<`number`, `unknown`, `boolean`\> |
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
 ### takeUntil
 
 ▸ **takeUntil**<`T`\>(`notifier`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
@@ -1790,30 +1582,6 @@ then ignores subsequent source values for `duration` milliseconds.
 | `duration` | `number` | Time to wait before emitting another value after emitting the last value, measured in milliseconds. |
 | `options?` | `Object` | - |
 | `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` | - |
-
-#### Returns
-
-[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
-### throwIfEmpty
-
-▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-Returns a Container that emits an error if the source completes without emitting a value.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<`unknown`\> | A factory function invoked to produce the error to be thrown. |
 
 #### Returns
 
@@ -1941,18 +1709,6 @@ ___
 
 ### firstAsync
 
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
 ▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
@@ -1977,18 +1733,6 @@ ___
 ___
 
 ### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 ▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 

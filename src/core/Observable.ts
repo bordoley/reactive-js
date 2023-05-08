@@ -1,4 +1,5 @@
 import {
+  AsynchronousContainers,
   Containers,
   DeferredContainers,
   DisposableLike,
@@ -12,6 +13,7 @@ import {
   ReactiveContainers,
   RunnableContainers,
   SchedulerLike,
+  StatefulContainers,
 } from "../core.js";
 import AsyncIterable_toObservable from "../core/AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
@@ -113,7 +115,7 @@ export const buffer: <T>(options?: {
 }) => Containers.Operator<ObservableContainer, T, readonly T[]> =
   Observable_buffer;
 
-export const catchError: ReactiveContainers.TypeClass<ObservableContainer>["catchError"] =
+export const catchError: StatefulContainers.TypeClass<ObservableContainer>["catchError"] =
   Observable_catchError;
 
 export const combineLatest: ReactiveContainers.TypeClass<ObservableContainer>["combineLatest"] =
@@ -145,10 +147,10 @@ export const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T> =
 export const currentTime: ReactiveContainers.TypeClass<ObservableContainer>["currentTime"] =
   Observable_currentTime;
 
-export const decodeWithCharset: ReactiveContainers.TypeClass<ObservableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: StatefulContainers.TypeClass<ObservableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: ReactiveContainers.TypeClass<ObservableContainer>["defer"] =
+export const defer: StatefulContainers.TypeClass<ObservableContainer>["defer"] =
   Observable_defer;
 
 export const dispatchTo: ReactiveContainers.TypeClass<ObservableContainer>["dispatchTo"] =
@@ -160,7 +162,7 @@ export const distinctUntilChanged: Containers.TypeClass<ObservableContainer>["di
 export const empty: ReactiveContainers.TypeClass<ObservableContainer>["empty"] =
   Observable_empty;
 
-export const encodeUtf8: ReactiveContainers.TypeClass<ObservableContainer>["encodeUtf8"] =
+export const encodeUtf8: StatefulContainers.TypeClass<ObservableContainer>["encodeUtf8"] =
   Observable_encodeUtf8;
 
 export const enqueue: ReactiveContainers.TypeClass<ObservableContainer>["enqueue"] =
@@ -175,7 +177,8 @@ export const exhaust: ReactiveContainers.TypeClass<ObservableContainer>["exhaust
 export const exhaustMap: ReactiveContainers.TypeClass<ObservableContainer>["exhaustMap"] =
   Observable_exhaustMap;
 
-export const firstAsync: ReactiveContainers.TypeClass<ObservableContainer>["firstAsync"] =
+export const firstAsync: ReactiveContainers.TypeClass<ObservableContainer>["firstAsync"] &
+  Containers.TypeClass<ObservableContainer>["firstAsync"] =
   Observable_firstAsync;
 
 /**
@@ -209,7 +212,7 @@ export const forkZipLatest: ReactiveContainers.TypeClass<ObservableContainer>["f
  */
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 
-export const fromAsyncIterable: Containers.TypeClass<ObservableContainer>["fromAsyncIterable"] =
+export const fromAsyncIterable: AsynchronousContainers.TypeClass<ObservableContainer>["fromAsyncIterable"] =
   AsyncIterable_toObservable;
 
 export const fromEnumeratorFactory: ReactiveContainers.TypeClass<ObservableContainer>["fromEnumeratorFactory"] =
@@ -242,8 +245,8 @@ export const keep: Containers.TypeClass<ObservableContainer>["keep"] =
 export const keepType: Containers.TypeClass<ObservableContainer>["keepType"] =
   Observable_keepType as Containers.TypeClass<ObservableContainer>["keepType"];
 
-export const lastAsync: ReactiveContainers.TypeClass<ObservableContainer>["lastAsync"] =
-  Observable_lastAsync;
+export const lastAsync: ReactiveContainers.TypeClass<ObservableContainer>["lastAsync"] &
+  Containers.TypeClass<ObservableContainer>["lastAsync"] = Observable_lastAsync;
 
 export const map: Containers.TypeClass<ObservableContainer>["map"] =
   Observable_map;
@@ -285,13 +288,13 @@ export const pick: Containers.TypeClass<ObservableContainer>["pick"] =
 export const repeat: DeferredContainers.TypeClass<ObservableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: ReactiveContainers.TypeClass<ObservableContainer>["retry"] =
+export const retry: StatefulContainers.TypeClass<ObservableContainer>["retry"] =
   Observable_retry;
 
 export const scan: Containers.TypeClass<ObservableContainer>["scan"] =
   Observable_scan;
 
-export const scanLast: ReactiveContainers.TypeClass<ObservableContainer>["scanLast"] =
+export const scanLast: Containers.TypeClass<ObservableContainer>["scanLast"] =
   Observable_scanLast;
 
 export const scanMany: ReactiveContainers.TypeClass<ObservableContainer>["scanMany"] =
@@ -340,7 +343,7 @@ export const takeWhile: Containers.TypeClass<ObservableContainer>["takeWhile"] =
 export const throttle: ReactiveContainers.TypeClass<ObservableContainer>["throttle"] =
   Observable_throttle;
 
-export const throwIfEmpty: ReactiveContainers.TypeClass<ObservableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: StatefulContainers.TypeClass<ObservableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
 interface Throws extends ReactiveContainers.TypeClass<ObservableContainer> {

@@ -4,7 +4,6 @@ import {
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
-  ReactiveContainers,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import {
@@ -26,7 +25,7 @@ const HigherOrderObservable_scanLast =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
-  ): ReactiveContainers.TypeClass<C>["scanLast"] =>
+  ): Containers.TypeClass<C>["scanLast"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

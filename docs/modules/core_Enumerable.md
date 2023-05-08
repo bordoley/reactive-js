@@ -21,18 +21,15 @@
 
 ### Operator Functions
 
-- [backpressureStrategy](core_Enumerable.md#backpressurestrategy)
 - [buffer](core_Enumerable.md#buffer)
 - [catchError](core_Enumerable.md#catcherror)
 - [concatAll](core_Enumerable.md#concatall)
 - [concatMap](core_Enumerable.md#concatmap)
 - [concatWith](core_Enumerable.md#concatwith)
 - [decodeWithCharset](core_Enumerable.md#decodewithcharset)
-- [dispatchTo](core_Enumerable.md#dispatchto)
 - [distinctUntilChanged](core_Enumerable.md#distinctuntilchanged)
 - [encodeUtf8](core_Enumerable.md#encodeutf8)
 - [endWith](core_Enumerable.md#endwith)
-- [enqueue](core_Enumerable.md#enqueue)
 - [flatMapIterable](core_Enumerable.md#flatmapiterable)
 - [forEach](core_Enumerable.md#foreach)
 - [forkConcat](core_Enumerable.md#forkconcat)
@@ -538,29 +535,6 @@ ___
 
 ## Operator Functions
 
-### backpressureStrategy
-
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-
-#### Returns
-
-[`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-___
-
 ### buffer
 
 ▸ **buffer**<`T`\>(`options?`): [`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, readonly `T`[]\>
@@ -695,28 +669,6 @@ ___
 
 ___
 
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/core.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
@@ -769,28 +721,6 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
-
-#### Returns
-
-[`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`Operator`](core.Containers.md#operator)<[`EnumerableContainer`](../interfaces/core.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/core.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -1928,27 +1858,6 @@ ___
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
-▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
 ___
 
 ### flow
@@ -2001,27 +1910,6 @@ ___
 | Name |
 | :------ |
 | `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/core.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
 
 #### Returns
 

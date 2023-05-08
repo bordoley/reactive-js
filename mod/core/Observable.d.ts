@@ -1,4 +1,4 @@
-import { Containers, DeferredContainers, DisposableLike, DisposableOrTeardown, EnumerableContainers, ObservableContainer, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, ReactiveContainers, RunnableContainers, SchedulerLike } from "../core.js";
+import { AsynchronousContainers, Containers, DeferredContainers, DisposableLike, DisposableOrTeardown, EnumerableContainers, ObservableContainer, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, ReactiveContainers, RunnableContainers, SchedulerLike, StatefulContainers } from "../core.js";
 import { Factory, Function1, SideEffect1 } from "../functions.js";
 export declare const animate: ReactiveContainers.TypeClass<ObservableContainer>["animate"];
 export declare const backpressureStrategy: ReactiveContainers.TypeClass<ObservableContainer>["backpressureStrategy"];
@@ -9,7 +9,7 @@ export declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableContainer>;
     readonly count?: number;
 }) => Containers.Operator<ObservableContainer, T, readonly T[]>;
-export declare const catchError: ReactiveContainers.TypeClass<ObservableContainer>["catchError"];
+export declare const catchError: StatefulContainers.TypeClass<ObservableContainer>["catchError"];
 export declare const combineLatest: ReactiveContainers.TypeClass<ObservableContainer>["combineLatest"];
 /**
  * @category Constructor
@@ -26,17 +26,17 @@ export declare const concatWith: DeferredContainers.TypeClass<ObservableContaine
  */
 export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => ObservableLike<T>;
 export declare const currentTime: ReactiveContainers.TypeClass<ObservableContainer>["currentTime"];
-export declare const decodeWithCharset: ReactiveContainers.TypeClass<ObservableContainer>["decodeWithCharset"];
-export declare const defer: ReactiveContainers.TypeClass<ObservableContainer>["defer"];
+export declare const decodeWithCharset: StatefulContainers.TypeClass<ObservableContainer>["decodeWithCharset"];
+export declare const defer: StatefulContainers.TypeClass<ObservableContainer>["defer"];
 export declare const dispatchTo: ReactiveContainers.TypeClass<ObservableContainer>["dispatchTo"];
 export declare const distinctUntilChanged: Containers.TypeClass<ObservableContainer>["distinctUntilChanged"];
 export declare const empty: ReactiveContainers.TypeClass<ObservableContainer>["empty"];
-export declare const encodeUtf8: ReactiveContainers.TypeClass<ObservableContainer>["encodeUtf8"];
+export declare const encodeUtf8: StatefulContainers.TypeClass<ObservableContainer>["encodeUtf8"];
 export declare const enqueue: ReactiveContainers.TypeClass<ObservableContainer>["enqueue"];
 export declare const endWith: DeferredContainers.TypeClass<ObservableContainer>["endWith"];
 export declare const exhaust: ReactiveContainers.TypeClass<ObservableContainer>["exhaust"];
 export declare const exhaustMap: ReactiveContainers.TypeClass<ObservableContainer>["exhaustMap"];
-export declare const firstAsync: ReactiveContainers.TypeClass<ObservableContainer>["firstAsync"];
+export declare const firstAsync: ReactiveContainers.TypeClass<ObservableContainer>["firstAsync"] & Containers.TypeClass<ObservableContainer>["firstAsync"];
 /**
  * @category Operator
  */
@@ -52,7 +52,7 @@ export declare const forkZipLatest: ReactiveContainers.TypeClass<ObservableConta
  * @category Constructor
  */
 export declare const fromAsyncFactory: <T>(f: (abortSignal: AbortSignal) => Promise<T>) => import("../core.js").DeferredObservableLike<T>;
-export declare const fromAsyncIterable: Containers.TypeClass<ObservableContainer>["fromAsyncIterable"];
+export declare const fromAsyncIterable: AsynchronousContainers.TypeClass<ObservableContainer>["fromAsyncIterable"];
 export declare const fromEnumeratorFactory: ReactiveContainers.TypeClass<ObservableContainer>["fromEnumeratorFactory"];
 export declare const fromFactory: ReactiveContainers.TypeClass<ObservableContainer>["fromFactory"];
 export declare const fromIterable: ReactiveContainers.TypeClass<ObservableContainer>["fromIterable"];
@@ -63,7 +63,7 @@ export declare const identity: Containers.TypeClass<ObservableContainer>["identi
 export declare const ignoreElements: Containers.TypeClass<ObservableContainer>["ignoreElements"];
 export declare const keep: Containers.TypeClass<ObservableContainer>["keep"];
 export declare const keepType: Containers.TypeClass<ObservableContainer>["keepType"];
-export declare const lastAsync: ReactiveContainers.TypeClass<ObservableContainer>["lastAsync"];
+export declare const lastAsync: ReactiveContainers.TypeClass<ObservableContainer>["lastAsync"] & Containers.TypeClass<ObservableContainer>["lastAsync"];
 export declare const map: Containers.TypeClass<ObservableContainer>["map"];
 export declare const mapTo: Containers.TypeClass<ObservableContainer>["mapTo"];
 export declare const merge: ReactiveContainers.TypeClass<ObservableContainer>["merge"];
@@ -79,9 +79,9 @@ export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) =
 export declare const pairwise: Containers.TypeClass<ObservableContainer>["pairwise"];
 export declare const pick: Containers.TypeClass<ObservableContainer>["pick"];
 export declare const repeat: DeferredContainers.TypeClass<ObservableContainer>["repeat"];
-export declare const retry: ReactiveContainers.TypeClass<ObservableContainer>["retry"];
+export declare const retry: StatefulContainers.TypeClass<ObservableContainer>["retry"];
 export declare const scan: Containers.TypeClass<ObservableContainer>["scan"];
-export declare const scanLast: ReactiveContainers.TypeClass<ObservableContainer>["scanLast"];
+export declare const scanLast: Containers.TypeClass<ObservableContainer>["scanLast"];
 export declare const scanMany: ReactiveContainers.TypeClass<ObservableContainer>["scanMany"];
 export declare const share: ReactiveContainers.TypeClass<ObservableContainer>["share"];
 export declare const skipFirst: Containers.TypeClass<ObservableContainer>["skipFirst"];
@@ -104,7 +104,7 @@ export declare const takeLast: Containers.TypeClass<ObservableContainer>["takeLa
 export declare const takeUntil: ReactiveContainers.TypeClass<ObservableContainer>["takeUntil"];
 export declare const takeWhile: Containers.TypeClass<ObservableContainer>["takeWhile"];
 export declare const throttle: ReactiveContainers.TypeClass<ObservableContainer>["throttle"];
-export declare const throwIfEmpty: ReactiveContainers.TypeClass<ObservableContainer>["throwIfEmpty"];
+export declare const throwIfEmpty: StatefulContainers.TypeClass<ObservableContainer>["throwIfEmpty"];
 interface Throws extends ReactiveContainers.TypeClass<ObservableContainer> {
     /**
      * @category Constructor

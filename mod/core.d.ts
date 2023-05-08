@@ -649,6 +649,11 @@ export declare namespace Containers {
          */
         empty<T>(): Containers.Of<C, T>;
         /**
+         *
+         * @category Transform
+         */
+        firstAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
+        /**
          * @category Operator
          */
         flatMapIterable: <TA, TB>(selector: Function1<TA, Iterable<TB>>) => Containers.Operator<C, TA, TB>;
@@ -670,10 +675,6 @@ export declare namespace Containers {
         forkZip<T, TA, TB, TC, TD, TE, TF, TG>(a: Containers.Operator<C, T, TA>, b: Containers.Operator<C, T, TB>, c: Containers.Operator<C, T, TC>, d: Containers.Operator<C, T, TD>, e: Containers.Operator<C, T, TE>, f: Containers.Operator<C, T, TF>, g: Containers.Operator<C, T, TG>): Containers.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
         forkZip<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: Containers.Operator<C, T, TA>, b: Containers.Operator<C, T, TB>, c: Containers.Operator<C, T, TC>, d: Containers.Operator<C, T, TD>, e: Containers.Operator<C, T, TE>, f: Containers.Operator<C, T, TF>, g: Containers.Operator<C, T, TG>, h: Containers.Operator<C, T, TH>): Containers.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
         forkZip<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: Containers.Operator<C, T, TA>, b: Containers.Operator<C, T, TB>, c: Containers.Operator<C, T, TC>, d: Containers.Operator<C, T, TD>, e: Containers.Operator<C, T, TE>, f: Containers.Operator<C, T, TF>, g: Containers.Operator<C, T, TG>, h: Containers.Operator<C, T, TH>, i: Containers.Operator<C, T, TI>): Containers.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-        /**
-         * @category Constructor
-         */
-        fromAsyncIterable<T>(): Function1<AsyncIterable<T>, Containers.Of<C, T>>;
         /**
          * @category Constructor
          */
@@ -736,6 +737,11 @@ export declare namespace Containers {
          */
         keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): Containers.Operator<C, TA, TB>;
         /**
+         *
+         * @category Transform
+         */
+        lastAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
+        /**
          * Returns a Containers.Operator that applies the `selector` function to each
          * value emitted by the source.
          *
@@ -770,6 +776,10 @@ export declare namespace Containers {
          * @category Operator
          */
         scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Containers.Operator<C, T, TAcc>;
+        /**
+         * @category Operator
+         */
+        scanLast: <T, TAcc>(scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>, initialValue: Factory<TAcc>) => Containers.Operator<C, T, TAcc>;
         /**
          * Returns a Container that skips the first count items emitted by the source.
          *
@@ -835,6 +845,14 @@ export declare namespace Containers {
         zipWith<TA, TB, TC, TD, TE, TF, TG>(b: Containers.Of<C, TB>, c: Containers.Of<C, TC>, d: Containers.Of<C, TD>, e: Containers.Of<C, TE>, f: Containers.Of<C, TF>, g: Containers.Of<C, TG>): Containers.Operator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
         zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: Containers.Of<C, TB>, c: Containers.Of<C, TC>, d: Containers.Of<C, TD>, e: Containers.Of<C, TE>, f: Containers.Of<C, TF>, g: Containers.Of<C, TG>, h: Containers.Of<C, TH>): Containers.Operator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
         zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: Containers.Of<C, TB>, c: Containers.Of<C, TC>, d: Containers.Of<C, TD>, e: Containers.Of<C, TE>, f: Containers.Of<C, TF>, g: Containers.Of<C, TG>, h: Containers.Of<C, TH>, i: Containers.Of<C, TI>): Containers.Operator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+    }
+}
+export declare namespace AsynchronousContainers {
+    interface TypeClass<C extends Container> {
+        /**
+         * @category Constructor
+         */
+        fromAsyncIterable<T>(): Function1<AsyncIterable<T>, Containers.Of<C, T>>;
     }
 }
 export declare namespace DeferredContainers {
@@ -952,6 +970,65 @@ export declare namespace RunnableContainers {
          * @category Transform
          */
         toRunnable: <T>() => Function1<Containers.Of<C, T>, RunnableLike<T>>;
+    }
+}
+export declare namespace StatefulContainers {
+    interface TypeClass<C extends Container> {
+        /**
+         * Returns a Container which catches errors produced by the source and either continues with
+         * the Container returned from the `onError` callback or swallows the error if
+         * void is returned.
+         *
+         * @param onError - A function that takes source error and either returns a Container
+         * to continue with or void if the error should be propagated.
+         *
+         * @category Operator
+         */
+        catchError<T>(onError: Function1<unknown, Containers.Of<C, T> | void>): Containers.Operator<C, T, T>;
+        /**
+         * @category Operator
+         */
+        decodeWithCharset(options?: {
+            charset?: string;
+        }): Containers.Operator<C, ArrayBuffer, string>;
+        /**
+         * @category Constructor
+         */
+        defer<T>(factory: Factory<Containers.Of<C, T>>): Containers.Of<C, T>;
+        /**
+         * @category Operator
+         */
+        encodeUtf8(): Containers.Operator<C, string, Uint8Array>;
+        /**
+         * Returns an `ObservableLike` that mirrors the source, re-subscribing
+         * if the source completes with an error.
+         *
+         * @category Operator
+         */
+        retry<T>(): Containers.Operator<C, T, T>;
+        /**
+         * Returns an `ObservableLike` that mirrors the source, resubscrbing
+         * if the source completes with an error which satisfies the predicate function.
+         *
+         * @param predicate
+         *
+         * @category Operator
+         */
+        retry<T>(predicate: Function2<number, unknown, boolean>): Containers.Operator<C, T, T>;
+        /**
+         * Returns a Container that emits an error if the source completes without emitting a value.
+         *
+         * @param factory - A factory function invoked to produce the error to be thrown.
+         *
+         * @category Operator
+         */
+        throwIfEmpty<T>(factory: Factory<unknown>): Containers.Operator<C, T, T>;
+        /**
+         * @category Constructor
+         */
+        throws<T>(options?: {
+            raise?: Factory<unknown>;
+        }): Containers.Of<C, T>;
     }
 }
 export declare namespace EnumerableContainers {
@@ -1165,7 +1242,7 @@ export declare namespace ReactiveContainers {
     /**
      * @noInheritDoc
      */
-    interface TypeClass<C extends ObservableContainer> extends Containers.TypeClass<C> {
+    interface TypeClass<C extends ObservableContainer> {
         /**
          * @category Constructor
          */
@@ -1174,17 +1251,6 @@ export declare namespace ReactiveContainers {
          * @category Operator
          */
         backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): Containers.Operator<C, T, T>;
-        /**
-         * Returns a Container which catches errors produced by the source and either continues with
-         * the Container returned from the `onError` callback or swallows the error if
-         * void is returned.
-         *
-         * @param onError - A function that takes source error and either returns a Container
-         * to continue with or void if the error should be propagated.
-         *
-         * @category Operator
-         */
-        catchError<T>(onError: Function1<unknown, Containers.Of<C, T> | void>): Containers.Operator<C, T, T>;
         /**
          * @category Constructor
          */
@@ -1204,16 +1270,6 @@ export declare namespace ReactiveContainers {
             readonly delayStart?: boolean;
         }): Containers.Of<C, number>;
         /**
-         * @category Operator
-         */
-        decodeWithCharset(options?: {
-            charset?: string;
-        }): Containers.Operator<C, ArrayBuffer, string>;
-        /**
-         * @category Constructor
-         */
-        defer<T>(factory: Factory<Containers.Of<C, T>>): Containers.Of<C, T>;
-        /**
          *
          * @category Operator
          */
@@ -1224,10 +1280,6 @@ export declare namespace ReactiveContainers {
         empty<T>(options?: {
             delay?: number;
         }): Containers.Of<C, T>;
-        /**
-         * @category Operator
-         */
-        encodeUtf8(): Containers.Operator<C, string, Uint8Array>;
         /**
          *
          * @category Operator
@@ -1242,11 +1294,6 @@ export declare namespace ReactiveContainers {
          * @category Operator
          */
         exhaustMap: <TA, TB>(selector: Function1<TA, Containers.Of<C, TB>>) => Containers.Operator<C, TA, TB>;
-        /**
-         *
-         * @category Transform
-         */
-        firstAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
         /**
          *
          * @category Transform
@@ -1327,11 +1374,6 @@ export declare namespace ReactiveContainers {
          *
          * @category Transform
          */
-        lastAsync<T>(): Function1<Containers.Of<C, T>, PromiseLike<Optional<T>>>;
-        /**
-         *
-         * @category Transform
-         */
         lastAsync<T>(scheduler: SchedulerLike, options?: {
             capacity?: number;
             backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1388,26 +1430,6 @@ export declare namespace ReactiveContainers {
          */
         never<T>(): Containers.Of<C, T>;
         /**
-         * Returns an `ObservableLike` that mirrors the source, re-subscribing
-         * if the source completes with an error.
-         *
-         * @category Operator
-         */
-        retry<T>(): Containers.Operator<C, T, T>;
-        /**
-         * Returns an `ObservableLike` that mirrors the source, resubscrbing
-         * if the source completes with an error which satisfies the predicate function.
-         *
-         * @param predicate
-         *
-         * @category Operator
-         */
-        retry<T>(predicate: Function2<number, unknown, boolean>): Containers.Operator<C, T, T>;
-        /**
-         * @category Operator
-         */
-        scanLast: <T, TAcc>(scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>, initialValue: Factory<TAcc>) => Containers.Operator<C, T, TAcc>;
-        /**
          * @category Operator
          */
         scanMany: <T, TAcc>(scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>, initialValue: Factory<TAcc>) => Containers.Operator<C, T, TAcc>;
@@ -1462,20 +1484,6 @@ export declare namespace ReactiveContainers {
         throttle<T>(duration: number, options?: {
             readonly mode?: "first" | "last" | "interval";
         }): Containers.Operator<C, T, T>;
-        /**
-         * Returns a Container that emits an error if the source completes without emitting a value.
-         *
-         * @param factory - A factory function invoked to produce the error to be thrown.
-         *
-         * @category Operator
-         */
-        throwIfEmpty<T>(factory: Factory<unknown>): Containers.Operator<C, T, T>;
-        /**
-         * @category Constructor
-         */
-        throws<T>(options?: {
-            raise?: Factory<unknown>;
-        }): Containers.Of<C, T>;
         /**
          * Returns an `ObservableLike` that completes with an error if the source
          * does not emit a value in given time span.
