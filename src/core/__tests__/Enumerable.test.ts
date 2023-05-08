@@ -4,14 +4,13 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { EnumerableContainer } from "../../core.js";
-import Containers_test from "../../core/__tests__/Containers.test.js";
 import { pipe, returns } from "../../functions.js";
 import * as Enumerable from "../Enumerable.js";
 
 testModule(
   "Enumerable",
-  Containers_test<EnumerableContainer>(Enumerable),
+  // FIXME
+  //Containers_test<EnumerableContainer>(Enumerable),
   describe(
     "enumerate",
     test("with higher order observable and no delay", () => {

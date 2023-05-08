@@ -3,8 +3,8 @@ import { pipe } from "../../../functions.js";
 
 const Container_startWith =
   <C extends Container>(
-    concatWith: Container.ConcatWith<C>["concatWith"],
-    fromReadonlyArray: Container.FromReadonlyArray<C>["fromReadonlyArray"],
+    concatWith: Container.TypeClass<C>["concatWith"],
+    fromReadonlyArray: Container.TypeClass<C>["fromReadonlyArray"],
   ) =>
   <T>(...values: readonly T[]): Container.Operator<C, T, T> =>
   container =>

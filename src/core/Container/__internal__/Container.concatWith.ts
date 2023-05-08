@@ -1,7 +1,7 @@
 import { Container } from "../../../core.js";
 
 const Container_concatWith =
-  <C extends Container>(concat: Container.Concat<C>["concat"]) =>
+  <C extends Container>(concat: Container.TypeClass<C>["concat"]) =>
   <T>(
     snd: Container.Of<C, T>,
     ...tail: readonly Container.Of<C, T>[]

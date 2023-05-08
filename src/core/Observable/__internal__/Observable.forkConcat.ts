@@ -7,7 +7,7 @@ import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/Readonly
 import { pipe } from "../../../functions.js";
 import Observable_concatObservables from "./Observable.concatObservables.js";
 
-const Observable_forkConcat: Container.ForkConcat<ObservableContainer>["forkConcat"] =
+const Observable_forkConcat: Container.TypeClass<ObservableContainer>["forkConcat"] =
 
     <TIn, TOut>(
       ...ops: readonly Container.Operator<ObservableContainer, TIn, TOut>[]

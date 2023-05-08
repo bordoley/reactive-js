@@ -6,7 +6,7 @@ const Container_fromFactory =
     fromOptional: <T>(
       options?: O,
     ) => Function1<Optional<T>, Container.Of<C, T>>,
-    map: Container.Map<C>["map"],
+    map: Container.TypeClass<C>["map"],
   ) =>
   <T>(factory: Factory<T>, options?: O): Container.Of<C, T> =>
     pipe(

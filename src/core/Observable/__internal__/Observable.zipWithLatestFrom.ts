@@ -46,7 +46,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observable_zipWithLatestFrom: ReactiveContainer.ZipWithLatestFrom<ObservableContainer>["zipWithLatestFrom"] =
+const Observable_zipWithLatestFrom: ReactiveContainer.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver: <TA, TB, T>(
       delegate: ObserverLike<T>,

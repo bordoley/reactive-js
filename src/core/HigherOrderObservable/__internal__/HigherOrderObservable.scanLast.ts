@@ -26,7 +26,7 @@ const HigherOrderObservable_scanLast =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Container.Of<C, T>,
-  ): ReactiveContainer.ScanLast<C>["scanLast"] =>
+  ): ReactiveContainer.TypeClass<C>["scanLast"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

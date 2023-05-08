@@ -6,7 +6,7 @@ import {
   EnumeratorLike_move,
 } from "../../../core.js";
 
-const Enumerator_toReadonlyArray: Container.ToReadonlyArray<EnumeratorContainer>["toReadonlyArray"] =
+const Enumerator_toReadonlyArray: Container.TypeClass<EnumeratorContainer>["toReadonlyArray"] =
 
     <T>() =>
     (enumerator: EnumeratorLike<T>) => {

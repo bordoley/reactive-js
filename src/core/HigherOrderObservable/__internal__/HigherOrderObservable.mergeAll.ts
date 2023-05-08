@@ -62,7 +62,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Container.Of<C, T>>>,
   ) => Container.Operator<C, Container.Of<C, T>, T>,
-): ReactiveContainer.MergeAll<C>["mergeAll"] => {
+): ReactiveContainer.TypeClass<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

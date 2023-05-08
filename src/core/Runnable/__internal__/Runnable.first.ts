@@ -3,7 +3,7 @@ import { pipe } from "../../../functions.js";
 import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
 import Runnable_last from "./Runnable.last.js";
 
-const Runnable_first: Container.First<RunnableContainer>["first"] =
+const Runnable_first: Container.TypeClass<RunnableContainer>["first"] =
   <T>() =>
   (src: RunnableLike<T>) =>
     pipe(src, Observable_takeFirst<RunnableContainer, T>(), Runnable_last<T>());

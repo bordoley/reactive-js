@@ -24,14 +24,15 @@ export const addEventHandler: <T>(
  */
 export const create = EventSource_create;
 
-export const forEach: Container.ForEach<EventSourceContainer>["forEach"] =
+export const forEach: Container.TypeClass<EventSourceContainer>["forEach"] =
   EventSource_forEach;
-export const ignoreElements: Container.IgnoreElements<EventSourceContainer>["ignoreElements"] =
+export const ignoreElements: Container.TypeClass<EventSourceContainer>["ignoreElements"] =
   EventSource_ignoreElements;
-export const keep: Container.Keep<EventSourceContainer>["keep"] =
+export const keep: Container.TypeClass<EventSourceContainer>["keep"] =
   EventSource_keep;
-export const map: Container.Map<EventSourceContainer>["map"] = EventSource_map;
-export const pick: Container.Pick<EventSourceContainer>["pick"] =
+export const map: Container.TypeClass<EventSourceContainer>["map"] =
+  EventSource_map;
+export const pick: Container.TypeClass<EventSourceContainer>["pick"] =
   EventSource_pick;
-export const toObservable: Container.ToObservable<EventSourceContainer>["toObservable"] =
+export const toObservable: Container.TypeClass<EventSourceContainer>["toObservable"] =
   EventSource_toObservable;

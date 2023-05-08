@@ -23,7 +23,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_map: Container.Map<EventSourceContainer>["map"] =
+const EventSource_map: Container.TypeClass<EventSourceContainer>["map"] =
   /*@__PURE__*/ (() => {
     const createMapEventListener: <TA, TB>(
       delegate: EventListenerLike<TB>,
@@ -69,6 +69,6 @@ const EventSource_map: Container.Map<EventSourceContainer>["map"] =
 
     return <TA, TB>(selector: Function1<TA, TB>) =>
       pipe(createMapEventListener, partial(selector), EventSource_lift);
-  })() as Container.Map<EventSourceContainer>["map"];
+  })() as Container.TypeClass<EventSourceContainer>["map"];
 
 export default EventSource_map;

@@ -49,7 +49,7 @@ const parseAnimationConfig = <T = number>(
           : (identity as Container.Operator<RunnableContainer, number, T>),
       );
 
-const Observable_animate: ReactiveContainer.Animate<RunnableContainer>["animate"] =
+const Observable_animate: ReactiveContainer.TypeClass<RunnableContainer>["animate"] =
   <T = number>(
     config:
       | ReactiveContainer.AnimationConfig<T>

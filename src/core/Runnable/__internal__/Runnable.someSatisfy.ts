@@ -5,7 +5,7 @@ import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_someSatisfy: Container.EverySatisfy<RunnableContainer>["everySatisfy"] =
+const Runnable_someSatisfy: Container.TypeClass<RunnableContainer>["everySatisfy"] =
 
     <T>(predicate: Predicate<T>) =>
     (runnable: RunnableLike<T>) => {

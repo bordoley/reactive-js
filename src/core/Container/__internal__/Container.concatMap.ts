@@ -3,7 +3,7 @@ import { Function1, compose } from "../../../functions.js";
 
 const Container_concatMap =
   <C extends Container, O = never>(
-    map: Container.Map<C>["map"],
+    map: Container.TypeClass<C>["map"],
     concatAll: <T>(options?: O) => Container.Operator<C, Container.Of<C, T>, T>,
   ) =>
   <TA, TB>(

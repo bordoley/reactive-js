@@ -1,3 +1,3 @@
 import { AsyncIterableContainer, Container } from "../../../core.js";
-declare const AsyncIterable_flow: Container.Flow<AsyncIterableContainer>["flow"];
+declare const AsyncIterable_flow: Container.TypeClass<AsyncIterableContainer>["flow"];
 export default AsyncIterable_flow;

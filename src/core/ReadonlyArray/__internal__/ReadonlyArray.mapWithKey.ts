@@ -1,7 +1,7 @@
 import { KeyedContainer, ReadonlyArrayContainer } from "../../../core.js";
 import { Function2 } from "../../../functions.js";
 
-const ReadonlyArray_mapWithKey: KeyedContainer.MapWithKey<ReadonlyArrayContainer>["mapWithKey"] =
+const ReadonlyArray_mapWithKey: KeyedContainer.TypeClass<ReadonlyArrayContainer>["mapWithKey"] =
 
     <
       TA,

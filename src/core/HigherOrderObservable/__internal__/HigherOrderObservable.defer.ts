@@ -12,7 +12,7 @@ const HigherOrderObservable_defer =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Container.Of<C, T>,
-  ): ReactiveContainer.Defer<C>["defer"] =>
+  ): ReactiveContainer.TypeClass<C>["defer"] =>
   <T>(factory: Factory<Container.Of<C, T>>): Container.Of<C, T> =>
     createObservable(observer => {
       factory()[ObservableLike_observe](observer);

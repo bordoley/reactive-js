@@ -3,7 +3,7 @@ import { Function1, pipe } from "../../../functions.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_toReadonlyArray: Container.ToReadonlyArray<RunnableContainer>["toReadonlyArray"] =
+const Runnable_toReadonlyArray: Container.TypeClass<RunnableContainer>["toReadonlyArray"] =
 
     <T>(): Function1<RunnableLike<T>, ReadonlyArray<T>> =>
     observable => {

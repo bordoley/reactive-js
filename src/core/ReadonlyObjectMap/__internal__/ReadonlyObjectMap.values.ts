@@ -8,7 +8,7 @@ import Enumerator_map from "../../../core/Enumerator/__internal__/Enumerator.map
 import { pipe } from "../../../functions.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
-const ReadonlyObjectMap_values: KeyedContainer.Values<ReadonlyObjectMapContainer>["values"] =
+const ReadonlyObjectMap_values: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["values"] =
 
     <
       T,

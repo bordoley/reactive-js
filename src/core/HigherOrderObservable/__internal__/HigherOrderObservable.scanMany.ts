@@ -30,7 +30,7 @@ const HigherOrderObservable_scanMany =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Container.Of<C, T>,
-  ): ReactiveContainer.ScanMany<C>["scanMany"] =>
+  ): ReactiveContainer.TypeClass<C>["scanMany"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

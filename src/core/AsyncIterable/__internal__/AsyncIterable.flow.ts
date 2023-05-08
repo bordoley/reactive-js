@@ -23,7 +23,7 @@ import Observable_subscribeWithConfig from "../../../core/Observable/__internal_
 import PauseableObservable_create from "../../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
 
-const AsyncIterable_flow: Container.Flow<AsyncIterableContainer>["flow"] =
+const AsyncIterable_flow: Container.TypeClass<AsyncIterableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {

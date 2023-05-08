@@ -106,7 +106,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
         partial(equality),
         Enumerable_lift,
       );
-    }) as Container.DistinctUntilChanged<ObservableContainer>["distinctUntilChanged"];
+    }) as Container.TypeClass<ObservableContainer>["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

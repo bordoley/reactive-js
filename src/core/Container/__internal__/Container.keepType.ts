@@ -2,7 +2,7 @@ import { Container } from "../../../core.js";
 import { TypePredicate } from "../../../functions.js";
 
 const Container_keepType =
-  <C extends Container>(keep: Container.Keep<C>["keep"]) =>
+  <C extends Container>(keep: Container.TypeClass<C>["keep"]) =>
   <TA, TB extends TA>(
     predicate: TypePredicate<TA, TB>,
   ): Container.Operator<C, TA, TB> =>

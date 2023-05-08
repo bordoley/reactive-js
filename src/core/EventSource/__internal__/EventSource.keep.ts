@@ -23,7 +23,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_keep: Container.Keep<EventSourceContainer>["keep"] =
+const EventSource_keep: Container.TypeClass<EventSourceContainer>["keep"] =
   /*@__PURE__*/ (() => {
     const createKeepEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -70,6 +70,6 @@ const EventSource_keep: Container.Keep<EventSourceContainer>["keep"] =
 
     return <T>(predicate: Predicate<T>) =>
       pipe(createKeepEventListener, partial(predicate), EventSource_lift);
-  })() as Container.Keep<EventSourceContainer>["keep"];
+  })() as Container.TypeClass<EventSourceContainer>["keep"];
 
 export default EventSource_keep;

@@ -5,7 +5,7 @@ import {
   ReadonlyObjectMapLike,
 } from "../../../core.js";
 
-const ReadonlyObjectMap_keySet: KeyedContainer.KeySet<ReadonlyObjectMapContainer>["keySet"] =
+const ReadonlyObjectMap_keySet: KeyedContainer.TypeClass<ReadonlyObjectMapContainer>["keySet"] =
 
     <
       TKey extends KeyedContainer.KeyOf<ReadonlyObjectMapContainer> = KeyedContainer.KeyOf<ReadonlyObjectMapContainer>,
