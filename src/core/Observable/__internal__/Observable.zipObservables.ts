@@ -51,10 +51,12 @@ import ReadonlyArray_forEach from "../../../core/ReadonlyArray/__internal__/Read
 import ReadonlyArray_map from "../../../core/ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_someSatisfy from "../../../core/ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../../functions.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
+import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_create from "./Observable.create.js";
@@ -299,6 +301,7 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
   return (
     observables: readonly ObservableLike<any>[],
   ): ObservableLike<readonly any[]> => {
+    const isDeferred = Observable_allAreDeferred(observables);
     const isEnumerable = Observable_allAreEnumerable(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
@@ -306,6 +309,8 @@ const Observable_zipObservables = /*@__PURE__*/ (() => {
       ? Enumerable_create(enumerableOnSubscribe(observables))
       : isRunnable
       ? Runnable_create(onSubscribe(observables))
+      : isDeferred
+      ? DeferredObservable_create(onSubscribe(observables))
       : Observable_create(onSubscribe(observables));
   };
 })();

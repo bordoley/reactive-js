@@ -2,9 +2,9 @@
 
 import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
-import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 import { error, pipe } from "../../../functions.js";
-const AsyncIterable_toObservable = () => (iterable) => Observable_create((observer) => {
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
+const AsyncIterable_toObservable = () => (iterable) => DeferredObservable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
     const continuation = async () => {

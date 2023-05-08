@@ -6,12 +6,12 @@ import {
 } from "../../../core.js";
 import Disposable_toAbortSignal from "../../../core/Disposable/__internal__/Disposable.toAbortSignal.js";
 import { error } from "../../../functions.js";
-import Observable_create from "./Observable.create.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 
 const Observable_fromAsyncFactory = <T>(
   f: (abortSignal: AbortSignal) => Promise<T>,
 ) =>
-  Observable_create<T>(async (observer: ObserverLike<T>) => {
+  DeferredObservable_create<T>(async (observer: ObserverLike<T>) => {
     const abortSignal = Disposable_toAbortSignal(observer);
     try {
       const result = await f(abortSignal);

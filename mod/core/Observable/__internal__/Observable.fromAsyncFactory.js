@@ -3,8 +3,8 @@
 import { DispatcherLike_complete, DisposableLike_dispose, QueueableLike_enqueue, } from "../../../core.js";
 import Disposable_toAbortSignal from "../../../core/Disposable/__internal__/Disposable.toAbortSignal.js";
 import { error } from "../../../functions.js";
-import Observable_create from "./Observable.create.js";
-const Observable_fromAsyncFactory = (f) => Observable_create(async (observer) => {
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
+const Observable_fromAsyncFactory = (f) => DeferredObservable_create(async (observer) => {
     const abortSignal = Disposable_toAbortSignal(observer);
     try {
         const result = await f(abortSignal);

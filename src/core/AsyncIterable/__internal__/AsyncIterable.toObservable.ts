@@ -11,14 +11,14 @@ import {
   SchedulerLike_schedule,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
-import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 import { error, pipe } from "../../../functions.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 
 const AsyncIterable_toObservable: Container.TypeClass<AsyncIterableContainer>["toObservable"] =
 
     <T>() =>
     (iterable: AsyncIterable<T>) =>
-      Observable_create<T>((observer: ObserverLike<T>) => {
+      DeferredObservable_create<T>((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 

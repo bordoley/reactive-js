@@ -1,11 +1,11 @@
 import {
+  DeferredObservableLike,
   DispatcherLike,
   DispatcherLikeEventMap,
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
   ObservableContainer,
-  ObservableLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
@@ -13,16 +13,16 @@ import {
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import EventSource_addEventHandler from "../../../core/EventSource/__internal__/EventSource.addEventHandler.js";
 import { Function1, pipe } from "../../../functions.js";
-import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 
 const PauseableObservable_sinkInto =
   <T>(
     sink: DispatcherLike<T>,
-  ): Function1<PauseableObservableLike<T>, ObservableLike<void>> =>
+  ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>> =>
   pauseableObservable =>
-    Observable_create(observer => {
+    DeferredObservable_create(observer => {
       pipe(
         sink,
         EventSource_addEventHandler(

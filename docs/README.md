@@ -8,6 +8,7 @@ Reactive-JS
 
 - [core](modules/core.md)
 - [core/AsyncIterable](modules/core_AsyncIterable.md)
+- [core/DeferredObservable](modules/core_DeferredObservable.md)
 - [core/Dictionary](modules/core_Dictionary.md)
 - [core/Disposable](modules/core_Disposable.md)
 - [core/Enumerable](modules/core_Enumerable.md)
