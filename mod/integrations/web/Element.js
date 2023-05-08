@@ -10,26 +10,32 @@ import * as Disposable from "../../util/Disposable.js";
 import * as EventListener from "../../util/EventListener.js";
 import * as EventPublisher from "../../util/EventPublisher.js";
 import * as EventSource from "../../util/EventSource.js";
-export const addEventHandler = (eventName, eventHandler) => source => {
+export const addEventHandler = (eventName, eventHandler, options) => source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
-    pipe(source, addEventListener(eventName, listener));
+    pipe(source, addEventListener(eventName, listener, options));
     return listener;
 };
-export const addEventListener = ((eventName, eventListener) => target => {
+export const addEventListener = ((eventName, eventListener, options) => target => {
     const errorSafeEventListener = pipe(eventListener, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
     const listener = bindMethod(errorSafeEventListener, EventListenerLike_notify);
-    target.addEventListener(eventName, listener, {
-        passive: true,
-    });
+    const addEventListenerOptions = {
+        capture: options?.capture ?? false,
+        passive: options?.capture ?? true,
+    };
+    target.addEventListener(eventName, listener, addEventListenerOptions);
     return target;
 });
-export const observeEvent = ((eventName, selector) => target => Observable.create(observer => {
+export const observeEvent = ((eventName, selector, options) => target => Observable.create(observer => {
+    const addEventHandlerOptions = {
+        passive: true,
+        capture: options?.capture,
+    };
     pipe(target, addEventHandler(eventName, ev => {
         const result = selector(ev);
         observer[QueueableLike_enqueue](result);
-    }), Disposable.bindTo(observer));
+    }, addEventHandlerOptions), Disposable.bindTo(observer));
 }));
 export const addScrollHandler = (handler) => element => {
     const listener = EventListener.create(handler);
@@ -171,9 +177,9 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
         for (const scrollContainer of findScrollContainers(element)) {
             pipe(scrollContainer, addEventListener("scroll", eventListener));
         }
-        pipe(window, addEventListener("resize", eventListener), 
-        // { capture: true, passive: true }
-        addEventListener("scroll", eventListener));
+        pipe(window, addEventListener("resize", eventListener), addEventListener("scroll", eventListener, {
+            capture: true,
+        }));
         return element;
     };
 })();

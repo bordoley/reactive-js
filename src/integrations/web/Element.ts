@@ -37,6 +37,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<AbortSignalEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Animation,
@@ -44,6 +45,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<AnimationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends AbstractWorker,
@@ -51,6 +53,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<AbstractWorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends AudioScheduledSourceNode,
@@ -58,6 +61,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<AudioScheduledSourceNodeEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends BaseAudioContext,
@@ -65,6 +69,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<BaseAudioContextEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends AudioWorkletNode,
@@ -72,6 +77,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<AudioWorkletNodeEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends BroadcastChannel,
@@ -79,6 +85,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<BroadcastChannelEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Document,
@@ -86,6 +93,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<DocumentEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Element,
@@ -93,6 +101,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaStreamTrack,
@@ -100,6 +109,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaStreamTrackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends EventSource,
@@ -107,6 +117,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<EventSourceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends FileReader,
@@ -114,6 +125,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<FileReaderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends FontFaceSet,
@@ -121,6 +133,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<FontFaceSetEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends GlobalEventHandlers,
@@ -128,6 +141,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<GlobalEventHandlersEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends IDBDatabase,
@@ -135,6 +149,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<IDBDatabaseEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends HTMLBodyElement,
@@ -142,6 +157,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<HTMLBodyElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends HTMLElement,
@@ -149,6 +165,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<HTMLElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends HTMLMediaElement,
@@ -156,6 +173,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<HTMLMediaElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends HTMLVideoElement,
@@ -163,6 +181,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<HTMLVideoElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends IDBOpenDBRequest,
@@ -170,6 +189,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<IDBOpenDBRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends IDBRequest<TDBObject>,
@@ -178,6 +198,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<IDBRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends IDBTransaction,
@@ -185,6 +206,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<IDBTransactionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MathMLElement,
@@ -192,6 +214,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MathMLElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaDevices,
@@ -199,6 +222,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaDevicesEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaKeySession,
@@ -206,6 +230,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaKeySessionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaQueryList,
@@ -213,6 +238,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaQueryListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaRecorder,
@@ -220,6 +246,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaRecorderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaSource | MediaStream,
@@ -227,6 +254,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaSourceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MediaStream,
@@ -234,6 +262,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MediaStreamEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends MessagePort,
@@ -241,6 +270,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<MessagePortEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Notification,
@@ -248,6 +278,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<NotificationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends OfflineAudioContext,
@@ -255,6 +286,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<OfflineAudioContextEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends OffscreenCanvas,
@@ -262,6 +294,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<OffscreenCanvasEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends PaymentRequest,
@@ -269,6 +302,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<PaymentRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Performance,
@@ -276,6 +310,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<PerformanceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends PermissionStatus,
@@ -283,6 +318,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<PermissionStatusEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends PictureInPictureWindow,
@@ -290,6 +326,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<PictureInPictureWindowEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCDTMFSender,
@@ -297,6 +334,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCDTMFSenderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCDataChannel,
@@ -304,6 +342,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCDataChannelEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCDtlsTransport,
@@ -311,6 +350,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCDtlsTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCIceTransport,
@@ -318,6 +358,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCIceTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCPeerConnection,
@@ -325,6 +366,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCPeerConnectionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RTCSctpTransport,
@@ -332,6 +374,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RTCSctpTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends RemotePlayback,
@@ -339,6 +382,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<RemotePlaybackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SVGSVGElement,
@@ -346,6 +390,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SVGSVGElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends ScreenOrientation,
@@ -353,6 +398,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ScreenOrientationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends ServiceWorker,
@@ -360,6 +406,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ServiceWorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends ServiceWorkerContainer,
@@ -367,6 +414,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ServiceWorkerContainerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends ServiceWorkerRegistration,
@@ -374,6 +422,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ServiceWorkerRegistrationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends ShadowRoot,
@@ -381,6 +430,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<ShadowRootEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SourceBuffer,
@@ -388,6 +438,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SourceBufferEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SourceBufferList,
@@ -395,6 +446,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SourceBufferListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SpeechSynthesis,
@@ -402,6 +454,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SpeechSynthesisEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SpeechSynthesisUtterance,
@@ -409,6 +462,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SpeechSynthesisUtteranceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends SVGElement,
@@ -416,6 +470,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<SVGElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends TextTrack,
@@ -423,6 +478,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<TextTrackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends TextTrackCue,
@@ -430,6 +486,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<TextTrackCueEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends TextTrackList,
@@ -437,6 +494,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<TextTrackListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends VisualViewport,
@@ -444,6 +502,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<VisualViewportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends WebSocket,
@@ -451,6 +510,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<WebSocketEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Window,
@@ -459,6 +519,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<WindowEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends Worker,
@@ -467,6 +528,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<WorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
   addEventHandler<
     TEventTarget extends XMLHttpRequestEventTarget,
@@ -474,6 +536,7 @@ interface AddEventHandler {
   >(
     eventName: K,
     eventHandler: SideEffect1<XMLHttpRequestEventTargetEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, DisposableLike>;
 }
 
@@ -481,6 +544,7 @@ export const addEventHandler: AddEventHandler["addEventHandler"] =
   (
     eventName: string,
     eventHandler: SideEffect1<unknown>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     {
       addEventListener(
@@ -497,7 +561,7 @@ export const addEventHandler: AddEventHandler["addEventHandler"] =
   > =>
   source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
-    pipe(source, (addEventListener as any)(eventName, listener));
+    pipe(source as any, addEventListener(eventName as any, listener, options));
 
     return listener;
   };
@@ -509,6 +573,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<AbortSignalEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Animation,
@@ -516,6 +581,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<AnimationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AbstractWorker,
@@ -523,6 +589,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<AbstractWorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AudioScheduledSourceNode,
@@ -532,6 +599,7 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       AudioScheduledSourceNodeEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends BaseAudioContext,
@@ -539,6 +607,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<BaseAudioContextEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends AudioWorkletNode,
@@ -546,6 +615,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<AudioWorkletNodeEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends BroadcastChannel,
@@ -553,6 +623,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<BroadcastChannelEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Document,
@@ -560,6 +631,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<DocumentEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Element,
@@ -567,6 +639,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<ElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaStreamTrack,
@@ -574,6 +647,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaStreamTrackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends EventSource,
@@ -581,6 +655,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<EventSourceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends FileReader,
@@ -588,6 +663,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<FileReaderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends FontFaceSet,
@@ -595,6 +671,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<FontFaceSetEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends GlobalEventHandlers,
@@ -602,6 +679,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<GlobalEventHandlersEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBDatabase,
@@ -609,6 +687,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<IDBDatabaseEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLBodyElement,
@@ -616,6 +695,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<HTMLBodyElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLElement,
@@ -623,6 +703,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<HTMLElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLMediaElement,
@@ -630,6 +711,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<HTMLMediaElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends HTMLVideoElement,
@@ -637,6 +719,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<HTMLVideoElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBOpenDBRequest,
@@ -644,6 +727,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<IDBOpenDBRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBRequest<TDBObject>,
@@ -652,6 +736,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<IDBRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends IDBTransaction,
@@ -659,6 +744,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<IDBTransactionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MathMLElement,
@@ -666,6 +752,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MathMLElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaDevices,
@@ -673,6 +760,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaDevicesEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaKeySession,
@@ -680,6 +768,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaKeySessionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaQueryList,
@@ -687,6 +776,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaQueryListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaRecorder,
@@ -694,6 +784,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaRecorderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaSource | MediaStream,
@@ -701,6 +792,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaSourceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MediaStream,
@@ -708,6 +800,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MediaStreamEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends MessagePort,
@@ -715,6 +808,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<MessagePortEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Notification,
@@ -722,6 +816,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<NotificationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends OfflineAudioContext,
@@ -729,6 +824,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<OfflineAudioContextEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends OffscreenCanvas,
@@ -736,6 +832,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<OffscreenCanvasEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PaymentRequest,
@@ -743,6 +840,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<PaymentRequestEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Performance,
@@ -750,6 +848,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<PerformanceEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PermissionStatus,
@@ -757,6 +856,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<PermissionStatusEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends PictureInPictureWindow,
@@ -766,6 +866,7 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       PictureInPictureWindowEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDTMFSender,
@@ -773,6 +874,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCDTMFSenderEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDataChannel,
@@ -780,6 +882,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCDataChannelEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCDtlsTransport,
@@ -787,6 +890,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCDtlsTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCIceTransport,
@@ -794,6 +898,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCIceTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCPeerConnection,
@@ -801,6 +906,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCPeerConnectionEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RTCSctpTransport,
@@ -808,6 +914,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RTCSctpTransportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends RemotePlayback,
@@ -815,6 +922,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<RemotePlaybackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SVGSVGElement,
@@ -822,6 +930,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<SVGSVGElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ScreenOrientation,
@@ -829,6 +938,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<ScreenOrientationEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorker,
@@ -836,6 +946,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<ServiceWorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorkerContainer,
@@ -845,6 +956,7 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       ServiceWorkerContainerEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ServiceWorkerRegistration,
@@ -854,6 +966,7 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       ServiceWorkerRegistrationEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends ShadowRoot,
@@ -861,6 +974,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<ShadowRootEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SourceBuffer,
@@ -868,6 +982,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<SourceBufferEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SourceBufferList,
@@ -875,6 +990,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<SourceBufferListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SpeechSynthesis,
@@ -882,6 +998,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<SpeechSynthesisEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SpeechSynthesisUtterance,
@@ -891,6 +1008,7 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       SpeechSynthesisUtteranceEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends SVGElement,
@@ -898,6 +1016,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<SVGElementEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrack,
@@ -905,6 +1024,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<TextTrackEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrackCue,
@@ -912,6 +1032,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<TextTrackCueEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends TextTrackList,
@@ -919,6 +1040,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<TextTrackListEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends VisualViewport,
@@ -926,6 +1048,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<VisualViewportEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends WebSocket,
@@ -933,6 +1056,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<WebSocketEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Window,
@@ -941,6 +1065,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<WindowEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends Worker,
@@ -949,6 +1074,7 @@ interface AddEventListener {
   >(
     eventName: K,
     eventListener: ErrorSafeEventListenerLike<WorkerEventMap[K]>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
   addEventListener<
     TEventTarget extends XMLHttpRequestEventTarget,
@@ -958,12 +1084,14 @@ interface AddEventListener {
     eventListener: ErrorSafeEventListenerLike<
       XMLHttpRequestEventTargetEventMap[K]
     >,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<TEventTarget, TEventTarget>;
 }
 
 export const addEventListener: AddEventListener["addEventListener"] = ((
     eventName: string,
     eventListener: ErrorSafeEventListenerLike<unknown>,
+    options?: { passive?: boolean; capture?: boolean },
   ): Function1<
     {
       addEventListener(
@@ -1001,9 +1129,12 @@ export const addEventListener: AddEventListener["addEventListener"] = ((
       EventListenerLike_notify,
     );
 
-    target.addEventListener(eventName, listener, {
-      passive: true,
-    } as any);
+    const addEventListenerOptions = {
+      capture: options?.capture ?? false,
+      passive: options?.capture ?? true,
+    };
+
+    target.addEventListener(eventName, listener, addEventListenerOptions);
 
     return target;
   }) as AddEventListener["addEventListener"];
@@ -1016,6 +1147,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<AbortSignalEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends Animation,
@@ -1024,6 +1156,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<AnimationEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends AbstractWorker,
@@ -1032,6 +1165,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<AbstractWorkerEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends AudioScheduledSourceNode,
@@ -1040,6 +1174,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<AudioScheduledSourceNodeEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends BaseAudioContext,
@@ -1048,6 +1183,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<BaseAudioContextEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends AudioWorkletNode,
@@ -1056,6 +1192,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<AudioWorkletNodeEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends BroadcastChannel,
@@ -1064,8 +1201,8 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<BroadcastChannelEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends Document,
     K extends keyof DocumentEventMap,
@@ -1073,6 +1210,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<DocumentEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends Element,
@@ -1081,6 +1219,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaStreamTrack,
@@ -1089,6 +1228,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaStreamTrackEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends EventSource,
@@ -1097,6 +1237,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<EventSourceEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends FileReader,
@@ -1105,6 +1246,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<FileReaderEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends FontFaceSet,
@@ -1113,6 +1255,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<FontFaceSetEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends GlobalEventHandlers,
@@ -1121,6 +1264,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<GlobalEventHandlersEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBDatabase,
@@ -1129,8 +1273,8 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<IDBDatabaseEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends HTMLBodyElement,
     K extends keyof HTMLBodyElementEventMap,
@@ -1138,6 +1282,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<HTMLBodyElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLElement,
@@ -1146,8 +1291,8 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<HTMLElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends HTMLMediaElement,
     K extends keyof HTMLMediaElementEventMap,
@@ -1155,6 +1300,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<HTMLMediaElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLVideoElement,
@@ -1163,8 +1309,8 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<HTMLVideoElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
-
   observeEvent<
     TEventTarget extends IDBOpenDBRequest,
     K extends keyof IDBOpenDBRequestEventMap,
@@ -1172,6 +1318,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<IDBOpenDBRequestEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBRequest<TDBObject>,
@@ -1181,6 +1328,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<IDBRequestEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBTransaction,
@@ -1189,6 +1337,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<IDBTransactionEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MathMLElement,
@@ -1197,6 +1346,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MathMLElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaDevices,
@@ -1205,6 +1355,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaDevicesEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaKeySession,
@@ -1213,6 +1364,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaKeySessionEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaQueryList,
@@ -1221,6 +1373,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaQueryListEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaRecorder,
@@ -1229,6 +1382,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaRecorderEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaSource | MediaStream,
@@ -1237,6 +1391,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaSourceEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaStream,
@@ -1245,6 +1400,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MediaStreamEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends MessagePort,
@@ -1253,6 +1409,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<MessagePortEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends Notification,
@@ -1261,6 +1418,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<NotificationEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends OfflineAudioContext,
@@ -1269,6 +1427,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<OfflineAudioContextEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends OffscreenCanvas,
@@ -1277,6 +1436,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<OffscreenCanvasEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends PaymentRequest,
@@ -1285,6 +1445,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<PaymentRequestEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends Performance,
@@ -1293,6 +1454,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<PerformanceEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends PermissionStatus,
@@ -1301,6 +1463,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<PermissionStatusEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends PictureInPictureWindow,
@@ -1309,6 +1472,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<PictureInPictureWindowEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDTMFSender,
@@ -1317,6 +1481,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCDTMFSenderEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDataChannel,
@@ -1325,6 +1490,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCDataChannelEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDtlsTransport,
@@ -1333,6 +1499,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCDtlsTransportEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCIceTransport,
@@ -1341,6 +1508,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCIceTransportEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCPeerConnection,
@@ -1349,6 +1517,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCPeerConnectionEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCSctpTransport,
@@ -1357,6 +1526,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RTCSctpTransportEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends RemotePlayback,
@@ -1365,6 +1535,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<RemotePlaybackEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SVGSVGElement,
@@ -1373,6 +1544,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SVGSVGElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends ScreenOrientation,
@@ -1381,6 +1553,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ScreenOrientationEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorker,
@@ -1389,6 +1562,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ServiceWorkerEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorkerContainer,
@@ -1397,6 +1571,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ServiceWorkerContainerEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorkerRegistration,
@@ -1405,6 +1580,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ServiceWorkerRegistrationEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends ShadowRoot,
@@ -1413,6 +1589,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<ShadowRootEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SourceBuffer,
@@ -1421,6 +1598,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SourceBufferEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SourceBufferList,
@@ -1429,6 +1607,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SourceBufferListEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SpeechSynthesis,
@@ -1437,6 +1616,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SpeechSynthesisEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SpeechSynthesisUtterance,
@@ -1445,6 +1625,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SpeechSynthesisUtteranceEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends SVGElement,
@@ -1453,6 +1634,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<SVGElementEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrack,
@@ -1461,6 +1643,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<TextTrackEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrackCue,
@@ -1469,6 +1652,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<TextTrackCueEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrackList,
@@ -1477,6 +1661,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<TextTrackListEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends VisualViewport,
@@ -1485,6 +1670,7 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<VisualViewportEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends WebSocket,
@@ -1493,14 +1679,17 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<WebSocketEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<TEventTarget extends Window, K extends keyof WindowEventMap, T>(
     eventName: K,
     selector: Function1<WindowEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(
     eventName: K,
     selector: Function1<WorkerEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
   observeEvent<
     TEventTarget extends XMLHttpRequestEventTarget,
@@ -1509,12 +1698,14 @@ interface ObserveEvent {
   >(
     eventName: K,
     selector: Function1<XMLHttpRequestEventTargetEventMap[K], T>,
+    options?: { capture?: boolean },
   ): Function1<TEventTarget, ObservableLike<T>>;
 }
 
 export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
     eventName: string,
     selector: Function1<unknown, T>,
+    options?: { capture?: boolean },
   ): Function1<
     {
       addEventListener(
@@ -1531,12 +1722,21 @@ export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
   > =>
   target =>
     Observable.create(observer => {
+      const addEventHandlerOptions = {
+        passive: true,
+        capture: options?.capture,
+      };
+
       pipe(
         target as any,
-        addEventHandler(eventName as any, ev => {
-          const result = selector(ev);
-          observer[QueueableLike_enqueue](result);
-        }),
+        addEventHandler(
+          eventName as any,
+          ev => {
+            const result = selector(ev);
+            observer[QueueableLike_enqueue](result);
+          },
+          addEventHandlerOptions,
+        ),
         Disposable.bindTo(observer),
       );
     })) as ObserveEvent["observeEvent"];
@@ -1776,8 +1976,9 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
     pipe(
       window,
       addEventListener<Window, "resize">("resize", eventListener),
-      // { capture: true, passive: true }
-      addEventListener<Window, "scroll">("scroll", eventListener),
+      addEventListener<Window, "scroll">("scroll", eventListener, {
+        capture: true,
+      }),
     );
 
     return element;
