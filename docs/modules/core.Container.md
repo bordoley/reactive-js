@@ -19,7 +19,7 @@
 
 ### Of
 
-Ƭ **Of**<`C`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T`  }[typeof `Container_type`]\> : { `_C`: `C` ; `_T`: () => `T`  }
+Ƭ **Of**<`C`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T`  }[typeof [`Container_type`](core.md#container_type)]\> : { `_C`: `C` ; `_T`: () => `T`  }
 
 Utility type for higher order programming with Containers.
 
