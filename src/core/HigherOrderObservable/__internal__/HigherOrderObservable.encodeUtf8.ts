@@ -1,15 +1,15 @@
 import {
   Containers,
   ObservableContainer,
-  ReactiveContainers,
+  StatefulContainers,
 } from "../../../core.js";
 import { bindMethod, newInstance, pipe } from "../../../functions.js";
 
 const HigherOrderObservable_encodeUtf8 =
   <C extends ObservableContainer>(
-    defer: ReactiveContainers.TypeClass<C>["defer"],
+    defer: StatefulContainers.TypeClass<C>["defer"],
     map: Containers.TypeClass<C>["map"],
-  ): ReactiveContainers.TypeClass<C>["encodeUtf8"] =>
+  ): StatefulContainers.TypeClass<C>["encodeUtf8"] =>
   () =>
   observable =>
     defer(() => {

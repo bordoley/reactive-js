@@ -1,9 +1,9 @@
-import { Containers, DeferredContainers, EnumerableContainers, ReactiveContainers, RunnableContainer, RunnableContainers, RunnableLike } from "../core.js";
+import { Containers, DeferredContainers, EnumerableContainers, ReactiveContainers, RunnableContainer, RunnableContainers, RunnableLike, StatefulContainers } from "../core.js";
 import { Factory } from "../functions.js";
 export declare const animate: ReactiveContainers.TypeClass<RunnableContainer>["animate"];
 export declare const backpressureStrategy: ReactiveContainers.TypeClass<RunnableContainer>["backpressureStrategy"];
 export declare const buffer: Containers.TypeClass<RunnableContainer>["buffer"];
-export declare const catchError: ReactiveContainers.TypeClass<RunnableContainer>["catchError"];
+export declare const catchError: StatefulContainers.TypeClass<RunnableContainer>["catchError"];
 export declare const combineLatest: ReactiveContainers.TypeClass<RunnableContainer>["combineLatest"];
 /**
  * @category Constructor
@@ -17,12 +17,12 @@ export declare const concatMap: DeferredContainers.TypeClass<RunnableContainer>[
 export declare const concatWith: DeferredContainers.TypeClass<RunnableContainer>["concatWith"];
 export declare const contains: RunnableContainers.TypeClass<RunnableContainer>["contains"];
 export declare const currentTime: ReactiveContainers.TypeClass<RunnableContainer>["currentTime"];
-export declare const decodeWithCharset: ReactiveContainers.TypeClass<RunnableContainer>["decodeWithCharset"];
-export declare const defer: ReactiveContainers.TypeClass<RunnableContainer>["defer"];
+export declare const decodeWithCharset: StatefulContainers.TypeClass<RunnableContainer>["decodeWithCharset"];
+export declare const defer: StatefulContainers.TypeClass<RunnableContainer>["defer"];
 export declare const dispatchTo: ReactiveContainers.TypeClass<RunnableContainer>["dispatchTo"];
 export declare const distinctUntilChanged: Containers.TypeClass<RunnableContainer>["distinctUntilChanged"];
 export declare const empty: ReactiveContainers.TypeClass<RunnableContainer>["empty"];
-export declare const encodeUtf8: ReactiveContainers.TypeClass<RunnableContainer>["encodeUtf8"];
+export declare const encodeUtf8: StatefulContainers.TypeClass<RunnableContainer>["encodeUtf8"];
 export declare const enqueue: ReactiveContainers.TypeClass<RunnableContainer>["enqueue"];
 export declare const endWith: DeferredContainers.TypeClass<RunnableContainer>["endWith"];
 export declare const everySatisfy: RunnableContainers.TypeClass<RunnableContainer>["everySatisfy"];
@@ -60,13 +60,13 @@ export declare const pairwise: Containers.TypeClass<RunnableContainer>["pairwise
 export declare const pick: Containers.TypeClass<RunnableContainer>["pick"];
 export declare const reduce: RunnableContainers.TypeClass<RunnableContainer>["reduce"];
 export declare const repeat: DeferredContainers.TypeClass<RunnableContainer>["repeat"];
-export declare const retry: ReactiveContainers.TypeClass<RunnableContainer>["retry"];
+export declare const retry: StatefulContainers.TypeClass<RunnableContainer>["retry"];
 export declare const run: <T>(options?: {
     readonly backpressureStrategy: "overflow" | "drop-latest" | "drop-oldest" | "throw";
     readonly capacity?: number | undefined;
 } | undefined) => (observable: RunnableLike<T>) => void;
 export declare const scan: Containers.TypeClass<RunnableContainer>["scan"];
-export declare const scanLast: ReactiveContainers.TypeClass<RunnableContainer>["scanLast"];
+export declare const scanLast: Containers.TypeClass<RunnableContainer>["scanLast"];
 export declare const scanMany: ReactiveContainers.TypeClass<RunnableContainer>["scanMany"];
 export declare const skipFirst: Containers.TypeClass<RunnableContainer>["skipFirst"];
 export declare const someSatisfy: RunnableContainers.TypeClass<RunnableContainer>["someSatisfy"];
@@ -78,7 +78,7 @@ export declare const takeLast: Containers.TypeClass<RunnableContainer>["takeLast
 export declare const takeUntil: ReactiveContainers.TypeClass<RunnableContainer>["takeUntil"];
 export declare const takeWhile: Containers.TypeClass<RunnableContainer>["takeWhile"];
 export declare const throttle: ReactiveContainers.TypeClass<RunnableContainer>["throttle"];
-export declare const throwIfEmpty: ReactiveContainers.TypeClass<RunnableContainer>["throwIfEmpty"];
+export declare const throwIfEmpty: StatefulContainers.TypeClass<RunnableContainer>["throwIfEmpty"];
 interface Throws extends ReactiveContainers.TypeClass<RunnableContainer> {
     /**
      * @category Constructor

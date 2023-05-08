@@ -44,10 +44,7 @@ import ReadonlyArray_toObservable from "../core/ReadonlyArray/__internal__/Reado
 import Runnable_flow from "../core/Runnable/__internal__/Runnable.flow.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
-import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
-import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
@@ -60,7 +57,6 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Enumerable_catchError;
 /**
@@ -74,15 +70,14 @@ export const concatWith = Observable_concatWith;
 export const contains = Runnable_contains;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Enumerable_defer;
-export const dispatchTo = Observable_dispatchTo;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const empty = Observable_empty;
 export const encodeUtf8 = Enumerable_encodeUtf8;
-export const enqueue = Observable_enqueue;
 export const endWith = Observable_endWith;
 export const enumerate = Enumerable_enumerate;
 export const everySatisfy = Runnable_everySatisfy;
 export const first = Runnable_first;
+// FIXME: use a custom implementation that doesn't schedule
 export const firstAsync = Observable_firstAsync;
 export const flatMapIterable = Enumerable_flatMapIterable;
 export const flow = Runnable_flow;
@@ -100,6 +95,7 @@ export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const last = Runnable_last;
+// FIXME: use a custom implementation that doesn't use a vts
 export const lastAsync = Observable_lastAsync;
 export const map = Observable_map;
 export const mapTo = Observable_mapTo;

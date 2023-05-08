@@ -3,7 +3,7 @@ import {
   ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
-  ReactiveContainers,
+  StatefulContainers,
 } from "../../../core.js";
 import { Factory, SideEffect1 } from "../../../functions.js";
 
@@ -12,7 +12,7 @@ const HigherOrderObservable_defer =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
-  ): ReactiveContainers.TypeClass<C>["defer"] =>
+  ): StatefulContainers.TypeClass<C>["defer"] =>
   <T>(factory: Factory<Containers.Of<C, T>>): Containers.Of<C, T> =>
     createObservable(observer => {
       factory()[ObservableLike_observe](observer);

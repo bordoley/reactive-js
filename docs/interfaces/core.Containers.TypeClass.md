@@ -10,12 +10,6 @@
 | :------ | :------ |
 | `C` | extends [`Container`](core.Container.md) |
 
-## Hierarchy
-
-- **`TypeClass`**
-
-  ↳ [`TypeClass`](core.ReactiveContainers.TypeClass.md)
-
 ## Table of contents
 
 ### Constructor Properties
@@ -26,6 +20,7 @@
 
 - [buffer](core.Containers.TypeClass.md#buffer)
 - [flatMapIterable](core.Containers.TypeClass.md#flatmapiterable)
+- [scanLast](core.Containers.TypeClass.md#scanlast)
 
 ### Transform Properties
 
@@ -34,7 +29,6 @@
 ### Constructor Methods
 
 - [empty](core.Containers.TypeClass.md#empty)
-- [fromAsyncIterable](core.Containers.TypeClass.md#fromasynciterable)
 - [fromEnumerable](core.Containers.TypeClass.md#fromenumerable)
 - [fromEnumeratorFactory](core.Containers.TypeClass.md#fromenumeratorfactory)
 - [fromFactory](core.Containers.TypeClass.md#fromfactory)
@@ -63,6 +57,11 @@
 - [takeLast](core.Containers.TypeClass.md#takelast)
 - [takeWhile](core.Containers.TypeClass.md#takewhile)
 - [zipWith](core.Containers.TypeClass.md#zipwith)
+
+### Transform Methods
+
+- [firstAsync](core.Containers.TypeClass.md#firstasync)
+- [lastAsync](core.Containers.TypeClass.md#lastasync)
 
 ## Constructor Properties
 
@@ -145,6 +144,34 @@ ___
 
 ___
 
+### scanLast
+
+• **scanLast**: <T, TAcc\>(`scanner`: [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`Of`](../modules/core.Containers.md#of)<`C`, `TAcc`\>\>, `initialValue`: [`Factory`](../modules/functions.md#factory)<`TAcc`\>) => [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
+
+#### Type declaration
+
+▸ <`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`Of`](../modules/core.Containers.md#of)<`C`, `TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+##### Returns
+
+[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `TAcc`\>
+
+___
+
 ## Transform Properties
 
 ### toObservable
@@ -182,22 +209,6 @@ Return an Container that emits no items.
 #### Returns
 
 [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
-
-___
-
-### fromAsyncIterable
-
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
 
 ___
 
@@ -1406,3 +1417,37 @@ ___
 #### Returns
 
 [`Operator`](../modules/core.Containers.md#operator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+## Transform Methods
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>

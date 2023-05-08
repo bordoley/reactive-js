@@ -6,6 +6,7 @@ import {
   RunnableContainer,
   RunnableContainers,
   RunnableLike,
+  StatefulContainers,
 } from "../core.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../core/Iterable/__internal__/Iterable.toObservable.js";
@@ -99,7 +100,7 @@ export const backpressureStrategy: ReactiveContainers.TypeClass<RunnableContaine
 export const buffer: Containers.TypeClass<RunnableContainer>["buffer"] =
   Observable_buffer;
 
-export const catchError: ReactiveContainers.TypeClass<RunnableContainer>["catchError"] =
+export const catchError: StatefulContainers.TypeClass<RunnableContainer>["catchError"] =
   Runnable_catchError;
 
 export const combineLatest: ReactiveContainers.TypeClass<RunnableContainer>["combineLatest"] =
@@ -128,10 +129,10 @@ export const contains: RunnableContainers.TypeClass<RunnableContainer>["contains
 export const currentTime: ReactiveContainers.TypeClass<RunnableContainer>["currentTime"] =
   Observable_currentTime;
 
-export const decodeWithCharset: ReactiveContainers.TypeClass<RunnableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: StatefulContainers.TypeClass<RunnableContainer>["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: ReactiveContainers.TypeClass<RunnableContainer>["defer"] =
+export const defer: StatefulContainers.TypeClass<RunnableContainer>["defer"] =
   Runnable_defer;
 
 export const dispatchTo: ReactiveContainers.TypeClass<RunnableContainer>["dispatchTo"] =
@@ -143,7 +144,7 @@ export const distinctUntilChanged: Containers.TypeClass<RunnableContainer>["dist
 export const empty: ReactiveContainers.TypeClass<RunnableContainer>["empty"] =
   Observable_empty;
 
-export const encodeUtf8: ReactiveContainers.TypeClass<RunnableContainer>["encodeUtf8"] =
+export const encodeUtf8: StatefulContainers.TypeClass<RunnableContainer>["encodeUtf8"] =
   Runnable_encodeUtf8;
 
 export const enqueue: ReactiveContainers.TypeClass<RunnableContainer>["enqueue"] =
@@ -257,7 +258,7 @@ export const reduce: RunnableContainers.TypeClass<RunnableContainer>["reduce"] =
 export const repeat: DeferredContainers.TypeClass<RunnableContainer>["repeat"] =
   Observable_repeat;
 
-export const retry: ReactiveContainers.TypeClass<RunnableContainer>["retry"] =
+export const retry: StatefulContainers.TypeClass<RunnableContainer>["retry"] =
   Observable_retry;
 
 export const run = Runnable_run;
@@ -265,7 +266,7 @@ export const run = Runnable_run;
 export const scan: Containers.TypeClass<RunnableContainer>["scan"] =
   Observable_scan;
 
-export const scanLast: ReactiveContainers.TypeClass<RunnableContainer>["scanLast"] =
+export const scanLast: Containers.TypeClass<RunnableContainer>["scanLast"] =
   Runnable_scanLast;
 
 export const scanMany: ReactiveContainers.TypeClass<RunnableContainer>["scanMany"] =
@@ -301,7 +302,7 @@ export const takeWhile: Containers.TypeClass<RunnableContainer>["takeWhile"] =
 export const throttle: ReactiveContainers.TypeClass<RunnableContainer>["throttle"] =
   Runnable_throttle;
 
-export const throwIfEmpty: ReactiveContainers.TypeClass<RunnableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: StatefulContainers.TypeClass<RunnableContainer>["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
 interface Throws extends ReactiveContainers.TypeClass<RunnableContainer> {

@@ -6,12 +6,14 @@
 
 ### Namespaces
 
+- [AsynchronousContainers](core.AsynchronousContainers.md)
 - [Containers](core.Containers.md)
 - [DeferredContainers](core.DeferredContainers.md)
 - [EnumerableContainers](core.EnumerableContainers.md)
 - [KeyedContainers](core.KeyedContainers.md)
 - [ReactiveContainers](core.ReactiveContainers.md)
 - [RunnableContainers](core.RunnableContainers.md)
+- [StatefulContainers](core.StatefulContainers.md)
 
 ### Collection Interfaces
 
