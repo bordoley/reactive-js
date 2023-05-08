@@ -42,6 +42,34 @@ export const addScrollHandler = (handler) => element => {
     pipe(element, addScrollListener(listener));
     return listener;
 };
+let windowResizeEventSourceRef = none;
+const getWindowResizeEventSource = () => {
+    const windowResizeEventSource = windowResizeEventSourceRef ??
+        (() => {
+            const windowResizeEventPublisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+                windowResizeEventSourceRef = none;
+            }));
+            windowResizeEventSourceRef = windowResizeEventPublisher;
+            pipe(window, addEventListener("resize", windowResizeEventPublisher));
+            return windowResizeEventPublisher;
+        })();
+    return windowResizeEventSource;
+};
+let windowScrollEventSourceRef = none;
+const getWindowScrollEventSource = () => {
+    const windowScrollEventSource = windowScrollEventSourceRef ??
+        (() => {
+            const windowScrollEventsPublisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+                windowScrollEventSourceRef = none;
+            }));
+            windowScrollEventSourceRef = windowScrollEventsPublisher;
+            pipe(window, addEventListener("scroll", windowScrollEventsPublisher, {
+                capture: true,
+            }));
+            return windowScrollEventsPublisher;
+        })();
+    return windowScrollEventSource;
+};
 export const addScrollListener = /*@__PURE__*/ (() => {
     const calcProgress = (min, max, value) => max - min === 0 ? 1 : (value - min) / (max - min);
     return (listener) => (element) => {
@@ -92,7 +120,8 @@ export const addScrollListener = /*@__PURE__*/ (() => {
             listener[EventListenerLike_notify]({ x, y });
         }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addEventListener("scroll", eventListener));
-        pipe(window, addEventListener("resize", eventListener));
+        const windowResizeEventSource = getWindowResizeEventSource();
+        windowResizeEventSource[EventSourceLike_addEventListener](eventListener);
         return element;
     };
 })();
@@ -177,9 +206,10 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
         for (const scrollContainer of findScrollContainers(element)) {
             pipe(scrollContainer, addEventListener("scroll", eventListener));
         }
-        pipe(window, addEventListener("resize", eventListener), addEventListener("scroll", eventListener, {
-            capture: true,
-        }));
+        const windowResizeEventSource = getWindowResizeEventSource();
+        windowResizeEventSource[EventSourceLike_addEventListener](eventListener);
+        const windowScrollEventSource = getWindowScrollEventSource();
+        windowScrollEventSource[EventSourceLike_addEventListener](eventListener);
         return element;
     };
 })();

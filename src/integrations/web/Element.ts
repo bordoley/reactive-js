@@ -1751,6 +1751,61 @@ export const addScrollHandler =
     return listener;
   };
 
+let windowResizeEventSourceRef: Optional<EventSourceLike<Event>> = none;
+
+const getWindowResizeEventSource = () => {
+  const windowResizeEventSource =
+    windowResizeEventSourceRef ??
+    (() => {
+      const windowResizeEventPublisher = pipe(
+        EventPublisher.createRefCounted(),
+        Disposable.onDisposed(() => {
+          windowResizeEventSourceRef = none;
+        }),
+      );
+      windowResizeEventSourceRef = windowResizeEventPublisher;
+      pipe(
+        window,
+        addEventListener<Window, "resize">(
+          "resize",
+          windowResizeEventPublisher,
+        ),
+      );
+      return windowResizeEventPublisher;
+    })();
+
+  return windowResizeEventSource;
+};
+
+let windowScrollEventSourceRef: Optional<EventSourceLike<Event>> = none;
+
+const getWindowScrollEventSource = () => {
+  const windowScrollEventSource =
+    windowScrollEventSourceRef ??
+    (() => {
+      const windowScrollEventsPublisher = pipe(
+        EventPublisher.createRefCounted(),
+        Disposable.onDisposed(() => {
+          windowScrollEventSourceRef = none;
+        }),
+      );
+      windowScrollEventSourceRef = windowScrollEventsPublisher;
+      pipe(
+        window,
+        addEventListener<Window, "scroll">(
+          "scroll",
+          windowScrollEventsPublisher,
+          {
+            capture: true,
+          },
+        ),
+      );
+      return windowScrollEventsPublisher;
+    })();
+
+  return windowScrollEventSource;
+};
+
 export const addScrollListener: <TElement extends HTMLElement>(
   listener: EventListenerLike<ScrollValue>,
 ) => Function1<TElement, TElement> = /*@__PURE__*/ (() => {
@@ -1827,7 +1882,8 @@ export const addScrollListener: <TElement extends HTMLElement>(
         addEventListener<HTMLElement, "scroll">("scroll", eventListener),
       );
 
-      pipe(window, addEventListener<Window, "resize">("resize", eventListener));
+      const windowResizeEventSource = getWindowResizeEventSource();
+      windowResizeEventSource[EventSourceLike_addEventListener](eventListener);
 
       return element;
     };
@@ -1973,13 +2029,11 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
       );
     }
 
-    pipe(
-      window,
-      addEventListener<Window, "resize">("resize", eventListener),
-      addEventListener<Window, "scroll">("scroll", eventListener, {
-        capture: true,
-      }),
-    );
+    const windowResizeEventSource = getWindowResizeEventSource();
+    windowResizeEventSource[EventSourceLike_addEventListener](eventListener);
+
+    const windowScrollEventSource = getWindowScrollEventSource();
+    windowScrollEventSource[EventSourceLike_addEventListener](eventListener);
 
     return element;
   };
