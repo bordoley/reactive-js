@@ -1,7 +1,7 @@
 import HigherOrderObservable_throttle from "../../HigherOrderObservable/__internal__/HigherOrderObservable.throttle.js";
 import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { DeferredObservableContainer } from "../../containers.js";
-import DeferredObservable_lift from "./DeferredObservable..lift.js";
+import DeferredObservable_lift from "./DeferredObservable.lift.js";
 
 const DeferredObservable_throttle: DeferredObservableContainer.TypeClass["throttle"] =
   /*@__PURE__*/ (<T>() =>
