@@ -1,3 +1,3 @@
-import { Containers, ObservableContainer } from "../../containers.js";
-declare const Observable_zipWith: Containers.TypeClass<ObservableContainer>["zipWith"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_zipWith: ObservableContainer.TypeClass["zipWith"];
 export default Observable_zipWith;

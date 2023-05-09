@@ -4,7 +4,7 @@ import { Containers, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import { QueueableLike } from "../../types.js";
 
-type ObservableEnqueue = <C extends ObservableContainer, T = unknown>(
+type ObservableEnqueue = <C extends ObservableContainer.Type, T = unknown>(
   queue: QueueableLike<T>,
 ) => Containers.Operator<C, T, T>;
 const Observable_enqueue: ObservableEnqueue = (<T>(queue: QueueableLike<T>) =>

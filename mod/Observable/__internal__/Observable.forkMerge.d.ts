@@ -1,3 +1,3 @@
-import { ObservableContainer, ObservableContainers } from "../../containers.js";
-declare const Observable_forkMerge: ObservableContainers.TypeClass<ObservableContainer>["forkMerge"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_forkMerge: ObservableContainer.TypeClass["forkMerge"];
 export default Observable_forkMerge;

@@ -54,11 +54,16 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
           ? DeferredObservable_switchMap<TEventType, never>(
               compose(
                 op,
-                Observable_ignoreElements<DeferredObservableContainer, never>(),
-                Observable_startWith<DeferredObservableContainer, boolean>(
+                Observable_ignoreElements<
+                  DeferredObservableContainer.Type,
+                  never
+                >(),
+                Observable_startWith<DeferredObservableContainer.Type, boolean>(
                   true,
                 ),
-                Observable_endWith<DeferredObservableContainer, boolean>(false),
+                Observable_endWith<DeferredObservableContainer.Type, boolean>(
+                  false,
+                ),
               ),
             )
           : mode === "blocking"
@@ -66,27 +71,34 @@ const Streamable_createEventHandler: CreateEventHandler["createEventHandler"] =
               compose(
                 op,
                 Observable_ignoreElements<
-                  DeferredObservableContainer,
+                  DeferredObservableContainer.Type,
                   boolean
                 >(),
-                Observable_startWith<DeferredObservableContainer, boolean>(
+                Observable_startWith<DeferredObservableContainer.Type, boolean>(
                   true,
                 ),
-                Observable_endWith<DeferredObservableContainer, boolean>(false),
+                Observable_endWith<DeferredObservableContainer.Type, boolean>(
+                  false,
+                ),
               ),
             )
           : DeferredObservable_mergeMap<TEventType, never>(
               compose(
                 op,
-                Observable_ignoreElements<DeferredObservableContainer, never>(),
-                Observable_startWith<DeferredObservableContainer, boolean>(
+                Observable_ignoreElements<
+                  DeferredObservableContainer.Type,
+                  never
+                >(),
+                Observable_startWith<DeferredObservableContainer.Type, boolean>(
                   true,
                 ),
-                Observable_endWith<DeferredObservableContainer, boolean>(false),
+                Observable_endWith<DeferredObservableContainer.Type, boolean>(
+                  false,
+                ),
               ),
               { ...options, concurrency: 1 },
             ),
-        Observable_mergeWith<DeferredObservableContainer, boolean>(
+        Observable_mergeWith<DeferredObservableContainer.Type, boolean>(
           pipe(false, Optional_toObservable()),
         ),
       ),

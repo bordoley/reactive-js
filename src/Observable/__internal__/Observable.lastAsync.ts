@@ -50,7 +50,7 @@ const Observable_lastAsync =
 
         pipe(
           observable,
-          Observable_forEach<ObservableContainer, T>(next => {
+          Observable_forEach<ObservableContainer.Type, T>(next => {
             result = next;
           }),
           Observable_subscribe(scheduler, options),

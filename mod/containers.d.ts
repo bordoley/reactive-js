@@ -77,7 +77,7 @@ export declare namespace KeyedContainers {
         /**
          * @category Constructor
          */
-        fromReadonlyArray<T, TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>>(options?: {
+        fromReadonlyArray<T, TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer.Type> = ReadonlyArrayContainer.TKey>(options?: {
             readonly start?: number;
             readonly count?: number;
         }): Function1<readonly T[], KeyedContainers.Of<C, TKey, T>>;
@@ -601,7 +601,7 @@ export declare namespace EnumerableContainers {
     /**
      * @noInheritDoc
      */
-    interface TypeClass<C extends Container, CEnumerator extends EnumeratorContainer = EnumeratorContainer> {
+    interface TypeClass<C extends Container, CEnumerator extends EnumeratorContainer.Type = EnumeratorContainer.Type> {
         /**
          *
          * @category Transform
@@ -623,7 +623,7 @@ export declare namespace ObservableContainers {
     /**
      * @noInheritDoc
      */
-    interface TypeClass<C extends ObservableContainer> extends Containers.TypeClass<C>, StatefulContainers.TypeClass<C> {
+    interface TypeClass<C extends ObservableContainer.Type> extends Containers.TypeClass<C>, StatefulContainers.TypeClass<C> {
         /**
          * @category Operator
          */
@@ -819,18 +819,11 @@ export declare namespace ObservableContainers {
         zipWithLatestFrom<TA, TB, T>(other: Containers.Of<C, TB>, selector: Function2<TA, TB, T>): Containers.Operator<C, TA, T>;
     }
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface DeferredObservableContainer extends ObservableContainer {
-    readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
-}
 export declare namespace DeferredObservableContainers {
     /**
      * @noInheritDoc
      */
-    interface TypeClass<C extends DeferredObservableContainer> extends ObservableContainers.TypeClass<C>, DeferredContainers.TypeClass<C> {
+    interface TypeClass<C extends DeferredObservableContainer.Type> extends ObservableContainers.TypeClass<C>, DeferredContainers.TypeClass<C> {
         /**
          * @category Constructor
          */
@@ -968,7 +961,7 @@ export declare namespace RunnableObservableContainers {
     } : (KeyFrameAnimationConfig | SpringAnimationConfig | FrameAnimationConfig) & {
         readonly selector: Function1<number, T>;
     });
-    interface TypeClass<C extends RunnableContainer> extends DeferredObservableContainers.TypeClass<C>, RunnableContainers.TypeClass<C> {
+    interface TypeClass<C extends RunnableContainer.Type> extends DeferredObservableContainers.TypeClass<C>, RunnableContainers.TypeClass<C> {
         /**
          * @category Constructor
          */
@@ -983,157 +976,157 @@ export declare namespace RunnableObservableContainers {
     }
 }
 export declare namespace EnumerableObservableContainers {
-    interface TypeClass<C extends EnumerableContainer> extends RunnableObservableContainers.TypeClass<C> {
+    interface TypeClass<C extends EnumerableContainer.Type> extends RunnableObservableContainers.TypeClass<C> {
     }
 }
-/**
- * A compile time only type for using a Javascript `Iterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface IterableContainer extends Container {
-    readonly [Container_type]?: Iterable<this[typeof Container_T]>;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumeratorContainer extends Container {
-    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
-}
 export declare namespace EnumeratorContainer {
-    interface TypeClass extends Containers.TypeClass<EnumeratorContainer>, DeferredContainers.TypeClass<EnumeratorContainer>, RunnableContainers.TypeClass<EnumeratorContainer> {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+    }
+    interface TypeClass extends Containers.TypeClass<Type>, DeferredContainers.TypeClass<Type>, RunnableContainers.TypeClass<Type> {
     }
 }
 export declare namespace IterableContainer {
-    interface TypeClass extends Containers.TypeClass<IterableContainer>, DeferredContainers.TypeClass<IterableContainer>, RunnableContainers.TypeClass<IterableContainer>, EnumerableContainers.TypeClass<IterableContainer> {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: Iterable<this[typeof Container_T]>;
     }
-}
-/**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyArrayContainer extends KeyedContainers {
-    readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: number;
+    interface TypeClass extends Containers.TypeClass<Type>, DeferredContainers.TypeClass<Type>, RunnableContainers.TypeClass<Type>, EnumerableContainers.TypeClass<Type> {
+    }
 }
 export declare namespace ReadonlyArrayContainer {
-    interface TypeClass extends KeyedContainers.TypeClass<ReadonlyArrayContainer>, DeferredContainers.TypeClass<ReadonlyArrayContainer>, RunnableContainers.TypeClass<ReadonlyArrayContainer> {
-        empty: KeyedContainers.TypeClass<ReadonlyArrayContainer>["empty"];
-        fromReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["fromReadonlyArray"];
-        reduce: KeyedContainers.TypeClass<ReadonlyArrayContainer>["reduce"];
-        toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"];
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends KeyedContainers {
+        readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+        readonly [KeyedContainer_TKey]?: number;
+    }
+    type TKey = KeyedContainers.KeyOf<ReadonlyArrayContainer.Type>;
+    interface TypeClass extends KeyedContainers.TypeClass<Type>, DeferredContainers.TypeClass<Type>, RunnableContainers.TypeClass<Type> {
+        empty: KeyedContainers.TypeClass<Type>["empty"];
+        fromReadonlyArray: KeyedContainers.TypeClass<Type>["fromReadonlyArray"];
+        reduce: KeyedContainers.TypeClass<Type>["reduce"];
+        toReadonlyArray: KeyedContainers.TypeClass<Type>["toReadonlyArray"];
     }
 }
-/**
- * A compile time only type for using a Javascript `PromiseLike` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface PromiseContainer extends Container {
-    readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
-}
-/**
- * A compile time only type for using a Javascript `AsyncIterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface AsyncIterableContainer extends Container {
-    readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+export declare namespace PromiseContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
+    }
+    interface TypeClass extends Containers.TypeClass<Type> {
+    }
 }
 export declare namespace AsyncIterableContainer {
-    interface TypeClass extends Containers.TypeClass<AsyncIterableContainer> {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+    }
+    interface TypeClass extends Containers.TypeClass<Type> {
         /**
          * @category Transform
          */
         flow<T>(scheduler: SchedulerLike, options?: {
             readonly capacity?: number;
             readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        }): Function1<Containers.Of<AsyncIterableContainer, T>, PauseableObservableLike<T> & DisposableLike>;
+        }): Function1<Containers.Of<Type, T>, PauseableObservableLike<T> & DisposableLike>;
     }
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EventSourceContainer extends Container {
-    readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface ObservableContainer extends Container {
-    readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+export declare namespace EventSourceContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+    }
+    interface TypeClass extends Containers.TypeClass<Type> {
+    }
 }
 export declare namespace ObservableContainer {
-    interface TypeClass extends ObservableContainers.TypeClass<ObservableContainer>, AsynchronousContainers.TypeClass<ObservableContainer> {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
     }
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface SharedObservableContainer extends ObservableContainer {
-    readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+    interface TypeClass extends ObservableContainers.TypeClass<Type>, AsynchronousContainers.TypeClass<Type> {
+    }
 }
 export declare namespace SharedObservableContainer {
     /**
      * @noInheritDoc
      */
-    interface TypeClass extends ObservableContainers.TypeClass<SharedObservableContainer> {
+    interface Type extends ObservableContainer.Type {
+        readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass extends ObservableContainers.TypeClass<Type> {
     }
 }
 export declare namespace DeferredObservableContainer {
     /**
      * @noInheritDoc
      */
-    interface TypeClass extends DeferredObservableContainers.TypeClass<DeferredObservableContainer> {
+    interface Type extends ObservableContainer.Type {
+        readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
     }
-}
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableContainer extends DeferredObservableContainer {
-    readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass extends DeferredObservableContainers.TypeClass<Type> {
+    }
 }
 export declare namespace RunnableContainer {
     /**
      * @noInheritDoc
      */
-    interface TypeClass extends RunnableObservableContainers.TypeClass<RunnableContainer> {
+    interface Type extends DeferredObservableContainer.Type {
+        readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface TypeClass extends RunnableObservableContainers.TypeClass<Type> {
     }
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableContainer extends RunnableContainer {
-    readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
-}
 export declare namespace EnumerableContainer {
+    /**
+     * @noInheritDoc
+     */
+    export interface Type extends RunnableContainer.Type {
+        readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+    }
     interface EnumerableEnumeratorContainer extends Container {
         readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> & DisposableLike;
     }
     /**
      * @noInheritDoc
      */
-    export interface TypeClass extends EnumerableObservableContainers.TypeClass<EnumerableContainer>, EnumerableContainers.TypeClass<EnumerableContainer, EnumerableEnumeratorContainer> {
+    export interface TypeClass extends EnumerableObservableContainers.TypeClass<Type>, EnumerableContainers.TypeClass<Type, EnumerableEnumeratorContainer> {
     }
     export {};
 }
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface PauseableObservableContainer extends ObservableContainer {
-    readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+export declare namespace PauseableObservableContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends ObservableContainer.Type {
+        readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+    }
+    interface TypeClass extends ObservableContainers.TypeClass<Type> {
+    }
 }
 /**
  * @noInheritDoc

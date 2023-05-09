@@ -8,4 +8,5 @@
 
 ### Interfaces
 
+- [Type](../interfaces/containers.RunnableContainer.Type.md)
 - [TypeClass](../interfaces/containers.RunnableContainer.TypeClass.md)

@@ -16,11 +16,15 @@
 
   ↳ [`TypeClass`](containers.ObservableContainers.TypeClass.md)
 
-  ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
-
   ↳ [`TypeClass`](containers.EnumeratorContainer.TypeClass.md)
 
+  ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](containers.PromiseContainer.TypeClass.md)
+
   ↳ [`TypeClass`](containers.AsyncIterableContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](containers.EventSourceContainer.TypeClass.md)
 
 ## Table of contents
 

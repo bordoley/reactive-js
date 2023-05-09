@@ -76,7 +76,7 @@ const createThrottleObserver: <T>(
       SerialDisposableLike_current
     ] = pipe(
       observer[__ThrottleObserver_durationFunction](next),
-      Observable_forEach<ObservableContainer>(
+      Observable_forEach<ObservableContainer.Type>(
         observer[__ThrottleObserver_onNotify],
       ),
       Observable_subscribeWithConfig(
@@ -176,7 +176,7 @@ const createThrottleObserver: <T>(
   );
 })();
 
-const throttleImpl = <C extends ObservableContainer, T>(
+const throttleImpl = <C extends ObservableContainer.Type, T>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => Containers.Operator<C, T, T>,
@@ -196,7 +196,7 @@ const throttleImpl = <C extends ObservableContainer, T>(
 };
 
 const HigherOrderObservable_throttle =
-  <C extends ObservableContainer, T>(
+  <C extends ObservableContainer.Type, T>(
     fromReadonlyArray: <T>(options?: {
       readonly count?: number;
       readonly delay?: number;

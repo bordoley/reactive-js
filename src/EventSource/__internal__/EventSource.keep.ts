@@ -13,7 +13,7 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
-import { Containers, EventSourceContainer } from "../../containers.js";
+import { EventSourceContainer } from "../../containers.js";
 import { Predicate, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
@@ -22,7 +22,7 @@ import {
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_keep: Containers.TypeClass<EventSourceContainer>["keep"] =
+const EventSource_keep: EventSourceContainer.TypeClass["keep"] =
   /*@__PURE__*/ (() => {
     const createKeepEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -69,6 +69,6 @@ const EventSource_keep: Containers.TypeClass<EventSourceContainer>["keep"] =
 
     return <T>(predicate: Predicate<T>) =>
       pipe(createKeepEventListener, partial(predicate), EventSource_lift);
-  })() as Containers.TypeClass<EventSourceContainer>["keep"];
+  })() as EventSourceContainer.TypeClass["keep"];
 
 export default EventSource_keep;

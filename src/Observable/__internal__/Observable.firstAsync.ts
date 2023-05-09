@@ -20,7 +20,7 @@ const Observable_firstAsync =
   (observable: ObservableLike<T>): Promise<Optional<T>> =>
     pipe(
       observable,
-      Observable_takeFirst<ObservableContainer, T>(),
+      Observable_takeFirst<ObservableContainer.Type, T>(),
       Observable_lastAsync(scheduler, options),
     );
 

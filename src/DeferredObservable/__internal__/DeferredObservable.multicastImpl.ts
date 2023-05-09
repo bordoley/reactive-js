@@ -56,7 +56,7 @@ const DeferredObservable_multicastImpl =
 
     pipe(
       observable,
-      Observable_forEach<ObservableContainer, T>(
+      Observable_forEach<ObservableContainer.Type, T>(
         bindMethod(publisher, EventListenerLike_notify),
       ),
       Observable_subscribeWithConfig(scheduler, {

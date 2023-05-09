@@ -1,3 +1,3 @@
-import { ObservableContainer, ObservableContainers } from "../../containers.js";
-declare const Observable_mergeMap: ObservableContainers.TypeClass<ObservableContainer>["mergeMap"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_mergeMap: ObservableContainer.TypeClass["mergeMap"];
 export default Observable_mergeMap;

@@ -6,7 +6,7 @@ import {
 import { bindMethod, newInstance, pipe } from "../../functions.js";
 
 const HigherOrderObservable_encodeUtf8 =
-  <C extends ObservableContainer>(
+  <C extends ObservableContainer.Type>(
     defer: StatefulContainers.TypeClass<C>["defer"],
     map: Containers.TypeClass<C>["map"],
   ): StatefulContainers.TypeClass<C>["encodeUtf8"] =>

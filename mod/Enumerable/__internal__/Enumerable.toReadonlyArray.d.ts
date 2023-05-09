@@ -1,3 +1,3 @@
-import { EnumerableContainer, RunnableContainers } from "../../containers.js";
-declare const Enumerable_toReadonlyArray: RunnableContainers.TypeClass<EnumerableContainer>["toReadonlyArray"];
+import { EnumerableContainer } from "../../containers.js";
+declare const Enumerable_toReadonlyArray: EnumerableContainer.TypeClass["toReadonlyArray"];
 export default Enumerable_toReadonlyArray;

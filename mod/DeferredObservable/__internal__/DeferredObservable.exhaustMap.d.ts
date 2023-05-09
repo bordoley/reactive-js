@@ -1,3 +1,3 @@
-import { DeferredObservableContainer, ObservableContainers } from "../../containers.js";
-declare const DeferredObservable_exhaustMap: ObservableContainers.TypeClass<DeferredObservableContainer>["exhaustMap"];
+import { DeferredObservableContainer } from "../../containers.js";
+declare const DeferredObservable_exhaustMap: DeferredObservableContainer.TypeClass["exhaustMap"];
 export default DeferredObservable_exhaustMap;

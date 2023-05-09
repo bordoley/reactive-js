@@ -31,7 +31,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-type ObservableScan = <C extends ObservableContainer, T, TAcc>(
+type ObservableScan = <C extends ObservableContainer.Type, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
 ) => Containers.Operator<C, T, TAcc>;

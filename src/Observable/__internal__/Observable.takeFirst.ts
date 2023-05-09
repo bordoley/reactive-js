@@ -27,7 +27,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-type ObservableTakeFirst = <C extends ObservableContainer, T>(options?: {
+type ObservableTakeFirst = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
 }) => Containers.Operator<C, T, T>;
 const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {

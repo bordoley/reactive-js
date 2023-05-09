@@ -41,7 +41,7 @@ interface ReadonlyArrayToObservable {
 const ReadonlyArray_toObservable: ReadonlyArrayToObservable["toObservable"] =
   /*@__PURE__*/
   ReadonlyArray_toContainer<
-    RunnableContainer,
+    RunnableContainer.Type,
     {
       delay?: number;
       delayStart?: boolean;

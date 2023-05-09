@@ -7,7 +7,7 @@ import { Factory, SideEffect1 } from "../../functions.js";
 import { ObservableLike_observe, ObserverLike } from "../../types.js";
 
 const HigherOrderObservable_defer =
-  <C extends ObservableContainer>(
+  <C extends ObservableContainer.Type>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,

@@ -12,17 +12,17 @@ Base type for all Containers.
 
   ↳ [`KeyedContainers`](containers.KeyedContainers-1.md)
 
-  ↳ [`IterableContainer`](containers.IterableContainer-1.md)
+  ↳ [`Type`](containers.EnumeratorContainer.Type.md)
 
-  ↳ [`EnumeratorContainer`](containers.EnumeratorContainer-1.md)
+  ↳ [`Type`](containers.IterableContainer.Type.md)
 
-  ↳ [`PromiseContainer`](containers.PromiseContainer.md)
+  ↳ [`Type`](containers.PromiseContainer.Type.md)
 
-  ↳ [`AsyncIterableContainer`](containers.AsyncIterableContainer-1.md)
+  ↳ [`Type`](containers.AsyncIterableContainer.Type.md)
 
-  ↳ [`EventSourceContainer`](containers.EventSourceContainer.md)
+  ↳ [`Type`](containers.EventSourceContainer.Type.md)
 
-  ↳ [`ObservableContainer`](containers.ObservableContainer-1.md)
+  ↳ [`Type`](containers.ObservableContainer.Type.md)
 
   ↳ [`ReadonlyObjectMapContainer`](containers.ReadonlyObjectMapContainer.md)
 

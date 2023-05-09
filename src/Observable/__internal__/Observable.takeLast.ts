@@ -25,7 +25,7 @@ import {
   QueueableLike_enqueue,
 } from "../../types.js";
 
-type ObservableTakeLast = <C extends ObservableContainer, T>(options?: {
+type ObservableTakeLast = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
 }) => Containers.Operator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {

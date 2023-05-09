@@ -10,7 +10,9 @@ const Runnable_currentTime = (options?: {
 }): RunnableLike<number> =>
   pipe(
     Observable_generate<unknown>(identity, returns(none), options),
-    Observable_withCurrentTime<RunnableContainer, unknown, number>(identity),
+    Observable_withCurrentTime<RunnableContainer.Type, unknown, number>(
+      identity,
+    ),
   );
 
 export default Runnable_currentTime;

@@ -1,15 +1,11 @@
 import Container_concatMap from "../../Container/__internal__/Container.concatMap.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
-import {
-  Containers,
-  ObservableContainers,
-  RunnableContainer,
-} from "../../containers.js";
+import { RunnableContainer } from "../../containers.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
-const Runnable_mergeMap: ObservableContainers.TypeClass<RunnableContainer>["mergeMap"] =
+const Runnable_mergeMap: RunnableContainer.TypeClass["mergeMap"] =
   /*@__PURE__*/ Container_concatMap(
-    Observable_map as Containers.TypeClass<RunnableContainer>["map"],
+    Observable_map as RunnableContainer.TypeClass["map"],
     Runnable_mergeAll,
   );
 

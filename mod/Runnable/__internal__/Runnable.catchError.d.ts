@@ -1,3 +1,3 @@
-import { RunnableContainer, StatefulContainers } from "../../containers.js";
-declare const Runnable_catchError: StatefulContainers.TypeClass<RunnableContainer>["catchError"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_catchError: RunnableContainer.TypeClass["catchError"];
 export default Runnable_catchError;

@@ -16,7 +16,7 @@
 
 ### identity
 
-▸ **identity**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`PromiseContainer`](../interfaces/containers.PromiseContainer.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.PromiseContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -26,7 +26,7 @@
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`PromiseContainer`](../interfaces/containers.PromiseContainer.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.PromiseContainer.Type.md), `T`, `T`\>
 
 ___
 

@@ -44,15 +44,15 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 import Observable_throws from "./Observable.throws.js";
 
 interface ObservableTimeout {
-  timeout<C extends ObservableContainer, T>(
+  timeout<C extends ObservableContainer.Type, T>(
     duration: number,
   ): Containers.Operator<C, T, T>;
   timeout<T>(
     duration: RunnableLike,
-  ): Containers.Operator<RunnableContainer, T, T>;
+  ): Containers.Operator<RunnableContainer.Type, T, T>;
   timeout<T>(
     duration: ObservableLike,
-  ): Containers.Operator<ObservableContainer, T, T>;
+  ): Containers.Operator<ObservableContainer.Type, T, T>;
 }
 
 const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<

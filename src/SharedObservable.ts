@@ -54,9 +54,10 @@ export const backpressureStrategy: SharedObservableContainer.TypeClass["backpres
  * @category Operator
  */
 export const buffer: <T>(options?: {
-  readonly duration?: number | Function1<T, SharedObservableContainer>;
+  // FIXME: This is wrong, it should be able to use any container type.
+  readonly duration?: number | Function1<T, SharedObservableContainer.Type>;
   readonly count?: number;
-}) => Containers.Operator<SharedObservableContainer, T, readonly T[]> =
+}) => Containers.Operator<SharedObservableContainer.Type, T, readonly T[]> =
   Observable_buffer;
 
 /*  
@@ -185,7 +186,7 @@ export const never: SharedObservableContainer.TypeClass["never"] =
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => Containers.Operator<SharedObservableContainer, T, T> =
+) => Containers.Operator<SharedObservableContainer.Type, T, T> =
   Observable_onSubscribe;
 
 export const pairwise: SharedObservableContainer.TypeClass["pairwise"] =

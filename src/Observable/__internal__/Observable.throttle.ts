@@ -11,7 +11,7 @@ import {
 import Observable_lift from "./Observable.lift.js";
 
 const Observable_throttle = /*@__PURE__*/ (<T>() =>
-  HigherOrderObservable_throttle<ObservableContainer, T>(
+  HigherOrderObservable_throttle<ObservableContainer.Type, T>(
     ReadonlyArray_toObservable,
     // FIXME: should just be DeferredObservable_lift
 

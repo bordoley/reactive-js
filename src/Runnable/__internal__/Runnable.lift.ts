@@ -6,10 +6,10 @@ import {
   ObservableLike_isRunnable,
 } from "../../types.js";
 
-const Runnable_lift: Lift<RunnableContainer>["lift"] =
+const Runnable_lift: Lift<RunnableContainer.Type>["lift"] =
   /*@__PURE__*/ Observable_lift({
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: true,
-  }) as Lift<RunnableContainer>["lift"];
+  }) as Lift<RunnableContainer.Type>["lift"];
 
 export default Runnable_lift;

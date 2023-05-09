@@ -197,7 +197,7 @@ type TProperties = {
 
 const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  Containers.Operator<DeferredObservableContainer, TReq, T>,
+  Containers.Operator<DeferredObservableContainer.Type, TReq, T>,
   SchedulerLike,
   Optional<{
     replay?: number;
@@ -214,7 +214,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       ),
       function StreamMixin(
         instance: TProperties,
-        op: Containers.Operator<DeferredObservableContainer, TReq, T>,
+        op: Containers.Operator<DeferredObservableContainer.Type, TReq, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           replay?: number;

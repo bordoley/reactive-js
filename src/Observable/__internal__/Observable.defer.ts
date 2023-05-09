@@ -3,7 +3,7 @@ import { ObservableContainer } from "../../containers.js";
 import Observable_create from "./Observable.create.js";
 
 const Observable_defer =
-  /*@__PURE__*/ HigherOrderObservable_defer<ObservableContainer>(
+  /*@__PURE__*/ HigherOrderObservable_defer<ObservableContainer.Type>(
     Observable_create,
   );
 export default Observable_defer;

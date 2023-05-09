@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.DeferredObservableContainers.TypeClass.md)<[`DeferredObservableContainer`](containers.DeferredObservableContainer-1.md)\>
+- [`TypeClass`](containers.DeferredObservableContainers.TypeClass.md)<[`Type`](containers.DeferredObservableContainer.Type.md)\>
 
   ↳ **`TypeClass`**

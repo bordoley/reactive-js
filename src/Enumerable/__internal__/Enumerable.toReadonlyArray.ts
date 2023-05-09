@@ -1,5 +1,5 @@
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
-import { EnumerableContainer, RunnableContainers } from "../../containers.js";
+import { EnumerableContainer } from "../../containers.js";
 import { isSome, pipe, raiseError } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -8,7 +8,7 @@ import {
 } from "../../types.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
-const Enumerable_toReadonlyArray: RunnableContainers.TypeClass<EnumerableContainer>["toReadonlyArray"] =
+const Enumerable_toReadonlyArray: EnumerableContainer.TypeClass["toReadonlyArray"] =
 
     <T>() =>
     (enumerable: EnumerableLike<T>) => {

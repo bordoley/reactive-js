@@ -63,7 +63,7 @@ const Observable_subscribeOn: ObservableSubscribeOn["subscribeOn"] = (<T>(
 
       pipe(
         observable,
-        Observable_dispatchTo<ObservableContainer, T>(observer),
+        Observable_dispatchTo<ObservableContainer.Type, T>(observer),
         Observable_subscribeWithConfig(scheduler, {
           [BufferLike_capacity]:
             options?.capacity ?? observer[BufferLike_capacity],

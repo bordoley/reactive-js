@@ -8,7 +8,8 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Enumerable"),
 };
 
-const Observable_toEnumerable: EnumerableContainers.TypeClass<ObservableContainer>["toEnumerable"] =
+// FIXME: Wrong typeclass
+const Observable_toEnumerable: EnumerableContainers.TypeClass<ObservableContainer.Type>["toEnumerable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

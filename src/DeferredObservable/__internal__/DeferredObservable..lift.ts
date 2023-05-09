@@ -6,10 +6,10 @@ import {
   ObservableLike_isRunnable,
 } from "../../types.js";
 
-const DeferredObservable_lift: Lift<DeferredObservableContainer>["lift"] =
+const DeferredObservable_lift: Lift<DeferredObservableContainer.Type>["lift"] =
   /*@__PURE__*/ Observable_lift({
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
-  }) as Lift<DeferredObservableContainer>["lift"];
+  }) as Lift<DeferredObservableContainer.Type>["lift"];
 
 export default DeferredObservable_lift;

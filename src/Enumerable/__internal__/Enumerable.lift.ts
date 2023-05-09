@@ -6,8 +6,10 @@ import {
   ObservableLike_isRunnable,
 } from "../../types.js";
 
-const Enumerable_lift: Lift<EnumerableContainer>["lift"] = Observable_lift({
-  [ObservableLike_isEnumerable]: true,
-  [ObservableLike_isRunnable]: true,
-}) as Lift<EnumerableContainer>["lift"];
+const Enumerable_lift: Lift<EnumerableContainer.Type>["lift"] = Observable_lift(
+  {
+    [ObservableLike_isEnumerable]: true,
+    [ObservableLike_isRunnable]: true,
+  },
+) as Lift<EnumerableContainer.Type>["lift"];
 export default Enumerable_lift;

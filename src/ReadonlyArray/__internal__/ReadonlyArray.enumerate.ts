@@ -98,7 +98,7 @@ const ReadonlyArray_enumerate: <T>(options?: {
     o?: unknown,
   ) => EnumeratorLike<T>;
 
-  return ReadonlyArray_toContainer<EnumeratorContainer>(createEnumerator);
+  return ReadonlyArray_toContainer<EnumeratorContainer.Type>(createEnumerator);
 })();
 
 export default ReadonlyArray_enumerate;

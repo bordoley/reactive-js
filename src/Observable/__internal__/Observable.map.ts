@@ -3,7 +3,7 @@ import Observer_createMapObserver from "../../Observer/__internal__/Observer.cre
 import { Containers, ObservableContainer } from "../../containers.js";
 import { Function1, partial, pipe } from "../../functions.js";
 
-type ObservableMap = <C extends ObservableContainer, TA, TB>(
+type ObservableMap = <C extends ObservableContainer.Type, TA, TB>(
   selector: Function1<TA, TB>,
 ) => Containers.Operator<C, TA, TB>;
 const Observable_map: ObservableMap = (<TA, TB>(selector: Function1<TA, TB>) =>

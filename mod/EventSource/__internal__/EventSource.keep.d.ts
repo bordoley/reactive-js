@@ -1,3 +1,3 @@
-import { Containers, EventSourceContainer } from "../../containers.js";
-declare const EventSource_keep: Containers.TypeClass<EventSourceContainer>["keep"];
+import { EventSourceContainer } from "../../containers.js";
+declare const EventSource_keep: EventSourceContainer.TypeClass["keep"];
 export default EventSource_keep;

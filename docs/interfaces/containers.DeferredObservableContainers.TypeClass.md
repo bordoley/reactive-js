@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`DeferredObservableContainer`](containers.DeferredObservableContainer-1.md) |
+| `C` | extends [`Type`](containers.DeferredObservableContainer.Type.md) |
 
 ## Hierarchy
 
@@ -18,9 +18,9 @@
 
   ↳ **`TypeClass`**
 
-  ↳↳ [`TypeClass`](containers.DeferredObservableContainer.TypeClass.md)
-
   ↳↳ [`TypeClass`](containers.RunnableObservableContainers.TypeClass.md)
+
+  ↳↳ [`TypeClass`](containers.DeferredObservableContainer.TypeClass.md)
 
 ## Table of contents
 

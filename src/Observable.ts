@@ -76,9 +76,10 @@ export const backpressureStrategy: ObservableContainer.TypeClass["backpressureSt
  * @category Operator
  */
 export const buffer: <T>(options?: {
-  readonly duration?: number | Function1<T, ObservableContainer>;
+  // FIXME: Duration should be a DeferredObservable
+  readonly duration?: number | Function1<T, ObservableContainer.Type>;
   readonly count?: number;
-}) => Containers.Operator<ObservableContainer, T, readonly T[]> =
+}) => Containers.Operator<ObservableContainer.Type, T, readonly T[]> =
   Observable_buffer;
 
 export const catchError: ObservableContainer.TypeClass["catchError"] =
@@ -185,7 +186,8 @@ export const never: ObservableContainer.TypeClass["never"] = Observable_never;
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => Containers.Operator<ObservableContainer, T, T> = Observable_onSubscribe;
+) => Containers.Operator<ObservableContainer.Type, T, T> =
+  Observable_onSubscribe;
 
 export const pairwise: ObservableContainer.TypeClass["pairwise"] =
   Observable_pairwise;

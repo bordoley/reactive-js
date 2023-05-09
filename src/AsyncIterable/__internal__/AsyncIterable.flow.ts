@@ -78,17 +78,19 @@ const AsyncIterable_flow: AsyncIterableContainer.TypeClass["flow"] =
 
         pipe(
           modeObs,
-          Observable_forEach<ObservableContainer, boolean>((mode: boolean) => {
-            const wasPaused = isPaused;
-            isPaused = mode;
+          Observable_forEach<ObservableContainer.Type, boolean>(
+            (mode: boolean) => {
+              const wasPaused = isPaused;
+              isPaused = mode;
 
-            if (!isPaused && wasPaused) {
-              pipe(
-                observer[SchedulerLike_schedule](continuation),
-                Disposable_addTo(observer),
-              );
-            }
-          }),
+              if (!isPaused && wasPaused) {
+                pipe(
+                  observer[SchedulerLike_schedule](continuation),
+                  Disposable_addTo(observer),
+                );
+              }
+            },
+          ),
           Observable_subscribeWithConfig(observer, observer),
           Disposable_addTo(observer),
           Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)),

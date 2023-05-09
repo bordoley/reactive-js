@@ -6,11 +6,11 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.KeyedContainers.TypeClass.md)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md)\>
+- [`TypeClass`](containers.KeyedContainers.TypeClass.md)<[`Type`](containers.ReadonlyArrayContainer.Type.md)\>
 
-- [`TypeClass`](containers.DeferredContainers.TypeClass.md)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md)\>
+- [`TypeClass`](containers.DeferredContainers.TypeClass.md)<[`Type`](containers.ReadonlyArrayContainer.Type.md)\>
 
-- [`TypeClass`](containers.RunnableContainers.TypeClass.md)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md)\>
+- [`TypeClass`](containers.RunnableContainers.TypeClass.md)<[`Type`](containers.ReadonlyArrayContainer.Type.md)\>
 
   ↳ **`TypeClass`**
 
@@ -166,11 +166,11 @@ ___
 
 ### concatAll
 
-• **concatAll**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), readonly `T`[], `T`\>
+• **concatAll**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), readonly `T`[], `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), readonly `T`[], `T`\>
+▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), readonly `T`[], `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -183,7 +183,7 @@ Container by concatenating the inner sources in order.
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), readonly `T`[], `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), readonly `T`[], `T`\>
 
 #### Inherited from
 
@@ -193,11 +193,11 @@ ___
 
 ### concatMap
 
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, readonly `TB`[]\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TA`, `TB`\>
+• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, readonly `TB`[]\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -214,7 +214,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TA`, `TB`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -224,11 +224,11 @@ ___
 
 ### concatWith
 
-• **concatWith**: <T\>(`snd`: readonly `T`[], ...`tail`: readonly readonly T[][]) => [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+• **concatWith**: <T\>(`snd`: readonly `T`[], ...`tail`: readonly readonly T[][]) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 ##### Type parameters
 
@@ -245,7 +245,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -568,7 +568,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -585,7 +585,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -595,7 +595,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 Returns a Containers.Operator that applies the side effect function to each
 value emitted by the source.
@@ -615,7 +615,7 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -625,7 +625,7 @@ ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 Returns a KeyedContainers.Operator that applies the side effect function to each
 value emitted by the source.
@@ -645,7 +645,7 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -655,7 +655,7 @@ ___
 
 ### forkConcat
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TIn`, `TOut`\>
+▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -668,13 +668,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TIn`, `TOut`\> |
-| `snd` | [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TIn`, `TOut`\> |
-| `...tail` | readonly [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TIn`, `TOut`\>[] |
+| `fst` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TIn`, `TOut`\> |
+| `snd` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TIn`, `TOut`\> |
+| `...tail` | readonly [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TIn`, `TOut`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TIn`, `TOut`\>
 
 #### Inherited from
 
@@ -684,7 +684,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Type parameters
 
@@ -695,7 +695,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -705,7 +705,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -725,7 +725,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -735,7 +735,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -753,7 +753,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -763,7 +763,7 @@ ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -783,7 +783,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -793,7 +793,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
@@ -822,7 +822,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -832,7 +832,7 @@ ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
@@ -861,7 +861,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -871,7 +871,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
 
@@ -889,13 +889,13 @@ Returns a Container that mirrors the source, repeating it whenever the predicate
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
 [TypeClass](containers.DeferredContainers.TypeClass.md).[repeat](containers.DeferredContainers.TypeClass.md#repeat)
 
-▸ **repeat**<`T`\>(`count`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 Returns a Container that mirrors the source, repeating it `count` times.
 
@@ -913,13 +913,13 @@ Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
 [TypeClass](containers.DeferredContainers.TypeClass.md).[repeat](containers.DeferredContainers.TypeClass.md#repeat)
 
-▸ **repeat**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **repeat**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 Returns a Container that mirrors the source, continually repeating it.
 
@@ -931,7 +931,7 @@ Returns a Container that mirrors the source, continually repeating it.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -941,7 +941,7 @@ ___
 
 ### retry
 
-▸ **retry**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **retry**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, re-subscribing
 if the source completes with an error.
@@ -954,13 +954,13 @@ if the source completes with an error.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
 [TypeClass](containers.DeferredContainers.TypeClass.md).[retry](containers.DeferredContainers.TypeClass.md#retry)
 
-▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, resubscrbing
 if the source completes with an error which satisfies the predicate function.
@@ -979,7 +979,7 @@ if the source completes with an error which satisfies the predicate function.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -989,7 +989,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1006,7 +1006,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ReadonlyArrayContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 

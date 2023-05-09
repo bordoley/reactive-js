@@ -3,7 +3,7 @@ import Observer_createForEachObserver from "../../Observer/__internal__/Observer
 import { Containers, ObservableContainer } from "../../containers.js";
 import { SideEffect1, partial, pipe } from "../../functions.js";
 
-type ObservableForEach = <C extends ObservableContainer, T = unknown>(
+type ObservableForEach = <C extends ObservableContainer.Type, T = unknown>(
   effect: SideEffect1<T>,
 ) => Containers.Operator<C, T, T>;
 const Observable_forEach: ObservableForEach = (<T>(effect: SideEffect1<T>) =>

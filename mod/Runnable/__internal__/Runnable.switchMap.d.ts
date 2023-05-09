@@ -1,3 +1,3 @@
-import { ObservableContainers, RunnableContainer } from "../../containers.js";
-declare const Runnable_switchMap: ObservableContainers.TypeClass<RunnableContainer>["switchMap"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_switchMap: RunnableContainer.TypeClass["switchMap"];
 export default Runnable_switchMap;

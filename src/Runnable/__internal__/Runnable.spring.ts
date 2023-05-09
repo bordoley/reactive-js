@@ -21,7 +21,7 @@ const Runnable_spring = (options?: {
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<RunnableContainer, number, [number, number, number]>(
+    Observable_scan<RunnableContainer.Type, number, [number, number, number]>(
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 
@@ -42,8 +42,8 @@ const Runnable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<RunnableContainer, [unknown, unknown, number], 2>(2),
-    Observable_takeWhile<RunnableContainer, number>(isNotEqualTo(1), {
+    Observable_pick<RunnableContainer.Type, [unknown, unknown, number], 2>(2),
+    Observable_takeWhile<RunnableContainer.Type, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

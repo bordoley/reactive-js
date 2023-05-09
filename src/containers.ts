@@ -40,6 +40,7 @@ export const Container_T: typeof __Container_T = __Container_T;
 export const Container_type: typeof __Container_type = __Container_type;
 export const KeyedContainer_TKey: typeof __KeyedContainer_TKey =
   __KeyedContainer_TKey;
+
 /**
  * Base type for all Containers.
  *
@@ -61,7 +62,6 @@ export interface KeyedContainers extends Container {
   readonly [KeyedContainer_TKey]?: unknown;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace KeyedContainers {
   export type Of<C extends Container, TKey, T> = C extends {
     readonly [Container_type]?: unknown;
@@ -155,7 +155,7 @@ export namespace KeyedContainers {
      */
     fromReadonlyArray<
       T,
-      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
+      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer.Type> = ReadonlyArrayContainer.TKey,
     >(options?: {
       readonly start?: number;
       readonly count?: number;
@@ -298,7 +298,6 @@ export namespace KeyedContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Containers {
   /**
    * Utility type for higher order programming with Containers.
@@ -706,7 +705,6 @@ export namespace Containers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AsynchronousContainers {
   /**
    * @noInheritDoc
@@ -719,7 +717,6 @@ export namespace AsynchronousContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DeferredContainers {
   /**
    * @noInheritDoc
@@ -888,7 +885,6 @@ export namespace DeferredContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RunnableContainers {
   /**
    * @noInheritDoc
@@ -978,7 +974,6 @@ export namespace RunnableContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace StatefulContainers {
   /**
    * @noInheritDoc
@@ -1031,14 +1026,13 @@ export namespace StatefulContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumerableContainers {
   /**
    * @noInheritDoc
    */
   export interface TypeClass<
     C extends Container,
-    CEnumerator extends EnumeratorContainer = EnumeratorContainer,
+    CEnumerator extends EnumeratorContainer.Type = EnumeratorContainer.Type,
   > {
     /**
      *
@@ -1063,12 +1057,11 @@ export namespace EnumerableContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ObservableContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends ObservableContainer>
+  export interface TypeClass<C extends ObservableContainer.Type>
     extends Containers.TypeClass<C>,
       StatefulContainers.TypeClass<C> {
     /**
@@ -1546,19 +1539,11 @@ export namespace ObservableContainers {
   }
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface DeferredObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DeferredObservableContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends DeferredObservableContainer>
+  export interface TypeClass<C extends DeferredObservableContainer.Type>
     extends ObservableContainers.TypeClass<C>,
       DeferredContainers.TypeClass<C> {
     /**
@@ -1670,7 +1655,6 @@ export namespace DeferredObservableContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RunnableObservableContainers {
   /**
    * @noInheritDoc
@@ -1744,7 +1728,7 @@ export namespace RunnableObservableContainers {
             readonly selector: Function1<number, T>;
           });
 
-  export interface TypeClass<C extends RunnableContainer>
+  export interface TypeClass<C extends RunnableContainer.Type>
     extends DeferredObservableContainers.TypeClass<C>,
       RunnableContainers.TypeClass<C> {
     /**
@@ -1764,93 +1748,83 @@ export namespace RunnableObservableContainers {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumerableObservableContainers {
-  export interface TypeClass<C extends EnumerableContainer>
+  export interface TypeClass<C extends EnumerableContainer.Type>
     extends RunnableObservableContainers.TypeClass<C> {}
 }
 
-/**
- * A compile time only type for using a Javascript `Iterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface IterableContainer extends Container {
-  readonly [Container_type]?: Iterable<this[typeof Container_T]>;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumeratorContainer extends Container {
-  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumeratorContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+  }
+
   export interface TypeClass
-    extends Containers.TypeClass<EnumeratorContainer>,
-      DeferredContainers.TypeClass<EnumeratorContainer>,
-      RunnableContainers.TypeClass<EnumeratorContainer> {}
+    extends Containers.TypeClass<Type>,
+      DeferredContainers.TypeClass<Type>,
+      RunnableContainers.TypeClass<Type> {}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace IterableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: Iterable<this[typeof Container_T]>;
+  }
+
   export interface TypeClass
-    extends Containers.TypeClass<IterableContainer>,
-      DeferredContainers.TypeClass<IterableContainer>,
-      RunnableContainers.TypeClass<IterableContainer>,
-      EnumerableContainers.TypeClass<IterableContainer> {}
+    extends Containers.TypeClass<Type>,
+      DeferredContainers.TypeClass<Type>,
+      RunnableContainers.TypeClass<Type>,
+      EnumerableContainers.TypeClass<Type> {}
 }
 
-/**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyArrayContainer extends KeyedContainers {
-  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-
-  readonly [KeyedContainer_TKey]?: number;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ReadonlyArrayContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends KeyedContainers {
+    readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+
+    readonly [KeyedContainer_TKey]?: number;
+  }
+
+  export type TKey = KeyedContainers.KeyOf<ReadonlyArrayContainer.Type>;
+
   export interface TypeClass
-    extends KeyedContainers.TypeClass<ReadonlyArrayContainer>,
-      DeferredContainers.TypeClass<ReadonlyArrayContainer>,
-      RunnableContainers.TypeClass<ReadonlyArrayContainer> {
-    empty: KeyedContainers.TypeClass<ReadonlyArrayContainer>["empty"];
-    fromReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["fromReadonlyArray"];
-    reduce: KeyedContainers.TypeClass<ReadonlyArrayContainer>["reduce"];
-    toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"];
+    extends KeyedContainers.TypeClass<Type>,
+      DeferredContainers.TypeClass<Type>,
+      RunnableContainers.TypeClass<Type> {
+    empty: KeyedContainers.TypeClass<Type>["empty"];
+    fromReadonlyArray: KeyedContainers.TypeClass<Type>["fromReadonlyArray"];
+    reduce: KeyedContainers.TypeClass<Type>["reduce"];
+    toReadonlyArray: KeyedContainers.TypeClass<Type>["toReadonlyArray"];
   }
 }
 
-/**
- * A compile time only type for using a Javascript `PromiseLike` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface PromiseContainer extends Container {
-  readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
+export namespace PromiseContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
+  }
+
+  export interface TypeClass extends Containers.TypeClass<Type> {}
 }
 
-/**
- * A compile time only type for using a Javascript `AsyncIterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface AsyncIterableContainer extends Container {
-  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AsyncIterableContainer {
-  export interface TypeClass
-    extends Containers.TypeClass<AsyncIterableContainer> {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+  }
+
+  export interface TypeClass extends Containers.TypeClass<Type> {
     // FIXME: Surely this can be shared
     /**
      * @category Transform
@@ -1862,84 +1836,89 @@ export namespace AsyncIterableContainer {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       },
     ): Function1<
-      Containers.Of<AsyncIterableContainer, T>,
+      Containers.Of<Type, T>,
       PauseableObservableLike<T> & DisposableLike
     >;
   }
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EventSourceContainer extends Container {
-  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+export namespace EventSourceContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+  }
+
+  export interface TypeClass extends Containers.TypeClass<Type> {}
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface ObservableContainer extends Container {
-  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ObservableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends Container {
+    readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+  }
+
   export interface TypeClass
-    extends ObservableContainers.TypeClass<ObservableContainer>,
-      AsynchronousContainers.TypeClass<ObservableContainer> {}
+    extends ObservableContainers.TypeClass<Type>,
+      AsynchronousContainers.TypeClass<Type> {}
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface SharedObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace SharedObservableContainer {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass
-    extends ObservableContainers.TypeClass<SharedObservableContainer> {}
+  export interface Type extends ObservableContainer.Type {
+    readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+  }
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass extends ObservableContainers.TypeClass<Type> {}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DeferredObservableContainer {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass
-    extends DeferredObservableContainers.TypeClass<DeferredObservableContainer> {}
-}
+  export interface Type extends ObservableContainer.Type {
+    readonly [Container_type]?: DeferredObservableLike<
+      this[typeof Container_T]
+    >;
+  }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableContainer extends DeferredObservableContainer {
-  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
-}
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace RunnableContainer {
   /**
    * @noInheritDoc
    */
   export interface TypeClass
-    extends RunnableObservableContainers.TypeClass<RunnableContainer> {}
+    extends DeferredObservableContainers.TypeClass<Type> {}
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableContainer extends RunnableContainer {
-  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+export namespace RunnableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends DeferredObservableContainer.Type {
+    readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass
+    extends RunnableObservableContainers.TypeClass<Type> {}
 }
-// eslint-disable-next-line @typescript-eslint/no-namespace
+
 export namespace EnumerableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends RunnableContainer.Type {
+    readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+  }
+
   interface EnumerableEnumeratorContainer extends Container {
     readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> &
       DisposableLike;
@@ -1949,19 +1928,21 @@ export namespace EnumerableContainer {
    * @noInheritDoc
    */
   export interface TypeClass
-    extends EnumerableObservableContainers.TypeClass<EnumerableContainer>,
-      EnumerableContainers.TypeClass<
-        EnumerableContainer,
-        EnumerableEnumeratorContainer
-      > {}
+    extends EnumerableObservableContainers.TypeClass<Type>,
+      EnumerableContainers.TypeClass<Type, EnumerableEnumeratorContainer> {}
 }
 
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface PauseableObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+export namespace PauseableObservableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface Type extends ObservableContainer.Type {
+    readonly [Container_type]?: PauseableObservableLike<
+      this[typeof Container_T]
+    >;
+  }
+
+  export interface TypeClass extends ObservableContainers.TypeClass<Type> {}
 }
 
 /**

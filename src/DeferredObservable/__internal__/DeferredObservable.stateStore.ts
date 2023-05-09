@@ -7,7 +7,7 @@ const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);
 const DeferredObservable_stateStore = <T>(
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): Containers.Operator<DeferredObservableContainer, Updater<T>, T> =>
+): Containers.Operator<DeferredObservableContainer.Type, Updater<T>, T> =>
   DeferredObservable_actionReducer<Updater<T>, T>(
     updateReducer,
     initialState,

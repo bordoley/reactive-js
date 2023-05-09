@@ -23,7 +23,7 @@ import { none, pipe, returns } from "../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../types.js";
 
 type ObservablePairwise = <
-  C extends ObservableContainer,
+  C extends ObservableContainer.Type,
   T,
 >() => Containers.Operator<C, T, readonly [T, T]>;
 const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {

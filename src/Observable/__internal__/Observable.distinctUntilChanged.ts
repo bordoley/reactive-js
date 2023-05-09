@@ -30,7 +30,7 @@ import {
 import { ObserverLike, ObserverLike_notify } from "../../types.js";
 
 type ObservableDistinctUntilChanged = <
-  C extends ObservableContainer,
+  C extends ObservableContainer.Type,
   T,
 >(options?: {
   readonly equality?: Equality<T>;
@@ -102,7 +102,7 @@ const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
         partial(equality),
         Enumerable_lift,
       );
-    }) as Containers.TypeClass<ObservableContainer>["distinctUntilChanged"];
+    }) as ObservableContainer.TypeClass["distinctUntilChanged"];
   })() as ObservableDistinctUntilChanged;
 
 export default Observable_distinctUntilChanged;

@@ -299,7 +299,7 @@ class ComputeContext {
 
       const subscription = pipe(
         observable,
-        Observable_forEach<ObservableContainer, T>(next => {
+        Observable_forEach<ObservableContainer.Type, T>(next => {
           effect[__AwaitOrObserveEffect_value] = next;
           effect[__AwaitOrObserveEffect_hasValue] = true;
 

@@ -21,13 +21,13 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 interface ObservableTakeUntil {
   takeUntil<T>(
     notifier: EnumerableLike,
-  ): Containers.Operator<EnumerableContainer, T, T>;
+  ): Containers.Operator<EnumerableContainer.Type, T, T>;
   takeUntil<T>(
     notifier: RunnableLike,
-  ): Containers.Operator<RunnableContainer, T, T>;
+  ): Containers.Operator<RunnableContainer.Type, T, T>;
   takeUntil<T>(
     notifier: ObservableLike,
-  ): Containers.Operator<ObservableContainer, T, T>;
+  ): Containers.Operator<ObservableContainer.Type, T, T>;
 }
 const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
   notifier: ObservableLike,
@@ -39,7 +39,7 @@ const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
       Disposable_bindTo(
         pipe(
           notifier,
-          Observable_takeFirst<ObservableContainer, T>(),
+          Observable_takeFirst<ObservableContainer.Type, T>(),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable_addTo(delegate),
         ),

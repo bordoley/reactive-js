@@ -13,7 +13,7 @@ import {
   MappingLike,
   MappingLike_selector,
 } from "../../__internal__/types.js";
-import { Containers, EventSourceContainer } from "../../containers.js";
+import { EventSourceContainer } from "../../containers.js";
 import { Function1, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
@@ -22,7 +22,7 @@ import {
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_map: Containers.TypeClass<EventSourceContainer>["map"] =
+const EventSource_map: EventSourceContainer.TypeClass["map"] =
   /*@__PURE__*/ (() => {
     const createMapEventListener: <TA, TB>(
       delegate: EventListenerLike<TB>,
@@ -68,6 +68,6 @@ const EventSource_map: Containers.TypeClass<EventSourceContainer>["map"] =
 
     return <TA, TB>(selector: Function1<TA, TB>) =>
       pipe(createMapEventListener, partial(selector), EventSource_lift);
-  })() as Containers.TypeClass<EventSourceContainer>["map"];
+  })() as EventSourceContainer.TypeClass["map"];
 
 export default EventSource_map;

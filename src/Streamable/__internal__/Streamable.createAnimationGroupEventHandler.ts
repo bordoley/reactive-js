@@ -166,13 +166,13 @@ const createAnimationGroupEventHandlerStream: <
                   Runnable_animate<T>(
                     isFunction(factory) ? factory(event) : factory,
                   ),
-                  Observable_forEach<RunnableContainer, T>(value => {
+                  Observable_forEach<RunnableContainer.Type, T>(value => {
                     const publisher = publishers[key];
                     if (isSome(publisher)) {
                       publisher[EventListenerLike_notify](value);
                     }
                   }),
-                  Observable_ignoreElements<RunnableContainer, T>(),
+                  Observable_ignoreElements<RunnableContainer.Type, T>(),
                 ),
               ),
             );

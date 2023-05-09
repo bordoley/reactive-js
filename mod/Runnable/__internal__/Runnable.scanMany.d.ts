@@ -1,3 +1,3 @@
-import { ObservableContainers, RunnableContainer } from "../../containers.js";
-declare const Runnable_scanMany: ObservableContainers.TypeClass<RunnableContainer>["scanMany"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_scanMany: RunnableContainer.TypeClass["scanMany"];
 export default Runnable_scanMany;

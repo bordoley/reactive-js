@@ -11,20 +11,20 @@ const DeferredObservable_actionReducer =
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
-  ): Containers.Operator<DeferredObservableContainer, TAction, T> =>
+  ): Containers.Operator<DeferredObservableContainer.Type, TAction, T> =>
   obs =>
     DeferredObservable_defer(() => {
       const acc = initialState();
       return pipe(
         obs,
-        Observable_scan<DeferredObservableContainer, TAction, T>(
+        Observable_scan<DeferredObservableContainer.Type, TAction, T>(
           reducer,
           returns(acc),
         ),
-        Observable_mergeWith<DeferredObservableContainer, T>(
+        Observable_mergeWith<DeferredObservableContainer.Type, T>(
           pipe(acc, Optional_toObservable()),
         ),
-        Observable_distinctUntilChanged<DeferredObservableContainer, T>(
+        Observable_distinctUntilChanged<DeferredObservableContainer.Type, T>(
           options,
         ),
       );

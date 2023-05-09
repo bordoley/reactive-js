@@ -42,7 +42,7 @@ import {
 } from "../../types.js";
 
 const PauseableObservable_create: <T>(
-  op: Containers.Operator<DeferredObservableContainer, boolean, T>,
+  op: Containers.Operator<DeferredObservableContainer.Type, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -62,7 +62,7 @@ const PauseableObservable_create: <T>(
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: Containers.Operator<DeferredObservableContainer, boolean, T>,
+        op: Containers.Operator<DeferredObservableContainer.Type, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
@@ -71,20 +71,22 @@ const PauseableObservable_create: <T>(
       ): PauseableObservableLike<T> & DisposableLike {
         const liftedOp = compose(
           Observable_backpressureStrategy<
-            DeferredObservableContainer,
+            DeferredObservableContainer.Type,
             boolean | Updater<boolean>
           >(1, "drop-oldest"),
-          Observable_mergeWith<DeferredObservableContainer, boolean>(
+          Observable_mergeWith<DeferredObservableContainer.Type, boolean>(
             // Initialize to paused state
             pipe(true, Optional_toObservable()),
           ),
           Observable_distinctUntilChanged<
-            DeferredObservableContainer,
+            DeferredObservableContainer.Type,
             boolean
           >(),
-          Observable_forEach<DeferredObservableContainer, boolean>(isPaused => {
-            instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
-          }),
+          Observable_forEach<DeferredObservableContainer.Type, boolean>(
+            isPaused => {
+              instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
+            },
+          ),
           op,
         );
 

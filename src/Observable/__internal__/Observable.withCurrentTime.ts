@@ -23,7 +23,7 @@ import {
   SchedulerLike_now,
 } from "../../types.js";
 
-type ObservableWithCurrentTime = <C extends ObservableContainer, TA, TB>(
+type ObservableWithCurrentTime = <C extends ObservableContainer.Type, TA, TB>(
   selector: Function2<number, TA, TB>,
 ) => Containers.Operator<C, TA, TB>;
 const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<

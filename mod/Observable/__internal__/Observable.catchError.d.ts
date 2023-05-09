@@ -1,3 +1,3 @@
-import { ObservableContainer, StatefulContainers } from "../../containers.js";
-declare const Observable_catchError: StatefulContainers.TypeClass<ObservableContainer>["catchError"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_catchError: ObservableContainer.TypeClass["catchError"];
 export default Observable_catchError;

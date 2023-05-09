@@ -1,3 +1,3 @@
-import { DeferredContainers, DeferredObservableContainer } from "../../containers.js";
-declare const DeferredObservable_concatMap: DeferredContainers.TypeClass<DeferredObservableContainer>["concatMap"];
+import { DeferredObservableContainer } from "../../containers.js";
+declare const DeferredObservable_concatMap: DeferredObservableContainer.TypeClass["concatMap"];
 export default DeferredObservable_concatMap;

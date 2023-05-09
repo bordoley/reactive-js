@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`EnumerableContainer`](containers.EnumerableContainer-1.md) |
+| `C` | extends [`Type`](containers.EnumerableContainer.Type.md) |
 
 ## Hierarchy
 

@@ -49,7 +49,9 @@ import Observable_lift from "./Observable.lift.js";
 import Observable_never from "./Observable.never.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type ObservableBuffer = <C extends ObservableContainer, T>(options?: {
+// FIXME: This is wrong. Since Observable and SharedObservable should
+// be able to use any duration type
+type ObservableBuffer = <C extends ObservableContainer.Type, T>(options?: {
   readonly duration?: number | Function1<T, C>;
   readonly count?: number;
 }) => Containers.Operator<C, T, readonly T[]>;
@@ -146,7 +148,7 @@ const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
             ] = pipe(
               next,
               this[__BufferObserver_durationFunction],
-              Observable_forEach<ObservableContainer>(doOnNotify),
+              Observable_forEach<ObservableContainer.Type>(doOnNotify),
               Observable_subscribeWithConfig(this, this),
               Disposable_addTo(this),
             );

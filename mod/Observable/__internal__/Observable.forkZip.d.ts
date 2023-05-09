@@ -1,3 +1,3 @@
-import { Containers, ObservableContainer } from "../../containers.js";
-declare const Observable_forkZip: Containers.TypeClass<ObservableContainer>["forkZip"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_forkZip: ObservableContainer.TypeClass["forkZip"];
 export default Observable_forkZip;

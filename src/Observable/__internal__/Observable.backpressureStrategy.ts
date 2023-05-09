@@ -23,7 +23,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../types.js";
 
-type ObservableBackpressureStrategy = <C extends ObservableContainer, T>(
+type ObservableBackpressureStrategy = <C extends ObservableContainer.Type, T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
 ) => Containers.Operator<C, T, T>;
