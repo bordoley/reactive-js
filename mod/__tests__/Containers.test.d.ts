@@ -1,3 +1,3 @@
-import { Container, Containers, DeferredContainers, RunnableContainers } from "../containers.js";
-declare const Containers_test: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
+import { Container, ContainerTypeClass, DeferredTypeClass, RunnableTypeClass } from "../containers.js";
+declare const Containers_test: <C extends Container>(m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>) => import("../__internal__/testing.js").Describe;
 export default Containers_test;

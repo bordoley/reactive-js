@@ -1,4 +1,4 @@
-import { ObservableContainer, RunnableContainers } from "../../containers.js";
+import { ObservableContainer, RunnableTypeClass } from "../../containers.js";
 import { errorWithDebugMessage } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
@@ -9,7 +9,7 @@ const throwOptions = {
 };
 
 // FIXME, wrong typeclass
-const Observable_toRunnable: RunnableContainers.TypeClass<ObservableContainer.Type>["toRunnable"] =
+const Observable_toRunnable: RunnableTypeClass<ObservableContainer.Type>["toRunnable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

@@ -10,7 +10,7 @@ import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import {
   Containers,
   ObservableContainer,
-  ObservableContainers,
+  ObservableTypeClass,
 } from "../../containers.js";
 import {
   Factory,
@@ -32,7 +32,7 @@ const HigherOrderObservable_scanMany =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
-  ): ObservableContainers.TypeClass<C>["scanMany"] =>
+  ): ObservableTypeClass<C>["scanMany"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

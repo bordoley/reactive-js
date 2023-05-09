@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.RunnableObservableContainers.TypeClass.md)<[`Type`](containers.RunnableContainer.Type.md)\>
+- [`RunnableObservableTypeClass`](containers.RunnableObservableTypeClass.md)<[`Type`](containers.RunnableContainer.Type.md)\>
 
   ↳ **`TypeClass`**

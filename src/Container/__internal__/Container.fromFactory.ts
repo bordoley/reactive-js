@@ -1,4 +1,4 @@
-import { Container, Containers } from "../../containers.js";
+import { Container, ContainerTypeClass, Containers } from "../../containers.js";
 import { Factory, Function1, Optional, pipe } from "../../functions.js";
 
 const Container_fromFactory =
@@ -6,7 +6,7 @@ const Container_fromFactory =
     fromOptional: <T>(
       options?: O,
     ) => Function1<Optional<T>, Containers.Of<C, T>>,
-    map: Containers.TypeClass<C>["map"],
+    map: ContainerTypeClass<C>["map"],
   ) =>
   <T>(factory: Factory<T>, options?: O): Containers.Of<C, T> =>
     pipe(

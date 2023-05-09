@@ -17,7 +17,7 @@ import {
 import {
   Containers,
   ObservableContainer,
-  StatefulContainers,
+  StatefulTypeClass,
 } from "../../containers.js";
 import {
   Function1,
@@ -38,7 +38,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => Containers.Operator<C, T, T>,
-): StatefulContainers.TypeClass<C>["catchError"] => {
+): StatefulTypeClass<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
       mix(
@@ -89,7 +89,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
       createCatchErrorObserver,
       partial(errorHandler),
       lift,
-    )) as StatefulContainers.TypeClass<C>["catchError"];
+    )) as StatefulTypeClass<C>["catchError"];
 };
 
 export default HigherOrderObservable_catchError;

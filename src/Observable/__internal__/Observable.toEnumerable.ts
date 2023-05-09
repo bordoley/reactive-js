@@ -1,4 +1,4 @@
-import { EnumerableContainers, ObservableContainer } from "../../containers.js";
+import { EnumerableTypeClass, ObservableContainer } from "../../containers.js";
 import { errorWithDebugMessage } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
@@ -9,7 +9,7 @@ const throwOptions = {
 };
 
 // FIXME: Wrong typeclass
-const Observable_toEnumerable: EnumerableContainers.TypeClass<ObservableContainer.Type>["toEnumerable"] =
+const Observable_toEnumerable: EnumerableTypeClass<ObservableContainer.Type>["toEnumerable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

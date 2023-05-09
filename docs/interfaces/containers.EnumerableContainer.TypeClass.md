@@ -6,8 +6,8 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.EnumerableObservableContainers.TypeClass.md)<[`Type`](containers.EnumerableContainer.Type.md)\>
+- [`EnumerableObservableTypeClass`](containers.EnumerableObservableTypeClass.md)<[`Type`](containers.EnumerableContainer.Type.md)\>
 
-- [`TypeClass`](containers.EnumerableContainers.TypeClass.md)<[`Type`](containers.EnumerableContainer.Type.md), `EnumerableEnumeratorContainer`\>
+- [`EnumerableTypeClass`](containers.EnumerableTypeClass.md)<[`Type`](containers.EnumerableContainer.Type.md), `EnumerableEnumeratorContainer`\>
 
   ↳ **`TypeClass`**

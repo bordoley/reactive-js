@@ -79,10 +79,80 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { RunnableContainer } from "./containers.js";
-import { Factory } from "./functions.js";
+import { Factory, Function1 } from "./functions.js";
 import { RunnableLike } from "./types.js";
 
-export const animate: RunnableContainer.TypeClass["animate"] = Runnable_animate;
+export namespace AnimationConfig {
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface Delay {
+    readonly type: "delay";
+    readonly duration: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface KeyFrame {
+    readonly type: "keyframe";
+    readonly from: number;
+    readonly to: number;
+    readonly duration: number;
+    readonly easing?: Function1<number, number>;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface Frame {
+    readonly type: "frame";
+    readonly value: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface Loop<T> {
+    readonly type: "loop";
+    readonly animation: Description<T> | readonly Description<T>[];
+    readonly count?: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface Spring {
+    readonly type: "spring";
+    readonly from: number;
+    readonly to: number;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }
+
+  export type Description<T = number> =
+    | Delay
+    | Loop<T>
+    | (T extends number
+        ? (KeyFrame | Spring | Frame) & {
+            readonly selector?: never;
+          }
+        : (KeyFrame | Spring | Frame) & {
+            readonly selector: Function1<number, T>;
+          });
+}
+
+export const animate: <T = number>(
+  configs:
+    | AnimationConfig.Description<T>
+    | readonly AnimationConfig.Description<T>[],
+) => RunnableLike<T> = Runnable_animate;
 
 export const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"] =
   Observable_backpressureStrategy;
@@ -114,8 +184,10 @@ export const concatWith: RunnableContainer.TypeClass["concatWith"] =
 export const contains: RunnableContainer.TypeClass["contains"] =
   Runnable_contains;
 
-export const currentTime: RunnableContainer.TypeClass["currentTime"] =
-  Runnable_currentTime;
+export const currentTime: (options?: {
+  readonly delay?: number;
+  readonly delayStart?: boolean;
+}) => RunnableLike<number> = Runnable_currentTime;
 
 export const decodeWithCharset: RunnableContainer.TypeClass["decodeWithCharset"] =
   Observable_decodeWithCharset;

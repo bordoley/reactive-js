@@ -1,3 +1,3 @@
-import { Containers, ObservableContainer, StatefulContainers } from "../../containers.js";
-declare const HigherOrderObservable_encodeUtf8: <C extends ObservableContainer.Type>(defer: <T>(factory: import("../../functions.js").Factory<Containers.Of<C, T>>) => Containers.Of<C, T>, map: <TA, TB>(selector: import("../../functions.js").Function1<TA, TB>) => Containers.Operator<C, TA, TB>) => () => Containers.Operator<C, string, Uint8Array>;
+import { ContainerTypeClass, ObservableContainer, StatefulTypeClass } from "../../containers.js";
+declare const HigherOrderObservable_encodeUtf8: <C extends ObservableContainer.Type>(defer: <T>(factory: import("../../functions.js").Factory<import("../../containers.js").Containers.Of<C, T>>) => import("../../containers.js").Containers.Of<C, T>, map: <TA, TB>(selector: import("../../functions.js").Function1<TA, TB>) => import("../../containers.js").Containers.Operator<C, TA, TB>) => () => import("../../containers.js").Containers.Operator<C, string, Uint8Array>;
 export default HigherOrderObservable_encodeUtf8;

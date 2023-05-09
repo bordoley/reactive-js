@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.ObservableContainers.TypeClass.md)<[`Type`](containers.SharedObservableContainer.Type.md)\>
+- [`ObservableTypeClass`](containers.ObservableTypeClass.md)<[`Type`](containers.SharedObservableContainer.Type.md)\>
 
   ↳ **`TypeClass`**

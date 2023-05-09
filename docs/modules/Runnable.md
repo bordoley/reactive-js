@@ -4,13 +4,15 @@
 
 ## Table of contents
 
+### Namespaces
+
+- [AnimationConfig](Runnable.AnimationConfig.md)
+
 ### Constructor Functions
 
-- [animate](Runnable.md#animate)
 - [combineLatest](Runnable.md#combinelatest)
 - [compute](Runnable.md#compute)
 - [concat](Runnable.md#concat)
-- [currentTime](Runnable.md#currenttime)
 - [defer](Runnable.md#defer)
 - [empty](Runnable.md#empty)
 - [fromEnumeratorFactory](Runnable.md#fromenumeratorfactory)
@@ -80,6 +82,8 @@
 
 ### Other Functions
 
+- [animate](Runnable.md#animate)
+- [currentTime](Runnable.md#currenttime)
 - [run](Runnable.md#run)
 
 ### Transform Functions
@@ -97,28 +101,6 @@
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
 
 ## Constructor Functions
-
-### animate
-
-▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `configs` | [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T`\>[] |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-___
 
 ### combineLatest
 
@@ -387,24 +369,6 @@ Returns a Container which emits all values from each source sequentially.
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-___
-
-### currentTime
-
-▸ **currentTime**(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -3007,6 +2971,46 @@ ___
 ___
 
 ## Other Functions
+
+### animate
+
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `configs` | [`Description`](Runnable.AnimationConfig.md#description)<`T`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
+### currentTime
+
+▸ **currentTime**(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
+
+___
 
 ### run
 

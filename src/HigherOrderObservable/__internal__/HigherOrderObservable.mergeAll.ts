@@ -36,7 +36,7 @@ import {
 import {
   Containers,
   ObservableContainer,
-  ObservableContainers,
+  ObservableTypeClass,
 } from "../../containers.js";
 import {
   Function1,
@@ -64,7 +64,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
   ) => Containers.Operator<C, Containers.Of<C, T>, T>,
-): ObservableContainers.TypeClass<C>["mergeAll"] => {
+): ObservableTypeClass<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

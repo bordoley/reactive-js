@@ -7,31 +7,22 @@
 ### Namespaces
 
 - [AsyncIterableContainer](containers.AsyncIterableContainer.md)
-- [AsynchronousContainers](containers.AsynchronousContainers.md)
 - [Containers](containers.Containers.md)
-- [DeferredContainers](containers.DeferredContainers.md)
 - [DeferredObservableContainer](containers.DeferredObservableContainer.md)
-- [DeferredObservableContainers](containers.DeferredObservableContainers.md)
 - [DictionaryContainer](containers.DictionaryContainer.md)
 - [EnumerableContainer](containers.EnumerableContainer.md)
-- [EnumerableContainers](containers.EnumerableContainers.md)
-- [EnumerableObservableContainers](containers.EnumerableObservableContainers.md)
 - [EnumeratorContainer](containers.EnumeratorContainer.md)
 - [EventSourceContainer](containers.EventSourceContainer.md)
 - [IterableContainer](containers.IterableContainer.md)
 - [KeyedContainers](containers.KeyedContainers.md)
 - [ObservableContainer](containers.ObservableContainer.md)
-- [ObservableContainers](containers.ObservableContainers.md)
 - [PauseableObservableContainer](containers.PauseableObservableContainer.md)
 - [PromiseContainer](containers.PromiseContainer.md)
 - [ReadonlyArrayContainer](containers.ReadonlyArrayContainer.md)
 - [ReadonlyMapContainer](containers.ReadonlyMapContainer.md)
 - [ReadonlyObjectMapContainer](containers.ReadonlyObjectMapContainer.md)
 - [RunnableContainer](containers.RunnableContainer.md)
-- [RunnableContainers](containers.RunnableContainers.md)
-- [RunnableObservableContainers](containers.RunnableObservableContainers.md)
 - [SharedObservableContainer](containers.SharedObservableContainer.md)
-- [StatefulContainers](containers.StatefulContainers.md)
 
 ### Container Interfaces
 
@@ -40,6 +31,20 @@
 ### KeyedContainers Interfaces
 
 - [KeyedContainers](../interfaces/containers.KeyedContainers-1.md)
+
+### Other Interfaces
+
+- [AsynchronousTypeClass](../interfaces/containers.AsynchronousTypeClass.md)
+- [ContainerTypeClass](../interfaces/containers.ContainerTypeClass.md)
+- [DeferredObservableTypeClass](../interfaces/containers.DeferredObservableTypeClass.md)
+- [DeferredTypeClass](../interfaces/containers.DeferredTypeClass.md)
+- [EnumerableObservableTypeClass](../interfaces/containers.EnumerableObservableTypeClass.md)
+- [EnumerableTypeClass](../interfaces/containers.EnumerableTypeClass.md)
+- [KeyedContainerTypeClass](../interfaces/containers.KeyedContainerTypeClass.md)
+- [ObservableTypeClass](../interfaces/containers.ObservableTypeClass.md)
+- [RunnableObservableTypeClass](../interfaces/containers.RunnableObservableTypeClass.md)
+- [RunnableTypeClass](../interfaces/containers.RunnableTypeClass.md)
+- [StatefulTypeClass](../interfaces/containers.StatefulTypeClass.md)
 
 ### Variables
 
