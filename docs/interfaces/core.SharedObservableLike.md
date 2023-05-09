@@ -4,8 +4,6 @@
 
 [core](../modules/core.md).SharedObservableLike
 
-The source of notifications which can be consumed by an `ObserverLike` instance.
-
 ## Type parameters
 
 | Name | Type |
@@ -27,10 +25,6 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 - [[\_\_\_ObservableLike\_isDeferred]](core.SharedObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](core.SharedObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](core.SharedObservableLike.md#[___observablelike_isrunnable])
-
-### Methods
-
-- [[\_\_\_ObservableLike\_observe]](core.SharedObservableLike.md#[___observablelike_observe])
 
 ## Properties
 
@@ -68,25 +62,3 @@ on a VirtualTimeScheduler.
 #### Overrides
 
 [ObservableLike](core.ObservableLike.md).[[___ObservableLike_isRunnable]](core.ObservableLike.md#[___observablelike_isrunnable])
-
-## Methods
-
-### [\_\_\_ObservableLike\_observe]
-
-▸ **[___ObservableLike_observe]**(`observer`): `void`
-
-Subscribes the given `ObserverLike` to the `ObservableLike` source.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `observer` | [`ObserverLike`](core.ObserverLike.md)<`T`\> | The observer. |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[ObservableLike](core.ObservableLike.md).[[___ObservableLike_observe]](core.ObservableLike.md#[___observablelike_observe])

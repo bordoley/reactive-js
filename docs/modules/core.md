@@ -49,6 +49,7 @@
 - [PromiseContainer](../interfaces/core.PromiseContainer.md)
 - [RunnableContainer](../interfaces/core.RunnableContainer-1.md)
 - [SharedObservableContainer](../interfaces/core.SharedObservableContainer-1.md)
+- [SharedObservableLike](../interfaces/core.SharedObservableLike.md)
 
 ### Event Interfaces
 
@@ -78,7 +79,6 @@
 
 ### Other Interfaces
 
-- [SharedObservableLike](../interfaces/core.SharedObservableLike.md)
 - [StreamableLike](../interfaces/core.StreamableLike.md)
 
 ### Queueing Interfaces
