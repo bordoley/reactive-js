@@ -1,5 +1,5 @@
+import { Container, Containers, DeferredContainers } from "../../containers.js";
 import { pipe } from "../../functions.js";
-import { Container, Containers, DeferredContainers } from "../../types.js";
 
 const Container_startWith =
   <C extends Container>(

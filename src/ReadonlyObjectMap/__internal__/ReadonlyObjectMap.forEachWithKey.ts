@@ -1,10 +1,10 @@
 import { hasOwn } from "../../__internal__/Object.js";
-import { Function1, SideEffect2 } from "../../functions.js";
 import {
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { Function1, SideEffect2 } from "../../functions.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_forEachWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["forEachWithKey"] =
 

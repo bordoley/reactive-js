@@ -1,5 +1,5 @@
+import { Container, Containers, RunnableContainers } from "../../containers.js";
 import { Equality, Function1, isEqualTo } from "../../functions.js";
-import { Container, Containers, RunnableContainers } from "../../types.js";
 
 const Container_contains =
   <C extends Container>(

@@ -1,10 +1,10 @@
 import Disposable_bindTo from "../../Disposable/__internal__/Disposable.bindTo.js";
 import EventSource_create from "../../EventSource/__internal__/EventSource.create.js";
+import { ObservableContainer } from "../../containers.js";
 import { Function1, bindMethod, pipe } from "../../functions.js";
 import {
   EventListenerLike_notify,
   EventSourceLike,
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

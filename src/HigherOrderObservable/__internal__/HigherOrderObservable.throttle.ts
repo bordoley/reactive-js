@@ -32,6 +32,7 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import {
   Function1,
   Optional,
@@ -43,9 +44,7 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_isDisposed,
-  ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,

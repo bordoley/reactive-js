@@ -1,11 +1,8 @@
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createDispatchToObserver from "../../Observer/__internal__/Observer.createDispatchToObserver.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
-import {
-  Containers,
-  DispatcherLike,
-  ObservableContainer,
-} from "../../types.js";
+import { DispatcherLike } from "../../types.js";
 
 type ObservableDispatchTo = <C extends ObservableContainer, T = unknown>(
   dispatcher: DispatcherLike<T>,

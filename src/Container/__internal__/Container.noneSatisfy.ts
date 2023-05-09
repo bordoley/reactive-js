@@ -1,5 +1,5 @@
+import { Container, Containers, RunnableContainers } from "../../containers.js";
 import { Function1, Predicate, compose, negate } from "../../functions.js";
-import { Container, Containers, RunnableContainers } from "../../types.js";
 
 const Container_noneSatisfy =
   <C extends Container>(

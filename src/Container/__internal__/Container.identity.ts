@@ -1,5 +1,5 @@
+import { Container, Containers } from "../../containers.js";
 import { identity, returns } from "../../functions.js";
-import { Container, Containers } from "../../types.js";
 
 const Container_identity: <C extends Container, T>() => Containers.Operator<
   C,

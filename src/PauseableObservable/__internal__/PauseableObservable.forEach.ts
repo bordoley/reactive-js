@@ -1,6 +1,6 @@
 import Observer_createForEachObserver from "../../Observer/__internal__/Observer.createForEachObserver.js";
+import { Containers, PauseableObservableContainer } from "../../containers.js";
 import { SideEffect1, partial, pipe } from "../../functions.js";
-import { Containers, PauseableObservableContainer } from "../../types.js";
 import PauseableObservable_lift from "./PauseableObservable.lift.js";
 
 type PauseableObservableForEach = <

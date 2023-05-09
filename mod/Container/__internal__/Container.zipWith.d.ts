@@ -1,4 +1,4 @@
-import { Container, Containers } from "../../types.js";
+import { Container, Containers } from "../../containers.js";
 declare const Container_zipWith: <C extends Container>(zip: {
     <TA, TB>(a: Containers.Of<C, TA>, b: Containers.Of<C, TB>): Containers.Of<C, readonly [TA, TB]>;
     <TA_1, TB_1, TC>(a: Containers.Of<C, TA_1>, b: Containers.Of<C, TB_1>, c: Containers.Of<C, TC>): Containers.Of<C, readonly [TA_1, TB_1, TC]>;

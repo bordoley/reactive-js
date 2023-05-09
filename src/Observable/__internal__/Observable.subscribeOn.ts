@@ -1,11 +1,11 @@
 import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import { ObservableContainer } from "../../containers.js";
 import { Factory, Function1, isFunction, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
   DeferredObservableLike,
   DisposableLike,
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

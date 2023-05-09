@@ -5,13 +5,15 @@ import PauseableObservable_keep from "./PauseableObservable/__internal__/Pauseab
 import PauseableObservable_map from "./PauseableObservable/__internal__/PauseableObservable.map.js";
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
-import { Function1 } from "./functions.js";
 import {
   Containers,
-  DispatcherLike,
   ObservableContainers,
-  ObservableLike,
   PauseableObservableContainer,
+} from "./containers.js";
+import { Function1 } from "./functions.js";
+import {
+  DispatcherLike,
+  ObservableLike,
   PauseableObservableLike,
 } from "./types.js";
 

@@ -59,11 +59,9 @@ import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js"
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import { DeferredObservableContainer } from "./containers.js";
 import { Factory } from "./functions.js";
-import {
-  DeferredObservableContainer,
-  DeferredObservableLike,
-} from "./types.js";
+import { DeferredObservableLike } from "./types.js";
 
 export const backpressureStrategy: DeferredObservableContainer.TypeClass["backpressureStrategy"] =
   Observable_backpressureStrategy;

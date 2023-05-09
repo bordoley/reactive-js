@@ -27,6 +27,7 @@ import {
   __MemoOrUsingEffect_func,
   __MemoOrUsingEffect_value,
 } from "../../__internal__/symbols.js";
+import { ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Optional,
@@ -50,7 +51,6 @@ import {
   EnumerableLike,
   KeyedCollectionLike_get,
   MulticastObservableLike_buffer,
-  ObservableContainer,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,

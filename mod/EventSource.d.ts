@@ -1,5 +1,6 @@
+import { Containers, EventSourceContainer } from "./containers.js";
 import { Function1, SideEffect1 } from "./functions.js";
-import { Containers, DisposableLike, EventSourceContainer, EventSourceLike } from "./types.js";
+import { DisposableLike, EventSourceLike } from "./types.js";
 export declare const addEventHandler: <T>(handler: SideEffect1<T>) => Function1<EventSourceLike<T>, DisposableLike>;
 /**
  * @category Constructor

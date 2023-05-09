@@ -1,4 +1,5 @@
-import { Containers, EnumerableContainer, EnumerableLike, ObservableContainer, ObservableLike, RunnableContainer, RunnableLike } from "../../types.js";
+import { Containers, EnumerableContainer, ObservableContainer, RunnableContainer } from "../../containers.js";
+import { EnumerableLike, ObservableLike, RunnableLike } from "../../types.js";
 interface ObservableTakeUntil {
     takeUntil<T>(notifier: EnumerableLike): Containers.Operator<EnumerableContainer, T, T>;
     takeUntil<T>(notifier: RunnableLike): Containers.Operator<RunnableContainer, T, T>;

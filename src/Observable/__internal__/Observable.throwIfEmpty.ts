@@ -17,6 +17,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Optional,
@@ -26,10 +27,8 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
   DisposableLike,
   DisposableLike_dispose,
-  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../types.js";

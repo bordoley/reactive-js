@@ -27,15 +27,17 @@ import {
   QueueLike_dequeue,
   WithLatestLike,
 } from "../../__internal__/types.js";
+import {
+  Containers,
+  ObservableContainer,
+  ObservableContainers,
+} from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
-  Containers,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableContainer,
-  ObservableContainers,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,

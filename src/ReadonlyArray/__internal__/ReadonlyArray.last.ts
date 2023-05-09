@@ -1,5 +1,8 @@
+import {
+  ReadonlyArrayContainer,
+  RunnableContainers,
+} from "../../containers.js";
 import { none } from "../../functions.js";
-import { ReadonlyArrayContainer, RunnableContainers } from "../../types.js";
 
 const ReadonlyArray_last: RunnableContainers.TypeClass<ReadonlyArrayContainer>["last"] =
 

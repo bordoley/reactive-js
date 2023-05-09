@@ -1,6 +1,6 @@
 import Container_flatMapIterable from "../../Container/__internal__/Container.flatMapIterable.js";
 import Iterable_toObservable from "../../Iterable/__internal__/Iterable.toObservable.js";
-import { Containers, RunnableContainer } from "../../types.js";
+import { Containers, RunnableContainer } from "../../containers.js";
 import Runnable_concatMap from "./Runnable.concatMap.js";
 
 const Runnable_flatMapIterable: Containers.TypeClass<RunnableContainer>["flatMapIterable"] =

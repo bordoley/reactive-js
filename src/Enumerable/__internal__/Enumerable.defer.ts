@@ -1,5 +1,5 @@
 import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
-import { EnumerableContainer } from "../../types.js";
+import { EnumerableContainer } from "../../containers.js";
 import Enumerable_create from "./Enumerable.create.js";
 
 const Enumerable_defer =

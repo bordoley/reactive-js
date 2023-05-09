@@ -1,10 +1,10 @@
 import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";
-import { partial, pipe } from "../../functions.js";
 import {
   ObservableContainers,
   PauseableObservableContainer,
-  QueueableLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { partial, pipe } from "../../functions.js";
+import { QueueableLike } from "../../types.js";
 import PauseableObservable_lift from "./PauseableObservable.lift.js";
 
 const PauseableObservable_enqueue: ObservableContainers.TypeClass<PauseableObservableContainer>["enqueue"] =

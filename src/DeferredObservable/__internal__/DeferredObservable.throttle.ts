@@ -3,7 +3,7 @@ import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/Readonl
 import {
   DeferredObservableContainer,
   ObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import DeferredObservable_lift from "./DeferredObservable..lift.js";
 
 const DeferredObservable_throttle: ObservableContainers.TypeClass<DeferredObservableContainer>["throttle"] =

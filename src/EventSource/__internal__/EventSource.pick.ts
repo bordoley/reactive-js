@@ -1,5 +1,5 @@
 import Container_pick from "../../Container/__internal__/Container.pick.js";
-import { Containers, EventSourceContainer } from "../../types.js";
+import { Containers, EventSourceContainer } from "../../containers.js";
 import EventSource_map from "./EventSource.map.js";
 
 const EventSource_pick: Containers.TypeClass<EventSourceContainer>["pick"] =

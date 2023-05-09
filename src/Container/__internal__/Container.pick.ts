@@ -1,4 +1,4 @@
-import { Container, Containers } from "../../types.js";
+import { Container, Containers } from "../../containers.js";
 
 const Container_pick =
   <C extends Container>(

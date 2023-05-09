@@ -12,10 +12,9 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
+import { Containers, EnumeratorContainer } from "../../containers.js";
 import { Predicate, none, unsafeCast } from "../../functions.js";
 import {
-  Containers,
-  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,

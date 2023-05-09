@@ -1,4 +1,4 @@
-import { Container, Containers, DeferredContainers } from "../../types.js";
+import { Container, Containers, DeferredContainers } from "../../containers.js";
 declare const Container_endWith: <C extends Container>(concatWith: <T>(snd: Containers.Of<C, T>, ...tail: readonly Containers.Of<C, T>[]) => Containers.Operator<C, T, T>, fromReadonlyArray: <T_1>(options?: {
     readonly start?: number | undefined;
     readonly count?: number | undefined;

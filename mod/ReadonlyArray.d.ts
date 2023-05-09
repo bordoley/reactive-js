@@ -1,5 +1,6 @@
+import { ReadonlyArrayContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
-import { DisposableLike, EnumerableLike, EnumeratorLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyArrayContainer, RunnableLike, SchedulerLike } from "./types.js";
+import { DisposableLike, EnumerableLike, EnumeratorLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export declare const empty: ReadonlyArrayContainer.TypeClass["empty"];
 export declare const entries: ReadonlyArrayContainer.TypeClass["entries"];
 interface Enumerate extends ReadonlyArrayContainer.TypeClass {

@@ -16,6 +16,7 @@ import {
   ReducerAccumulatorLike_acc,
   ReducerAccumulatorLike_reducer,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Reducer,
@@ -25,9 +26,7 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_dispose,
-  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../types.js";

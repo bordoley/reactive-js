@@ -1,7 +1,7 @@
 import Observable_lift from "../../Observable/__internal__/Observable.lift.js";
 import { Lift } from "../../__internal__/types.js";
+import { EnumerableContainer } from "../../containers.js";
 import {
-  EnumerableContainer,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
 } from "../../types.js";

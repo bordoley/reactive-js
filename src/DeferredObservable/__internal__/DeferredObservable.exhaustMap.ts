@@ -4,7 +4,7 @@ import {
   Containers,
   DeferredObservableContainer,
   ObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import DeferredObservable_exhaust from "./DeferredObservable.exhaust.js";
 
 const map: Containers.TypeClass<DeferredObservableContainer>["map"] =

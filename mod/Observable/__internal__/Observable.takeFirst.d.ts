@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 type ObservableTakeFirst = <C extends ObservableContainer, T>(options?: {
     readonly count?: number;
 }) => Containers.Operator<C, T, T>;

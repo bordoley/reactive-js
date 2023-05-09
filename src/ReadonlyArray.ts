@@ -21,6 +21,7 @@ import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { ReadonlyArrayContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
 import {
   DisposableLike,
@@ -30,7 +31,6 @@ import {
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  ReadonlyArrayContainer,
   RunnableLike,
   SchedulerLike,
 } from "./types.js";

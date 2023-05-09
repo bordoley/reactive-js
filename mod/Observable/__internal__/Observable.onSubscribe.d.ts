@@ -1,5 +1,6 @@
+import { Containers, DeferredObservableContainer, EnumerableContainer, ObservableContainer, RunnableContainer, SharedObservableContainer } from "../../containers.js";
 import { Factory } from "../../functions.js";
-import { Containers, DeferredObservableContainer, DisposableOrTeardown, EnumerableContainer, ObservableContainer, RunnableContainer, SharedObservableContainer } from "../../types.js";
+import { DisposableOrTeardown } from "../../types.js";
 interface ObservableOnSubscribe {
     onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<EnumerableContainer, T, T>;
     onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<RunnableContainer, T, T>;

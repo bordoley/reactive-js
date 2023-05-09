@@ -1,5 +1,5 @@
 import Container_concatWith from "../../Container/__internal__/Container.concatWith.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_merge from "./Observable.merge.js";
 
 type ObservableMergeWith = <C extends ObservableContainer, T>(

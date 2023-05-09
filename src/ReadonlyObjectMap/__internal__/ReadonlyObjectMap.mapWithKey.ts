@@ -1,10 +1,10 @@
 import { create, hasOwn } from "../../__internal__/Object.js";
-import { Function2 } from "../../functions.js";
 import {
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { Function2 } from "../../functions.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_mapWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["mapWithKey"] =
 

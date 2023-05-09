@@ -900,7 +900,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -917,13 +917,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -937,17 +937,17 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
-| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`ObservableContainer`](../interfaces/types.ObservableContainer-1.md)\> |
+| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md)\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly `T`[]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly `T`[]\>
 
 ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container which catches errors produced by the source and either continues with
 the Container returned from the `onError` callback or swallows the error if
@@ -967,13 +967,13 @@ void is returned.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -984,13 +984,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `ArrayBuffer`, `string`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `ArrayBuffer`, `string`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1006,13 +1006,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -1032,23 +1032,23 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `string`, `Uint8Array`\>
+▸ **encodeUtf8**(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `string`, `Uint8Array`\>
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `string`, `Uint8Array`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `string`, `Uint8Array`\>
 
 ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1064,13 +1064,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -1080,13 +1080,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1103,13 +1103,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### flatMapAsync
 
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1126,13 +1126,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1149,13 +1149,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that applies the side effect function to each
 value emitted by the source.
@@ -1174,13 +1174,13 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### forkCombineLatest
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1194,14 +1194,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1216,15 +1216,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1240,16 +1240,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1266,17 +1266,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1294,18 +1294,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1324,19 +1324,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1356,20 +1356,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1390,25 +1390,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
-| `i` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TI`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
+| `i` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TI`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TIn`, `TOut`\>
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -1421,19 +1421,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TIn`, `TOut`\> |
-| `snd` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TIn`, `TOut`\> |
-| `...tail` | readonly [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TIn`, `TOut`\>[] |
+| `fst` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TIn`, `TOut`\> |
+| `snd` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TIn`, `TOut`\> |
+| `...tail` | readonly [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TIn`, `TOut`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TIn`, `TOut`\>
 
 ___
 
 ### forkZip
 
-▸ **forkZip**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+▸ **forkZip**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1447,14 +1447,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1469,15 +1469,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1493,16 +1493,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1519,17 +1519,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1547,18 +1547,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1577,19 +1577,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1609,20 +1609,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1643,25 +1643,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
-| `i` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TI`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
+| `i` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TI`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### forkZipLatest
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1675,14 +1675,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1697,15 +1697,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1721,16 +1721,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1747,17 +1747,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1775,18 +1775,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1805,19 +1805,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1837,20 +1837,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1871,25 +1871,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TH`\> |
-| `i` | [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TI`\> |
+| `a` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TA`\> |
+| `b` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `c` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `d` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `e` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `f` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `g` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `h` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TH`\> |
+| `i` | [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TI`\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1899,13 +1899,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `unknown`, `T`\>
 
 #### Type parameters
 
@@ -1915,13 +1915,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `unknown`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -1940,13 +1940,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -1963,13 +1963,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
@@ -1997,13 +1997,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2020,13 +2020,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2045,13 +2045,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2072,13 +2072,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -2095,13 +2095,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -2117,13 +2117,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -2133,13 +2133,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -2156,9 +2156,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKey`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -2177,9 +2177,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -2200,13 +2200,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -2227,13 +2227,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 ___
 
 ### scanLast
 
-▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2251,13 +2251,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 ___
 
 ### scanMany
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -2275,13 +2275,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TAcc`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -2300,7 +2300,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
@@ -2373,7 +2373,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2383,13 +2383,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -2406,13 +2406,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -2431,13 +2431,13 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -2456,13 +2456,13 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -2478,13 +2478,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -2506,13 +2506,13 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### throttle
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -2532,9 +2532,9 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -2555,13 +2555,13 @@ then ignores subsequent source values for `duration` milliseconds.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that emits an error if the source completes without emitting a value.
 
@@ -2579,13 +2579,13 @@ Returns a Container that emits an error if the source completes without emitting
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### timeout
 
-▸ **timeout**<`T`\>(`duration`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 Returns an `ObservableLike` that completes with an error if the source
 does not emit a value in given time span.
@@ -2604,9 +2604,9 @@ does not emit a value in given time span.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
-▸ **timeout**<`T`\>(`duration`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -2622,13 +2622,13 @@ does not emit a value in given time span.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TOut`\>
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TOut`\>
 
 #### Type parameters
 
@@ -2645,13 +2645,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `T`, `TOut`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `T`, `TOut`\>
 
 ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `T`\>
 
 #### Type parameters
 
@@ -2670,13 +2670,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `T`\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -2693,9 +2693,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -2714,9 +2714,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -2737,9 +2737,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -2762,9 +2762,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -2789,9 +2789,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -2818,9 +2818,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -2849,9 +2849,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -2882,13 +2882,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `T`\>
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `T`\>
 
 #### Type parameters
 
@@ -2907,7 +2907,7 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `T`\>
 
 ___
 

@@ -1,5 +1,5 @@
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Predicate } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 interface RepeatObservable {
     repeat<C extends ObservableContainer, T>(predicate: Predicate<number>): Containers.Operator<C, T, T>;
     repeat<C extends ObservableContainer, T>(count?: number): Containers.Operator<C, T, T>;

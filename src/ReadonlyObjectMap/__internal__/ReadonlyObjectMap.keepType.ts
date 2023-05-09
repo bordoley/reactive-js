@@ -1,5 +1,8 @@
 import Container_keepType from "../../Container/__internal__/Container.keepType.js";
-import { KeyedContainers, ReadonlyObjectMapContainer } from "../../types.js";
+import {
+  KeyedContainers,
+  ReadonlyObjectMapContainer,
+} from "../../containers.js";
 import ReadonlyObjectMap_keep from "./ReadonlyObjectMap.keep.js";
 
 const ReadonlyObjectMap_keepType: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["keepType"] =

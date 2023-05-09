@@ -2,7 +2,7 @@ import HigherOrderObservable_mergeAll from "../../HigherOrderObservable/__intern
 import {
   DeferredObservableContainer,
   ObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import DeferredObservable_lift from "./DeferredObservable.lift.js";
 
 const DeferredObservable_mergeAll: ObservableContainers.TypeClass<DeferredObservableContainer>["mergeAll"] =

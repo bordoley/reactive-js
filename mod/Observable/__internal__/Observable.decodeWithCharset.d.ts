@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 type ObservableDecodeWithCharset = <C extends ObservableContainer>(options?: {
     readonly charset?: string;
 }) => Containers.Operator<C, ArrayBuffer, string>;

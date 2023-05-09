@@ -1,10 +1,7 @@
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
+import { KeyedContainers, ReadonlyArrayContainer } from "../../containers.js";
 import { pipe } from "../../functions.js";
-import {
-  EnumeratorLike,
-  KeyedContainers,
-  ReadonlyArrayContainer,
-} from "../../types.js";
+import { EnumeratorLike } from "../../types.js";
 
 const ReadonlyArray_entries: KeyedContainers.TypeClass<ReadonlyArrayContainer>["entries"] =
 

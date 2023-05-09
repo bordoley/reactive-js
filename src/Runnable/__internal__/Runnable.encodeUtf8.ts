@@ -4,7 +4,7 @@ import {
   Containers,
   RunnableContainer,
   StatefulContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import Runnable_defer from "./Runnable.defer.js";
 
 const map: Containers.TypeClass<RunnableContainer>["map"] = Observable_map;

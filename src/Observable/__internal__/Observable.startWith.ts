@@ -1,6 +1,6 @@
 import Container_startWith from "../../Container/__internal__/Container.startWith.js";
 import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_concatWith from "./Observable.concatWith.js";
 
 type ObservableStartWith = <C extends ObservableContainer, T>(

@@ -1,4 +1,5 @@
-import { KeyedContainers, ReadonlyObjectMapContainer, ReadonlyObjectMapLike } from "./types.js";
+import { KeyedContainers, ReadonlyObjectMapContainer } from "./containers.js";
+import { ReadonlyObjectMapLike } from "./types.js";
 export declare const empty: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["empty"];
 export declare const entries: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["entries"];
 export declare const forEachWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["forEachWithKey"];

@@ -30,6 +30,7 @@ Reactive-JS
 - [Store](modules/Store.md)
 - [Stream](modules/Stream.md)
 - [Streamable](modules/Streamable.md)
+- [containers](modules/containers.md)
 - [functions](modules/functions.md)
 - [integrations/node/Stream](modules/integrations_node_Stream.md)
 - [integrations/react](modules/integrations_react.md)

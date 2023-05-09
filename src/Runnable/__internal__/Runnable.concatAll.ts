@@ -1,4 +1,4 @@
-import { DeferredContainers, RunnableContainer } from "../../types.js";
+import { DeferredContainers, RunnableContainer } from "../../containers.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
 const Runnable_concatAll: DeferredContainers.TypeClass<RunnableContainer>["concatAll"] =

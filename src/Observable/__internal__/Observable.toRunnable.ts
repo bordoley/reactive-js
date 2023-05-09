@@ -1,9 +1,6 @@
+import { ObservableContainer, RunnableContainers } from "../../containers.js";
 import { errorWithDebugMessage } from "../../functions.js";
-import {
-  ObservableContainer,
-  ObservableLike,
-  RunnableContainers,
-} from "../../types.js";
+import { ObservableLike } from "../../types.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 import Observable_throws from "./Observable.throws.js";
 

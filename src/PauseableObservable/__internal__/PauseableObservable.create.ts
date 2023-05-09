@@ -20,10 +20,9 @@ import {
   DelegatingLike_delegate,
   MutableStoreLike,
 } from "../../__internal__/types.js";
+import { Containers, DeferredObservableContainer } from "../../containers.js";
 import { Updater, compose, none, pipe } from "../../functions.js";
 import {
-  Containers,
-  DeferredObservableContainer,
   DisposableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,

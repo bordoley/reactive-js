@@ -1,5 +1,5 @@
 import Container_zipWith from "../../Container/__internal__/Container.zipWith.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_zip from "./Observable.zip.js";
 
 const Observable_zipWith: Containers.TypeClass<ObservableContainer>["zipWith"] =

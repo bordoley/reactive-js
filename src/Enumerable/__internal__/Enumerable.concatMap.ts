@@ -4,7 +4,7 @@ import {
   Containers,
   DeferredContainers,
   EnumerableContainer,
-} from "../../types.js";
+} from "../../containers.js";
 import Enumerable_concatAll from "./Enumerable.concatAll.js";
 
 const map: Containers.TypeClass<EnumerableContainer>["map"] = Observable_map;

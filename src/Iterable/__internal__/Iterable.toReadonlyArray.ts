@@ -1,6 +1,6 @@
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import { IterableContainer, RunnableContainers } from "../../containers.js";
 import { compose, returns } from "../../functions.js";
-import { IterableContainer, RunnableContainers } from "../../types.js";
 import Iterable_enumerate from "./Iterable.enumerate.js";
 
 const Iterable_toReadonlyArray: RunnableContainers.TypeClass<IterableContainer>["toReadonlyArray"] =

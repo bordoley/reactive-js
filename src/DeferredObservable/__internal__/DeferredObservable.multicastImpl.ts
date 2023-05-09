@@ -3,6 +3,7 @@ import Disposable_bindTo from "../../Disposable/__internal__/Disposable.bindTo.j
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
+import { ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Function1,
@@ -17,7 +18,6 @@ import {
   DisposableLike,
   EventListenerLike_notify,
   MulticastObservableLike,
-  ObservableContainer,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

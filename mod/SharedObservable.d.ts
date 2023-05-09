@@ -1,5 +1,6 @@
+import { Containers, SharedObservableContainer } from "./containers.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { Containers, DisposableLike, DisposableOrTeardown, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, SharedObservableContainer, SharedObservableLike } from "./types.js";
+import { DisposableLike, DisposableOrTeardown, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, SharedObservableLike } from "./types.js";
 export declare const backpressureStrategy: SharedObservableContainer.TypeClass["backpressureStrategy"];
 /**
  * @category Operator
@@ -27,7 +28,7 @@ export declare const firstAsync: SharedObservableContainer.TypeClass["firstAsync
 /**
  * @category Operator
  */
-export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Containers.Operator<import("./types.js").ObservableContainer, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Containers.Operator<import("./containers.js").ObservableContainer, TA, TB>;
 export declare const forEach: SharedObservableContainer.TypeClass["forEach"];
 /**
  * @category Constructor

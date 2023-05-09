@@ -6,6 +6,12 @@ import {
   test,
 } from "../__internal__/testing.js";
 import {
+  Container,
+  Containers,
+  DeferredContainers,
+  RunnableContainers,
+} from "../containers.js";
+import {
   Optional,
   alwaysFalse,
   alwaysTrue,
@@ -18,12 +24,6 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import {
-  Container,
-  Containers,
-  DeferredContainers,
-  RunnableContainers,
-} from "../types.js";
 
 const Containers_test = <C extends Container>(
   m: Containers.TypeClass<C> &

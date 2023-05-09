@@ -1,3 +1,4 @@
+import { Container, Containers } from "../containers.js";
 import {
   Function1,
   Function2,
@@ -8,8 +9,6 @@ import {
 } from "../functions.js";
 import {
   CollectionLike,
-  Container,
-  Containers,
   DisposableLike,
   IndexedCollectionLike,
   KeyedCollectionLike,

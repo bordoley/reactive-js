@@ -1,5 +1,5 @@
 import HigherOrderObservable_encodeUtf8 from "../../HigherOrderObservable/__internal__/HigherOrderObservable.encodeUtf8.js";
-import { ObservableContainer, StatefulContainers } from "../../types.js";
+import { ObservableContainer, StatefulContainers } from "../../containers.js";
 import Observable_defer from "./Observable.defer.js";
 import Observable_map from "./Observable.map.js";
 

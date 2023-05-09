@@ -4,7 +4,7 @@ import {
   Containers,
   EnumerableContainer,
   StatefulContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import Enumerable_defer from "./Enumerable.defer.js";
 
 const map: Containers.TypeClass<EnumerableContainer>["map"] = Observable_map;

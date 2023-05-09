@@ -1,11 +1,10 @@
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
+import { DictionaryContainer, KeyedContainers } from "../../containers.js";
 import { pipe } from "../../functions.js";
 import {
-  DictionaryContainer,
   DictionaryLike,
   EnumeratorLike,
   KeyedCollectionLike_get,
-  KeyedContainers,
 } from "../../types.js";
 import Dictionary_keys from "./Dictionary.keys.js";
 

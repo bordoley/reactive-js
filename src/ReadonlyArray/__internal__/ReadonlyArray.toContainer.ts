@@ -1,7 +1,7 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
+import { Container, Containers } from "../../containers.js";
 import { Function1 } from "../../functions.js";
-import { Container, Containers } from "../../types.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =

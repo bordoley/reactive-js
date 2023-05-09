@@ -1,7 +1,6 @@
 import { createInstanceFactory } from "../../__internal__/mixins.js";
+import { Containers, DeferredObservableContainer } from "../../containers.js";
 import {
-  Containers,
-  DeferredObservableContainer,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

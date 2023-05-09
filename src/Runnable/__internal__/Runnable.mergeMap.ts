@@ -4,7 +4,7 @@ import {
   Containers,
   ObservableContainers,
   RunnableContainer,
-} from "../../types.js";
+} from "../../containers.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
 const Runnable_mergeMap: ObservableContainers.TypeClass<RunnableContainer>["mergeMap"] =

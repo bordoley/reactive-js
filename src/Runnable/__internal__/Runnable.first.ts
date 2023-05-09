@@ -1,10 +1,7 @@
 import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
+import { RunnableContainer, RunnableContainers } from "../../containers.js";
 import { pipe } from "../../functions.js";
-import {
-  RunnableContainer,
-  RunnableContainers,
-  RunnableLike,
-} from "../../types.js";
+import { RunnableLike } from "../../types.js";
 import Runnable_last from "./Runnable.last.js";
 
 const Runnable_first: RunnableContainers.TypeClass<RunnableContainer>["first"] =

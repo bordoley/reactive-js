@@ -1,9 +1,9 @@
-import { bindMethod, newInstance, pipe } from "../../functions.js";
 import {
   Containers,
   ObservableContainer,
   StatefulContainers,
-} from "../../types.js";
+} from "../../containers.js";
+import { bindMethod, newInstance, pipe } from "../../functions.js";
 
 const HigherOrderObservable_encodeUtf8 =
   <C extends ObservableContainer>(

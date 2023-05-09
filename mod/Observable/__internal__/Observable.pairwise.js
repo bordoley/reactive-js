@@ -8,7 +8,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __PairwiseObserver_hasPrev, __PairwiseObserver_prev, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none, pipe, returns } from "../../functions.js";
-import { ObserverLike_notify, } from "../../types.js";
+import { ObserverLike_notify } from "../../types.js";
 const Observable_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseObserver = (() => {
         return createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function PairwiseObserver(instance, delegate) {

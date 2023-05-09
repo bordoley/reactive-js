@@ -4,10 +4,10 @@ import Iterable_flow from "./Iterable/__internal__/Iterable.flow.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import { IterableContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
 import {
   DisposableLike,
-  IterableContainer,
   ObservableLike,
   PauseableObservableLike,
   QueueableLike,

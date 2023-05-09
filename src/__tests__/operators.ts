@@ -6,14 +6,14 @@ import {
   expectToThrowError,
   test,
 } from "../__internal__/testing.js";
-import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 import {
   Container,
   Containers,
   DeferredContainers,
   EnumerableContainers,
   RunnableContainers,
-} from "../types.js";
+} from "../containers.js";
+import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
 export const forEachTests = <C extends Container>(
   m: Containers.TypeClass<C> &

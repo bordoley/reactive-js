@@ -1,5 +1,5 @@
 import Container_pick from "../../Container/__internal__/Container.pick.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_map from "./Observable.map.js";
 
 interface ObservablePick {

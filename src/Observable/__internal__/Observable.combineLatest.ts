@@ -1,8 +1,5 @@
-import {
-  Containers,
-  ObservableContainer,
-  ObservableLike,
-} from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
+import { ObservableLike } from "../../types.js";
 import Observable_latest from "./Observable.latest.js";
 
 interface ObservableCombineLatest {

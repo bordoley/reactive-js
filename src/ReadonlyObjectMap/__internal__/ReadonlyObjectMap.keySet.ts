@@ -2,8 +2,8 @@ import { hasOwn } from "../../__internal__/Object.js";
 import {
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_keySet: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["keySet"] =
 

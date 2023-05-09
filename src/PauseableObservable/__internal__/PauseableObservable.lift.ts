@@ -11,13 +11,13 @@ import {
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../__internal__/types.js";
+import { PauseableObservableContainer } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  PauseableObservableContainer,
   PauseableObservableLike,
 } from "../../types.js";
 

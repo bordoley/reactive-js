@@ -1,9 +1,8 @@
+import { DictionaryContainer, KeyedContainers } from "../../containers.js";
 import {
   AssociativeCollectionLike_keys,
-  DictionaryContainer,
   DictionaryLike,
   EnumeratorLike,
-  KeyedContainers,
 } from "../../types.js";
 
 const Dictionary_keys: KeyedContainers.TypeClass<DictionaryContainer>["keys"] =

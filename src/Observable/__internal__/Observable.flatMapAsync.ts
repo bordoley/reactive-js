@@ -1,5 +1,5 @@
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function2 } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 import Observable_concatMap from "./Observable.concatMap.js";
 import Observable_fromAsyncFactory from "./Observable.fromAsyncFactory.js";
 

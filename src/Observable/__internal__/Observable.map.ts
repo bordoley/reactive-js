@@ -1,7 +1,7 @@
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createMapObserver from "../../Observer/__internal__/Observer.createMapObserver.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function1, partial, pipe } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 
 type ObservableMap = <C extends ObservableContainer, TA, TB>(
   selector: Function1<TA, TB>,

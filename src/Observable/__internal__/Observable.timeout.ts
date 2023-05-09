@@ -22,18 +22,20 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
-import { isNumber, none, partial, pipe, returns } from "../../functions.js";
 import {
   Containers,
+  ObservableContainer,
+  RunnableContainer,
+} from "../../containers.js";
+import { isNumber, none, partial, pipe, returns } from "../../functions.js";
+import {
   DisposableLike,
   DisposableLike_dispose,
-  ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   ObserverLike_notify,
-  RunnableContainer,
   RunnableLike,
 } from "../../types.js";
 import Observable_concat from "./Observable.concat.js";

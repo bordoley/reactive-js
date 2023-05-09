@@ -15,6 +15,11 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import {
+  Containers,
+  ObservableContainer,
+  StatefulContainers,
+} from "../../containers.js";
+import {
   Function1,
   bindMethod,
   error,
@@ -23,13 +28,10 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_dispose,
-  ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,
-  StatefulContainers,
 } from "../../types.js";
 
 const HigherOrderObservable_catchError = <C extends ObservableContainer>(

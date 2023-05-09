@@ -18,11 +18,10 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { invoke, newInstance, none, partial, pipe } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_dispose,
-  ObservableContainer,
   ObservableLike_observe,
   ObserverLike,
   ObserverLike_notify,

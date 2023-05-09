@@ -1,5 +1,5 @@
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function2, isNone, isSome } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface ObservableRetry {

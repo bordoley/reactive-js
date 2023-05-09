@@ -1,11 +1,10 @@
-import { Factory, SideEffect1 } from "../../functions.js";
 import {
   Containers,
   ObservableContainer,
-  ObservableLike_observe,
-  ObserverLike,
   StatefulContainers,
-} from "../../types.js";
+} from "../../containers.js";
+import { Factory, SideEffect1 } from "../../functions.js";
+import { ObservableLike_observe, ObserverLike } from "../../types.js";
 
 const HigherOrderObservable_defer =
   <C extends ObservableContainer>(

@@ -346,7 +346,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -363,13 +363,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -383,17 +383,17 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
-| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md)\> |
+| `options.duration?` | `number` \| [`Function1`](functions.md#function1)<`T`, [`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md)\> |
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, readonly `T`[]\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, readonly `T`[]\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -404,13 +404,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `ArrayBuffer`, `string`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `ArrayBuffer`, `string`\>
 
 ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -426,13 +426,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -452,13 +452,13 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -474,13 +474,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### flatMapAsync
 
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -497,13 +497,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`ObservableContainer`](../interfaces/types.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`ObservableContainer`](../interfaces/containers.ObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that applies the side effect function to each
 value emitted by the source.
@@ -522,13 +522,13 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -538,13 +538,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `unknown`, `T`\>
 
 #### Type parameters
 
@@ -554,13 +554,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `unknown`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -579,13 +579,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -602,13 +602,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
@@ -636,13 +636,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -659,13 +659,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `TB`\>
 
 ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -682,13 +682,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -704,13 +704,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -720,13 +720,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -743,9 +743,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKey`]\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -764,9 +764,9 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -787,13 +787,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -814,13 +814,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `TAcc`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -839,7 +839,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
@@ -912,7 +912,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -931,13 +931,13 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -956,13 +956,13 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -984,13 +984,13 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 Returns a Container that emits an error if the source completes without emitting a value.
 
@@ -1008,13 +1008,13 @@ Returns a Container that emits an error if the source completes without emitting
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `T`\>
 
 ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `TOut`\>
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `TOut`\>
 
 #### Type parameters
 
@@ -1031,13 +1031,13 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `T`, `TOut`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `T`, `TOut`\>
 
 ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `T`\>
 
 #### Type parameters
 
@@ -1056,7 +1056,7 @@ ___
 
 #### Returns
 
-[`Operator`](types.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer-1.md), `TA`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`SharedObservableContainer`](../interfaces/containers.SharedObservableContainer-1.md), `TA`, `T`\>
 
 ___
 

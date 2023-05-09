@@ -1,11 +1,10 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import { Containers, EventSourceContainer } from "../../containers.js";
 import { bindMethod, pipe } from "../../functions.js";
 import {
-  Containers,
   DispatcherLike_complete,
-  EventSourceContainer,
   EventSourceLike,
   QueueableLike_enqueue,
 } from "../../types.js";

@@ -1,4 +1,4 @@
-import { EnumeratorContainer } from "./types.js";
+import { EnumeratorContainer } from "./containers.js";
 export declare const empty: EnumeratorContainer.TypeClass["empty"];
 export declare const keep: EnumeratorContainer.TypeClass["keep"];
 export declare const map: EnumeratorContainer.TypeClass["map"];

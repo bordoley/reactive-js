@@ -1,6 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
+import { RunnableContainer } from "../../containers.js";
 import { Function1, none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -8,7 +9,6 @@ import {
   EnumerableLike,
   ObserverLike,
   ObserverLike_notify,
-  RunnableContainer,
   RunnableLike,
   SchedulerLike,
   SchedulerLike_schedule,
