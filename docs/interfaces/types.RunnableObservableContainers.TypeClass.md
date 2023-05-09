@@ -18,9 +18,9 @@
 
   ↳ **`TypeClass`**
 
-  ↳↳ [`TypeClass`](types.RunnableContainer.TypeClass.md)
-
   ↳↳ [`TypeClass`](types.EnumerableObservableContainers.TypeClass.md)
+
+  ↳↳ [`TypeClass`](types.RunnableContainer.TypeClass.md)
 
 ## Table of contents
 

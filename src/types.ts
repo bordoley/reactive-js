@@ -152,47 +152,6 @@ export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run
   __VirtualTimeSchedulerLike_run;
 
 /**
- * Base type for all Containers.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface Container {
-  readonly [Container_T]?: unknown;
-  readonly [Container_type]?: unknown;
-}
-
-/**
- * A compile time only type for using a Javascript `Iterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface IterableContainer extends Container {
-  readonly [Container_type]?: Iterable<this[typeof Container_T]>;
-}
-
-/**
- * A compile time only type for using a Javascript `AsyncIterable` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface AsyncIterableContainer extends Container {
-  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
-}
-
-/**
- * A compile time only type for using a Javascript `PromiseLike` as a `Container`.
- *
- * @noInheritDoc
- * @category Container
- */
-export interface PromiseContainer extends Container {
-  readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
-}
-
-/**
  * An interactive mutable enumerator that can be used to iterate
  * over an underlying source of data.
  *
@@ -219,69 +178,11 @@ export interface EnumeratorLike<T = unknown> {
 
 /**
  * @noInheritDoc
- * @category Container
- */
-export interface EnumeratorContainer extends Container {
-  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
-}
-
-/**
- * Base type for all Containers.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface KeyedContainers extends Container {
-  readonly [KeyedContainer_TKey]?: unknown;
-}
-
-/**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyArrayContainer extends KeyedContainers {
-  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-
-  readonly [KeyedContainer_TKey]?: number;
-}
-
-/**
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyMapContainer extends Container {
-  readonly [Container_type]?: ReadonlyMap<
-    this[typeof KeyedContainer_TKey],
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: unknown;
-}
-
-/**
- * @noInheritDoc
  */
 export type ReadonlyObjectMapLike<
   TKey extends symbol | number | string = string,
   T = unknown,
 > = { readonly [P in TKey]?: T };
-
-/**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyObjectMapContainer extends Container {
-  readonly [Container_type]?: ReadonlyObjectMapLike<
-    NonNullable<this[typeof KeyedContainer_TKey]>,
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: symbol | number | string;
-}
 
 /**
  * @noInheritDoc
@@ -315,19 +216,6 @@ export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
  */
 export interface DictionaryLike<TKey = unknown, T = unknown>
   extends AssociativeCollectionLike<TKey, Optional<T>> {}
-
-/**
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface DictionaryContainer extends KeyedContainers {
-  readonly [Container_type]?: DictionaryLike<
-    this[typeof KeyedContainer_TKey],
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: unknown;
-}
 
 /**
  * @noInheritDoc
@@ -442,14 +330,6 @@ export interface ErrorSafeEventListenerLike<T = unknown>
  */
 export interface EventSourceLike<T = unknown> {
   [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EventSourceContainer extends Container {
-  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 
 /**
@@ -661,28 +541,12 @@ export interface ObservableLike<T = unknown> {
 
 /**
  * @noInheritDoc
- * @category Container
- */
-export interface ObservableContainer extends Container {
-  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
-}
-
-/**
- * @noInheritDoc
  * @category Reactive
  */
 export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface SharedObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
 }
 
 /**
@@ -696,14 +560,6 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
 }
 
 /**
- * @noInheritDoc
- * @category Container
- */
-export interface DeferredObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
-}
-
-/**
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
@@ -714,14 +570,6 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
 }
 
 /**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableContainer extends DeferredObservableContainer {
-  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
-}
-
-/**
  * An `ObservableLike` that supports interactive enumeration.
  *
  * @noInheritDoc
@@ -729,14 +577,6 @@ export interface RunnableContainer extends DeferredObservableContainer {
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
   readonly [ObservableLike_isEnumerable]: true;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableContainer extends RunnableContainer {
-  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 
 /**
@@ -782,14 +622,6 @@ export interface PauseableObservableLike<T = unknown>
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface PauseableObservableContainer extends ObservableContainer {
-  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
 }
 
 /**
@@ -848,6 +680,27 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
+
+/**
+ * Base type for all Containers.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface Container {
+  readonly [Container_T]?: unknown;
+  readonly [Container_type]?: unknown;
+}
+
+/**
+ * Base type for all Containers.
+ *
+ * @noInheritDoc
+ * @category KeyedContainers
+ */
+export interface KeyedContainers extends Container {
+  readonly [KeyedContainer_TKey]?: unknown;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace KeyedContainers {
@@ -2334,6 +2187,13 @@ export namespace ObservableContainers {
   }
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableContainer extends ObservableContainer {
+  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace DeferredObservableContainers {
   /**
@@ -2551,6 +2411,23 @@ export namespace EnumerableObservableContainers {
     extends RunnableObservableContainers.TypeClass<C> {}
 }
 
+/**
+ * A compile time only type for using a Javascript `Iterable` as a `Container`.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface IterableContainer extends Container {
+  readonly [Container_type]?: Iterable<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumeratorContainer {
   export interface TypeClass
@@ -2568,6 +2445,17 @@ export namespace IterableContainer {
       EnumerableContainers.TypeClass<IterableContainer> {}
 }
 
+/**
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
+ *
+ * @noInheritDoc
+ * @category KeyedContainers
+ */
+export interface ReadonlyArrayContainer extends KeyedContainers {
+  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+
+  readonly [KeyedContainer_TKey]?: number;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ReadonlyArrayContainer {
   export interface TypeClass
@@ -2581,6 +2469,25 @@ export namespace ReadonlyArrayContainer {
   }
 }
 
+/**
+ * A compile time only type for using a Javascript `PromiseLike` as a `Container`.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface PromiseContainer extends Container {
+  readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
+}
+
+/**
+ * A compile time only type for using a Javascript `AsyncIterable` as a `Container`.
+ *
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncIterableContainer extends Container {
+  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace AsyncIterableContainer {
   export interface TypeClass
@@ -2602,6 +2509,21 @@ export namespace AsyncIterableContainer {
   }
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EventSourceContainer extends Container {
+  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ObservableContainer extends Container {
+  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ObservableContainer {
   export interface TypeClass
@@ -2609,6 +2531,13 @@ export namespace ObservableContainer {
       AsynchronousContainers.TypeClass<ObservableContainer> {}
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface SharedObservableContainer extends ObservableContainer {
+  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace SharedObservableContainer {
   /**
@@ -2627,6 +2556,13 @@ export namespace DeferredObservableContainer {
     extends DeferredObservableContainers.TypeClass<DeferredObservableContainer> {}
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface RunnableContainer extends DeferredObservableContainer {
+  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace RunnableContainer {
   /**
@@ -2636,6 +2572,13 @@ export namespace RunnableContainer {
     extends RunnableObservableContainers.TypeClass<RunnableContainer> {}
 }
 
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableContainer extends RunnableContainer {
+  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace EnumerableContainer {
   interface EnumerableEnumeratorContainer extends Container {
@@ -2652,4 +2595,53 @@ export namespace EnumerableContainer {
         EnumerableContainer,
         EnumerableEnumeratorContainer
       > {}
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface PauseableObservableContainer extends ObservableContainer {
+  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category KeyedContainers
+ */
+export interface DictionaryContainer extends KeyedContainers {
+  readonly [Container_type]?: DictionaryLike<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: unknown;
+}
+
+/**
+ * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
+ *
+ * @noInheritDoc
+ * @category KeyedContainers
+ */
+export interface ReadonlyObjectMapContainer extends Container {
+  readonly [Container_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedContainer_TKey]>,
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: symbol | number | string;
+}
+
+/**
+ * @noInheritDoc
+ * @category KeyedContainers
+ */
+export interface ReadonlyMapContainer extends Container {
+  readonly [Container_type]?: ReadonlyMap<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: unknown;
 }

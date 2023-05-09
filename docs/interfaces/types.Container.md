@@ -10,23 +10,23 @@ Base type for all Containers.
 
 - **`Container`**
 
+  ↳ [`KeyedContainers`](types.KeyedContainers-1.md)
+
   ↳ [`IterableContainer`](types.IterableContainer-1.md)
-
-  ↳ [`AsyncIterableContainer`](types.AsyncIterableContainer-1.md)
-
-  ↳ [`PromiseContainer`](types.PromiseContainer.md)
 
   ↳ [`EnumeratorContainer`](types.EnumeratorContainer-1.md)
 
-  ↳ [`KeyedContainers`](types.KeyedContainers-1.md)
+  ↳ [`PromiseContainer`](types.PromiseContainer.md)
 
-  ↳ [`ReadonlyMapContainer`](types.ReadonlyMapContainer.md)
-
-  ↳ [`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)
+  ↳ [`AsyncIterableContainer`](types.AsyncIterableContainer-1.md)
 
   ↳ [`EventSourceContainer`](types.EventSourceContainer.md)
 
   ↳ [`ObservableContainer`](types.ObservableContainer-1.md)
+
+  ↳ [`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)
+
+  ↳ [`ReadonlyMapContainer`](types.ReadonlyMapContainer.md)
 
 ## Table of contents
 
