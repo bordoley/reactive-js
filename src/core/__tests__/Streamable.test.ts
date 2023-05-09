@@ -14,6 +14,7 @@ import {
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import * as ReadonlyArray from "../../core/ReadonlyArray.js";
@@ -311,9 +312,9 @@ testModule(
 
       const persistentStore = {
         load: (_: ReadonlySet<string>) =>
-          pipe({ ...store }, Observable.fromOptional()),
+          pipe({ ...store }, DeferredObservable.fromOptional()),
         store: (updates: ReadonlyObjectMapLike<string, number>) =>
-          Observable.fromFactory(() => {
+          DeferredObservable.fromFactory(() => {
             pipe(
               updates,
               ReadonlyObjectMap.forEachWithKey<number, string>((v, k) => {

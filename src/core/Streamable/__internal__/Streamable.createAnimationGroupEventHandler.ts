@@ -19,12 +19,12 @@ import {
   EventPublisherLike,
   EventSourceLike,
   KeyedCollectionLike_get,
-  ObservableContainer,
-  ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  ReactiveContainers,
   ReadonlyObjectMapLike,
+  RunnableContainer,
+  RunnableLike,
+  RunnableObservableContainers,
   SchedulerLike,
   StreamLike,
   StreamOf,
@@ -36,10 +36,8 @@ import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.a
 import Enumerator_map from "../../../core/Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_toReadonlyArray from "../../../core/Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import EventPublisher_create from "../../../core/EventPublisher/__internal__/EventPublisher.create.js";
-import Observable_animate from "../../../core/Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../../core/Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../../core/Observable/__internal__/Observable.ignoreElements.js";
-import Observable_mergeObservables from "../../../core/Observable/__internal__/Observable.mergeObservables.js";
 import Observable_subscribeOn from "../../../core/Observable/__internal__/Observable.subscribeOn.js";
 import ReadonlyObjectMap_keys from "../../../core/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
 import ReadonlyObjectMap_map from "../../../core/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
@@ -56,6 +54,8 @@ import {
   returns,
   unsafeCast,
 } from "../../../functions.js";
+import DeferredObservable_mergeObservables from "../../DeferredObservable/__internal__/Runnable.mergeObservables.js";
+import Runnable_animate from "../../Runnable/__internal__/Runnable.animate.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 
@@ -78,11 +78,11 @@ const createAnimationGroupEventHandlerStream: <
     TKey,
     | Function1<
         TEvent,
-        | ReactiveContainers.AnimationConfig<T>
-        | readonly ReactiveContainers.AnimationConfig<T>[]
+        | RunnableObservableContainers.AnimationConfig<T>
+        | readonly RunnableObservableContainers.AnimationConfig<T>[]
       >
-    | ReactiveContainers.AnimationConfig<T>
-    | readonly ReactiveContainers.AnimationConfig<T>[]
+    | RunnableObservableContainers.AnimationConfig<T>
+    | readonly RunnableObservableContainers.AnimationConfig<T>[]
   >,
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -120,12 +120,12 @@ const createAnimationGroupEventHandlerStream: <
           TKey,
           | Function1<
               TEvent,
-              | ReactiveContainers.AnimationConfig<T>
-              | readonly ReactiveContainers.AnimationConfig<T>[]
+              | RunnableObservableContainers.AnimationConfig<T>
+              | readonly RunnableObservableContainers.AnimationConfig<T>[]
             >
           | (
-              | ReactiveContainers.AnimationConfig<T>
-              | readonly ReactiveContainers.AnimationConfig<T>[]
+              | RunnableObservableContainers.AnimationConfig<T>
+              | readonly RunnableObservableContainers.AnimationConfig<T>[]
             )
         >,
         creationOptions: {
@@ -146,31 +146,31 @@ const createAnimationGroupEventHandlerStream: <
           (event: TEvent) => {
             const observables: ReadonlyObjectMapLike<
               string,
-              ObservableLike<T>
+              RunnableLike<T>
             > = pipe(
               animationGroup,
               ReadonlyObjectMap_mapWithKey<
                 | Function1<
                     TEvent,
-                    | ReactiveContainers.AnimationConfig<T>
-                    | readonly ReactiveContainers.AnimationConfig<T>[]
+                    | RunnableObservableContainers.AnimationConfig<T>
+                    | readonly RunnableObservableContainers.AnimationConfig<T>[]
                   >
-                | ReactiveContainers.AnimationConfig<T>
-                | readonly ReactiveContainers.AnimationConfig<T>[],
-                ObservableLike<T>,
+                | RunnableObservableContainers.AnimationConfig<T>
+                | readonly RunnableObservableContainers.AnimationConfig<T>[],
+                RunnableLike<T>,
                 string
               >((factory, key: string) =>
                 pipe(
-                  Observable_animate<T>(
+                  Runnable_animate<T>(
                     isFunction(factory) ? factory(event) : factory,
                   ),
-                  Observable_forEach<ObservableContainer, T>(value => {
+                  Observable_forEach<RunnableContainer, T>(value => {
                     const publisher = publishers[key];
                     if (isSome(publisher)) {
                       publisher[EventListenerLike_notify](value);
                     }
                   }),
-                  Observable_ignoreElements<ObservableContainer, T>(),
+                  Observable_ignoreElements<RunnableContainer, T>(),
                 ),
               ),
             );
@@ -180,7 +180,7 @@ const createAnimationGroupEventHandlerStream: <
               ReadonlyObjectMap_values(),
               Enumerator_map(Observable_subscribeOn(animationScheduler)),
               Enumerator_toReadonlyArray(),
-              Observable_mergeObservables,
+              DeferredObservable_mergeObservables,
             );
           },
           creationOptions as any,
@@ -246,8 +246,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | ReactiveContainers.AnimationConfig<T>
-        | readonly ReactiveContainers.AnimationConfig<T>[]
+        | RunnableObservableContainers.AnimationConfig<T>
+        | readonly RunnableObservableContainers.AnimationConfig<T>[]
       >
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
@@ -261,8 +261,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | ReactiveContainers.AnimationConfig<T>
-        | readonly ReactiveContainers.AnimationConfig<T>[]
+        | RunnableObservableContainers.AnimationConfig<T>
+        | readonly RunnableObservableContainers.AnimationConfig<T>[]
       >
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
@@ -276,8 +276,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | ReactiveContainers.AnimationConfig<T>
-        | readonly ReactiveContainers.AnimationConfig<T>[]
+        | RunnableObservableContainers.AnimationConfig<T>
+        | readonly RunnableObservableContainers.AnimationConfig<T>[]
       >
     >,
     options: {
@@ -291,24 +291,24 @@ interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | ReactiveContainers.AnimationConfig<T>
-      | readonly ReactiveContainers.AnimationConfig<T>[]
+      | RunnableObservableContainers.AnimationConfig<T>
+      | readonly RunnableObservableContainers.AnimationConfig<T>[]
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | ReactiveContainers.AnimationConfig<T>
-      | readonly ReactiveContainers.AnimationConfig<T>[]
+      | RunnableObservableContainers.AnimationConfig<T>
+      | readonly RunnableObservableContainers.AnimationConfig<T>[]
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | ReactiveContainers.AnimationConfig<T>
-      | readonly ReactiveContainers.AnimationConfig<T>[]
+      | RunnableObservableContainers.AnimationConfig<T>
+      | readonly RunnableObservableContainers.AnimationConfig<T>[]
     >,
     options: {
       readonly mode: "queueing";
@@ -324,11 +324,11 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
       TKey,
       | Function1<
           TEvent,
-          | ReactiveContainers.AnimationConfig<T>
-          | readonly ReactiveContainers.AnimationConfig<T>[]
+          | RunnableObservableContainers.AnimationConfig<T>
+          | readonly RunnableObservableContainers.AnimationConfig<T>[]
         >
-      | ReactiveContainers.AnimationConfig<T>
-      | readonly ReactiveContainers.AnimationConfig<T>[]
+      | RunnableObservableContainers.AnimationConfig<T>
+      | readonly RunnableObservableContainers.AnimationConfig<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

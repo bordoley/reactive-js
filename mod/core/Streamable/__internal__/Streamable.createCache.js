@@ -4,9 +4,9 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../../__internal__/core.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { AssociativeCollectionLike_keys, CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, StreamableLike_stream, } from "../../../core.js";
+import * as DeferredObservable from "../../../core/DeferredObservable.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../core/Disposable.js";
-import * as Observable from "../../../core/Observable.js";
 import * as Publisher from "../../../core/Publisher.js";
 import Queue_createIndexedQueue from "../../../core/Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyMap_keys from "../../../core/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
@@ -45,24 +45,24 @@ const createCacheStream = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => [
+        const delegate = pipe(Streamable_create(compose(DeferredObservable.map((updaters) => [
             updaters,
             pipe(updaters, ReadonlyObjectMap.mapWithKey((_, k) => instance.store.get(k))),
         ]), isSome(persistentStore)
-            ? Observable.concatMap((next) => {
+            ? DeferredObservable.concatMap((next) => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), ReadonlyObjectMap.keySet());
                 return keys.size > 0
-                    ? pipe(persistentStore.load(keys), Observable.map(persistedValues => [
+                    ? pipe(persistentStore.load(keys), DeferredObservable.map(persistedValues => [
                         updaters,
                         ReadonlyObjectMap_union(values, persistedValues),
                     ]))
-                    : pipe(next, Observable.fromOptional());
+                    : pipe(next, DeferredObservable.fromOptional());
             })
-            : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.mapWithKey((updater, k) => 
+            : identity, DeferredObservable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.mapWithKey((updater, k) => 
         // This could be the cached value or the value
         // loaded from a persistent store.
-        updater(values[k])))), Observable.forEach(ReadonlyObjectMap.forEachWithKey((v, key) => {
+        updater(values[k])))), DeferredObservable.forEach(ReadonlyObjectMap.forEachWithKey((v, key) => {
             const oldValue = instance.store.get(key);
             if (isNone(v)) {
                 instance.store.delete(key);
@@ -80,8 +80,8 @@ const createCacheStream = /*@__PURE__*/ (() => {
             }
             instance.scheduleCleanup(key);
         })), isSome(persistentStore)
-            ? Observable.concatMap(bindMethod(persistentStore, "store"))
-            : Observable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
+            ? DeferredObservable.concatMap(bindMethod(persistentStore, "store"))
+            : DeferredObservable.ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         return instance;

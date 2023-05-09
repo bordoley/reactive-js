@@ -667,6 +667,21 @@ export interface ObservableContainer extends Container {
   readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 
+// FIXME: Maybe this should be multicast, and the other should be ReplayObservableLike
+export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: false;
+  readonly [ObservableLike_isEnumerable]: false;
+  readonly [ObservableLike_isRunnable]: false;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface SharedObservableContainer extends ObservableContainer {
+  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+}
+
 /**
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
@@ -728,7 +743,7 @@ export interface EnumerableContainer extends RunnableContainer {
  * @category Reactive
  */
 export interface MulticastObservableLike<T = unknown>
-  extends ObservableLike<T> {
+  extends SharedObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
@@ -832,6 +847,243 @@ export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
 >;
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace KeyedContainers {
+  export type Of<C extends Container, TKey, T> = C extends {
+    readonly [Container_type]?: unknown;
+  }
+    ? NonNullable<
+        (C & {
+          readonly [Container_T]: T;
+          readonly [KeyedContainer_TKey]: TKey;
+        })[typeof Container_type]
+      >
+    : {
+        readonly _C: C;
+        readonly _T: () => T;
+        readonly _TKey: () => TKey;
+      };
+
+  export type KeyOf<C extends KeyedContainers> = C extends {
+    readonly [Container_type]?: unknown;
+  }
+    ? NonNullable<C[typeof KeyedContainer_TKey]>
+    : // eslint-disable-next-line @typescript-eslint/ban-types
+      {};
+
+  /**
+   * Utility type for a generic operator function that transforms a Container's inner value type.
+   */
+  export type Operator<C extends KeyedContainers, TKey, TA, TB> = Function1<
+    KeyedContainers.Of<C, TKey, TA>,
+    KeyedContainers.Of<C, TKey, TB>
+  >;
+
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends KeyedContainers> {
+    /**
+     * Return an Container that emits no items.
+     *
+     * @category Constructor
+     */
+    empty<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): KeyedContainers.Of<C, TKey, T>;
+
+    /**
+     *
+     * @category Transform
+     */
+    entries<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): Function1<KeyedContainers.Of<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
+
+    /**
+     * Returns a Containers.Operator that applies the side effect function to each
+     * value emitted by the source.
+     *
+     * @category Operator
+     */
+    forEach<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      effect: SideEffect1<T>,
+    ): KeyedContainers.Operator<C, TKey, T, T>;
+
+    /**
+     * Returns a KeyedContainers.Operator that applies the side effect function to each
+     * value emitted by the source.
+     *
+     * @category Operator
+     */
+    forEachWithKey<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      effect: SideEffect2<T, TKey>,
+    ): KeyedContainers.Operator<C, TKey, T, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromEntries<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainers.Of<C, TKey, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromReadonlyArray<
+      T,
+      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
+    >(options?: {
+      readonly start?: number;
+      readonly count?: number;
+    }): Function1<readonly T[], KeyedContainers.Of<C, TKey, T>>;
+
+    /**
+     * @category Operator
+     */
+    identity<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): KeyedContainers.Operator<C, TKey, T, T>;
+
+    /**
+     * Returns a Containers.Operator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
+     * @category Operator
+     */
+    keep<T, TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>>(
+      predicate: Predicate<T>,
+    ): KeyedContainers.Operator<C, TKey, T, T>;
+
+    /**
+     *
+     * @category Operator
+     */
+    keepType<
+      TA,
+      TB extends TA,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      predicate: TypePredicate<TA, TB>,
+    ): KeyedContainers.Operator<C, TKey, TA, TB>;
+
+    /**
+     * Returns a Containers.Operator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
+     * @category Operator
+     */
+    keepWithKey<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      predicate: Function2<T, TKey, boolean>,
+    ): KeyedContainers.Operator<C, TKey, T, T>;
+
+    /**
+     *
+     * @category Transform
+     */
+    keys<
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): Function1<KeyedContainers.Of<C, TKey, unknown>, EnumeratorLike<TKey>>;
+
+    /**
+     *
+     * @category Transform
+     */
+    keySet<
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): Function1<KeyedContainers.Of<C, TKey, unknown>, ReadonlySet<TKey>>;
+
+    /**
+     * Returns a Containers.Operator that applies the `selector` function to each
+     * value emitted by the source.
+     *
+     * @param selector - A pure map function that is applied each value emitted by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     *
+     * @category Operator
+     */
+    map<
+      TA,
+      TB,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      selector: Function1<TA, TB>,
+    ): KeyedContainers.Operator<C, TKey, TA, TB>;
+
+    /**
+     * Returns a Containers.Operator that applies the `selector` function to each
+     * value emitted by the source.
+     *
+     * @param selector - A pure map function that is applied each value emitted by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     *
+     * @category Operator
+     */
+    mapWithKey<
+      TA,
+      TB,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      selector: Function2<TA, TKey, TB>,
+    ): KeyedContainers.Operator<C, TKey, TA, TB>;
+
+    /**
+     * @category Transform
+     */
+    reduce<
+      T,
+      TAcc,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      reducer: Reducer<T, TAcc>,
+      initialValue: Factory<TAcc>,
+    ): Function1<KeyedContainers.Of<C, TKey, T>, TAcc>;
+
+    /**
+     * @category Transform
+     */
+    reduceWithKey<
+      T,
+      TAcc,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(
+      reducer: Function3<TAcc, T, TKey, TAcc>,
+      initialValue: Factory<TAcc>,
+    ): Function1<KeyedContainers.Of<C, TKey, T>, TAcc>;
+
+    /**
+     * Converts the Container to a `ReadonlyArrayContainer`.
+     *
+     * @category Transform
+     */
+    toReadonlyArray<
+      T,
+      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
+    >(): Function1<KeyedContainers.Of<C, TKey, T>, ReadonlyArray<T>>;
+
+    /**
+     *
+     * @category Transform
+     */
+    values<T>(): Function1<KeyedContainers.Of<C, any, T>, EnumeratorLike<T>>;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Containers {
   /**
    * Utility type for higher order programming with Containers.
@@ -881,13 +1133,6 @@ export namespace Containers {
     distinctUntilChanged<T>(options?: {
       readonly equality?: Equality<T>;
     }): Containers.Operator<C, T, T>;
-
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<T>(): Containers.Of<C, T>;
 
     /**
      *
@@ -973,60 +1218,6 @@ export namespace Containers {
       h: Containers.Operator<C, T, TH>,
       i: Containers.Operator<C, T, TI>,
     ): Containers.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-
-    /**
-     * @category Constructor
-     */
-    fromEnumerable<T>(): Function1<EnumerableLike<T>, Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromEnumeratorFactory<T>(
-      factory: Factory<EnumeratorLike<T>>,
-    ): Containers.Of<C, T>;
-
-    /**
-     * @category Constructor
-     */
-    fromFactory<T>(factory: Factory<T>): Containers.Of<C, T>;
-
-    /**
-     * @category Constructor
-     */
-    fromIterable<T>(): Function1<Iterable<T>, Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromOptional<T>(): Function1<Optional<T>, Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromReadonlyArray<T>(options?: {
-      readonly start?: number;
-      readonly count?: number;
-    }): Function1<readonly T[], Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromRunnable: <T>() => Function1<RunnableLike<T>, Containers.Of<C, T>>;
-
-    /**
-     * Generates a Container from a generator function
-     * that is applied to an accumulator value between emitted items.
-     *
-     * @param generator - The generator function.
-     * @param initialValue - Factory function used to generate the initial accumulator.
-     *
-     * @category Constructor
-     */
-    generate<T>(
-      generator: Updater<T>,
-      initialValue: Factory<T>,
-    ): Containers.Of<C, T>;
 
     /**
      * @category Operator
@@ -1305,8 +1496,7 @@ export namespace AsynchronousContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends Container>
-    extends Containers.TypeClass<C> {
+  export interface TypeClass<C extends Container> {
     /**
      * @category Constructor
      */
@@ -1319,8 +1509,7 @@ export namespace DeferredContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends Container>
-    extends Containers.TypeClass<C> {
+  export interface TypeClass<C extends Container> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -1356,23 +1545,16 @@ export namespace DeferredContainers {
     ) => Containers.Operator<C, T, T>;
 
     /**
+     * Return an Container that emits no items.
+     *
+     * @category Constructor
+     */
+    empty<T>(): Containers.Of<C, T>;
+
+    /**
      * @category Operator
      */
     endWith<T>(value: T, ...values: readonly T[]): Containers.Operator<C, T, T>;
-
-    /**
-     * @category Transform
-     */
-    flow<T>(
-      scheduler: SchedulerLike,
-      options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      },
-    ): Function1<
-      Containers.Of<C, T>,
-      PauseableObservableLike<T> & DisposableLike
-    >;
 
     /**
      * @category Operator
@@ -1382,6 +1564,60 @@ export namespace DeferredContainers {
       snd: Containers.Operator<C, TIn, TOut>,
       ...tail: readonly Containers.Operator<C, TIn, TOut>[]
     ): Containers.Operator<C, TIn, TOut>;
+
+    /**
+     * @category Constructor
+     */
+    fromEnumerable<T>(): Function1<EnumerableLike<T>, Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromEnumeratorFactory<T>(
+      factory: Factory<EnumeratorLike<T>>,
+    ): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromFactory<T>(factory: Factory<T>): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromIterable<T>(): Function1<Iterable<T>, Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromOptional<T>(): Function1<Optional<T>, Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromReadonlyArray<T>(options?: {
+      readonly start?: number;
+      readonly count?: number;
+    }): Function1<readonly T[], Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromRunnable: <T>() => Function1<RunnableLike<T>, Containers.Of<C, T>>;
+
+    /**
+     * Generates a Container from a generator function
+     * that is applied to an accumulator value between emitted items.
+     *
+     * @param generator - The generator function.
+     * @param initialValue - Factory function used to generate the initial accumulator.
+     *
+     * @category Constructor
+     */
+    generate<T>(
+      generator: Updater<T>,
+      initialValue: Factory<T>,
+    ): Containers.Of<C, T>;
 
     /**
      * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
@@ -1408,6 +1644,26 @@ export namespace DeferredContainers {
     repeat<T>(): Containers.Operator<C, T, T>;
 
     /**
+     * Returns an `ObservableLike` that mirrors the source, re-subscribing
+     * if the source completes with an error.
+     *
+     * @category Operator
+     */
+    retry<T>(): Containers.Operator<C, T, T>;
+
+    /**
+     * Returns an `ObservableLike` that mirrors the source, resubscrbing
+     * if the source completes with an error which satisfies the predicate function.
+     *
+     * @param predicate
+     *
+     * @category Operator
+     */
+    retry<T>(
+      predicate: Function2<number, unknown, boolean>,
+    ): Containers.Operator<C, T, T>;
+
+    /**
      * @category Operator
      */
     startWith<T>(
@@ -1422,8 +1678,7 @@ export namespace RunnableContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends Container>
-    extends Containers.TypeClass<C> {
+  export interface TypeClass<C extends Container> {
     /**
      * @category Transform
      */
@@ -1451,6 +1706,20 @@ export namespace RunnableContainers {
      * @category Transform
      */
     first<T>(): Function1<Containers.Of<C, T>, Optional<T>>;
+
+    /**
+     * @category Transform
+     */
+    flow<T>(
+      scheduler: SchedulerLike,
+      options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      },
+    ): Function1<
+      Containers.Of<C, T>,
+      PauseableObservableLike<T> & DisposableLike
+    >;
 
     /**
      *
@@ -1499,8 +1768,7 @@ export namespace StatefulContainers {
   /**
    * @noInheritDoc
    */
-  export interface TypeClass<C extends Container>
-    extends Containers.TypeClass<C> {
+  export interface TypeClass<C extends Container> {
     /**
      * Returns a Container which catches errors produced by the source and either continues with
      * the Container returned from the `onError` callback or swallows the error if
@@ -1533,26 +1801,6 @@ export namespace StatefulContainers {
     encodeUtf8(): Containers.Operator<C, string, Uint8Array>;
 
     /**
-     * Returns an `ObservableLike` that mirrors the source, re-subscribing
-     * if the source completes with an error.
-     *
-     * @category Operator
-     */
-    retry<T>(): Containers.Operator<C, T, T>;
-
-    /**
-     * Returns an `ObservableLike` that mirrors the source, resubscrbing
-     * if the source completes with an error which satisfies the predicate function.
-     *
-     * @param predicate
-     *
-     * @category Operator
-     */
-    retry<T>(
-      predicate: Function2<number, unknown, boolean>,
-    ): Containers.Operator<C, T, T>;
-
-    /**
      * Returns a Container that emits an error if the source completes without emitting a value.
      *
      * @param factory - A factory function invoked to produce the error to be thrown.
@@ -1576,7 +1824,7 @@ export namespace EnumerableContainers {
   export interface TypeClass<
     C extends Container,
     CEnumerator extends EnumeratorContainer = EnumeratorContainer,
-  > extends Containers.TypeClass<C> {
+  > {
     /**
      *
      * @category Transform
@@ -1601,329 +1849,13 @@ export namespace EnumerableContainers {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace KeyedContainers {
-  export type Of<C extends Container, TKey, T> = C extends {
-    readonly [Container_type]?: unknown;
-  }
-    ? NonNullable<
-        (C & {
-          readonly [Container_T]: T;
-          readonly [KeyedContainer_TKey]: TKey;
-        })[typeof Container_type]
-      >
-    : {
-        readonly _C: C;
-        readonly _T: () => T;
-        readonly _TKey: () => TKey;
-      };
-
-  export type KeyOf<C extends KeyedContainers> = C extends {
-    readonly [Container_type]?: unknown;
-  }
-    ? NonNullable<C[typeof KeyedContainer_TKey]>
-    : // eslint-disable-next-line @typescript-eslint/ban-types
-      {};
-
-  /**
-   * Utility type for a generic operator function that transforms a Container's inner value type.
-   */
-  export type Operator<C extends KeyedContainers, TKey, TA, TB> = Function1<
-    KeyedContainers.Of<C, TKey, TA>,
-    KeyedContainers.Of<C, TKey, TB>
-  >;
-
-  /**
-   * @noInheritDoc
-   */
-  export interface TypeClass<C extends KeyedContainers> {
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): KeyedContainers.Of<C, TKey, T>;
-
-    /**
-     *
-     * @category Transform
-     */
-    entries<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): Function1<KeyedContainers.Of<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
-
-    /**
-     * Returns a Containers.Operator that applies the side effect function to each
-     * value emitted by the source.
-     *
-     * @category Operator
-     */
-    forEach<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      effect: SideEffect1<T>,
-    ): KeyedContainers.Operator<C, TKey, T, T>;
-
-    /**
-     * Returns a KeyedContainers.Operator that applies the side effect function to each
-     * value emitted by the source.
-     *
-     * @category Operator
-     */
-    forEachWithKey<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      effect: SideEffect2<T, TKey>,
-    ): KeyedContainers.Operator<C, TKey, T, T>;
-
-    /**
-     * @category Constructor
-     */
-    fromEntries<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainers.Of<C, TKey, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromReadonlyArray<
-      T,
-      TKey extends KeyedContainers.KeyOf<ReadonlyArrayContainer> = KeyedContainers.KeyOf<ReadonlyArrayContainer>,
-    >(options?: {
-      readonly start?: number;
-      readonly count?: number;
-    }): Function1<readonly T[], KeyedContainers.Of<C, TKey, T>>;
-
-    /**
-     * @category Operator
-     */
-    identity<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): KeyedContainers.Operator<C, TKey, T, T>;
-
-    /**
-     * Returns a Containers.Operator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keep<T, TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>>(
-      predicate: Predicate<T>,
-    ): KeyedContainers.Operator<C, TKey, T, T>;
-
-    /**
-     *
-     * @category Operator
-     */
-    keepType<
-      TA,
-      TB extends TA,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      predicate: TypePredicate<TA, TB>,
-    ): KeyedContainers.Operator<C, TKey, TA, TB>;
-
-    /**
-     * Returns a Containers.Operator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keepWithKey<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      predicate: Function2<T, TKey, boolean>,
-    ): KeyedContainers.Operator<C, TKey, T, T>;
-
-    /**
-     *
-     * @category Transform
-     */
-    keys<
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): Function1<KeyedContainers.Of<C, TKey, unknown>, EnumeratorLike<TKey>>;
-
-    /**
-     *
-     * @category Transform
-     */
-    keySet<
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): Function1<KeyedContainers.Of<C, TKey, unknown>, ReadonlySet<TKey>>;
-
-    /**
-     * Returns a Containers.Operator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    map<
-      TA,
-      TB,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      selector: Function1<TA, TB>,
-    ): KeyedContainers.Operator<C, TKey, TA, TB>;
-
-    /**
-     * Returns a Containers.Operator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    mapWithKey<
-      TA,
-      TB,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      selector: Function2<TA, TKey, TB>,
-    ): KeyedContainers.Operator<C, TKey, TA, TB>;
-
-    /**
-     * @category Transform
-     */
-    reduce<
-      T,
-      TAcc,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      reducer: Reducer<T, TAcc>,
-      initialValue: Factory<TAcc>,
-    ): Function1<KeyedContainers.Of<C, TKey, T>, TAcc>;
-
-    /**
-     * @category Transform
-     */
-    reduceWithKey<
-      T,
-      TAcc,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(
-      reducer: Function3<TAcc, T, TKey, TAcc>,
-      initialValue: Factory<TAcc>,
-    ): Function1<KeyedContainers.Of<C, TKey, T>, TAcc>;
-
-    /**
-     * Converts the Container to a `ReadonlyArrayContainer`.
-     *
-     * @category Transform
-     */
-    toReadonlyArray<
-      T,
-      TKey extends KeyedContainers.KeyOf<C> = KeyedContainers.KeyOf<C>,
-    >(): Function1<KeyedContainers.Of<C, TKey, T>, ReadonlyArray<T>>;
-
-    /**
-     *
-     * @category Transform
-     */
-    values<T>(): Function1<KeyedContainers.Of<C, any, T>, EnumeratorLike<T>>;
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace ReactiveContainers {
-  /**
-   * @noInheritDoc
-   * @category AnimationConfig
-   */
-  export interface DelayAnimationConfig {
-    readonly type: "delay";
-    readonly duration: number;
-  }
-
-  /**
-   * @noInheritDoc
-   * @category AnimationConfig
-   */
-  export interface KeyFrameAnimationConfig {
-    readonly type: "keyframe";
-    readonly from: number;
-    readonly to: number;
-    readonly duration: number;
-    readonly easing?: Function1<number, number>;
-  }
-
-  /**
-   * @noInheritDoc
-   * @category AnimationConfig
-   */
-  export interface FrameAnimationConfig {
-    readonly type: "frame";
-    readonly value: number;
-  }
-
-  /**
-   * @noInheritDoc
-   * @category AnimationConfig
-   */
-  export interface LoopAnimationConfig<T> {
-    readonly type: "loop";
-    readonly animation: AnimationConfig<T> | readonly AnimationConfig<T>[];
-    readonly count?: number;
-  }
-
-  /**
-   * @noInheritDoc
-   * @category AnimationConfig
-   */
-  export interface SpringAnimationConfig {
-    readonly type: "spring";
-    readonly from: number;
-    readonly to: number;
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-  }
-
-  export type AnimationConfig<T = number> =
-    | DelayAnimationConfig
-    | LoopAnimationConfig<T>
-    | (T extends number
-        ? (
-            | KeyFrameAnimationConfig
-            | SpringAnimationConfig
-            | FrameAnimationConfig
-          ) & {
-            readonly selector?: never;
-          }
-        : (
-            | KeyFrameAnimationConfig
-            | SpringAnimationConfig
-            | FrameAnimationConfig
-          ) & {
-            readonly selector: Function1<number, T>;
-          });
-
+export namespace ObservableContainers {
   /**
    * @noInheritDoc
    */
   export interface TypeClass<C extends ObservableContainer>
     extends Containers.TypeClass<C>,
-      DeferredContainers.TypeClass<C> {
-    /**
-     * @category Constructor
-     */
-    animate<T = number>(
-      configs: AnimationConfig<T> | readonly AnimationConfig<T>[],
-    ): Containers.Of<C, T>;
-
+      StatefulContainers.TypeClass<C> {
     /**
      * @category Operator
      */
@@ -1997,23 +1929,10 @@ export namespace ReactiveContainers {
     ): Containers.Of<C, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
     /**
-     * @category Constructor
-     */
-    currentTime(options?: {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    }): Containers.Of<C, number>;
-
-    /**
      *
      * @category Operator
      */
     dispatchTo<T>(dispatcher: DispatcherLike<T>): Containers.Operator<C, T, T>;
-
-    /**
-     * @category Constructor
-     */
-    empty<T>(options?: { delay?: number }): Containers.Of<C, T>;
 
     /**
      *
@@ -2185,64 +2104,6 @@ export namespace ReactiveContainers {
     ): Containers.Operator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
     /**
-     * @category Constructor
-     */
-    fromEnumeratorFactory<T>(
-      factory: Factory<EnumeratorLike<T>>,
-      options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-      },
-    ): Containers.Of<C, T>;
-
-    /**
-     * @category Constructor
-     */
-    fromFactory<T>(
-      factory: Factory<T>,
-      options?: {
-        readonly delay?: number;
-      },
-    ): Containers.Of<C, T>;
-
-    /**
-     * @category Constructor
-     */
-    fromIterable<T>(options?: {
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-    }): Function1<Iterable<T>, Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromOptional<T>(options?: {
-      readonly delay?: number;
-    }): Function1<Optional<T>, Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    fromReadonlyArray<T>(options?: {
-      readonly count?: number;
-      readonly delay?: number;
-      readonly delayStart?: boolean;
-      readonly start?: number;
-    }): Function1<readonly T[], Containers.Of<C, T>>;
-
-    /**
-     * @category Constructor
-     */
-    generate<T>(
-      generator: Updater<T>,
-      initialValue: Factory<T>,
-      options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-      },
-    ): Containers.Of<C, T>;
-
-    /**
      *
      * @category Transform
      */
@@ -2296,32 +2157,6 @@ export namespace ReactiveContainers {
     ) => Containers.Operator<C, T, T>;
 
     /**
-     * Returns a `MulticastObservableLike` backed by a single subscription to the source.
-     *
-     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
-     *
-     * @category Transform
-     */
-    multicast<T>(
-      scheduler: SchedulerLike,
-      options?: {
-        /**
-         * The number of items to buffer for replay when an observer subscribes
-         * to the stream.
-         */
-        readonly replay?: number;
-        /**
-         * The capacity of the stream's request queue.
-         */
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      },
-    ): Function1<
-      Containers.Of<C, T>,
-      MulticastObservableLike<T> & DisposableLike
-    >;
-
-    /**
      * Returns a Container instance that emits no items and never disposes its state.
      *
      * @category Constructor
@@ -2335,24 +2170,6 @@ export namespace ReactiveContainers {
       scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
       initialValue: Factory<TAcc>,
     ) => Containers.Operator<C, T, TAcc>;
-
-    /**
-     * Returns an `ObservableLike` backed by a shared refcounted subscription to the
-     * source. When the refcount goes to 0, the underlying subscription
-     * to the source is disposed.
-     *
-     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
-     *
-     * @category Transform
-     */
-    share<T>(
-      scheduler: SchedulerLike,
-      options?: {
-        readonly replay?: number;
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      },
-    ): Function1<Containers.Of<C, T>, ObservableLike<T>>;
 
     /**
      *
@@ -2512,4 +2329,324 @@ export namespace ReactiveContainers {
       selector: Function2<TA, TB, T>,
     ): Containers.Operator<C, TA, T>;
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace DeferredObservableContainers {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass<C extends DeferredObservableContainer>
+    extends ObservableContainers.TypeClass<C>,
+      DeferredContainers.TypeClass<C> {
+    /**
+     * @category Constructor
+     */
+    empty<T>(options?: { delay?: number }): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromEnumeratorFactory<T>(
+      factory: Factory<EnumeratorLike<T>>,
+      options?: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+      },
+    ): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromFactory<T>(
+      factory: Factory<T>,
+      options?: {
+        readonly delay?: number;
+      },
+    ): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    fromIterable<T>(options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    }): Function1<Iterable<T>, Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromOptional<T>(options?: {
+      readonly delay?: number;
+    }): Function1<Optional<T>, Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    fromReadonlyArray<T>(options?: {
+      readonly count?: number;
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+      readonly start?: number;
+    }): Function1<readonly T[], Containers.Of<C, T>>;
+
+    /**
+     * @category Constructor
+     */
+    generate<T>(
+      generator: Updater<T>,
+      initialValue: Factory<T>,
+      options?: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+      },
+    ): Containers.Of<C, T>;
+
+    /**
+     * Returns a `MulticastObservableLike` backed by a single subscription to the source.
+     *
+     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source observable.
+     *
+     * @category Transform
+     */
+    multicast<T>(
+      scheduler: SchedulerLike,
+      options?: {
+        /**
+         * The number of items to buffer for replay when an observer subscribes
+         * to the stream.
+         */
+        readonly replay?: number;
+        /**
+         * The capacity of the stream's request queue.
+         */
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      },
+    ): Function1<
+      Containers.Of<C, T>,
+      MulticastObservableLike<T> & DisposableLike
+    >;
+
+    /**
+     * Returns an `ObservableLike` backed by a shared refcounted subscription to the
+     * source. When the refcount goes to 0, the underlying subscription
+     * to the source is disposed.
+     *
+     * @param scheduler - A `SchedulerLike` that is used to subscribe to the source.
+     *
+     * @category Transform
+     */
+    share<T>(
+      scheduler: SchedulerLike,
+      options?: {
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      },
+    ): Function1<Containers.Of<C, T>, SharedObservableLike<T>>;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace RunnableObservableContainers {
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface DelayAnimationConfig {
+    readonly type: "delay";
+    readonly duration: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface KeyFrameAnimationConfig {
+    readonly type: "keyframe";
+    readonly from: number;
+    readonly to: number;
+    readonly duration: number;
+    readonly easing?: Function1<number, number>;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface FrameAnimationConfig {
+    readonly type: "frame";
+    readonly value: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface LoopAnimationConfig<T> {
+    readonly type: "loop";
+    readonly animation: AnimationConfig<T> | readonly AnimationConfig<T>[];
+    readonly count?: number;
+  }
+
+  /**
+   * @noInheritDoc
+   * @category AnimationConfig
+   */
+  export interface SpringAnimationConfig {
+    readonly type: "spring";
+    readonly from: number;
+    readonly to: number;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }
+
+  export type AnimationConfig<T = number> =
+    | DelayAnimationConfig
+    | LoopAnimationConfig<T>
+    | (T extends number
+        ? (
+            | KeyFrameAnimationConfig
+            | SpringAnimationConfig
+            | FrameAnimationConfig
+          ) & {
+            readonly selector?: never;
+          }
+        : (
+            | KeyFrameAnimationConfig
+            | SpringAnimationConfig
+            | FrameAnimationConfig
+          ) & {
+            readonly selector: Function1<number, T>;
+          });
+
+  export interface TypeClass<C extends RunnableContainer>
+    extends DeferredObservableContainers.TypeClass<C>,
+      RunnableContainers.TypeClass<C> {
+    /**
+     * @category Constructor
+     */
+    animate<T = number>(
+      configs: AnimationConfig<T> | readonly AnimationConfig<T>[],
+    ): Containers.Of<C, T>;
+
+    /**
+     * @category Constructor
+     */
+    currentTime(options?: {
+      readonly delay?: number;
+      readonly delayStart?: boolean;
+    }): Containers.Of<C, number>;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace EnumerableObservableContainers {
+  export interface TypeClass<C extends EnumerableContainer>
+    extends RunnableObservableContainers.TypeClass<C> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace EnumeratorContainer {
+  export interface TypeClass
+    extends Containers.TypeClass<EnumeratorContainer>,
+      DeferredContainers.TypeClass<EnumeratorContainer>,
+      RunnableContainers.TypeClass<EnumeratorContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace IterableContainer {
+  export interface TypeClass
+    extends Containers.TypeClass<IterableContainer>,
+      DeferredContainers.TypeClass<IterableContainer>,
+      RunnableContainers.TypeClass<IterableContainer>,
+      EnumerableContainers.TypeClass<IterableContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace ReadonlyArrayContainer {
+  export interface TypeClass
+    extends KeyedContainers.TypeClass<ReadonlyArrayContainer>,
+      DeferredContainers.TypeClass<ReadonlyArrayContainer>,
+      RunnableContainers.TypeClass<ReadonlyArrayContainer> {
+    empty: KeyedContainers.TypeClass<ReadonlyArrayContainer>["empty"];
+    fromReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["fromReadonlyArray"];
+    reduce: KeyedContainers.TypeClass<ReadonlyArrayContainer>["reduce"];
+    toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"];
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace AsyncIterableContainer {
+  export interface TypeClass
+    extends Containers.TypeClass<AsyncIterableContainer> {
+    // FIXME: Surely this can be shared
+    /**
+     * @category Transform
+     */
+    flow<T>(
+      scheduler: SchedulerLike,
+      options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      },
+    ): Function1<
+      Containers.Of<AsyncIterableContainer, T>,
+      PauseableObservableLike<T> & DisposableLike
+    >;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace ObservableContainer {
+  export interface TypeClass
+    extends ObservableContainers.TypeClass<ObservableContainer>,
+      AsynchronousContainers.TypeClass<ObservableContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace SharedObservableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass
+    extends ObservableContainers.TypeClass<SharedObservableContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace DeferredObservableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass
+    extends DeferredObservableContainers.TypeClass<DeferredObservableContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace RunnableContainer {
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass
+    extends RunnableObservableContainers.TypeClass<RunnableContainer> {}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace EnumerableContainer {
+  interface EnumerableEnumeratorContainer extends Container {
+    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> &
+      DisposableLike;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface TypeClass
+    extends EnumerableObservableContainers.TypeClass<EnumerableContainer>,
+      EnumerableContainers.TypeClass<
+        EnumerableContainer,
+        EnumerableEnumeratorContainer
+      > {}
 }

@@ -1,3 +1,3 @@
-import { ObservableContainer, ReactiveContainers } from "../../../core.js";
-declare const Observable_forkZipLatest: ReactiveContainers.TypeClass<ObservableContainer>["forkZipLatest"];
+import { ObservableContainer, ObservableContainers } from "../../../core.js";
+declare const Observable_forkZipLatest: ObservableContainers.TypeClass<ObservableContainer>["forkZipLatest"];
 export default Observable_forkZipLatest;

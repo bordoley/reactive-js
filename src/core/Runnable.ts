@@ -1,26 +1,15 @@
-import {
-  Containers,
-  DeferredContainers,
-  EnumerableContainers,
-  ReactiveContainers,
-  RunnableContainer,
-  RunnableContainers,
-  RunnableLike,
-  StatefulContainers,
-} from "../core.js";
+import { RunnableContainer, RunnableLike } from "../core.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
 import Iterable_toObservable from "../core/Iterable/__internal__/Iterable.toObservable.js";
 import Optional_toObservable from "../core/Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "../core/ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { Factory } from "../functions.js";
-import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -57,17 +46,18 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_timeout from "./Observable/__internal__/Observable.timeout.js";
-import Observable_toEnumerable from "./Observable/__internal__/Observable.toEnumerable.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
+import Runnable_animate from "./Runnable/__internal__/Runnable.animate.js";
 import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
+import Runnable_currentTime from "./Runnable/__internal__/Runnable.currentTime.js";
 import Runnable_defer from "./Runnable/__internal__/Runnable.defer.js";
 import Runnable_encodeUtf8 from "./Runnable/__internal__/Runnable.encodeUtf8.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
@@ -91,19 +81,17 @@ import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 
-export const animate: ReactiveContainers.TypeClass<RunnableContainer>["animate"] =
-  Observable_animate;
+export const animate: RunnableContainer.TypeClass["animate"] = Runnable_animate;
 
-export const backpressureStrategy: ReactiveContainers.TypeClass<RunnableContainer>["backpressureStrategy"] =
+export const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"] =
   Observable_backpressureStrategy;
 
-export const buffer: Containers.TypeClass<RunnableContainer>["buffer"] =
-  Observable_buffer;
+export const buffer: RunnableContainer.TypeClass["buffer"] = Observable_buffer;
 
-export const catchError: StatefulContainers.TypeClass<RunnableContainer>["catchError"] =
+export const catchError: RunnableContainer.TypeClass["catchError"] =
   Runnable_catchError;
 
-export const combineLatest: ReactiveContainers.TypeClass<RunnableContainer>["combineLatest"] =
+export const combineLatest: RunnableContainer.TypeClass["combineLatest"] =
   Observable_combineLatest;
 
 /**
@@ -111,201 +99,185 @@ export const combineLatest: ReactiveContainers.TypeClass<RunnableContainer>["com
  */
 export const compute = Runnable_compute;
 
-export const concat: DeferredContainers.TypeClass<RunnableContainer>["concat"] =
-  Observable_concat;
+export const concat: RunnableContainer.TypeClass["concat"] = Observable_concat;
 
-export const concatAll: DeferredContainers.TypeClass<RunnableContainer>["concatAll"] =
+export const concatAll: RunnableContainer.TypeClass["concatAll"] =
   Runnable_concatAll;
 
-export const concatMap: DeferredContainers.TypeClass<RunnableContainer>["concatMap"] =
+export const concatMap: RunnableContainer.TypeClass["concatMap"] =
   Runnable_concatMap;
 
-export const concatWith: DeferredContainers.TypeClass<RunnableContainer>["concatWith"] =
-  Observable_concatWith as DeferredContainers.TypeClass<RunnableContainer>["concatWith"];
+export const concatWith: RunnableContainer.TypeClass["concatWith"] =
+  Observable_concatWith as RunnableContainer.TypeClass["concatWith"];
 
-export const contains: RunnableContainers.TypeClass<RunnableContainer>["contains"] =
+export const contains: RunnableContainer.TypeClass["contains"] =
   Runnable_contains;
 
-export const currentTime: ReactiveContainers.TypeClass<RunnableContainer>["currentTime"] =
-  Observable_currentTime;
+export const currentTime: RunnableContainer.TypeClass["currentTime"] =
+  Runnable_currentTime;
 
-export const decodeWithCharset: StatefulContainers.TypeClass<RunnableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: RunnableContainer.TypeClass["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: StatefulContainers.TypeClass<RunnableContainer>["defer"] =
-  Runnable_defer;
+export const defer: RunnableContainer.TypeClass["defer"] = Runnable_defer;
 
-export const dispatchTo: ReactiveContainers.TypeClass<RunnableContainer>["dispatchTo"] =
+export const dispatchTo: RunnableContainer.TypeClass["dispatchTo"] =
   Observable_dispatchTo;
 
-export const distinctUntilChanged: Containers.TypeClass<RunnableContainer>["distinctUntilChanged"] =
+export const distinctUntilChanged: RunnableContainer.TypeClass["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: ReactiveContainers.TypeClass<RunnableContainer>["empty"] =
-  Observable_empty;
+export const empty: RunnableContainer.TypeClass["empty"] = Observable_empty;
 
-export const encodeUtf8: StatefulContainers.TypeClass<RunnableContainer>["encodeUtf8"] =
+export const encodeUtf8: RunnableContainer.TypeClass["encodeUtf8"] =
   Runnable_encodeUtf8;
 
-export const enqueue: ReactiveContainers.TypeClass<RunnableContainer>["enqueue"] =
+export const enqueue: RunnableContainer.TypeClass["enqueue"] =
   Observable_enqueue;
 
-export const endWith: DeferredContainers.TypeClass<RunnableContainer>["endWith"] =
+export const endWith: RunnableContainer.TypeClass["endWith"] =
   Observable_endWith;
 
-export const everySatisfy: RunnableContainers.TypeClass<RunnableContainer>["everySatisfy"] =
+export const everySatisfy: RunnableContainer.TypeClass["everySatisfy"] =
   Runnable_everySatisfy;
 
-export const exhaust: ReactiveContainers.TypeClass<RunnableContainer>["exhaust"] =
-  Runnable_exhaust;
+export const exhaust: RunnableContainer.TypeClass["exhaust"] = Runnable_exhaust;
 
-export const exhaustMap: ReactiveContainers.TypeClass<RunnableContainer>["exhaustMap"] =
+export const exhaustMap: RunnableContainer.TypeClass["exhaustMap"] =
   Runnable_exhaustMap;
 
-export const first: RunnableContainers.TypeClass<RunnableContainer>["first"] =
-  Runnable_first;
+export const first: RunnableContainer.TypeClass["first"] = Runnable_first;
 
-export const firstAsync: ReactiveContainers.TypeClass<RunnableContainer>["firstAsync"] =
+export const firstAsync: RunnableContainer.TypeClass["firstAsync"] =
   Observable_firstAsync;
 
-export const flatMapIterable: Containers.TypeClass<RunnableContainer>["flatMapIterable"] =
+export const flatMapIterable: RunnableContainer.TypeClass["flatMapIterable"] =
   Runnable_flatMapIterable;
 
-export const flow: DeferredContainers.TypeClass<RunnableContainer>["flow"] =
-  Runnable_flow;
+export const flow: RunnableContainer.TypeClass["flow"] = Runnable_flow;
 
-export const forEach: Containers.TypeClass<RunnableContainer>["forEach"] =
+export const forEach: RunnableContainer.TypeClass["forEach"] =
   Observable_forEach;
 
-export const forkConcat: DeferredContainers.TypeClass<RunnableContainer>["forkConcat"] =
-  Observable_forkConcat as DeferredContainers.TypeClass<RunnableContainer>["forkConcat"];
+export const forkConcat: RunnableContainer.TypeClass["forkConcat"] =
+  Observable_forkConcat as RunnableContainer.TypeClass["forkConcat"];
 
-export const forkMerge: ReactiveContainers.TypeClass<RunnableContainer>["forkMerge"] =
-  Observable_forkMerge as ReactiveContainers.TypeClass<RunnableContainer>["forkMerge"];
+export const forkMerge: RunnableContainer.TypeClass["forkMerge"] =
+  Observable_forkMerge as RunnableContainer.TypeClass["forkMerge"];
 
-export const forkZip: Containers.TypeClass<RunnableContainer>["forkZip"] =
-  Observable_forkZip as Containers.TypeClass<RunnableContainer>["forkZip"];
+export const forkZip: RunnableContainer.TypeClass["forkZip"] =
+  Observable_forkZip as RunnableContainer.TypeClass["forkZip"];
 
-export const forkZipLatest: ReactiveContainers.TypeClass<RunnableContainer>["forkZipLatest"] =
-  Observable_forkZipLatest as ReactiveContainers.TypeClass<RunnableContainer>["forkZipLatest"];
+export const forkZipLatest: RunnableContainer.TypeClass["forkZipLatest"] =
+  Observable_forkZipLatest as RunnableContainer.TypeClass["forkZipLatest"];
 
-export const fromEnumeratorFactory: ReactiveContainers.TypeClass<RunnableContainer>["fromEnumeratorFactory"] =
+export const fromEnumeratorFactory: RunnableContainer.TypeClass["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-export const fromFactory: ReactiveContainers.TypeClass<RunnableContainer>["fromFactory"] =
+export const fromFactory: RunnableContainer.TypeClass["fromFactory"] =
   Observable_fromFactory;
 
-export const fromIterable: ReactiveContainers.TypeClass<RunnableContainer>["fromIterable"] =
+export const fromIterable: RunnableContainer.TypeClass["fromIterable"] =
   Iterable_toObservable;
 
-export const fromOptional: ReactiveContainers.TypeClass<RunnableContainer>["fromOptional"] =
+export const fromOptional: RunnableContainer.TypeClass["fromOptional"] =
   Optional_toObservable;
 
-export const fromReadonlyArray: ReactiveContainers.TypeClass<RunnableContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: RunnableContainer.TypeClass["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-export const generate: ReactiveContainers.TypeClass<RunnableContainer>["generate"] =
+export const generate: RunnableContainer.TypeClass["generate"] =
   Observable_generate;
 
-export const identity: Containers.TypeClass<RunnableContainer>["identity"] =
+export const identity: RunnableContainer.TypeClass["identity"] =
   Container_identity;
 
-export const ignoreElements: Containers.TypeClass<RunnableContainer>["ignoreElements"] =
+export const ignoreElements: RunnableContainer.TypeClass["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Containers.TypeClass<RunnableContainer>["keep"] =
-  Observable_keep;
+export const keep: RunnableContainer.TypeClass["keep"] = Observable_keep;
 
-export const keepType: Containers.TypeClass<RunnableContainer>["keepType"] =
-  Observable_keepType as Containers.TypeClass<RunnableContainer>["keepType"];
+export const keepType: RunnableContainer.TypeClass["keepType"] =
+  Observable_keepType as RunnableContainer.TypeClass["keepType"];
 
-export const last: RunnableContainers.TypeClass<RunnableContainer>["last"] =
-  Runnable_last;
+export const last: RunnableContainer.TypeClass["last"] = Runnable_last;
 
-export const lastAsync: ReactiveContainers.TypeClass<RunnableContainer>["lastAsync"] =
+export const lastAsync: RunnableContainer.TypeClass["lastAsync"] =
   Observable_lastAsync;
 
-export const noneSatisfy: RunnableContainers.TypeClass<RunnableContainer>["noneSatisfy"] =
+export const noneSatisfy: RunnableContainer.TypeClass["noneSatisfy"] =
   Runnable_noneSatisfy;
 
-export const map: Containers.TypeClass<RunnableContainer>["map"] =
-  Observable_map;
+export const map: RunnableContainer.TypeClass["map"] = Observable_map;
 
-export const mapTo: Containers.TypeClass<RunnableContainer>["mapTo"] =
-  Observable_mapTo;
+export const mapTo: RunnableContainer.TypeClass["mapTo"] = Observable_mapTo;
 
-export const merge: ReactiveContainers.TypeClass<RunnableContainer>["merge"] =
-  Observable_merge;
+export const merge: RunnableContainer.TypeClass["merge"] = Observable_merge;
 
-export const mergeAll: ReactiveContainers.TypeClass<RunnableContainer>["mergeAll"] =
+export const mergeAll: RunnableContainer.TypeClass["mergeAll"] =
   Runnable_mergeAll;
 
-export const mergeMap: ReactiveContainers.TypeClass<RunnableContainer>["mergeMap"] =
+export const mergeMap: RunnableContainer.TypeClass["mergeMap"] =
   Runnable_mergeMap;
 
-export const mergeWith: ReactiveContainers.TypeClass<RunnableContainer>["mergeWith"] =
-  Observable_mergeWith as ReactiveContainers.TypeClass<RunnableContainer>["mergeWith"];
+export const mergeWith: RunnableContainer.TypeClass["mergeWith"] =
+  Observable_mergeWith as RunnableContainer.TypeClass["mergeWith"];
 
-export const pairwise: Containers.TypeClass<RunnableContainer>["pairwise"] =
+export const pairwise: RunnableContainer.TypeClass["pairwise"] =
   Observable_pairwise;
 
-export const pick: Containers.TypeClass<RunnableContainer>["pick"] =
-  Observable_pick;
+export const pick: RunnableContainer.TypeClass["pick"] = Observable_pick;
 
-export const reduce: RunnableContainers.TypeClass<RunnableContainer>["reduce"] =
-  Runnable_reduce;
+export const reduce: RunnableContainer.TypeClass["reduce"] = Runnable_reduce;
 
-export const repeat: DeferredContainers.TypeClass<RunnableContainer>["repeat"] =
-  Observable_repeat;
+export const repeat: RunnableContainer.TypeClass["repeat"] = Observable_repeat;
 
-export const retry: StatefulContainers.TypeClass<RunnableContainer>["retry"] =
-  Observable_retry;
+export const retry: RunnableContainer.TypeClass["retry"] = Observable_retry;
 
 export const run = Runnable_run;
 
-export const scan: Containers.TypeClass<RunnableContainer>["scan"] =
-  Observable_scan;
+export const scan: RunnableContainer.TypeClass["scan"] = Observable_scan;
 
-export const scanLast: Containers.TypeClass<RunnableContainer>["scanLast"] =
+export const scanLast: RunnableContainer.TypeClass["scanLast"] =
   Runnable_scanLast;
 
-export const scanMany: ReactiveContainers.TypeClass<RunnableContainer>["scanMany"] =
+export const scanMany: RunnableContainer.TypeClass["scanMany"] =
   Runnable_scanMany;
 
-export const skipFirst: Containers.TypeClass<RunnableContainer>["skipFirst"] =
+export const skipFirst: RunnableContainer.TypeClass["skipFirst"] =
   Observable_skipFirst;
 
-export const someSatisfy: RunnableContainers.TypeClass<RunnableContainer>["someSatisfy"] =
+export const someSatisfy: RunnableContainer.TypeClass["someSatisfy"] =
   Runnable_someSatisfy;
 
-export const startWith: DeferredContainers.TypeClass<RunnableContainer>["startWith"] =
+export const startWith: RunnableContainer.TypeClass["startWith"] =
   Observable_startWith;
 
-export const switchAll: ReactiveContainers.TypeClass<RunnableContainer>["switchAll"] =
+export const switchAll: RunnableContainer.TypeClass["switchAll"] =
   Runnable_switchAll;
 
-export const switchMap: ReactiveContainers.TypeClass<RunnableContainer>["switchMap"] =
+export const switchMap: RunnableContainer.TypeClass["switchMap"] =
   Runnable_switchMap;
 
-export const takeFirst: Containers.TypeClass<RunnableContainer>["takeFirst"] =
+export const takeFirst: RunnableContainer.TypeClass["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: Containers.TypeClass<RunnableContainer>["takeLast"] =
+export const takeLast: RunnableContainer.TypeClass["takeLast"] =
   Observable_takeLast;
 
-export const takeUntil: ReactiveContainers.TypeClass<RunnableContainer>["takeUntil"] =
+export const takeUntil: RunnableContainer.TypeClass["takeUntil"] =
   Observable_takeUntil;
 
-export const takeWhile: Containers.TypeClass<RunnableContainer>["takeWhile"] =
+export const takeWhile: RunnableContainer.TypeClass["takeWhile"] =
   Observable_takeWhile;
 
-export const throttle: ReactiveContainers.TypeClass<RunnableContainer>["throttle"] =
+export const throttle: RunnableContainer.TypeClass["throttle"] =
   Runnable_throttle;
 
-export const throwIfEmpty: StatefulContainers.TypeClass<RunnableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: RunnableContainer.TypeClass["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-interface Throws extends ReactiveContainers.TypeClass<RunnableContainer> {
+interface Throws extends RunnableContainer.TypeClass {
   /**
    * @category Constructor
    */
@@ -316,29 +288,26 @@ interface Throws extends ReactiveContainers.TypeClass<RunnableContainer> {
 }
 export const throws: Throws["throws"] = Observable_throws;
 
-export const timeout: ReactiveContainers.TypeClass<RunnableContainer>["timeout"] =
+export const timeout: RunnableContainer.TypeClass["timeout"] =
   Observable_timeout;
 
-export const toEnumerable: EnumerableContainers.TypeClass<RunnableContainer>["toEnumerable"] =
-  Observable_toEnumerable;
-
-export const toReadonlyArray: RunnableContainers.TypeClass<RunnableContainer>["toReadonlyArray"] =
+export const toReadonlyArray: RunnableContainer.TypeClass["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 
-export const withCurrentTime: ReactiveContainers.TypeClass<RunnableContainer>["withCurrentTime"] =
+export const withCurrentTime: RunnableContainer.TypeClass["withCurrentTime"] =
   Observable_withCurrentTime;
 
-export const withLatestFrom: ReactiveContainers.TypeClass<RunnableContainer>["withLatestFrom"] =
-  Observable_withLatestFrom as ReactiveContainers.TypeClass<RunnableContainer>["withLatestFrom"];
+export const withLatestFrom: RunnableContainer.TypeClass["withLatestFrom"] =
+  Observable_withLatestFrom as RunnableContainer.TypeClass["withLatestFrom"];
 
-export const zip: Containers.TypeClass<RunnableContainer>["zip"] =
-  Observable_zip as Containers.TypeClass<RunnableContainer>["zip"];
+export const zip: RunnableContainer.TypeClass["zip"] =
+  Observable_zip as RunnableContainer.TypeClass["zip"];
 
-export const zipLatest: ReactiveContainers.TypeClass<RunnableContainer>["zipLatest"] =
-  Observable_zipLatest as ReactiveContainers.TypeClass<RunnableContainer>["zipLatest"];
+export const zipLatest: RunnableContainer.TypeClass["zipLatest"] =
+  Observable_zipLatest as RunnableContainer.TypeClass["zipLatest"];
 
-export const zipWith: Containers.TypeClass<RunnableContainer>["zipWith"] =
-  Observable_zipWith as Containers.TypeClass<RunnableContainer>["zipWith"];
+export const zipWith: RunnableContainer.TypeClass["zipWith"] =
+  Observable_zipWith as RunnableContainer.TypeClass["zipWith"];
 
-export const zipWithLatestFrom: ReactiveContainers.TypeClass<RunnableContainer>["zipWithLatestFrom"] =
-  Observable_zipWithLatestFrom as ReactiveContainers.TypeClass<RunnableContainer>["zipWithLatestFrom"];
+export const zipWithLatestFrom: RunnableContainer.TypeClass["zipWithLatestFrom"] =
+  Observable_zipWithLatestFrom as RunnableContainer.TypeClass["zipWithLatestFrom"];

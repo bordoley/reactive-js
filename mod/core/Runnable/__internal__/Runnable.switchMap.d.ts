@@ -1,3 +1,3 @@
-import { ReactiveContainers, RunnableContainer } from "../../../core.js";
-declare const Runnable_switchMap: ReactiveContainers.TypeClass<RunnableContainer>["switchMap"];
+import { ObservableContainers, RunnableContainer } from "../../../core.js";
+declare const Runnable_switchMap: ObservableContainers.TypeClass<RunnableContainer>["switchMap"];
 export default Runnable_switchMap;

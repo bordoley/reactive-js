@@ -1,4 +1,11 @@
-import { DisposableOrTeardown, ObservableLike } from "../../../core.js";
+import { Containers, DeferredObservableContainer, DisposableOrTeardown, EnumerableContainer, ObservableContainer, RunnableContainer, SharedObservableContainer } from "../../../core.js";
 import { Factory } from "../../../functions.js";
-declare const Observable_onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => (obs: ObservableLike<T>) => ObservableLike<T>;
+interface ObservableOnSubscribe {
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<EnumerableContainer, T, T>;
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<RunnableContainer, T, T>;
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<DeferredObservableContainer, T, T>;
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<SharedObservableContainer, T, T>;
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): Containers.Operator<ObservableContainer, T, T>;
+}
+declare const Observable_onSubscribe: ObservableOnSubscribe["onSubscribe"];
 export default Observable_onSubscribe;

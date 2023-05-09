@@ -12,9 +12,9 @@
 
 ## Hierarchy
 
-- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+- **`TypeClass`**
 
-  ↳ **`TypeClass`**
+  ↳ [`TypeClass`](core.ObservableContainer.TypeClass.md)
 
 ## Table of contents
 

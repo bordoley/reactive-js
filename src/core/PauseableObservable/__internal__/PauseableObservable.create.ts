@@ -12,8 +12,8 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   Containers,
+  DeferredObservableContainer,
   DisposableLike,
-  ObservableContainer,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -43,7 +43,7 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 
 const PauseableObservable_create: <T>(
-  op: Containers.Operator<ObservableContainer, boolean, T>,
+  op: Containers.Operator<DeferredObservableContainer, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -63,7 +63,7 @@ const PauseableObservable_create: <T>(
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: Containers.Operator<ObservableContainer, boolean, T>,
+        op: Containers.Operator<DeferredObservableContainer, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
@@ -72,15 +72,18 @@ const PauseableObservable_create: <T>(
       ): PauseableObservableLike<T> & DisposableLike {
         const liftedOp = compose(
           Observable_backpressureStrategy<
-            ObservableContainer,
+            DeferredObservableContainer,
             boolean | Updater<boolean>
           >(1, "drop-oldest"),
-          Observable_mergeWith<ObservableContainer, boolean>(
+          Observable_mergeWith<DeferredObservableContainer, boolean>(
             // Initialize to paused state
             pipe(true, Optional_toObservable()),
           ),
-          Observable_distinctUntilChanged<ObservableContainer, boolean>(),
-          Observable_forEach<ObservableContainer, boolean>(isPaused => {
+          Observable_distinctUntilChanged<
+            DeferredObservableContainer,
+            boolean
+          >(),
+          Observable_forEach<DeferredObservableContainer, boolean>(isPaused => {
             instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
           }),
           op,

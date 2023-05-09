@@ -30,13 +30,13 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableContainer,
+  ObservableContainers,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  ReactiveContainers,
 } from "../../../core.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
@@ -62,7 +62,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
   ) => Containers.Operator<C, Containers.Of<C, T>, T>,
-): ReactiveContainers.TypeClass<C>["mergeAll"] => {
+): ObservableContainers.TypeClass<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

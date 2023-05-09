@@ -1,3 +1,3 @@
-import { DeferredContainers, RunnableContainer } from "../../../core.js";
-declare const Runnable_flow: DeferredContainers.TypeClass<RunnableContainer>["flow"];
+import { RunnableContainer, RunnableContainers } from "../../../core.js";
+declare const Runnable_flow: RunnableContainers.TypeClass<RunnableContainer>["flow"];
 export default Runnable_flow;

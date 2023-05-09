@@ -15,6 +15,7 @@ import {
   AssociativeCollectionLike,
   AssociativeCollectionLike_keys,
   CollectionLike_count,
+  DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
   DisposableLike_isDisposed,
@@ -35,9 +36,9 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../../../core.js";
+import * as DeferredObservable from "../../../core/DeferredObservable.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../../core/Disposable.js";
-import * as Observable from "../../../core/Observable.js";
 import * as Publisher from "../../../core/Publisher.js";
 import Queue_createIndexedQueue from "../../../core/Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyMap_keys from "../../../core/ReadonlyMap/__internal__/ReadonlyMap.keys.js";
@@ -63,10 +64,10 @@ import Streamable_create from "./Streamable.create.js";
 interface ReactiveCachePersistentStorageLike<T> {
   load(
     keys: ReadonlySet<string>,
-  ): ObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+  ): DeferredObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
   store(
     updates: ReadonlyObjectMapLike<string, Optional<T>>,
-  ): ObservableLike<void>;
+  ): DeferredObservableLike<void>;
 }
 
 type CacheLike<T> = StreamableLike<
@@ -170,7 +171,7 @@ const createCacheStream: <T>(
             never
           >(
             compose(
-              Observable.map(
+              DeferredObservable.map(
                 (
                   updaters: ReadonlyObjectMapLike<
                     string,
@@ -193,7 +194,7 @@ const createCacheStream: <T>(
                 ],
               ),
               isSome(persistentStore)
-                ? Observable.concatMap(
+                ? DeferredObservable.concatMap(
                     (
                       next: [
                         ReadonlyObjectMapLike<
@@ -213,16 +214,16 @@ const createCacheStream: <T>(
                       return keys.size > 0
                         ? pipe(
                             persistentStore.load(keys),
-                            Observable.map(persistedValues => [
+                            DeferredObservable.map(persistedValues => [
                               updaters,
                               ReadonlyObjectMap_union(values, persistedValues),
                             ]),
                           )
-                        : pipe(next, Observable.fromOptional());
+                        : pipe(next, DeferredObservable.fromOptional());
                     },
                   )
                 : identity,
-              Observable.map(
+              DeferredObservable.map(
                 ([updaters, values]: [
                   ReadonlyObjectMapLike<
                     string,
@@ -243,7 +244,7 @@ const createCacheStream: <T>(
                     ),
                   ),
               ),
-              Observable.forEach(
+              DeferredObservable.forEach(
                 ReadonlyObjectMap.forEachWithKey((v: T, key: string) => {
                   const oldValue = instance.store.get(key);
 
@@ -268,8 +269,10 @@ const createCacheStream: <T>(
                 }),
               ),
               isSome(persistentStore)
-                ? Observable.concatMap(bindMethod(persistentStore, "store"))
-                : Observable.ignoreElements(),
+                ? DeferredObservable.concatMap(
+                    bindMethod(persistentStore, "store"),
+                  )
+                : DeferredObservable.ignoreElements(),
             ),
           ),
           invoke(StreamableLike_stream, scheduler, options),
@@ -359,8 +362,10 @@ const Streamable_createCache = <T>(
   persistentStore: Optional<{
     load(
       keys: ReadonlySet<string>,
-    ): ObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
-    store(updates: ReadonlyObjectMapLike<string, T>): ObservableLike<void>;
+    ): DeferredObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+    store(
+      updates: ReadonlyObjectMapLike<string, T>,
+    ): DeferredObservableLike<void>;
   }>,
   options: {
     readonly capacity?: number;

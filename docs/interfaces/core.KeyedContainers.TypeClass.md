@@ -10,6 +10,12 @@
 | :------ | :------ |
 | `C` | extends [`KeyedContainers`](core.KeyedContainers-1.md) |
 
+## Hierarchy
+
+- **`TypeClass`**
+
+  ↳ [`TypeClass`](core.ReadonlyArrayContainer.TypeClass.md)
+
 ## Table of contents
 
 ### Constructor Methods

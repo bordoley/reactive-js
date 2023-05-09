@@ -3,13 +3,13 @@
 import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../../core/Disposable/__internal__/Disposable.onComplete.js";
-import Observable_create from "../../../core/Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../../core/Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../../core/Observable/__internal__/Observable.subscribeWithConfig.js";
 import PauseableObservable_create from "../../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
 import { bindMethod, error, pipe } from "../../../functions.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 const AsyncIterable_flow = (scheduler, options) => (iterable) => {
-    const op = (modeObs) => Observable_create((observer) => {
+    const op = (modeObs) => DeferredObservable_create((observer) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
         let isPaused = true;

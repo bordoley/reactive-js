@@ -9,14 +9,14 @@ import {
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
-  ObservableLike,
   QueueableLike_enqueue,
+  SharedObservableLike,
 } from "../../core.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as EventListener from "../../core/EventListener.js";
 import * as EventPublisher from "../../core/EventPublisher.js";
 import * as EventSource from "../../core/EventSource.js";
-import * as Observable from "../../core/Observable.js";
+import * as SharedObservable from "../../core/SharedObservable.js";
 import {
   Function1,
   Optional,
@@ -1148,7 +1148,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<AbortSignalEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends Animation,
     K extends keyof AnimationEventMap,
@@ -1157,7 +1157,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<AnimationEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends AbstractWorker,
     K extends keyof AbstractWorkerEventMap,
@@ -1166,7 +1166,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<AbstractWorkerEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends AudioScheduledSourceNode,
     K extends keyof AudioScheduledSourceNodeEventMap,
@@ -1175,7 +1175,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<AudioScheduledSourceNodeEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends BaseAudioContext,
     K extends keyof BaseAudioContextEventMap,
@@ -1184,7 +1184,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<BaseAudioContextEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends AudioWorkletNode,
     K extends keyof AudioWorkletNodeEventMap,
@@ -1193,7 +1193,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<AudioWorkletNodeEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends BroadcastChannel,
     K extends keyof BroadcastChannelEventMap,
@@ -1202,7 +1202,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<BroadcastChannelEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends Document,
     K extends keyof DocumentEventMap,
@@ -1211,7 +1211,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<DocumentEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends Element,
     K extends keyof ElementEventMap,
@@ -1220,7 +1220,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaStreamTrack,
     K extends keyof MediaStreamTrackEventMap,
@@ -1229,7 +1229,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaStreamTrackEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends EventSource,
     K extends keyof EventSourceEventMap,
@@ -1238,7 +1238,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<EventSourceEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends FileReader,
     K extends keyof FileReaderEventMap,
@@ -1247,7 +1247,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<FileReaderEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends FontFaceSet,
     K extends keyof FontFaceSetEventMap,
@@ -1256,7 +1256,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<FontFaceSetEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends GlobalEventHandlers,
     K extends keyof GlobalEventHandlersEventMap,
@@ -1265,7 +1265,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<GlobalEventHandlersEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBDatabase,
     K extends keyof IDBDatabaseEventMap,
@@ -1274,7 +1274,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<IDBDatabaseEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLBodyElement,
     K extends keyof HTMLBodyElementEventMap,
@@ -1283,7 +1283,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLBodyElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLElement,
     K extends keyof HTMLElementEventMap,
@@ -1292,7 +1292,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLMediaElement,
     K extends keyof HTMLMediaElementEventMap,
@@ -1301,7 +1301,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLMediaElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends HTMLVideoElement,
     K extends keyof HTMLVideoElementEventMap,
@@ -1310,7 +1310,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<HTMLVideoElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBOpenDBRequest,
     K extends keyof IDBOpenDBRequestEventMap,
@@ -1319,7 +1319,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<IDBOpenDBRequestEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBRequest<TDBObject>,
     K extends keyof IDBRequestEventMap,
@@ -1329,7 +1329,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<IDBRequestEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends IDBTransaction,
     K extends keyof IDBTransactionEventMap,
@@ -1338,7 +1338,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<IDBTransactionEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MathMLElement,
     K extends keyof MathMLElementEventMap,
@@ -1347,7 +1347,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MathMLElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaDevices,
     K extends keyof MediaDevicesEventMap,
@@ -1356,7 +1356,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaDevicesEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaKeySession,
     K extends keyof MediaKeySessionEventMap,
@@ -1365,7 +1365,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaKeySessionEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaQueryList,
     K extends keyof MediaQueryListEventMap,
@@ -1374,7 +1374,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaQueryListEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaRecorder,
     K extends keyof MediaRecorderEventMap,
@@ -1383,7 +1383,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaRecorderEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaSource | MediaStream,
     K extends keyof MediaSourceEventMap,
@@ -1392,7 +1392,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaSourceEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MediaStream,
     K extends keyof MediaStreamEventMap,
@@ -1401,7 +1401,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MediaStreamEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends MessagePort,
     K extends keyof MessagePortEventMap,
@@ -1410,7 +1410,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<MessagePortEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends Notification,
     K extends keyof NotificationEventMap,
@@ -1419,7 +1419,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<NotificationEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends OfflineAudioContext,
     K extends keyof OfflineAudioContextEventMap,
@@ -1428,7 +1428,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<OfflineAudioContextEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends OffscreenCanvas,
     K extends keyof OffscreenCanvasEventMap,
@@ -1437,7 +1437,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<OffscreenCanvasEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends PaymentRequest,
     K extends keyof PaymentRequestEventMap,
@@ -1446,7 +1446,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<PaymentRequestEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends Performance,
     K extends keyof PerformanceEventMap,
@@ -1455,7 +1455,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<PerformanceEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends PermissionStatus,
     K extends keyof PermissionStatusEventMap,
@@ -1464,7 +1464,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<PermissionStatusEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends PictureInPictureWindow,
     K extends keyof PictureInPictureWindowEventMap,
@@ -1473,7 +1473,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<PictureInPictureWindowEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDTMFSender,
     K extends keyof RTCDTMFSenderEventMap,
@@ -1482,7 +1482,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCDTMFSenderEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDataChannel,
     K extends keyof RTCDataChannelEventMap,
@@ -1491,7 +1491,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCDataChannelEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCDtlsTransport,
     K extends keyof RTCDtlsTransportEventMap,
@@ -1500,7 +1500,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCDtlsTransportEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCIceTransport,
     K extends keyof RTCIceTransportEventMap,
@@ -1509,7 +1509,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCIceTransportEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCPeerConnection,
     K extends keyof RTCPeerConnectionEventMap,
@@ -1518,7 +1518,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCPeerConnectionEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RTCSctpTransport,
     K extends keyof RTCSctpTransportEventMap,
@@ -1527,7 +1527,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RTCSctpTransportEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends RemotePlayback,
     K extends keyof RemotePlaybackEventMap,
@@ -1536,7 +1536,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<RemotePlaybackEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SVGSVGElement,
     K extends keyof SVGSVGElementEventMap,
@@ -1545,7 +1545,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SVGSVGElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends ScreenOrientation,
     K extends keyof ScreenOrientationEventMap,
@@ -1554,7 +1554,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ScreenOrientationEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorker,
     K extends keyof ServiceWorkerEventMap,
@@ -1563,7 +1563,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ServiceWorkerEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorkerContainer,
     K extends keyof ServiceWorkerContainerEventMap,
@@ -1572,7 +1572,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ServiceWorkerContainerEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends ServiceWorkerRegistration,
     K extends keyof ServiceWorkerRegistrationEventMap,
@@ -1581,7 +1581,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ServiceWorkerRegistrationEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends ShadowRoot,
     K extends keyof ShadowRootEventMap,
@@ -1590,7 +1590,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<ShadowRootEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SourceBuffer,
     K extends keyof SourceBufferEventMap,
@@ -1599,7 +1599,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SourceBufferEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SourceBufferList,
     K extends keyof SourceBufferListEventMap,
@@ -1608,7 +1608,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SourceBufferListEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SpeechSynthesis,
     K extends keyof SpeechSynthesisEventMap,
@@ -1617,7 +1617,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SpeechSynthesisEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SpeechSynthesisUtterance,
     K extends keyof SpeechSynthesisUtteranceEventMap,
@@ -1626,7 +1626,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SpeechSynthesisUtteranceEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends SVGElement,
     K extends keyof SVGElementEventMap,
@@ -1635,7 +1635,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<SVGElementEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrack,
     K extends keyof TextTrackEventMap,
@@ -1644,7 +1644,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<TextTrackEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrackCue,
     K extends keyof TextTrackCueEventMap,
@@ -1653,7 +1653,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<TextTrackCueEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends TextTrackList,
     K extends keyof TextTrackListEventMap,
@@ -1662,7 +1662,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<TextTrackListEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends VisualViewport,
     K extends keyof VisualViewportEventMap,
@@ -1671,7 +1671,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<VisualViewportEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends WebSocket,
     K extends keyof WebSocketEventMap,
@@ -1680,17 +1680,17 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<WebSocketEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<TEventTarget extends Window, K extends keyof WindowEventMap, T>(
     eventName: K,
     selector: Function1<WindowEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(
     eventName: K,
     selector: Function1<WorkerEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
   observeEvent<
     TEventTarget extends XMLHttpRequestEventTarget,
     K extends keyof XMLHttpRequestEventTargetEventMap,
@@ -1699,7 +1699,7 @@ interface ObserveEvent {
     eventName: K,
     selector: Function1<XMLHttpRequestEventTargetEventMap[K], T>,
     options?: { capture?: boolean },
-  ): Function1<TEventTarget, ObservableLike<T>>;
+  ): Function1<TEventTarget, SharedObservableLike<T>>;
 }
 
 export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
@@ -1718,10 +1718,10 @@ export const observeEvent: ObserveEvent["observeEvent"] = (<T>(
         listener: (ev: unknown) => void,
       ): void;
     },
-    ObservableLike<T>
+    SharedObservableLike<T>
   > =>
   target =>
-    Observable.create(observer => {
+    SharedObservable.create(observer => {
       const addEventHandlerOptions = {
         passive: true,
         capture: options?.capture,
@@ -2041,7 +2041,7 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
 
 export const observeMeasure: <
   TElement extends HTMLElement | SVGElement,
->() => Function1<TElement, ObservableLike<Rect>> = /*@__PURE__*/ (() => {
+>() => Function1<TElement, SharedObservableLike<Rect>> = /*@__PURE__*/ (() => {
   const keys: (keyof Rect)[] = [
     "x",
     "y",
@@ -2057,7 +2057,7 @@ export const observeMeasure: <
 
   return returns(element =>
     pipe(
-      Observable.create(observer => {
+      SharedObservable.create(observer => {
         const listener = pipe(
           EventListener.create<Rect>(
             bindMethod(observer, QueueableLike_enqueue),
@@ -2081,7 +2081,7 @@ export const observeMeasure: <
         };
         observer[QueueableLike_enqueue](rect);
       }),
-      Observable.distinctUntilChanged({ equality: areBoundsEqual }),
+      SharedObservable.distinctUntilChanged({ equality: areBoundsEqual }),
     ),
   );
 })();

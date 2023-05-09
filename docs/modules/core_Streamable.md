@@ -31,7 +31,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Operator`](core.Containers.md#operator)<[`ObservableContainer`](../interfaces/core.ObservableContainer.md), `TReq`, `T`\> |
+| `op` | [`Operator`](core.Containers.md#operator)<[`DeferredObservableContainer`](../interfaces/core.DeferredObservableContainer-1.md), `TReq`, `T`\> |
 
 #### Returns
 
@@ -55,7 +55,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -78,7 +78,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_1`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -101,7 +101,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_2`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_2`\>[]\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -125,7 +125,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_3`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_3`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -147,7 +147,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_4`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_4`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
@@ -169,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](core.ReactiveContainers.md#animationconfig)<`T_5`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](core.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](core.RunnableObservableContainers.md#animationconfig)<`T_5`\>[]\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -198,7 +198,7 @@ Returns an event handler that invokes the observable function.
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 
@@ -220,7 +220,7 @@ Returns an event handler that invokes the observable function.
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType_1`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_1`, [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 
@@ -242,7 +242,7 @@ Returns an event handler that invokes the observable function.
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType_2`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_2`, [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -266,7 +266,7 @@ Returns an event handler that invokes the observable function.
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType_3`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType_3`, [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`unknown`\>\> |
 
 #### Returns
 
@@ -313,8 +313,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `persistentStore` | `Object` |
-| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`ObservableLike`](../interfaces/core.ObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](functions.md#optional)<`T`\>\>\>\> |
-| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`ObservableLike`](../interfaces/core.ObservableLike.md)<`void`\> |
+| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](functions.md#optional)<`T`\>\>\>\> |
+| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableLike`](../interfaces/core.DeferredObservableLike.md)<`void`\> |
 | `options?` | `Object` |
 | `options.capacity?` | `number` |
 | `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |

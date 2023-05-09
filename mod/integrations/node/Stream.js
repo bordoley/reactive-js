@@ -1,6 +1,7 @@
 /// <reference types="./Stream.d.ts" />
 
 import { DispatcherLike_complete, DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import PauseableObservable_create from "../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -31,7 +32,7 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
 };
-export const flow = (scheduler, options) => factory => PauseableObservable_create(mode => Observable.create(observer => {
+export const flow = (scheduler, options) => factory => PauseableObservable_create(mode => DeferredObservable.create(observer => {
     const dispatchDisposable = pipe(Disposable.create(), Disposable.onError(Disposable.toErrorHandler(observer)), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
     const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable))
@@ -50,7 +51,7 @@ export const flow = (scheduler, options) => factory => PauseableObservable_creat
     readable.on("data", onData);
     readable.on("end", onEnd);
 }), scheduler, options);
-export const sinkInto = (factory) => flowable => Observable.create(observer => {
+export const sinkInto = (factory) => flowable => DeferredObservable.create(observer => {
     const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
         : pipe(factory, addDisposable(observer));

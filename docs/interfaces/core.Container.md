@@ -10,13 +10,13 @@ Base type for all Containers.
 
 - **`Container`**
 
-  ↳ [`IterableContainer`](core.IterableContainer.md)
+  ↳ [`IterableContainer`](core.IterableContainer-1.md)
 
-  ↳ [`AsyncIterableContainer`](core.AsyncIterableContainer.md)
+  ↳ [`AsyncIterableContainer`](core.AsyncIterableContainer-1.md)
 
   ↳ [`PromiseContainer`](core.PromiseContainer.md)
 
-  ↳ [`EnumeratorContainer`](core.EnumeratorContainer.md)
+  ↳ [`EnumeratorContainer`](core.EnumeratorContainer-1.md)
 
   ↳ [`KeyedContainers`](core.KeyedContainers-1.md)
 
@@ -26,7 +26,7 @@ Base type for all Containers.
 
   ↳ [`EventSourceContainer`](core.EventSourceContainer.md)
 
-  ↳ [`ObservableContainer`](core.ObservableContainer.md)
+  ↳ [`ObservableContainer`](core.ObservableContainer-1.md)
 
 ## Table of contents
 

@@ -19,6 +19,7 @@ import * as ReadonlyArray from "../../core/ReadonlyArray.js";
 import * as Scheduler from "../../core/Scheduler.js";
 import * as Streamable from "../../core/Streamable.js";
 import { Optional, pipe, raise } from "../../functions.js";
+import * as DeferredObservable from "../DeferredObservable.js";
 import * as Observable from "../Observable.js";
 import {
   __bindMethod,
@@ -93,8 +94,8 @@ const shareTests = describe(
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const shared = pipe(
       [1, 2, 3],
-      ReadonlyArray.toObservable({ delay: 1 }),
-      Observable.share(scheduler, { replay: 1 }),
+      ReadonlyArray.toRunnable({ delay: 1 }),
+      DeferredObservable.share(scheduler, { replay: 1 }),
     );
 
     let result: number[] = [];

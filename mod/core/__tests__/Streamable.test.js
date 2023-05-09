@@ -2,6 +2,7 @@
 
 import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
 import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import * as ReadonlyArray from "../../core/ReadonlyArray.js";
@@ -183,8 +184,8 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         def: 2,
     };
     const persistentStore = {
-        load: (_) => pipe({ ...store }, Observable.fromOptional()),
-        store: (updates) => Observable.fromFactory(() => {
+        load: (_) => pipe({ ...store }, DeferredObservable.fromOptional()),
+        store: (updates) => DeferredObservable.fromFactory(() => {
             pipe(updates, ReadonlyObjectMap.forEachWithKey((v, k) => {
                 store[k] = v;
             }));

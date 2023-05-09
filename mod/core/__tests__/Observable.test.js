@@ -6,6 +6,7 @@ import * as ReadonlyArray from "../../core/ReadonlyArray.js";
 import * as Scheduler from "../../core/Scheduler.js";
 import * as Streamable from "../../core/Streamable.js";
 import { pipe, raise } from "../../functions.js";
+import * as DeferredObservable from "../DeferredObservable.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
 const computeTests = describe("compute", testAsync("__stream", async () => {
@@ -35,7 +36,7 @@ const onSubscribeTests = describe("onSubscribe", test("when subscribe function r
 }));
 const shareTests = describe("share", test("shared observable zipped with itself", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
-    const shared = pipe([1, 2, 3], ReadonlyArray.toObservable({ delay: 1 }), Observable.share(scheduler, { replay: 1 }));
+    const shared = pipe([1, 2, 3], ReadonlyArray.toRunnable({ delay: 1 }), DeferredObservable.share(scheduler, { replay: 1 }));
     let result = [];
     pipe(Observable.zip(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(x => {
         result.push(x);

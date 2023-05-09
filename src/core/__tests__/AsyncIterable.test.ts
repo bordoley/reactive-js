@@ -6,6 +6,7 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import { PauseableLike_resume, SchedulerLike } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import * as Scheduler from "../../core/Scheduler.js";
@@ -76,7 +77,9 @@ testModule(
 
         const result = await pipe(
           stream,
-          Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
+          Observable.catchError(e =>
+            pipe([e], DeferredObservable.fromReadonlyArray()),
+          ),
           Observable.lastAsync(scheduler),
         );
 
@@ -133,7 +136,9 @@ testModule(
             throw e;
           })(),
           AsyncIterable.toObservable(),
-          Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())),
+          Observable.catchError(e =>
+            pipe([e], DeferredObservable.fromReadonlyArray()),
+          ),
           Observable.lastAsync(scheduler, { capacity: 1 }),
         );
 
