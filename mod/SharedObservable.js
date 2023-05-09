@@ -35,6 +35,7 @@ import Observable_toEventSource from "./Observable/__internal__/Observable.toEve
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import SharedObservable_create from "./SharedObservable/__internal__/SharedObservable.create.js";
+import SharedObservable_defer from "./SharedObservable/__internal__/SharedObservable.defer.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 /**
  * @category Operator
@@ -53,9 +54,7 @@ export const compute = Observable_compute;
  */
 export const create = SharedObservable_create;
 export const decodeWithCharset = Observable_decodeWithCharset;
-/*
-export const defer: SharedObservableContainer.TypeClass["defer"] =
-  Observable_defer;*/
+export const defer = SharedObservable_defer;
 export const dispatchTo = Observable_dispatchTo;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 /*

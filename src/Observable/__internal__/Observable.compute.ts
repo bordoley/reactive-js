@@ -207,6 +207,7 @@ class ComputeContext {
   [__ComputeContext_index] = 0;
   readonly [__ComputeContext_effects]: ComputeEffect[] = [];
   readonly [__ComputeContext_observableConfig]: {
+    readonly [ObservableLike_isDeferred]: boolean;
     readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
@@ -244,6 +245,7 @@ class ComputeContext {
     runComputation: () => void,
     mode: EffectsMode,
     config: {
+      readonly [ObservableLike_isDeferred]: boolean;
       readonly [ObservableLike_isEnumerable]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     },
@@ -271,6 +273,13 @@ class ComputeContext {
     ) {
       raiseWithDebugMessage(
         "cannot observe a non-runnable observable in a Runnable computation",
+      );
+    } else if (
+      this[__ComputeContext_observableConfig][ObservableLike_isDeferred] &&
+      !observable[ObservableLike_isDeferred]
+    ) {
+      raiseWithDebugMessage(
+        "cannot observe a non-deferred observable in a DeferredObservable computation",
       );
     }
 
@@ -443,6 +452,15 @@ interface ObservableComputeWithConfig {
     },
     options?: { readonly mode?: "batched" | "combine-latest" },
   ): DeferredObservableLike<T>;
+  computeWithConfig<T>(
+    computation: Factory<T>,
+    config: {
+      readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ObservableLike_isEnumerable]: boolean;
+      readonly [ObservableLike_isRunnable]: boolean;
+    },
+    options?: { readonly mode?: "batched" | "combine-latest" },
+  ): ObservableLike<T>;
 }
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
@@ -559,6 +577,20 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
     }, config)) as ObservableComputeWithConfig["computeWithConfig"];
 
 export const Observable_compute = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+): ObservableLike<T> =>
+  Observable_computeWithConfig(
+    computation,
+    {
+      [ObservableLike_isDeferred]: false,
+      [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isRunnable]: false,
+    },
+    options,
+  );
+
+export const DeferredObservable_compute = <T>(
   computation: Factory<T>,
   options: { mode?: "batched" | "combine-latest" } = {},
 ): DeferredObservableLike<T> =>

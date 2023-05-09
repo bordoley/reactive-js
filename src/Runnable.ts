@@ -1,4 +1,5 @@
 import Container_identity from "./Container/__internal__/Container.identity.js";
+import DeferredObservable_forkConcat from "./DeferredObservable/__internal__/DeferredObservable.forkConcat.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -14,7 +15,6 @@ import Observable_endWith from "./Observable/__internal__/Observable.endWith.js"
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
-import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
@@ -161,7 +161,7 @@ export const forEach: RunnableContainer.TypeClass["forEach"] =
   Observable_forEach;
 
 export const forkConcat: RunnableContainer.TypeClass["forkConcat"] =
-  Observable_forkConcat as RunnableContainer.TypeClass["forkConcat"];
+  DeferredObservable_forkConcat as RunnableContainer.TypeClass["forkConcat"];
 
 export const forkMerge: RunnableContainer.TypeClass["forkMerge"] =
   Observable_forkMerge as RunnableContainer.TypeClass["forkMerge"];

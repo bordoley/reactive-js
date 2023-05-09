@@ -104,6 +104,10 @@ class ComputeContext {
             !observable[ObservableLike_isRunnable]) {
             raiseWithDebugMessage("cannot observe a non-runnable observable in a Runnable computation");
         }
+        else if (this[__ComputeContext_observableConfig][ObservableLike_isDeferred] &&
+            !observable[ObservableLike_isDeferred]) {
+            raiseWithDebugMessage("cannot observe a non-deferred observable in a DeferredObservable computation");
+        }
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)
             : validateComputeEffect(this, Observe);
@@ -249,6 +253,11 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
     pipe(observer[SchedulerLike_schedule](runComputation), Disposable_addTo(observer));
 }, config));
 export const Observable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+    [ObservableLike_isDeferred]: false,
+    [ObservableLike_isEnumerable]: false,
+    [ObservableLike_isRunnable]: false,
+}, options);
+export const DeferredObservable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,

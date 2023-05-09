@@ -16,7 +16,7 @@ export declare const combineLatest: ObservableContainer.TypeClass["combineLatest
  */
 export declare const compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest" | undefined;
-}) => import("./types.js").DeferredObservableLike<T>;
+}) => ObservableLike<T>;
 export declare const decodeWithCharset: ObservableContainer.TypeClass["decodeWithCharset"];
 export declare const defer: ObservableContainer.TypeClass["defer"];
 export declare const dispatchTo: ObservableContainer.TypeClass["dispatchTo"];

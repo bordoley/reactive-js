@@ -1,6 +1,6 @@
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../__internal__/symbols.js";
 import { Factory, Optional } from "../../functions.js";
-import { DeferredObservableLike, DisposableLike, EnumerableLike, ObservableLike, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../types.js";
+import { DeferredObservableLike, DisposableLike, EnumerableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../types.js";
 type EffectsMode = "batched" | "combine-latest";
 declare const Memo = 1;
 declare const Await = 2;
@@ -42,6 +42,7 @@ declare class ComputeContext {
     [__ComputeContext_index]: number;
     readonly [__ComputeContext_effects]: ComputeEffect[];
     readonly [__ComputeContext_observableConfig]: {
+        readonly [ObservableLike_isDeferred]: boolean;
         readonly [ObservableLike_isEnumerable]: boolean;
         readonly [ObservableLike_isRunnable]: boolean;
     };
@@ -51,6 +52,7 @@ declare class ComputeContext {
     private readonly [__ComputeContext_mode];
     private readonly [__ComputeContext_cleanup];
     constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode, config: {
+        readonly [ObservableLike_isDeferred]: boolean;
         readonly [ObservableLike_isEnumerable]: boolean;
         readonly [ObservableLike_isRunnable]: boolean;
     });
@@ -61,6 +63,9 @@ declare class ComputeContext {
 }
 export declare const assertCurrentContext: () => ComputeContext;
 export declare const Observable_compute: <T>(computation: Factory<T>, options?: {
+    mode?: "batched" | "combine-latest";
+}) => ObservableLike<T>;
+export declare const DeferredObservable_compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest";
 }) => DeferredObservableLike<T>;
 export declare const Runnable_compute: <T>(computation: Factory<T>, options?: {

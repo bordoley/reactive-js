@@ -1,4 +1,5 @@
 import Container_identity from "./Container/__internal__/Container.identity.js";
+import DeferredObservable_forkConcat from "./DeferredObservable/__internal__/DeferredObservable.forkConcat.js";
 import Enumerable_catchError from "./Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
@@ -19,7 +20,6 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
-import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -119,7 +119,7 @@ export const forEach: EnumerableContainer.TypeClass["forEach"] =
   Observable_forEach;
 
 export const forkConcat: EnumerableContainer.TypeClass["forkConcat"] =
-  Observable_forkConcat as EnumerableContainer.TypeClass["forkConcat"];
+  DeferredObservable_forkConcat as EnumerableContainer.TypeClass["forkConcat"];
 
 export const forkZip: EnumerableContainer.TypeClass["forkZip"] =
   Observable_forkZip as EnumerableContainer.TypeClass["forkZip"];

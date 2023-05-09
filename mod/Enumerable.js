@@ -1,6 +1,7 @@
 /// <reference types="./Enumerable.d.ts" />
 
 import Container_identity from "./Container/__internal__/Container.identity.js";
+import DeferredObservable_forkConcat from "./DeferredObservable/__internal__/DeferredObservable.forkConcat.js";
 import Enumerable_catchError from "./Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
@@ -21,7 +22,6 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
-import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -81,7 +81,7 @@ export const firstAsync = Observable_firstAsync;
 export const flatMapIterable = Enumerable_flatMapIterable;
 export const flow = Runnable_flow;
 export const forEach = Observable_forEach;
-export const forkConcat = Observable_forkConcat;
+export const forkConcat = DeferredObservable_forkConcat;
 export const forkZip = Observable_forkZip;
 export const fromEnumeratorFactory = Runnable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
