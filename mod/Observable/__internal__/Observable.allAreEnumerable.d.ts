@@ -1,3 +1,4 @@
+import { TypePredicate } from "../../functions.js";
 import { EnumerableLike, ObservableLike } from "../../types.js";
-declare const Observable_allAreEnumerable: (srcs: ReadonlyArray<ObservableLike>) => srcs is readonly EnumerableLike<unknown>[];
+declare const Observable_allAreEnumerable: TypePredicate<ReadonlyArray<ObservableLike>, ReadonlyArray<EnumerableLike>>;
 export default Observable_allAreEnumerable;
