@@ -242,33 +242,33 @@ ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<{}, `ReadonlySet`<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<{}, `ReadonlySet`<`TKey`\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<{}, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `unknown`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TKey`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<{}, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `unknown`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TKey`\>\>
 
 ___
 

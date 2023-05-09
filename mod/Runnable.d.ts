@@ -1,7 +1,62 @@
 import { RunnableContainer } from "./containers.js";
-import { Factory } from "./functions.js";
+import { Factory, Function1 } from "./functions.js";
 import { RunnableLike } from "./types.js";
-export declare const animate: RunnableContainer.TypeClass["animate"];
+export declare namespace AnimationConfig {
+    /**
+     * @noInheritDoc
+     * @category AnimationConfig
+     */
+    interface Delay {
+        readonly type: "delay";
+        readonly duration: number;
+    }
+    /**
+     * @noInheritDoc
+     * @category AnimationConfig
+     */
+    interface KeyFrame {
+        readonly type: "keyframe";
+        readonly from: number;
+        readonly to: number;
+        readonly duration: number;
+        readonly easing?: Function1<number, number>;
+    }
+    /**
+     * @noInheritDoc
+     * @category AnimationConfig
+     */
+    interface Frame {
+        readonly type: "frame";
+        readonly value: number;
+    }
+    /**
+     * @noInheritDoc
+     * @category AnimationConfig
+     */
+    interface Loop<T> {
+        readonly type: "loop";
+        readonly animation: Description<T> | readonly Description<T>[];
+        readonly count?: number;
+    }
+    /**
+     * @noInheritDoc
+     * @category AnimationConfig
+     */
+    interface Spring {
+        readonly type: "spring";
+        readonly from: number;
+        readonly to: number;
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }
+    type Description<T = number> = Delay | Loop<T> | (T extends number ? (KeyFrame | Spring | Frame) & {
+        readonly selector?: never;
+    } : (KeyFrame | Spring | Frame) & {
+        readonly selector: Function1<number, T>;
+    });
+}
+export declare const animate: <T = number>(configs: AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]) => RunnableLike<T>;
 export declare const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"];
 export declare const buffer: RunnableContainer.TypeClass["buffer"];
 export declare const catchError: RunnableContainer.TypeClass["catchError"];
@@ -17,7 +72,10 @@ export declare const concatAll: RunnableContainer.TypeClass["concatAll"];
 export declare const concatMap: RunnableContainer.TypeClass["concatMap"];
 export declare const concatWith: RunnableContainer.TypeClass["concatWith"];
 export declare const contains: RunnableContainer.TypeClass["contains"];
-export declare const currentTime: RunnableContainer.TypeClass["currentTime"];
+export declare const currentTime: (options?: {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+}) => RunnableLike<number>;
 export declare const decodeWithCharset: RunnableContainer.TypeClass["decodeWithCharset"];
 export declare const defer: RunnableContainer.TypeClass["defer"];
 export declare const dispatchTo: RunnableContainer.TypeClass["dispatchTo"];

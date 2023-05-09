@@ -1,10 +1,8 @@
-import { Container, Containers, RunnableContainers } from "../../containers.js";
+import { Container, Containers, RunnableTypeClass } from "../../containers.js";
 import { Equality, Function1, isEqualTo } from "../../functions.js";
 
 const Container_contains =
-  <C extends Container>(
-    someSatisfy: RunnableContainers.TypeClass<C>["someSatisfy"],
-  ) =>
+  <C extends Container>(someSatisfy: RunnableTypeClass<C>["someSatisfy"]) =>
   <T>(
     value: T,
     options: { readonly equality?: Equality<T> } = {},

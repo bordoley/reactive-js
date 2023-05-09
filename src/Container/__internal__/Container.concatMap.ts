@@ -1,9 +1,9 @@
-import { Container, Containers } from "../../containers.js";
+import { Container, ContainerTypeClass, Containers } from "../../containers.js";
 import { Function1, compose } from "../../functions.js";
 
 const Container_concatMap =
   <C extends Container, O = never>(
-    map: Containers.TypeClass<C>["map"],
+    map: ContainerTypeClass<C>["map"],
     concatAll: <T>(
       options?: O,
     ) => Containers.Operator<C, Containers.Of<C, T>, T>,

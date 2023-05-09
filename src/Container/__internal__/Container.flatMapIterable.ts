@@ -1,10 +1,10 @@
-import { Container, Containers, DeferredContainers } from "../../containers.js";
+import { Container, Containers, DeferredTypeClass } from "../../containers.js";
 import { Function1, compose } from "../../functions.js";
 
 const Container_flatMapIterable =
   <C extends Container>(
-    concatMap: DeferredContainers.TypeClass<C>["concatMap"],
-    fromIterable: DeferredContainers.TypeClass<C>["fromIterable"],
+    concatMap: DeferredTypeClass<C>["concatMap"],
+    fromIterable: DeferredTypeClass<C>["fromIterable"],
   ) =>
   <TA, TB>(
     selector: Function1<TA, Iterable<TB>>,

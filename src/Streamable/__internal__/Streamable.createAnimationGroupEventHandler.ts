@@ -12,6 +12,7 @@ import ReadonlyObjectMap_map from "../../ReadonlyObjectMap/__internal__/Readonly
 import ReadonlyObjectMap_mapWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
+import type { AnimationConfig } from "../../Runnable.js";
 import Runnable_animate from "../../Runnable/__internal__/Runnable.animate.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import {
@@ -25,10 +26,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import {
-  RunnableContainer,
-  RunnableObservableContainers,
-} from "../../containers.js";
+import { RunnableContainer } from "../../containers.js";
 import {
   Function1,
   Optional,
@@ -80,11 +78,11 @@ const createAnimationGroupEventHandlerStream: <
     TKey,
     | Function1<
         TEvent,
-        | RunnableObservableContainers.AnimationConfig<T>
-        | readonly RunnableObservableContainers.AnimationConfig<T>[]
+        | AnimationConfig.Description<T>
+        | readonly AnimationConfig.Description<T>[]
       >
-    | RunnableObservableContainers.AnimationConfig<T>
-    | readonly RunnableObservableContainers.AnimationConfig<T>[]
+    | AnimationConfig.Description<T>
+    | readonly AnimationConfig.Description<T>[]
   >,
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -122,12 +120,12 @@ const createAnimationGroupEventHandlerStream: <
           TKey,
           | Function1<
               TEvent,
-              | RunnableObservableContainers.AnimationConfig<T>
-              | readonly RunnableObservableContainers.AnimationConfig<T>[]
+              | AnimationConfig.Description<T>
+              | readonly AnimationConfig.Description<T>[]
             >
           | (
-              | RunnableObservableContainers.AnimationConfig<T>
-              | readonly RunnableObservableContainers.AnimationConfig<T>[]
+              | AnimationConfig.Description<T>
+              | readonly AnimationConfig.Description<T>[]
             )
         >,
         creationOptions: {
@@ -154,11 +152,11 @@ const createAnimationGroupEventHandlerStream: <
               ReadonlyObjectMap_mapWithKey<
                 | Function1<
                     TEvent,
-                    | RunnableObservableContainers.AnimationConfig<T>
-                    | readonly RunnableObservableContainers.AnimationConfig<T>[]
+                    | AnimationConfig.Description<T>
+                    | readonly AnimationConfig.Description<T>[]
                   >
-                | RunnableObservableContainers.AnimationConfig<T>
-                | readonly RunnableObservableContainers.AnimationConfig<T>[],
+                | AnimationConfig.Description<T>
+                | readonly AnimationConfig.Description<T>[],
                 RunnableLike<T>,
                 string
               >((factory, key: string) =>
@@ -248,8 +246,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | RunnableObservableContainers.AnimationConfig<T>
-        | readonly RunnableObservableContainers.AnimationConfig<T>[]
+        | AnimationConfig.Description<T>
+        | readonly AnimationConfig.Description<T>[]
       >
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
@@ -263,8 +261,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | RunnableObservableContainers.AnimationConfig<T>
-        | readonly RunnableObservableContainers.AnimationConfig<T>[]
+        | AnimationConfig.Description<T>
+        | readonly AnimationConfig.Description<T>[]
       >
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
@@ -278,8 +276,8 @@ interface CreateAnimationGroupEventHandler {
       TKey,
       Function1<
         TEvent,
-        | RunnableObservableContainers.AnimationConfig<T>
-        | readonly RunnableObservableContainers.AnimationConfig<T>[]
+        | AnimationConfig.Description<T>
+        | readonly AnimationConfig.Description<T>[]
       >
     >,
     options: {
@@ -293,24 +291,21 @@ interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | RunnableObservableContainers.AnimationConfig<T>
-      | readonly RunnableObservableContainers.AnimationConfig<T>[]
+      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | RunnableObservableContainers.AnimationConfig<T>
-      | readonly RunnableObservableContainers.AnimationConfig<T>[]
+      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | RunnableObservableContainers.AnimationConfig<T>
-      | readonly RunnableObservableContainers.AnimationConfig<T>[]
+      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
     >,
     options: {
       readonly mode: "queueing";
@@ -326,11 +321,11 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
       TKey,
       | Function1<
           TEvent,
-          | RunnableObservableContainers.AnimationConfig<T>
-          | readonly RunnableObservableContainers.AnimationConfig<T>[]
+          | AnimationConfig.Description<T>
+          | readonly AnimationConfig.Description<T>[]
         >
-      | RunnableObservableContainers.AnimationConfig<T>
-      | readonly RunnableObservableContainers.AnimationConfig<T>[]
+      | AnimationConfig.Description<T>
+      | readonly AnimationConfig.Description<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

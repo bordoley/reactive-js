@@ -4,7 +4,11 @@ import Observable_forEach from "../../Observable/__internal__/Observable.forEach
 import Observable_takeLast from "../../Observable/__internal__/Observable.takeLast.js";
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import {
+  ContainerTypeClass,
+  Containers,
+  ObservableContainer,
+} from "../../containers.js";
 import {
   Factory,
   Function2,
@@ -24,7 +28,7 @@ const HigherOrderObservable_scanLast =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
-  ): Containers.TypeClass<C>["scanLast"] =>
+  ): ContainerTypeClass<C>["scanLast"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

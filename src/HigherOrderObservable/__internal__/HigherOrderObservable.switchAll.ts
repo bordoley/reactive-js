@@ -25,7 +25,7 @@ import {
 } from "../../__internal__/types.js";
 import {
   Containers,
-  DeferredContainers,
+  DeferredTypeClass,
   ObservableContainer,
 } from "../../containers.js";
 import { Function1, bind, bindMethod, none, pipe } from "../../functions.js";
@@ -41,7 +41,7 @@ const HigherOrderObservable_switchAll = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
   ) => Containers.Operator<C, Containers.Of<C, T>, T>,
-): DeferredContainers.TypeClass<C>["concatAll"] => {
+): DeferredTypeClass<C>["concatAll"] => {
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
   ) => ObserverLike<Containers.Of<C, T>> = (<T>() => {

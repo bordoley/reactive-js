@@ -7,9 +7,9 @@ import {
 } from "../__internal__/testing.js";
 import {
   Container,
-  Containers,
-  DeferredContainers,
-  RunnableContainers,
+  ContainerTypeClass,
+  DeferredTypeClass,
+  RunnableTypeClass,
 } from "../containers.js";
 import {
   Optional,
@@ -26,9 +26,7 @@ import {
 } from "../functions.js";
 
 const Containers_test = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
     "container",

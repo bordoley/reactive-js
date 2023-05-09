@@ -2,14 +2,14 @@ import Observable_concatObservables from "../../Observable/__internal__/Observab
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   Containers,
-  DeferredContainers,
+  DeferredTypeClass,
   ObservableContainer,
 } from "../../containers.js";
 import { pipe } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 
 // FIXME: Wrong typeclass, define a better signature
-const DeferredObservable_forkConcat: DeferredContainers.TypeClass<ObservableContainer.Type>["forkConcat"] =
+const DeferredObservable_forkConcat: DeferredTypeClass<ObservableContainer.Type>["forkConcat"] =
 
     <TIn, TOut>(
       ...ops: readonly Containers.Operator<

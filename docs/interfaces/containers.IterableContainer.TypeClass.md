@@ -6,13 +6,13 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.Containers.TypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
+- [`ContainerTypeClass`](containers.ContainerTypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
 
-- [`TypeClass`](containers.DeferredContainers.TypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
+- [`DeferredTypeClass`](containers.DeferredTypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
 
-- [`TypeClass`](containers.RunnableContainers.TypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
+- [`RunnableTypeClass`](containers.RunnableTypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
 
-- [`TypeClass`](containers.EnumerableContainers.TypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
+- [`EnumerableTypeClass`](containers.EnumerableTypeClass.md)<[`Type`](containers.IterableContainer.Type.md)\>
 
   ↳ **`TypeClass`**
 
@@ -113,7 +113,7 @@
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromRunnable](containers.DeferredContainers.TypeClass.md#fromrunnable)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromRunnable](containers.DeferredTypeClass.md#fromrunnable)
 
 ___
 
@@ -149,7 +149,7 @@ number of items reaches the specified maximum buffer size.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[buffer](containers.Containers.TypeClass.md#buffer)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[buffer](containers.ContainerTypeClass.md#buffer)
 
 ___
 
@@ -176,7 +176,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[concatAll](containers.DeferredContainers.TypeClass.md#concatall)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[concatAll](containers.DeferredTypeClass.md#concatall)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[concatMap](containers.DeferredContainers.TypeClass.md#concatmap)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[concatMap](containers.DeferredTypeClass.md#concatmap)
 
 ___
 
@@ -238,7 +238,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[concatWith](containers.DeferredContainers.TypeClass.md#concatwith)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[concatWith](containers.DeferredTypeClass.md#concatwith)
 
 ___
 
@@ -269,7 +269,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[flatMapIterable](containers.Containers.TypeClass.md#flatmapiterable)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[flatMapIterable](containers.ContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -301,7 +301,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[scanLast](containers.Containers.TypeClass.md#scanlast)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[scanLast](containers.ContainerTypeClass.md#scanlast)
 
 ___
 
@@ -335,7 +335,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[contains](containers.RunnableContainers.TypeClass.md#contains)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[contains](containers.RunnableTypeClass.md#contains)
 
 ___
 
@@ -359,7 +359,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[toObservable](containers.Containers.TypeClass.md#toobservable)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[toObservable](containers.ContainerTypeClass.md#toobservable)
 
 ___
 
@@ -383,7 +383,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[toRunnable](containers.RunnableContainers.TypeClass.md#torunnable)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[toRunnable](containers.RunnableTypeClass.md#torunnable)
 
 ## Constructor Methods
 
@@ -413,7 +413,7 @@ Returns a Container which emits all values from each source sequentially.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[concat](containers.DeferredContainers.TypeClass.md#concat)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[concat](containers.DeferredTypeClass.md#concat)
 
 ___
 
@@ -435,7 +435,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[empty](containers.DeferredContainers.TypeClass.md#empty)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[empty](containers.DeferredTypeClass.md#empty)
 
 ___
 
@@ -455,7 +455,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromEnumerable](containers.DeferredContainers.TypeClass.md#fromenumerable)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromEnumerable](containers.DeferredTypeClass.md#fromenumerable)
 
 ___
 
@@ -481,7 +481,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromEnumeratorFactory](containers.DeferredContainers.TypeClass.md#fromenumeratorfactory)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromEnumeratorFactory](containers.DeferredTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -507,7 +507,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromFactory](containers.DeferredContainers.TypeClass.md#fromfactory)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromFactory](containers.DeferredTypeClass.md#fromfactory)
 
 ___
 
@@ -527,7 +527,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromIterable](containers.DeferredContainers.TypeClass.md#fromiterable)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromIterable](containers.DeferredTypeClass.md#fromiterable)
 
 ___
 
@@ -547,7 +547,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromOptional](containers.DeferredContainers.TypeClass.md#fromoptional)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromOptional](containers.DeferredTypeClass.md#fromoptional)
 
 ___
 
@@ -575,7 +575,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[fromReadonlyArray](containers.DeferredContainers.TypeClass.md#fromreadonlyarray)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[fromReadonlyArray](containers.DeferredTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -605,7 +605,7 @@ that is applied to an accumulator value between emitted items.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[generate](containers.DeferredContainers.TypeClass.md#generate)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[generate](containers.DeferredTypeClass.md#generate)
 
 ___
 
@@ -636,7 +636,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): `Iterable`<readonly [`TA`, `TB`, `TC`]\>
 
@@ -662,7 +662,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -690,7 +690,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -720,7 +720,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -752,7 +752,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -786,7 +786,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -822,7 +822,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -860,7 +860,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zip](containers.Containers.TypeClass.md#zip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zip](containers.ContainerTypeClass.md#zip)
 
 ___
 
@@ -892,7 +892,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[distinctUntilChanged](containers.Containers.TypeClass.md#distinctuntilchanged)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[distinctUntilChanged](containers.ContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -919,7 +919,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[endWith](containers.DeferredContainers.TypeClass.md#endwith)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[endWith](containers.DeferredTypeClass.md#endwith)
 
 ___
 
@@ -948,7 +948,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forEach](containers.Containers.TypeClass.md#foreach)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forEach](containers.ContainerTypeClass.md#foreach)
 
 ___
 
@@ -977,7 +977,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[forkConcat](containers.DeferredContainers.TypeClass.md#forkconcat)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[forkConcat](containers.DeferredTypeClass.md#forkconcat)
 
 ___
 
@@ -1006,7 +1006,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1033,7 +1033,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1062,7 +1062,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1093,7 +1093,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1126,7 +1126,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1161,7 +1161,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1198,7 +1198,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ▸ **forkZip**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1237,7 +1237,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[forkZip](containers.Containers.TypeClass.md#forkzip)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[forkZip](containers.ContainerTypeClass.md#forkzip)
 
 ___
 
@@ -1257,7 +1257,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[identity](containers.Containers.TypeClass.md#identity)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[identity](containers.ContainerTypeClass.md#identity)
 
 ___
 
@@ -1277,7 +1277,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[ignoreElements](containers.Containers.TypeClass.md#ignoreelements)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[ignoreElements](containers.ContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -1306,7 +1306,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[keep](containers.Containers.TypeClass.md#keep)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[keep](containers.ContainerTypeClass.md#keep)
 
 ___
 
@@ -1333,7 +1333,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[keepType](containers.Containers.TypeClass.md#keeptype)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[keepType](containers.ContainerTypeClass.md#keeptype)
 
 ___
 
@@ -1371,7 +1371,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[map](containers.Containers.TypeClass.md#map)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[map](containers.ContainerTypeClass.md#map)
 
 ___
 
@@ -1398,7 +1398,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[mapTo](containers.Containers.TypeClass.md#mapto)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[mapTo](containers.ContainerTypeClass.md#mapto)
 
 ___
 
@@ -1418,7 +1418,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[pairwise](containers.Containers.TypeClass.md#pairwise)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[pairwise](containers.ContainerTypeClass.md#pairwise)
 
 ___
 
@@ -1445,7 +1445,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[pick](containers.Containers.TypeClass.md#pick)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[pick](containers.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -1470,7 +1470,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[pick](containers.Containers.TypeClass.md#pick)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[pick](containers.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -1497,7 +1497,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[pick](containers.Containers.TypeClass.md#pick)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[pick](containers.ContainerTypeClass.md#pick)
 
 ___
 
@@ -1525,7 +1525,7 @@ Returns a Container that mirrors the source, repeating it whenever the predicate
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[repeat](containers.DeferredContainers.TypeClass.md#repeat)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[repeat](containers.DeferredTypeClass.md#repeat)
 
 ▸ **repeat**<`T`\>(`count`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, `T`\>
 
@@ -1549,7 +1549,7 @@ Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[repeat](containers.DeferredContainers.TypeClass.md#repeat)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[repeat](containers.DeferredTypeClass.md#repeat)
 
 ▸ **repeat**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, `T`\>
 
@@ -1567,7 +1567,7 @@ Returns a Container that mirrors the source, continually repeating it.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[repeat](containers.DeferredContainers.TypeClass.md#repeat)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[repeat](containers.DeferredTypeClass.md#repeat)
 
 ___
 
@@ -1590,7 +1590,7 @@ if the source completes with an error.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[retry](containers.DeferredContainers.TypeClass.md#retry)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[retry](containers.DeferredTypeClass.md#retry)
 
 ▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `T`, `T`\>
 
@@ -1615,7 +1615,7 @@ if the source completes with an error which satisfies the predicate function.
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[retry](containers.DeferredContainers.TypeClass.md#retry)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[retry](containers.DeferredTypeClass.md#retry)
 
 ___
 
@@ -1646,7 +1646,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[scan](containers.Containers.TypeClass.md#scan)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[scan](containers.ContainerTypeClass.md#scan)
 
 ___
 
@@ -1675,7 +1675,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[skipFirst](containers.Containers.TypeClass.md#skipfirst)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[skipFirst](containers.ContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -1702,7 +1702,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.DeferredContainers.TypeClass.md).[startWith](containers.DeferredContainers.TypeClass.md#startwith)
+[DeferredTypeClass](containers.DeferredTypeClass.md).[startWith](containers.DeferredTypeClass.md#startwith)
 
 ___
 
@@ -1731,7 +1731,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[takeFirst](containers.Containers.TypeClass.md#takefirst)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[takeFirst](containers.ContainerTypeClass.md#takefirst)
 
 ___
 
@@ -1760,7 +1760,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[takeLast](containers.Containers.TypeClass.md#takelast)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[takeLast](containers.ContainerTypeClass.md#takelast)
 
 ___
 
@@ -1792,7 +1792,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[takeWhile](containers.Containers.TypeClass.md#takewhile)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[takeWhile](containers.ContainerTypeClass.md#takewhile)
 
 ___
 
@@ -1819,7 +1819,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1844,7 +1844,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1871,7 +1871,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1900,7 +1900,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1931,7 +1931,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1964,7 +1964,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1999,7 +1999,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.IterableContainer.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -2036,7 +2036,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[zipWith](containers.Containers.TypeClass.md#zipwith)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[zipWith](containers.ContainerTypeClass.md#zipwith)
 
 ___
 
@@ -2058,7 +2058,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.EnumerableContainers.TypeClass.md).[enumerate](containers.EnumerableContainers.TypeClass.md#enumerate)
+[EnumerableTypeClass](containers.EnumerableTypeClass.md).[enumerate](containers.EnumerableTypeClass.md#enumerate)
 
 ___
 
@@ -2088,7 +2088,7 @@ it returns false, or until the end of the Containers.
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[everySatisfy](containers.RunnableContainers.TypeClass.md#everysatisfy)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[everySatisfy](containers.RunnableTypeClass.md#everysatisfy)
 
 ___
 
@@ -2108,7 +2108,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[first](containers.RunnableContainers.TypeClass.md#first)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[first](containers.RunnableTypeClass.md#first)
 
 ___
 
@@ -2128,7 +2128,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[firstAsync](containers.Containers.TypeClass.md#firstasync)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[firstAsync](containers.ContainerTypeClass.md#firstasync)
 
 ___
 
@@ -2157,7 +2157,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[flow](containers.RunnableContainers.TypeClass.md#flow)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[flow](containers.RunnableTypeClass.md#flow)
 
 ___
 
@@ -2177,7 +2177,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[last](containers.RunnableContainers.TypeClass.md#last)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[last](containers.RunnableTypeClass.md#last)
 
 ___
 
@@ -2197,7 +2197,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.Containers.TypeClass.md).[lastAsync](containers.Containers.TypeClass.md#lastasync)
+[ContainerTypeClass](containers.ContainerTypeClass.md).[lastAsync](containers.ContainerTypeClass.md#lastasync)
 
 ___
 
@@ -2223,7 +2223,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[noneSatisfy](containers.RunnableContainers.TypeClass.md#nonesatisfy)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[noneSatisfy](containers.RunnableTypeClass.md#nonesatisfy)
 
 ___
 
@@ -2251,7 +2251,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[reduce](containers.RunnableContainers.TypeClass.md#reduce)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[reduce](containers.RunnableTypeClass.md#reduce)
 
 ___
 
@@ -2277,7 +2277,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[someSatisfy](containers.RunnableContainers.TypeClass.md#somesatisfy)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[someSatisfy](containers.RunnableTypeClass.md#somesatisfy)
 
 ___
 
@@ -2297,7 +2297,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.EnumerableContainers.TypeClass.md).[toEnumerable](containers.EnumerableContainers.TypeClass.md#toenumerable)
+[EnumerableTypeClass](containers.EnumerableTypeClass.md).[toEnumerable](containers.EnumerableTypeClass.md#toenumerable)
 
 ___
 
@@ -2319,7 +2319,7 @@ Converts the Container to a `IterableLike`.
 
 #### Inherited from
 
-[TypeClass](containers.EnumerableContainers.TypeClass.md).[toIterable](containers.EnumerableContainers.TypeClass.md#toiterable)
+[EnumerableTypeClass](containers.EnumerableTypeClass.md).[toIterable](containers.EnumerableTypeClass.md#toiterable)
 
 ___
 
@@ -2341,4 +2341,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[TypeClass](containers.RunnableContainers.TypeClass.md).[toReadonlyArray](containers.RunnableContainers.TypeClass.md#toreadonlyarray)
+[RunnableTypeClass](containers.RunnableTypeClass.md).[toReadonlyArray](containers.RunnableTypeClass.md#toreadonlyarray)

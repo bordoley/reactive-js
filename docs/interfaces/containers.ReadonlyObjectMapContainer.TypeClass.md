@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.KeyedContainers.TypeClass.md)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md)\>
+- [`KeyedContainerTypeClass`](containers.KeyedContainerTypeClass.md)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md)\>
 
   ↳ **`TypeClass`**
 
@@ -60,7 +60,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[empty](containers.KeyedContainers.TypeClass.md#empty)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[empty](containers.KeyedContainerTypeClass.md#empty)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[fromEntries](containers.KeyedContainers.TypeClass.md#fromentries)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[fromEntries](containers.KeyedContainerTypeClass.md#fromentries)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[fromReadonlyArray](containers.KeyedContainers.TypeClass.md#fromreadonlyarray)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[fromReadonlyArray](containers.KeyedContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -142,7 +142,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[forEach](containers.KeyedContainers.TypeClass.md#foreach)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[forEach](containers.KeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -172,7 +172,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[forEachWithKey](containers.KeyedContainers.TypeClass.md#foreachwithkey)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[forEachWithKey](containers.KeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -193,7 +193,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[identity](containers.KeyedContainers.TypeClass.md#identity)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[identity](containers.KeyedContainerTypeClass.md#identity)
 
 ___
 
@@ -223,7 +223,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[keep](containers.KeyedContainers.TypeClass.md#keep)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[keep](containers.KeyedContainerTypeClass.md#keep)
 
 ___
 
@@ -251,7 +251,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[keepType](containers.KeyedContainers.TypeClass.md#keeptype)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[keepType](containers.KeyedContainerTypeClass.md#keeptype)
 
 ___
 
@@ -281,7 +281,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[keepWithKey](containers.KeyedContainers.TypeClass.md#keepwithkey)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[keepWithKey](containers.KeyedContainerTypeClass.md#keepwithkey)
 
 ___
 
@@ -320,7 +320,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[map](containers.KeyedContainers.TypeClass.md#map)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[map](containers.KeyedContainerTypeClass.md#map)
 
 ___
 
@@ -359,7 +359,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[mapWithKey](containers.KeyedContainers.TypeClass.md#mapwithkey)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[mapWithKey](containers.KeyedContainerTypeClass.md#mapwithkey)
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[entries](containers.KeyedContainers.TypeClass.md#entries)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[entries](containers.KeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -402,7 +402,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[keySet](containers.KeyedContainers.TypeClass.md#keyset)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[keySet](containers.KeyedContainerTypeClass.md#keyset)
 
 ___
 
@@ -422,7 +422,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[keys](containers.KeyedContainers.TypeClass.md#keys)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[keys](containers.KeyedContainerTypeClass.md#keys)
 
 ___
 
@@ -451,7 +451,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[reduce](containers.KeyedContainers.TypeClass.md#reduce)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[reduce](containers.KeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -480,7 +480,7 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[reduceWithKey](containers.KeyedContainers.TypeClass.md#reducewithkey)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[reduceWithKey](containers.KeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -503,7 +503,7 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[toReadonlyArray](containers.KeyedContainers.TypeClass.md#toreadonlyarray)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[toReadonlyArray](containers.KeyedContainerTypeClass.md#toreadonlyarray)
 
 ___
 
@@ -523,4 +523,4 @@ ___
 
 #### Inherited from
 
-[TypeClass](containers.KeyedContainers.TypeClass.md).[values](containers.KeyedContainers.TypeClass.md#values)
+[KeyedContainerTypeClass](containers.KeyedContainerTypeClass.md).[values](containers.KeyedContainerTypeClass.md#values)

@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer, ObservableContainers } from "../../containers.js";
+import { Containers, ObservableContainer, ObservableTypeClass } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 declare const HigherOrderObservable_mergeAll: <C extends ObservableContainer.Type>(lift: <T>(f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>) => Containers.Operator<C, Containers.Of<C, T>, T>) => <T_1>(options?: {

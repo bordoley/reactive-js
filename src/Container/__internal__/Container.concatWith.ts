@@ -1,7 +1,7 @@
-import { Container, Containers, DeferredContainers } from "../../containers.js";
+import { Container, Containers, DeferredTypeClass } from "../../containers.js";
 
 const Container_concatWith =
-  <C extends Container>(concat: DeferredContainers.TypeClass<C>["concat"]) =>
+  <C extends Container>(concat: DeferredTypeClass<C>["concat"]) =>
   <T>(
     snd: Containers.Of<C, T>,
     ...tail: readonly Containers.Of<C, T>[]

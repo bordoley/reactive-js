@@ -11,8 +11,7 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { KeyedContainers, ReadonlyObjectMapContainer } from "./containers.js";
-import { ReadonlyObjectMapLike } from "./types.js";
+import { ReadonlyObjectMapContainer } from "./containers.js";
 
 export const empty: ReadonlyObjectMapContainer.TypeClass["empty"] =
   ReadonlyObjectMap_empty;
@@ -26,9 +25,9 @@ export const keepType: ReadonlyObjectMapContainer.TypeClass["keepType"] =
   ReadonlyObjectMap_keepType;
 export const keepWithKey: ReadonlyObjectMapContainer.TypeClass["keepWithKey"] =
   ReadonlyObjectMap_keepWithKey;
-export const keys: KeyedContainers.TypeClass<ReadonlyObjectMapLike>["keys"] =
+export const keys: ReadonlyObjectMapContainer.TypeClass["keys"] =
   ReadonlyObjectMap_keys;
-export const keySet: KeyedContainers.TypeClass<ReadonlyObjectMapLike>["keySet"] =
+export const keySet: ReadonlyObjectMapContainer.TypeClass["keySet"] =
   ReadonlyObjectMap_keySet;
 export const map: ReadonlyObjectMapContainer.TypeClass["map"] =
   ReadonlyObjectMap_map;

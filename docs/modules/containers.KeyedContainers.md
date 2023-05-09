@@ -6,10 +6,6 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [TypeClass](../interfaces/containers.KeyedContainers.TypeClass.md)
-
 ### Type Aliases
 
 - [KeyOf](containers.KeyedContainers.md#keyof)

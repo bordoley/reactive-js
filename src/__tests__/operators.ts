@@ -8,18 +8,18 @@ import {
 } from "../__internal__/testing.js";
 import {
   Container,
-  Containers,
-  DeferredContainers,
-  EnumerableContainers,
-  RunnableContainers,
+  ContainerTypeClass,
+  DeferredTypeClass,
+  EnumerableTypeClass,
+  RunnableTypeClass,
 } from "../containers.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
 export const forEachTests = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    EnumerableContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> &
+    DeferredTypeClass<C> &
+    EnumerableTypeClass<C> &
+    RunnableTypeClass<C>,
 ) =>
   describe(
     "forEach",
@@ -57,9 +57,7 @@ export const forEachTests = <C extends Container>(
   );
 
 export const fromReadonlyArrayTests = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -120,9 +118,7 @@ export const fromReadonlyArrayTests = <C extends Container>(
   );
 
 export const keepTests = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
     "keep",
@@ -157,9 +153,7 @@ export const keepTests = <C extends Container>(
   );
 
 export const mapTests = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
     "map",
@@ -194,9 +188,7 @@ export const mapTests = <C extends Container>(
   );
 
 export const toEnumerableTests = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    EnumerableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & EnumerableTypeClass<C>,
 ) =>
   describe(
     "toEnumerable",
@@ -213,9 +205,7 @@ export const toEnumerableTests = <C extends Container>(
   );
 
 export const toRunnableTest = <C extends Container>(
-  m: Containers.TypeClass<C> &
-    DeferredContainers.TypeClass<C> &
-    RunnableContainers.TypeClass<C>,
+  m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   test(
     "without delay",
