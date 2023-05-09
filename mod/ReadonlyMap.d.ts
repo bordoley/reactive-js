@@ -1,6 +1,6 @@
-import { KeyedContainers, ReadonlyMapContainer } from "./containers.js";
-export declare const empty: KeyedContainers.TypeClass<ReadonlyMapContainer>["empty"];
-export declare const entries: KeyedContainers.TypeClass<ReadonlyMapContainer>["entries"];
-export declare const keys: KeyedContainers.TypeClass<ReadonlyMapContainer>["keys"];
-export declare const map: KeyedContainers.TypeClass<ReadonlyMapContainer>["map"];
-export declare const mapWithKey: KeyedContainers.TypeClass<ReadonlyMapContainer>["mapWithKey"];
+import { ReadonlyMapContainer } from "./containers.js";
+export declare const empty: ReadonlyMapContainer.TypeClass["empty"];
+export declare const entries: ReadonlyMapContainer.TypeClass["entries"];
+export declare const keys: ReadonlyMapContainer.TypeClass["keys"];
+export declare const map: ReadonlyMapContainer.TypeClass["map"];
+export declare const mapWithKey: ReadonlyMapContainer.TypeClass["mapWithKey"];

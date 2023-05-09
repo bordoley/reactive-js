@@ -16,6 +16,12 @@
 
   ↳ [`TypeClass`](containers.ReadonlyArrayContainer.TypeClass.md)
 
+  ↳ [`TypeClass`](containers.DictionaryContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](containers.ReadonlyObjectMapContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](containers.ReadonlyMapContainer.TypeClass.md)
+
 ## Table of contents
 
 ### Constructor Methods

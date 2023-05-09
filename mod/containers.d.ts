@@ -1128,29 +1128,39 @@ export declare namespace PauseableObservableContainer {
     interface TypeClass extends ObservableContainers.TypeClass<Type> {
     }
 }
-/**
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface DictionaryContainer extends KeyedContainers {
-    readonly [Container_type]?: DictionaryLike<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: unknown;
+export declare namespace DictionaryContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends KeyedContainers {
+        readonly [Container_type]?: DictionaryLike<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
+        readonly [KeyedContainer_TKey]?: unknown;
+    }
+    type TKey = KeyedContainers.KeyOf<Type>;
+    interface TypeClass extends KeyedContainers.TypeClass<Type> {
+    }
 }
-/**
- * A compile time only type for using a Javascript `ReadonlyArray` as a `Container`.
- *
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyObjectMapContainer extends Container {
-    readonly [Container_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedContainer_TKey]>, this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: symbol | number | string;
+export declare namespace ReadonlyObjectMapContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedContainer_TKey]>, this[typeof Container_T]>;
+        readonly [KeyedContainer_TKey]?: symbol | number | string;
+    }
+    type TKey = KeyedContainers.KeyOf<Type>;
+    interface TypeClass extends KeyedContainers.TypeClass<Type> {
+    }
 }
-/**
- * @noInheritDoc
- * @category KeyedContainers
- */
-export interface ReadonlyMapContainer extends Container {
-    readonly [Container_type]?: ReadonlyMap<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: unknown;
+export declare namespace ReadonlyMapContainer {
+    /**
+     * @noInheritDoc
+     */
+    interface Type extends Container {
+        readonly [Container_type]?: ReadonlyMap<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
+        readonly [KeyedContainer_TKey]?: unknown;
+    }
+    type TKey = KeyedContainers.KeyOf<Type>;
+    interface TypeClass extends KeyedContainers.TypeClass<Type> {
+    }
 }
