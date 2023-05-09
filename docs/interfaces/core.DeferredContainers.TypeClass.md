@@ -12,13 +12,21 @@
 
 ## Hierarchy
 
-- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+- **`TypeClass`**
 
-  ↳ **`TypeClass`**
+  ↳ [`TypeClass`](core.IterableContainer.TypeClass.md)
 
-  ↳↳ [`TypeClass`](core.ReactiveContainers.TypeClass.md)
+  ↳ [`TypeClass`](core.EnumeratorContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.ReadonlyArrayContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.DeferredObservableContainers.TypeClass.md)
 
 ## Table of contents
+
+### Constructor Properties
+
+- [fromRunnable](core.DeferredContainers.TypeClass.md#fromrunnable)
 
 ### Operator Properties
 
@@ -29,17 +37,44 @@
 ### Constructor Methods
 
 - [concat](core.DeferredContainers.TypeClass.md#concat)
+- [empty](core.DeferredContainers.TypeClass.md#empty)
+- [fromEnumerable](core.DeferredContainers.TypeClass.md#fromenumerable)
+- [fromEnumeratorFactory](core.DeferredContainers.TypeClass.md#fromenumeratorfactory)
+- [fromFactory](core.DeferredContainers.TypeClass.md#fromfactory)
+- [fromIterable](core.DeferredContainers.TypeClass.md#fromiterable)
+- [fromOptional](core.DeferredContainers.TypeClass.md#fromoptional)
+- [fromReadonlyArray](core.DeferredContainers.TypeClass.md#fromreadonlyarray)
+- [generate](core.DeferredContainers.TypeClass.md#generate)
 
 ### Operator Methods
 
 - [endWith](core.DeferredContainers.TypeClass.md#endwith)
 - [forkConcat](core.DeferredContainers.TypeClass.md#forkconcat)
 - [repeat](core.DeferredContainers.TypeClass.md#repeat)
+- [retry](core.DeferredContainers.TypeClass.md#retry)
 - [startWith](core.DeferredContainers.TypeClass.md#startwith)
 
-### Transform Methods
+## Constructor Properties
 
-- [flow](core.DeferredContainers.TypeClass.md#flow)
+### fromRunnable
+
+• **fromRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](core.RunnableLike.md)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Type declaration
+
+▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](core.RunnableLike.md)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](core.RunnableLike.md)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+___
 
 ## Operator Properties
 
@@ -139,6 +174,166 @@ Returns a Container which emits all values from each source sequentially.
 | `fst` | [`Of`](../modules/core.Containers.md#of)<`C`, `T`\> |
 | `snd` | [`Of`](../modules/core.Containers.md#of)<`C`, `T`\> |
 | `...tail` | readonly [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>[] |
+
+#### Returns
+
+[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](core.EnumerableLike.md)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](core.EnumerableLike.md)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](core.EnumeratorLike.md)<`T`\>\> |
+
+#### Returns
+
+[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`Of`](../modules/core.Containers.md#of)<`C`, `T`\>
+
+Generates a Container from a generator function
+that is applied to an accumulator value between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
 
 #### Returns
 
@@ -254,6 +449,46 @@ Returns a Container that mirrors the source, continually repeating it.
 
 ___
 
+### retry
+
+▸ **retry**<`T`\>(): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
+
+Returns an `ObservableLike` that mirrors the source, re-subscribing
+if the source completes with an error.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
+
+▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
+
+Returns an `ObservableLike` that mirrors the source, resubscrbing
+if the source completes with an error which satisfies the predicate function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](../modules/functions.md#function2)<`number`, `unknown`, `boolean`\> |
+
+#### Returns
+
+[`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
+
+___
+
 ### startWith
 
 ▸ **startWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
@@ -274,30 +509,3 @@ ___
 #### Returns
 
 [`Operator`](../modules/core.Containers.md#operator)<`C`, `T`, `T`\>
-
-___
-
-## Transform Methods
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](core.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](core.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](core.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](core.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](core.DisposableLike.md)\>

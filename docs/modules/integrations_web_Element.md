@@ -3083,7 +3083,7 @@ ___
 
 ### observeEvent
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3104,9 +3104,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3127,9 +3127,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3150,9 +3150,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3173,9 +3173,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3196,9 +3196,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3219,9 +3219,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3242,9 +3242,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3265,9 +3265,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3288,9 +3288,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3311,9 +3311,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3334,9 +3334,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3357,9 +3357,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3380,9 +3380,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3403,9 +3403,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3426,9 +3426,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3449,9 +3449,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3472,9 +3472,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3495,9 +3495,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3518,9 +3518,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3541,9 +3541,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`, `TDBObject`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`, `TDBObject`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3565,9 +3565,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3588,9 +3588,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3611,9 +3611,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3634,9 +3634,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3657,9 +3657,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3680,9 +3680,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3703,9 +3703,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3726,9 +3726,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3749,9 +3749,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3772,9 +3772,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3795,9 +3795,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3818,9 +3818,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3841,9 +3841,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3864,9 +3864,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3887,9 +3887,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3910,9 +3910,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3933,9 +3933,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3956,9 +3956,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3979,9 +3979,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4002,9 +4002,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4025,9 +4025,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4048,9 +4048,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4071,9 +4071,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4094,9 +4094,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4117,9 +4117,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4140,9 +4140,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4163,9 +4163,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4186,9 +4186,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4209,9 +4209,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4232,9 +4232,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4255,9 +4255,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4278,9 +4278,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4301,9 +4301,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4324,9 +4324,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4347,9 +4347,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4370,9 +4370,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4393,9 +4393,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4416,9 +4416,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4439,9 +4439,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4462,9 +4462,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4485,9 +4485,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4508,9 +4508,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
-▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+▸ **observeEvent**<`TEventTarget`, `K`, `T`\>(`eventName`, `selector`, `options?`): [`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -4531,13 +4531,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TEventTarget`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`TEventTarget`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<`T`\>\>
 
 ___
 
 ### observeMeasure
 
-▸ **observeMeasure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>
+▸ **observeMeasure**<`TElement`\>(): [`Function1`](functions.md#function1)<`TElement`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>
 
 #### Type parameters
 
@@ -4547,4 +4547,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`TElement`, [`ObservableLike`](../interfaces/core.ObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>
+[`Function1`](functions.md#function1)<`TElement`, [`SharedObservableLike`](../interfaces/core.SharedObservableLike.md)<[`Rect`](../interfaces/integrations_web.Rect.md)\>\>

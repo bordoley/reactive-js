@@ -7,6 +7,7 @@ import {
 import {
   Container,
   Containers,
+  DeferredContainers,
   EnumerableContainers,
   RunnableContainers,
 } from "../core.js";
@@ -16,6 +17,7 @@ import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
 export const forEachTests = <C extends Container>(
   m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
     EnumerableContainers.TypeClass<C> &
     RunnableContainers.TypeClass<C>,
 ) =>
@@ -55,7 +57,9 @@ export const forEachTests = <C extends Container>(
   );
 
 export const fromReadonlyArrayTests = <C extends Container>(
-  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
 ) =>
   describe(
     "fromReadonlyArray",
@@ -116,7 +120,9 @@ export const fromReadonlyArrayTests = <C extends Container>(
   );
 
 export const keepTests = <C extends Container>(
-  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
 ) =>
   describe(
     "keep",
@@ -151,7 +157,9 @@ export const keepTests = <C extends Container>(
   );
 
 export const mapTests = <C extends Container>(
-  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
 ) =>
   describe(
     "map",
@@ -186,7 +194,9 @@ export const mapTests = <C extends Container>(
   );
 
 export const toEnumerableTests = <C extends Container>(
-  m: Containers.TypeClass<C> & EnumerableContainers.TypeClass<C>,
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    EnumerableContainers.TypeClass<C>,
 ) =>
   describe(
     "toEnumerable",
@@ -203,7 +213,9 @@ export const toEnumerableTests = <C extends Container>(
   );
 
 export const toRunnableTest = <C extends Container>(
-  m: Containers.TypeClass<C> & RunnableContainers.TypeClass<C>,
+  m: Containers.TypeClass<C> &
+    DeferredContainers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
 ) =>
   test(
     "without delay",

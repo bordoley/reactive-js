@@ -9,13 +9,15 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](core.Container.md) |
-| `CEnumerator` | extends [`EnumeratorContainer`](core.EnumeratorContainer.md) = [`EnumeratorContainer`](core.EnumeratorContainer.md) |
+| `CEnumerator` | extends [`EnumeratorContainer`](core.EnumeratorContainer-1.md) = [`EnumeratorContainer`](core.EnumeratorContainer-1.md) |
 
 ## Hierarchy
 
-- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+- **`TypeClass`**
 
-  ↳ **`TypeClass`**
+  ↳ [`TypeClass`](core.IterableContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.EnumerableContainer.TypeClass.md)
 
 ## Table of contents
 

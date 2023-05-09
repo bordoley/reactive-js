@@ -1,11 +1,11 @@
 import {
   ObservableContainer,
+  ObservableContainers,
   ObservableLike,
-  ReactiveContainers,
 } from "../../../core.js";
 import Observable_latest from "./Observable.latest.js";
 
-const Observable_zipLatest: ReactiveContainers.TypeClass<ObservableContainer>["zipLatest"] =
+const Observable_zipLatest: ObservableContainers.TypeClass<ObservableContainer>["zipLatest"] =
   (
     ...observables: readonly ObservableLike<any>[]
   ): ObservableLike<readonly unknown[]> => Observable_latest(observables, 2);

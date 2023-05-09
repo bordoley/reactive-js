@@ -51,7 +51,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`\>(): [`Operator`](core.Containers.md#operator)<[`IterableContainer`](../interfaces/core.IterableContainer.md), `T`, `T`\>
+▸ **identity**<`T`\>(): [`Operator`](core.Containers.md#operator)<[`IterableContainer`](../interfaces/core.IterableContainer-1.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -61,7 +61,7 @@ ___
 
 #### Returns
 
-[`Operator`](core.Containers.md#operator)<[`IterableContainer`](../interfaces/core.IterableContainer.md), `T`, `T`\>
+[`Operator`](core.Containers.md#operator)<[`IterableContainer`](../interfaces/core.IterableContainer-1.md), `T`, `T`\>
 
 ___
 

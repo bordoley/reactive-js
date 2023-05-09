@@ -1,4 +1,4 @@
-import { DisposableLike, ErrorSafeEventListenerLike, EventListenerLike, EventSourceLike, ObservableLike } from "../../core.js";
+import { DisposableLike, ErrorSafeEventListenerLike, EventListenerLike, EventSourceLike, SharedObservableLike } from "../../core.js";
 import { Function1, SideEffect1 } from "../../functions.js";
 import type { Rect, ScrollValue } from "../web.js";
 interface AddEventHandler {
@@ -514,193 +514,193 @@ export declare const addEventListener: AddEventListener["addEventListener"];
 interface ObserveEvent {
     observeEvent<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap, T>(eventName: K, selector: Function1<AbortSignalEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Animation, K extends keyof AnimationEventMap, T>(eventName: K, selector: Function1<AnimationEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends AbstractWorker, K extends keyof AbstractWorkerEventMap, T>(eventName: K, selector: Function1<AbstractWorkerEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends AudioScheduledSourceNode, K extends keyof AudioScheduledSourceNodeEventMap, T>(eventName: K, selector: Function1<AudioScheduledSourceNodeEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends BaseAudioContext, K extends keyof BaseAudioContextEventMap, T>(eventName: K, selector: Function1<BaseAudioContextEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap, T>(eventName: K, selector: Function1<AudioWorkletNodeEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap, T>(eventName: K, selector: Function1<BroadcastChannelEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Document, K extends keyof DocumentEventMap, T>(eventName: K, selector: Function1<DocumentEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Element, K extends keyof ElementEventMap, T>(eventName: K, selector: Function1<ElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap, T>(eventName: K, selector: Function1<MediaStreamTrackEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends EventSource, K extends keyof EventSourceEventMap, T>(eventName: K, selector: Function1<EventSourceEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends FileReader, K extends keyof FileReaderEventMap, T>(eventName: K, selector: Function1<FileReaderEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends FontFaceSet, K extends keyof FontFaceSetEventMap, T>(eventName: K, selector: Function1<FontFaceSetEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends GlobalEventHandlers, K extends keyof GlobalEventHandlersEventMap, T>(eventName: K, selector: Function1<GlobalEventHandlersEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends IDBDatabase, K extends keyof IDBDatabaseEventMap, T>(eventName: K, selector: Function1<IDBDatabaseEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends HTMLBodyElement, K extends keyof HTMLBodyElementEventMap, T>(eventName: K, selector: Function1<HTMLBodyElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends HTMLElement, K extends keyof HTMLElementEventMap, T>(eventName: K, selector: Function1<HTMLElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends HTMLMediaElement, K extends keyof HTMLMediaElementEventMap, T>(eventName: K, selector: Function1<HTMLMediaElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends HTMLVideoElement, K extends keyof HTMLVideoElementEventMap, T>(eventName: K, selector: Function1<HTMLVideoElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends IDBOpenDBRequest, K extends keyof IDBOpenDBRequestEventMap, T>(eventName: K, selector: Function1<IDBOpenDBRequestEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends IDBRequest<TDBObject>, K extends keyof IDBRequestEventMap, T, TDBObject = any>(eventName: K, selector: Function1<IDBRequestEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends IDBTransaction, K extends keyof IDBTransactionEventMap, T>(eventName: K, selector: Function1<IDBTransactionEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MathMLElement, K extends keyof MathMLElementEventMap, T>(eventName: K, selector: Function1<MathMLElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaDevices, K extends keyof MediaDevicesEventMap, T>(eventName: K, selector: Function1<MediaDevicesEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaKeySession, K extends keyof MediaKeySessionEventMap, T>(eventName: K, selector: Function1<MediaKeySessionEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaQueryList, K extends keyof MediaQueryListEventMap, T>(eventName: K, selector: Function1<MediaQueryListEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaRecorder, K extends keyof MediaRecorderEventMap, T>(eventName: K, selector: Function1<MediaRecorderEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaSource | MediaStream, K extends keyof MediaSourceEventMap, T>(eventName: K, selector: Function1<MediaSourceEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MediaStream, K extends keyof MediaStreamEventMap, T>(eventName: K, selector: Function1<MediaStreamEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends MessagePort, K extends keyof MessagePortEventMap, T>(eventName: K, selector: Function1<MessagePortEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Notification, K extends keyof NotificationEventMap, T>(eventName: K, selector: Function1<NotificationEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends OfflineAudioContext, K extends keyof OfflineAudioContextEventMap, T>(eventName: K, selector: Function1<OfflineAudioContextEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends OffscreenCanvas, K extends keyof OffscreenCanvasEventMap, T>(eventName: K, selector: Function1<OffscreenCanvasEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends PaymentRequest, K extends keyof PaymentRequestEventMap, T>(eventName: K, selector: Function1<PaymentRequestEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Performance, K extends keyof PerformanceEventMap, T>(eventName: K, selector: Function1<PerformanceEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends PermissionStatus, K extends keyof PermissionStatusEventMap, T>(eventName: K, selector: Function1<PermissionStatusEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends PictureInPictureWindow, K extends keyof PictureInPictureWindowEventMap, T>(eventName: K, selector: Function1<PictureInPictureWindowEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCDTMFSender, K extends keyof RTCDTMFSenderEventMap, T>(eventName: K, selector: Function1<RTCDTMFSenderEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCDataChannel, K extends keyof RTCDataChannelEventMap, T>(eventName: K, selector: Function1<RTCDataChannelEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCDtlsTransport, K extends keyof RTCDtlsTransportEventMap, T>(eventName: K, selector: Function1<RTCDtlsTransportEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCIceTransport, K extends keyof RTCIceTransportEventMap, T>(eventName: K, selector: Function1<RTCIceTransportEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCPeerConnection, K extends keyof RTCPeerConnectionEventMap, T>(eventName: K, selector: Function1<RTCPeerConnectionEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RTCSctpTransport, K extends keyof RTCSctpTransportEventMap, T>(eventName: K, selector: Function1<RTCSctpTransportEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends RemotePlayback, K extends keyof RemotePlaybackEventMap, T>(eventName: K, selector: Function1<RemotePlaybackEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SVGSVGElement, K extends keyof SVGSVGElementEventMap, T>(eventName: K, selector: Function1<SVGSVGElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends ScreenOrientation, K extends keyof ScreenOrientationEventMap, T>(eventName: K, selector: Function1<ScreenOrientationEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends ServiceWorker, K extends keyof ServiceWorkerEventMap, T>(eventName: K, selector: Function1<ServiceWorkerEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends ServiceWorkerContainer, K extends keyof ServiceWorkerContainerEventMap, T>(eventName: K, selector: Function1<ServiceWorkerContainerEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends ServiceWorkerRegistration, K extends keyof ServiceWorkerRegistrationEventMap, T>(eventName: K, selector: Function1<ServiceWorkerRegistrationEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends ShadowRoot, K extends keyof ShadowRootEventMap, T>(eventName: K, selector: Function1<ShadowRootEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SourceBuffer, K extends keyof SourceBufferEventMap, T>(eventName: K, selector: Function1<SourceBufferEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SourceBufferList, K extends keyof SourceBufferListEventMap, T>(eventName: K, selector: Function1<SourceBufferListEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SpeechSynthesis, K extends keyof SpeechSynthesisEventMap, T>(eventName: K, selector: Function1<SpeechSynthesisEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SpeechSynthesisUtterance, K extends keyof SpeechSynthesisUtteranceEventMap, T>(eventName: K, selector: Function1<SpeechSynthesisUtteranceEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends SVGElement, K extends keyof SVGElementEventMap, T>(eventName: K, selector: Function1<SVGElementEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends TextTrack, K extends keyof TextTrackEventMap, T>(eventName: K, selector: Function1<TextTrackEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends TextTrackCue, K extends keyof TextTrackCueEventMap, T>(eventName: K, selector: Function1<TextTrackCueEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends TextTrackList, K extends keyof TextTrackListEventMap, T>(eventName: K, selector: Function1<TextTrackListEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends VisualViewport, K extends keyof VisualViewportEventMap, T>(eventName: K, selector: Function1<VisualViewportEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends WebSocket, K extends keyof WebSocketEventMap, T>(eventName: K, selector: Function1<WebSocketEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Window, K extends keyof WindowEventMap, T>(eventName: K, selector: Function1<WindowEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(eventName: K, selector: Function1<WorkerEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
     observeEvent<TEventTarget extends XMLHttpRequestEventTarget, K extends keyof XMLHttpRequestEventTargetEventMap, T>(eventName: K, selector: Function1<XMLHttpRequestEventTargetEventMap[K], T>, options?: {
         capture?: boolean;
-    }): Function1<TEventTarget, ObservableLike<T>>;
+    }): Function1<TEventTarget, SharedObservableLike<T>>;
 }
 export declare const observeEvent: ObserveEvent["observeEvent"];
 export declare const addScrollHandler: <TElement extends HTMLElement>(handler: SideEffect1<ScrollValue>) => Function1<TElement, DisposableLike>;
@@ -709,6 +709,6 @@ export declare const addResizeHandler: <TElement extends Element>(handler: SideE
 export declare const addResizeListener: <TElement extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<TElement, TElement>;
 export declare const addMeasureHandler: <TElement extends HTMLElement>(handler: SideEffect1<Rect>) => Function1<TElement, DisposableLike>;
 export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<Rect>) => Function1<TElement, TElement>;
-export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, ObservableLike<Rect>>;
+export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, SharedObservableLike<Rect>>;
 export declare const intersectionWith: (parent?: Document | Element) => Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
 export {};

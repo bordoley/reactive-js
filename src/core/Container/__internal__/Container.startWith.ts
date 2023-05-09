@@ -4,7 +4,7 @@ import { pipe } from "../../../functions.js";
 const Container_startWith =
   <C extends Container>(
     concatWith: DeferredContainers.TypeClass<C>["concatWith"],
-    fromReadonlyArray: Containers.TypeClass<C>["fromReadonlyArray"],
+    fromReadonlyArray: DeferredContainers.TypeClass<C>["fromReadonlyArray"],
   ) =>
   <T>(...values: readonly T[]): Containers.Operator<C, T, T> =>
   container =>

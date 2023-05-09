@@ -1,23 +1,49 @@
 import {
   BufferLike_capacity,
+  DeferredObservableLike,
   DisposableLike,
   ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
+  SharedObservableLike,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
-import { Factory, isFunction, pipe } from "../../../functions.js";
+import { Factory, Function1, isFunction, pipe } from "../../../functions.js";
 import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observable_create from "./Observable.create.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
+interface ObservableSubscribeOn {
+  subscribeOn<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<DeferredObservableLike<T>, DeferredObservableLike<T>>;
+
+  subscribeOn<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<SharedObservableLike<T>, SharedObservableLike<T>>;
+
+  subscribeOn<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, ObservableLike<T>>;
+}
 // FIXME: improve return type.
-const Observable_subscribeOn =
-  <T>(
+const Observable_subscribeOn: ObservableSubscribeOn["subscribeOn"] = (<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -48,5 +74,5 @@ const Observable_subscribeOn =
         Disposable_addTo(observer),
       );
     });
-  };
+  }) as ObservableSubscribeOn["subscribeOn"];
 export default Observable_subscribeOn;

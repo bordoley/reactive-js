@@ -1,3 +1,3 @@
-import { ObservableContainer, ReactiveContainers } from "../../../core.js";
-declare const Observable_switchMap: ReactiveContainers.TypeClass<ObservableContainer>["switchMap"];
+import { ObservableContainer, ObservableContainers } from "../../../core.js";
+declare const Observable_switchMap: ObservableContainers.TypeClass<ObservableContainer>["switchMap"];
 export default Observable_switchMap;

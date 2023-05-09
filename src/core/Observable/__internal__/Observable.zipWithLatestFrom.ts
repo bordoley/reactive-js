@@ -27,12 +27,12 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableContainer,
+  ObservableContainers,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  ReactiveContainers,
 } from "../../../core.js";
 import Delegating_mixin from "../../../core/Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
@@ -46,7 +46,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observable_zipWithLatestFrom: ReactiveContainers.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
+const Observable_zipWithLatestFrom: ObservableContainers.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver: <TA, TB, T>(
       delegate: ObserverLike<T>,

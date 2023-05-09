@@ -1,7 +1,13 @@
 import {
+  Containers,
+  DeferredObservableContainer,
   DisposableOrTeardown,
+  EnumerableContainer,
+  ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
+  RunnableContainer,
+  SharedObservableContainer,
 } from "../../../core.js";
 import Disposable_add from "../../../core/Disposable/__internal__/Disposable.add.js";
 import Disposable_onDisposed from "../../../core/Disposable/__internal__/Disposable.onDisposed.js";
@@ -21,9 +27,28 @@ import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 
+interface ObservableOnSubscribe {
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): Containers.Operator<EnumerableContainer, T, T>;
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): Containers.Operator<RunnableContainer, T, T>;
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): Containers.Operator<DeferredObservableContainer, T, T>;
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): Containers.Operator<SharedObservableContainer, T, T>;
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): Containers.Operator<ObservableContainer, T, T>;
+}
+
 // FIXME: improve return type.
-const Observable_onSubscribe =
-  <T>(f: Factory<DisposableOrTeardown | void>) =>
+const Observable_onSubscribe: ObservableOnSubscribe["onSubscribe"] = (<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ) =>
   (obs: ObservableLike<T>): ObservableLike<T> => {
     const create = Observable_isEnumerable(obs)
       ? Enumerable_create
@@ -46,6 +71,6 @@ const Observable_onSubscribe =
           : identity,
       );
     });
-  };
+  }) as ObservableOnSubscribe["onSubscribe"];
 
 export default Observable_onSubscribe;

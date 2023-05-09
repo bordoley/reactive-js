@@ -2,9 +2,9 @@ import {
   Containers,
   EventListenerLike_notify,
   ObservableContainer,
+  ObservableContainers,
   ObservableLike_observe,
   ObserverLike,
-  ReactiveContainers,
 } from "../../../core.js";
 import Disposable_addTo from "../../../core/Disposable/__internal__/Disposable.addTo.js";
 import {
@@ -30,7 +30,7 @@ const HigherOrderObservable_scanMany =
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
-  ): ReactiveContainers.TypeClass<C>["scanMany"] =>
+  ): ObservableContainers.TypeClass<C>["scanMany"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,

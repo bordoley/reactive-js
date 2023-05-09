@@ -1,9 +1,9 @@
-import { AssociativeCollectionLike, ObservableLike, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "../../../core.js";
+import { AssociativeCollectionLike, DeferredObservableLike, ObservableLike, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "../../../core.js";
 import { Function1, Optional } from "../../../functions.js";
 type CacheLike<T> = StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeCollectionLike<string, ObservableLike<T>>>;
 declare const Streamable_createCache: <T>(persistentStore: Optional<{
-    load(keys: ReadonlySet<string>): ObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
-    store(updates: ReadonlyObjectMapLike<string, T>): ObservableLike<void>;
+    load(keys: ReadonlySet<string>): DeferredObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+    store(updates: ReadonlyObjectMapLike<string, T>): DeferredObservableLike<void>;
 }>, options?: {
     readonly capacity?: number;
     readonly cleanupScheduler?: SchedulerLike;

@@ -16,6 +16,7 @@ import {
   ObservableLike_observe,
   ObserverLike,
   RunnableLike,
+  SharedObservableLike,
 } from "../../../core.js";
 import { SideEffect1, error, none } from "../../../functions.js";
 
@@ -54,7 +55,7 @@ interface ObservableCreateWithConfig {
       readonly [ObservableLike_isEnumerable]: false;
       readonly [ObservableLike_isRunnable]: false;
     },
-  ): ObservableLike<T>;
+  ): SharedObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,

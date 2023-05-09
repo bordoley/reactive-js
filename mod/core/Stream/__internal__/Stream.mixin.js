@@ -7,8 +7,8 @@ import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, Dis
 import Dispatcher_delegatingMixin from "../../../core/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../core/Disposable/__internal__/Disposable.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../core/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
-import Observable_multicast from "../../../core/Observable/__internal__/Observable.multicast.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../../functions.js";
+import Observable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
@@ -16,7 +16,7 @@ const DispatchedObservable_create =
     }, props({
         [__DispatchedObservable_observer]: none,
     }), {
-        [ObservableLike_isDeferred]: false,
+        [ObservableLike_isDeferred]: true,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
         get [QueueableLike_backpressureStrategy]() {

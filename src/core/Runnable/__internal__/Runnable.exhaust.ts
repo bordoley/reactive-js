@@ -1,8 +1,8 @@
-import { ReactiveContainers, RunnableContainer } from "../../../core.js";
+import { ObservableContainers, RunnableContainer } from "../../../core.js";
 import { returns } from "../../../functions.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
-const Runnable_exhaust: ReactiveContainers.TypeClass<RunnableContainer>["exhaust"] =
+const Runnable_exhaust: ObservableContainers.TypeClass<RunnableContainer>["exhaust"] =
   /*@__PURE__*/ (() =>
     returns(
       Runnable_mergeAll({

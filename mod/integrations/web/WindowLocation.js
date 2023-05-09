@@ -3,6 +3,7 @@
 import { DelegatingLike_delegate, } from "../../__internal__/core.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { MulticastObservableLike_buffer, ObservableLike_observe, QueueableLike_enqueue, StreamableLike_stream, } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import Delegating_mixin from "../../core/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../core/Disposable.js";
 import IndexedBufferCollection_map from "../../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
@@ -41,7 +42,7 @@ const areWindowLocationStatesEqual = ({ uri: a, counter: counterA }, { uri: b, c
 // Intentionally ignore the replace flag.
 (a === b || (a.title === b.title && areURIsEqual(a, b))) &&
     counterA === counterB;
-const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(compose(Observable.throttle(100), Observable.forEach(({ counter, uri }) => {
+const createSyncToHistoryStream = (f, scheduler, options) => Streamable.create(compose(DeferredObservable.throttle(100), DeferredObservable.forEach(({ counter, uri }) => {
     const { title } = uri;
     document.title = title;
     f({ title, counter }, "", String(uri));
@@ -107,17 +108,17 @@ export const subscribe = /*@__PURE__*/ (() => {
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.startWith({
+        }), Observable.mergeWith(pipe({
             counter: 0,
             replace: true,
             uri: state.uri,
-        }), Observable.map(returns)), (oldState, state) => {
+        }, DeferredObservable.fromOptional())), Observable.map(returns)), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe(state, Observable.fromOptional(), replace
+            return pipe(state, DeferredObservable.fromOptional(), replace
                 ? Observable.enqueue(replaceState)
                 : push
                     ? Observable.enqueue(pushState)

@@ -1,3 +1,3 @@
-import { PauseableObservableContainer, ReactiveContainers } from "../../../core.js";
-declare const PauseableObservable_enqueue: ReactiveContainers.TypeClass<PauseableObservableContainer>["enqueue"];
+import { ObservableContainers, PauseableObservableContainer } from "../../../core.js";
+declare const PauseableObservable_enqueue: ObservableContainers.TypeClass<PauseableObservableContainer>["enqueue"];
 export default PauseableObservable_enqueue;

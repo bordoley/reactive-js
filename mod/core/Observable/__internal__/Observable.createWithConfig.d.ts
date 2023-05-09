@@ -1,4 +1,4 @@
-import { DeferredObservableLike, EnumerableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../../core.js";
+import { DeferredObservableLike, EnumerableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike, SharedObservableLike } from "../../../core.js";
 import { SideEffect1 } from "../../../functions.js";
 interface ObservableCreateWithConfig {
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
@@ -20,7 +20,7 @@ interface ObservableCreateWithConfig {
         readonly [ObservableLike_isDeferred]: false;
         readonly [ObservableLike_isEnumerable]: false;
         readonly [ObservableLike_isRunnable]: false;
-    }): ObservableLike<T>;
+    }): SharedObservableLike<T>;
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
         readonly [ObservableLike_isDeferred]: boolean;
         readonly [ObservableLike_isEnumerable]: boolean;

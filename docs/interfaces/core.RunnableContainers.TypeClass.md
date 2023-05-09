@@ -12,9 +12,15 @@
 
 ## Hierarchy
 
-- [`TypeClass`](core.Containers.TypeClass.md)<`C`\>
+- **`TypeClass`**
 
-  ↳ **`TypeClass`**
+  ↳ [`TypeClass`](core.IterableContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.EnumeratorContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.ReadonlyArrayContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](core.RunnableObservableContainers.TypeClass.md)
 
 ## Table of contents
 
@@ -27,6 +33,7 @@
 
 - [everySatisfy](core.RunnableContainers.TypeClass.md#everysatisfy)
 - [first](core.RunnableContainers.TypeClass.md#first)
+- [flow](core.RunnableContainers.TypeClass.md#flow)
 - [last](core.RunnableContainers.TypeClass.md#last)
 - [noneSatisfy](core.RunnableContainers.TypeClass.md#nonesatisfy)
 - [reduce](core.RunnableContainers.TypeClass.md#reduce)
@@ -122,6 +129,31 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+___
+
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](core.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](core.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](core.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/core.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](core.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](core.DisposableLike.md)\>
 
 ___
 

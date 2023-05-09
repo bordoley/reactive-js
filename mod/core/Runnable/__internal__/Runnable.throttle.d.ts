@@ -1,3 +1,3 @@
-import { ReactiveContainers, RunnableContainer } from "../../../core.js";
-declare const Runnable_throttle: ReactiveContainers.TypeClass<RunnableContainer>["throttle"];
+import { ObservableContainers, RunnableContainer } from "../../../core.js";
+declare const Runnable_throttle: ObservableContainers.TypeClass<RunnableContainer>["throttle"];
 export default Runnable_throttle;

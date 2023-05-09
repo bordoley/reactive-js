@@ -6,12 +6,12 @@ import Disposable_bindTo from "../../../core/Disposable/__internal__/Disposable.
 import PauseableObservable_create from "../../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
 import Scheduler_toPausableScheduler from "../../../core/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import { invoke, pipe } from "../../../functions.js";
-import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 const Runnable_flow = (scheduler, options) => (runnable) => {
-    const op = (modeObs) => Observable_create(observer => {
+    const op = (modeObs) => DeferredObservable_create(observer => {
         const pauseableScheduler = pipe(observer, Scheduler_toPausableScheduler, Disposable_addTo(observer));
         pipe(runnable, Observable_subscribeOn(pauseableScheduler), invoke(ObservableLike_observe, observer));
         pipe(modeObs, Observable_forEach(isPaused => {

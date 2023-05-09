@@ -14,6 +14,8 @@ import {
   BufferLike_capacity,
   CollectionLike_count,
   Containers,
+  DeferredObservableContainer,
+  DeferredObservableLike,
   DispatcherLike,
   DispatcherLikeEventMap,
   DispatcherLike_complete,
@@ -21,8 +23,6 @@ import {
   DisposableLike_isDisposed,
   EventListenerLike,
   EventSourceLike_addEventListener,
-  ObservableContainer,
-  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -40,7 +40,6 @@ import {
 import Dispatcher_delegatingMixin from "../../../core/Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../../core/Disposable/__internal__/Disposable.delegatingMixin.js";
 import MulticastObservable_delegatingMixin from "../../../core/MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
-import Observable_multicast from "../../../core/Observable/__internal__/Observable.multicast.js";
 import {
   Optional,
   isNone,
@@ -51,9 +50,10 @@ import {
   returns,
   unsafeCast,
 } from "../../../functions.js";
+import Observable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 
 interface DispatchedObservableLike<T>
-  extends ObservableLike<T>,
+  extends DeferredObservableLike<T>,
     Omit<DispatcherLike<T>, keyof DisposableLike> {}
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
@@ -73,9 +73,9 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           [__DispatchedObservable_observer]: none,
         }),
         {
-          [ObservableLike_isDeferred]: false,
-          [ObservableLike_isEnumerable]: false,
-          [ObservableLike_isRunnable]: false,
+          [ObservableLike_isDeferred]: true as const,
+          [ObservableLike_isEnumerable]: false as const,
+          [ObservableLike_isRunnable]: false as const,
 
           get [QueueableLike_backpressureStrategy]() {
             unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
@@ -198,7 +198,7 @@ type TProperties = {
 
 const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  Containers.Operator<ObservableContainer, TReq, T>,
+  Containers.Operator<DeferredObservableContainer, TReq, T>,
   SchedulerLike,
   Optional<{
     replay?: number;
@@ -215,7 +215,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       ),
       function StreamMixin(
         instance: TProperties,
-        op: Containers.Operator<ObservableContainer, TReq, T>,
+        op: Containers.Operator<DeferredObservableContainer, TReq, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           replay?: number;

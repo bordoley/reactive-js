@@ -1,16 +1,4 @@
-import {
-  Container,
-  Container_T,
-  Container_type,
-  Containers,
-  DeferredContainers,
-  DisposableLike,
-  EnumerableContainer,
-  EnumerableContainers,
-  EnumeratorLike,
-  RunnableContainers,
-  StatefulContainers,
-} from "../core.js";
+import { EnumerableContainer } from "../core.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
 import Enumerable_catchError from "../core/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../core/Enumerable/__internal__/Enumerable.concatAll.js";
@@ -68,10 +56,10 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 
-export const buffer: Containers.TypeClass<EnumerableContainer>["buffer"] =
+export const buffer: EnumerableContainer.TypeClass["buffer"] =
   Observable_buffer;
 
-export const catchError: StatefulContainers.TypeClass<EnumerableContainer>["catchError"] =
+export const catchError: EnumerableContainer.TypeClass["catchError"] =
   Enumerable_catchError;
 
 /**
@@ -79,169 +67,151 @@ export const catchError: StatefulContainers.TypeClass<EnumerableContainer>["catc
  */
 export const compute = Enumerable_compute;
 
-export const concat: DeferredContainers.TypeClass<EnumerableContainer>["concat"] =
+export const concat: EnumerableContainer.TypeClass["concat"] =
   Observable_concat;
 
-export const concatAll: DeferredContainers.TypeClass<EnumerableContainer>["concatAll"] =
+export const concatAll: EnumerableContainer.TypeClass["concatAll"] =
   Enumerable_concatAll;
 
-export const concatMap: DeferredContainers.TypeClass<EnumerableContainer>["concatMap"] =
+export const concatMap: EnumerableContainer.TypeClass["concatMap"] =
   Enumerable_concatMap;
 
-export const concatWith: DeferredContainers.TypeClass<EnumerableContainer>["concatWith"] =
-  Observable_concatWith as DeferredContainers.TypeClass<EnumerableContainer>["concatWith"];
+export const concatWith: EnumerableContainer.TypeClass["concatWith"] =
+  Observable_concatWith as EnumerableContainer.TypeClass["concatWith"];
 
-export const contains: RunnableContainers.TypeClass<EnumerableContainer>["contains"] =
+export const contains: EnumerableContainer.TypeClass["contains"] =
   Runnable_contains;
 
-export const decodeWithCharset: StatefulContainers.TypeClass<EnumerableContainer>["decodeWithCharset"] =
+export const decodeWithCharset: EnumerableContainer.TypeClass["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-export const defer: StatefulContainers.TypeClass<EnumerableContainer>["defer"] =
-  Enumerable_defer;
+export const defer: EnumerableContainer.TypeClass["defer"] = Enumerable_defer;
 
-export const distinctUntilChanged: Containers.TypeClass<EnumerableContainer>["distinctUntilChanged"] =
+export const distinctUntilChanged: EnumerableContainer.TypeClass["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 
-export const empty: Containers.TypeClass<EnumerableContainer>["empty"] =
-  Observable_empty;
+export const empty: EnumerableContainer.TypeClass["empty"] = Observable_empty;
 
-export const encodeUtf8: StatefulContainers.TypeClass<EnumerableContainer>["encodeUtf8"] =
+export const encodeUtf8: EnumerableContainer.TypeClass["encodeUtf8"] =
   Enumerable_encodeUtf8;
 
-export const endWith: DeferredContainers.TypeClass<EnumerableContainer>["endWith"] =
+export const endWith: EnumerableContainer.TypeClass["endWith"] =
   Observable_endWith;
 
-interface EnumerableEnumeratorContainer extends Container {
-  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> &
-    DisposableLike;
-}
-export const enumerate: EnumerableContainers.TypeClass<
-  EnumerableContainer,
-  EnumerableEnumeratorContainer
->["enumerate"] = Enumerable_enumerate;
+export const enumerate: EnumerableContainer.TypeClass["enumerate"] =
+  Enumerable_enumerate;
 
-export const everySatisfy: RunnableContainers.TypeClass<EnumerableContainer>["everySatisfy"] =
+export const everySatisfy: EnumerableContainer.TypeClass["everySatisfy"] =
   Runnable_everySatisfy;
 
-export const first: RunnableContainers.TypeClass<EnumerableContainer>["first"] =
-  Runnable_first;
+export const first: EnumerableContainer.TypeClass["first"] = Runnable_first;
 
 // FIXME: use a custom implementation that doesn't schedule
-export const firstAsync: Containers.TypeClass<EnumerableContainer>["firstAsync"] =
+export const firstAsync: EnumerableContainer.TypeClass["firstAsync"] =
   Observable_firstAsync;
 
-export const flatMapIterable: Containers.TypeClass<EnumerableContainer>["flatMapIterable"] =
+export const flatMapIterable: EnumerableContainer.TypeClass["flatMapIterable"] =
   Enumerable_flatMapIterable;
 
-export const flow: DeferredContainers.TypeClass<EnumerableContainer>["flow"] =
-  Runnable_flow;
+export const flow: EnumerableContainer.TypeClass["flow"] = Runnable_flow;
 
-export const forEach: Containers.TypeClass<EnumerableContainer>["forEach"] =
+export const forEach: EnumerableContainer.TypeClass["forEach"] =
   Observable_forEach;
 
-export const forkConcat: DeferredContainers.TypeClass<EnumerableContainer>["forkConcat"] =
-  Observable_forkConcat as DeferredContainers.TypeClass<EnumerableContainer>["forkConcat"];
+export const forkConcat: EnumerableContainer.TypeClass["forkConcat"] =
+  Observable_forkConcat as EnumerableContainer.TypeClass["forkConcat"];
 
-export const forkZip: Containers.TypeClass<EnumerableContainer>["forkZip"] =
-  Observable_forkZip as Containers.TypeClass<EnumerableContainer>["forkZip"];
+export const forkZip: EnumerableContainer.TypeClass["forkZip"] =
+  Observable_forkZip as EnumerableContainer.TypeClass["forkZip"];
 
-export const fromEnumeratorFactory: Containers.TypeClass<EnumerableContainer>["fromEnumeratorFactory"] =
+export const fromEnumeratorFactory: EnumerableContainer.TypeClass["fromEnumeratorFactory"] =
   Runnable_fromEnumeratorFactory;
 
-export const fromFactory: Containers.TypeClass<EnumerableContainer>["fromFactory"] =
+export const fromFactory: EnumerableContainer.TypeClass["fromFactory"] =
   Observable_fromFactory;
 
-export const fromIterable: Containers.TypeClass<EnumerableContainer>["fromIterable"] =
+export const fromIterable: EnumerableContainer.TypeClass["fromIterable"] =
   Iterable_toObservable;
 
-export const fromOptional: Containers.TypeClass<EnumerableContainer>["fromOptional"] =
+export const fromOptional: EnumerableContainer.TypeClass["fromOptional"] =
   Optional_toObservable;
 
-export const fromReadonlyArray: Containers.TypeClass<EnumerableContainer>["fromReadonlyArray"] =
+export const fromReadonlyArray: EnumerableContainer.TypeClass["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 
-export const generate: Containers.TypeClass<EnumerableContainer>["generate"] =
+export const generate: EnumerableContainer.TypeClass["generate"] =
   Observable_generate;
 
-export const identity: Containers.TypeClass<EnumerableContainer>["identity"] =
+export const identity: EnumerableContainer.TypeClass["identity"] =
   Container_identity;
 
-export const ignoreElements: Containers.TypeClass<EnumerableContainer>["ignoreElements"] =
+export const ignoreElements: EnumerableContainer.TypeClass["ignoreElements"] =
   Observable_ignoreElements;
 
-export const keep: Containers.TypeClass<EnumerableContainer>["keep"] =
-  Observable_keep;
+export const keep: EnumerableContainer.TypeClass["keep"] = Observable_keep;
 
-export const keepType: Containers.TypeClass<EnumerableContainer>["keepType"] =
-  Observable_keepType as Containers.TypeClass<EnumerableContainer>["keepType"];
+export const keepType: EnumerableContainer.TypeClass["keepType"] =
+  Observable_keepType as EnumerableContainer.TypeClass["keepType"];
 
-export const last: RunnableContainers.TypeClass<EnumerableContainer>["last"] =
-  Runnable_last;
+export const last: EnumerableContainer.TypeClass["last"] = Runnable_last;
 
 // FIXME: use a custom implementation that doesn't use a vts
-export const lastAsync: Containers.TypeClass<EnumerableContainer>["lastAsync"] =
+export const lastAsync: EnumerableContainer.TypeClass["lastAsync"] =
   Observable_lastAsync;
 
-export const map: Containers.TypeClass<EnumerableContainer>["map"] =
-  Observable_map;
+export const map: EnumerableContainer.TypeClass["map"] = Observable_map;
 
-export const mapTo: Containers.TypeClass<EnumerableContainer>["mapTo"] =
-  Observable_mapTo;
+export const mapTo: EnumerableContainer.TypeClass["mapTo"] = Observable_mapTo;
 
-export const noneSatisfy: RunnableContainers.TypeClass<EnumerableContainer>["noneSatisfy"] =
+export const noneSatisfy: EnumerableContainer.TypeClass["noneSatisfy"] =
   Runnable_noneSatisfy;
 
-export const pairwise: Containers.TypeClass<EnumerableContainer>["pairwise"] =
+export const pairwise: EnumerableContainer.TypeClass["pairwise"] =
   Observable_pairwise;
 
-export const pick: Containers.TypeClass<EnumerableContainer>["pick"] =
-  Observable_pick;
+export const pick: EnumerableContainer.TypeClass["pick"] = Observable_pick;
 
-export const reduce: RunnableContainers.TypeClass<EnumerableContainer>["reduce"] =
-  Runnable_reduce;
+export const reduce: EnumerableContainer.TypeClass["reduce"] = Runnable_reduce;
 
-export const repeat: DeferredContainers.TypeClass<EnumerableContainer>["repeat"] =
+export const repeat: EnumerableContainer.TypeClass["repeat"] =
   Observable_repeat;
 
-export const retry: StatefulContainers.TypeClass<EnumerableContainer>["retry"] =
-  Observable_retry;
+export const retry: EnumerableContainer.TypeClass["retry"] = Observable_retry;
 
-export const scan: Containers.TypeClass<EnumerableContainer>["scan"] =
-  Observable_scan;
+export const scan: EnumerableContainer.TypeClass["scan"] = Observable_scan;
 
-export const scanLast: Containers.TypeClass<EnumerableContainer>["scanLast"] =
+export const scanLast: EnumerableContainer.TypeClass["scanLast"] =
   Enumerable_scanLast;
 
-export const skipFirst: Containers.TypeClass<EnumerableContainer>["skipFirst"] =
+export const skipFirst: EnumerableContainer.TypeClass["skipFirst"] =
   Observable_skipFirst;
 
-export const someSatisfy: RunnableContainers.TypeClass<EnumerableContainer>["someSatisfy"] =
+export const someSatisfy: EnumerableContainer.TypeClass["someSatisfy"] =
   Runnable_someSatisfy;
 
-export const startWith: DeferredContainers.TypeClass<EnumerableContainer>["startWith"] =
+export const startWith: EnumerableContainer.TypeClass["startWith"] =
   Observable_startWith;
 
-export const takeFirst: Containers.TypeClass<EnumerableContainer>["takeFirst"] =
+export const takeFirst: EnumerableContainer.TypeClass["takeFirst"] =
   Observable_takeFirst;
 
-export const takeLast: Containers.TypeClass<EnumerableContainer>["takeLast"] =
+export const takeLast: EnumerableContainer.TypeClass["takeLast"] =
   Observable_takeLast;
 
-export const takeWhile: Containers.TypeClass<EnumerableContainer>["takeWhile"] =
+export const takeWhile: EnumerableContainer.TypeClass["takeWhile"] =
   Observable_takeWhile;
 
-export const throws: StatefulContainers.TypeClass<EnumerableContainer>["throws"] =
+export const throws: EnumerableContainer.TypeClass["throws"] =
   Observable_throws;
 
-export const throwIfEmpty: StatefulContainers.TypeClass<EnumerableContainer>["throwIfEmpty"] =
+export const throwIfEmpty: EnumerableContainer.TypeClass["throwIfEmpty"] =
   Observable_throwIfEmpty;
 
-export const toReadonlyArray: RunnableContainers.TypeClass<EnumerableContainer>["toReadonlyArray"] =
+export const toReadonlyArray: EnumerableContainer.TypeClass["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 
-export const zip: Containers.TypeClass<EnumerableContainer>["zip"] =
-  Observable_zip as Containers.TypeClass<EnumerableContainer>["zip"];
+export const zip: EnumerableContainer.TypeClass["zip"] =
+  Observable_zip as EnumerableContainer.TypeClass["zip"];
 
-export const zipWith: Containers.TypeClass<EnumerableContainer>["zipWith"] =
-  Observable_zipWith as Containers.TypeClass<EnumerableContainer>["zipWith"];
+export const zipWith: EnumerableContainer.TypeClass["zipWith"] =
+  Observable_zipWith as EnumerableContainer.TypeClass["zipWith"];

@@ -12,7 +12,7 @@ import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 // FIXME: improve return type.
-const Observable_onSubscribe = (f) => (obs) => {
+const Observable_onSubscribe = ((f) => (obs) => {
     const create = Observable_isEnumerable(obs)
         ? Enumerable_create
         : Observable_isRunnable(obs)
@@ -29,5 +29,5 @@ const Observable_onSubscribe = (f) => (obs) => {
                 ? Disposable_add(disposable)
                 : identity);
     });
-};
+});
 export default Observable_onSubscribe;

@@ -1,5 +1,4 @@
 import {
-  DeferredContainers,
   ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
@@ -8,6 +7,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableContainer,
+  RunnableContainers,
   RunnableLike,
   SchedulerLike,
 } from "../../../core.js";
@@ -16,12 +16,12 @@ import Disposable_bindTo from "../../../core/Disposable/__internal__/Disposable.
 import PauseableObservable_create from "../../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
 import Scheduler_toPausableScheduler from "../../../core/Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import { invoke, pipe } from "../../../functions.js";
-import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 
-const Runnable_flow: DeferredContainers.TypeClass<RunnableContainer>["flow"] =
+const Runnable_flow: RunnableContainers.TypeClass<RunnableContainer>["flow"] =
   <T>(
     scheduler: SchedulerLike,
     options?: {
@@ -31,7 +31,7 @@ const Runnable_flow: DeferredContainers.TypeClass<RunnableContainer>["flow"] =
   ) =>
   (runnable: RunnableLike<T>) => {
     const op = (modeObs: ObservableLike<boolean>) =>
-      Observable_create<T>(observer => {
+      DeferredObservable_create<T>(observer => {
         const pauseableScheduler = pipe(
           observer,
           Scheduler_toPausableScheduler,

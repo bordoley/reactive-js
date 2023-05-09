@@ -9,7 +9,7 @@ import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 // FIXME: improve return type.
-const Observable_subscribeOn = (schedulerOrFactory, options) => (observable) => {
+const Observable_subscribeOn = ((schedulerOrFactory, options) => (observable) => {
     // FIXME: type test for VTS
     const create = Observable_isDeferred(observable)
         ? DeferredObservable_create
@@ -24,5 +24,5 @@ const Observable_subscribeOn = (schedulerOrFactory, options) => (observable) => 
                 observer[QueueableLike_backpressureStrategy],
         }), Disposable_addTo(observer));
     });
-};
+});
 export default Observable_subscribeOn;

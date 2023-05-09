@@ -1,3 +1,3 @@
-import { AsyncIterableContainer, DeferredContainers } from "../../../core.js";
-declare const AsyncIterable_flow: DeferredContainers.TypeClass<AsyncIterableContainer>["flow"];
+import { AsyncIterableContainer } from "../../../core.js";
+declare const AsyncIterable_flow: AsyncIterableContainer.TypeClass["flow"];
 export default AsyncIterable_flow;

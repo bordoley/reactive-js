@@ -27,6 +27,7 @@ Reactive-JS
 - [core/ReadonlyObjectMap](modules/core_ReadonlyObjectMap.md)
 - [core/Runnable](modules/core_Runnable.md)
 - [core/Scheduler](modules/core_Scheduler.md)
+- [core/SharedObservable](modules/core_SharedObservable.md)
 - [core/Store](modules/core_Store.md)
 - [core/Stream](modules/core_Stream.md)
 - [core/Streamable](modules/core_Streamable.md)

@@ -14,7 +14,7 @@ A stateful ObservableLike resource.
 
 ## Hierarchy
 
-- [`ObservableLike`](core.ObservableLike.md)<`T`\>
+- [`SharedObservableLike`](core.SharedObservableLike.md)<`T`\>
 
   ↳ **`MulticastObservableLike`**
 
@@ -49,7 +49,7 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 
 #### Overrides
 
-[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isDeferred]](core.ObservableLike.md#[___observablelike_isdeferred])
+[SharedObservableLike](core.SharedObservableLike.md).[[___ObservableLike_isDeferred]](core.SharedObservableLike.md#[___observablelike_isdeferred])
 
 ___
 
@@ -61,7 +61,7 @@ Indicates if the `ObservableLike` supports interactive enumeration.
 
 #### Overrides
 
-[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isEnumerable]](core.ObservableLike.md#[___observablelike_isenumerable])
+[SharedObservableLike](core.SharedObservableLike.md).[[___ObservableLike_isEnumerable]](core.SharedObservableLike.md#[___observablelike_isenumerable])
 
 ___
 
@@ -74,4 +74,4 @@ on a VirtualTimeScheduler.
 
 #### Overrides
 
-[ObservableLike](core.ObservableLike.md).[[___ObservableLike_isRunnable]](core.ObservableLike.md#[___observablelike_isrunnable])
+[SharedObservableLike](core.SharedObservableLike.md).[[___ObservableLike_isRunnable]](core.SharedObservableLike.md#[___observablelike_isrunnable])

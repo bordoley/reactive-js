@@ -8,7 +8,7 @@ import * as Disposable from "../../core/Disposable.js";
 import * as EventListener from "../../core/EventListener.js";
 import * as EventPublisher from "../../core/EventPublisher.js";
 import * as EventSource from "../../core/EventSource.js";
-import * as Observable from "../../core/Observable.js";
+import * as SharedObservable from "../../core/SharedObservable.js";
 import { bindMethod, isNone, newInstance, none, pipe, returns, } from "../../functions.js";
 export const addEventHandler = (eventName, eventHandler, options) => source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
@@ -27,7 +27,7 @@ export const addEventListener = ((eventName, eventListener, options) => target =
     target.addEventListener(eventName, listener, addEventListenerOptions);
     return target;
 });
-export const observeEvent = ((eventName, selector, options) => target => Observable.create(observer => {
+export const observeEvent = ((eventName, selector, options) => target => SharedObservable.create(observer => {
     const addEventHandlerOptions = {
         passive: true,
         capture: options?.capture,
@@ -225,7 +225,7 @@ export const observeMeasure = /*@__PURE__*/ (() => {
         "height",
     ];
     const areBoundsEqual = (a, b) => keys.every(key => a[key] === b[key]);
-    return returns(element => pipe(Observable.create(observer => {
+    return returns(element => pipe(SharedObservable.create(observer => {
         const listener = pipe(EventListener.create(bindMethod(observer, QueueableLike_enqueue)), Disposable.bindTo(observer));
         pipe(element, addMeasureListener(listener));
         const { left, top, width, height, bottom, right, x, y } = element.getBoundingClientRect();
@@ -240,7 +240,7 @@ export const observeMeasure = /*@__PURE__*/ (() => {
             y,
         };
         observer[QueueableLike_enqueue](rect);
-    }), Observable.distinctUntilChanged({ equality: areBoundsEqual })));
+    }), SharedObservable.distinctUntilChanged({ equality: areBoundsEqual })));
 })();
 export const intersectionWith = 
 /*@__PURE__*/ (() => {

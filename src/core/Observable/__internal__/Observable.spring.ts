@@ -2,7 +2,7 @@ import { MAX_VALUE, __DEV__ } from "../../../__internal__/constants.js";
 import { abs, min } from "../../../__internal__/math.js";
 import { RunnableContainer, RunnableLike } from "../../../core.js";
 import { isNotEqualTo, pipe, returns } from "../../../functions.js";
-import Observable_currentTime from "./Observable.currentTime.js";
+import Observable_currentTime from "../../Runnable/__internal__/Runnable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";

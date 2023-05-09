@@ -2,6 +2,7 @@
 
 import { describe, expectArrayEquals, expectEquals, testAsync, testModule, } from "../../__internal__/testing.js";
 import { PauseableLike_resume } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import * as Scheduler from "../../core/Scheduler.js";
@@ -32,7 +33,7 @@ testModule("AsyncIterable", describe("flow", testAsync("infinite immediately res
         throw e;
     })(), AsyncIterable.flow(scheduler));
     stream[PauseableLike_resume]();
-    const result = await pipe(stream, Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())), Observable.lastAsync(scheduler));
+    const result = await pipe(stream, Observable.catchError(e => pipe([e], DeferredObservable.fromReadonlyArray())), Observable.lastAsync(scheduler));
     pipe(result, expectEquals(e));
 }, Disposable.usingAsync(Scheduler.createHostScheduler)))), describe("toObservable", testAsync("infinite immediately resolving iterable", pipeLazy(async (scheduler) => {
     const result = await pipe((async function* foo() {
@@ -53,6 +54,6 @@ testModule("AsyncIterable", describe("flow", testAsync("infinite immediately res
     const e = error();
     const result = await pipe((async function* foo() {
         throw e;
-    })(), AsyncIterable.toObservable(), Observable.catchError(e => pipe([e], Observable.fromReadonlyArray())), Observable.lastAsync(scheduler, { capacity: 1 }));
+    })(), AsyncIterable.toObservable(), Observable.catchError(e => pipe([e], DeferredObservable.fromReadonlyArray())), Observable.lastAsync(scheduler, { capacity: 1 }));
     pipe(result, expectEquals(e));
 }, Disposable.usingAsync(Scheduler.createHostScheduler)))));

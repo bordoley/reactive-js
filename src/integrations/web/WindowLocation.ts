@@ -23,6 +23,7 @@ import {
   StreamLike,
   StreamableLike_stream,
 } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import Delegating_mixin from "../../core/Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../core/Disposable.js";
 import IndexedBufferCollection_map from "../../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
@@ -123,8 +124,8 @@ const createSyncToHistoryStream = (
 ) =>
   Streamable.create<TState, TState>(
     compose(
-      Observable.throttle(100),
-      Observable.forEach(({ counter, uri }) => {
+      DeferredObservable.throttle(100),
+      DeferredObservable.forEach(({ counter, uri }) => {
         const { title } = uri;
         document.title = title;
         f({ title, counter }, "", String(uri));
@@ -292,11 +293,16 @@ export const subscribe: (
                 return { counter, replace: true, uri };
               },
             ),
-            Observable.startWith({
-              counter: 0,
-              replace: true,
-              uri: state.uri,
-            }),
+            Observable.mergeWith(
+              pipe(
+                {
+                  counter: 0,
+                  replace: true,
+                  uri: state.uri,
+                },
+                DeferredObservable.fromOptional(),
+              ),
+            ),
             Observable.map(returns),
           ),
         (oldState, state) => {
@@ -309,7 +315,7 @@ export const subscribe: (
 
           return pipe(
             state,
-            Observable.fromOptional(),
+            DeferredObservable.fromOptional(),
             replace
               ? Observable.enqueue(replaceState)
               : push

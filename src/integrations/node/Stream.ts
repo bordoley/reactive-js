@@ -12,6 +12,7 @@ import {
   QueueableLike_enqueue,
   SchedulerLike,
 } from "../../core.js";
+import * as DeferredObservable from "../../core/DeferredObservable.js";
 import * as Disposable from "../../core/Disposable.js";
 import * as Observable from "../../core/Observable.js";
 import PauseableObservable_create from "../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -82,7 +83,7 @@ export const flow =
   factory =>
     PauseableObservable_create(
       mode =>
-        Observable.create(observer => {
+        DeferredObservable.create<Uint8Array>(observer => {
           const dispatchDisposable = pipe(
             Disposable.create(),
             Disposable.onError(Disposable.toErrorHandler(observer)),
@@ -129,7 +130,7 @@ export const sinkInto =
     factory: Writable | Factory<Writable>,
   ): Function1<PauseableObservableLike<Uint8Array>, ObservableLike<void>> =>
   flowable =>
-    Observable.create(observer => {
+    DeferredObservable.create<void>(observer => {
       const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))
         : pipe(factory, addDisposable(observer));

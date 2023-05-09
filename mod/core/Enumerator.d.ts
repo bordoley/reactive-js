@@ -1,6 +1,6 @@
-import { Containers, EnumeratorContainer, RunnableContainers } from "../core.js";
-export declare const empty: Containers.TypeClass<EnumeratorContainer>["empty"];
-export declare const keep: Containers.TypeClass<EnumeratorContainer>["keep"];
-export declare const map: Containers.TypeClass<EnumeratorContainer>["map"];
-export declare const pick: Containers.TypeClass<EnumeratorContainer>["pick"];
-export declare const toReadonlyArray: RunnableContainers.TypeClass<EnumeratorContainer>["toReadonlyArray"];
+import { EnumeratorContainer } from "../core.js";
+export declare const empty: EnumeratorContainer.TypeClass["empty"];
+export declare const keep: EnumeratorContainer.TypeClass["keep"];
+export declare const map: EnumeratorContainer.TypeClass["map"];
+export declare const pick: EnumeratorContainer.TypeClass["pick"];
+export declare const toReadonlyArray: EnumeratorContainer.TypeClass["toReadonlyArray"];

@@ -1,6 +1,5 @@
 /// <reference types="./Enumerable.d.ts" />
 
-import { Container_type, } from "../core.js";
 import Container_identity from "../core/Container/__internal__/Container.identity.js";
 import Enumerable_catchError from "../core/Enumerable/__internal__/Enumerable.catchError.js";
 import Enumerable_concatAll from "../core/Enumerable/__internal__/Enumerable.concatAll.js";
