@@ -9,6 +9,7 @@
 - [combineLatest](SharedObservable.md#combinelatest)
 - [compute](SharedObservable.md#compute)
 - [create](SharedObservable.md#create)
+- [defer](SharedObservable.md#defer)
 - [fromAsyncFactory](SharedObservable.md#fromasyncfactory)
 
 ### Operator Functions
@@ -276,7 +277,7 @@ ___
 
 ### compute
 
-▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+▸ **compute**<`T`\>(`computation`, `options?`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -294,7 +295,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
 
 ___
 
@@ -313,6 +314,28 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/types.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`factory`): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](functions.md#factory)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\> |
 
 #### Returns
 

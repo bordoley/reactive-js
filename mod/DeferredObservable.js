@@ -7,6 +7,7 @@ import DeferredObservable_create from "./DeferredObservable/__internal__/Deferre
 import DeferredObservable_defer from "./DeferredObservable/__internal__/DeferredObservable.defer.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
 import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
+import DeferredObservable_forkConcat from "./DeferredObservable/__internal__/DeferredObservable.forkConcat.js";
 import DeferredObservable_mergeAll from "./DeferredObservable/__internal__/DeferredObservable.mergeAll.js";
 import DeferredObservable_mergeMap from "./DeferredObservable/__internal__/DeferredObservable.mergeMap.js";
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
@@ -27,7 +28,6 @@ import Observable_endWith from "./Observable/__internal__/Observable.endWith.js"
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
-import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
@@ -93,7 +93,7 @@ export const firstAsync = Observable_firstAsync;
 export const flatMapIterable: DeferredObservableContainer.TypeClass["flatMapIterable"] =
   DeferredObservable_flatMapIterable;*/
 export const forEach = Observable_forEach;
-export const forkConcat = Observable_forkConcat;
+export const forkConcat = DeferredObservable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const forkZipLatest = Observable_forkZipLatest;

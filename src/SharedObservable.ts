@@ -33,6 +33,7 @@ import Observable_toEventSource from "./Observable/__internal__/Observable.toEve
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import SharedObservable_create from "./SharedObservable/__internal__/SharedObservable.create.js";
+import SharedObservable_defer from "./SharedObservable/__internal__/SharedObservable.defer.js";
 import { Containers, SharedObservableContainer } from "./containers.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
 import {
@@ -80,9 +81,8 @@ export const create: <T>(
 export const decodeWithCharset: SharedObservableContainer.TypeClass["decodeWithCharset"] =
   Observable_decodeWithCharset;
 
-/*
 export const defer: SharedObservableContainer.TypeClass["defer"] =
-  Observable_defer;*/
+  SharedObservable_defer;
 
 export const dispatchTo: SharedObservableContainer.TypeClass["dispatchTo"] =
   Observable_dispatchTo;

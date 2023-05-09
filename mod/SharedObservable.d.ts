@@ -15,12 +15,13 @@ export declare const combineLatest: SharedObservableContainer.TypeClass["combine
  */
 export declare const compute: <T>(computation: Factory<T>, options?: {
     mode?: "batched" | "combine-latest" | undefined;
-}) => import("./types.js").DeferredObservableLike<T>;
+}) => ObservableLike<T>;
 /**
  * @category Constructor
  */
 export declare const create: <T>(f: SideEffect1<ObserverLike<T>>) => SharedObservableLike<T>;
 export declare const decodeWithCharset: SharedObservableContainer.TypeClass["decodeWithCharset"];
+export declare const defer: SharedObservableContainer.TypeClass["defer"];
 export declare const dispatchTo: SharedObservableContainer.TypeClass["dispatchTo"];
 export declare const distinctUntilChanged: SharedObservableContainer.TypeClass["distinctUntilChanged"];
 export declare const enqueue: SharedObservableContainer.TypeClass["enqueue"];
