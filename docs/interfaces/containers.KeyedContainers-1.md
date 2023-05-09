@@ -14,7 +14,7 @@ Base type for all Containers.
 
   ↳↳ [`Type`](containers.ReadonlyArrayContainer.Type.md)
 
-  ↳↳ [`DictionaryContainer`](containers.DictionaryContainer.md)
+  ↳↳ [`Type`](containers.DictionaryContainer.Type.md)
 
 ## Table of contents
 

@@ -1,17 +1,14 @@
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
-import {
-  KeyedContainers,
-  ReadonlyObjectMapContainer,
-} from "../../containers.js";
+import { ReadonlyObjectMapContainer } from "../../containers.js";
 import { pipe } from "../../functions.js";
 import { EnumeratorLike, ReadonlyObjectMapLike } from "../../types.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
-const ReadonlyObjectMap_values: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["values"] =
+const ReadonlyObjectMap_values: ReadonlyObjectMapContainer.TypeClass["values"] =
 
     <
       T,
-      TKey extends KeyedContainers.KeyOf<ReadonlyObjectMapContainer> = KeyedContainers.KeyOf<ReadonlyObjectMapContainer>,
+      TKey extends ReadonlyObjectMapContainer.TKey = ReadonlyObjectMapContainer.TKey,
     >() =>
     (obj: ReadonlyObjectMapLike<TKey, T>): EnumeratorLike<T> =>
       pipe(

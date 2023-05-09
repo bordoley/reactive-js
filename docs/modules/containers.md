@@ -12,6 +12,7 @@
 - [DeferredContainers](containers.DeferredContainers.md)
 - [DeferredObservableContainer](containers.DeferredObservableContainer.md)
 - [DeferredObservableContainers](containers.DeferredObservableContainers.md)
+- [DictionaryContainer](containers.DictionaryContainer.md)
 - [EnumerableContainer](containers.EnumerableContainer.md)
 - [EnumerableContainers](containers.EnumerableContainers.md)
 - [EnumerableObservableContainers](containers.EnumerableObservableContainers.md)
@@ -24,6 +25,8 @@
 - [PauseableObservableContainer](containers.PauseableObservableContainer.md)
 - [PromiseContainer](containers.PromiseContainer.md)
 - [ReadonlyArrayContainer](containers.ReadonlyArrayContainer.md)
+- [ReadonlyMapContainer](containers.ReadonlyMapContainer.md)
+- [ReadonlyObjectMapContainer](containers.ReadonlyObjectMapContainer.md)
 - [RunnableContainer](containers.RunnableContainer.md)
 - [RunnableContainers](containers.RunnableContainers.md)
 - [RunnableObservableContainers](containers.RunnableObservableContainers.md)
@@ -36,10 +39,7 @@
 
 ### KeyedContainers Interfaces
 
-- [DictionaryContainer](../interfaces/containers.DictionaryContainer.md)
 - [KeyedContainers](../interfaces/containers.KeyedContainers-1.md)
-- [ReadonlyMapContainer](../interfaces/containers.ReadonlyMapContainer.md)
-- [ReadonlyObjectMapContainer](../interfaces/containers.ReadonlyObjectMapContainer.md)
 
 ### Variables
 

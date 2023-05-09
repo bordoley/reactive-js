@@ -1,16 +1,13 @@
 import { hasOwn } from "../../__internal__/Object.js";
-import {
-  KeyedContainers,
-  ReadonlyObjectMapContainer,
-} from "../../containers.js";
+import { ReadonlyObjectMapContainer } from "../../containers.js";
 import { Function1, SideEffect2 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
-const ReadonlyObjectMap_forEachWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["forEachWithKey"] =
+const ReadonlyObjectMap_forEachWithKey: ReadonlyObjectMapContainer.TypeClass["forEachWithKey"] =
 
     <
       T,
-      TKey extends KeyedContainers.KeyOf<ReadonlyObjectMapContainer> = KeyedContainers.KeyOf<ReadonlyObjectMapContainer>,
+      TKey extends ReadonlyObjectMapContainer.TKey = ReadonlyObjectMapContainer.TKey,
     >(
       effect: SideEffect2<T, TKey>,
     ): Function1<

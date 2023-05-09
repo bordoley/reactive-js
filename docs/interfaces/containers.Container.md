@@ -24,9 +24,9 @@ Base type for all Containers.
 
   ↳ [`Type`](containers.ObservableContainer.Type.md)
 
-  ↳ [`ReadonlyObjectMapContainer`](containers.ReadonlyObjectMapContainer.md)
+  ↳ [`Type`](containers.ReadonlyObjectMapContainer.Type.md)
 
-  ↳ [`ReadonlyMapContainer`](containers.ReadonlyMapContainer.md)
+  ↳ [`Type`](containers.ReadonlyMapContainer.Type.md)
 
 ## Table of contents
 
