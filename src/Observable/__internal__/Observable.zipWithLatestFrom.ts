@@ -27,7 +27,7 @@ import {
   QueueLike_dequeue,
   WithLatestLike,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
@@ -164,7 +164,7 @@ const Observable_zipWithLatestFrom: ObservableContainer.TypeClass["zipWithLatest
         createZipWithLatestFromObserver,
         partial(other, selector),
         Observable_lift(other),
-      ) as Containers.Operator<ObservableContainer.Type, TA, T>;
+      ) as Container.Operator<ObservableContainer.Type, TA, T>;
   })();
 
 export default Observable_zipWithLatestFrom;

@@ -8,19 +8,19 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container.md) |
+| `C` | extends [`Type`](containers.Container.Type.md) |
 
 ## Hierarchy
 
 - **`DeferredTypeClass`**
-
-  ↳ [`DeferredObservableTypeClass`](containers.DeferredObservableTypeClass.md)
 
   ↳ [`TypeClass`](containers.EnumeratorContainer.TypeClass.md)
 
   ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
 
   ↳ [`TypeClass`](containers.ReadonlyArrayContainer.TypeClass.md)
+
+  ↳ [`DeferredObservableTypeClass`](containers.DeferredObservableTypeClass.md)
 
 ## Table of contents
 
@@ -58,11 +58,11 @@
 
 ### fromRunnable
 
-• **fromRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+• **fromRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ##### Type parameters
 
@@ -72,7 +72,7 @@
 
 ##### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ___
 
@@ -80,11 +80,11 @@ ___
 
 ### concatAll
 
-• **concatAll**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<`C`, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `T`\>
+• **concatAll**: <T\>() => [`Operator`](../modules/containers.Container.md#operator)<`C`, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<`C`, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `T`\>
+▸ <`T`\>(): [`Operator`](../modules/containers.Container.md#operator)<`C`, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -97,17 +97,17 @@ Container by concatenating the inner sources in order.
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `T`\>
 
 ___
 
 ### concatMap
 
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`Of`](../modules/containers.Containers.md#of)<`C`, `TB`\>\>) => [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TA`, `TB`\>
+• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`Of`](../modules/containers.Container.md#of)<`C`, `TB`\>\>) => [`Operator`](../modules/containers.Container.md#operator)<`C`, `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -120,21 +120,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`Of`](../modules/containers.Containers.md#of)<`C`, `TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`Of`](../modules/containers.Container.md#of)<`C`, `TB`\>\> |
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `TA`, `TB`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `TA`, `TB`\>
 
 ___
 
 ### concatWith
 
-• **concatWith**: <T\>(`snd`: [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, ...`tail`: readonly [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>[]) => [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+• **concatWith**: <T\>(`snd`: [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, ...`tail`: readonly [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>[]) => [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ##### Type parameters
 
@@ -146,18 +146,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\> |
-| `...tail` | readonly [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>[] |
+| `snd` | [`Of`](../modules/containers.Container.md#of)<`C`, `T`\> |
+| `...tail` | readonly [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>[] |
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ## Constructor Methods
 
 ### concat
 
-▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 Returns a Container which emits all values from each source sequentially.
 
@@ -171,19 +171,19 @@ Returns a Container which emits all values from each source sequentially.
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\> |
-| `snd` | [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\> |
-| `...tail` | readonly [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>[] |
+| `fst` | [`Of`](../modules/containers.Container.md#of)<`C`, `T`\> |
+| `snd` | [`Of`](../modules/containers.Container.md#of)<`C`, `T`\> |
+| `...tail` | readonly [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>[] |
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
 ### empty
 
-▸ **empty**<`T`\>(): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **empty**<`T`\>(): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 Return an Container that emits no items.
 
@@ -195,13 +195,13 @@ Return an Container that emits no items.
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
 ### fromEnumerable
 
-▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -211,13 +211,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 #### Type parameters
 
@@ -233,13 +233,13 @@ ___
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **fromFactory**<`T`\>(`factory`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 #### Type parameters
 
@@ -255,13 +255,13 @@ ___
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
 ### fromIterable
 
-▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -271,13 +271,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ___
 
 ### fromOptional
 
-▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -287,13 +287,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -311,13 +311,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 ___
 
 ### generate
 
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 Generates a Container from a generator function
 that is applied to an accumulator value between emitted items.
@@ -337,7 +337,7 @@ that is applied to an accumulator value between emitted items.
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
@@ -345,7 +345,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -362,13 +362,13 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ___
 
 ### forkConcat
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TIn`, `TOut`\>
+▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -381,19 +381,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TIn`, `TOut`\> |
-| `snd` | [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TIn`, `TOut`\> |
-| `...tail` | readonly [`Operator`](../modules/containers.Containers.md#operator)<`C`, `TIn`, `TOut`\>[] |
+| `fst` | [`Operator`](../modules/containers.Container.md#operator)<`C`, `TIn`, `TOut`\> |
+| `snd` | [`Operator`](../modules/containers.Container.md#operator)<`C`, `TIn`, `TOut`\> |
+| `...tail` | readonly [`Operator`](../modules/containers.Container.md#operator)<`C`, `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `TIn`, `TOut`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `TIn`, `TOut`\>
 
 ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
 
@@ -411,9 +411,9 @@ Returns a Container that mirrors the source, repeating it whenever the predicate
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns a Container that mirrors the source, repeating it `count` times.
 
@@ -431,9 +431,9 @@ Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **repeat**<`T`\>(): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns a Container that mirrors the source, continually repeating it.
 
@@ -445,13 +445,13 @@ Returns a Container that mirrors the source, continually repeating it.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **retry**<`T`\>(): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, re-subscribing
 if the source completes with an error.
@@ -464,9 +464,9 @@ if the source completes with an error.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
-▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **retry**<`T`\>(`predicate`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns an `ObservableLike` that mirrors the source, resubscrbing
 if the source completes with an error which satisfies the predicate function.
@@ -485,13 +485,13 @@ if the source completes with an error which satisfies the predicate function.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -508,4 +508,4 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>

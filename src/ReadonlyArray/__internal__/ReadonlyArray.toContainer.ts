@@ -1,24 +1,24 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
-import { Container, Containers } from "../../containers.js";
+import { Container } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =
-  <C extends Container, O extends unknown = unknown>(
+  <C extends Container.Type, O extends unknown = unknown>(
     factory: <T>(
       values: readonly T[],
       start: number,
       count: number,
       options?: O,
-    ) => Containers.Of<C, T>,
+    ) => Container.Of<C, T>,
   ) =>
   <T>(
     options?: O & {
       readonly start?: number;
       readonly count?: number;
     },
-  ): Function1<ReadonlyArray<T>, Containers.Of<C, T>> =>
+  ): Function1<ReadonlyArray<T>, Container.Of<C, T>> =>
   values => {
     const valuesLength = ReadonlyArray_getLength(values);
     const {

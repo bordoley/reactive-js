@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Container`](containers.Container.md)
+- [`Type`](containers.Container.Type.md)
 
   ↳ **`Type`**
 
@@ -30,4 +30,4 @@
 
 #### Overrides
 
-[Container](containers.Container.md).[[___Container_type]](containers.Container.md#[___container_type])
+[Type](containers.Container.Type.md).[[___Container_type]](containers.Container.Type.md#[___container_type])

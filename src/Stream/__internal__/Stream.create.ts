@@ -1,5 +1,5 @@
 import { createInstanceFactory } from "../../__internal__/mixins.js";
-import { Containers, DeferredObservableContainer } from "../../containers.js";
+import { Container, DeferredObservableContainer } from "../../containers.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -11,7 +11,7 @@ import {
 import Stream_mixin from "./Stream.mixin.js";
 
 const Stream_create: <TReq, T>(
-  op: Containers.Operator<DeferredObservableContainer.Type, TReq, T>,
+  op: Container.Operator<DeferredObservableContainer.Type, TReq, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

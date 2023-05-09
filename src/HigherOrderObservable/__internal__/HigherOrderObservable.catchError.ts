@@ -15,7 +15,7 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import {
-  Containers,
+  Container,
   ObservableContainer,
   StatefulTypeClass,
 } from "../../containers.js";
@@ -37,7 +37,7 @@ import {
 const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
-  ) => Containers.Operator<C, T, T>,
+  ) => Container.Operator<C, T, T>,
 ): StatefulTypeClass<C>["catchError"] => {
   const createCatchErrorObserver = (<T>() => {
     return createInstanceFactory(
@@ -46,7 +46,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
         function CatchErrorObserver(
           instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
           delegate: ObserverLike<T>,
-          errorHandler: Function1<unknown, Containers.Of<C, T> | void>,
+          errorHandler: Function1<unknown, Container.Of<C, T> | void>,
         ): ObserverLike<T> {
           init(Observer_mixin(), instance, delegate, delegate);
           init(Delegating_mixin(), instance, delegate);
@@ -56,7 +56,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
             Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)),
             Disposable_onError((err: Error) => {
               try {
-                const result = errorHandler(err) as Containers.Of<C, T>;
+                const result = errorHandler(err) as Container.Of<C, T>;
                 if (isSome(result)) {
                   result[ObservableLike_observe](delegate);
                 } else {
@@ -84,7 +84,7 @@ const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
     );
   })();
 
-  return (<T>(errorHandler: Function1<unknown, Containers.Of<C, T> | void>) =>
+  return (<T>(errorHandler: Function1<unknown, Container.Of<C, T> | void>) =>
     pipe(
       createCatchErrorObserver,
       partial(errorHandler),

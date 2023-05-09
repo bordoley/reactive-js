@@ -19,4 +19,4 @@
 
 ### TKey
 
-Ƭ **TKey**: [`KeyOf`](containers.KeyedContainers.md#keyof)<[`Type`](../interfaces/containers.DictionaryContainer.Type.md)\>
+Ƭ **TKey**: [`KeyOf`](containers.KeyedContainer.md#keyof)<[`Type`](../interfaces/containers.DictionaryContainer.Type.md)\>

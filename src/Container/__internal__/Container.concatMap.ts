@@ -1,17 +1,15 @@
-import { Container, ContainerTypeClass, Containers } from "../../containers.js";
+import { Container, ContainerTypeClass } from "../../containers.js";
 import { Function1, compose } from "../../functions.js";
 
 const Container_concatMap =
-  <C extends Container, O = never>(
+  <C extends Container.Type, O = never>(
     map: ContainerTypeClass<C>["map"],
-    concatAll: <T>(
-      options?: O,
-    ) => Containers.Operator<C, Containers.Of<C, T>, T>,
+    concatAll: <T>(options?: O) => Container.Operator<C, Container.Of<C, T>, T>,
   ) =>
   <TA, TB>(
-    selector: Function1<TA, Containers.Of<C, TB>>,
+    selector: Function1<TA, Container.Of<C, TB>>,
     options?: O,
-  ): Containers.Operator<C, TA, TB> =>
+  ): Container.Operator<C, TA, TB> =>
     compose(map(selector), concatAll(options));
 
 export default Container_concatMap;

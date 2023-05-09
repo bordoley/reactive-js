@@ -18,14 +18,14 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { none, pipe, returns } from "../../functions.js";
 import { ObserverLike, ObserverLike_notify } from "../../types.js";
 
 type ObservablePairwise = <
   C extends ObservableContainer.Type,
   T,
->() => Containers.Operator<C, T, readonly [T, T]>;
+>() => Container.Operator<C, T, readonly [T, T]>;
 const Observable_pairwise: ObservablePairwise = /*@__PURE__*/ (() => {
   const createPairwiseObserver: <T>(
     delegate: ObserverLike<readonly [T, T]>,

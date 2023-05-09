@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainers`](containers.KeyedContainers-1.md)
+- [`Type`](containers.KeyedContainer.Type.md)
 
   ↳ **`Type`**
 
@@ -25,7 +25,7 @@
 
 #### Overrides
 
-KeyedContainers.\_\_@\_\_\_Container\_type@22120
+[Type](containers.KeyedContainer.Type.md).[[___Container_type]](containers.KeyedContainer.Type.md#[___container_type])
 
 ___
 
@@ -35,4 +35,4 @@ ___
 
 #### Overrides
 
-[KeyedContainers](containers.KeyedContainers-1.md).[[___KeyedContainer_TKey]](containers.KeyedContainers-1.md#[___keyedcontainer_tkey])
+[Type](containers.KeyedContainer.Type.md).[[___KeyedContainer_TKey]](containers.KeyedContainer.Type.md#[___keyedcontainer_tkey])

@@ -23,7 +23,7 @@ import {
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
 import {
-  Containers,
+  Container,
   ObservableContainer,
   RunnableContainer,
 } from "../../containers.js";
@@ -46,13 +46,13 @@ import Observable_throws from "./Observable.throws.js";
 interface ObservableTimeout {
   timeout<C extends ObservableContainer.Type, T>(
     duration: number,
-  ): Containers.Operator<C, T, T>;
+  ): Container.Operator<C, T, T>;
   timeout<T>(
     duration: RunnableLike,
-  ): Containers.Operator<RunnableContainer.Type, T, T>;
+  ): Container.Operator<RunnableContainer.Type, T, T>;
   timeout<T>(
     duration: ObservableLike,
-  ): Containers.Operator<ObservableContainer.Type, T, T>;
+  ): Container.Operator<ObservableContainer.Type, T, T>;
 }
 
 const Observable_timeout: ObservableTimeout["timeout"] = /*@__PURE__*/ (<

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container.md) |
+| `C` | extends [`Type`](containers.Container.Type.md) |
 | `CEnumerator` | extends [`Type`](containers.EnumeratorContainer.Type.md) = [`Type`](containers.EnumeratorContainer.Type.md) |
 
 ## Hierarchy
@@ -31,7 +31,7 @@
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Of`](../modules/containers.Containers.md#of)<`CEnumerator`, `T`\>\>
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Of`](../modules/containers.Container.md#of)<`CEnumerator`, `T`\>\>
 
 #### Type parameters
 
@@ -41,13 +41,13 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Of`](../modules/containers.Containers.md#of)<`CEnumerator`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Of`](../modules/containers.Container.md#of)<`CEnumerator`, `T`\>\>
 
 ___
 
 ### toEnumerable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+▸ **toEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -57,13 +57,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 ___
 
 ### toIterable
 
-▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `Iterable`<`T`\>\>
+▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `Iterable`<`T`\>\>
 
 Converts the Container to a `IterableLike`.
 
@@ -75,4 +75,4 @@ Converts the Container to a `IterableLike`.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `Iterable`<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `Iterable`<`T`\>\>

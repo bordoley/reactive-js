@@ -25,7 +25,7 @@ import {
   returns,
 } from "../functions.js";
 
-const Containers_test = <C extends Container>(
+const Containers_test = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(

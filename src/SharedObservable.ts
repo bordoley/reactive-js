@@ -34,7 +34,7 @@ import Observable_withCurrentTime from "./Observable/__internal__/Observable.wit
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import SharedObservable_create from "./SharedObservable/__internal__/SharedObservable.create.js";
 import SharedObservable_defer from "./SharedObservable/__internal__/SharedObservable.defer.js";
-import { Containers, SharedObservableContainer } from "./containers.js";
+import { Container, SharedObservableContainer } from "./containers.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
 import {
   DisposableLike,
@@ -57,7 +57,7 @@ export const buffer: <T>(options?: {
   // FIXME: This is wrong, it should be able to use any container type.
   readonly duration?: number | Function1<T, SharedObservableContainer.Type>;
   readonly count?: number;
-}) => Containers.Operator<SharedObservableContainer.Type, T, readonly T[]> =
+}) => Container.Operator<SharedObservableContainer.Type, T, readonly T[]> =
   Observable_buffer;
 
 /*  
@@ -186,7 +186,7 @@ export const never: SharedObservableContainer.TypeClass["never"] =
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => Containers.Operator<SharedObservableContainer.Type, T, T> =
+) => Container.Operator<SharedObservableContainer.Type, T, T> =
   Observable_onSubscribe;
 
 export const pairwise: SharedObservableContainer.TypeClass["pairwise"] =

@@ -24,7 +24,7 @@ import {
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
 import {
-  Containers,
+  Container,
   DeferredTypeClass,
   ObservableContainer,
 } from "../../containers.js";
@@ -39,12 +39,12 @@ import {
 
 const HigherOrderObservable_switchAll = <C extends ObservableContainer.Type>(
   lift: <T>(
-    f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
-  ) => Containers.Operator<C, Containers.Of<C, T>, T>,
+    f: Function1<ObserverLike<T>, ObserverLike<Container.Of<C, T>>>,
+  ) => Container.Operator<C, Container.Of<C, T>, T>,
 ): DeferredTypeClass<C>["concatAll"] => {
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
-  ) => ObserverLike<Containers.Of<C, T>> = (<T>() => {
+  ) => ObserverLike<Container.Of<C, T>> = (<T>() => {
     type TProperties = {
       readonly [__HigherOrderObservable_currentRef]: SerialDisposableLike;
     };
@@ -63,15 +63,15 @@ const HigherOrderObservable_switchAll = <C extends ObservableContainer.Type>(
 
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<Containers.Of<C, T>>(), Delegating_mixin()),
+        include(Observer_mixin<Container.Of<C, T>>(), Delegating_mixin()),
         function SwitchAllObserver(
           instance: Pick<
-            ObserverLike<Containers.Of<C, T>>,
+            ObserverLike<Container.Of<C, T>>,
             typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
-        ): ObserverLike<Containers.Of<C, T>> {
+        ): ObserverLike<Container.Of<C, T>> {
           Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin(), instance, delegate);
 
@@ -90,11 +90,11 @@ const HigherOrderObservable_switchAll = <C extends ObservableContainer.Type>(
         {
           [ObserverLike_notify](
             this: TProperties &
-              ObserverLike<Containers.Of<C, T>> &
+              ObserverLike<Container.Of<C, T>> &
               SerialDisposableLike &
               DelegatingLike<ObserverLike<T>> &
               DelegatingLike<ObserverLike>,
-            next: Containers.Of<C, T>,
+            next: Container.Of<C, T>,
           ) {
             Observer_assertState(this);
             this[__HigherOrderObservable_currentRef][

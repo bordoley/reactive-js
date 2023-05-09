@@ -20,7 +20,7 @@ import {
   DelegatingLike_delegate,
   MutableStoreLike,
 } from "../../__internal__/types.js";
-import { Containers, DeferredObservableContainer } from "../../containers.js";
+import { Container, DeferredObservableContainer } from "../../containers.js";
 import { Updater, compose, none, pipe } from "../../functions.js";
 import {
   DisposableLike,
@@ -42,7 +42,7 @@ import {
 } from "../../types.js";
 
 const PauseableObservable_create: <T>(
-  op: Containers.Operator<DeferredObservableContainer.Type, boolean, T>,
+  op: Container.Operator<DeferredObservableContainer.Type, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -62,7 +62,7 @@ const PauseableObservable_create: <T>(
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: Containers.Operator<DeferredObservableContainer.Type, boolean, T>,
+        op: Container.Operator<DeferredObservableContainer.Type, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;

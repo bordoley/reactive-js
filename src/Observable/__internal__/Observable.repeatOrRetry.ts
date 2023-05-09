@@ -1,7 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { bindMethod, error, isSome, partial, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -17,7 +17,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <C extends ObservableContainer.Type, T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   C extends ObservableContainer.Type,
@@ -64,7 +64,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   };
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: Containers.Of<C, T>) => {
+    (observable: Container.Of<C, T>) => {
       const operator = pipe(
         createRepeatObserver,
         partial(observable, shouldRepeat),

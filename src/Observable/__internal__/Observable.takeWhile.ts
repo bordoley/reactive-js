@@ -17,7 +17,7 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Predicate, none, partial, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -30,7 +30,7 @@ type ObservableTakeWhile = <C extends ObservableContainer.Type, T>(
   options?: {
     readonly inclusive?: boolean;
   },
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 
 const Observable_takeWhile: ObservableTakeWhile = /*@__PURE__*/ (<T>() => {
   const createTakeWhileObserver: (

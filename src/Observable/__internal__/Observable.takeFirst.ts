@@ -19,7 +19,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -29,7 +29,7 @@ import {
 
 type ObservableTakeFirst = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
-}) => Containers.Operator<C, T, T>;
+}) => Container.Operator<C, T, T>;
 const Observable_takeFirst: ObservableTakeFirst = /*@__PURE__*/ (() => {
   const createTakeFirstObserver: <T>(
     delegate: ObserverLike<T>,

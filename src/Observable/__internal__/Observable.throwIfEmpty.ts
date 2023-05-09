@@ -17,7 +17,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Optional,
@@ -36,7 +36,7 @@ import {
 type ObservableThrowIfEmpty = <C extends ObservableContainer.Type, T>(
   factory: Factory<unknown>,
   options?: undefined,
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 const Observable_throwIfEmpty: ObservableThrowIfEmpty = /*@__PURE__*/ (() => {
   const createThrowIfEmptyObserver = (<T>() => {
     type TProperties = {

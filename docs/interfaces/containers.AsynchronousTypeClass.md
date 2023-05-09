@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container.md) |
+| `C` | extends [`Type`](containers.Container.Type.md) |
 
 ## Hierarchy
 
@@ -26,7 +26,7 @@
 
 ### fromAsyncIterable
 
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -36,4 +36,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\>

@@ -1,13 +1,13 @@
-import { Container, Containers } from "../../containers.js";
+import { Container } from "../../containers.js";
 import { identity, returns } from "../../functions.js";
 
-const Container_identity: <C extends Container, T>() => Containers.Operator<
+const Container_identity: <C extends Container.Type, T>() => Container.Operator<
   C,
   T,
   T
 > = /*@__PURE__*/ returns(identity) as <
-  C extends Container,
+  C extends Container.Type,
   T,
->() => Containers.Operator<C, T, T>;
+>() => Container.Operator<C, T, T>;
 
 export default Container_identity;

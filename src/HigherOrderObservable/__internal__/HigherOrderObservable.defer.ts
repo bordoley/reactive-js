@@ -1,5 +1,5 @@
 import {
-  Containers,
+  Container,
   ObservableContainer,
   StatefulTypeClass,
 } from "../../containers.js";
@@ -10,9 +10,9 @@ const HigherOrderObservable_defer =
   <C extends ObservableContainer.Type>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
-    ) => Containers.Of<C, T>,
+    ) => Container.Of<C, T>,
   ): StatefulTypeClass<C>["defer"] =>
-  <T>(factory: Factory<Containers.Of<C, T>>): Containers.Of<C, T> =>
+  <T>(factory: Factory<Container.Of<C, T>>): Container.Of<C, T> =>
     createObservable(observer => {
       factory()[ObservableLike_observe](observer);
     });

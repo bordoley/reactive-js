@@ -8,19 +8,19 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container.md) |
+| `C` | extends [`Type`](containers.Container.Type.md) |
 
 ## Hierarchy
 
 - **`RunnableTypeClass`**
-
-  ↳ [`RunnableObservableTypeClass`](containers.RunnableObservableTypeClass.md)
 
   ↳ [`TypeClass`](containers.EnumeratorContainer.TypeClass.md)
 
   ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
 
   ↳ [`TypeClass`](containers.ReadonlyArrayContainer.TypeClass.md)
+
+  ↳ [`RunnableObservableTypeClass`](containers.RunnableObservableTypeClass.md)
 
 ## Table of contents
 
@@ -44,11 +44,11 @@
 
 ### contains
 
-• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 #### Type declaration
 
-▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 ##### Type parameters
 
@@ -66,17 +66,17 @@
 
 ##### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 ___
 
 ### toRunnable
 
-• **toRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+• **toRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ##### Type parameters
 
@@ -86,17 +86,17 @@ ___
 
 ##### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ## Transform Methods
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 Determines whether all the members of an Container satisfy the predicate.
 The predicate function is invoked for each element in the Container until the
-it returns false, or until the end of the Containers.
+it returns false, or until the end of the Container.
 
 #### Type parameters
 
@@ -112,13 +112,13 @@ it returns false, or until the end of the Containers.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 ___
 
 ### first
 
-▸ **first**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+▸ **first**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
@@ -128,13 +128,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -153,13 +153,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 ___
 
 ### last
 
-▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
@@ -169,13 +169,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 ___
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -191,13 +191,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -215,13 +215,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `TAcc`\>
 
 ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -237,13 +237,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, `boolean`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, `boolean`\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, readonly `T`[]\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, readonly `T`[]\>
 
 Converts the Container to a `ReadonlyArrayContainer`.
 
@@ -255,4 +255,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>, readonly `T`[]\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>, readonly `T`[]\>

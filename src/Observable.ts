@@ -58,7 +58,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
-import { Containers, ObservableContainer } from "./containers.js";
+import { Container, ObservableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
 import {
   DisposableLike,
@@ -79,7 +79,7 @@ export const buffer: <T>(options?: {
   // FIXME: Duration should be a DeferredObservable
   readonly duration?: number | Function1<T, ObservableContainer.Type>;
   readonly count?: number;
-}) => Containers.Operator<ObservableContainer.Type, T, readonly T[]> =
+}) => Container.Operator<ObservableContainer.Type, T, readonly T[]> =
   Observable_buffer;
 
 export const catchError: ObservableContainer.TypeClass["catchError"] =
@@ -186,7 +186,7 @@ export const never: ObservableContainer.TypeClass["never"] = Observable_never;
  */
 export const onSubscribe: <T>(
   f: Factory<DisposableOrTeardown | void>,
-) => Containers.Operator<ObservableContainer.Type, T, T> =
+) => Container.Operator<ObservableContainer.Type, T, T> =
   Observable_onSubscribe;
 
 export const pairwise: ObservableContainer.TypeClass["pairwise"] =

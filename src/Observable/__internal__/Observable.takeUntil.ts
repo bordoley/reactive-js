@@ -2,7 +2,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_bindTo from "../../Disposable/__internal__/Disposable.bindTo.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import {
-  Containers,
+  Container,
   EnumerableContainer,
   ObservableContainer,
   RunnableContainer,
@@ -21,13 +21,13 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 interface ObservableTakeUntil {
   takeUntil<T>(
     notifier: EnumerableLike,
-  ): Containers.Operator<EnumerableContainer.Type, T, T>;
+  ): Container.Operator<EnumerableContainer.Type, T, T>;
   takeUntil<T>(
     notifier: RunnableLike,
-  ): Containers.Operator<RunnableContainer.Type, T, T>;
+  ): Container.Operator<RunnableContainer.Type, T, T>;
   takeUntil<T>(
     notifier: ObservableLike,
-  ): Containers.Operator<ObservableContainer.Type, T, T>;
+  ): Container.Operator<ObservableContainer.Type, T, T>;
 }
 const Observable_takeUntil: ObservableTakeUntil["takeUntil"] = (<T>(
   notifier: ObservableLike,

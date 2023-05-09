@@ -1,12 +1,12 @@
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createDispatchToObserver from "../../Observer/__internal__/Observer.createDispatchToObserver.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import { DispatcherLike } from "../../types.js";
 
 type ObservableDispatchTo = <C extends ObservableContainer.Type, T = unknown>(
   dispatcher: DispatcherLike<T>,
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 const Observable_dispatchTo: ObservableDispatchTo = (<T>(
   dispatcher: DispatcherLike<T>,
 ) =>

@@ -18,7 +18,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import {
   ObservableLike,
@@ -31,7 +31,7 @@ import Observable_lift from "./Observable.lift.js";
 
 type ObservableSkipFirst = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
-}) => Containers.Operator<C, T, T>;
+}) => Container.Operator<C, T, T>;
 
 const Observable_skipFirst: ObservableSkipFirst = /*@__PURE__*/ (() => {
   const createSkipFirstObserver: <T>(

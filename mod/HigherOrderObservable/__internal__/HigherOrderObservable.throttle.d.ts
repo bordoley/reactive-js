@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 declare const HigherOrderObservable_throttle: <C extends ObservableContainer.Type, T>(fromReadonlyArray: <T_1>(options?: {
@@ -6,7 +6,7 @@ declare const HigherOrderObservable_throttle: <C extends ObservableContainer.Typ
     readonly delay?: number;
     readonly delayStart?: boolean;
     readonly start?: number;
-}) => Function1<readonly T_1[], Containers.Of<C, T_1>>, lift: <T_2>(f: Function1<ObserverLike<T_2>, ObserverLike<T_2>>) => Containers.Operator<C, T_2, T_2>) => (duration: number | Function1<T, Containers.Of<C, unknown>>, options?: {
+}) => Function1<readonly T_1[], Container.Of<C, T_1>>, lift: <T_2>(f: Function1<ObserverLike<T_2>, ObserverLike<T_2>>) => Container.Operator<C, T_2, T_2>) => (duration: number | Function1<T, Container.Of<C, unknown>>, options?: {
     readonly mode?: "first" | "last" | "interval";
-}) => Containers.Operator<C, T, T>;
+}) => Container.Operator<C, T, T>;
 export default HigherOrderObservable_throttle;
