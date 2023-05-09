@@ -1,4 +1,6 @@
-import Observable_currentTime from "../../Runnable/__internal__/Runnable.currentTime.js";
+import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
+import Observable_scan from "../../Observable/__internal__/Observable.scan.js";
+import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import { MAX_VALUE } from "../../__internal__/constants.js";
 import { min } from "../../__internal__/math.js";
 import { RunnableContainer } from "../../containers.js";
@@ -10,11 +12,9 @@ import {
   returns,
 } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
-import Observable_pick from "./Observable.pick.js";
-import Observable_scan from "./Observable.scan.js";
-import Observable_takeWhile from "./Observable.takeWhile.js";
+import Observable_currentTime from "./Runnable.currentTime.js";
 
-const Observable_keyFrame = (
+const Runnable_keyFrame = (
   duration: number,
   options?: {
     readonly easing?: Function1<number, number>;
@@ -41,4 +41,4 @@ const Observable_keyFrame = (
   );
 };
 
-export default Observable_keyFrame;
+export default Runnable_keyFrame;
