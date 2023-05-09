@@ -15,7 +15,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { __TakeLastObserver_takeLastQueue } from "../../__internal__/symbols.js";
 import { IndexedQueueLike, QueueLike } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { invoke, none, partial, pipe } from "../../functions.js";
 import {
   DisposableLike,
@@ -27,7 +27,7 @@ import {
 
 type ObservableTakeLast = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
-}) => Containers.Operator<C, T, T>;
+}) => Container.Operator<C, T, T>;
 const Observable_takeLast: ObservableTakeLast = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     readonly [__TakeLastObserver_takeLastQueue]: IndexedQueueLike<T>;

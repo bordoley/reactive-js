@@ -1,4 +1,4 @@
-import { Container, Containers } from "../containers.js";
+import { Container } from "../containers.js";
 import {
   Function1,
   Function2,
@@ -162,10 +162,10 @@ export interface ReducerAccumulatorLike<T, TAcc> {
   [ReducerAccumulatorLike_reducer]: Reducer<T, TAcc>;
 }
 
-export interface Lift<C extends Container> {
+export interface Lift<C extends Container.Type> {
   lift<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): Containers.Operator<C, TA, TB>;
+  ): Container.Operator<C, TA, TB>;
 }
 
 export interface WithLatestLike<TA, TB, T> {

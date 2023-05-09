@@ -15,7 +15,7 @@ import {
 } from "../containers.js";
 import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 
-export const forEachTests = <C extends Container>(
+export const forEachTests = <C extends Container.Type>(
   m: ContainerTypeClass<C> &
     DeferredTypeClass<C> &
     EnumerableTypeClass<C> &
@@ -56,7 +56,7 @@ export const forEachTests = <C extends Container>(
     }),
   );
 
-export const fromReadonlyArrayTests = <C extends Container>(
+export const fromReadonlyArrayTests = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
@@ -117,7 +117,7 @@ export const fromReadonlyArrayTests = <C extends Container>(
     }),
   );
 
-export const keepTests = <C extends Container>(
+export const keepTests = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
@@ -152,7 +152,7 @@ export const keepTests = <C extends Container>(
     }),
   );
 
-export const mapTests = <C extends Container>(
+export const mapTests = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   describe(
@@ -187,7 +187,7 @@ export const mapTests = <C extends Container>(
     }),
   );
 
-export const toEnumerableTests = <C extends Container>(
+export const toEnumerableTests = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & EnumerableTypeClass<C>,
 ) =>
   describe(
@@ -204,7 +204,7 @@ export const toEnumerableTests = <C extends Container>(
     ),
   );
 
-export const toRunnableTest = <C extends Container>(
+export const toRunnableTest = <C extends Container.Type>(
   m: ContainerTypeClass<C> & DeferredTypeClass<C> & RunnableTypeClass<C>,
 ) =>
   test(

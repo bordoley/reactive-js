@@ -34,7 +34,7 @@ import {
   QueueLike_dequeue,
 } from "../../__internal__/types.js";
 import {
-  Containers,
+  Container,
   ObservableContainer,
   ObservableTypeClass,
 } from "../../containers.js";
@@ -62,26 +62,26 @@ import {
 
 const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
   lift: <T>(
-    f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
-  ) => Containers.Operator<C, Containers.Of<C, T>, T>,
+    f: Function1<ObserverLike<T>, ObserverLike<Container.Of<C, T>>>,
+  ) => Container.Operator<C, Container.Of<C, T>, T>,
 ): ObservableTypeClass<C>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
     concurrency: number,
-  ) => ObserverLike<Containers.Of<C, T>> = (<T>() => {
+  ) => ObserverLike<Container.Of<C, T>> = (<T>() => {
     type TProperties = {
       [__MergeAllObserver_activeCount]: number;
       readonly [__MergeAllObserver_concurrency]: number;
       readonly [__MergeAllObserver_onDispose]: SideEffect;
       readonly [__MergeAllObserver_observablesQueue]: IndexedQueueLike<
-        Containers.Of<C, T>
+        Container.Of<C, T>
       >;
     };
 
     const subscribeToObservable = <T>(
-      observer: ObserverLike<Containers.Of<C, T>> &
+      observer: ObserverLike<Container.Of<C, T>> &
         DelegatingLike<ObserverLike<T>> &
         TProperties,
       nextObs: ObservableLike<T>,
@@ -104,10 +104,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
 
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<Containers.Of<C, T>>(), Delegating_mixin()),
+        include(Observer_mixin<Container.Of<C, T>>(), Delegating_mixin()),
         function MergeAllObserver(
           instance: Pick<
-            ObserverLike<Containers.Of<C, T>>,
+            ObserverLike<Container.Of<C, T>>,
             typeof ObserverLike_notify
           > &
             Mutable<TProperties>,
@@ -115,7 +115,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
           capacity: number,
           backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
           concurrency: number,
-        ): ObserverLike<Containers.Of<C, T>> {
+        ): ObserverLike<Container.Of<C, T>> {
           Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
 
@@ -169,10 +169,10 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
         {
           [ObserverLike_notify](
             this: TProperties &
-              ObserverLike<Containers.Of<C, T>> &
+              ObserverLike<Container.Of<C, T>> &
               DelegatingLike<ObserverLike<T>> &
-              QueueLike<Containers.Of<C, T>>,
-            next: Containers.Of<C, T>,
+              QueueLike<Container.Of<C, T>>,
+            next: Container.Of<C, T>,
           ) {
             Observer_assertState(this);
 
@@ -198,7 +198,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
       readonly capacity?: number;
       readonly concurrency?: number;
     } = {},
-  ): Containers.Operator<C, Containers.Of<C, T>, T> => {
+  ): Container.Operator<C, Container.Of<C, T>, T> => {
     const concurrency = clampPositiveNonZeroInteger(
       options.concurrency ?? MAX_SAFE_INTEGER,
     );
@@ -207,7 +207,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
 
     const f: Function1<
       ObserverLike<T>,
-      ObserverLike<Containers.Of<C, T>>
+      ObserverLike<Container.Of<C, T>>
     > = pipe(
       createMergeAllObserver,
       partial(

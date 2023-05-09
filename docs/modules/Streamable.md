@@ -31,7 +31,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.DeferredObservableContainer.Type.md), `TReq`, `T`\> |
+| `op` | [`Operator`](containers.Container.md#operator)<[`Type`](../interfaces/containers.DeferredObservableContainer.Type.md), `TReq`, `T`\> |
 
 #### Returns
 

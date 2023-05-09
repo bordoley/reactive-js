@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`KeyedContainers`](containers.KeyedContainers-1.md) |
+| `C` | extends [`Type`](containers.KeyedContainer.Type.md) |
 
 ## Hierarchy
 
@@ -55,7 +55,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>
+▸ **empty**<`T`, `TKey`\>(): [`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>
 
 Return an Container that emits no items.
 
@@ -64,34 +64,34 @@ Return an Container that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>
+[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>
 
 ___
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>\>
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>\>
 
 ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>\>
+▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -110,7 +110,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>\>
 
 ___
 
@@ -118,9 +118,9 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that applies the side effect function to each
+Returns a Container.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -128,7 +128,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -138,15 +138,15 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
-Returns a KeyedContainers.Operator that applies the side effect function to each
+Returns a KeyedContainer.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -154,7 +154,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -164,32 +164,32 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 ___
 
 ### identity
 
-▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that only emits items produced by the
+Returns a Container.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -197,7 +197,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -207,13 +207,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -221,7 +221,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -231,15 +231,15 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that only emits items produced by the
+Returns a Container.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -247,7 +247,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -257,15 +257,15 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
-Returns a Containers.Operator that applies the `selector` function to each
+Returns a Container.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -282,7 +282,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -292,15 +292,15 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
-Returns a Containers.Operator that applies the `selector` function to each
+Returns a Container.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -317,7 +317,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -327,7 +327,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<`C`, `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<`C`, `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -335,56 +335,56 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -392,7 +392,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -403,13 +403,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
 
 ___
 
 ### reduceWithKey
 
-▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -417,7 +417,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -428,13 +428,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, `TAcc`\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, readonly `T`[]\>
+▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, readonly `T`[]\>
 
 Converts the Container to a `ReadonlyArrayContainer`.
 
@@ -443,17 +443,17 @@ Converts the Container to a `ReadonlyArrayContainer`.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainers.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/containers.KeyedContainer.md#keyof)<`C`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `TKey`, `T`\>, readonly `T`[]\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `TKey`, `T`\>, readonly `T`[]\>
 
 ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `any`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `any`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -463,4 +463,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainers.md#of)<`C`, `any`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`Of`](../modules/containers.KeyedContainer.md#of)<`C`, `any`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>

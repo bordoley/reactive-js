@@ -1,11 +1,11 @@
-import { Container, ContainerTypeClass, Containers } from "../../containers.js";
+import { Container, ContainerTypeClass } from "../../containers.js";
 
 const Container_zipWith =
-  <C extends Container>(zip: ContainerTypeClass<C>["zip"]) =>
+  <C extends Container.Type>(zip: ContainerTypeClass<C>["zip"]) =>
   (
-    snd: Containers.Of<C, any>,
-    ...tail: readonly Containers.Of<C, any>[]
-  ): Containers.Operator<C, any, any> =>
+    snd: Container.Of<C, any>,
+    ...tail: readonly Container.Of<C, any>[]
+  ): Container.Operator<C, any, any> =>
   fst =>
     (zip as any)(fst, snd, ...tail);
 

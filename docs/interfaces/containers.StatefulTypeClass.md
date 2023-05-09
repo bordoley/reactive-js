@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](containers.Container.md) |
+| `C` | extends [`Type`](containers.Container.Type.md) |
 
 ## Hierarchy
 
@@ -34,7 +34,7 @@
 
 ### defer
 
-▸ **defer**<`T`\>(`factory`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **defer**<`T`\>(`factory`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 #### Type parameters
 
@@ -46,17 +46,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\> |
+| `factory` | [`Factory`](../modules/functions.md#factory)<[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\> |
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
 ### throws
 
-▸ **throws**<`T`\>(`options?`): [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+▸ **throws**<`T`\>(`options?`): [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 #### Type parameters
 
@@ -73,7 +73,7 @@ ___
 
 #### Returns
 
-[`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>
+[`Of`](../modules/containers.Container.md#of)<`C`, `T`\>
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns a Container which catches errors produced by the source and either continues with
 the Container returned from the `onError` callback or swallows the error if
@@ -97,17 +97,17 @@ void is returned.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `onError` | [`Function1`](../modules/functions.md#function1)<`unknown`, `void` \| [`Of`](../modules/containers.Containers.md#of)<`C`, `T`\>\> | A function that takes source error and either returns a Container to continue with or void if the error should be propagated. |
+| `onError` | [`Function1`](../modules/functions.md#function1)<`unknown`, `void` \| [`Of`](../modules/containers.Container.md#of)<`C`, `T`\>\> | A function that takes source error and either returns a Container to continue with or void if the error should be propagated. |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -118,23 +118,23 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `ArrayBuffer`, `string`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `ArrayBuffer`, `string`\>
 
 ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `string`, `Uint8Array`\>
+▸ **encodeUtf8**(): [`Operator`](../modules/containers.Container.md#operator)<`C`, `string`, `Uint8Array`\>
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `string`, `Uint8Array`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `string`, `Uint8Array`\>
 
 ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`): [`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>
 
 Returns a Container that emits an error if the source completes without emitting a value.
 
@@ -152,4 +152,4 @@ Returns a Container that emits an error if the source completes without emitting
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<`C`, `T`, `T`\>
+[`Operator`](../modules/containers.Container.md#operator)<`C`, `T`, `T`\>

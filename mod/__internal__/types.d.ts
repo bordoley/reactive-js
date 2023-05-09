@@ -1,4 +1,4 @@
-import { Container, Containers } from "../containers.js";
+import { Container } from "../containers.js";
 import { Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../functions.js";
 import { CollectionLike, DisposableLike, IndexedCollectionLike, KeyedCollectionLike, ObserverLike, QueueableLike, SchedulerLike, StoreLike, StoreLike_value } from "../types.js";
 import { __ContinuationLike_activeChild as ContinuationLike_activeChild, __ContinuationLike_parent as ContinuationLike_parent, __ContinuationLike_run as ContinuationLike_run, __ContinuationLike_scheduler as ContinuationLike_scheduler, __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule, __DelegatingLike_delegate as DelegatingLike_delegate, __ForEachLike_effect as ForEachLike_effect, __LiftedLike_operators as LiftedLike_operators, __LiftedLike_source as LiftedLike_source, __MappingLike_selector as MappingLike_selector, __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __PredicatedLike_predicate as PredicatedLike_predicate, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __ReducerAccumulatorLike_acc as ReducerAccumulatorLike_acc, __ReducerAccumulatorLike_reducer as ReducerAccumulatorLike_reducer, __SchedulerTaskLike_continuation as SchedulerTaskLike_continuation, __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime, __SchedulerTaskLike_id as SchedulerTaskLike_id, __SerialDisposableLike_current as SerialDisposableLike_current, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop, __WithLatestLike_hasLatest, __WithLatestLike_otherLatest, __WithLatestLike_selector } from "./symbols.js";
@@ -63,8 +63,8 @@ export interface ReducerAccumulatorLike<T, TAcc> {
     [ReducerAccumulatorLike_acc]: TAcc;
     [ReducerAccumulatorLike_reducer]: Reducer<T, TAcc>;
 }
-export interface Lift<C extends Container> {
-    lift<TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>): Containers.Operator<C, TA, TB>;
+export interface Lift<C extends Container.Type> {
+    lift<TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>): Container.Operator<C, TA, TB>;
 }
 export interface WithLatestLike<TA, TB, T> {
     [__WithLatestLike_hasLatest]: boolean;

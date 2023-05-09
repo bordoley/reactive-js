@@ -16,7 +16,7 @@ import {
   ReducerAccumulatorLike_acc,
   ReducerAccumulatorLike_reducer,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import {
   Factory,
   Reducer,
@@ -34,7 +34,7 @@ import {
 type ObservableScan = <C extends ObservableContainer.Type, T, TAcc>(
   scanner: Reducer<T, TAcc>,
   initialValue: Factory<TAcc>,
-) => Containers.Operator<C, T, TAcc>;
+) => Container.Operator<C, T, TAcc>;
 const Observable_scan: ObservableScan = /*@__PURE__*/ (<T, TAcc>() => {
   const createScanObserver: (
     delegate: ObserverLike<TAcc>,

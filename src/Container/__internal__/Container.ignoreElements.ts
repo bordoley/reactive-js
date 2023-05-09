@@ -1,9 +1,9 @@
-import { Container, ContainerTypeClass, Containers } from "../../containers.js";
+import { Container, ContainerTypeClass } from "../../containers.js";
 import { alwaysFalse } from "../../functions.js";
 
 const Container_ignoreElements =
-  <C extends Container>(keep: ContainerTypeClass<C>["keep"]) =>
-  <T>(): Containers.Operator<C, unknown, T> =>
-    keep(alwaysFalse) as Containers.Operator<C, unknown, T>;
+  <C extends Container.Type>(keep: ContainerTypeClass<C>["keep"]) =>
+  <T>(): Container.Operator<C, unknown, T> =>
+    keep(alwaysFalse) as Container.Operator<C, unknown, T>;
 
 export default Container_ignoreElements;

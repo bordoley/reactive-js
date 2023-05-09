@@ -118,9 +118,9 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that applies the side effect function to each
+Returns a Container.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -138,7 +138,7 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -148,9 +148,9 @@ ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
-Returns a KeyedContainers.Operator that applies the side effect function to each
+Returns a KeyedContainer.Operator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -168,7 +168,7 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -178,7 +178,7 @@ ___
 
 ### identity
 
-▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **identity**<`T`, `TKey`\>(): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Type parameters
 
@@ -189,7 +189,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -199,9 +199,9 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that only emits items produced by the
+Returns a Container.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -219,7 +219,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -229,7 +229,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -247,7 +247,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -257,9 +257,9 @@ ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
-Returns a Containers.Operator that only emits items produced by the
+Returns a Container.Operator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -277,7 +277,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
 
 #### Inherited from
 
@@ -287,9 +287,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Containers.Operator that applies the `selector` function to each
+Returns a Container.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -316,7 +316,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 
@@ -326,9 +326,9 @@ ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Containers.Operator that applies the `selector` function to each
+Returns a Container.Operator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -355,7 +355,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](../modules/containers.KeyedContainers.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`Operator`](../modules/containers.KeyedContainer.md#operator)<[`Type`](containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Inherited from
 

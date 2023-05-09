@@ -8,7 +8,7 @@ import Observable_takeLast from "../../Observable/__internal__/Observable.takeLa
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import {
-  Containers,
+  Container,
   ObservableContainer,
   ObservableTypeClass,
 } from "../../containers.js";
@@ -31,12 +31,12 @@ const HigherOrderObservable_scanMany =
   <C extends ObservableContainer.Type>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
-    ) => Containers.Of<C, T>,
+    ) => Container.Of<C, T>,
   ): ObservableTypeClass<C>["scanMany"] =>
   <T, TAcc>(
-    scanner: Function2<TAcc, T, Containers.Of<C, TAcc>>,
+    scanner: Function2<TAcc, T, Container.Of<C, TAcc>>,
     initialValue: Factory<TAcc>,
-  ): Containers.Operator<C, T, TAcc> =>
+  ): Container.Operator<C, T, TAcc> =>
   observable =>
     createObservable((observer: ObserverLike<TAcc>) => {
       const accFeedbackStream = pipe(
@@ -50,7 +50,7 @@ const HigherOrderObservable_scanMany =
           scanner(acc, next),
         ),
         Observable_forkMerge<
-          Containers.Of<ObservableContainer.Type, TAcc>,
+          Container.Of<ObservableContainer.Type, TAcc>,
           TAcc
         >(
           compose(

@@ -6,7 +6,7 @@ import Optional_toObservable from "../../Optional/__internal__/Optional.toObserv
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import type { AnimationConfig } from "../../Runnable.js";
 import Runnable_spring from "../../Runnable/__internal__/Runnable.spring.js";
-import { Containers, RunnableContainer } from "../../containers.js";
+import { Container, RunnableContainer } from "../../containers.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
 import Runnable_keyFrame from "./Runnable.keyFrame.js";
@@ -32,11 +32,7 @@ const parseAnimationConfig = <T = number>(
         Optional_toObservable(),
         isSome(config.selector)
           ? Observable_map<RunnableContainer.Type, number, T>(config.selector)
-          : (identity as Containers.Operator<
-              RunnableContainer.Type,
-              number,
-              T
-            >),
+          : (identity as Container.Operator<RunnableContainer.Type, number, T>),
       )
     : pipe(
         config.type === "keyframe"
@@ -47,11 +43,7 @@ const parseAnimationConfig = <T = number>(
         ),
         isSome(config.selector)
           ? Observable_map<RunnableContainer.Type, number, T>(config.selector)
-          : (identity as Containers.Operator<
-              RunnableContainer.Type,
-              number,
-              T
-            >),
+          : (identity as Container.Operator<RunnableContainer.Type, number, T>),
       );
 
 const Runnable_animate: <T = number>(

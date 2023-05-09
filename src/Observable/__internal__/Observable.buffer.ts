@@ -32,7 +32,7 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Function1, invoke, isNumber, none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -54,7 +54,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 type ObservableBuffer = <C extends ObservableContainer.Type, T>(options?: {
   readonly duration?: number | Function1<T, C>;
   readonly count?: number;
-}) => Containers.Operator<C, T, readonly T[]>;
+}) => Container.Operator<C, T, readonly T[]>;
 
 const Observable_buffer: ObservableBuffer = /*@__PURE__*/ (<T>() => {
   type TProperties = {

@@ -2,7 +2,7 @@ import Observable_distinctUntilChanged from "../../Observable/__internal__/Obser
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Observable_scan from "../../Observable/__internal__/Observable.scan.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
-import { Containers, DeferredObservableContainer } from "../../containers.js";
+import { Container, DeferredObservableContainer } from "../../containers.js";
 import { Equality, Factory, Reducer, pipe, returns } from "../../functions.js";
 import DeferredObservable_defer from "./DeferredObservable.defer.js";
 
@@ -11,7 +11,7 @@ const DeferredObservable_actionReducer =
     reducer: Reducer<TAction, T>,
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
-  ): Containers.Operator<DeferredObservableContainer.Type, TAction, T> =>
+  ): Container.Operator<DeferredObservableContainer.Type, TAction, T> =>
   obs =>
     DeferredObservable_defer(() => {
       const acc = initialState();

@@ -18,7 +18,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { invoke, newInstance, none, partial, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -31,7 +31,7 @@ type ObservableDecodeWithCharset = <
   C extends ObservableContainer.Type,
 >(options?: {
   readonly charset?: string;
-}) => Containers.Operator<C, ArrayBuffer, string>;
+}) => Container.Operator<C, ArrayBuffer, string>;
 
 const Observable_decodeWithCharset: ObservableDecodeWithCharset =
   /*@__PURE__*/ (() => {

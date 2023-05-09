@@ -13,7 +13,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
@@ -26,7 +26,7 @@ import {
 type ObservableBackpressureStrategy = <C extends ObservableContainer.Type, T>(
   capacity: number,
   backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 
 const Observable_backpressureStrategy: ObservableBackpressureStrategy =
   /*@__PURE__*/ (<T>() => {

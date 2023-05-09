@@ -5,7 +5,7 @@ import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.j
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import {
-  Containers,
+  Container,
   DeferredObservableContainer,
   EnumerableContainer,
   ObservableContainer,
@@ -32,19 +32,19 @@ import Observable_isRunnable from "./Observable.isRunnable.js";
 interface ObservableOnSubscribe {
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<EnumerableContainer.Type, T, T>;
+  ): Container.Operator<EnumerableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<RunnableContainer.Type, T, T>;
+  ): Container.Operator<RunnableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<DeferredObservableContainer.Type, T, T>;
+  ): Container.Operator<DeferredObservableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<SharedObservableContainer.Type, T, T>;
+  ): Container.Operator<SharedObservableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<ObservableContainer.Type, T, T>;
+  ): Container.Operator<ObservableContainer.Type, T, T>;
 }
 
 // FIXME: improve return type.

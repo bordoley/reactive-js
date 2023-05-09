@@ -19,7 +19,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import {
   Equality,
   none,
@@ -34,7 +34,7 @@ type ObservableDistinctUntilChanged = <
   T,
 >(options?: {
   readonly equality?: Equality<T>;
-}) => Containers.Operator<C, T, T>;
+}) => Container.Operator<C, T, T>;
 
 const Observable_distinctUntilChanged: ObservableDistinctUntilChanged =
   /*@__PURE__*/ (<T>() => {

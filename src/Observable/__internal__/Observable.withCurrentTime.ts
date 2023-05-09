@@ -15,7 +15,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
   ObserverLike,
@@ -25,7 +25,7 @@ import {
 
 type ObservableWithCurrentTime = <C extends ObservableContainer.Type, TA, TB>(
   selector: Function2<number, TA, TB>,
-) => Containers.Operator<C, TA, TB>;
+) => Container.Operator<C, TA, TB>;
 const Observable_withCurrentTime: ObservableWithCurrentTime = /*@__PURE__*/ (<
   TA,
   TB,

@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer } from "./containers.js";
+import { Container, ObservableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
 import { DisposableLike, DisposableOrTeardown, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
 export declare const backpressureStrategy: ObservableContainer.TypeClass["backpressureStrategy"];
@@ -8,7 +8,7 @@ export declare const backpressureStrategy: ObservableContainer.TypeClass["backpr
 export declare const buffer: <T>(options?: {
     readonly duration?: number | Function1<T, ObservableContainer.Type>;
     readonly count?: number;
-}) => Containers.Operator<ObservableContainer.Type, T, readonly T[]>;
+}) => Container.Operator<ObservableContainer.Type, T, readonly T[]>;
 export declare const catchError: ObservableContainer.TypeClass["catchError"];
 export declare const combineLatest: ObservableContainer.TypeClass["combineLatest"];
 /**
@@ -29,7 +29,7 @@ export declare const firstAsync: ObservableContainer.TypeClass["firstAsync"];
 /**
  * @category Operator
  */
-export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Containers.Operator<ObservableContainer.Type, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Container.Operator<ObservableContainer.Type, TA, TB>;
 export declare const flatMapIterable: ObservableContainer.TypeClass["flatMapIterable"];
 export declare const forEach: ObservableContainer.TypeClass["forEach"];
 export declare const forkCombineLatest: ObservableContainer.TypeClass["forkCombineLatest"];
@@ -56,7 +56,7 @@ export declare const never: ObservableContainer.TypeClass["never"];
 /**
  * @category Operator
  */
-export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => Containers.Operator<ObservableContainer.Type, T, T>;
+export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => Container.Operator<ObservableContainer.Type, T, T>;
 export declare const pairwise: ObservableContainer.TypeClass["pairwise"];
 export declare const pick: ObservableContainer.TypeClass["pick"];
 export declare const scan: ObservableContainer.TypeClass["scan"];

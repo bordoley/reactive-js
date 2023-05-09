@@ -7,14 +7,14 @@
 ### Namespaces
 
 - [AsyncIterableContainer](containers.AsyncIterableContainer.md)
-- [Containers](containers.Containers.md)
+- [Container](containers.Container.md)
 - [DeferredObservableContainer](containers.DeferredObservableContainer.md)
 - [DictionaryContainer](containers.DictionaryContainer.md)
 - [EnumerableContainer](containers.EnumerableContainer.md)
 - [EnumeratorContainer](containers.EnumeratorContainer.md)
 - [EventSourceContainer](containers.EventSourceContainer.md)
 - [IterableContainer](containers.IterableContainer.md)
-- [KeyedContainers](containers.KeyedContainers.md)
+- [KeyedContainer](containers.KeyedContainer.md)
 - [ObservableContainer](containers.ObservableContainer.md)
 - [PauseableObservableContainer](containers.PauseableObservableContainer.md)
 - [PromiseContainer](containers.PromiseContainer.md)
@@ -24,15 +24,7 @@
 - [RunnableContainer](containers.RunnableContainer.md)
 - [SharedObservableContainer](containers.SharedObservableContainer.md)
 
-### Container Interfaces
-
-- [Container](../interfaces/containers.Container.md)
-
-### KeyedContainers Interfaces
-
-- [KeyedContainers](../interfaces/containers.KeyedContainers-1.md)
-
-### Other Interfaces
+### Interfaces
 
 - [AsynchronousTypeClass](../interfaces/containers.AsynchronousTypeClass.md)
 - [ContainerTypeClass](../interfaces/containers.ContainerTypeClass.md)

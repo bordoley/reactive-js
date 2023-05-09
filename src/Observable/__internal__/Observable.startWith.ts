@@ -1,12 +1,12 @@
 import Container_startWith from "../../Container/__internal__/Container.startWith.js";
 import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import Observable_concatWith from "./Observable.concatWith.js";
 
 type ObservableStartWith = <C extends ObservableContainer.Type, T>(
   value: T,
   ...values: readonly T[]
-) => Containers.Operator<C, T, T>;
+) => Container.Operator<C, T, T>;
 const Observable_startWith: ObservableStartWith =
   /*@__PURE__*/ Container_startWith(
     Observable_concatWith,

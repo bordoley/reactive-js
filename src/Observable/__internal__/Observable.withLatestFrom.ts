@@ -20,7 +20,7 @@ import {
   DelegatingLike_delegate,
   WithLatestLike,
 } from "../../__internal__/types.js";
-import { Containers, ObservableContainer } from "../../containers.js";
+import { Container, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
@@ -39,9 +39,9 @@ type ObservableWithLastestFrom = <
   TB,
   T,
 >(
-  other: Containers.Of<C, TB>,
+  other: Container.Of<C, TB>,
   selector: Function2<TA, TB, T>,
-) => Containers.Operator<C, TA, T>;
+) => Container.Operator<C, TA, T>;
 const Observable_withLatestFrom: ObservableWithLastestFrom = /*@__PURE__*/ (<
   TA,
   TB,
