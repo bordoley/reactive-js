@@ -14,13 +14,13 @@
 
 - **`TypeClass`**
 
-  ↳ [`TypeClass`](types.IterableContainer.TypeClass.md)
+  ↳ [`TypeClass`](types.ObservableContainers.TypeClass.md)
 
-  ↳ [`TypeClass`](types.AsyncIterableContainer.TypeClass.md)
+  ↳ [`TypeClass`](types.IterableContainer.TypeClass.md)
 
   ↳ [`TypeClass`](types.EnumeratorContainer.TypeClass.md)
 
-  ↳ [`TypeClass`](types.ObservableContainers.TypeClass.md)
+  ↳ [`TypeClass`](types.AsyncIterableContainer.TypeClass.md)
 
 ## Table of contents
 

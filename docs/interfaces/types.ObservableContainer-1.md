@@ -10,9 +10,9 @@
 
   ↳ **`ObservableContainer`**
 
-  ↳↳ [`SharedObservableContainer`](types.SharedObservableContainer-1.md)
-
   ↳↳ [`DeferredObservableContainer`](types.DeferredObservableContainer-1.md)
+
+  ↳↳ [`SharedObservableContainer`](types.SharedObservableContainer-1.md)
 
   ↳↳ [`PauseableObservableContainer`](types.PauseableObservableContainer.md)
 

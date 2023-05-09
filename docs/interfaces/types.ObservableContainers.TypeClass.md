@@ -18,11 +18,11 @@
 
   ↳ **`TypeClass`**
 
+  ↳↳ [`TypeClass`](types.DeferredObservableContainers.TypeClass.md)
+
   ↳↳ [`TypeClass`](types.ObservableContainer.TypeClass.md)
 
   ↳↳ [`TypeClass`](types.SharedObservableContainer.TypeClass.md)
-
-  ↳↳ [`TypeClass`](types.DeferredObservableContainers.TypeClass.md)
 
 ## Table of contents
 
