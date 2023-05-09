@@ -6,9 +6,9 @@ export declare const backpressureStrategy: SharedObservableContainer.TypeClass["
  * @category Operator
  */
 export declare const buffer: <T>(options?: {
-    readonly duration?: number | Function1<T, SharedObservableContainer>;
+    readonly duration?: number | Function1<T, SharedObservableContainer.Type>;
     readonly count?: number;
-}) => Containers.Operator<SharedObservableContainer, T, readonly T[]>;
+}) => Containers.Operator<SharedObservableContainer.Type, T, readonly T[]>;
 export declare const combineLatest: SharedObservableContainer.TypeClass["combineLatest"];
 /**
  * @category Constructor
@@ -29,7 +29,7 @@ export declare const firstAsync: SharedObservableContainer.TypeClass["firstAsync
 /**
  * @category Operator
  */
-export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Containers.Operator<import("./containers.js").ObservableContainer, TA, TB>;
+export declare const flatMapAsync: <TA, TB>(f: import("./functions.js").Function2<TA, AbortSignal, Promise<TB>>) => Containers.Operator<import("./containers.js").ObservableContainer.Type, TA, TB>;
 export declare const forEach: SharedObservableContainer.TypeClass["forEach"];
 /**
  * @category Constructor
@@ -46,7 +46,7 @@ export declare const mergeWith: SharedObservableContainer.TypeClass["mergeWith"]
 /**
  * @category Operator
  */
-export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => Containers.Operator<SharedObservableContainer, T, T>;
+export declare const onSubscribe: <T>(f: Factory<DisposableOrTeardown | void>) => Containers.Operator<SharedObservableContainer.Type, T, T>;
 export declare const pairwise: SharedObservableContainer.TypeClass["pairwise"];
 export declare const pick: SharedObservableContainer.TypeClass["pick"];
 export declare const scan: SharedObservableContainer.TypeClass["scan"];

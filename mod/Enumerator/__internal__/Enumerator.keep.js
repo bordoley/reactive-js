@@ -5,8 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { DelegatingLike_delegate, PredicatedLike_predicate, } from "../../__internal__/types.js";
 import { none, unsafeCast } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
-const Enumerator_keep = 
-/*@__PURE__*/ (() => {
+const Enumerator_keep = /*@__PURE__*/ (() => {
     const createKeepEnumerator = createInstanceFactory(mix(include(Delegating_mixin()), function KeepEnumerator(instance, delegate, predicate) {
         init(Delegating_mixin(), instance, delegate);
         instance[PredicatedLike_predicate] = predicate;

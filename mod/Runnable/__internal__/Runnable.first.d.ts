@@ -1,3 +1,3 @@
-import { RunnableContainer, RunnableContainers } from "../../containers.js";
-declare const Runnable_first: RunnableContainers.TypeClass<RunnableContainer>["first"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_first: RunnableContainer.TypeClass["first"];
 export default Runnable_first;

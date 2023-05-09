@@ -8,10 +8,15 @@ import {
 import { pipe } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 
-const DeferredObservable_forkConcat: DeferredContainers.TypeClass<ObservableContainer>["forkConcat"] =
+// FIXME: Wrong typeclass, define a better signature
+const DeferredObservable_forkConcat: DeferredContainers.TypeClass<ObservableContainer.Type>["forkConcat"] =
 
     <TIn, TOut>(
-      ...ops: readonly Containers.Operator<ObservableContainer, TIn, TOut>[]
+      ...ops: readonly Containers.Operator<
+        ObservableContainer.Type,
+        TIn,
+        TOut
+      >[]
     ) =>
     (obs: ObservableLike<TIn>) =>
       pipe(

@@ -33,7 +33,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-type ObservableThrowIfEmpty = <C extends ObservableContainer, T>(
+type ObservableThrowIfEmpty = <C extends ObservableContainer.Type, T>(
   factory: Factory<unknown>,
   options?: undefined,
 ) => Containers.Operator<C, T, T>;

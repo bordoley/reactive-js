@@ -6,8 +6,7 @@ import { DelegatingLike_delegate, MappingLike_selector, } from "../../__internal
 import { none } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
-const Enumerator_map = 
-/*@__PURE__*/ (() => {
+const Enumerator_map = /*@__PURE__*/ (() => {
     const createMapEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Delegating_mixin()), function MapEnumerator(instance, delegate, mapper) {
         init(MutableEnumerator_mixin(), instance);
         init(Delegating_mixin(), instance, delegate);

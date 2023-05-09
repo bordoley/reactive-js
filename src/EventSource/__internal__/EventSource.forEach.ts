@@ -13,7 +13,7 @@ import {
   ForEachLike,
   ForEachLike_effect,
 } from "../../__internal__/types.js";
-import { Containers, EventSourceContainer } from "../../containers.js";
+import { EventSourceContainer } from "../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
@@ -22,7 +22,7 @@ import {
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_forEach: Containers.TypeClass<EventSourceContainer>["forEach"] =
+const EventSource_forEach: EventSourceContainer.TypeClass["forEach"] =
   /*@__PURE__*/ (() => {
     const createForEachEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -68,6 +68,6 @@ const EventSource_forEach: Containers.TypeClass<EventSourceContainer>["forEach"]
 
     return <T>(effect: SideEffect1<T>) =>
       pipe(createForEachEventListener, partial(effect), EventSource_lift);
-  })() as Containers.TypeClass<EventSourceContainer>["forEach"];
+  })() as EventSourceContainer.TypeClass["forEach"];
 
 export default EventSource_forEach;

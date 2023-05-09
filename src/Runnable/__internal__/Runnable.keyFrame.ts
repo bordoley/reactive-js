@@ -24,7 +24,7 @@ const Runnable_keyFrame = (
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<RunnableContainer, number, [number, number]>(
+    Observable_scan<RunnableContainer.Type, number, [number, number]>(
       ([startTime, _], now) => {
         startTime = min(now, startTime);
 
@@ -34,8 +34,8 @@ const Runnable_keyFrame = (
       },
       returns([MAX_VALUE, 0]),
     ),
-    Observable_pick<RunnableContainer, [unknown, number], 1>(1),
-    Observable_takeWhile<RunnableContainer, number>(isNotEqualTo(1), {
+    Observable_pick<RunnableContainer.Type, [unknown, number], 1>(1),
+    Observable_takeWhile<RunnableContainer.Type, number>(isNotEqualTo(1), {
       inclusive: true,
     }),
   );

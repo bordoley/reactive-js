@@ -1,7 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
-import { Containers, EventSourceContainer } from "../../containers.js";
+import { EventSourceContainer } from "../../containers.js";
 import { bindMethod, pipe } from "../../functions.js";
 import {
   DispatcherLike_complete,
@@ -10,7 +10,7 @@ import {
 } from "../../types.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 
-const EventSource_toObservable: Containers.TypeClass<EventSourceContainer>["toObservable"] =
+const EventSource_toObservable: EventSourceContainer.TypeClass["toObservable"] =
 
     <T>() =>
     (eventSource: EventSourceLike<T>) =>

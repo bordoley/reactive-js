@@ -4,7 +4,8 @@ import { DeferredContainers, ObservableContainer } from "../../containers.js";
 import Observable_concatAll from "./Observable.concatAll.js";
 import Observable_map from "./Observable.map.js";
 
-const Observable_concatMap: DeferredContainers.TypeClass<ObservableContainer>["concatMap"] =
+// FIXME wrong typeclass
+const Observable_concatMap: DeferredContainers.TypeClass<ObservableContainer.Type>["concatMap"] =
   /*@__PURE__*/ Container_concatMap(Observable_map, Observable_concatAll);
 
 export default Observable_concatMap;

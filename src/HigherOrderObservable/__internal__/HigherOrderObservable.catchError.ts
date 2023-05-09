@@ -34,7 +34,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-const HigherOrderObservable_catchError = <C extends ObservableContainer>(
+const HigherOrderObservable_catchError = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,
   ) => Containers.Operator<C, T, T>,

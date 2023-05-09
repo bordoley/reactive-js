@@ -1,3 +1,3 @@
-import { ObservableContainers, PauseableObservableContainer } from "../../containers.js";
-declare const PauseableObservable_dispatchTo: ObservableContainers.TypeClass<PauseableObservableContainer>["dispatchTo"];
+import { PauseableObservableContainer } from "../../containers.js";
+declare const PauseableObservable_dispatchTo: PauseableObservableContainer.TypeClass["dispatchTo"];
 export default PauseableObservable_dispatchTo;

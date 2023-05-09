@@ -32,19 +32,19 @@ import Observable_isRunnable from "./Observable.isRunnable.js";
 interface ObservableOnSubscribe {
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<EnumerableContainer, T, T>;
+  ): Containers.Operator<EnumerableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<RunnableContainer, T, T>;
+  ): Containers.Operator<RunnableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<DeferredObservableContainer, T, T>;
+  ): Containers.Operator<DeferredObservableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<SharedObservableContainer, T, T>;
+  ): Containers.Operator<SharedObservableContainer.Type, T, T>;
   onSubscribe<T>(
     f: Factory<DisposableOrTeardown | void>,
-  ): Containers.Operator<ObservableContainer, T, T>;
+  ): Containers.Operator<ObservableContainer.Type, T, T>;
 }
 
 // FIXME: improve return type.

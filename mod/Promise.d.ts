@@ -1,3 +1,3 @@
-import { Containers, PromiseContainer } from "./containers.js";
-export declare const identity: Containers.TypeClass<PromiseContainer>["identity"];
-export declare const toObservable: Containers.TypeClass<PromiseContainer>["toObservable"];
+import { PromiseContainer } from "./containers.js";
+export declare const identity: PromiseContainer.TypeClass["identity"];
+export declare const toObservable: PromiseContainer.TypeClass["toObservable"];

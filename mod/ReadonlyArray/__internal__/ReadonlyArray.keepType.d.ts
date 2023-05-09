@@ -1,3 +1,3 @@
-import { KeyedContainers, ReadonlyArrayContainer } from "../../containers.js";
-declare const ReadonlyArray_keepType: KeyedContainers.TypeClass<ReadonlyArrayContainer>["keepType"];
+import { ReadonlyArrayContainer } from "../../containers.js";
+declare const ReadonlyArray_keepType: ReadonlyArrayContainer.TypeClass["keepType"];
 export default ReadonlyArray_keepType;

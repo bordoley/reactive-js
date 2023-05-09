@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ObservableContainer`](containers.ObservableContainer-1.md) |
+| `C` | extends [`Type`](containers.ObservableContainer.Type.md) |
 
 ## Hierarchy
 
@@ -23,6 +23,8 @@
   ↳↳ [`TypeClass`](containers.ObservableContainer.TypeClass.md)
 
   ↳↳ [`TypeClass`](containers.SharedObservableContainer.TypeClass.md)
+
+  ↳↳ [`TypeClass`](containers.PauseableObservableContainer.TypeClass.md)
 
 ## Table of contents
 

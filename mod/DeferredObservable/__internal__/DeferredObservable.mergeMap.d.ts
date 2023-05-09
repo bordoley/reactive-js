@@ -1,3 +1,3 @@
-import { DeferredObservableContainer, ObservableContainers } from "../../containers.js";
-declare const DeferredObservable_mergeMap: ObservableContainers.TypeClass<DeferredObservableContainer>["mergeMap"];
+import { DeferredObservableContainer } from "../../containers.js";
+declare const DeferredObservable_mergeMap: DeferredObservableContainer.TypeClass["mergeMap"];
 export default DeferredObservable_mergeMap;

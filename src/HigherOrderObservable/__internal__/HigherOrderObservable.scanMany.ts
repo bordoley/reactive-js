@@ -28,7 +28,7 @@ import {
 } from "../../types.js";
 
 const HigherOrderObservable_scanMany =
-  <C extends ObservableContainer>(
+  <C extends ObservableContainer.Type>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
@@ -49,13 +49,16 @@ const HigherOrderObservable_scanMany =
         Observable_zipWithLatestFrom(accFeedbackStream, (next, acc: TAcc) =>
           scanner(acc, next),
         ),
-        Observable_forkMerge<Containers.Of<ObservableContainer, TAcc>, TAcc>(
+        Observable_forkMerge<
+          Containers.Of<ObservableContainer.Type, TAcc>,
+          TAcc
+        >(
           compose(
             Observable_concatMap(Observable_takeLast<C, TAcc>()),
-            Observable_forEach<ObservableContainer, TAcc>(
+            Observable_forEach<ObservableContainer.Type, TAcc>(
               bindMethod(accFeedbackStream, EventListenerLike_notify),
             ),
-            Observable_ignoreElements<ObservableContainer, TAcc>(),
+            Observable_ignoreElements<ObservableContainer.Type, TAcc>(),
           ),
           Observable_concatAll<TAcc>(),
         ),

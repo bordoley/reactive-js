@@ -3,8 +3,8 @@ import { Function2, isNone, isSome } from "../../functions.js";
 import Observable_repeatOrRetry from "./Observable.repeatOrRetry.js";
 
 interface ObservableRetry {
-  retry<C extends ObservableContainer, T>(): Containers.Operator<C, T, T>;
-  retry<C extends ObservableContainer, T>(
+  retry<C extends ObservableContainer.Type, T>(): Containers.Operator<C, T, T>;
+  retry<C extends ObservableContainer.Type, T>(
     predicate: Function2<number, unknown, boolean>,
   ): Containers.Operator<C, T, T>;
 }

@@ -1,8 +1,8 @@
 import Container_pick from "../../Container/__internal__/Container.pick.js";
-import { Containers, EnumeratorContainer } from "../../containers.js";
+import { EnumeratorContainer } from "../../containers.js";
 import Enumerator_map from "./Enumerator.map.js";
 
-const Enumerator_pick: Containers.TypeClass<EnumeratorContainer>["pick"] =
+const Enumerator_pick: EnumeratorContainer.TypeClass["pick"] =
   /*@__PURE__*/ Container_pick(Enumerator_map);
 
 export default Enumerator_pick;

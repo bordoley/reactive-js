@@ -25,7 +25,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-type ObservableTakeWhile = <C extends ObservableContainer, T>(
+type ObservableTakeWhile = <C extends ObservableContainer.Type, T>(
   predicate: Predicate<T>,
   options?: {
     readonly inclusive?: boolean;

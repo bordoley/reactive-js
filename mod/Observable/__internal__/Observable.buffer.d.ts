@@ -1,6 +1,6 @@
 import { Containers, ObservableContainer } from "../../containers.js";
 import { Function1 } from "../../functions.js";
-type ObservableBuffer = <C extends ObservableContainer, T>(options?: {
+type ObservableBuffer = <C extends ObservableContainer.Type, T>(options?: {
     readonly duration?: number | Function1<T, C>;
     readonly count?: number;
 }) => Containers.Operator<C, T, readonly T[]>;

@@ -1,7 +1,7 @@
 import { Containers, ObservableContainer } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
-declare const HigherOrderObservable_throttle: <C extends ObservableContainer, T>(fromReadonlyArray: <T_1>(options?: {
+declare const HigherOrderObservable_throttle: <C extends ObservableContainer.Type, T>(fromReadonlyArray: <T_1>(options?: {
     readonly count?: number;
     readonly delay?: number;
     readonly delayStart?: boolean;

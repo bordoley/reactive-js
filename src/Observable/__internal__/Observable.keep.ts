@@ -3,7 +3,7 @@ import Observer_createKeepObserver from "../../Observer/__internal__/Observer.cr
 import { Containers, ObservableContainer } from "../../containers.js";
 import { Predicate, partial, pipe } from "../../functions.js";
 
-type ObservableKeep = <C extends ObservableContainer, T>(
+type ObservableKeep = <C extends ObservableContainer.Type, T>(
   predicate: Predicate<T>,
   options?: undefined,
 ) => Containers.Operator<C, T, T>;

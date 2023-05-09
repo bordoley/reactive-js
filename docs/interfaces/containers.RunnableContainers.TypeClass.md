@@ -16,9 +16,9 @@
 
   ↳ [`TypeClass`](containers.RunnableObservableContainers.TypeClass.md)
 
-  ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
-
   ↳ [`TypeClass`](containers.EnumeratorContainer.TypeClass.md)
+
+  ↳ [`TypeClass`](containers.IterableContainer.TypeClass.md)
 
   ↳ [`TypeClass`](containers.ReadonlyArrayContainer.TypeClass.md)
 

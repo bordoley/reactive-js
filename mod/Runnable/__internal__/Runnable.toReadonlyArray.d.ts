@@ -1,3 +1,3 @@
-import { RunnableContainer, RunnableContainers } from "../../containers.js";
-declare const Runnable_toReadonlyArray: RunnableContainers.TypeClass<RunnableContainer>["toReadonlyArray"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_toReadonlyArray: RunnableContainer.TypeClass["toReadonlyArray"];
 export default Runnable_toReadonlyArray;

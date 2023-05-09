@@ -12,7 +12,7 @@ Base type for all Containers.
 
   ↳ **`KeyedContainers`**
 
-  ↳↳ [`ReadonlyArrayContainer`](containers.ReadonlyArrayContainer-1.md)
+  ↳↳ [`Type`](containers.ReadonlyArrayContainer.Type.md)
 
   ↳↳ [`DictionaryContainer`](containers.DictionaryContainer.md)
 

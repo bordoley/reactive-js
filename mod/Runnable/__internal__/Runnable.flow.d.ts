@@ -1,3 +1,3 @@
-import { RunnableContainer, RunnableContainers } from "../../containers.js";
-declare const Runnable_flow: RunnableContainers.TypeClass<RunnableContainer>["flow"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_flow: RunnableContainer.TypeClass["flow"];
 export default Runnable_flow;

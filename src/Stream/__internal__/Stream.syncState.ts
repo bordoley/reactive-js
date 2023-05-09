@@ -42,20 +42,20 @@ const Stream_syncState = <T>(
       stateStore,
       Observable_forkMerge(
         compose(
-          Observable_takeFirst<ObservableContainer, T>(),
+          Observable_takeFirst<ObservableContainer.Type, T>(),
           Observable_concatMap(onInit),
         ),
         compose(
           throttleDuration > 0
             ? Observable_throttle(throttleDuration)
             : identity,
-          Observable_pairwise<ObservableContainer, T>(),
+          Observable_pairwise<ObservableContainer.Type, T>(),
           Observable_concatMap(([oldValue, newValue]) =>
             onChange(oldValue, newValue),
           ),
         ),
       ),
-      Observable_dispatchTo<ObservableContainer, Updater<T>>(stateStore),
+      Observable_dispatchTo<ObservableContainer.Type, Updater<T>>(stateStore),
       Observable_subscribe(scheduler, {
         backpressureStrategy: options?.backpressureStrategy,
         capacity: options?.capacity,

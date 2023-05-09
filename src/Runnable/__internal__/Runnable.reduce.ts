@@ -1,24 +1,23 @@
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import { RunnableContainer, RunnableContainers } from "../../containers.js";
+import { RunnableContainer } from "../../containers.js";
 import { Factory, Reducer, pipe } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
 import Runnable_run from "./Runnable.run.js";
 
-const Runnable_reduce: RunnableContainers.TypeClass<RunnableContainer>["reduce"] =
+const Runnable_reduce: RunnableContainer.TypeClass["reduce"] =
+  <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
+  (runnable: RunnableLike<T>) => {
+    let acc = initialValue();
 
-    <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
-    (runnable: RunnableLike<T>) => {
-      let acc = initialValue();
+    pipe(
+      runnable,
+      Observable_forEach<RunnableContainer.Type, T>(next => {
+        acc = reducer(acc, next);
+      }),
+      Runnable_run(),
+    );
 
-      pipe(
-        runnable,
-        Observable_forEach<RunnableContainer, T>(next => {
-          acc = reducer(acc, next);
-        }),
-        Runnable_run(),
-      );
-
-      return acc;
-    };
+    return acc;
+  };
 
 export default Runnable_reduce;

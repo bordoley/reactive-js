@@ -8,4 +8,5 @@
 
 ### Interfaces
 
+- [Type](../interfaces/containers.DeferredObservableContainer.Type.md)
 - [TypeClass](../interfaces/containers.DeferredObservableContainer.TypeClass.md)

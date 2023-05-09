@@ -2,12 +2,12 @@ import Container_concatWith from "../../Container/__internal__/Container.concatW
 import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_merge from "./Observable.merge.js";
 
-type ObservableMergeWith = <C extends ObservableContainer, T>(
+type ObservableMergeWith = <C extends ObservableContainer.Type, T>(
   snd: Containers.Of<C, T>,
   ...tail: readonly Containers.Of<C, T>[]
 ) => Containers.Operator<C, T, T>;
 const Observable_mergeWith: ObservableMergeWith =
-  /*@__PURE__*/ Container_concatWith<ObservableContainer>(
+  /*@__PURE__*/ Container_concatWith<ObservableContainer.Type>(
     Observable_merge,
   ) as ObservableMergeWith;
 

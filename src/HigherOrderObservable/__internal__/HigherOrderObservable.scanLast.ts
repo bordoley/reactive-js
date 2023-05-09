@@ -20,7 +20,7 @@ import {
 } from "../../types.js";
 
 const HigherOrderObservable_scanLast =
-  <C extends ObservableContainer>(
+  <C extends ObservableContainer.Type>(
     createObservable: <T>(
       f: SideEffect1<ObserverLike<T>>,
     ) => Containers.Of<C, T>,
@@ -42,7 +42,7 @@ const HigherOrderObservable_scanLast =
           pipe(scanner(acc, next), Observable_takeLast()),
         ),
         Observable_concatAll(),
-        Observable_forEach<ObservableContainer, TAcc>(
+        Observable_forEach<ObservableContainer.Type, TAcc>(
           bindMethod(accFeedbackStream, EventListenerLike_notify),
         ),
         invoke(ObservableLike_observe, observer),

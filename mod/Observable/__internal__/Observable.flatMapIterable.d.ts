@@ -1,3 +1,3 @@
-import { Containers, ObservableContainer } from "../../containers.js";
-declare const Observable_flatMapIterable: Containers.TypeClass<ObservableContainer>["flatMapIterable"];
+import { ObservableContainer } from "../../containers.js";
+declare const Observable_flatMapIterable: ObservableContainer.TypeClass["flatMapIterable"];
 export default Observable_flatMapIterable;

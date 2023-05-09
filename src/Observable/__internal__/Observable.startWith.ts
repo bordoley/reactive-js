@@ -3,7 +3,7 @@ import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/Readonl
 import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_concatWith from "./Observable.concatWith.js";
 
-type ObservableStartWith = <C extends ObservableContainer, T>(
+type ObservableStartWith = <C extends ObservableContainer.Type, T>(
   value: T,
   ...values: readonly T[]
 ) => Containers.Operator<C, T, T>;

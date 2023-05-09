@@ -42,7 +42,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`\>
 
 Returns a Containers.Operator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -61,13 +61,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `TA`, `TB`\>
 
 Returns a Containers.Operator that applies the `selector` function to each
 value emitted by the source.
@@ -95,13 +95,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `TA`, `TB`\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `TA`, `TB`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -118,9 +118,9 @@ ___
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKey`]\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -139,9 +139,9 @@ ___
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -162,7 +162,7 @@ ___
 
 #### Returns
 
-[`Operator`](containers.Containers.md#operator)<[`EnumeratorContainer`](../interfaces/containers.EnumeratorContainer-1.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`Operator`](containers.Containers.md#operator)<[`Type`](../interfaces/containers.EnumeratorContainer.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

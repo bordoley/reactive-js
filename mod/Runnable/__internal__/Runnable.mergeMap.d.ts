@@ -1,3 +1,3 @@
-import { ObservableContainers, RunnableContainer } from "../../containers.js";
-declare const Runnable_mergeMap: ObservableContainers.TypeClass<RunnableContainer>["mergeMap"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_mergeMap: RunnableContainer.TypeClass["mergeMap"];
 export default Runnable_mergeMap;

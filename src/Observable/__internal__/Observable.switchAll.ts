@@ -1,5 +1,5 @@
 import HigherOrderObservable_switchAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.switchAll.js";
-import { ObservableContainer, ObservableContainers } from "../../containers.js";
+import { ObservableContainer } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import {
   ObservableLike,
@@ -9,8 +9,8 @@ import {
 } from "../../types.js";
 import Observable_lift from "./Observable.lift.js";
 
-const Observable_switchAll: ObservableContainers.TypeClass<ObservableContainer>["switchAll"] =
-  /*@__PURE__*/ HigherOrderObservable_switchAll<ObservableContainer>(
+const Observable_switchAll: ObservableContainer.TypeClass["switchAll"] =
+  /*@__PURE__*/ HigherOrderObservable_switchAll<ObservableContainer.Type>(
     // FIXME: should just be DeferredObservable_lift
 
     Observable_lift({

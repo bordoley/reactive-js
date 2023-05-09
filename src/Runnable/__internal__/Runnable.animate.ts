@@ -25,7 +25,7 @@ const parseAnimationConfig = <T = number>(
   config.type === "loop"
     ? pipe(
         Runnable_animate<T>(config.animation),
-        Observable_repeat<RunnableContainer, T>(config.count),
+        Observable_repeat<RunnableContainer.Type, T>(config.count),
       )
     : config.type === "delay"
     ? Observable_empty({ delay: config.duration })
@@ -34,22 +34,30 @@ const parseAnimationConfig = <T = number>(
         config.value,
         Optional_toObservable(),
         isSome(config.selector)
-          ? Observable_map<RunnableContainer, number, T>(config.selector)
-          : (identity as Containers.Operator<RunnableContainer, number, T>),
+          ? Observable_map<RunnableContainer.Type, number, T>(config.selector)
+          : (identity as Containers.Operator<
+              RunnableContainer.Type,
+              number,
+              T
+            >),
       )
     : pipe(
         config.type === "keyframe"
           ? Runnable_keyFrame(config.duration, config)
           : Runnable_spring(config),
-        Observable_map<RunnableContainer, number, number>(
+        Observable_map<RunnableContainer.Type, number, number>(
           scale(config.from, config.to),
         ),
         isSome(config.selector)
-          ? Observable_map<RunnableContainer, number, T>(config.selector)
-          : (identity as Containers.Operator<RunnableContainer, number, T>),
+          ? Observable_map<RunnableContainer.Type, number, T>(config.selector)
+          : (identity as Containers.Operator<
+              RunnableContainer.Type,
+              number,
+              T
+            >),
       );
 
-const Runnable_animate: RunnableObservableContainers.TypeClass<RunnableContainer>["animate"] =
+const Runnable_animate: RunnableObservableContainers.TypeClass<RunnableContainer.Type>["animate"] =
   <T = number>(
     config:
       | RunnableObservableContainers.AnimationConfig<T>

@@ -8,4 +8,5 @@
 
 ### Interfaces
 
+- [Type](../interfaces/containers.IterableContainer.Type.md)
 - [TypeClass](../interfaces/containers.IterableContainer.TypeClass.md)

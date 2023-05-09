@@ -1,12 +1,8 @@
-import {
-  ReadonlyArrayContainer,
-  RunnableContainers,
-} from "../../containers.js";
+import { ReadonlyArrayContainer } from "../../containers.js";
 
-const ReadonlyArray_first: RunnableContainers.TypeClass<ReadonlyArrayContainer>["first"] =
-
-    <T>() =>
-    (values: ReadonlyArray<T>) =>
-      values[0];
+const ReadonlyArray_first: ReadonlyArrayContainer.TypeClass["first"] =
+  <T>() =>
+  (values: ReadonlyArray<T>) =>
+    values[0];
 
 export default ReadonlyArray_first;

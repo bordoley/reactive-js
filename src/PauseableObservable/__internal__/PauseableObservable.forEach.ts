@@ -4,7 +4,7 @@ import { SideEffect1, partial, pipe } from "../../functions.js";
 import PauseableObservable_lift from "./PauseableObservable.lift.js";
 
 type PauseableObservableForEach = <
-  C extends PauseableObservableContainer,
+  C extends PauseableObservableContainer.Type,
   T = unknown,
 >(
   effect: SideEffect1<T>,

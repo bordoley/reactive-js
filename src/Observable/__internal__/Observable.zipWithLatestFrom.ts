@@ -27,11 +27,7 @@ import {
   QueueLike_dequeue,
   WithLatestLike,
 } from "../../__internal__/types.js";
-import {
-  Containers,
-  ObservableContainer,
-  ObservableContainers,
-} from "../../containers.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
@@ -48,7 +44,7 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const Observable_zipWithLatestFrom: ObservableContainers.TypeClass<ObservableContainer>["zipWithLatestFrom"] =
+const Observable_zipWithLatestFrom: ObservableContainer.TypeClass["zipWithLatestFrom"] =
   /*@__PURE__*/ (() => {
     const createZipWithLatestFromObserver: <TA, TB, T>(
       delegate: ObserverLike<T>,
@@ -112,7 +108,7 @@ const Observable_zipWithLatestFrom: ObservableContainers.TypeClass<ObservableCon
 
             const otherSubscription = pipe(
               other,
-              Observable_forEach<ObservableContainer, TB>(otherLatest => {
+              Observable_forEach<ObservableContainer.Type, TB>(otherLatest => {
                 instance[__WithLatestLike_hasLatest] = true;
                 instance[__WithLatestLike_otherLatest] = otherLatest;
                 notifyDelegate(instance);
@@ -168,7 +164,7 @@ const Observable_zipWithLatestFrom: ObservableContainers.TypeClass<ObservableCon
         createZipWithLatestFromObserver,
         partial(other, selector),
         Observable_lift(other),
-      ) as Containers.Operator<ObservableContainer, TA, T>;
+      ) as Containers.Operator<ObservableContainer.Type, TA, T>;
   })();
 
 export default Observable_zipWithLatestFrom;

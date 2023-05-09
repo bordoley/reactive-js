@@ -29,7 +29,7 @@ import {
 } from "../../types.js";
 import Observable_lift from "./Observable.lift.js";
 
-type ObservableSkipFirst = <C extends ObservableContainer, T>(options?: {
+type ObservableSkipFirst = <C extends ObservableContainer.Type, T>(options?: {
   readonly count?: number;
 }) => Containers.Operator<C, T, T>;
 

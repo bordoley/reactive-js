@@ -60,7 +60,7 @@ import {
   QueueableLike_enqueue,
 } from "../../types.js";
 
-const HigherOrderObservable_mergeAll = <C extends ObservableContainer>(
+const HigherOrderObservable_mergeAll = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
   ) => Containers.Operator<C, Containers.Of<C, T>, T>,
@@ -90,7 +90,7 @@ const HigherOrderObservable_mergeAll = <C extends ObservableContainer>(
 
       pipe(
         nextObs,
-        Observable_forEach<ObservableContainer, T>(
+        Observable_forEach<ObservableContainer.Type, T>(
           bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify),
         ),
         Observable_subscribeWithConfig(

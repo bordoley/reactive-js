@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`RunnableContainer`](containers.RunnableContainer-1.md) |
+| `C` | extends [`Type`](containers.RunnableContainer.Type.md) |
 
 ## Hierarchy
 

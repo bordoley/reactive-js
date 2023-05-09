@@ -1,3 +1,3 @@
-import { DeferredObservableContainer, ObservableContainers } from "../../containers.js";
-declare const DeferredObservable_throttle: ObservableContainers.TypeClass<DeferredObservableContainer>["throttle"];
+import { DeferredObservableContainer } from "../../containers.js";
+declare const DeferredObservable_throttle: DeferredObservableContainer.TypeClass["throttle"];
 export default DeferredObservable_throttle;

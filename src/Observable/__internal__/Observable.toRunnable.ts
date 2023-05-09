@@ -8,7 +8,8 @@ const throwOptions = {
   raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
 
-const Observable_toRunnable: RunnableContainers.TypeClass<ObservableContainer>["toRunnable"] =
+// FIXME, wrong typeclass
+const Observable_toRunnable: RunnableContainers.TypeClass<ObservableContainer.Type>["toRunnable"] =
 
     <T>() =>
     (obs: ObservableLike<T>) =>

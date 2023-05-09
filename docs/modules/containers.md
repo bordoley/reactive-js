@@ -16,10 +16,13 @@
 - [EnumerableContainers](containers.EnumerableContainers.md)
 - [EnumerableObservableContainers](containers.EnumerableObservableContainers.md)
 - [EnumeratorContainer](containers.EnumeratorContainer.md)
+- [EventSourceContainer](containers.EventSourceContainer.md)
 - [IterableContainer](containers.IterableContainer.md)
 - [KeyedContainers](containers.KeyedContainers.md)
 - [ObservableContainer](containers.ObservableContainer.md)
 - [ObservableContainers](containers.ObservableContainers.md)
+- [PauseableObservableContainer](containers.PauseableObservableContainer.md)
+- [PromiseContainer](containers.PromiseContainer.md)
 - [ReadonlyArrayContainer](containers.ReadonlyArrayContainer.md)
 - [RunnableContainer](containers.RunnableContainer.md)
 - [RunnableContainers](containers.RunnableContainers.md)
@@ -29,24 +32,12 @@
 
 ### Container Interfaces
 
-- [AsyncIterableContainer](../interfaces/containers.AsyncIterableContainer-1.md)
 - [Container](../interfaces/containers.Container.md)
-- [DeferredObservableContainer](../interfaces/containers.DeferredObservableContainer-1.md)
-- [EnumerableContainer](../interfaces/containers.EnumerableContainer-1.md)
-- [EnumeratorContainer](../interfaces/containers.EnumeratorContainer-1.md)
-- [EventSourceContainer](../interfaces/containers.EventSourceContainer.md)
-- [IterableContainer](../interfaces/containers.IterableContainer-1.md)
-- [ObservableContainer](../interfaces/containers.ObservableContainer-1.md)
-- [PauseableObservableContainer](../interfaces/containers.PauseableObservableContainer.md)
-- [PromiseContainer](../interfaces/containers.PromiseContainer.md)
-- [RunnableContainer](../interfaces/containers.RunnableContainer-1.md)
-- [SharedObservableContainer](../interfaces/containers.SharedObservableContainer-1.md)
 
 ### KeyedContainers Interfaces
 
 - [DictionaryContainer](../interfaces/containers.DictionaryContainer.md)
 - [KeyedContainers](../interfaces/containers.KeyedContainers-1.md)
-- [ReadonlyArrayContainer](../interfaces/containers.ReadonlyArrayContainer-1.md)
 - [ReadonlyMapContainer](../interfaces/containers.ReadonlyMapContainer.md)
 - [ReadonlyObjectMapContainer](../interfaces/containers.ReadonlyObjectMapContainer.md)
 

@@ -46,18 +46,19 @@ const createLiftedPauseableObservable: <TIn, TOut>(
   );
 })();
 
-const PauseableObservable_lift: Lift<PauseableObservableContainer>["lift"] =
-  <TA, TB>(
-    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): Function1<PauseableObservableLike<TA>, PauseableObservableLike<TB>> =>
-  source => {
-    const sourceSource = (source as any)[LiftedLike_source] ?? source;
-    const allFunctions = [
-      operator,
-      ...((source as any)[LiftedLike_operators] ?? []),
-    ];
+const PauseableObservable_lift: Lift<PauseableObservableContainer.Type>["lift"] =
 
-    return createLiftedPauseableObservable(sourceSource, allFunctions);
-  };
+    <TA, TB>(
+      operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+    ): Function1<PauseableObservableLike<TA>, PauseableObservableLike<TB>> =>
+    source => {
+      const sourceSource = (source as any)[LiftedLike_source] ?? source;
+      const allFunctions = [
+        operator,
+        ...((source as any)[LiftedLike_operators] ?? []),
+      ];
+
+      return createLiftedPauseableObservable(sourceSource, allFunctions);
+    };
 
 export default PauseableObservable_lift;

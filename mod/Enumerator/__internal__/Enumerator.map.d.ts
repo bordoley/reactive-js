@@ -1,3 +1,3 @@
-import { Containers, EnumeratorContainer } from "../../containers.js";
-declare const Enumerator_map: Containers.TypeClass<EnumeratorContainer>["map"];
+import { EnumeratorContainer } from "../../containers.js";
+declare const Enumerator_map: EnumeratorContainer.TypeClass["map"];
 export default Enumerator_map;

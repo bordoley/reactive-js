@@ -8,4 +8,5 @@
 
 ### Interfaces
 
+- [Type](../interfaces/containers.AsyncIterableContainer.Type.md)
 - [TypeClass](../interfaces/containers.AsyncIterableContainer.TypeClass.md)

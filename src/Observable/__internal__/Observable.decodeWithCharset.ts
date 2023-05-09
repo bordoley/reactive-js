@@ -27,7 +27,9 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-type ObservableDecodeWithCharset = <C extends ObservableContainer>(options?: {
+type ObservableDecodeWithCharset = <
+  C extends ObservableContainer.Type,
+>(options?: {
   readonly charset?: string;
 }) => Containers.Operator<C, ArrayBuffer, string>;
 

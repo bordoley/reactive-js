@@ -1,8 +1,8 @@
-import { ObservableContainer, ObservableContainers } from "../../containers.js";
+import { ObservableContainer } from "../../containers.js";
 import { returns } from "../../functions.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 
-const Observable_exhaust: ObservableContainers.TypeClass<ObservableContainer>["exhaust"] =
+const Observable_exhaust: ObservableContainer.TypeClass["exhaust"] =
   /*@__PURE__*/ (() =>
     returns(
       Observable_mergeAll({

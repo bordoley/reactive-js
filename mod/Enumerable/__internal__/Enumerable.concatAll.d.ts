@@ -1,3 +1,3 @@
-import { DeferredContainers, EnumerableContainer } from "../../containers.js";
-declare const Enumerable_concatAll: DeferredContainers.TypeClass<EnumerableContainer>["concatAll"];
+import { EnumerableContainer } from "../../containers.js";
+declare const Enumerable_concatAll: EnumerableContainer.TypeClass["concatAll"];
 export default Enumerable_concatAll;

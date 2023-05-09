@@ -4,10 +4,14 @@ import { pipe } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 import Observable_latest from "./Observable.latest.js";
 
-const Observable_forkCombineLatest: Containers.TypeClass<ObservableContainer>["forkZip"] =
+const Observable_forkCombineLatest: ObservableContainer.TypeClass["forkZip"] =
   (<T>(
-      ...ops: readonly Containers.Operator<ObservableContainer, T, unknown>[]
-    ): Containers.Operator<ObservableContainer, T, readonly unknown[]> =>
+      ...ops: readonly Containers.Operator<
+        ObservableContainer.Type,
+        T,
+        unknown
+      >[]
+    ): Containers.Operator<ObservableContainer.Type, T, readonly unknown[]> =>
     (obs: ObservableLike<T>) =>
       Observable_latest(
         pipe(
@@ -15,6 +19,6 @@ const Observable_forkCombineLatest: Containers.TypeClass<ObservableContainer>["f
           ReadonlyArray_map(op => op(obs)),
         ),
         1,
-      )) as Containers.TypeClass<ObservableContainer>["forkZip"];
+      )) as ObservableContainer.TypeClass["forkZip"];
 
 export default Observable_forkCombineLatest;

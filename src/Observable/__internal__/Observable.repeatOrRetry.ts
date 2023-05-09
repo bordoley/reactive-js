@@ -15,12 +15,12 @@ import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-type ObservableRepeatOrRetry = <C extends ObservableContainer, T>(
+type ObservableRepeatOrRetry = <C extends ObservableContainer.Type, T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
 ) => Containers.Operator<C, T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
-  C extends ObservableContainer,
+  C extends ObservableContainer.Type,
   T,
 >() => {
   const createRepeatObserver = (
@@ -46,7 +46,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
 
         pipe(
           observable,
-          Observable_forEach<ObservableContainer, T>(
+          Observable_forEach<ObservableContainer.Type, T>(
             bindMethod(delegate, ObserverLike_notify),
           ),
           Observable_subscribeWithConfig(delegate, delegate),

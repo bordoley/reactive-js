@@ -1,3 +1,3 @@
-import { Containers, EnumerableContainer } from "../../containers.js";
-declare const EnumerableObservable_scanLast: Containers.TypeClass<EnumerableContainer>["scanLast"];
+import { EnumerableContainer } from "../../containers.js";
+declare const EnumerableObservable_scanLast: EnumerableContainer.TypeClass["scanLast"];
 export default EnumerableObservable_scanLast;

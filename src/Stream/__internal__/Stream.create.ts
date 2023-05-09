@@ -11,7 +11,7 @@ import {
 import Stream_mixin from "./Stream.mixin.js";
 
 const Stream_create: <TReq, T>(
-  op: Containers.Operator<DeferredObservableContainer, TReq, T>,
+  op: Containers.Operator<DeferredObservableContainer.Type, TReq, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

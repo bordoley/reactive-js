@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`TypeClass`](containers.ObservableContainers.TypeClass.md)<[`ObservableContainer`](containers.ObservableContainer-1.md)\>
+- [`TypeClass`](containers.ObservableContainers.TypeClass.md)<[`Type`](containers.ObservableContainer.Type.md)\>
 
-- [`TypeClass`](containers.AsynchronousContainers.TypeClass.md)<[`ObservableContainer`](containers.ObservableContainer-1.md)\>
+- [`TypeClass`](containers.AsynchronousContainers.TypeClass.md)<[`Type`](containers.ObservableContainer.Type.md)\>
 
   ↳ **`TypeClass`**
 
@@ -57,11 +57,11 @@
 
 ### exhaust
 
-• **exhaust**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+• **exhaust**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 ##### Type parameters
 
@@ -71,7 +71,7 @@
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -81,11 +81,11 @@ ___
 
 ### exhaustMap
 
-• **exhaustMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+• **exhaustMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -102,7 +102,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -112,11 +112,11 @@ ___
 
 ### mergeAll
 
-• **mergeAll**: <T\>(`options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+• **mergeAll**: <T\>(`options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+▸ <`T`\>(`options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 ##### Type parameters
 
@@ -135,7 +135,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -145,11 +145,11 @@ ___
 
 ### mergeMap
 
-• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>, `options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>, `options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -170,7 +170,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -180,11 +180,11 @@ ___
 
 ### mergeWith
 
-• **mergeWith**: <T\>(`snd`: [`ObservableLike`](types.ObservableLike.md)<`T`\>, ...`tail`: readonly [`ObservableLike`](types.ObservableLike.md)<`T`\>[]) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+• **mergeWith**: <T\>(`snd`: [`ObservableLike`](types.ObservableLike.md)<`T`\>, ...`tail`: readonly [`ObservableLike`](types.ObservableLike.md)<`T`\>[]) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ <`T`\>(`snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 ##### Type parameters
 
@@ -201,7 +201,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -211,11 +211,11 @@ ___
 
 ### scanMany
 
-• **scanMany**: <T, TAcc\>(`scanner`: [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](types.ObservableLike.md)<`TAcc`\>\>, `initialValue`: [`Factory`](../modules/functions.md#factory)<`TAcc`\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TAcc`\>
+• **scanMany**: <T, TAcc\>(`scanner`: [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`ObservableLike`](types.ObservableLike.md)<`TAcc`\>\>, `initialValue`: [`Factory`](../modules/functions.md#factory)<`TAcc`\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TAcc`\>
 
 #### Type declaration
 
-▸ <`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TAcc`\>
+▸ <`T`, `TAcc`\>(`scanner`, `initialValue`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TAcc`\>
 
 ##### Type parameters
 
@@ -233,7 +233,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TAcc`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -243,11 +243,11 @@ ___
 
 ### switchAll
 
-• **switchAll**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+• **switchAll**: <T\>() => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+▸ <`T`\>(): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 ##### Type parameters
 
@@ -257,7 +257,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), [`ObservableLike`](types.ObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -267,11 +267,11 @@ ___
 
 ### switchMap
 
-• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ObservableLike`](types.ObservableLike.md)<`TB`\>\>) => [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -288,7 +288,7 @@ ___
 
 ##### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `TB`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -877,7 +877,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -894,7 +894,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -904,7 +904,7 @@ ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -920,7 +920,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -930,7 +930,7 @@ ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -946,7 +946,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -956,7 +956,7 @@ ___
 
 ### forkCombineLatest
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -970,18 +970,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -996,19 +996,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1024,20 +1024,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1054,21 +1054,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1086,22 +1086,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1120,23 +1120,23 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1156,24 +1156,24 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TH`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
+| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TH`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkCombineLatest](containers.ObservableContainers.TypeClass.md#forkcombinelatest)
 
-▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkCombineLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1194,19 +1194,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TH`\> |
-| `i` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TI`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
+| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TH`\> |
+| `i` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TI`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Inherited from
 
@@ -1216,7 +1216,7 @@ ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TIn`, `TOut`\>
+▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TIn`, `TOut`\>
 
 #### Type parameters
 
@@ -1229,13 +1229,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TIn`, `TOut`\> |
-| `snd` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TIn`, `TOut`\> |
-| `...tail` | readonly [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TIn`, `TOut`\>[] |
+| `fst` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TIn`, `TOut`\> |
+| `snd` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TIn`, `TOut`\> |
+| `...tail` | readonly [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TIn`, `TOut`\>[] |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TIn`, `TOut`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TIn`, `TOut`\>
 
 #### Inherited from
 
@@ -1245,7 +1245,7 @@ ___
 
 ### forkZipLatest
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`\>(`a`, `b`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1259,18 +1259,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1285,19 +1285,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1313,20 +1313,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1343,21 +1343,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1375,22 +1375,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1409,23 +1409,23 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1445,24 +1445,24 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TH`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
+| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TH`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[forkZipLatest](containers.ObservableContainers.TypeClass.md#forkziplatest)
 
-▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **forkZipLatest**<`T`, `TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1483,19 +1483,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TA`\> |
-| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TB`\> |
-| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TC`\> |
-| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TD`\> |
-| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TE`\> |
-| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TF`\> |
-| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TG`\> |
-| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TH`\> |
-| `i` | [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TI`\> |
+| `a` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TA`\> |
+| `b` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TB`\> |
+| `c` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TC`\> |
+| `d` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TD`\> |
+| `e` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TE`\> |
+| `f` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TF`\> |
+| `g` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TG`\> |
+| `h` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TH`\> |
+| `i` | [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TI`\> |
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Inherited from
 
@@ -1505,7 +1505,7 @@ ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1521,7 +1521,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1531,7 +1531,7 @@ ___
 
 ### throttle
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 Emits a value from the source, then ignores subsequent source values for a duration determined by another observable.
 
@@ -1551,13 +1551,13 @@ Emits a value from the source, then ignores subsequent source values for a durat
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[throttle](containers.ObservableContainers.TypeClass.md#throttle)
 
-▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **throttle**<`T`\>(`duration`, `options?`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 Returns an `ObservableLike` which emits a value from the source,
 then ignores subsequent source values for `duration` milliseconds.
@@ -1578,7 +1578,7 @@ then ignores subsequent source values for `duration` milliseconds.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1588,7 +1588,7 @@ ___
 
 ### timeout
 
-▸ **timeout**<`T`\>(`duration`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 Returns an `ObservableLike` that completes with an error if the source
 does not emit a value in given time span.
@@ -1607,13 +1607,13 @@ does not emit a value in given time span.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
 [TypeClass](containers.ObservableContainers.TypeClass.md).[timeout](containers.ObservableContainers.TypeClass.md#timeout)
 
-▸ **timeout**<`T`\>(`duration`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+▸ **timeout**<`T`\>(`duration`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1629,7 +1629,7 @@ does not emit a value in given time span.
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1639,7 +1639,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TOut`\>
+▸ **withCurrentTime**<`T`, `TOut`\>(`selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TOut`\>
 
 #### Type parameters
 
@@ -1656,7 +1656,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `T`, `TOut`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `T`, `TOut`\>
 
 #### Inherited from
 
@@ -1666,7 +1666,7 @@ ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `T`\>
 
 #### Type parameters
 
@@ -1685,7 +1685,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `T`\>
 
 #### Inherited from
 
@@ -1695,7 +1695,7 @@ ___
 
 ### zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `T`\>
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `T`\>
 
 #### Type parameters
 
@@ -1714,7 +1714,7 @@ ___
 
 #### Returns
 
-[`Operator`](../modules/containers.Containers.md#operator)<[`ObservableContainer`](containers.ObservableContainer-1.md), `TA`, `T`\>
+[`Operator`](../modules/containers.Containers.md#operator)<[`Type`](containers.ObservableContainer.Type.md), `TA`, `T`\>
 
 #### Inherited from
 

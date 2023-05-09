@@ -37,7 +37,7 @@ import {
   ObserverLike_notify,
 } from "../../types.js";
 
-const HigherOrderObservable_switchAll = <C extends ObservableContainer>(
+const HigherOrderObservable_switchAll = <C extends ObservableContainer.Type>(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<Containers.Of<C, T>>>,
   ) => Containers.Operator<C, Containers.Of<C, T>, T>,

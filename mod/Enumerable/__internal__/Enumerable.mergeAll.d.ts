@@ -1,3 +1,3 @@
-import { EnumerableContainer, ObservableContainers } from "../../containers.js";
-declare const Enumerable_mergeAll: ObservableContainers.TypeClass<EnumerableContainer>["mergeAll"];
+import { EnumerableContainer } from "../../containers.js";
+declare const Enumerable_mergeAll: EnumerableContainer.TypeClass["mergeAll"];
 export default Enumerable_mergeAll;

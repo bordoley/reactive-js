@@ -25,7 +25,7 @@ const Observable_toEventSource =
     EventSource_create(listener =>
       pipe(
         obs,
-        Observable_forEach<ObservableContainer, T>(
+        Observable_forEach<ObservableContainer.Type, T>(
           bindMethod(listener, EventListenerLike_notify),
         ),
         Observable_subscribe(scheduler, options),

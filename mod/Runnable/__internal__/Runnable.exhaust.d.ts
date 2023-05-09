@@ -1,3 +1,3 @@
-import { ObservableContainers, RunnableContainer } from "../../containers.js";
-declare const Runnable_exhaust: ObservableContainers.TypeClass<RunnableContainer>["exhaust"];
+import { RunnableContainer } from "../../containers.js";
+declare const Runnable_exhaust: RunnableContainer.TypeClass["exhaust"];
 export default Runnable_exhaust;

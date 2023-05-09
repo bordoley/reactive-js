@@ -8,4 +8,5 @@
 
 ### Interfaces
 
+- [Type](../interfaces/containers.ObservableContainer.Type.md)
 - [TypeClass](../interfaces/containers.ObservableContainer.TypeClass.md)

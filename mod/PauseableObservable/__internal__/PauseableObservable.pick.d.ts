@@ -1,3 +1,3 @@
-import { Containers, PauseableObservableContainer } from "../../containers.js";
-declare const PauseableObservable_pick: Containers.TypeClass<PauseableObservableContainer>["pick"];
+import { PauseableObservableContainer } from "../../containers.js";
+declare const PauseableObservable_pick: PauseableObservableContainer.TypeClass["pick"];
 export default PauseableObservable_pick;

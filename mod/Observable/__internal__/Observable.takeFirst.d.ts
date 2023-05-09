@@ -1,5 +1,5 @@
 import { Containers, ObservableContainer } from "../../containers.js";
-type ObservableTakeFirst = <C extends ObservableContainer, T>(options?: {
+type ObservableTakeFirst = <C extends ObservableContainer.Type, T>(options?: {
     readonly count?: number;
 }) => Containers.Operator<C, T, T>;
 declare const Observable_takeFirst: ObservableTakeFirst;

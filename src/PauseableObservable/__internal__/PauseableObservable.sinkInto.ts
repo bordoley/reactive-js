@@ -42,7 +42,7 @@ const PauseableObservable_sinkInto =
 
       pipe(
         pauseableObservable,
-        Observable_dispatchTo<ObservableContainer>(sink),
+        Observable_dispatchTo<ObservableContainer.Type>(sink),
         Observable_subscribe(observer),
         Disposable_addTo(observer),
       );

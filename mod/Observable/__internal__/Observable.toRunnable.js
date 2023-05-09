@@ -6,5 +6,6 @@ import Observable_throws from "./Observable.throws.js";
 const throwOptions = {
     raise: () => errorWithDebugMessage("Observable is not Runnable"),
 };
+// FIXME, wrong typeclass
 const Observable_toRunnable = () => (obs) => Observable_isRunnable(obs) ? obs : Observable_throws(throwOptions);
 export default Observable_toRunnable;
