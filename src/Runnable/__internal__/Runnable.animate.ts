@@ -4,7 +4,7 @@ import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import type { AnimationConfig } from "../../Runnable.js";
+import type { Animation } from "../../Runnable.js";
 import Runnable_spring from "../../Runnable/__internal__/Runnable.spring.js";
 import { Container, RunnableContainer } from "../../containers.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
@@ -17,7 +17,7 @@ const scale = (start: number, end: number) => (v: number) => {
 };
 
 const parseAnimationConfig = <T = number>(
-  config: AnimationConfig.Description<T>,
+  config: Animation<T>,
 ): RunnableLike<T> =>
   config.type === "loop"
     ? pipe(
@@ -47,17 +47,11 @@ const parseAnimationConfig = <T = number>(
       );
 
 const Runnable_animate: <T = number>(
-  configs:
-    | AnimationConfig.Description<T>
-    | readonly AnimationConfig.Description<T>[],
+  configs: Animation<T> | readonly Animation<T>[],
 ) => RunnableLike<T> = <T = number>(
-  config:
-    | AnimationConfig.Description<T>
-    | readonly AnimationConfig.Description<T>[],
+  config: Animation<T> | readonly Animation<T>[],
 ) => {
-  const configs = isReadonlyArray<AnimationConfig.Description<T>>(config)
-    ? config
-    : [config];
+  const configs = isReadonlyArray<Animation<T>>(config) ? config : [config];
   const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));
   return Observable_concatObservables(observables);
 };

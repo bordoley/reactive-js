@@ -6,7 +6,11 @@
 
 ### Namespaces
 
-- [AnimationConfig](Runnable.AnimationConfig.md)
+- [Animation](Runnable.Animation.md)
+
+### Type Aliases
+
+- [Animation](Runnable.md#animation)
 
 ### Constructor Functions
 
@@ -99,6 +103,18 @@
 - [reduce](Runnable.md#reduce)
 - [someSatisfy](Runnable.md#somesatisfy)
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
+
+## Type Aliases
+
+### Animation
+
+Ƭ **Animation**<`T`\>: [`Delay`](../interfaces/Runnable.Animation.Delay.md) \| [`Loop`](../interfaces/Runnable.Animation.Loop.md)<`T`\> \| `T` extends `number` ? [`KeyFrame`](../interfaces/Runnable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/Runnable.Animation.Spring.md) \| [`Frame`](../interfaces/Runnable.Animation.Frame.md) & { `selector?`: `never`  } : [`KeyFrame`](../interfaces/Runnable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/Runnable.Animation.Spring.md) \| [`Frame`](../interfaces/Runnable.Animation.Frame.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
 
 ## Constructor Functions
 
@@ -2986,7 +3002,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `configs` | [`Description`](Runnable.AnimationConfig.md#description)<`T`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T`\>[] |
+| `configs` | [`Animation`](Runnable.md#animation)<`T`\> \| readonly [`Animation`](Runnable.md#animation)<`T`\>[] |
 
 #### Returns
 
