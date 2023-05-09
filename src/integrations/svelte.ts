@@ -1,11 +1,4 @@
-import {
-  DisposableLike_dispose,
-  ObservableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  SchedulerLike,
-} from "../core.js";
-import * as Observable from "../core/Observable.js";
+import * as Observable from "../Observable.js";
 import {
   Factory,
   Function1,
@@ -15,6 +8,13 @@ import {
   none,
   pipe,
 } from "../functions.js";
+import {
+  DisposableLike_dispose,
+  ObservableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  SchedulerLike,
+} from "../types.js";
 
 class ObservableSvelteStore<T> {
   constructor(

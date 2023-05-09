@@ -1,15 +1,15 @@
 /// <reference types="./Element.d.ts" />
 
+import * as Disposable from "../../Disposable.js";
+import * as EventListener from "../../EventListener.js";
+import * as EventPublisher from "../../EventPublisher.js";
+import * as EventSource from "../../EventSource.js";
+import * as SharedObservable from "../../SharedObservable.js";
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
-import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLike_enqueue, } from "../../core.js";
-import * as Disposable from "../../core/Disposable.js";
-import * as EventListener from "../../core/EventListener.js";
-import * as EventPublisher from "../../core/EventPublisher.js";
-import * as EventSource from "../../core/EventSource.js";
-import * as SharedObservable from "../../core/SharedObservable.js";
 import { bindMethod, isNone, newInstance, none, pipe, returns, } from "../../functions.js";
+import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLike_enqueue, } from "../../types.js";
 export const addEventHandler = (eventName, eventHandler, options) => source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
     pipe(source, addEventListener(eventName, listener, options));

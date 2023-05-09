@@ -1,5 +1,10 @@
 import { Readable, Writable, pipeline } from "node:stream";
 import zlib from "node:zlib";
+import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
+import * as PauseableObservable from "../../PauseableObservable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
+import * as Scheduler from "../../Scheduler.js";
 import {
   describe,
   expectEquals,
@@ -8,16 +13,6 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import {
-  DisposableLike,
-  PauseableLike_resume,
-  SchedulerLike,
-} from "../../core.js";
-import * as Disposable from "../../core/Disposable.js";
-import * as Observable from "../../core/Observable.js";
-import * as PauseableObservable from "../../core/PauseableObservable.js";
-import * as ReadonlyArray from "../../core/ReadonlyArray.js";
-import * as Scheduler from "../../core/Scheduler.js";
-import {
   Optional,
   bindMethod,
   newInstance,
@@ -25,6 +20,11 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
+import {
+  DisposableLike,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../types.js";
 import * as NodeStream from "../node/Stream.js";
 
 testModule(

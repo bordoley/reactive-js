@@ -30,7 +30,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/core.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\>\> |
+| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<[`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\>\> |
 
 #### Returns
 
@@ -49,7 +49,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/core.EventSourceLike.md)<`T`\>\> |
+| `animation` | [`Optional`](functions.md#optional)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\> |
 | `selector` | [`Function1`](functions.md#function1)<`T`, [`CSSStyleMapLike`](../interfaces/integrations_web.CSSStyleMapLike.md)\> |
 | `deps` | readonly `unknown`[] |
 

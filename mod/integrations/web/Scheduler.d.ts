@@ -1,1 +1,1 @@
-export declare const createAnimationFrameScheduler: import("../../functions.js").Function1<import("../../core.js").SchedulerLike, import("../../core.js").SchedulerLike & import("../../core.js").DisposableLike>;
+export declare const createAnimationFrameScheduler: import("../../functions.js").Function1<import("../../types.js").SchedulerLike, import("../../types.js").SchedulerLike & import("../../types.js").DisposableLike>;

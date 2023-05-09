@@ -1,11 +1,11 @@
 /// <reference types="./Stream.d.ts" />
 
-import { DispatcherLike_complete, DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../core.js";
-import * as DeferredObservable from "../../core/DeferredObservable.js";
-import * as Disposable from "../../core/Disposable.js";
-import * as Observable from "../../core/Observable.js";
-import PauseableObservable_create from "../../core/PauseableObservable/__internal__/PauseableObservable.create.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
+import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
+import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
+import { DispatcherLike_complete, DisposableLike_dispose, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, } from "../../types.js";
 const disposeStream = (stream) => () => {
     stream.removeAllListeners();
     // Calling destory can result in onError being called

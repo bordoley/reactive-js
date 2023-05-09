@@ -1,7 +1,11 @@
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../__internal__/core.js";
+import * as DeferredObservable from "../../DeferredObservable.js";
+import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import * as Disposable from "../../Disposable.js";
+import IndexedBufferCollection_map from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
+import * as Observable from "../../Observable.js";
+import * as Stream from "../../Stream.js";
+import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
+import * as Streamable from "../../Streamable.js";
 import {
   createInstanceFactory,
   include,
@@ -10,27 +14,9 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  DisposableLike,
-  IndexedBufferCollectionLike,
-  MulticastObservableLike_buffer,
-  ObservableLike,
-  ObservableLike_observe,
-  ObserverLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
-  SchedulerLike,
-  StreamLike,
-  StreamableLike_stream,
-} from "../../core.js";
-import * as DeferredObservable from "../../core/DeferredObservable.js";
-import Delegating_mixin from "../../core/Delegating/__internal__/Delegating.mixin.js";
-import * as Disposable from "../../core/Disposable.js";
-import IndexedBufferCollection_map from "../../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
-import * as Observable from "../../core/Observable.js";
-import * as Stream from "../../core/Stream.js";
-import Stream_delegatingMixin from "../../core/Stream/__internal__/Stream.delegatingMixin.js";
-import * as Streamable from "../../core/Streamable.js";
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../__internal__/types.js";
 import {
   Optional,
   Updater,
@@ -46,6 +32,20 @@ import {
   raiseWithDebugMessage,
   returns,
 } from "../../functions.js";
+import {
+  DisposableLike,
+  IndexedBufferCollectionLike,
+  MulticastObservableLike_buffer,
+  ObservableLike,
+  ObservableLike_observe,
+  ObserverLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_enqueue,
+  SchedulerLike,
+  StreamLike,
+  StreamableLike_stream,
+} from "../../types.js";
 import {
   WindowLocationLike,
   WindowLocationLike_canGoBack,

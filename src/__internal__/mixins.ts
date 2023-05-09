@@ -1,4 +1,4 @@
-import ReadonlyArray_getLength from "../core/ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
+import ReadonlyArray_getLength from "../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Factory,
   Function1,
