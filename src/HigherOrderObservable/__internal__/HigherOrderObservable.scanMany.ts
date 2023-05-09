@@ -8,6 +8,11 @@ import Observable_takeLast from "../../Observable/__internal__/Observable.takeLa
 import Observable_zipWithLatestFrom from "../../Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 import {
+  Containers,
+  ObservableContainer,
+  ObservableContainers,
+} from "../../containers.js";
+import {
   Factory,
   Function2,
   SideEffect1,
@@ -17,10 +22,7 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
   EventListenerLike_notify,
-  ObservableContainer,
-  ObservableContainers,
   ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";

@@ -33,9 +33,9 @@ import Observable_toEventSource from "./Observable/__internal__/Observable.toEve
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import SharedObservable_create from "./SharedObservable/__internal__/SharedObservable.create.js";
+import { Containers, SharedObservableContainer } from "./containers.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
 import {
-  Containers,
   DisposableLike,
   DisposableOrTeardown,
   ObservableLike,
@@ -43,7 +43,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
-  SharedObservableContainer,
   SharedObservableLike,
 } from "./types.js";
 

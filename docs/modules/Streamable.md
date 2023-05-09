@@ -31,7 +31,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Operator`](types.Containers.md#operator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer-1.md), `TReq`, `T`\> |
+| `op` | [`Operator`](containers.Containers.md#operator)<[`DeferredObservableContainer`](../interfaces/containers.DeferredObservableContainer-1.md), `TReq`, `T`\> |
 
 #### Returns
 
@@ -55,7 +55,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -78,7 +78,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_1`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_1`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -101,7 +101,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_2`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_2`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_2`\>[]\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -125,7 +125,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_3`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_3`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_3`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_3`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -147,7 +147,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_4`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_4`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_4`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_4`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -169,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](types.RunnableObservableContainers.md#animationconfig)<`T_5`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_5`, [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_5`\> \| readonly [`AnimationConfig`](containers.RunnableObservableContainers.md#animationconfig)<`T_5`\>[]\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

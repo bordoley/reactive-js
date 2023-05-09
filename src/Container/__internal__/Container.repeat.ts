@@ -1,4 +1,5 @@
 import { clampPositiveInteger } from "../../__internal__/math.js";
+import { Container, Containers } from "../../containers.js";
 import {
   Predicate,
   alwaysTrue,
@@ -6,7 +7,6 @@ import {
   isNumber,
   lessThan,
 } from "../../functions.js";
-import { Container, Containers } from "../../types.js";
 
 const Container_repeat =
   <C extends Container, T>(

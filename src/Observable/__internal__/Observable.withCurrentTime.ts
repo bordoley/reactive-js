@@ -15,10 +15,9 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
-  Containers,
-  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
   SchedulerLike_now,

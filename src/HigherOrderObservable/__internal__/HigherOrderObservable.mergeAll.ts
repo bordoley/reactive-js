@@ -34,6 +34,11 @@ import {
   QueueLike_dequeue,
 } from "../../__internal__/types.js";
 import {
+  Containers,
+  ObservableContainer,
+  ObservableContainers,
+} from "../../containers.js";
+import {
   Function1,
   Optional,
   SideEffect,
@@ -45,11 +50,8 @@ import {
 } from "../../functions.js";
 import {
   CollectionLike_count,
-  Containers,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableContainer,
-  ObservableContainers,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,

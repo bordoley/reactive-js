@@ -5,6 +5,7 @@ import Observable_pairwise from "../../Observable/__internal__/Observable.pairwi
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../Observable/__internal__/Observable.throttle.js";
+import { ObservableContainer } from "../../containers.js";
 import {
   Function1,
   Updater,
@@ -14,7 +15,6 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike,
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

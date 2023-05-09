@@ -1,5 +1,5 @@
 import Container_concatMap from "../../Container/__internal__/Container.concatMap.js";
-import { ObservableContainer, ObservableContainers } from "../../types.js";
+import { ObservableContainer, ObservableContainers } from "../../containers.js";
 import Observable_exhaust from "./Observable.exhaust.js";
 import Observable_map from "./Observable.map.js";
 

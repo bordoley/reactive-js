@@ -6,13 +6,13 @@ import Observable_repeat from "../../Observable/__internal__/Observable.repeat.j
 import Observable_spring from "../../Observable/__internal__/Observable.spring.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
 import {
   Containers,
   RunnableContainer,
-  RunnableLike,
   RunnableObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
+import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
+import { RunnableLike } from "../../types.js";
 
 const scale = (start: number, end: number) => (v: number) => {
   const diff = end - start;

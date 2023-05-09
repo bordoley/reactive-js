@@ -1,12 +1,11 @@
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
 import { hasOwn } from "../../__internal__/Object.js";
-import { pipe } from "../../functions.js";
 import {
-  EnumeratorLike,
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { pipe } from "../../functions.js";
+import { EnumeratorLike, ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_entries: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["entries"] =
 

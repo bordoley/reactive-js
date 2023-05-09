@@ -1,7 +1,8 @@
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
-import { Containers, ObservableContainer, QueueableLike } from "../../types.js";
+import { QueueableLike } from "../../types.js";
 
 type ObservableEnqueue = <C extends ObservableContainer, T = unknown>(
   queue: QueueableLike<T>,

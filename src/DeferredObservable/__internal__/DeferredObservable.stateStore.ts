@@ -1,5 +1,5 @@
+import { Containers, DeferredObservableContainer } from "../../containers.js";
 import { Equality, Factory, Updater } from "../../functions.js";
-import { Containers, DeferredObservableContainer } from "../../types.js";
 import DeferredObservable_actionReducer from "./DeferredObservable.actionReducer.js";
 
 const updateReducer = <T>(acc: T, updater: Updater<T>) => updater(acc);

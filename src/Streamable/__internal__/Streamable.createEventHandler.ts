@@ -6,9 +6,9 @@ import Observable_ignoreElements from "../../Observable/__internal__/Observable.
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Observable_startWith from "../../Observable/__internal__/Observable.startWith.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
+import { DeferredObservableContainer } from "../../containers.js";
 import { Function1, compose, pipe } from "../../functions.js";
 import {
-  DeferredObservableContainer,
   DeferredObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

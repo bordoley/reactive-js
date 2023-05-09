@@ -14,6 +14,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../__internal__/types.js";
+import { Containers, DeferredObservableContainer } from "../../containers.js";
 import {
   Optional,
   isNone,
@@ -27,8 +28,6 @@ import {
 import {
   BufferLike_capacity,
   CollectionLike_count,
-  Containers,
-  DeferredObservableContainer,
   DeferredObservableLike,
   DispatcherLike,
   DispatcherLikeEventMap,

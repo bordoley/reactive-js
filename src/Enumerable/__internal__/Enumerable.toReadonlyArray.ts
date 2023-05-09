@@ -1,11 +1,10 @@
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import { EnumerableContainer, RunnableContainers } from "../../containers.js";
 import { isSome, pipe, raiseError } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
-  EnumerableContainer,
   EnumerableLike,
-  RunnableContainers,
 } from "../../types.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 

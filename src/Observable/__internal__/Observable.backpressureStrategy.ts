@@ -13,11 +13,10 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { partial, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
-  Containers,
-  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
   QueueableLike,

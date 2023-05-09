@@ -4,29 +4,6 @@
 
 ## Table of contents
 
-### Namespaces
-
-- [AsyncIterableContainer](types.AsyncIterableContainer.md)
-- [AsynchronousContainers](types.AsynchronousContainers.md)
-- [Containers](types.Containers.md)
-- [DeferredContainers](types.DeferredContainers.md)
-- [DeferredObservableContainer](types.DeferredObservableContainer.md)
-- [DeferredObservableContainers](types.DeferredObservableContainers.md)
-- [EnumerableContainer](types.EnumerableContainer.md)
-- [EnumerableContainers](types.EnumerableContainers.md)
-- [EnumerableObservableContainers](types.EnumerableObservableContainers.md)
-- [EnumeratorContainer](types.EnumeratorContainer.md)
-- [IterableContainer](types.IterableContainer.md)
-- [KeyedContainers](types.KeyedContainers.md)
-- [ObservableContainer](types.ObservableContainer.md)
-- [ObservableContainers](types.ObservableContainers.md)
-- [ReadonlyArrayContainer](types.ReadonlyArrayContainer.md)
-- [RunnableContainer](types.RunnableContainer.md)
-- [RunnableContainers](types.RunnableContainers.md)
-- [RunnableObservableContainers](types.RunnableObservableContainers.md)
-- [SharedObservableContainer](types.SharedObservableContainer.md)
-- [StatefulContainers](types.StatefulContainers.md)
-
 ### Collection Interfaces
 
 - [AssociativeCollectionLike](../interfaces/types.AssociativeCollectionLike.md)
@@ -34,21 +11,6 @@
 - [DictionaryLike](../interfaces/types.DictionaryLike.md)
 - [IndexedCollectionLike](../interfaces/types.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/types.KeyedCollectionLike.md)
-
-### Container Interfaces
-
-- [AsyncIterableContainer](../interfaces/types.AsyncIterableContainer-1.md)
-- [Container](../interfaces/types.Container.md)
-- [DeferredObservableContainer](../interfaces/types.DeferredObservableContainer-1.md)
-- [EnumerableContainer](../interfaces/types.EnumerableContainer-1.md)
-- [EnumeratorContainer](../interfaces/types.EnumeratorContainer-1.md)
-- [EventSourceContainer](../interfaces/types.EventSourceContainer.md)
-- [IterableContainer](../interfaces/types.IterableContainer-1.md)
-- [ObservableContainer](../interfaces/types.ObservableContainer-1.md)
-- [PauseableObservableContainer](../interfaces/types.PauseableObservableContainer.md)
-- [PromiseContainer](../interfaces/types.PromiseContainer.md)
-- [RunnableContainer](../interfaces/types.RunnableContainer-1.md)
-- [SharedObservableContainer](../interfaces/types.SharedObservableContainer-1.md)
 
 ### Event Interfaces
 
@@ -67,14 +29,6 @@
 - [EnumerableLike](../interfaces/types.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/types.EnumeratorLike.md)
 - [StreamLike](../interfaces/types.StreamLike.md)
-
-### KeyedContainers Interfaces
-
-- [DictionaryContainer](../interfaces/types.DictionaryContainer.md)
-- [KeyedContainers](../interfaces/types.KeyedContainers-1.md)
-- [ReadonlyArrayContainer](../interfaces/types.ReadonlyArrayContainer-1.md)
-- [ReadonlyMapContainer](../interfaces/types.ReadonlyMapContainer.md)
-- [ReadonlyObjectMapContainer](../interfaces/types.ReadonlyObjectMapContainer.md)
 
 ### Other Interfaces
 
@@ -120,8 +74,6 @@
 - [AssociativeCollectionLike\_keys](types.md#associativecollectionlike_keys)
 - [BufferLike\_capacity](types.md#bufferlike_capacity)
 - [CollectionLike\_count](types.md#collectionlike_count)
-- [Container\_T](types.md#container_t)
-- [Container\_type](types.md#container_type)
 - [DispatcherLikeEvent\_capacityExceeded](types.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](types.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](types.md#dispatcherlikeevent_ready)
@@ -138,7 +90,6 @@
 - [EventPublisherLike\_listenerCount](types.md#eventpublisherlike_listenercount)
 - [EventSourceLike\_addEventListener](types.md#eventsourcelike_addeventlistener)
 - [KeyedCollectionLike\_get](types.md#keyedcollectionlike_get)
-- [KeyedContainer\_TKey](types.md#keyedcontainer_tkey)
 - [MulticastObservableLike\_buffer](types.md#multicastobservablelike_buffer)
 - [ObservableLike\_isDeferred](types.md#observablelike_isdeferred)
 - [ObservableLike\_isEnumerable](types.md#observablelike_isenumerable)
@@ -214,18 +165,6 @@ ___
 ### CollectionLike\_count
 
 • `Const` **CollectionLike\_count**: typeof `__CollectionLike_count`
-
-___
-
-### Container\_T
-
-• `Const` **Container\_T**: typeof `__Container_T`
-
-___
-
-### Container\_type
-
-• `Const` **Container\_type**: typeof `__Container_type`
 
 ___
 
@@ -322,12 +261,6 @@ ___
 ### KeyedCollectionLike\_get
 
 • `Const` **KeyedCollectionLike\_get**: typeof `__KeyedCollectionLike_get`
-
-___
-
-### KeyedContainer\_TKey
-
-• `Const` **KeyedContainer\_TKey**: typeof `__KeyedContainer_TKey`
 
 ___
 

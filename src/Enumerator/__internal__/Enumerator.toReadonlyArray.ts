@@ -1,9 +1,8 @@
+import { EnumeratorContainer, RunnableContainers } from "../../containers.js";
 import {
-  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  RunnableContainers,
 } from "../../types.js";
 
 const Enumerator_toReadonlyArray: RunnableContainers.TypeClass<EnumeratorContainer>["toReadonlyArray"] =

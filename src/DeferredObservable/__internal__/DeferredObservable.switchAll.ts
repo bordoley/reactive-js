@@ -2,7 +2,7 @@ import HigherOrderObservable_switchAll from "../../HigherOrderObservable/__inter
 import {
   DeferredObservableContainer,
   ObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
 import DeferredObservable_lift from "./DeferredObservable.lift.js";
 
 const DeferredObservable_switchAll: ObservableContainers.TypeClass<DeferredObservableContainer>["switchAll"] =

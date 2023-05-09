@@ -1,8 +1,8 @@
-import { returns } from "../../functions.js";
 import {
   DeferredObservableContainer,
   ObservableContainers,
-} from "../../types.js";
+} from "../../containers.js";
+import { returns } from "../../functions.js";
 import DeferredObservable_mergeAll from "./DeferredObservable.mergeAll.js";
 
 const DeferredObservable_exhaust: ObservableContainers.TypeClass<DeferredObservableContainer>["exhaust"] =

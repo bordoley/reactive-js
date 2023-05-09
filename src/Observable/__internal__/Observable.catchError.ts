@@ -1,12 +1,11 @@
 import HigherOrderObservable_catchError from "../../HigherOrderObservable/__internal__/HigherOrderObservable.catchError.js";
+import { ObservableContainer, StatefulContainers } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import {
-  ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  StatefulContainers,
 } from "../../types.js";
 import Observable_lift from "./Observable.lift.js";
 

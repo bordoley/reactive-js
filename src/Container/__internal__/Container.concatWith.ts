@@ -1,4 +1,4 @@
-import { Container, Containers, DeferredContainers } from "../../types.js";
+import { Container, Containers, DeferredContainers } from "../../containers.js";
 
 const Container_concatWith =
   <C extends Container>(concat: DeferredContainers.TypeClass<C>["concat"]) =>

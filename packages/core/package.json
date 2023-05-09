@@ -47,6 +47,7 @@
     "access": "public"
   },
   "exports": {
+    "./containers": "./containers.js",
     "./functions": "./functions.js",
     "./integrations/node/Stream": "./integrations/node/Stream.js",
     "./integrations/react": "./integrations/react.js",

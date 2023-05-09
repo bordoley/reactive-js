@@ -1,7 +1,7 @@
 import Enumerable_lift from "../../Enumerable/__internal__/Enumerable.lift.js";
 import Observer_createKeepObserver from "../../Observer/__internal__/Observer.createKeepObserver.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Predicate, partial, pipe } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 
 type ObservableKeep = <C extends ObservableContainer, T>(
   predicate: Predicate<T>,

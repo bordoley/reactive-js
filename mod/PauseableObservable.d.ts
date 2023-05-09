@@ -1,5 +1,6 @@
+import { Containers, ObservableContainers, PauseableObservableContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
-import { Containers, DispatcherLike, ObservableContainers, ObservableLike, PauseableObservableContainer, PauseableObservableLike } from "./types.js";
+import { DispatcherLike, ObservableLike, PauseableObservableLike } from "./types.js";
 export declare const dispatchTo: ObservableContainers.TypeClass<PauseableObservableContainer>["dispatchTo"];
 export declare const enqueue: ObservableContainers.TypeClass<PauseableObservableContainer>["enqueue"];
 export declare const forEach: Containers.TypeClass<PauseableObservableContainer>["forEach"];

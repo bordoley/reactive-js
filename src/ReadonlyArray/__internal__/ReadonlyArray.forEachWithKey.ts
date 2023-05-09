@@ -1,5 +1,5 @@
+import { KeyedContainers, ReadonlyArrayContainer } from "../../containers.js";
 import { Function1, SideEffect2 } from "../../functions.js";
-import { KeyedContainers, ReadonlyArrayContainer } from "../../types.js";
 
 const ReadonlyArray_forEachWithKey: KeyedContainers.TypeClass<ReadonlyArrayContainer>["forEachWithKey"] =
 

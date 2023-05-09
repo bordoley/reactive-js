@@ -1,6 +1,7 @@
 import { create } from "../../__internal__/Object.js";
+import { KeyedContainers } from "../../containers.js";
 import { returns } from "../../functions.js";
-import { KeyedContainers, ReadonlyObjectMapLike } from "../../types.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_empty: KeyedContainers.TypeClass<ReadonlyObjectMapLike>["empty"] =
   /*@__PURE__*/ (() =>

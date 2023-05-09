@@ -1,5 +1,5 @@
 import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
-import { SharedObservableContainer } from "../../types.js";
+import { SharedObservableContainer } from "../../containers.js";
 import SharedObservable_create from "./SharedObservable.create.js";
 
 const SharedObservable_defer =

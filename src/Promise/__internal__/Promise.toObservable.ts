@@ -1,11 +1,10 @@
 import Disposable_toErrorHandler from "../../Disposable/__internal__/Disposable.toErrorHandler.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
+import { Containers, PromiseContainer } from "../../containers.js";
 import {
-  Containers,
   DispatcherLike_complete,
   DisposableLike_isDisposed,
   ObservableLike,
-  PromiseContainer,
   QueueableLike_enqueue,
 } from "../../types.js";
 

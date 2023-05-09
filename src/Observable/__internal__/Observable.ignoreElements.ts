@@ -1,5 +1,5 @@
 import Container_ignoreElements from "../../Container/__internal__/Container.ignoreElements.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_keep from "./Observable.keep.js";
 
 type ObservableIgnoreElements = <

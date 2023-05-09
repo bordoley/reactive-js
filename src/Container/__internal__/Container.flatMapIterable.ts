@@ -1,5 +1,5 @@
+import { Container, Containers, DeferredContainers } from "../../containers.js";
 import { Function1, compose } from "../../functions.js";
-import { Container, Containers, DeferredContainers } from "../../types.js";
 
 const Container_flatMapIterable =
   <C extends Container>(

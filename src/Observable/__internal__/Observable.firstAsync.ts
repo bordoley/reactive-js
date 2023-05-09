@@ -1,6 +1,6 @@
+import { ObservableContainer } from "../../containers.js";
 import { Optional, pipe } from "../../functions.js";
 import {
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

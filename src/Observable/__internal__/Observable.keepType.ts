@@ -1,6 +1,6 @@
 import Container_keepType from "../../Container/__internal__/Container.keepType.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { TypePredicate } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 import Observable_keep from "./Observable.keep.js";
 
 type ObservableKeepType = <C extends ObservableContainer, TA, TB extends TA>(

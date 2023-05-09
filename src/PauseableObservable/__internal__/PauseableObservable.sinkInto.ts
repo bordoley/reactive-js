@@ -3,6 +3,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import EventSource_addEventHandler from "../../EventSource/__internal__/EventSource.addEventHandler.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import { ObservableContainer } from "../../containers.js";
 import { Function1, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
@@ -11,7 +12,6 @@ import {
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
-  ObservableContainer,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,

@@ -1,5 +1,5 @@
 import HigherOrderObservable_scanLast from "../../HigherOrderObservable/__internal__/HigherOrderObservable.scanLast.js";
-import { Containers, EnumerableContainer } from "../../types.js";
+import { Containers, EnumerableContainer } from "../../containers.js";
 import Enumerable_create from "./Enumerable.create.js";
 
 const EnumerableObservable_scanLast: Containers.TypeClass<EnumerableContainer>["scanLast"] =

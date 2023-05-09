@@ -1,5 +1,6 @@
+import { IterableContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
-import { DisposableLike, IterableContainer, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { DisposableLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export declare const enumerate: IterableContainer.TypeClass["enumerate"];
 interface Flow extends IterableContainer.TypeClass {
     /** @category Transform */

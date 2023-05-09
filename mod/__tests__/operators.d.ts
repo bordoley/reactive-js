@@ -1,7 +1,7 @@
-import { Container, Containers, DeferredContainers, EnumerableContainers, RunnableContainers } from "../types.js";
-export declare const forEachTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & EnumerableContainers.TypeClass<C, import("../types.js").EnumeratorContainer> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
+import { Container, Containers, DeferredContainers, EnumerableContainers, RunnableContainers } from "../containers.js";
+export declare const forEachTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & EnumerableContainers.TypeClass<C, import("../containers.js").EnumeratorContainer> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
 export declare const fromReadonlyArrayTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
 export declare const keepTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
 export declare const mapTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Describe;
-export declare const toEnumerableTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & EnumerableContainers.TypeClass<C, import("../types.js").EnumeratorContainer>) => import("../__internal__/testing.js").Describe;
+export declare const toEnumerableTests: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & EnumerableContainers.TypeClass<C, import("../containers.js").EnumeratorContainer>) => import("../__internal__/testing.js").Describe;
 export declare const toRunnableTest: <C extends Container>(m: Containers.TypeClass<C> & DeferredContainers.TypeClass<C> & RunnableContainers.TypeClass<C>) => import("../__internal__/testing.js").Test;

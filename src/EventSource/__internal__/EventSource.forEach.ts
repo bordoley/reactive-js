@@ -13,13 +13,12 @@ import {
   ForEachLike,
   ForEachLike_effect,
 } from "../../__internal__/types.js";
+import { Containers, EventSourceContainer } from "../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../functions.js";
 import {
-  Containers,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
-  EventSourceContainer,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 

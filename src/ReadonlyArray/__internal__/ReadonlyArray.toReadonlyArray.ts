@@ -1,4 +1,4 @@
-import { KeyedContainers, ReadonlyArrayContainer } from "../../types.js";
+import { KeyedContainers, ReadonlyArrayContainer } from "../../containers.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const ReadonlyArray_toReadonlyArray: KeyedContainers.TypeClass<ReadonlyArrayContainer>["toReadonlyArray"] =

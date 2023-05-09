@@ -4,13 +4,15 @@ import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onCo
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
-import { bindMethod, error, pipe } from "../../functions.js";
 import {
   AsyncIterableContainer,
+  ObservableContainer,
+} from "../../containers.js";
+import { bindMethod, error, pipe } from "../../functions.js";
+import {
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableContainer,
   ObservableLike,
   ObserverLike,
   QueueableLike,

@@ -1,5 +1,6 @@
+import { Containers, ObservableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
-import { Containers, DisposableLike, DisposableOrTeardown, ObservableContainer, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
+import { DisposableLike, DisposableOrTeardown, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
 export declare const backpressureStrategy: ObservableContainer.TypeClass["backpressureStrategy"];
 /**
  * @category Operator

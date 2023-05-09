@@ -12,10 +12,9 @@ import {
   MappingLike,
   MappingLike_selector,
 } from "../../__internal__/types.js";
+import { Containers, EnumeratorContainer } from "../../containers.js";
 import { Function1, none } from "../../functions.js";
 import {
-  Containers,
-  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,

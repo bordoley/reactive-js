@@ -78,8 +78,9 @@ import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_throttle from "./Runnable/__internal__/Runnable.throttle.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { RunnableContainer } from "./containers.js";
 import { Factory } from "./functions.js";
-import { RunnableContainer, RunnableLike } from "./types.js";
+import { RunnableLike } from "./types.js";
 
 export const animate: RunnableContainer.TypeClass["animate"] = Runnable_animate;
 

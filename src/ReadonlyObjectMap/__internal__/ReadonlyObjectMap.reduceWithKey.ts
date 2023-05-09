@@ -1,10 +1,10 @@
 import { hasOwn } from "../../__internal__/Object.js";
-import { Factory, Function3 } from "../../functions.js";
 import {
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { Factory, Function3 } from "../../functions.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_reduceWithKey: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["reduceWithKey"] =
 

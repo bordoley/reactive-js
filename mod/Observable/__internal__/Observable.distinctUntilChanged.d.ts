@@ -1,5 +1,5 @@
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Equality } from "../../functions.js";
-import { Containers, ObservableContainer } from "../../types.js";
 type ObservableDistinctUntilChanged = <C extends ObservableContainer, T>(options?: {
     readonly equality?: Equality<T>;
 }) => Containers.Operator<C, T, T>;

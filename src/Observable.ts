@@ -58,12 +58,11 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
+import { Containers, ObservableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
 import {
-  Containers,
   DisposableLike,
   DisposableOrTeardown,
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

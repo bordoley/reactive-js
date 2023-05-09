@@ -1,8 +1,7 @@
 import HigherOrderObservable_switchAll from "../../HigherOrderObservable/__internal__/HigherOrderObservable.switchAll.js";
+import { ObservableContainer, ObservableContainers } from "../../containers.js";
 import { Function1 } from "../../functions.js";
 import {
-  ObservableContainer,
-  ObservableContainers,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,

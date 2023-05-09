@@ -4,7 +4,7 @@ import {
   Containers,
   ObservableContainers,
   RunnableContainer,
-} from "../../types.js";
+} from "../../containers.js";
 import Runnable_exhaust from "./Runnable.exhaust.js";
 
 const map: Containers.TypeClass<RunnableContainer>["map"] = Observable_map;

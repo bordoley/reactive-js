@@ -1,5 +1,5 @@
+import { Container, Containers } from "../../containers.js";
 import { Function1, compose } from "../../functions.js";
-import { Container, Containers } from "../../types.js";
 
 const Container_concatMap =
   <C extends Container, O = never>(

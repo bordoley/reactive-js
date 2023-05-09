@@ -1,34 +1,34 @@
 /**
  * @category Constructor
  */
-export declare const create: <TReq, T>(op: import("./types.js").Containers.Operator<import("./types.js").DeferredObservableContainer, TReq, T>) => import("./types.js").StreamableLike<TReq, T, import("./types.js").StreamLike<TReq, T>>;
+export declare const create: <TReq, T>(op: import("./containers.js").Containers.Operator<import("./containers.js").DeferredObservableContainer, TReq, T>) => import("./types.js").StreamableLike<TReq, T, import("./types.js").StreamLike<TReq, T>>;
 /**
  * @category Constructor
  */
 export declare const createAnimationGroupEventHandler: {
-    <TEvent, TKey extends string | number | symbol, T>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey, import("./functions.js").Function1<TEvent, import("./types.js").RunnableObservableContainers.AnimationConfig<T> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T>[]>>, options: {
+    <TEvent, TKey extends string | number | symbol, T>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey, import("./functions.js").Function1<TEvent, import("./containers.js").RunnableObservableContainers.AnimationConfig<T> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<TEvent, boolean, import("./types.js").StreamLike<TEvent, boolean> & import("./types.js").DictionaryLike<TKey, import("./types.js").EventSourceLike<T>>>;
-    <TEvent_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_1, import("./functions.js").Function1<TEvent_1, import("./types.js").RunnableObservableContainers.AnimationConfig<T_1> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T_1>[]>>, options: {
+    <TEvent_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_1, import("./functions.js").Function1<TEvent_1, import("./containers.js").RunnableObservableContainers.AnimationConfig<T_1> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T_1>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<TEvent_1, boolean, import("./types.js").StreamLike<TEvent_1, boolean> & import("./types.js").DictionaryLike<TKey_1, import("./types.js").EventSourceLike<T_1>>>;
-    <TEvent_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_2, import("./functions.js").Function1<TEvent_2, import("./types.js").RunnableObservableContainers.AnimationConfig<T_2> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T_2>[]>>, options: {
+    <TEvent_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_2, import("./functions.js").Function1<TEvent_2, import("./containers.js").RunnableObservableContainers.AnimationConfig<T_2> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T_2>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): import("./types.js").StreamableLike<TEvent_2, boolean, import("./types.js").StreamLike<TEvent_2, boolean> & import("./types.js").DictionaryLike<TKey_2, import("./types.js").EventSourceLike<T_2>>>;
-    <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_3, import("./types.js").RunnableObservableContainers.AnimationConfig<T_3> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T_3>[]>, options: {
+    <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_3, import("./containers.js").RunnableObservableContainers.AnimationConfig<T_3> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T_3>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<void, boolean, import("./types.js").StreamLike<void, boolean> & import("./types.js").DictionaryLike<TKey_3, import("./types.js").EventSourceLike<T_3>>>;
-    <TKey_4 extends string | number | symbol, T_4>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_4, import("./types.js").RunnableObservableContainers.AnimationConfig<T_4> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T_4>[]>, options: {
+    <TKey_4 extends string | number | symbol, T_4>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_4, import("./containers.js").RunnableObservableContainers.AnimationConfig<T_4> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T_4>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<void, boolean, import("./types.js").StreamLike<void, boolean> & import("./types.js").DictionaryLike<TKey_4, import("./types.js").EventSourceLike<T_4>>>;
-    <TKey_5 extends string | number | symbol, T_5>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_5, import("./types.js").RunnableObservableContainers.AnimationConfig<T_5> | readonly import("./types.js").RunnableObservableContainers.AnimationConfig<T_5>[]>, options: {
+    <TKey_5 extends string | number | symbol, T_5>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_5, import("./containers.js").RunnableObservableContainers.AnimationConfig<T_5> | readonly import("./containers.js").RunnableObservableContainers.AnimationConfig<T_5>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;

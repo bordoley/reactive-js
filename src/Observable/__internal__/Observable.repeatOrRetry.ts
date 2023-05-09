@@ -1,11 +1,10 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { bindMethod, error, isSome, partial, pipe } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_dispose,
-  ObservableContainer,
   ObservableLike,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,

@@ -1,9 +1,6 @@
+import { EnumerableContainers, ObservableContainer } from "../../containers.js";
 import { errorWithDebugMessage } from "../../functions.js";
-import {
-  EnumerableContainers,
-  ObservableContainer,
-  ObservableLike,
-} from "../../types.js";
+import { ObservableLike } from "../../types.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_throws from "./Observable.throws.js";
 

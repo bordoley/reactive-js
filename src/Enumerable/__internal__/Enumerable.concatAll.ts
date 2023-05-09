@@ -1,4 +1,4 @@
-import { DeferredContainers, EnumerableContainer } from "../../types.js";
+import { DeferredContainers, EnumerableContainer } from "../../containers.js";
 import Enumerable_mergeAll from "./Enumerable.mergeAll.js";
 
 const Enumerable_concatAll: DeferredContainers.TypeClass<EnumerableContainer>["concatAll"] =

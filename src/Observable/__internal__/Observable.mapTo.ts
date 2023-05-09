@@ -1,5 +1,5 @@
 import Container_mapTo from "../../Container/__internal__/Container.mapTo.js";
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import Observable_map from "./Observable.map.js";
 
 type ObservableMap = <C extends ObservableContainer, TA, TB>(

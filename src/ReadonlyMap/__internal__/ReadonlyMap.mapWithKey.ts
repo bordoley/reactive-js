@@ -1,5 +1,5 @@
+import { KeyedContainers, ReadonlyMapContainer } from "../../containers.js";
 import { Function2 } from "../../functions.js";
-import { KeyedContainers, ReadonlyMapContainer } from "../../types.js";
 
 const ReadonlyMap_mapWithKey: KeyedContainers.TypeClass<ReadonlyMapContainer>["mapWithKey"] =
 

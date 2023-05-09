@@ -23,14 +23,16 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
-import { Function1, bind, bindMethod, none, pipe } from "../../functions.js";
 import {
   Containers,
   DeferredContainers,
+  ObservableContainer,
+} from "../../containers.js";
+import { Function1, bind, bindMethod, none, pipe } from "../../functions.js";
+import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableContainer,
   ObserverLike,
   ObserverLike_notify,
 } from "../../types.js";

@@ -1,4 +1,4 @@
-import { Containers, ObservableContainer } from "../../types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 interface ObservableCombineLatest {
     combineLatest<C extends ObservableContainer, TA, TB>(a: Containers.Of<C, TA>, b: Containers.Of<C, TB>): Containers.Of<C, readonly [TA, TB]>;
     combineLatest<C extends ObservableContainer, TA, TB, TC>(a: Containers.Of<C, TA>, b: Containers.Of<C, TB>, c: Containers.Of<C, TC>): Containers.Of<C, readonly [TA, TB, TC]>;

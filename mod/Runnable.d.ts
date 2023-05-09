@@ -1,5 +1,6 @@
+import { RunnableContainer } from "./containers.js";
 import { Factory } from "./functions.js";
-import { RunnableContainer, RunnableLike } from "./types.js";
+import { RunnableLike } from "./types.js";
 export declare const animate: RunnableContainer.TypeClass["animate"];
 export declare const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"];
 export declare const buffer: RunnableContainer.TypeClass["buffer"];

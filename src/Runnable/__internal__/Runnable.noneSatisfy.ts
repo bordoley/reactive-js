@@ -1,5 +1,5 @@
 import Container_noneSatisfy from "../../Container/__internal__/Container.noneSatisfy.js";
-import { RunnableContainer } from "../../types.js";
+import { RunnableContainer } from "../../containers.js";
 import Runnable_everySatisfy from "./Runnable.everySatisfy.js";
 
 const Runnable_noneSatisfy =

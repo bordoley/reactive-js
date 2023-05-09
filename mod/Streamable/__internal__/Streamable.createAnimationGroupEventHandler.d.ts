@@ -1,5 +1,6 @@
+import { RunnableObservableContainers } from "../../containers.js";
 import { Function1 } from "../../functions.js";
-import { DictionaryLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, RunnableObservableContainers, SchedulerLike, StreamLike, StreamableLike } from "../../types.js";
+import { DictionaryLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "../../types.js";
 type AnimationGroupEventHandlerLike<TEvent, TKey extends string | number | symbol, T> = StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
 interface CreateAnimationGroupEventHandler {
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, RunnableObservableContainers.AnimationConfig<T> | readonly RunnableObservableContainers.AnimationConfig<T>[]>>, options: {

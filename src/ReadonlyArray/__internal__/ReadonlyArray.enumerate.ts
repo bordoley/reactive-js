@@ -15,9 +15,9 @@ import {
   __ReadonlyArrayEnumerator_index,
   __ReadonlyArrayEnumerator_values,
 } from "../../__internal__/symbols.js";
+import { EnumeratorContainer } from "../../containers.js";
 import { Function1, none } from "../../functions.js";
 import {
-  EnumeratorContainer,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,

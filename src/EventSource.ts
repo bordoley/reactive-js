@@ -6,13 +6,9 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import { Containers, EventSourceContainer } from "./containers.js";
 import { Function1, SideEffect1 } from "./functions.js";
-import {
-  Containers,
-  DisposableLike,
-  EventSourceContainer,
-  EventSourceLike,
-} from "./types.js";
+import { DisposableLike, EventSourceLike } from "./types.js";
 
 export const addEventHandler: <T>(
   handler: SideEffect1<T>,

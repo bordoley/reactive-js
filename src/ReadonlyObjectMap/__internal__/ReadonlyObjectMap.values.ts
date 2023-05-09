@@ -1,11 +1,10 @@
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
-import { pipe } from "../../functions.js";
 import {
-  EnumeratorLike,
   KeyedContainers,
   ReadonlyObjectMapContainer,
-  ReadonlyObjectMapLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { pipe } from "../../functions.js";
+import { EnumeratorLike, ReadonlyObjectMapLike } from "../../types.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
 const ReadonlyObjectMap_values: KeyedContainers.TypeClass<ReadonlyObjectMapContainer>["values"] =

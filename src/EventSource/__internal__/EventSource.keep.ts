@@ -13,13 +13,12 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
+import { Containers, EventSourceContainer } from "../../containers.js";
 import { Predicate, none, partial, pipe } from "../../functions.js";
 import {
-  Containers,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
-  EventSourceContainer,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 

@@ -1,5 +1,6 @@
+import { DeferredObservableContainer } from "./containers.js";
 import { Factory } from "./functions.js";
-import { DeferredObservableContainer, DeferredObservableLike } from "./types.js";
+import { DeferredObservableLike } from "./types.js";
 export declare const backpressureStrategy: DeferredObservableContainer.TypeClass["backpressureStrategy"];
 export declare const buffer: DeferredObservableContainer.TypeClass["buffer"];
 export declare const combineLatest: DeferredObservableContainer.TypeClass["combineLatest"];

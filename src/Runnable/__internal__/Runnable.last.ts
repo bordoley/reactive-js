@@ -1,10 +1,7 @@
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import { RunnableContainer, RunnableContainers } from "../../containers.js";
 import { Optional, none, pipe } from "../../functions.js";
-import {
-  RunnableContainer,
-  RunnableContainers,
-  RunnableLike,
-} from "../../types.js";
+import { RunnableLike } from "../../types.js";
 import Runnable_run from "./Runnable.run.js";
 
 const Runnable_last: RunnableContainers.TypeClass<RunnableContainer>["last"] =

@@ -5,6 +5,14 @@ import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.j
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import {
+  Containers,
+  DeferredObservableContainer,
+  EnumerableContainer,
+  ObservableContainer,
+  RunnableContainer,
+  SharedObservableContainer,
+} from "../../containers.js";
+import {
   Factory,
   identity,
   isFunction,
@@ -13,15 +21,9 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  Containers,
-  DeferredObservableContainer,
   DisposableOrTeardown,
-  EnumerableContainer,
-  ObservableContainer,
   ObservableLike,
   ObservableLike_observe,
-  RunnableContainer,
-  SharedObservableContainer,
 } from "../../types.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";

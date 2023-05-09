@@ -1,4 +1,4 @@
-import { EnumerableContainer } from "./types.js";
+import { EnumerableContainer } from "./containers.js";
 export declare const buffer: EnumerableContainer.TypeClass["buffer"];
 export declare const catchError: EnumerableContainer.TypeClass["catchError"];
 /**

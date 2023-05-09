@@ -1,11 +1,11 @@
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { pipe } from "../../functions.js";
 import {
   Containers,
   ObservableContainer,
   ObservableContainers,
-  ObservableLike,
-} from "../../types.js";
+} from "../../containers.js";
+import { pipe } from "../../functions.js";
+import { ObservableLike } from "../../types.js";
 import Observable_latest from "./Observable.latest.js";
 
 const Observable_forkZipLatest: ObservableContainers.TypeClass<ObservableContainer>["forkZipLatest"] =

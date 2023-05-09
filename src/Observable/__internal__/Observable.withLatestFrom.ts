@@ -20,12 +20,11 @@ import {
   DelegatingLike_delegate,
   WithLatestLike,
 } from "../../__internal__/types.js";
+import { Containers, ObservableContainer } from "../../containers.js";
 import { Function2, none, partial, pipe } from "../../functions.js";
 import {
-  Containers,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableContainer,
   ObservableLike,
   ObserverLike,
   ObserverLike_notify,

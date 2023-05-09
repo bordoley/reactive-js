@@ -1,5 +1,5 @@
 import HigherOrderObservable_defer from "../../HigherOrderObservable/__internal__/HigherOrderObservable.defer.js";
-import { ObservableContainer } from "../../types.js";
+import { ObservableContainer } from "../../containers.js";
 import Observable_create from "./Observable.create.js";
 
 const Observable_defer =

@@ -1,5 +1,5 @@
 import HigherOrderObservable_scanLast from "../../HigherOrderObservable/__internal__/HigherOrderObservable.scanLast.js";
-import { Containers, RunnableContainer } from "../../types.js";
+import { Containers, RunnableContainer } from "../../containers.js";
 import Runnable_create from "./Runnable.create.js";
 
 const Runnable_scanLast: Containers.TypeClass<RunnableContainer>["scanLast"] =

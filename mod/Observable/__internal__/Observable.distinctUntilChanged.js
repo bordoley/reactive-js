@@ -8,7 +8,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __DistinctUntilChangedObserver_equality, __DistinctUntilChangedObserver_hasValue, __DistinctUntilChangedObserver_prev, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none, partial, pipe, strictEquality, } from "../../functions.js";
-import { ObserverLike_notify, } from "../../types.js";
+import { ObserverLike_notify } from "../../types.js";
 const Observable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
     const createDistinctUntilChangedObserver = (() => {

@@ -1,4 +1,4 @@
-import { DeferredContainers, ObservableContainer } from "../../types.js";
+import { DeferredContainers, ObservableContainer } from "../../containers.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 
 const Observable_concatAll: DeferredContainers.TypeClass<ObservableContainer>["concatAll"] =

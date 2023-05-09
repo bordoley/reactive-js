@@ -1,6 +1,7 @@
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../Disposable/__internal__/Disposable.onError.js";
 import Scheduler_createHostScheduler from "../../Scheduler/__internal__/Scheduler.createHostScheduler.js";
+import { ObservableContainer } from "../../containers.js";
 import {
   Optional,
   isFunction,
@@ -11,7 +12,6 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike_dispose,
-  ObservableContainer,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

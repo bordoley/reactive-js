@@ -4,7 +4,7 @@ import {
   Containers,
   ObservableContainers,
   RunnableContainer,
-} from "../../types.js";
+} from "../../containers.js";
 import Runnable_switchAll from "./Runnable.switchAll.js";
 
 const map: Containers.TypeClass<RunnableContainer>["map"] = Observable_map;

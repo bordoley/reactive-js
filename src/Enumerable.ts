@@ -54,7 +54,7 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { EnumerableContainer } from "./types.js";
+import { EnumerableContainer } from "./containers.js";
 
 export const buffer: EnumerableContainer.TypeClass["buffer"] =
   Observable_buffer;
