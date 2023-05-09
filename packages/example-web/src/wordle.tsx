@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { EventSourceLike, KeyedCollectionLike_get } from "@reactive-js/core/core";
+import {
+  EventSourceLike,
+  KeyedCollectionLike_get,
+} from "@reactive-js/core/core";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
 import * as Streamable from "@reactive-js/core/core/Streamable";

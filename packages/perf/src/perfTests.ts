@@ -10,7 +10,7 @@ import {
   Container,
   Containers,
   DeferredContainers,
-  RunnableContainers
+  RunnableContainers,
 } from "@reactive-js/core";
 import * as Enumerable from "@reactive-js/core/Enumerable";
 import * as ReadonlyArray from "@reactive-js/core/ReadonlyArray";

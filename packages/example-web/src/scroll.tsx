@@ -9,7 +9,11 @@ import {
   useDisposable,
   useStream,
 } from "@reactive-js/core/integrations/react";
-import { KeyedCollectionLike_get, EventSourceLike, EventListenerLike_notify } from "@reactive-js/core/core";
+import {
+  KeyedCollectionLike_get,
+  EventSourceLike,
+  EventListenerLike_notify,
+} from "@reactive-js/core/core";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/core/EventSource";

@@ -472,6 +472,10 @@ export interface ObservableLike<T = unknown> {
 export interface ObservableContainer extends Container {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isEnumerable]: false;
