@@ -1,19 +1,13 @@
-import {
-  DisposableLike,
-  EventSourceLike,
-  QueueableLike,
-  QueueableLike_enqueue,
-} from "../../core.js";
-import * as Disposable from "../../core/Disposable.js";
-import * as EventSource from "../../core/EventSource.js";
+import * as Disposable from "../../Disposable.js";
+import * as EventSource from "../../EventSource.js";
 import {
   __constant,
   __memo,
   __observe,
   __state,
   __using,
-} from "../../core/Observable/effects.js";
-import * as ReadonlyObjectMap from "../../core/ReadonlyObjectMap.js";
+} from "../../Observable/effects.js";
+import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import {
   Optional,
   SideEffect1,
@@ -24,6 +18,12 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import {
+  DisposableLike,
+  EventSourceLike,
+  QueueableLike,
+  QueueableLike_enqueue,
+} from "../../types.js";
 import { CSSStyleMapLike } from "../web.js";
 
 const returnsNone = returns(none);

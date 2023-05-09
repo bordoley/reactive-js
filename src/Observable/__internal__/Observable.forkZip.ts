@@ -1,0 +1,22 @@
+import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import { pipe } from "../../functions.js";
+import {
+  Containers,
+  ObservableContainer,
+  ObservableLike,
+} from "../../types.js";
+import Observable_zipObservables from "./Observable.zipObservables.js";
+
+const Observable_forkZip: Containers.TypeClass<ObservableContainer>["forkZip"] =
+
+    <TIn, TOut>(
+      ...ops: readonly Containers.Operator<ObservableContainer, TIn, TOut>[]
+    ) =>
+    (obs: ObservableLike<TIn>) =>
+      pipe(
+        ops,
+        ReadonlyArray_map(op => op(obs)),
+        Observable_zipObservables,
+      );
+
+export default Observable_forkZip;

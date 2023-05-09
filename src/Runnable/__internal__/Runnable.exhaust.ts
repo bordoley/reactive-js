@@ -1,0 +1,15 @@
+import { returns } from "../../functions.js";
+import { ObservableContainers, RunnableContainer } from "../../types.js";
+import Runnable_mergeAll from "./Runnable.mergeAll.js";
+
+const Runnable_exhaust: ObservableContainers.TypeClass<RunnableContainer>["exhaust"] =
+  /*@__PURE__*/ (() =>
+    returns(
+      Runnable_mergeAll({
+        capacity: 0,
+        backpressureStrategy: "drop-latest",
+        concurrency: 1,
+      }),
+    ))();
+
+export default Runnable_exhaust;

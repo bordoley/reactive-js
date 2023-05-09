@@ -1,6 +1,6 @@
 import { Readable, Writable } from "stream";
-import { DisposableLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../core.js";
 import { Factory, Function1 } from "../../functions.js";
+import { DisposableLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "../../types.js";
 export declare const flow: (scheduler: SchedulerLike, options?: {
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

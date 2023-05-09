@@ -1,5 +1,5 @@
-import { DisposableLike, ErrorSafeEventListenerLike, EventListenerLike, EventSourceLike, SharedObservableLike } from "../../core.js";
 import { Function1, SideEffect1 } from "../../functions.js";
+import { DisposableLike, ErrorSafeEventListenerLike, EventListenerLike, EventSourceLike, SharedObservableLike } from "../../types.js";
 import type { Rect, ScrollValue } from "../web.js";
 interface AddEventHandler {
     addEventHandler<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, eventHandler: SideEffect1<AbortSignalEventMap[K]>, options?: {

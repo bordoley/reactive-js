@@ -1,19 +1,19 @@
+import * as Enumerable from "../Enumerable.js";
+import * as Runnable from "../Runnable.js";
 import {
   describe,
   expectArrayEquals,
   expectToThrowError,
   test,
 } from "../__internal__/testing.js";
+import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
 import {
   Container,
   Containers,
   DeferredContainers,
   EnumerableContainers,
   RunnableContainers,
-} from "../core.js";
-import * as Enumerable from "../core/Enumerable.js";
-import * as Runnable from "../core/Runnable.js";
-import { greaterThan, increment, pipe, pipeLazy } from "../functions.js";
+} from "../types.js";
 
 export const forEachTests = <C extends Container>(
   m: Containers.TypeClass<C> &

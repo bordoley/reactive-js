@@ -1,10 +1,10 @@
+import { Optional } from "../functions.js";
 import {
   CollectionLike,
   DisposableLike,
   QueueableLike,
   SchedulerLike,
-} from "../core.js";
-import { Optional } from "../functions.js";
+} from "../types.js";
 import {
   __ContinuationLike_activeChild as ContinuationLike_activeChild,
   __ContinuationLike_parent as ContinuationLike_parent,

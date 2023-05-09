@@ -1,22 +1,11 @@
+import * as Disposable from "../../Disposable.js";
+import * as EventListener from "../../EventListener.js";
+import * as EventPublisher from "../../EventPublisher.js";
+import * as EventSource from "../../EventSource.js";
+import * as SharedObservable from "../../SharedObservable.js";
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
-import {
-  DisposableLike,
-  ErrorSafeEventListenerLike,
-  EventListenerLike,
-  EventListenerLike_notify,
-  EventPublisherLike,
-  EventSourceLike,
-  EventSourceLike_addEventListener,
-  QueueableLike_enqueue,
-  SharedObservableLike,
-} from "../../core.js";
-import * as Disposable from "../../core/Disposable.js";
-import * as EventListener from "../../core/EventListener.js";
-import * as EventPublisher from "../../core/EventPublisher.js";
-import * as EventSource from "../../core/EventSource.js";
-import * as SharedObservable from "../../core/SharedObservable.js";
 import {
   Function1,
   Optional,
@@ -28,6 +17,17 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
+import {
+  DisposableLike,
+  ErrorSafeEventListenerLike,
+  EventListenerLike,
+  EventListenerLike_notify,
+  EventPublisherLike,
+  EventSourceLike,
+  EventSourceLike_addEventListener,
+  QueueableLike_enqueue,
+  SharedObservableLike,
+} from "../../types.js";
 import type { Rect, ScrollValue } from "../web.js";
 
 interface AddEventHandler {

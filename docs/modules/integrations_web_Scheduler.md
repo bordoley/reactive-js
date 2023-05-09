@@ -12,14 +12,14 @@
 
 ### createAnimationFrameScheduler
 
-▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/core.SchedulerLike.md) & [`DisposableLike`](../interfaces/core.DisposableLike.md)
+▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
+| `a` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/core.SchedulerLike.md) & [`DisposableLike`](../interfaces/core.DisposableLike.md)
+[`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)

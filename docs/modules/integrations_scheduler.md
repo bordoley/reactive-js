@@ -12,7 +12,7 @@
 
 ### getScheduler
 
-▸ **getScheduler**(`options?`): [`SchedulerLike`](../interfaces/core.SchedulerLike.md)
+▸ **getScheduler**(`options?`): [`SchedulerLike`](../interfaces/types.SchedulerLike.md)
 
 #### Parameters
 
@@ -23,4 +23,4 @@
 
 #### Returns
 
-[`SchedulerLike`](../interfaces/core.SchedulerLike.md)
+[`SchedulerLike`](../interfaces/types.SchedulerLike.md)

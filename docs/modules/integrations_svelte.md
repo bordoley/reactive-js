@@ -12,7 +12,7 @@
 
 ### subscribe
 
-▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>
+▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>
 
 #### Type parameters
 
@@ -24,11 +24,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/core.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, { `subscribe`: (`callback`: (`next`: [`Optional`](functions.md#optional)<`T`\>) => `void`) => [`Factory`](functions.md#factory)<`void`\>  }\>

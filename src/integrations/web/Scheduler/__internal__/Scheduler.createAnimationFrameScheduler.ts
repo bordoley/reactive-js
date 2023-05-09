@@ -1,12 +1,15 @@
+import Delegating_mixin from "../../../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../../../Disposable/__internal__/Disposable.addTo.js";
+import Queue_createIndexedQueue from "../../../../Queue/__internal__/Queue.createIndexedQueue.js";
+import {
+  SchedulerImplementationLike,
+  SchedulerImplementationLike_runContinuation,
+  SchedulerImplementationLike_scheduleContinuation,
+  SchedulerImplementationLike_shouldYield,
+  SchedulerImplementation_mixin,
+} from "../../../../Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_SAFE_INTEGER } from "../../../../__internal__/constants.js";
-import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
-  DelegatingLike,
-  DelegatingLike_delegate,
-  QueueLike_dequeue,
-} from "../../../../__internal__/core.js";
 import {
   createInstanceFactory,
   include,
@@ -15,24 +18,12 @@ import {
   props,
 } from "../../../../__internal__/mixins.js";
 import {
-  CollectionLike_count,
-  DisposableLike,
-  QueueableLike_enqueue,
-  SchedulerLike,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  SchedulerLike_shouldYield,
-} from "../../../../core.js";
-import Delegating_mixin from "../../../../core/Delegating/__internal__/Delegating.mixin.js";
-import Disposable_addTo from "../../../../core/Disposable/__internal__/Disposable.addTo.js";
-import Queue_createIndexedQueue from "../../../../core/Queue/__internal__/Queue.createIndexedQueue.js";
-import {
-  SchedulerImplementationLike,
-  SchedulerImplementationLike_runContinuation,
-  SchedulerImplementationLike_scheduleContinuation,
-  SchedulerImplementationLike_shouldYield,
-  SchedulerImplementation_mixin,
-} from "../../../../core/Scheduler/__internal__/SchedulerImplementation.mixin.js";
+  ContinuationLike,
+  ContinuationSchedulerLike_schedule,
+  DelegatingLike,
+  DelegatingLike_delegate,
+  QueueLike_dequeue,
+} from "../../../../__internal__/types.js";
 import {
   Optional,
   SideEffect,
@@ -42,6 +33,15 @@ import {
   pipe,
   pipeLazy,
 } from "../../../../functions.js";
+import {
+  CollectionLike_count,
+  DisposableLike,
+  QueueableLike_enqueue,
+  SchedulerLike,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
+} from "../../../../types.js";
 
 const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
   let rafQueue = Queue_createIndexedQueue<SideEffect>(

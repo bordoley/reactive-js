@@ -1,11 +1,11 @@
 /// <reference types="./scheduler.d.ts" />
 
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
+import * as Disposable from "../Disposable.js";
+import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "../Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { DisposableLike_dispose, SchedulerLike_now, } from "../core.js";
-import * as Disposable from "../core/Disposable.js";
-import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "../core/Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import { newInstance, none, pipe, pipeLazy } from "../functions.js";
+import { DisposableLike_dispose, SchedulerLike_now, } from "../types.js";
 const createReactScheduler = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(SchedulerImplementation_mixin), function ReactPriorityScheduler(instance, priority) {
         init(SchedulerImplementation_mixin, instance, 300);

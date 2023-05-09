@@ -7,6 +7,26 @@ import {
   useRef,
   useState,
 } from "react";
+import * as Disposable from "../Disposable.js";
+import * as Enumerable from "../Enumerable.js";
+import * as EventSource from "../EventSource.js";
+import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import MulticastObservable_isMulticastObservable from "../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
+import * as Observable from "../Observable.js";
+import * as Publisher from "../Publisher.js";
+import {
+  Factory,
+  Function1,
+  Optional,
+  SideEffect,
+  bindMethod,
+  isFunction,
+  isNone,
+  isSome,
+  none,
+  pipeSomeLazy,
+  raiseError,
+} from "../functions.js";
 import {
   CollectionLike_count,
   DispatcherLike,
@@ -33,27 +53,7 @@ import {
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
-} from "../core.js";
-import * as Disposable from "../core/Disposable.js";
-import * as Enumerable from "../core/Enumerable.js";
-import * as EventSource from "../core/EventSource.js";
-import IndexedBufferCollection_empty from "../core/IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import MulticastObservable_isMulticastObservable from "../core/MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
-import * as Observable from "../core/Observable.js";
-import * as Publisher from "../core/Publisher.js";
-import {
-  Factory,
-  Function1,
-  Optional,
-  SideEffect,
-  bindMethod,
-  isFunction,
-  isNone,
-  isSome,
-  none,
-  pipeSomeLazy,
-  raiseError,
-} from "../functions.js";
+} from "../types.js";
 import { getScheduler } from "./scheduler.js";
 
 /**

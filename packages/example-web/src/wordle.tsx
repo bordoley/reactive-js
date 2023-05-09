@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   EventSourceLike,
   KeyedCollectionLike_get,
-} from "@reactive-js/core/core";
+} from "@reactive-js/core/types";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
-import * as Streamable from "@reactive-js/core/core/Streamable";
+import * as Streamable from "@reactive-js/core/Streamable";
 import {
   useDispatcher,
   useDisposable,

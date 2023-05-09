@@ -12,14 +12,14 @@
 
 ### subscribe
 
-▸ **subscribe**(`scheduler`): [`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) & [`DisposableLike`](../interfaces/core.DisposableLike.md)
+▸ **subscribe**(`scheduler`): [`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
 
 #### Returns
 
-[`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) & [`DisposableLike`](../interfaces/core.DisposableLike.md)
+[`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)

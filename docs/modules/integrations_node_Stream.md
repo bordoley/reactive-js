@@ -13,26 +13,26 @@
 
 ### flow
 
-▸ **flow**(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/core.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/core.DisposableLike.md)\>
+▸ **flow**(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/core.SchedulerLike.md) |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/core.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/core.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 
 ### sinkInto
 
-▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/core.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`void`\>\>
+▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`void`\>\>
 
 #### Parameters
 
@@ -42,4 +42,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/core.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/core.ObservableLike.md)<`void`\>\>
+[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`void`\>\>
