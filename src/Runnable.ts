@@ -82,10 +82,9 @@ import { RunnableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
 import { RunnableLike } from "./types.js";
 
-export namespace AnimationConfig {
+export namespace Animation {
   /**
    * @noInheritDoc
-   * @category AnimationConfig
    */
   export interface Delay {
     readonly type: "delay";
@@ -94,7 +93,6 @@ export namespace AnimationConfig {
 
   /**
    * @noInheritDoc
-   * @category AnimationConfig
    */
   export interface KeyFrame {
     readonly type: "keyframe";
@@ -106,7 +104,6 @@ export namespace AnimationConfig {
 
   /**
    * @noInheritDoc
-   * @category AnimationConfig
    */
   export interface Frame {
     readonly type: "frame";
@@ -115,17 +112,15 @@ export namespace AnimationConfig {
 
   /**
    * @noInheritDoc
-   * @category AnimationConfig
    */
   export interface Loop<T> {
     readonly type: "loop";
-    readonly animation: Description<T> | readonly Description<T>[];
+    readonly animation: Animation<T> | readonly Animation<T>[];
     readonly count?: number;
   }
 
   /**
    * @noInheritDoc
-   * @category AnimationConfig
    */
   export interface Spring {
     readonly type: "spring";
@@ -135,23 +130,20 @@ export namespace AnimationConfig {
     readonly damping?: number;
     readonly precision?: number;
   }
-
-  export type Description<T = number> =
-    | Delay
-    | Loop<T>
-    | (T extends number
-        ? (KeyFrame | Spring | Frame) & {
-            readonly selector?: never;
-          }
-        : (KeyFrame | Spring | Frame) & {
-            readonly selector: Function1<number, T>;
-          });
 }
+export type Animation<T = number> =
+  | Animation.Delay
+  | Animation.Loop<T>
+  | (T extends number
+      ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+          readonly selector?: never;
+        }
+      : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+          readonly selector: Function1<number, T>;
+        });
 
 export const animate: <T = number>(
-  configs:
-    | AnimationConfig.Description<T>
-    | readonly AnimationConfig.Description<T>[],
+  configs: Animation<T> | readonly Animation<T>[],
 ) => RunnableLike<T> = Runnable_animate;
 
 export const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"] =

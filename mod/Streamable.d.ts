@@ -6,29 +6,29 @@ export declare const create: <TReq, T>(op: import("./containers.js").Container.O
  * @category Constructor
  */
 export declare const createAnimationGroupEventHandler: {
-    <TEvent, TKey extends string | number | symbol, T>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey, import("./functions.js").Function1<TEvent, import("./Runnable.js").AnimationConfig.Description<T> | readonly import("./Runnable.js").AnimationConfig.Description<T>[]>>, options: {
+    <TEvent, TKey extends string | number | symbol, T>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey, import("./functions.js").Function1<TEvent, import("./Runnable.js").Animation<T> | readonly import("./Runnable.js").Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<TEvent, boolean, import("./types.js").StreamLike<TEvent, boolean> & import("./types.js").DictionaryLike<TKey, import("./types.js").EventSourceLike<T>>>;
-    <TEvent_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_1, import("./functions.js").Function1<TEvent_1, import("./Runnable.js").AnimationConfig.Description<T_1> | readonly import("./Runnable.js").AnimationConfig.Description<T_1>[]>>, options: {
+    <TEvent_1, TKey_1 extends string | number | symbol, T_1>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_1, import("./functions.js").Function1<TEvent_1, import("./Runnable.js").Animation<T_1> | readonly import("./Runnable.js").Animation<T_1>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<TEvent_1, boolean, import("./types.js").StreamLike<TEvent_1, boolean> & import("./types.js").DictionaryLike<TKey_1, import("./types.js").EventSourceLike<T_1>>>;
-    <TEvent_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_2, import("./functions.js").Function1<TEvent_2, import("./Runnable.js").AnimationConfig.Description<T_2> | readonly import("./Runnable.js").AnimationConfig.Description<T_2>[]>>, options: {
+    <TEvent_2, TKey_2 extends string | number | symbol, T_2>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_2, import("./functions.js").Function1<TEvent_2, import("./Runnable.js").Animation<T_2> | readonly import("./Runnable.js").Animation<T_2>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;
         readonly capacity?: number | undefined;
     }): import("./types.js").StreamableLike<TEvent_2, boolean, import("./types.js").StreamLike<TEvent_2, boolean> & import("./types.js").DictionaryLike<TKey_2, import("./types.js").EventSourceLike<T_2>>>;
-    <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_3, import("./Runnable.js").AnimationConfig.Description<T_3> | readonly import("./Runnable.js").AnimationConfig.Description<T_3>[]>, options: {
+    <TKey_3 extends string | number | symbol, T_3>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_3, import("./Runnable.js").Animation<T_3> | readonly import("./Runnable.js").Animation<T_3>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<void, boolean, import("./types.js").StreamLike<void, boolean> & import("./types.js").DictionaryLike<TKey_3, import("./types.js").EventSourceLike<T_3>>>;
-    <TKey_4 extends string | number | symbol, T_4>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_4, import("./Runnable.js").AnimationConfig.Description<T_4> | readonly import("./Runnable.js").AnimationConfig.Description<T_4>[]>, options: {
+    <TKey_4 extends string | number | symbol, T_4>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_4, import("./Runnable.js").Animation<T_4> | readonly import("./Runnable.js").Animation<T_4>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
     }): import("./types.js").StreamableLike<void, boolean, import("./types.js").StreamLike<void, boolean> & import("./types.js").DictionaryLike<TKey_4, import("./types.js").EventSourceLike<T_4>>>;
-    <TKey_5 extends string | number | symbol, T_5>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_5, import("./Runnable.js").AnimationConfig.Description<T_5> | readonly import("./Runnable.js").AnimationConfig.Description<T_5>[]>, options: {
+    <TKey_5 extends string | number | symbol, T_5>(animationGroup: import("./types.js").ReadonlyObjectMapLike<TKey_5, import("./Runnable.js").Animation<T_5> | readonly import("./Runnable.js").Animation<T_5>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: import("./types.js").SchedulerLike | undefined;
         readonly backpressureStrategy?: "overflow" | "drop-latest" | "drop-oldest" | "throw" | undefined;

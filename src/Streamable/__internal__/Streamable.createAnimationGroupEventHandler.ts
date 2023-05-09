@@ -12,7 +12,7 @@ import ReadonlyObjectMap_map from "../../ReadonlyObjectMap/__internal__/Readonly
 import ReadonlyObjectMap_mapWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import type { AnimationConfig } from "../../Runnable.js";
+import type { Animation } from "../../Runnable.js";
 import Runnable_animate from "../../Runnable/__internal__/Runnable.animate.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import {
@@ -76,13 +76,9 @@ const createAnimationGroupEventHandlerStream: <
 >(
   animationGroup: ReadonlyObjectMapLike<
     TKey,
-    | Function1<
-        TEvent,
-        | AnimationConfig.Description<T>
-        | readonly AnimationConfig.Description<T>[]
-      >
-    | AnimationConfig.Description<T>
-    | readonly AnimationConfig.Description<T>[]
+    | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    | Animation<T>
+    | readonly Animation<T>[]
   >,
   creationOptions: {
     readonly mode: "switching" | "blocking" | "queueing";
@@ -118,15 +114,8 @@ const createAnimationGroupEventHandlerStream: <
           >,
         animationGroup: ReadonlyObjectMapLike<
           TKey,
-          | Function1<
-              TEvent,
-              | AnimationConfig.Description<T>
-              | readonly AnimationConfig.Description<T>[]
-            >
-          | (
-              | AnimationConfig.Description<T>
-              | readonly AnimationConfig.Description<T>[]
-            )
+          | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+          | (Animation<T> | readonly Animation<T>[])
         >,
         creationOptions: {
           readonly mode: "switching" | "blocking" | "queueing";
@@ -150,13 +139,9 @@ const createAnimationGroupEventHandlerStream: <
             > = pipe(
               animationGroup,
               ReadonlyObjectMap_mapWithKey<
-                | Function1<
-                    TEvent,
-                    | AnimationConfig.Description<T>
-                    | readonly AnimationConfig.Description<T>[]
-                  >
-                | AnimationConfig.Description<T>
-                | readonly AnimationConfig.Description<T>[],
+                | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+                | Animation<T>
+                | readonly Animation<T>[],
                 RunnableLike<T>,
                 string
               >((factory, key: string) =>
@@ -244,11 +229,7 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<
-        TEvent,
-        | AnimationConfig.Description<T>
-        | readonly AnimationConfig.Description<T>[]
-      >
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEvent, TKey, T>;
@@ -259,11 +240,7 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<
-        TEvent,
-        | AnimationConfig.Description<T>
-        | readonly AnimationConfig.Description<T>[]
-      >
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<TEvent, TKey, T>;
@@ -274,11 +251,7 @@ interface CreateAnimationGroupEventHandler {
   >(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      Function1<
-        TEvent,
-        | AnimationConfig.Description<T>
-        | readonly AnimationConfig.Description<T>[]
-      >
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
     >,
     options: {
       readonly mode: "queueing";
@@ -291,21 +264,21 @@ interface CreateAnimationGroupEventHandler {
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
+      Animation<T> | readonly Animation<T>[]
     >,
     options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
+      Animation<T> | readonly Animation<T>[]
     >,
     options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
   ): AnimationGroupEventHandlerLike<void, TKey, T>;
   createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]
+      Animation<T> | readonly Animation<T>[]
     >,
     options: {
       readonly mode: "queueing";
@@ -319,13 +292,9 @@ const Streamable_createAnimationGroupEventHandler: CreateAnimationGroupEventHand
   (<TEvent, TKey extends string | symbol | number, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
-      | Function1<
-          TEvent,
-          | AnimationConfig.Description<T>
-          | readonly AnimationConfig.Description<T>[]
-        >
-      | AnimationConfig.Description<T>
-      | readonly AnimationConfig.Description<T>[]
+      | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+      | Animation<T>
+      | readonly Animation<T>[]
     >,
     createOptions: {
       readonly mode: "queueing" | "blocking" | "switching";

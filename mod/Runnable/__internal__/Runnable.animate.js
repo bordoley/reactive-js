@@ -27,9 +27,7 @@ const parseAnimationConfig = (config) => config.type === "loop"
                 ? Observable_map(config.selector)
                 : identity);
 const Runnable_animate = (config) => {
-    const configs = isReadonlyArray(config)
-        ? config
-        : [config];
+    const configs = isReadonlyArray(config) ? config : [config];
     const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));
     return Observable_concatObservables(observables);
 };

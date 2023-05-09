@@ -55,7 +55,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`Description`](Runnable.AnimationConfig.md#description)<`T`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, [`Function1`](functions.md#function1)<`TEvent`, [`Animation`](Runnable.md#animation)<`T`\> \| readonly [`Animation`](Runnable.md#animation)<`T`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -78,7 +78,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`Description`](Runnable.AnimationConfig.md#description)<`T_1`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T_1`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_1`, [`Function1`](functions.md#function1)<`TEvent_1`, [`Animation`](Runnable.md#animation)<`T_1`\> \| readonly [`Animation`](Runnable.md#animation)<`T_1`\>[]\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -101,7 +101,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`Description`](Runnable.AnimationConfig.md#description)<`T_2`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T_2`\>[]\>\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_2`, [`Function1`](functions.md#function1)<`TEvent_2`, [`Animation`](Runnable.md#animation)<`T_2`\> \| readonly [`Animation`](Runnable.md#animation)<`T_2`\>[]\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -125,7 +125,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_3`, [`Description`](Runnable.AnimationConfig.md#description)<`T_3`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T_3`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_3`, [`Animation`](Runnable.md#animation)<`T_3`\> \| readonly [`Animation`](Runnable.md#animation)<`T_3`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -147,7 +147,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_4`, [`Description`](Runnable.AnimationConfig.md#description)<`T_4`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T_4`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_4`, [`Animation`](Runnable.md#animation)<`T_4`\> \| readonly [`Animation`](Runnable.md#animation)<`T_4`\>[]\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 | `options.scheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
@@ -169,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_5`, [`Description`](Runnable.AnimationConfig.md#description)<`T_5`\> \| readonly [`Description`](Runnable.AnimationConfig.md#description)<`T_5`\>[]\> |
+| `animationGroup` | [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey_5`, [`Animation`](Runnable.md#animation)<`T_5`\> \| readonly [`Animation`](Runnable.md#animation)<`T_5`\>[]\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

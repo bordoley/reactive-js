@@ -1,31 +1,31 @@
-import type { AnimationConfig } from "../../Runnable.js";
+import type { Animation } from "../../Runnable.js";
 import { Function1 } from "../../functions.js";
 import { DictionaryLike, EventSourceLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "../../types.js";
 type AnimationGroupEventHandlerLike<TEvent, TKey extends string | number | symbol, T> = StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
 interface CreateAnimationGroupEventHandler {
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
     }): AnimationGroupEventHandlerLike<TEvent, TKey, T>;
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
     }): AnimationGroupEventHandlerLike<TEvent, TKey, T>;
-    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>>, options: {
+    createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): AnimationGroupEventHandlerLike<TEvent, TKey, T>;
-    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
     }): AnimationGroupEventHandlerLike<void, TKey, T>;
-    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "blocking";
         readonly scheduler?: SchedulerLike;
     }): AnimationGroupEventHandlerLike<void, TKey, T>;
-    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]>, options: {
+    createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Animation<T> | readonly Animation<T>[]>, options: {
         readonly mode: "queueing";
         readonly scheduler?: SchedulerLike;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

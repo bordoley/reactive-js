@@ -1,10 +1,9 @@
 import { RunnableContainer } from "./containers.js";
 import { Factory, Function1 } from "./functions.js";
 import { RunnableLike } from "./types.js";
-export declare namespace AnimationConfig {
+export declare namespace Animation {
     /**
      * @noInheritDoc
-     * @category AnimationConfig
      */
     interface Delay {
         readonly type: "delay";
@@ -12,7 +11,6 @@ export declare namespace AnimationConfig {
     }
     /**
      * @noInheritDoc
-     * @category AnimationConfig
      */
     interface KeyFrame {
         readonly type: "keyframe";
@@ -23,7 +21,6 @@ export declare namespace AnimationConfig {
     }
     /**
      * @noInheritDoc
-     * @category AnimationConfig
      */
     interface Frame {
         readonly type: "frame";
@@ -31,16 +28,14 @@ export declare namespace AnimationConfig {
     }
     /**
      * @noInheritDoc
-     * @category AnimationConfig
      */
     interface Loop<T> {
         readonly type: "loop";
-        readonly animation: Description<T> | readonly Description<T>[];
+        readonly animation: Animation<T> | readonly Animation<T>[];
         readonly count?: number;
     }
     /**
      * @noInheritDoc
-     * @category AnimationConfig
      */
     interface Spring {
         readonly type: "spring";
@@ -50,13 +45,13 @@ export declare namespace AnimationConfig {
         readonly damping?: number;
         readonly precision?: number;
     }
-    type Description<T = number> = Delay | Loop<T> | (T extends number ? (KeyFrame | Spring | Frame) & {
-        readonly selector?: never;
-    } : (KeyFrame | Spring | Frame) & {
-        readonly selector: Function1<number, T>;
-    });
 }
-export declare const animate: <T = number>(configs: AnimationConfig.Description<T> | readonly AnimationConfig.Description<T>[]) => RunnableLike<T>;
+export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T extends number ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+    readonly selector?: never;
+} : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+    readonly selector: Function1<number, T>;
+});
+export declare const animate: <T = number>(configs: Animation<T> | readonly Animation<T>[]) => RunnableLike<T>;
 export declare const backpressureStrategy: RunnableContainer.TypeClass["backpressureStrategy"];
 export declare const buffer: RunnableContainer.TypeClass["buffer"];
 export declare const catchError: RunnableContainer.TypeClass["catchError"];
