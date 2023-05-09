@@ -1,11 +1,10 @@
 import Observable_concatObservables from "../../Observable/__internal__/Observable.concatObservables.js";
 import Observable_empty from "../../Observable/__internal__/Observable.empty.js";
-import Observable_keyFrame from "../../Observable/__internal__/Observable.keyFrame.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
-import Observable_spring from "../../Observable/__internal__/Observable.spring.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import Runnable_spring from "../../Runnable/__internal__/Runnable.spring.js";
 import {
   Containers,
   RunnableContainer,
@@ -13,6 +12,7 @@ import {
 } from "../../containers.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
+import Runnable_keyFrame from "./Runnable.keyFrame.js";
 
 const scale = (start: number, end: number) => (v: number) => {
   const diff = end - start;
@@ -39,8 +39,8 @@ const parseAnimationConfig = <T = number>(
       )
     : pipe(
         config.type === "keyframe"
-          ? Observable_keyFrame(config.duration, config)
-          : Observable_spring(config),
+          ? Runnable_keyFrame(config.duration, config)
+          : Runnable_spring(config),
         Observable_map<RunnableContainer, number, number>(
           scale(config.from, config.to),
         ),

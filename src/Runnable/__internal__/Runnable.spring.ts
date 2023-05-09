@@ -1,14 +1,14 @@
-import Observable_currentTime from "../../Runnable/__internal__/Runnable.currentTime.js";
+import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
+import Observable_scan from "../../Observable/__internal__/Observable.scan.js";
+import Observable_takeWhile from "../../Observable/__internal__/Observable.takeWhile.js";
 import { MAX_VALUE, __DEV__ } from "../../__internal__/constants.js";
 import { abs, min } from "../../__internal__/math.js";
 import { RunnableContainer } from "../../containers.js";
 import { isNotEqualTo, pipe, returns } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
-import Observable_pick from "./Observable.pick.js";
-import Observable_scan from "./Observable.scan.js";
-import Observable_takeWhile from "./Observable.takeWhile.js";
+import Observable_currentTime from "./Runnable.currentTime.js";
 
-const Observable_spring = (options?: {
+const Runnable_spring = (options?: {
   readonly stiffness?: number;
   readonly damping?: number;
   readonly precision?: number;
@@ -49,4 +49,4 @@ const Observable_spring = (options?: {
   );
 };
 
-export default Observable_spring;
+export default Runnable_spring;
