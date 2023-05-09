@@ -9,14 +9,12 @@ import {
   useDisposable,
   useStream,
 } from "@reactive-js/core/integrations/react";
-import { EventSourceLike } from "@reactive-js/core/util";
+import { KeyedCollectionLike_get, EventSourceLike, EventListenerLike_notify } from "@reactive-js/core/core";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
-import * as EventSource from "@reactive-js/core/util/EventSource";
-import { EventListenerLike_notify } from "@reactive-js/core/util";
-import * as EventPublisher from "@reactive-js/core/util/EventPublisher";
-import * as Streamable from "@reactive-js/core/rx/Streamable";
-import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
+import * as EventSource from "@reactive-js/core/core/EventSource";
+import * as EventPublisher from "@reactive-js/core/core/EventPublisher";
+import * as Streamable from "@reactive-js/core/core/Streamable";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 

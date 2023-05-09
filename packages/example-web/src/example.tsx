@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Enumerable from "@reactive-js/core/rx/Enumerable";
-import * as Runnable from "@reactive-js/core/rx/Runnable";
-import * as Observable from "@reactive-js/core/rx/Observable";
+import * as Enumerable from "@reactive-js/core/core/Enumerable";
+import * as Runnable from "@reactive-js/core/core/Runnable";
+import * as Observable from "@reactive-js/core/core/Observable";
 import {
   createComponent,
   useDispatcher,
@@ -33,9 +33,10 @@ import {
   pipeSome,
   returns,
 } from "@reactive-js/core/functions";
-import * as Streamable from "@reactive-js/core/rx/Streamable";
-import { ObservableLike } from "@reactive-js/core/rx";
+import * as Streamable from "@reactive-js/core/core/Streamable";
 import {
+  KeyedCollectionLike_get,
+  ObservableLike,
   QueueableLike_enqueue,
   EventSourceLike,
   PauseableLike_pause,
@@ -43,9 +44,9 @@ import {
   PauseableLike_isPaused,
   SchedulerLike,
   StoreLike_value,
-} from "@reactive-js/core/util";
-import * as Dictionary from "@reactive-js/core/containers/Dictionary";
-import * as Enumerator from "@reactive-js/core/containers/Enumerator";
+} from "@reactive-js/core/core";
+import * as Dictionary from "@reactive-js/core/core/Dictionary";
+import * as Enumerator from "@reactive-js/core/core/Enumerator";
 import {
   __await,
   __bindMethod,
@@ -55,16 +56,15 @@ import {
   __observe,
   __stream,
   __using,
-} from "@reactive-js/core/rx/effects";
+} from "@reactive-js/core/core/Observable/effects";
 import { __animate } from "@reactive-js/core/integrations/web/effects";
-import { Wordle } from "./wordle";
-import Measure from "./measure";
+import { Wordle } from "./wordle.js";
+import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
-import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import * as Scheduler from "@reactive-js/core/core/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
-import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
-import * as Store from "@reactive-js/core/util/Store";
+import * as Store from "@reactive-js/core/core/Store";
 
 const AnimatedBox = ({
   animation,

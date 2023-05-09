@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { EventSourceLike } from "@reactive-js/core/util";
+import { EventSourceLike, KeyedCollectionLike_get } from "@reactive-js/core/core";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
-import * as Streamable from "@reactive-js/core/rx/Streamable";
+import * as Streamable from "@reactive-js/core/core/Streamable";
 import {
   useDispatcher,
   useDisposable,
   useStream,
   useObserve,
 } from "@reactive-js/core/integrations/react";
-import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
 import { Optional, pipeLazy } from "@reactive-js/core/functions";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";

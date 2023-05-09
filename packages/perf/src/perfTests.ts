@@ -8,11 +8,13 @@ import {
 } from "@reactive-js/core/functions";
 import {
   Container,
-  ReadonlyArrayContainer,
-} from "@reactive-js/core/containers";
-import * as Enumerable from "@reactive-js/core/rx/Enumerable";
-import * as ReadonlyArray from "@reactive-js/core/containers/ReadonlyArray";
-import * as Runnable from "@reactive-js/core/rx/Runnable";
+  Containers,
+  DeferredContainers,
+  RunnableContainers
+} from "@reactive-js/core";
+import * as Enumerable from "@reactive-js/core/Enumerable";
+import * as ReadonlyArray from "@reactive-js/core/ReadonlyArray";
+import * as Runnable from "@reactive-js/core/Runnable";
 
 /**
  * A function that returns the result of summing
@@ -38,9 +40,9 @@ export const createArray = (n: number): ReadonlyArray<number> => {
 
 const createMapPerfTest = <C extends Container>(
   name: string,
-  m: Container.FromReadonlyArray<C> &
-    Container.Map<C> &
-    Container.ToReadonlyArray<C>,
+  m: DeferredContainers.TypeClass<C> &
+    Containers.TypeClass<C> &
+    RunnableContainers.TypeClass<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
