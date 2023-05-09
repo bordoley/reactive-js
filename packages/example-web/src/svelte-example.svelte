@@ -1,6 +1,6 @@
 <script>
-import * as Scheduler from "@reactive-js/core/util/Scheduler";
-import * as Runnable from "@reactive-js/core/rx/Runnable";
+import * as Scheduler from "@reactive-js/core/core/Scheduler";
+import * as Runnable from "@reactive-js/core/core/Runnable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
   bindMethod,
@@ -12,8 +12,8 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause, 
   PauseableLike_resume
-} from "@reactive-js/core/util";
-import * as Store from "@reactive-js/core/util/Store";
+} from "@reactive-js/core/core";
+import * as Store from "@reactive-js/core/core/Store";
   const scheduler = Scheduler.createHostScheduler();
 
   const counter = pipe(

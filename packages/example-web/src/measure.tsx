@@ -7,7 +7,7 @@ import {
   pipeSomeLazy,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
-import * as Observable from "@reactive-js/core/rx/Observable";
+import * as Observable from "@reactive-js/core/core/Observable";
 import {
   useDispatcher,
   useDisposable,
@@ -15,13 +15,14 @@ import {
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import * as EventSource from "@reactive-js/core/util/EventSource";
+import * as EventSource from "@reactive-js/core/core/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
-import * as Streamable from "@reactive-js/core/rx/Streamable";
-import { KeyedCollectionLike_get } from "@reactive-js/core/containers";
+import * as Streamable from "@reactive-js/core/core/Streamable";
+import { KeyedCollectionLike_get } from "@reactive-js/core/core";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as DeferredObservable from "@reactive-js/core/core/DeferredObservable";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -76,7 +77,7 @@ const Measure = () => {
         compose(
           Observable.withLatestFrom(
             pipeSome(animation, EventSource.toObservable()) ??
-              Observable.empty<number>(),
+              DeferredObservable.empty<number>(),
             ({ width: boxWidth }, currentWidth) => [boxWidth, currentWidth],
           ),
           Observable.forEach(([boxWidth, currentWidth]) => {

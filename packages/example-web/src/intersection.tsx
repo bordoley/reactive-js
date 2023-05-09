@@ -10,7 +10,7 @@ import {
   pipeSomeLazy,
 } from "@reactive-js/core/functions";
 import { useDisposable } from "@reactive-js/core/integrations/react";
-import * as EventSource from "@reactive-js/core/util/EventSource";
+import * as EventSource from "@reactive-js/core/core/EventSource";
 
 const IntersectionApp = () => {
   const [count, updateCount] = useState(10);
