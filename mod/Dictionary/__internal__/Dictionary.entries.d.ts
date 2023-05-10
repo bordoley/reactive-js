@@ -1,3 +1,3 @@
-import { DictionaryLike, EnumeratorLike } from "../../types.js";
-declare const Dictionary_entries: <T, TKey extends {} = {}>() => (dict: DictionaryLike<TKey, T>) => EnumeratorLike<[TKey, T]>;
+import type * as Dictionary from "../../Dictionary.js";
+declare const Dictionary_entries: Dictionary.Signature["entries"];
 export default Dictionary_entries;

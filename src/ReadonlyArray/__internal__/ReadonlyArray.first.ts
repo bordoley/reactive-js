@@ -1,6 +1,6 @@
-import { ReadonlyArrayContainer } from "../../containers.js";
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
-const ReadonlyArray_first: ReadonlyArrayContainer.TypeClass["first"] =
+const ReadonlyArray_first: ReadonlyArray.Signature["first"] =
   <T>() =>
   (values: ReadonlyArray<T>) =>
     values[0];

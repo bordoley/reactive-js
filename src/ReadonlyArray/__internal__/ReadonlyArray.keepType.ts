@@ -1,10 +1,11 @@
 import Container_keepType from "../../Container/__internal__/Container.keepType.js";
-import { ReadonlyArrayContainer } from "../../containers.js";
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
+
 import ReadonlyArray_keep from "./ReadonlyArray.keep.js";
 
-const ReadonlyArray_keepType: ReadonlyArrayContainer.TypeClass["keepType"] =
-  /*@__PURE__*/ Container_keepType<ReadonlyArrayContainer.Type>(
+const ReadonlyArray_keepType: ReadonlyArray.Signature["keepType"] =
+  /*@__PURE__*/ Container_keepType<ReadonlyArray.Type>(
     ReadonlyArray_keep,
-  ) as ReadonlyArrayContainer.TypeClass["keepType"];
+  ) as ReadonlyArray.Signature["keepType"];
 
 export default ReadonlyArray_keepType;

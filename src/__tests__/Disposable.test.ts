@@ -1,6 +1,4 @@
 import * as Disposable from "../Disposable.js";
-import * as Observable from "../Observable.js";
-import * as Scheduler from "../Scheduler.js";
 import {
   expectArrayEquals,
   expectEquals,
@@ -16,9 +14,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  VirtualTimeSchedulerLike_run,
 } from "../types.js";
 
 testModule(
@@ -91,29 +86,5 @@ testModule(
     child[DisposableLike_dispose](e);
 
     pipe(parent[DisposableLike_error], expectEquals<Optional<Error>>(e));
-  }),
-  test("toObservable", () => {
-    const disposable = Disposable.create();
-    const scheduler = Scheduler.createVirtualTimeScheduler();
-
-    let disposedTime = 0;
-    pipe(
-      disposable,
-      Disposable.toObservable(),
-      Observable.subscribe(scheduler),
-      Disposable.onDisposed(_ => {
-        disposedTime = scheduler[SchedulerLike_now];
-      }),
-    );
-
-    scheduler[SchedulerLike_schedule](
-      () => {
-        disposable[DisposableLike_dispose]();
-      },
-      { delay: 2 },
-    );
-
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(disposedTime, expectEquals(2));
   }),
 );

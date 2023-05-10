@@ -1,11 +1,9 @@
 /// <reference types="./Disposable.test.d.ts" />
 
 import * as Disposable from "../Disposable.js";
-import * as Observable from "../Observable.js";
-import * as Scheduler from "../Scheduler.js";
 import { expectArrayEquals, expectEquals, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../__internal__/testing.js";
 import { error, none, pipe, pipeLazy, raise } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../types.js";
 testModule("Disposable", test("disposes child disposable when disposed", () => {
     const child = Disposable.create();
     const disposable = pipe(Disposable.create(), Disposable.add(child, { ignoreChildErrors: true }));
@@ -46,16 +44,4 @@ testModule("Disposable", test("disposes child disposable when disposed", () => {
     const e = new Error();
     child[DisposableLike_dispose](e);
     pipe(parent[DisposableLike_error], expectEquals(e));
-}), test("toObservable", () => {
-    const disposable = Disposable.create();
-    const scheduler = Scheduler.createVirtualTimeScheduler();
-    let disposedTime = 0;
-    pipe(disposable, Disposable.toObservable(), Observable.subscribe(scheduler), Disposable.onDisposed(_ => {
-        disposedTime = scheduler[SchedulerLike_now];
-    }));
-    scheduler[SchedulerLike_schedule](() => {
-        disposable[DisposableLike_dispose]();
-    }, { delay: 2 });
-    scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(disposedTime, expectEquals(2));
 }));

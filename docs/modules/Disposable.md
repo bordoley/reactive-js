@@ -19,7 +19,6 @@
 - [onError](Disposable.md#onerror)
 - [toAbortSignal](Disposable.md#toabortsignal)
 - [toErrorHandler](Disposable.md#toerrorhandler)
-- [toObservable](Disposable.md#toobservable)
 - [usingAsync](Disposable.md#usingasync)
 
 ## Variables
@@ -219,22 +218,6 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
 
 ___
 

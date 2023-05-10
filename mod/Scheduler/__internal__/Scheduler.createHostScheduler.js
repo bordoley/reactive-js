@@ -3,10 +3,10 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { none, pipe } from "../../functions.js";
 import { DisposableLike_dispose, SchedulerLike_now, } from "../../types.js";
+import * as CurrentTime from "./CurrentTime.js";
 import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "./SchedulerImplementation.mixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&

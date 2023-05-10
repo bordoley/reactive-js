@@ -1,3 +1,3 @@
-import { ReadonlyArrayContainer } from "../../containers.js";
-declare const ReadonlyArray_mapWithKey: ReadonlyArrayContainer.TypeClass["mapWithKey"];
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
+declare const ReadonlyArray_mapWithKey: ReadonlyArray.Signature["mapWithKey"];
 export default ReadonlyArray_mapWithKey;

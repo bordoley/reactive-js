@@ -1,3 +1,3 @@
-import { EventSourceContainer } from "../../containers.js";
-declare const EventSource_pick: EventSourceContainer.TypeClass["pick"];
+import type * as EventSource from "../../EventSource.js";
+declare const EventSource_pick: EventSource.Signature["pick"];
 export default EventSource_pick;

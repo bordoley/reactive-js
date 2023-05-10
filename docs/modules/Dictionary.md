@@ -4,6 +4,15 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/Dictionary.Signature.md)
+- [Type](../interfaces/Dictionary.Type.md)
+
+### Type Aliases
+
+- [TKey](Dictionary.md#tkey)
+
 ### Constructor Functions
 
 - [empty](Dictionary.md#empty)
@@ -13,6 +22,12 @@
 - [entries](Dictionary.md#entries)
 - [keys](Dictionary.md#keys)
 - [values](Dictionary.md#values)
+
+## Type Aliases
+
+### TKey
+
+Ƭ **TKey**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/Dictionary.Type.md)\>
 
 ## Constructor Functions
 

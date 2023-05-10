@@ -4,6 +4,15 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/ReadonlyObjectMap.Signature.md)
+- [Type](../interfaces/ReadonlyObjectMap.Type.md)
+
+### Type Aliases
+
+- [TKey](ReadonlyObjectMap.md#tkey)
+
 ### Constructor Functions
 
 - [empty](ReadonlyObjectMap.md#empty)
@@ -25,6 +34,12 @@
 - [reduce](ReadonlyObjectMap.md#reduce)
 - [reduceWithKey](ReadonlyObjectMap.md#reducewithkey)
 - [values](ReadonlyObjectMap.md#values)
+
+## Type Aliases
+
+### TKey
+
+Ƭ **TKey**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\>
 
 ## Constructor Functions
 
@@ -51,9 +66,9 @@ ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
-Returns a KeyedContainer.Operator that applies the side effect function to each
+Returns a KeyedContainerOperator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -71,15 +86,15 @@ value emitted by the source.
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
-Returns a Container.Operator that only emits items produced by the
+Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -97,13 +112,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -121,15 +136,15 @@ ___
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
-Returns a Container.Operator that only emits items produced by the
+Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
@@ -147,15 +162,15 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -182,15 +197,15 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -217,7 +232,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyObjectMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `TA`, `TB`\>
 
 ___
 

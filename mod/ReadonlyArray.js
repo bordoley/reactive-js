@@ -1,6 +1,5 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
-import Container_identity from "./Container/__internal__/Container.identity.js";
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import Optional_toReadonlyArray from "./Optional/__internal__/Optional.toReadonlyArray.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
@@ -8,11 +7,8 @@ import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.en
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
-import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
-import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_isEmpty from "./ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
@@ -20,25 +16,18 @@ import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
-import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { Container_type, KeyedContainer_TKey, } from "./types.js";
 export const empty = ReadonlyArray_empty;
 export const entries = ReadonlyArray_entries;
 export const enumerate = ReadonlyArray_enumerate;
 export const everySatisfy = ReadonlyArray_everySatisfy;
 export const first = ReadonlyArray_first;
-export const flow = ReadonlyArray_flow;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
-export const fromEnumerable = Runnable_toReadonlyArray;
 export const fromIterable = Iterable_toReadonlyArray;
 export const fromOptional = Optional_toReadonlyArray;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
-export const fromRunnable = Runnable_toReadonlyArray;
-export const getLength = ReadonlyArray_getLength;
-export const identity = Container_identity;
-export const isEmpty = ReadonlyArray_isEmpty;
 export const keep = ReadonlyArray_keep;
 export const keepType = ReadonlyArray_keepType;
 export const keepWithKey = ReadonlyArray_keepWithKey;
@@ -46,8 +35,5 @@ export const last = ReadonlyArray_last;
 export const map = ReadonlyArray_map;
 export const mapWithKey = ReadonlyArray_mapWithKey;
 export const someSatisfy = ReadonlyArray_someSatisfy;
-export const toEnumerable = ReadonlyArray_toObservable;
 export const toIterable = ReadonlyArray_toReadonlyArray;
-export const toObservable = ReadonlyArray_toObservable;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
-export const toRunnable = ReadonlyArray_toObservable;

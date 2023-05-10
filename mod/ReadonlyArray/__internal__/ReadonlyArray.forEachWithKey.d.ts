@@ -1,3 +1,3 @@
-import { ReadonlyArrayContainer } from "../../containers.js";
-declare const ReadonlyArray_forEachWithKey: ReadonlyArrayContainer.TypeClass["forEachWithKey"];
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
+declare const ReadonlyArray_forEachWithKey: ReadonlyArray.Signature["forEachWithKey"];
 export default ReadonlyArray_forEachWithKey;

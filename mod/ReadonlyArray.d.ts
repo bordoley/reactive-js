@@ -1,9 +1,13 @@
-import { ReadonlyArrayContainer } from "./containers.js";
 import { Function1 } from "./functions.js";
-import { DisposableLike, EnumerableLike, EnumeratorLike, ObservableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
-export declare const empty: ReadonlyArrayContainer.TypeClass["empty"];
-export declare const entries: ReadonlyArrayContainer.TypeClass["entries"];
-interface Enumerate extends ReadonlyArrayContainer.TypeClass {
+import { DeferredTypeClass, KeyedContainerTypeClass, RunnableTypeClass } from "./type-classes.js";
+import { Container_T, Container_type, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+export interface Type extends KeyedContainer {
+    readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+    readonly [KeyedContainer_TKey]?: number;
+}
+export type TKey = KeyOf<Type>;
+export interface Signature extends KeyedContainerTypeClass<Type>, DeferredTypeClass<Type>, RunnableTypeClass<Type> {
+    empty: KeyedContainerTypeClass<Type>["empty"];
     /**
      *
      * @category Transform
@@ -12,76 +16,31 @@ interface Enumerate extends ReadonlyArrayContainer.TypeClass {
         readonly start?: number;
         readonly count?: number;
     }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-}
-export declare const enumerate: Enumerate["enumerate"];
-export declare const everySatisfy: ReadonlyArrayContainer.TypeClass["everySatisfy"];
-export declare const first: ReadonlyArrayContainer.TypeClass["first"];
-interface Flow extends ReadonlyArrayContainer.TypeClass {
-    /** @category Transform */
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-        readonly start?: number;
-        readonly count?: number;
-    }): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
-}
-export declare const flow: Flow["flow"];
-export declare const forEach: ReadonlyArrayContainer.TypeClass["forEach"];
-export declare const forEachWithKey: ReadonlyArrayContainer.TypeClass["forEachWithKey"];
-export declare const fromEnumerable: ReadonlyArrayContainer.TypeClass["fromEnumerable"];
-export declare const fromIterable: ReadonlyArrayContainer.TypeClass["fromIterable"];
-export declare const fromOptional: ReadonlyArrayContainer.TypeClass["fromOptional"];
-export declare const fromReadonlyArray: ReadonlyArrayContainer.TypeClass["fromReadonlyArray"];
-export declare const fromRunnable: ReadonlyArrayContainer.TypeClass["fromRunnable"];
-export declare const getLength: (arr: readonly unknown[]) => number;
-export declare const identity: ReadonlyArrayContainer.TypeClass["identity"];
-export declare const isEmpty: (arr: readonly unknown[]) => boolean;
-export declare const keep: ReadonlyArrayContainer.TypeClass["keep"];
-export declare const keepType: ReadonlyArrayContainer.TypeClass["keepType"];
-export declare const keepWithKey: ReadonlyArrayContainer.TypeClass["keepWithKey"];
-export declare const last: ReadonlyArrayContainer.TypeClass["last"];
-export declare const map: ReadonlyArrayContainer.TypeClass["map"];
-export declare const mapWithKey: ReadonlyArrayContainer.TypeClass["mapWithKey"];
-export declare const someSatisfy: ReadonlyArrayContainer.TypeClass["someSatisfy"];
-interface ToEnumerable extends ReadonlyArrayContainer.TypeClass {
-    /**
-     * @category Transform
-     */
-    toEnumerable<T>(options?: {
-        readonly start: number;
-        readonly count: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-}
-export declare const toEnumerable: ToEnumerable["toEnumerable"];
-interface ToIterable extends ReadonlyArrayContainer.TypeClass {
+    fromReadonlyArray: KeyedContainerTypeClass<Type>["fromReadonlyArray"];
+    reduce: KeyedContainerTypeClass<Type>["reduce"];
     /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
+    toReadonlyArray: KeyedContainerTypeClass<Type>["toReadonlyArray"];
 }
-export declare const toIterable: ToIterable["toIterable"];
-interface ToObservable extends ReadonlyArrayContainer.TypeClass {
-    /** @category Transform */
-    toObservable: <T>(options?: {
-        readonly count?: number;
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-        readonly start?: number;
-    }) => Function1<ReadonlyArray<T>, ObservableLike<T>>;
-}
-export declare const toObservable: ToObservable["toObservable"];
-export declare const toReadonlyArray: ReadonlyArrayContainer.TypeClass["toReadonlyArray"];
-interface ToRunnable extends ReadonlyArrayContainer.TypeClass {
-    /** @category Transform */
-    toRunnable: <T>(options?: {
-        readonly count?: number;
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-        readonly start?: number;
-    }) => Function1<ReadonlyArray<T>, RunnableLike<T>>;
-}
-export declare const toRunnable: ToRunnable["toRunnable"];
-export {};
+export declare const empty: Signature["empty"];
+export declare const entries: Signature["entries"];
+export declare const enumerate: Signature["enumerate"];
+export declare const everySatisfy: Signature["everySatisfy"];
+export declare const first: Signature["first"];
+export declare const forEach: Signature["forEach"];
+export declare const forEachWithKey: Signature["forEachWithKey"];
+export declare const fromIterable: Signature["fromIterable"];
+export declare const fromOptional: Signature["fromOptional"];
+export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
+export declare const keep: Signature["keep"];
+export declare const keepType: Signature["keepType"];
+export declare const keepWithKey: Signature["keepWithKey"];
+export declare const last: Signature["last"];
+export declare const map: Signature["map"];
+export declare const mapWithKey: Signature["mapWithKey"];
+export declare const someSatisfy: Signature["someSatisfy"];
+export declare const toIterable: Signature["toIterable"];
+export declare const toReadonlyArray: Signature["toReadonlyArray"];

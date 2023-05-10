@@ -1,12 +1,12 @@
-import { DictionaryContainer } from "../../containers.js";
+import type * as Dictionary from "../../Dictionary.js";
 import {
   AssociativeCollectionLike_keys,
   DictionaryLike,
   EnumeratorLike,
 } from "../../types.js";
 
-const Dictionary_keys: DictionaryContainer.TypeClass["keys"] =
-  <TKey extends DictionaryContainer.TKey = DictionaryContainer.TKey>() =>
+const Dictionary_keys: Dictionary.Signature["keys"] =
+  <TKey extends Dictionary.TKey = Dictionary.TKey>() =>
   (dict: DictionaryLike<TKey, unknown>): EnumeratorLike<TKey> =>
     dict[AssociativeCollectionLike_keys];
 

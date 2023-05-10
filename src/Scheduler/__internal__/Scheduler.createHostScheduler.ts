@@ -1,7 +1,6 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -17,6 +16,7 @@ import {
   SchedulerLike,
   SchedulerLike_now,
 } from "../../types.js";
+import * as CurrentTime from "./CurrentTime.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,

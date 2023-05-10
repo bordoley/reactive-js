@@ -4,6 +4,15 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/ReadonlyMap.Signature.md)
+- [Type](../interfaces/ReadonlyMap.Type.md)
+
+### Type Aliases
+
+- [TKey](ReadonlyMap.md#tkey)
+
 ### Constructor Functions
 
 - [empty](ReadonlyMap.md#empty)
@@ -17,6 +26,12 @@
 
 - [entries](ReadonlyMap.md#entries)
 - [keys](ReadonlyMap.md#keys)
+
+## Type Aliases
+
+### TKey
+
+Ƭ **TKey**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyMap.Type.md)\>
 
 ## Constructor Functions
 
@@ -43,9 +58,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -72,15 +87,15 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
 
-Returns a Container.Operator that applies the `selector` function to each
+Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -107,7 +122,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`Operator`](containers.KeyedContainer.md#operator)<[`Type`](../interfaces/containers.ReadonlyMapContainer.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
 
 ___
 

@@ -16,7 +16,6 @@ export declare const toAbortSignal: (disposable: DisposableLike) => AbortSignal;
  * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
  */
 export declare const toErrorHandler: (disposable: DisposableLike) => import("./functions.js").SideEffect1<unknown>;
-export declare const toObservable: <T>() => import("./functions.js").Function1<DisposableLike, import("./types.js").ObservableLike<T>>;
 export declare const usingAsync: {
     <TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | import("./functions.js").Factory<TDisposable>): import("./functions.js").Function1<import("./functions.js").Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
     <TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult_1 = unknown>(factoryOrDisposableA: TDisposableA | import("./functions.js").Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | import("./functions.js").Factory<TDisposableB>): import("./functions.js").Function1<import("./functions.js").Function2<TDisposableA, TDisposableB, Promise<TResult_1>>, Promise<TResult_1>>;

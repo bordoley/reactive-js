@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
+import type * as EventSource from "../../EventSource.js";
 import {
   createInstanceFactory,
   include,
@@ -13,7 +14,6 @@ import {
   ForEachLike,
   ForEachLike_effect,
 } from "../../__internal__/types.js";
-import { EventSourceContainer } from "../../containers.js";
 import { SideEffect1, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
@@ -22,7 +22,7 @@ import {
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_forEach: EventSourceContainer.TypeClass["forEach"] =
+const EventSource_forEach: EventSource.Signature["forEach"] =
   /*@__PURE__*/ (() => {
     const createForEachEventListener: <T>(
       delegate: EventListenerLike<T>,
@@ -68,6 +68,6 @@ const EventSource_forEach: EventSourceContainer.TypeClass["forEach"] =
 
     return <T>(effect: SideEffect1<T>) =>
       pipe(createForEachEventListener, partial(effect), EventSource_lift);
-  })() as EventSourceContainer.TypeClass["forEach"];
+  })() as EventSource.Signature["forEach"];
 
 export default EventSource_forEach;

@@ -1,4 +1,4 @@
-import { Container } from "../../containers.js";
 import { Predicate } from "../../functions.js";
-declare const Container_repeat: <C extends Container.Type, T>(repeat: (c: Container.Of<C, T>, predicate: Predicate<number>) => Container.Of<C, T>) => (predicate?: Predicate<number> | number) => (c: Container.Of<C, T>) => Container.Of<C, T>;
+import { Container, ContainerOf } from "../../types.js";
+declare const Container_repeat: <C extends Container, T>(repeat: (c: ContainerOf<C, T>, predicate: Predicate<number>) => ContainerOf<C, T>) => (predicate?: Predicate<number> | number) => (c: ContainerOf<C, T>) => ContainerOf<C, T>;
 export default Container_repeat;

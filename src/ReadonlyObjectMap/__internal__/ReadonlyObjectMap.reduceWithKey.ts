@@ -1,15 +1,11 @@
+import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import { hasOwn } from "../../__internal__/Object.js";
-import { ReadonlyObjectMapContainer } from "../../containers.js";
 import { Factory, Function3 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
-const ReadonlyObjectMap_reduceWithKey: ReadonlyObjectMapContainer.TypeClass["reduceWithKey"] =
+const ReadonlyObjectMap_reduceWithKey: ReadonlyObjectMap.Signature["reduceWithKey"] =
 
-    <
-      T,
-      TAcc,
-      TKey extends ReadonlyObjectMapContainer.TKey = ReadonlyObjectMapContainer.TKey,
-    >(
+    <T, TAcc, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
       reducer: Function3<TAcc, T, TKey, TAcc>,
       initialValue: Factory<TAcc>,
     ) =>

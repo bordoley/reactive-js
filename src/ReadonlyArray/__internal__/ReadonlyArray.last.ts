@@ -1,7 +1,7 @@
-import { ReadonlyArrayContainer } from "../../containers.js";
 import { none } from "../../functions.js";
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
-const ReadonlyArray_last: ReadonlyArrayContainer.TypeClass["last"] =
+const ReadonlyArray_last: ReadonlyArray.Signature["last"] =
   <T>() =>
   (values: ReadonlyArray<T>) => {
     const count = values.length;

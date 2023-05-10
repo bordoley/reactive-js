@@ -11,31 +11,42 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { ReadonlyObjectMapContainer } from "./containers.js";
+import { KeyedContainerTypeClass } from "./type-classes.js";
+import {
+  Container_T,
+  Container_type,
+  KeyOf,
+  KeyedContainer,
+  KeyedContainer_TKey,
+  ReadonlyObjectMapLike,
+} from "./types.js";
 
-export const empty: ReadonlyObjectMapContainer.TypeClass["empty"] =
-  ReadonlyObjectMap_empty;
-export const entries: ReadonlyObjectMapContainer.TypeClass["entries"] =
-  ReadonlyObjectMap_entries;
-export const forEachWithKey: ReadonlyObjectMapContainer.TypeClass["forEachWithKey"] =
+export interface Type extends KeyedContainer {
+  readonly [Container_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedContainer_TKey]>,
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: symbol | number | string;
+}
+
+export type TKey = KeyOf<Type>;
+
+export interface Signature extends KeyedContainerTypeClass<Type> {}
+
+export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
+export const entries: Signature["entries"] = ReadonlyObjectMap_entries;
+export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyObjectMap_forEachWithKey;
-export const keep: ReadonlyObjectMapContainer.TypeClass["keep"] =
-  ReadonlyObjectMap_keep;
-export const keepType: ReadonlyObjectMapContainer.TypeClass["keepType"] =
-  ReadonlyObjectMap_keepType;
-export const keepWithKey: ReadonlyObjectMapContainer.TypeClass["keepWithKey"] =
+export const keep: Signature["keep"] = ReadonlyObjectMap_keep;
+export const keepType: Signature["keepType"] = ReadonlyObjectMap_keepType;
+export const keepWithKey: Signature["keepWithKey"] =
   ReadonlyObjectMap_keepWithKey;
-export const keys: ReadonlyObjectMapContainer.TypeClass["keys"] =
-  ReadonlyObjectMap_keys;
-export const keySet: ReadonlyObjectMapContainer.TypeClass["keySet"] =
-  ReadonlyObjectMap_keySet;
-export const map: ReadonlyObjectMapContainer.TypeClass["map"] =
-  ReadonlyObjectMap_map;
-export const mapWithKey: ReadonlyObjectMapContainer.TypeClass["mapWithKey"] =
-  ReadonlyObjectMap_mapWithKey;
-export const reduce: ReadonlyObjectMapContainer.TypeClass["reduce"] =
-  ReadonlyObjectMap_reduce;
-export const reduceWithKey: ReadonlyObjectMapContainer.TypeClass["reduceWithKey"] =
+export const keys: Signature["keys"] = ReadonlyObjectMap_keys;
+export const keySet: Signature["keySet"] = ReadonlyObjectMap_keySet;
+export const map: Signature["map"] = ReadonlyObjectMap_map;
+export const mapWithKey: Signature["mapWithKey"] = ReadonlyObjectMap_mapWithKey;
+export const reduce: Signature["reduce"] = ReadonlyObjectMap_reduce;
+export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyObjectMap_reduceWithKey;
-export const values: ReadonlyObjectMapContainer.TypeClass["values"] =
-  ReadonlyObjectMap_values;
+export const values: Signature["values"] = ReadonlyObjectMap_values;

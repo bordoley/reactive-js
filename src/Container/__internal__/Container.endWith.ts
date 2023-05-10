@@ -1,11 +1,12 @@
-import { Container, DeferredTypeClass } from "../../containers.js";
+import { DeferredTypeClass } from "../../type-classes.js";
+import { Container, ContainerOperator } from "../../types.js";
 
 const Container_endWith =
-  <C extends Container.Type>(
+  <C extends Container>(
     concatWith: DeferredTypeClass<C>["concatWith"],
     fromReadonlyArray: DeferredTypeClass<C>["fromReadonlyArray"],
   ) =>
-  <T>(...values: readonly T[]): Container.Operator<C, T, T> =>
+  <T>(...values: readonly T[]): ContainerOperator<C, T, T> =>
     concatWith(fromReadonlyArray<T>()(values));
 
 export default Container_endWith;

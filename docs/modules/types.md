@@ -32,6 +32,8 @@
 
 ### Other Interfaces
 
+- [Container](../interfaces/types.Container.md)
+- [KeyedContainer](../interfaces/types.KeyedContainer.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
 ### Queueing Interfaces
@@ -65,7 +67,12 @@
 
 ### Type Aliases
 
+- [ContainerOf](types.md#containerof)
+- [ContainerOperator](types.md#containeroperator)
 - [DisposableOrTeardown](types.md#disposableorteardown)
+- [KeyOf](types.md#keyof)
+- [KeyedContainerOf](types.md#keyedcontainerof)
+- [KeyedContainerOperator](types.md#keyedcontaineroperator)
 - [ReadonlyObjectMapLike](types.md#readonlyobjectmaplike)
 - [StreamOf](types.md#streamof)
 
@@ -74,6 +81,8 @@
 - [AssociativeCollectionLike\_keys](types.md#associativecollectionlike_keys)
 - [BufferLike\_capacity](types.md#bufferlike_capacity)
 - [CollectionLike\_count](types.md#collectionlike_count)
+- [Container\_T](types.md#container_t)
+- [Container\_type](types.md#container_type)
 - [DispatcherLikeEvent\_capacityExceeded](types.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](types.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](types.md#dispatcherlikeevent_ready)
@@ -90,6 +99,7 @@
 - [EventPublisherLike\_listenerCount](types.md#eventpublisherlike_listenercount)
 - [EventSourceLike\_addEventListener](types.md#eventsourcelike_addeventlistener)
 - [KeyedCollectionLike\_get](types.md#keyedcollectionlike_get)
+- [KeyedContainer\_TKey](types.md#keyedcontainer_tkey)
 - [MulticastObservableLike\_buffer](types.md#multicastobservablelike_buffer)
 - [ObservableLike\_isDeferred](types.md#observablelike_isdeferred)
 - [ObservableLike\_isEnumerable](types.md#observablelike_isenumerable)
@@ -117,9 +127,79 @@
 
 ## Type Aliases
 
+### ContainerOf
+
+Ƭ **ContainerOf**<`C`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T`  }[typeof [`Container_type`](types.md#container_type)]\> : { `_C`: `C` ; `_T`: () => `T`  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`Container`](../interfaces/types.Container.md) |
+| `T` | `T` |
+
+___
+
+### ContainerOperator
+
+Ƭ **ContainerOperator**<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`ContainerOf`](types.md#containerof)<`C`, `TA`\>, [`ContainerOf`](types.md#containerof)<`C`, `TB`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`Container`](../interfaces/types.Container.md) |
+| `TA` | `TA` |
+| `TB` | `TB` |
+
+___
+
 ### DisposableOrTeardown
 
 Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
+
+___
+
+### KeyOf
+
+Ƭ **KeyOf**<`C`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\> : {}
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`KeyedContainer`](../interfaces/types.KeyedContainer.md) |
+
+___
+
+### KeyedContainerOf
+
+Ƭ **KeyedContainerOf**<`C`, `TKey`, `T`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[___Container_T]`: `T` ; `[___KeyedContainer_TKey]`: `TKey`  }[typeof [`Container_type`](types.md#container_type)]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`KeyedContainer`](../interfaces/types.KeyedContainer.md) |
+| `TKey` | `TKey` |
+| `T` | `T` |
+
+___
+
+### KeyedContainerOperator
+
+Ƭ **KeyedContainerOperator**<`C`, `TKey`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`KeyedContainerOf`](types.md#keyedcontainerof)<`C`, `TKey`, `TA`\>, [`KeyedContainerOf`](types.md#keyedcontainerof)<`C`, `TKey`, `TB`\>\>
+
+Utility type for a generic operator function that transforms a Container's inner value type.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | extends [`KeyedContainer`](../interfaces/types.KeyedContainer.md) |
+| `TKey` | `TKey` |
+| `TA` | `TA` |
+| `TB` | `TB` |
 
 ___
 
@@ -165,6 +245,18 @@ ___
 ### CollectionLike\_count
 
 • `Const` **CollectionLike\_count**: typeof `__CollectionLike_count`
+
+___
+
+### Container\_T
+
+• `Const` **Container\_T**: typeof `__Container_T`
+
+___
+
+### Container\_type
+
+• `Const` **Container\_type**: typeof `__Container_type`
 
 ___
 
@@ -261,6 +353,12 @@ ___
 ### KeyedCollectionLike\_get
 
 • `Const` **KeyedCollectionLike\_get**: typeof `__KeyedCollectionLike_get`
+
+___
+
+### KeyedContainer\_TKey
+
+• `Const` **KeyedContainer\_TKey**: typeof `__KeyedContainer_TKey`
 
 ___
 

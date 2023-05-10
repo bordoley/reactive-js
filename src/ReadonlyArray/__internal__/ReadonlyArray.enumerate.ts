@@ -1,3 +1,4 @@
+import type * as Enumerator from "../../Enumerator.js";
 import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
@@ -15,7 +16,6 @@ import {
   __ReadonlyArrayEnumerator_index,
   __ReadonlyArrayEnumerator_values,
 } from "../../__internal__/symbols.js";
-import { EnumeratorContainer } from "../../containers.js";
 import { Function1, none } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -98,7 +98,7 @@ const ReadonlyArray_enumerate: <T>(options?: {
     o?: unknown,
   ) => EnumeratorLike<T>;
 
-  return ReadonlyArray_toContainer<EnumeratorContainer.Type>(createEnumerator);
+  return ReadonlyArray_toContainer<Enumerator.Type>(createEnumerator);
 })();
 
 export default ReadonlyArray_enumerate;

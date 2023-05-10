@@ -1,14 +1,22 @@
-import { ReadonlyObjectMapContainer } from "./containers.js";
-export declare const empty: ReadonlyObjectMapContainer.TypeClass["empty"];
-export declare const entries: ReadonlyObjectMapContainer.TypeClass["entries"];
-export declare const forEachWithKey: ReadonlyObjectMapContainer.TypeClass["forEachWithKey"];
-export declare const keep: ReadonlyObjectMapContainer.TypeClass["keep"];
-export declare const keepType: ReadonlyObjectMapContainer.TypeClass["keepType"];
-export declare const keepWithKey: ReadonlyObjectMapContainer.TypeClass["keepWithKey"];
-export declare const keys: ReadonlyObjectMapContainer.TypeClass["keys"];
-export declare const keySet: ReadonlyObjectMapContainer.TypeClass["keySet"];
-export declare const map: ReadonlyObjectMapContainer.TypeClass["map"];
-export declare const mapWithKey: ReadonlyObjectMapContainer.TypeClass["mapWithKey"];
-export declare const reduce: ReadonlyObjectMapContainer.TypeClass["reduce"];
-export declare const reduceWithKey: ReadonlyObjectMapContainer.TypeClass["reduceWithKey"];
-export declare const values: ReadonlyObjectMapContainer.TypeClass["values"];
+import { KeyedContainerTypeClass } from "./type-classes.js";
+import { Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey, ReadonlyObjectMapLike } from "./types.js";
+export interface Type extends KeyedContainer {
+    readonly [Container_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedContainer_TKey]>, this[typeof Container_T]>;
+    readonly [KeyedContainer_TKey]?: symbol | number | string;
+}
+export type TKey = KeyOf<Type>;
+export interface Signature extends KeyedContainerTypeClass<Type> {
+}
+export declare const empty: Signature["empty"];
+export declare const entries: Signature["entries"];
+export declare const forEachWithKey: Signature["forEachWithKey"];
+export declare const keep: Signature["keep"];
+export declare const keepType: Signature["keepType"];
+export declare const keepWithKey: Signature["keepWithKey"];
+export declare const keys: Signature["keys"];
+export declare const keySet: Signature["keySet"];
+export declare const map: Signature["map"];
+export declare const mapWithKey: Signature["mapWithKey"];
+export declare const reduce: Signature["reduce"];
+export declare const reduceWithKey: Signature["reduceWithKey"];
+export declare const values: Signature["values"];
