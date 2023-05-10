@@ -38,6 +38,67 @@ export interface ContainerTypeClass<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
+   * Return an Container that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(
+    factory: Factory<EnumeratorLike<T>>,
+  ): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
+
+  /**
+   * Generates a Container from a generator function
+   * that is applied to an accumulator value between emitted items.
+   *
+   * @param generator - The generator function.
+   * @param initialValue - Factory function used to generate the initial accumulator.
+   *
+   * @category Constructor
+   */
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): ContainerOf<C, T>;
+
+  /**
    *
    * @category Transform
    */
@@ -305,9 +366,23 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
-export interface DeferredTypeClass<C extends Container> {
+export interface AsyncContainerTypeClass<C extends Container>
+  extends ContainerTypeClass<C> {
   fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+}
 
+export interface BlockingContainerTypeClass<C extends Container>
+  extends ContainerTypeClass<C> {
+  /**
+   * Converts the Container to a `ReadonlyArrayContainer`.
+   *
+   * @category Transform
+   */
+  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+}
+
+export interface DeferredTypeClass<C extends Container>
+  extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -343,79 +418,9 @@ export interface DeferredTypeClass<C extends Container> {
   ) => ContainerOperator<C, T, T>;
 
   /**
-   * Return an Container that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(): ContainerOf<C, T>;
-
-  /**
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
-  forkConcat<TIn, TOut>(
-    fst: ContainerOperator<C, TIn, TOut>,
-    snd: ContainerOperator<C, TIn, TOut>,
-    ...tail: readonly ContainerOperator<C, TIn, TOut>[]
-  ): ContainerOperator<C, TIn, TOut>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumeratorFactory<T>(
-    factory: Factory<EnumeratorLike<T>>,
-  ): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<T>(options?: {
-    readonly start?: number;
-    readonly count?: number;
-  }): Function1<readonly T[], ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
-
-  /**
-   * Generates a Container from a generator function
-   * that is applied to an accumulator value between emitted items.
-   *
-   * @param generator - The generator function.
-   * @param initialValue - Factory function used to generate the initial accumulator.
-   *
-   * @category Constructor
-   */
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
 
   /**
    * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
@@ -447,7 +452,9 @@ export interface DeferredTypeClass<C extends Container> {
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 }
 
-export interface RunnableTypeClass<C extends Container> {
+export interface RunnableTypeClass<C extends Container>
+  extends DeferredTypeClass<C>,
+    BlockingContainerTypeClass<C> {
   /**
    * @category Transform
    */
@@ -503,19 +510,12 @@ export interface RunnableTypeClass<C extends Container> {
   someSatisfy<T>(
     predicate: Predicate<T>,
   ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   * Converts the Container to a `ReadonlyArrayContainer`.
-   *
-   * @category Transform
-   */
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
 
 export interface EnumerableTypeClass<
   C extends Container,
   CEnumerator extends Enumerator.Type = Enumerator.Type,
-> {
+> extends RunnableTypeClass<C> {
   /**
    *
    * @category Transform
