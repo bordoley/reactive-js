@@ -1,4 +1,5 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
+import type * as EventListener from "../../EventListener.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -10,7 +11,6 @@ import {
 import { SideEffect1, call, error, none } from "../../functions.js";
 import {
   DisposableLike_dispose,
-  ErrorSafeEventListenerLike,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
   EventListenerLike_notify,
@@ -61,29 +61,13 @@ const EventListener_createInternal: <T>(
   );
 })();
 
-interface EventListenerCreate {
-  create<T>(
-    notify: (this: EventListenerLike<T>, a: T) => void,
-  ): EventListenerLike<T>;
-
-  create<T>(
-    notify: (this: EventListenerLike<T>, a: T) => void,
-    options: { errorSafe: true },
-  ): ErrorSafeEventListenerLike<T>;
-
-  create<T>(
-    notify: (this: EventListenerLike<T>, a: T) => void,
-    options?: { errorSafe?: boolean },
-  ): EventListenerLike<T>;
-}
-
-const EventListener_create: EventListenerCreate["create"] = (<T>(
+const EventListener_create: EventListener.Signature["create"] = (<T>(
   notify: (this: EventListenerLike<T>, a: T) => void,
   options?: { errorSafe?: boolean },
 ) =>
   EventListener_createInternal(
     notify,
     options?.errorSafe ?? false,
-  )) as EventListenerCreate["create"];
+  )) as EventListener.Signature["create"];
 
 export default EventListener_create;

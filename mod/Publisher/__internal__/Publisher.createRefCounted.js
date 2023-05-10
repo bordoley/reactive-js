@@ -9,7 +9,8 @@ import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { pipe, unsafeCast } from "../../functions.js";
 import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, ObservableLike_observe, PublisherLike_observerCount, } from "../../types.js";
 import Publisher_create from "./Publisher.create.js";
-const Publisher_createRefCounted = /*@__PURE__*/ (() => {
+const Publisher_createRefCounted = 
+/*@__PURE__*/ (() => {
     const createRefCountedPublisherInstance = createInstanceFactory(mix(include(Disposable_delegatingMixin, MulticastObservable_delegatingMixin(), Delegating_mixin()), function RefCountedPublisher(instance, delegate) {
         init(Disposable_delegatingMixin, instance, delegate);
         init(MulticastObservable_delegatingMixin(), instance, delegate);

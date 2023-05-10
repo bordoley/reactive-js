@@ -2,6 +2,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
 } from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Queue_priorityQueueMixin from "../../Queue/__internal__/Queue.priorityQueueMixin.js";
+import type * as Scheduler from "../../Scheduler.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
 import {
@@ -162,13 +163,12 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
     ),
   ))();
 
-const Scheduler_createVirtualTimeScheduler = (
-  options: { readonly maxMicroTaskTicks?: number } = {},
-): VirtualTimeSchedulerLike => {
-  const maxMicroTaskTicks = clampPositiveNonZeroInteger(
-    options.maxMicroTaskTicks ?? MAX_SAFE_INTEGER,
-  );
-  return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
-};
+const Scheduler_createVirtualTimeScheduler: Scheduler.Signature["createVirtualTimeScheduler"] =
+  (options: { readonly maxMicroTaskTicks?: number } = {}) => {
+    const maxMicroTaskTicks = clampPositiveNonZeroInteger(
+      options.maxMicroTaskTicks ?? MAX_SAFE_INTEGER,
+    );
+    return createVirtualTimeSchedulerInstance(maxMicroTaskTicks);
+  };
 
 export default Scheduler_createVirtualTimeScheduler;

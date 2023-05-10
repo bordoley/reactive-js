@@ -1,5 +1,3 @@
-import { PublisherLike } from "../../types.js";
-declare const Publisher_createRefCounted: <T>(options?: {
-    readonly replay?: number;
-}) => PublisherLike<T>;
+import type * as Publisher from "../../Publisher.js";
+declare const Publisher_createRefCounted: Publisher.Signature["createRefCounted"];
 export default Publisher_createRefCounted;

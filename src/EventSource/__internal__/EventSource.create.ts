@@ -1,6 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import EventPublisher_createRefCounted from "../../EventPublisher/__internal__/EventPublisher.createRefCounted.js";
+import type * as EventSource from "../../EventSource.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -30,9 +31,9 @@ import {
   EventSourceLike_addEventListener,
 } from "../../types.js";
 
-const EventSource_create: <T>(
-  setup: SideEffect1<EventListenerLike<T>>,
-) => EventSourceLike<T> = /*@__PURE__*/ (<T>() => {
+const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
+  T,
+>() => {
   type TProperties = {
     [__CreateEventSource_createDelegate]: Factory<EventPublisherLike<T>>;
   };

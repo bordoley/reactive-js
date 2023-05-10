@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/Publisher.Signature.md)
+
 ### Functions
 
 - [create](Publisher.md#create)
