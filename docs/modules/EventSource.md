@@ -12,7 +12,6 @@
 ### Operator Functions
 
 - [forEach](EventSource.md#foreach)
-- [ignoreElements](EventSource.md#ignoreelements)
 - [keep](EventSource.md#keep)
 - [map](EventSource.md#map)
 - [pick](EventSource.md#pick)
@@ -21,6 +20,7 @@
 
 - [addEventHandler](EventSource.md#addeventhandler)
 - [create](EventSource.md#create)
+- [ignoreElements](EventSource.md#ignoreelements)
 
 ## Operator Functions
 
@@ -46,22 +46,6 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
 
 ___
 
@@ -234,3 +218,19 @@ ___
 #### Returns
 
 [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>

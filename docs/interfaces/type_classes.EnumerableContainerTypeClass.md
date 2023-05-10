@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [type-classes](../modules/type_classes.md) / EnumerableContainerTypeClass
 
-# Interface: EnumerableContainerTypeClass<C, CEnumerator\>
+# Interface: EnumerableContainerTypeClass<C\>
 
 [type-classes](../modules/type_classes.md).EnumerableContainerTypeClass
 
@@ -9,15 +9,16 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](types.Container.md) |
-| `CEnumerator` | extends [`Type`](Enumerator.Type.md) = [`Type`](Enumerator.Type.md) |
 
 ## Hierarchy
 
 - [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<`C`\>
 
-  ↳ **`EnumerableContainerTypeClass`**
+- [`EnumerableContainerBaseTypeClass`](type_classes.EnumerableContainerBaseTypeClass.md)<`C`\>
 
-  ↳↳ [`Signature`](Iterable.Signature.md)
+- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<`C`\>
+
+  ↳ **`EnumerableContainerTypeClass`**
 
 ## Table of contents
 
@@ -35,6 +36,13 @@
 ### Constructor Methods
 
 - [concat](type_classes.EnumerableContainerTypeClass.md#concat)
+- [empty](type_classes.EnumerableContainerTypeClass.md#empty)
+- [fromEnumeratorFactory](type_classes.EnumerableContainerTypeClass.md#fromenumeratorfactory)
+- [fromFactory](type_classes.EnumerableContainerTypeClass.md#fromfactory)
+- [fromIterable](type_classes.EnumerableContainerTypeClass.md#fromiterable)
+- [fromOptional](type_classes.EnumerableContainerTypeClass.md#fromoptional)
+- [fromReadonlyArray](type_classes.EnumerableContainerTypeClass.md#fromreadonlyarray)
+- [fromValue](type_classes.EnumerableContainerTypeClass.md#fromvalue)
 - [zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ### Operator Methods
@@ -42,14 +50,12 @@
 - [distinctUntilChanged](type_classes.EnumerableContainerTypeClass.md#distinctuntilchanged)
 - [endWith](type_classes.EnumerableContainerTypeClass.md#endwith)
 - [forEach](type_classes.EnumerableContainerTypeClass.md#foreach)
-- [ignoreElements](type_classes.EnumerableContainerTypeClass.md#ignoreelements)
 - [keep](type_classes.EnumerableContainerTypeClass.md#keep)
 - [keepType](type_classes.EnumerableContainerTypeClass.md#keeptype)
 - [map](type_classes.EnumerableContainerTypeClass.md#map)
 - [mapTo](type_classes.EnumerableContainerTypeClass.md#mapto)
 - [pairwise](type_classes.EnumerableContainerTypeClass.md#pairwise)
 - [pick](type_classes.EnumerableContainerTypeClass.md#pick)
-- [repeat](type_classes.EnumerableContainerTypeClass.md#repeat)
 - [scan](type_classes.EnumerableContainerTypeClass.md#scan)
 - [skipFirst](type_classes.EnumerableContainerTypeClass.md#skipfirst)
 - [startWith](type_classes.EnumerableContainerTypeClass.md#startwith)
@@ -255,6 +261,168 @@ Returns a Container which emits all values from each source sequentially.
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concat](type_classes.RunnableContainerTypeClass.md#concat)
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromenumeratorfactory)
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromfactory)
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromIterable](type_classes.ConcreteContainerBaseTypeClass.md#fromiterable)
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromOptional](type_classes.ConcreteContainerBaseTypeClass.md#fromoptional)
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#fromreadonlyarray)
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
 
 ___
 
@@ -601,26 +769,6 @@ value emitted by the source.
 
 ___
 
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[ignoreElements](type_classes.RunnableContainerTypeClass.md#ignoreelements)
-
-___
-
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
@@ -838,76 +986,6 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
-
-___
-
-### repeat
-
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[repeat](type_classes.RunnableContainerTypeClass.md#repeat)
-
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it `count` times.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[repeat](type_classes.RunnableContainerTypeClass.md#repeat)
-
-▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, continually repeating it.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[repeat](type_classes.RunnableContainerTypeClass.md#repeat)
 
 ___
 
@@ -1336,7 +1414,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CEnumerator`, `T`\>\>
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1346,7 +1424,11 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CEnumerator`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Inherited from
+
+[EnumerableContainerBaseTypeClass](type_classes.EnumerableContainerBaseTypeClass.md).[enumerate](type_classes.EnumerableContainerBaseTypeClass.md#enumerate)
 
 ___
 
@@ -1555,6 +1637,10 @@ Converts the Container to a `IterableLike`.
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
+
+#### Inherited from
+
+[EnumerableContainerBaseTypeClass](type_classes.EnumerableContainerBaseTypeClass.md).[toIterable](type_classes.EnumerableContainerBaseTypeClass.md#toiterable)
 
 ___
 

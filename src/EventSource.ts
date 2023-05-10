@@ -6,7 +6,10 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import { Function1, SideEffect1 } from "./functions.js";
-import { ContainerTypeClass } from "./type-classes.js";
+import {
+  ContainerTypeClass,
+  StatefulContainerBaseTypeClass,
+} from "./type-classes.js";
 import {
   Container,
   Container_T,
@@ -20,7 +23,9 @@ export interface Type extends Container {
   readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 
-export interface Signature extends ContainerTypeClass<Type> {
+export interface Signature
+  extends ContainerTypeClass<Type>,
+    StatefulContainerBaseTypeClass<Type> {
   addEventHandler: <T>(
     handler: SideEffect1<T>,
   ) => Function1<EventSourceLike<T>, DisposableLike>;

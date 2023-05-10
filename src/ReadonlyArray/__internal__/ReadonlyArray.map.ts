@@ -1,5 +1,4 @@
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
-
 import ReadonlyArray_mapWithKey from "./ReadonlyArray.mapWithKey.js";
 
 const ReadonlyArray_map: ReadonlyArray.Signature["map"] =

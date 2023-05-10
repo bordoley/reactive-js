@@ -6,11 +6,9 @@
 
 ## Hierarchy
 
-- [`ConcreteContainerTypeClass`](type_classes.ConcreteContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
-
 - [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
 
-- `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>\>
+- `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\> \| ``"enumerate"`` \| ``"keepType"``\>
 
   ↳ **`Signature`**
 
@@ -31,14 +29,12 @@
 
 - [concat](ReadonlyArray.Signature.md#concat)
 - [empty](ReadonlyArray.Signature.md#empty)
-- [fromEnumerable](ReadonlyArray.Signature.md#fromenumerable)
 - [fromEnumeratorFactory](ReadonlyArray.Signature.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.Signature.md#fromfactory)
 - [fromIterable](ReadonlyArray.Signature.md#fromiterable)
 - [fromOptional](ReadonlyArray.Signature.md#fromoptional)
 - [fromReadonlyArray](ReadonlyArray.Signature.md#fromreadonlyarray)
 - [fromValue](ReadonlyArray.Signature.md#fromvalue)
-- [generate](ReadonlyArray.Signature.md#generate)
 - [zip](ReadonlyArray.Signature.md#zip)
 
 ### Operator Methods
@@ -47,7 +43,6 @@
 - [endWith](ReadonlyArray.Signature.md#endwith)
 - [forEach](ReadonlyArray.Signature.md#foreach)
 - [forEachWithKey](ReadonlyArray.Signature.md#foreachwithkey)
-- [ignoreElements](ReadonlyArray.Signature.md#ignoreelements)
 - [keep](ReadonlyArray.Signature.md#keep)
 - [keepType](ReadonlyArray.Signature.md#keeptype)
 - [keepWithKey](ReadonlyArray.Signature.md#keepwithkey)
@@ -56,7 +51,6 @@
 - [mapWithKey](ReadonlyArray.Signature.md#mapwithkey)
 - [pairwise](ReadonlyArray.Signature.md#pairwise)
 - [pick](ReadonlyArray.Signature.md#pick)
-- [repeat](ReadonlyArray.Signature.md#repeat)
 - [scan](ReadonlyArray.Signature.md#scan)
 - [skipFirst](ReadonlyArray.Signature.md#skipfirst)
 - [startWith](ReadonlyArray.Signature.md#startwith)
@@ -286,27 +280,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[empty](type_classes.ConcreteContainerTypeClass.md#empty)
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
-
-#### Inherited from
-
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerTypeClass.md#fromenumerable)
+Omit.empty
 
 ___
 
@@ -332,7 +306,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerTypeClass.md#fromenumeratorfactory)
+Omit.fromEnumeratorFactory
 
 ___
 
@@ -358,7 +332,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromFactory](type_classes.ConcreteContainerTypeClass.md#fromfactory)
+Omit.fromFactory
 
 ___
 
@@ -378,7 +352,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromIterable](type_classes.ConcreteContainerTypeClass.md#fromiterable)
+Omit.fromIterable
 
 ___
 
@@ -398,7 +372,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromOptional](type_classes.ConcreteContainerTypeClass.md#fromoptional)
+Omit.fromOptional
 
 ___
 
@@ -426,7 +400,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerTypeClass.md#fromreadonlyarray)
+Omit.fromReadonlyArray
 
 ___
 
@@ -446,37 +420,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromValue](type_classes.ConcreteContainerTypeClass.md#fromvalue)
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): readonly `T`[]
-
-Generates a Container from a generator function
-that is applied to an accumulator value between emitted items.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-
-#### Returns
-
-readonly `T`[]
-
-#### Inherited from
-
-[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[generate](type_classes.ConcreteContainerTypeClass.md#generate)
+Omit.fromValue
 
 ___
 
@@ -854,26 +798,6 @@ value emitted by the source.
 
 ___
 
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `unknown`, `T`\>
-
-#### Inherited from
-
-Omit.ignoreElements
-
-___
-
 ### keep
 
 ▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
@@ -906,6 +830,29 @@ ___
 
 ### keepType
 
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Overrides
+
+[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
+
 ▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
@@ -926,9 +873,9 @@ ___
 
 [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
 
-#### Inherited from
+#### Overrides
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
+KeyedContainerTypeClass.keepType
 
 ___
 
@@ -1163,76 +1110,6 @@ Omit.pick
 #### Inherited from
 
 Omit.pick
-
-___
-
-### repeat
-
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-#### Inherited from
-
-Omit.repeat
-
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it `count` times.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-#### Inherited from
-
-Omit.repeat
-
-▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-Returns a Container that mirrors the source, continually repeating it.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-#### Inherited from
-
-Omit.repeat
 
 ___
 
@@ -1701,10 +1578,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
-
-#### Overrides
-
-Omit.enumerate
 
 ___
 

@@ -14,7 +14,9 @@
 
 - [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)<`C`\>
 
-- [`BlockingContainerTypeClass`](type_classes.BlockingContainerTypeClass.md)<`C`\>
+- [`RunnableContainerBaseTypeClass`](type_classes.RunnableContainerBaseTypeClass.md)<`C`\>
+
+- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<`C`\>
 
   ↳ **`RunnableContainerTypeClass`**
 
@@ -36,6 +38,13 @@
 ### Constructor Methods
 
 - [concat](type_classes.RunnableContainerTypeClass.md#concat)
+- [empty](type_classes.RunnableContainerTypeClass.md#empty)
+- [fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
+- [fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
+- [fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
+- [fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
+- [fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
+- [fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
 - [zip](type_classes.RunnableContainerTypeClass.md#zip)
 
 ### Operator Methods
@@ -43,14 +52,12 @@
 - [distinctUntilChanged](type_classes.RunnableContainerTypeClass.md#distinctuntilchanged)
 - [endWith](type_classes.RunnableContainerTypeClass.md#endwith)
 - [forEach](type_classes.RunnableContainerTypeClass.md#foreach)
-- [ignoreElements](type_classes.RunnableContainerTypeClass.md#ignoreelements)
 - [keep](type_classes.RunnableContainerTypeClass.md#keep)
 - [keepType](type_classes.RunnableContainerTypeClass.md#keeptype)
 - [map](type_classes.RunnableContainerTypeClass.md#map)
 - [mapTo](type_classes.RunnableContainerTypeClass.md#mapto)
 - [pairwise](type_classes.RunnableContainerTypeClass.md#pairwise)
 - [pick](type_classes.RunnableContainerTypeClass.md#pick)
-- [repeat](type_classes.RunnableContainerTypeClass.md#repeat)
 - [scan](type_classes.RunnableContainerTypeClass.md#scan)
 - [skipFirst](type_classes.RunnableContainerTypeClass.md#skipfirst)
 - [startWith](type_classes.RunnableContainerTypeClass.md#startwith)
@@ -189,7 +196,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[flatMapIterable](type_classes.BlockingContainerTypeClass.md#flatmapiterable)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[flatMapIterable](type_classes.DeferredContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -220,6 +227,10 @@ ___
 ##### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[contains](type_classes.RunnableContainerBaseTypeClass.md#contains)
 
 ## Constructor Methods
 
@@ -253,6 +264,168 @@ Returns a Container which emits all values from each source sequentially.
 
 ___
 
+### empty
+
+▸ **empty**<`T`\>(): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[empty](type_classes.DeferredContainerTypeClass.md#empty)
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromEnumeratorFactory](type_classes.DeferredContainerTypeClass.md#fromenumeratorfactory)
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromFactory](type_classes.DeferredContainerTypeClass.md#fromfactory)
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromIterable](type_classes.DeferredContainerTypeClass.md#fromiterable)
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromOptional](type_classes.DeferredContainerTypeClass.md#fromoptional)
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromReadonlyArray](type_classes.DeferredContainerTypeClass.md#fromreadonlyarray)
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromValue](type_classes.DeferredContainerTypeClass.md#fromvalue)
+
+___
+
 ### zip
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`]\>
@@ -280,7 +453,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -306,7 +479,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -334,7 +507,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -364,7 +537,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -396,7 +569,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -430,7 +603,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -466,7 +639,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -504,7 +677,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zip](type_classes.BlockingContainerTypeClass.md#zip)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zip](type_classes.DeferredContainerTypeClass.md#zip)
 
 ___
 
@@ -536,7 +709,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[distinctUntilChanged](type_classes.BlockingContainerTypeClass.md#distinctuntilchanged)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[distinctUntilChanged](type_classes.DeferredContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -592,27 +765,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[forEach](type_classes.BlockingContainerTypeClass.md#foreach)
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
-
-#### Inherited from
-
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[ignoreElements](type_classes.BlockingContainerTypeClass.md#ignoreelements)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[forEach](type_classes.DeferredContainerTypeClass.md#foreach)
 
 ___
 
@@ -641,7 +794,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[keep](type_classes.BlockingContainerTypeClass.md#keep)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[keep](type_classes.DeferredContainerTypeClass.md#keep)
 
 ___
 
@@ -668,7 +821,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[keepType](type_classes.BlockingContainerTypeClass.md#keeptype)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[keepType](type_classes.DeferredContainerTypeClass.md#keeptype)
 
 ___
 
@@ -706,7 +859,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[map](type_classes.BlockingContainerTypeClass.md#map)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[map](type_classes.DeferredContainerTypeClass.md#map)
 
 ___
 
@@ -733,7 +886,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[mapTo](type_classes.BlockingContainerTypeClass.md#mapto)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[mapTo](type_classes.DeferredContainerTypeClass.md#mapto)
 
 ___
 
@@ -753,7 +906,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[pairwise](type_classes.BlockingContainerTypeClass.md#pairwise)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[pairwise](type_classes.DeferredContainerTypeClass.md#pairwise)
 
 ___
 
@@ -780,7 +933,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[pick](type_classes.BlockingContainerTypeClass.md#pick)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[pick](type_classes.DeferredContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -805,7 +958,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[pick](type_classes.BlockingContainerTypeClass.md#pick)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[pick](type_classes.DeferredContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -832,77 +985,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[pick](type_classes.BlockingContainerTypeClass.md#pick)
-
-___
-
-### repeat
-
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[repeat](type_classes.DeferredContainerTypeClass.md#repeat)
-
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, repeating it `count` times.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[repeat](type_classes.DeferredContainerTypeClass.md#repeat)
-
-▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that mirrors the source, continually repeating it.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Inherited from
-
-[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[repeat](type_classes.DeferredContainerTypeClass.md#repeat)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[pick](type_classes.DeferredContainerTypeClass.md#pick)
 
 ___
 
@@ -933,7 +1016,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[scan](type_classes.BlockingContainerTypeClass.md#scan)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[scan](type_classes.DeferredContainerTypeClass.md#scan)
 
 ___
 
@@ -962,7 +1045,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[skipFirst](type_classes.BlockingContainerTypeClass.md#skipfirst)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[skipFirst](type_classes.DeferredContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -1018,7 +1101,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[takeFirst](type_classes.BlockingContainerTypeClass.md#takefirst)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[takeFirst](type_classes.DeferredContainerTypeClass.md#takefirst)
 
 ___
 
@@ -1047,7 +1130,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[takeLast](type_classes.BlockingContainerTypeClass.md#takelast)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[takeLast](type_classes.DeferredContainerTypeClass.md#takelast)
 
 ___
 
@@ -1079,7 +1162,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[takeWhile](type_classes.BlockingContainerTypeClass.md#takewhile)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[takeWhile](type_classes.DeferredContainerTypeClass.md#takewhile)
 
 ___
 
@@ -1106,7 +1189,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1131,7 +1214,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1158,7 +1241,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1187,7 +1270,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1218,7 +1301,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1251,7 +1334,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1286,7 +1369,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1323,7 +1406,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[zipWith](type_classes.BlockingContainerTypeClass.md#zipwith)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[zipWith](type_classes.DeferredContainerTypeClass.md#zipwith)
 
 ___
 
@@ -1353,6 +1436,10 @@ it returns false, or until the end of the Container.
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
 
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[everySatisfy](type_classes.RunnableContainerBaseTypeClass.md#everysatisfy)
+
 ___
 
 ### first
@@ -1368,6 +1455,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[first](type_classes.RunnableContainerBaseTypeClass.md#first)
 
 ___
 
@@ -1387,7 +1478,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[firstAsync](type_classes.BlockingContainerTypeClass.md#firstasync)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[firstAsync](type_classes.DeferredContainerTypeClass.md#firstasync)
 
 ___
 
@@ -1404,6 +1495,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[last](type_classes.RunnableContainerBaseTypeClass.md#last)
 
 ___
 
@@ -1423,7 +1518,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[lastAsync](type_classes.BlockingContainerTypeClass.md#lastasync)
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[lastAsync](type_classes.DeferredContainerTypeClass.md#lastasync)
 
 ___
 
@@ -1446,6 +1541,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[noneSatisfy](type_classes.RunnableContainerBaseTypeClass.md#nonesatisfy)
 
 ___
 
@@ -1471,6 +1570,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `TAcc`\>
 
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[reduce](type_classes.RunnableContainerBaseTypeClass.md#reduce)
+
 ___
 
 ### someSatisfy
@@ -1493,6 +1596,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
 
+#### Inherited from
+
+[RunnableContainerBaseTypeClass](type_classes.RunnableContainerBaseTypeClass.md).[someSatisfy](type_classes.RunnableContainerBaseTypeClass.md#somesatisfy)
+
 ___
 
 ### toReadonlyArray
@@ -1513,4 +1620,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[toReadonlyArray](type_classes.BlockingContainerTypeClass.md#toreadonlyarray)
+[BlockingContainerBaseTypeClass](type_classes.BlockingContainerBaseTypeClass.md).[toReadonlyArray](type_classes.BlockingContainerBaseTypeClass.md#toreadonlyarray)

@@ -1,3 +1,3 @@
-import { Function1, Predicate } from "../../functions.js";
-declare const ReadonlyArray_someSatisfy: <T>(predicate: Predicate<T>) => Function1<readonly T[], boolean>;
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
+declare const ReadonlyArray_someSatisfy: ReadonlyArray.Signature["someSatisfy"];
 export default ReadonlyArray_someSatisfy;
