@@ -18,7 +18,7 @@
 
   ↳↳ [`Signature`](Enumerator.Signature.md)
 
-  ↳↳ [`RunnableTypeClass`](type_classes.RunnableTypeClass.md)
+  ↳↳ [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)
 
 ## Table of contents
 

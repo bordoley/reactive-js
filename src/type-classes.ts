@@ -1,5 +1,4 @@
 import type * as Enumerator from "./Enumerator.js";
-import type * as ReadonlyArray from "./ReadonlyArray.js";
 import {
   Equality,
   Factory,
@@ -381,7 +380,7 @@ export interface BlockingContainerTypeClass<C extends Container>
   toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
 
-export interface DeferredTypeClass<C extends Container>
+export interface DeferredContainerTypeClass<C extends Container>
   extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
@@ -452,8 +451,8 @@ export interface DeferredTypeClass<C extends Container>
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 }
 
-export interface RunnableTypeClass<C extends Container>
-  extends DeferredTypeClass<C>,
+export interface RunnableContainerTypeClass<C extends Container>
+  extends DeferredContainerTypeClass<C>,
     BlockingContainerTypeClass<C> {
   /**
    * @category Transform
@@ -512,10 +511,10 @@ export interface RunnableTypeClass<C extends Container>
   ): Function1<ContainerOf<C, T>, boolean>;
 }
 
-export interface EnumerableTypeClass<
+export interface EnumerableContainerTypeClass<
   C extends Container,
   CEnumerator extends Enumerator.Type = Enumerator.Type,
-> extends RunnableTypeClass<C> {
+> extends RunnableContainerTypeClass<C> {
   /**
    *
    * @category Transform
@@ -568,35 +567,6 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
   ): KeyedContainerOperator<C, TKey, T, T>;
 
   /**
-   * @category Constructor
-   */
-  fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    EnumeratorLike<[TKey, T]>,
-    KeyedContainerOf<C, TKey, T>
-  >;
-
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<
-    T,
-    TKey extends KeyOf<ReadonlyArray.Type> = ReadonlyArray.TKey,
-  >(options?: {
-    readonly start?: number;
-    readonly count?: number;
-  }): Function1<readonly T[], KeyedContainerOf<C, TKey, T>>;
-
-  /**
-   * @category Operator
-   */
-  identity<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedContainerOperator<
-    C,
-    TKey,
-    T,
-    T
-  >;
-
-  /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
    *
@@ -623,24 +593,6 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
   keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
     predicate: Function2<T, TKey, boolean>,
   ): KeyedContainerOperator<C, TKey, T, T>;
-
-  /**
-   *
-   * @category Transform
-   */
-  keys<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    KeyedContainerOf<C, TKey, unknown>,
-    EnumeratorLike<TKey>
-  >;
-
-  /**
-   *
-   * @category Transform
-   */
-  keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    KeyedContainerOf<C, TKey, unknown>,
-    ReadonlySet<TKey>
-  >;
 
   /**
    * Returns a ContainerOperator that applies the `selector` function to each
@@ -687,18 +639,37 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
   ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
 
   /**
-   * Converts the Container to a `ReadonlyArrayContainer`.
    *
    * @category Transform
    */
-  toReadonlyArray<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    KeyedContainerOf<C, TKey, T>,
-    ReadonlyArray<T>
+  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+}
+
+export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer>
+  extends KeyedContainerTypeClass<C> {
+  /**
+   * @category Constructor
+   */
+  fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    EnumeratorLike<[TKey, T]>,
+    KeyedContainerOf<C, TKey, T>
   >;
 
   /**
    *
    * @category Transform
    */
-  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+  keys<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, unknown>,
+    EnumeratorLike<TKey>
+  >;
+
+  /**
+   *
+   * @category Transform
+   */
+  keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    KeyedContainerOf<C, TKey, unknown>,
+    ReadonlySet<TKey>
+  >;
 }

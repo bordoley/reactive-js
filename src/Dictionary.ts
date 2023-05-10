@@ -2,7 +2,7 @@ import Dictionary_empty from "./Dictionary/__internal__/Dictionary.empty.js";
 import Dictionary_entries from "./Dictionary/__internal__/Dictionary.entries.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
-import { KeyedContainerTypeClass } from "./type-classes.js";
+import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import {
   Container_T,
   Container_type,
@@ -23,7 +23,7 @@ export interface Type extends KeyedContainer {
 
 export type TKey = KeyOf<Type>;
 
-export interface Signature extends KeyedContainerTypeClass<Type> {}
+export interface Signature extends AssociativeKeyedContainerTypeClass<Type> {}
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;

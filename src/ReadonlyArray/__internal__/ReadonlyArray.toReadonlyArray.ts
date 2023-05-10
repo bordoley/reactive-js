@@ -1,5 +1,4 @@
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
-
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
 const ReadonlyArray_toReadonlyArray: ReadonlyArray.Signature["toReadonlyArray"] =

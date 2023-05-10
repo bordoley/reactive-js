@@ -14,27 +14,20 @@
 
 - **`KeyedContainerTypeClass`**
 
-  ↳ [`Signature`](Dictionary.Signature.md)
-
   ↳ [`Signature`](ReadonlyArray.Signature.md)
 
-  ↳ [`Signature`](ReadonlyMap.Signature.md)
-
-  ↳ [`Signature`](ReadonlyObjectMap.Signature.md)
+  ↳ [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)
 
 ## Table of contents
 
 ### Constructor Methods
 
 - [empty](type_classes.KeyedContainerTypeClass.md#empty)
-- [fromEntries](type_classes.KeyedContainerTypeClass.md#fromentries)
-- [fromReadonlyArray](type_classes.KeyedContainerTypeClass.md#fromreadonlyarray)
 
 ### Operator Methods
 
 - [forEach](type_classes.KeyedContainerTypeClass.md#foreach)
 - [forEachWithKey](type_classes.KeyedContainerTypeClass.md#foreachwithkey)
-- [identity](type_classes.KeyedContainerTypeClass.md#identity)
 - [keep](type_classes.KeyedContainerTypeClass.md#keep)
 - [keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
 - [keepWithKey](type_classes.KeyedContainerTypeClass.md#keepwithkey)
@@ -44,11 +37,8 @@
 ### Transform Methods
 
 - [entries](type_classes.KeyedContainerTypeClass.md#entries)
-- [keySet](type_classes.KeyedContainerTypeClass.md#keyset)
-- [keys](type_classes.KeyedContainerTypeClass.md#keys)
 - [reduce](type_classes.KeyedContainerTypeClass.md#reduce)
 - [reduceWithKey](type_classes.KeyedContainerTypeClass.md#reducewithkey)
-- [toReadonlyArray](type_classes.KeyedContainerTypeClass.md#toreadonlyarray)
 - [values](type_classes.KeyedContainerTypeClass.md#values)
 
 ## Constructor Methods
@@ -69,48 +59,6 @@ Return an Container that emits no items.
 #### Returns
 
 [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
-
-___
-
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
 
 ___
 
@@ -161,23 +109,6 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `effect` | [`SideEffect2`](../modules/functions.md#sideeffect2)<`T`, `TKey`\> |
-
-#### Returns
-
-[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
-
-___
-
-### identity
-
-▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
 
 #### Returns
 
@@ -350,38 +281,6 @@ ___
 
 ___
 
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-___
-
-### keys
-
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
-
-___
-
 ### reduce
 
 ▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `TAcc`\>
@@ -429,25 +328,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `TAcc`\>
-
-___
-
-### toReadonlyArray
-
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, readonly `T`[]\>
 
 ___
 

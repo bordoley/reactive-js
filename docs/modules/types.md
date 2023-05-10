@@ -162,7 +162,7 @@ ___
 
 ### KeyOf
 
-Ƭ **KeyOf**<`C`\>: `C` extends { `[___Container_type]?`: `unknown`  } ? `NonNullable`<`C`[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\> : {}
+Ƭ **KeyOf**<`C`\>: `NonNullable`<`C`[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
 
 #### Type parameters
 

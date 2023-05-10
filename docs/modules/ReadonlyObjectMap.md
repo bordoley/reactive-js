@@ -16,9 +16,11 @@
 ### Constructor Functions
 
 - [empty](ReadonlyObjectMap.md#empty)
+- [fromEntries](ReadonlyObjectMap.md#fromentries)
 
 ### Operator Functions
 
+- [forEach](ReadonlyObjectMap.md#foreach)
 - [forEachWithKey](ReadonlyObjectMap.md#foreachwithkey)
 - [keep](ReadonlyObjectMap.md#keep)
 - [keepType](ReadonlyObjectMap.md#keeptype)
@@ -54,7 +56,7 @@ Return an Container that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -62,7 +64,50 @@ Return an Container that emits no items.
 
 ___
 
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+___
+
 ## Operator Functions
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
+
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
+
+___
 
 ### forEachWithKey
 
@@ -76,7 +121,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -102,7 +147,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -126,7 +171,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -152,7 +197,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -187,7 +232,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -222,7 +267,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -247,7 +292,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -263,7 +308,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -279,7 +324,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -297,7 +342,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -322,7 +367,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> = [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 

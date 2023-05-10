@@ -37,9 +37,12 @@
 - [everySatisfy](ReadonlyArray.md#everysatisfy)
 - [first](ReadonlyArray.md#first)
 - [last](ReadonlyArray.md#last)
+- [reduce](ReadonlyArray.md#reduce)
+- [reduceWithKey](ReadonlyArray.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.md#somesatisfy)
 - [toIterable](ReadonlyArray.md#toiterable)
 - [toReadonlyArray](ReadonlyArray.md#toreadonlyarray)
+- [values](ReadonlyArray.md#values)
 
 ## Type Aliases
 
@@ -102,14 +105,13 @@ ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
@@ -426,6 +428,56 @@ ___
 
 ___
 
+### reduce
+
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
+
+___
+
+### reduceWithKey
+
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Function3`](functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
+
+___
+
 ### someSatisfy
 
 ▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<readonly `T`[], `boolean`\>
@@ -474,17 +526,32 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+___
+
+### values
+
+▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>

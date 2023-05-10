@@ -1,6 +1,8 @@
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
+import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
 import ReadonlyObjectMap_forEachWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
+import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromEntries.js";
 import ReadonlyObjectMap_keep from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keep.js";
 import ReadonlyObjectMap_keepType from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepType.js";
 import ReadonlyObjectMap_keepWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepWithKey.js";
@@ -11,7 +13,7 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { KeyedContainerTypeClass } from "./type-classes.js";
+import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import {
   Container_T,
   Container_type,
@@ -32,12 +34,15 @@ export interface Type extends KeyedContainer {
 
 export type TKey = KeyOf<Type>;
 
-export interface Signature extends KeyedContainerTypeClass<Type> {}
+export interface Signature extends AssociativeKeyedContainerTypeClass<Type> {}
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;
+export const forEach: Signature["forEach"] = ReadonlyObjectMap_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyObjectMap_forEachWithKey;
+export const fromEntries: Signature["fromEntries"] =
+  ReadonlyObjectMap_fromEntries;
 export const keep: Signature["keep"] = ReadonlyObjectMap_keep;
 export const keepType: Signature["keepType"] = ReadonlyObjectMap_keepType;
 export const keepWithKey: Signature["keepWithKey"] =
