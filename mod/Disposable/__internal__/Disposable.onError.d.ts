@@ -1,4 +1,3 @@
-import { SideEffect1, Updater } from "../../functions.js";
-import { DisposableLike } from "../../types.js";
-declare const Disposable_onError: <T extends DisposableLike>(teardown: SideEffect1<Error>) => Updater<T>;
+import type * as Disposable from "../../Disposable.js";
+declare const Disposable_onError: Disposable.Signature["onError"];
 export default Disposable_onError;

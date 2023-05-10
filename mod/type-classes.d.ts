@@ -1,17 +1,8 @@
 import type * as Enumerator from "./Enumerator.js";
 import type * as ReadonlyArray from "./ReadonlyArray.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
-    /**
-     * Returns a Container which buffers items produced by the source until the
-     * number of items reaches the specified maximum buffer size.
-     *
-     * @category Operator
-     */
-    buffer: <T>(options?: {
-        readonly count?: number;
-    }) => ContainerOperator<C, T, readonly T[]>;
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
      * are distinct by comparison from the previous item.
@@ -37,17 +28,6 @@ export interface ContainerTypeClass<C extends Container> {
      * @category Operator
      */
     forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    forkZip<T, TA, TB>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>): ContainerOperator<C, T, readonly [TA, TB]>;
-    forkZip<T, TA, TB, TC>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>): ContainerOperator<C, T, readonly [TA, TB, TC]>;
-    forkZip<T, TA, TB, TC, TD>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>): ContainerOperator<C, T, readonly [TA, TB, TC, TD]>;
-    forkZip<T, TA, TB, TC, TD, TE>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE]>;
-    forkZip<T, TA, TB, TC, TD, TE, TF>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF]>;
-    forkZip<T, TA, TB, TC, TD, TE, TF, TG>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG]>;
-    forkZip<T, TA, TB, TC, TD, TE, TF, TG, TH>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
-    forkZip<T, TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ContainerOperator<C, T, TA>, b: ContainerOperator<C, T, TB>, c: ContainerOperator<C, T, TC>, d: ContainerOperator<C, T, TD>, e: ContainerOperator<C, T, TE>, f: ContainerOperator<C, T, TF>, g: ContainerOperator<C, T, TG>, h: ContainerOperator<C, T, TH>, i: ContainerOperator<C, T, TI>): ContainerOperator<C, T, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
     /**
      * @category Operator
      */
@@ -104,10 +84,6 @@ export interface ContainerTypeClass<C extends Container> {
      * @category Operator
      */
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ContainerOperator<C, T, TAcc>;
-    /**
-     * @category Operator
-     */
-    scanLast: <T, TAcc>(scanner: Function2<TAcc, T, ContainerOf<C, TAcc>>, initialValue: Factory<TAcc>) => ContainerOperator<C, T, TAcc>;
     /**
      * Returns a Container that skips the first count items emitted by the source.
      *
@@ -170,9 +146,169 @@ export interface ContainerTypeClass<C extends Container> {
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-/**
- * @noInheritDoc
- */
+export interface DeferredTypeClass<C extends Container> {
+    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+    /**
+     * Returns a Container which emits all values from each source sequentially.
+     *
+     * @category Constructor
+     */
+    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
+    /**
+     * Converts a higher-order Container into a first-order
+     * Container by concatenating the inner sources in order.
+     *
+     * @category Operator
+     */
+    concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
+    /**
+     * @category Operator
+     */
+    concatMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>) => ContainerOperator<C, TA, TB>;
+    /**
+     * @category Operator
+     */
+    concatWith: <T>(snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]) => ContainerOperator<C, T, T>;
+    /**
+     * Return an Container that emits no items.
+     *
+     * @category Constructor
+     */
+    empty<T>(): ContainerOf<C, T>;
+    /**
+     * @category Operator
+     */
+    endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+    /**
+     * @category Operator
+     */
+    forkConcat<TIn, TOut>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
+    /**
+     * @category Constructor
+     */
+    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+    /**
+     * @category Constructor
+     */
+    fromEnumeratorFactory<T>(factory: Factory<EnumeratorLike<T>>): ContainerOf<C, T>;
+    /**
+     * @category Constructor
+     */
+    fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
+    /**
+     * @category Constructor
+     */
+    fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
+    /**
+     * @category Constructor
+     */
+    fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
+    /**
+     * @category Constructor
+     */
+    fromReadonlyArray<T>(options?: {
+        readonly start?: number;
+        readonly count?: number;
+    }): Function1<readonly T[], ContainerOf<C, T>>;
+    /**
+     * @category Constructor
+     */
+    fromValue<T>(): Function1<T, ContainerOf<C, T>>;
+    /**
+     * Generates a Container from a generator function
+     * that is applied to an accumulator value between emitted items.
+     *
+     * @param generator - The generator function.
+     * @param initialValue - Factory function used to generate the initial accumulator.
+     *
+     * @category Constructor
+     */
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
+    /**
+     * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
+     *
+     * @param predicate
+     *
+     * @category Operator
+     */
+    repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
+    /**
+     * Returns a Container that mirrors the source, repeating it `count` times.
+     *
+     * @param count
+     *
+     * @category Operator
+     */
+    repeat<T>(count: number): ContainerOperator<C, T, T>;
+    /**
+     * Returns a Container that mirrors the source, continually repeating it.
+     *
+     * @category Operator
+     */
+    repeat<T>(): ContainerOperator<C, T, T>;
+    /**
+     * @category Operator
+     */
+    startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+}
+export interface RunnableTypeClass<C extends Container> {
+    /**
+     * @category Transform
+     */
+    contains: <T>(value: T, options?: {
+        readonly equality?: Equality<T>;
+    }) => Function1<ContainerOf<C, T>, boolean>;
+    /**
+     * Determines whether all the members of an Container satisfy the predicate.
+     * The predicate function is invoked for each element in the Container until the
+     * it returns false, or until the end of the Container.
+     *
+     * @param predicate
+     * @category Transform
+     */
+    everySatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
+    /**
+     *
+     * @category Transform
+     */
+    first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+    /**
+     *
+     * @category Transform
+     */
+    last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+    /**
+     * @category Transform
+     */
+    noneSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
+    /**
+     * @category Transform
+     */
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
+    /**
+     * @category Transform
+     */
+    someSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
+    /**
+     * Converts the Container to a `ReadonlyArrayContainer`.
+     *
+     * @category Transform
+     */
+    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+}
+export interface EnumerableTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> {
+    /**
+     *
+     * @category Transform
+     */
+    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+    /**
+     * Converts the Container to a `IterableLike`.
+     *
+     * @category Transform
+     */
+    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+}
 export interface KeyedContainerTypeClass<C extends KeyedContainer> {
     /**
      * Return an Container that emits no items.
@@ -284,236 +420,4 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
      * @category Transform
      */
     values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
-}
-export interface AsynchronousTypeClass<C extends Container> {
-    /**
-     * @category Constructor
-     */
-    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-}
-export interface DeferredTypeClass<C extends Container> {
-    /**
-     * Returns a Container which emits all values from each source sequentially.
-     *
-     * @category Constructor
-     */
-    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
-    /**
-     * Converts a higher-order Container into a first-order
-     * Container by concatenating the inner sources in order.
-     *
-     * @category Operator
-     */
-    concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
-    /**
-     * @category Operator
-     */
-    concatMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>) => ContainerOperator<C, TA, TB>;
-    /**
-     * @category Operator
-     */
-    concatWith: <T>(snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]) => ContainerOperator<C, T, T>;
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<T>(): ContainerOf<C, T>;
-    /**
-     * @category Operator
-     */
-    endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    forkConcat<TIn, TOut>(fst: ContainerOperator<C, TIn, TOut>, snd: ContainerOperator<C, TIn, TOut>, ...tail: readonly ContainerOperator<C, TIn, TOut>[]): ContainerOperator<C, TIn, TOut>;
-    /**
-     * @category Constructor
-     */
-    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-    /**
-     * @category Constructor
-     */
-    fromEnumeratorFactory<T>(factory: Factory<EnumeratorLike<T>>): ContainerOf<C, T>;
-    /**
-     * @category Constructor
-     */
-    fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
-    /**
-     * @category Constructor
-     */
-    fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
-    /**
-     * @category Constructor
-     */
-    fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
-    /**
-     * @category Constructor
-     */
-    fromReadonlyArray<T>(options?: {
-        readonly start?: number;
-        readonly count?: number;
-    }): Function1<readonly T[], ContainerOf<C, T>>;
-    /**
-     * @category Constructor
-     */
-    fromRunnable: <T>() => Function1<RunnableLike<T>, ContainerOf<C, T>>;
-    /**
-     * Generates a Container from a generator function
-     * that is applied to an accumulator value between emitted items.
-     *
-     * @param generator - The generator function.
-     * @param initialValue - Factory function used to generate the initial accumulator.
-     *
-     * @category Constructor
-     */
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
-    /**
-     * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
-     *
-     * @param predicate
-     *
-     * @category Operator
-     */
-    repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
-    /**
-     * Returns a Container that mirrors the source, repeating it `count` times.
-     *
-     * @param count
-     *
-     * @category Operator
-     */
-    repeat<T>(count: number): ContainerOperator<C, T, T>;
-    /**
-     * Returns a Container that mirrors the source, continually repeating it.
-     *
-     * @category Operator
-     */
-    repeat<T>(): ContainerOperator<C, T, T>;
-    /**
-     * Returns an `ObservableLike` that mirrors the source, re-subscribing
-     * if the source completes with an error.
-     *
-     * @category Operator
-     */
-    retry<T>(): ContainerOperator<C, T, T>;
-    /**
-     * Returns an `ObservableLike` that mirrors the source, resubscrbing
-     * if the source completes with an error which satisfies the predicate function.
-     *
-     * @param predicate
-     *
-     * @category Operator
-     */
-    retry<T>(predicate: Function2<number, unknown, boolean>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-}
-export interface RunnableTypeClass<C extends Container> {
-    /**
-     * @category Transform
-     */
-    contains: <T>(value: T, options?: {
-        readonly equality?: Equality<T>;
-    }) => Function1<ContainerOf<C, T>, boolean>;
-    /**
-     * Determines whether all the members of an Container satisfy the predicate.
-     * The predicate function is invoked for each element in the Container until the
-     * it returns false, or until the end of the Container.
-     *
-     * @param predicate
-     * @category Transform
-     */
-    everySatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
-    /**
-     *
-     * @category Transform
-     */
-    first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-    /**
-     * @category Transform
-     */
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
-    /**
-     *
-     * @category Transform
-     */
-    last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-    /**
-     * @category Transform
-     */
-    noneSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
-    /**
-     * @category Transform
-     */
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
-    /**
-     * @category Transform
-     */
-    someSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
-    /**
-     * Converts the Container to a `ReadonlyArrayContainer`.
-     *
-     * @category Transform
-     */
-    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
-}
-export interface StatefulTypeClass<C extends Container> {
-    /**
-     * Returns a Container which catches errors produced by the source and either continues with
-     * the Container returned from the `onError` callback or swallows the error if
-     * void is returned.
-     *
-     * @param onError - A function that takes source error and either returns a Container
-     * to continue with or void if the error should be propagated.
-     *
-     * @category Operator
-     */
-    catchError<T>(onError: Function1<unknown, ContainerOf<C, T> | void>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    decodeWithCharset(options?: {
-        charset?: string;
-    }): ContainerOperator<C, ArrayBuffer, string>;
-    /**
-     * @category Constructor
-     */
-    defer<T>(factory: Factory<ContainerOf<C, T>>): ContainerOf<C, T>;
-    /**
-     * @category Operator
-     */
-    encodeUtf8(): ContainerOperator<C, string, Uint8Array>;
-    /**
-     * Returns a Container that emits an error if the source completes without emitting a value.
-     *
-     * @param factory - A factory function invoked to produce the error to be thrown.
-     *
-     * @category Operator
-     */
-    throwIfEmpty<T>(factory: Factory<unknown>): ContainerOperator<C, T, T>;
-    /**
-     * @category Constructor
-     */
-    throws<T>(options?: {
-        raise?: Factory<unknown>;
-    }): ContainerOf<C, T>;
-}
-export interface EnumerableTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> {
-    /**
-     *
-     * @category Transform
-     */
-    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
-    /**
-     * Converts the Container to a `IterableLike`.
-     *
-     * @category Transform
-     */
-    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }

@@ -1,5 +1,3 @@
-import { DisposableLike } from "../../types.js";
-declare const Disposable_add: <T extends DisposableLike>(child: DisposableLike, options?: {
-    readonly ignoreChildErrors?: boolean;
-}) => (parent: T) => T;
+import type * as Disposable from "../../Disposable.js";
+declare const Disposable_add: Disposable.Signature["add"];
 export default Disposable_add;
