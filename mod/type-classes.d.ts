@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -28,10 +28,6 @@ export interface ContainerTypeClass<C extends Container> {
      */
     forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
     /**
-     * @category Operator
-     */
-    ignoreElements<T>(): ContainerOperator<C, unknown, T>;
-    /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
      *
@@ -39,7 +35,6 @@ export interface ContainerTypeClass<C extends Container> {
      */
     keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
     /**
-     *
      * @category Operator
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB>;
@@ -145,7 +140,7 @@ export interface ContainerTypeClass<C extends Container> {
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-export interface ConcreteContainerTypeClass<C extends Container> {
+export interface ConcreteContainerBaseTypeClass<C extends Container> {
     /**
      * Return an Container that emits no items.
      *
@@ -155,7 +150,6 @@ export interface ConcreteContainerTypeClass<C extends Container> {
     /**
      * @category Constructor
      */
-    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
     /**
      * @category Constructor
      */
@@ -183,6 +177,11 @@ export interface ConcreteContainerTypeClass<C extends Container> {
      * @category Constructor
      */
     fromValue<T>(): Function1<T, ContainerOf<C, T>>;
+}
+export interface ConcreteAsyncContainerBaseTypeClass<C extends Container> {
+    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
+}
+export interface StatefulContainerBaseTypeClass<C extends Container> {
     /**
      * Generates a Container from a generator function
      * that is applied to an accumulator value between emitted items.
@@ -193,11 +192,9 @@ export interface ConcreteContainerTypeClass<C extends Container> {
      * @category Constructor
      */
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
+    ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 }
-export interface ConcreteAsyncContainerTypeClass<C extends Container> {
-    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-}
-export interface BlockingContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface BlockingContainerBaseTypeClass<C extends Container> {
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
@@ -205,7 +202,7 @@ export interface BlockingContainerTypeClass<C extends Container> extends Contain
      */
     toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
-export interface DeferredContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface DeferredContainerBaseTypeClass<C extends Container> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -232,33 +229,11 @@ export interface DeferredContainerTypeClass<C extends Container> extends Contain
      */
     endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
     /**
-     * Returns a Container that mirrors the source, repeating it whenever the predicate returns true.
-     *
-     * @param predicate
-     *
-     * @category Operator
-     */
-    repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
-    /**
-     * Returns a Container that mirrors the source, repeating it `count` times.
-     *
-     * @param count
-     *
-     * @category Operator
-     */
-    repeat<T>(count: number): ContainerOperator<C, T, T>;
-    /**
-     * Returns a Container that mirrors the source, continually repeating it.
-     *
-     * @category Operator
-     */
-    repeat<T>(): ContainerOperator<C, T, T>;
-    /**
      * @category Operator
      */
     startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 }
-export interface RunnableContainerTypeClass<C extends Container> extends DeferredContainerTypeClass<C>, BlockingContainerTypeClass<C> {
+export interface RunnableContainerBaseTypeClass<C extends Container> {
     /**
      * @category Transform
      */
@@ -297,7 +272,7 @@ export interface RunnableContainerTypeClass<C extends Container> extends Deferre
      */
     someSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
 }
-export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C> {
+export interface EnumerableContainerBaseTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> {
     /**
      *
      * @category Transform
@@ -309,6 +284,12 @@ export interface EnumerableContainerTypeClass<C extends Container, CEnumerator e
      * @category Transform
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+}
+export interface DeferredContainerTypeClass<C extends Container> extends DeferredContainerBaseTypeClass<C>, ConcreteContainerBaseTypeClass<C>, ContainerTypeClass<C> {
+}
+export interface RunnableContainerTypeClass<C extends Container> extends DeferredContainerTypeClass<C>, RunnableContainerBaseTypeClass<C>, BlockingContainerBaseTypeClass<C> {
+}
+export interface EnumerableContainerTypeClass<C extends Container> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C>, ConcreteContainerBaseTypeClass<C> {
 }
 export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**

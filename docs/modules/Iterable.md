@@ -16,6 +16,7 @@
 ### Transform Functions
 
 - [enumerate](Iterable.md#enumerate)
+- [toReadonlyArray](Iterable.md#toreadonlyarray)
 
 ## Constructor Functions
 
@@ -58,3 +59,21 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
+
+Converts the Container to a `ReadonlyArrayContainer`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>

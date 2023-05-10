@@ -4,8 +4,9 @@ import Enumerator_map from "./Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_pick from "./Enumerator/__internal__/Enumerator.pick.js";
 import Enumerator_toReadonlyArray from "./Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import {
-  BlockingContainerTypeClass,
-  ConcreteContainerTypeClass,
+  BlockingContainerBaseTypeClass,
+  ConcreteContainerBaseTypeClass,
+  ContainerTypeClass,
 } from "./type-classes.js";
 import {
   Container,
@@ -19,8 +20,9 @@ export interface Type extends Container {
 }
 
 export interface Signature
-  extends ConcreteContainerTypeClass<Type>,
-    BlockingContainerTypeClass<Type> {}
+  extends ConcreteContainerBaseTypeClass<Type>,
+    BlockingContainerBaseTypeClass<Type>,
+    ContainerTypeClass<Type> {}
 
 export const empty: Signature["empty"] = Enumerator_empty;
 export const keep: Signature["keep"] = Enumerator_keep;

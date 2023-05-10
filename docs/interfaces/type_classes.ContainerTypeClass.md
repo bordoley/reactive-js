@@ -14,9 +14,9 @@
 
 - **`ContainerTypeClass`**
 
-  ↳ [`Signature`](EventSource.Signature.md)
+  ↳ [`Signature`](Enumerator.Signature.md)
 
-  ↳ [`BlockingContainerTypeClass`](type_classes.BlockingContainerTypeClass.md)
+  ↳ [`Signature`](EventSource.Signature.md)
 
   ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
 
@@ -34,7 +34,6 @@
 
 - [distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
 - [forEach](type_classes.ContainerTypeClass.md#foreach)
-- [ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 - [keep](type_classes.ContainerTypeClass.md#keep)
 - [keepType](type_classes.ContainerTypeClass.md#keeptype)
 - [map](type_classes.ContainerTypeClass.md#map)
@@ -355,22 +354,6 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
 
 ___
 

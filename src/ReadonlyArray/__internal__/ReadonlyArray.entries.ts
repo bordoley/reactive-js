@@ -1,5 +1,4 @@
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
-
 import { pipe } from "../../functions.js";
 import { EnumeratorLike } from "../../types.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";

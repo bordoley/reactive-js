@@ -1,8 +1,10 @@
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
-import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import Iterable_fromReadonlyArray from "./Iterable/__internal__/Iterable.fromReadonlyArray.js";
+import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import {
-  ConcreteContainerTypeClass,
-  EnumerableContainerTypeClass,
+  BlockingContainerBaseTypeClass,
+  ConcreteContainerBaseTypeClass,
+  EnumerableContainerBaseTypeClass,
 } from "./type-classes.js";
 import { Container, Container_T, Container_type } from "./types.js";
 
@@ -11,9 +13,12 @@ export interface Type extends Container {
 }
 
 export interface Signature
-  extends ConcreteContainerTypeClass<Type>,
-    EnumerableContainerTypeClass<Type> {}
+  extends ConcreteContainerBaseTypeClass<Type>,
+    BlockingContainerBaseTypeClass<Type>,
+    EnumerableContainerBaseTypeClass<Type> {}
 
 export const enumerate: Signature["enumerate"] = Iterable_enumerate;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  ReadonlyArray_toReadonlyArray;
+  Iterable_fromReadonlyArray;
+export const toReadonlyArray: Signature["toReadonlyArray"] =
+  Iterable_toReadonlyArray;

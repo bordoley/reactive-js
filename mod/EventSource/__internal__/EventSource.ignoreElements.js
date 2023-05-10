@@ -1,7 +1,6 @@
 /// <reference types="./EventSource.ignoreElements.d.ts" />
 
-import Container_ignoreElements from "../../Container/__internal__/Container.ignoreElements.js";
+import { alwaysFalse } from "../../functions.js";
 import EventSource_keep from "./EventSource.keep.js";
-const EventSource_ignoreElements = 
-/*@__PURE__*/ Container_ignoreElements(EventSource_keep);
+const EventSource_ignoreElements = () => EventSource_keep(alwaysFalse);
 export default EventSource_ignoreElements;

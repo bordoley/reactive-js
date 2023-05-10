@@ -8,6 +8,8 @@
 
 - [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<[`Type`](EventSource.Type.md)\>
 
+- [`StatefulContainerBaseTypeClass`](type_classes.StatefulContainerBaseTypeClass.md)<[`Type`](EventSource.Type.md)\>
+
   ↳ **`Signature`**
 
 ## Table of contents
@@ -23,13 +25,13 @@
 
 ### Constructor Methods
 
+- [generate](EventSource.Signature.md#generate)
 - [zip](EventSource.Signature.md#zip)
 
 ### Operator Methods
 
 - [distinctUntilChanged](EventSource.Signature.md#distinctuntilchanged)
 - [forEach](EventSource.Signature.md#foreach)
-- [ignoreElements](EventSource.Signature.md#ignoreelements)
 - [keep](EventSource.Signature.md#keep)
 - [keepType](EventSource.Signature.md#keeptype)
 - [map](EventSource.Signature.md#map)
@@ -42,6 +44,10 @@
 - [takeLast](EventSource.Signature.md#takelast)
 - [takeWhile](EventSource.Signature.md#takewhile)
 - [zipWith](EventSource.Signature.md#zipwith)
+
+### Other Methods
+
+- [ignoreElements](EventSource.Signature.md#ignoreelements)
 
 ### Transform Methods
 
@@ -134,6 +140,36 @@ ___
 [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ## Constructor Methods
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+Generates a Container from a generator function
+that is applied to an accumulator value between emitted items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
+
+#### Returns
+
+[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+#### Inherited from
+
+[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[generate](type_classes.StatefulContainerBaseTypeClass.md#generate)
+
+___
 
 ### zip
 
@@ -448,26 +484,6 @@ value emitted by the source.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -1082,6 +1098,28 @@ ___
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[ignoreElements](type_classes.StatefulContainerBaseTypeClass.md#ignoreelements)
 
 ___
 
