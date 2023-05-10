@@ -1,6 +1,7 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
+import type * as Publisher from "../../Publisher.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
@@ -42,9 +43,9 @@ import {
   QueueableLike_enqueue,
 } from "../../types.js";
 
-const Publisher_create: <T>(options?: {
-  readonly replay?: number;
-}) => PublisherLike<T> = /*@__PURE__*/ (<T>() => {
+const Publisher_create: Publisher.Signature["create"] = /*@__PURE__*/ (<
+  T,
+>() => {
   type TProperties = {
     readonly [__Publisher_observers]: Set<ObserverLike<T>>;
     readonly [MulticastObservableLike_buffer]: IndexedQueueLike<T>;
@@ -167,7 +168,7 @@ const Publisher_create: <T>(options?: {
     ),
   );
 
-  return (options?: { readonly replay?: number }): PublisherLike<T> => {
+  return (options?: { readonly replay?: number }) => {
     const replay = clampPositiveInteger(options?.replay ?? 0);
     return createPublisherInstance(replay);
   };

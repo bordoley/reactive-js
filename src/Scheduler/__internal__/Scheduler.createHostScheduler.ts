@@ -1,6 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_create from "../../Disposable/__internal__/Disposable.create.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import type * as Scheduler from "../../Scheduler.js";
 import {
   createInstanceFactory,
   include,
@@ -141,13 +142,14 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
     ),
   ))();
 
-const Scheduler_createHostScheduler = (
-  options: {
-    readonly maxYieldInterval?: number;
-  } = {},
-): SchedulerLike & DisposableLike => {
-  const { maxYieldInterval = 300 } = options;
-  return createHostSchedulerInstance(maxYieldInterval);
-};
+const Scheduler_createHostScheduler: Scheduler.Signature["createHostScheduler"] =
+  (
+    options: {
+      readonly maxYieldInterval?: number;
+    } = {},
+  ) => {
+    const { maxYieldInterval = 300 } = options;
+    return createHostSchedulerInstance(maxYieldInterval);
+  };
 
 export default Scheduler_createHostScheduler;

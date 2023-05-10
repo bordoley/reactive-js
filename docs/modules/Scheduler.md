@@ -4,11 +4,15 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/Scheduler.Signature.md)
+
 ### Functions
 
 - [createHostScheduler](Scheduler.md#createhostscheduler)
+- [createPausableScheduler](Scheduler.md#createpausablescheduler)
 - [createVirtualTimeScheduler](Scheduler.md#createvirtualtimescheduler)
-- [toPausableScheduler](Scheduler.md#topausablescheduler)
 
 ## Functions
 
@@ -29,6 +33,22 @@
 
 ___
 
+### createPausableScheduler
+
+▸ **createPausableScheduler**(`hostScheduler`): [`PauseableSchedulerLike`](../interfaces/types.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
+
+#### Returns
+
+[`PauseableSchedulerLike`](../interfaces/types.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
+
+___
+
 ### createVirtualTimeScheduler
 
 ▸ **createVirtualTimeScheduler**(`options?`): [`VirtualTimeSchedulerLike`](../interfaces/types.VirtualTimeSchedulerLike.md)
@@ -43,19 +63,3 @@ ___
 #### Returns
 
 [`VirtualTimeSchedulerLike`](../interfaces/types.VirtualTimeSchedulerLike.md)
-
-___
-
-### toPausableScheduler
-
-▸ **toPausableScheduler**(`a`): [`PauseableSchedulerLike`](../interfaces/types.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
-
-#### Returns
-
-[`PauseableSchedulerLike`](../interfaces/types.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)

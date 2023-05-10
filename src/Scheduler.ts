@@ -1,9 +1,30 @@
 import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
+import Scheduler_createPausableScheduler from "./Scheduler/__internal__/Scheduler.createPausableScheduler.js";
 import Scheduler_createVirtualTimeScheduler from "./Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
-import Scheduler_toPausableScheduler from "./Scheduler/__internal__/Scheduler.toPausableScheduler.js";
+import {
+  DisposableLike,
+  PauseableSchedulerLike,
+  SchedulerLike,
+  VirtualTimeSchedulerLike,
+} from "./types.js";
 
-export const createHostScheduler = Scheduler_createHostScheduler;
+export interface Signature {
+  createHostScheduler(options?: {
+    readonly maxYieldInterval?: number;
+  }): SchedulerLike & DisposableLike;
 
-export const createVirtualTimeScheduler = Scheduler_createVirtualTimeScheduler;
+  createVirtualTimeScheduler(options?: {
+    readonly maxMicroTaskTicks?: number | undefined;
+  }): VirtualTimeSchedulerLike;
 
-export const toPausableScheduler = Scheduler_toPausableScheduler;
+  createPausableScheduler(
+    hostScheduler: SchedulerLike,
+  ): PauseableSchedulerLike & DisposableLike;
+}
+
+export const createHostScheduler: Signature["createHostScheduler"] =
+  Scheduler_createHostScheduler;
+export const createVirtualTimeScheduler: Signature["createVirtualTimeScheduler"] =
+  Scheduler_createVirtualTimeScheduler;
+export const createPausableScheduler: Signature["createPausableScheduler"] =
+  Scheduler_createPausableScheduler;

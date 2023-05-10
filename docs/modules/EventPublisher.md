@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/EventPublisher.Signature.md)
+
 ### Functions
 
 - [create](EventPublisher.md#create)

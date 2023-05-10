@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/EventListener.Signature.md)
+
 ### Functions
 
 - [create](EventListener.md#create)
@@ -30,42 +34,42 @@
 
 [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>
 
-▸ **create**<`T_1`\>(`notify`, `options`): [`ErrorSafeEventListenerLike`](../interfaces/types.ErrorSafeEventListenerLike.md)<`T_1`\>
+▸ **create**<`T`\>(`notify`, `options`): [`ErrorSafeEventListenerLike`](../interfaces/types.ErrorSafeEventListenerLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T_1` |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `notify` | (`this`: [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T_1`\>, `a`: `T_1`) => `void` |
+| `notify` | (`this`: [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>, `a`: `T`) => `void` |
 | `options` | `Object` |
 | `options.errorSafe` | ``true`` |
 
 #### Returns
 
-[`ErrorSafeEventListenerLike`](../interfaces/types.ErrorSafeEventListenerLike.md)<`T_1`\>
+[`ErrorSafeEventListenerLike`](../interfaces/types.ErrorSafeEventListenerLike.md)<`T`\>
 
-▸ **create**<`T_2`\>(`notify`, `options?`): [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T_2`\>
+▸ **create**<`T`\>(`notify`, `options?`): [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
-| `T_2` |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `notify` | (`this`: [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T_2`\>, `a`: `T_2`) => `void` |
+| `notify` | (`this`: [`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>, `a`: `T`) => `void` |
 | `options?` | `Object` |
 | `options.errorSafe?` | `boolean` |
 
 #### Returns
 
-[`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T_2`\>
+[`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>

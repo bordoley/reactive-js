@@ -1,5 +1,3 @@
-import { DisposableLike, SchedulerLike } from "../../types.js";
-declare const Scheduler_createHostScheduler: (options?: {
-    readonly maxYieldInterval?: number;
-}) => SchedulerLike & DisposableLike;
+import type * as Scheduler from "../../Scheduler.js";
+declare const Scheduler_createHostScheduler: Scheduler.Signature["createHostScheduler"];
 export default Scheduler_createHostScheduler;

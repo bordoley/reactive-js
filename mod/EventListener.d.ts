@@ -1,9 +1,11 @@
-export declare const create: {
-    <T>(notify: (this: import("./types.js").EventListenerLike<T>, a: T) => void): import("./types.js").EventListenerLike<T>;
-    <T_1>(notify: (this: import("./types.js").EventListenerLike<T_1>, a: T_1) => void, options: {
+import { ErrorSafeEventListenerLike, EventListenerLike } from "./types.js";
+export interface Signature {
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void): EventListenerLike<T>;
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void, options: {
         errorSafe: true;
-    }): import("./types.js").ErrorSafeEventListenerLike<T_1>;
-    <T_2>(notify: (this: import("./types.js").EventListenerLike<T_2>, a: T_2) => void, options?: {
-        errorSafe?: boolean | undefined;
-    } | undefined): import("./types.js").EventListenerLike<T_2>;
-};
+    }): ErrorSafeEventListenerLike<T>;
+    create<T>(notify: (this: EventListenerLike<T>, a: T) => void, options?: {
+        errorSafe?: boolean;
+    }): EventListenerLike<T>;
+}
+export declare const create: Signature["create"];

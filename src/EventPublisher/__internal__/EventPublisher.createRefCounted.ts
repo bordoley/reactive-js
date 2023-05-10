@@ -1,6 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import type * as EventPublisher from "../../EventPublisher.js";
 import {
   createInstanceFactory,
   include,
@@ -24,7 +25,7 @@ import {
 } from "../../types.js";
 import EventPublisher_create from "./EventPublisher.create.js";
 
-const EventPublisher_createRefCounted: <T>() => EventPublisherLike<T> =
+const EventPublisher_createRefCounted: EventPublisher.Signature["createRefCounted"] =
   /*@__PURE__*/ (<T>() => {
     const createRefCountedEventPublisherInstance = createInstanceFactory(
       mix(

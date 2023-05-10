@@ -1,7 +1,13 @@
-export declare const createHostScheduler: (options?: {
-    readonly maxYieldInterval?: number | undefined;
-}) => import("./types.js").SchedulerLike & import("./types.js").DisposableLike;
-export declare const createVirtualTimeScheduler: (options?: {
-    readonly maxMicroTaskTicks?: number | undefined;
-}) => import("./types.js").VirtualTimeSchedulerLike;
-export declare const toPausableScheduler: import("./functions.js").Function1<import("./types.js").SchedulerLike, import("./types.js").PauseableSchedulerLike & import("./types.js").DisposableLike>;
+import { DisposableLike, PauseableSchedulerLike, SchedulerLike, VirtualTimeSchedulerLike } from "./types.js";
+export interface Signature {
+    createHostScheduler(options?: {
+        readonly maxYieldInterval?: number;
+    }): SchedulerLike & DisposableLike;
+    createVirtualTimeScheduler(options?: {
+        readonly maxMicroTaskTicks?: number | undefined;
+    }): VirtualTimeSchedulerLike;
+    createPausableScheduler(hostScheduler: SchedulerLike): PauseableSchedulerLike & DisposableLike;
+}
+export declare const createHostScheduler: Signature["createHostScheduler"];
+export declare const createVirtualTimeScheduler: Signature["createVirtualTimeScheduler"];
+export declare const createPausableScheduler: Signature["createPausableScheduler"];

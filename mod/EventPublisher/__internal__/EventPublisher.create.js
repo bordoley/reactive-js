@@ -7,7 +7,8 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __EventPublisher_listeners } from "../../__internal__/symbols.js";
 import { error, newInstance, none, pipe, unsafeCast } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, } from "../../types.js";
-const EventPublisher_create = /*@__PURE__*/ (() => {
+const EventPublisher_create = 
+/*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance) {
         init(Disposable_mixin, instance);
         instance[__EventPublisher_listeners] =
