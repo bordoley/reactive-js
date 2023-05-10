@@ -1,11 +1,12 @@
-import { Container, DeferredTypeClass } from "../../containers.js";
+import { DeferredTypeClass } from "../../type-classes.js";
+import { Container, ContainerOf, ContainerOperator } from "../../types.js";
 
 const Container_concatWith =
-  <C extends Container.Type>(concat: DeferredTypeClass<C>["concat"]) =>
+  <C extends Container>(concat: DeferredTypeClass<C>["concat"]) =>
   <T>(
-    snd: Container.Of<C, T>,
-    ...tail: readonly Container.Of<C, T>[]
-  ): Container.Operator<C, T, T> =>
+    snd: ContainerOf<C, T>,
+    ...tail: readonly ContainerOf<C, T>[]
+  ): ContainerOperator<C, T, T> =>
   first =>
     concat(first, snd, ...tail);
 

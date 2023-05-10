@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
   include,
@@ -12,7 +13,6 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
-import { EnumeratorContainer } from "../../containers.js";
 import { Predicate, none, unsafeCast } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -21,9 +21,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_keep: EnumeratorContainer.TypeClass["keep"] = /*@__PURE__*/ (<
-  T,
->() => {
+const Enumerator_keep: Enumerator.Signature["keep"] = /*@__PURE__*/ (<T>() => {
   const createKeepEnumerator = createInstanceFactory(
     mix(
       include(Delegating_mixin()),

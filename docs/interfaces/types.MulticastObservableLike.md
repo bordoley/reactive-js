@@ -18,8 +18,6 @@ A stateful ObservableLike resource.
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)
-
   ↳↳ [`PublisherLike`](types.PublisherLike.md)
 
   ↳↳ [`StreamLike`](types.StreamLike.md)

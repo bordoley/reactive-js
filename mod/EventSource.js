@@ -7,15 +7,11 @@ import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.i
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
-import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import { Container_type, } from "./types.js";
 export const addEventHandler = EventSource_addEventHandler;
-/**
- * @category Constructor
- */
 export const create = EventSource_create;
 export const forEach = EventSource_forEach;
 export const ignoreElements = EventSource_ignoreElements;
 export const keep = EventSource_keep;
 export const map = EventSource_map;
 export const pick = EventSource_pick;
-export const toObservable = EventSource_toObservable;

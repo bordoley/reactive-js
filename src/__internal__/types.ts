@@ -1,4 +1,3 @@
-import { Container } from "../containers.js";
 import {
   Function1,
   Function2,
@@ -9,6 +8,8 @@ import {
 } from "../functions.js";
 import {
   CollectionLike,
+  Container,
+  ContainerOperator,
   DisposableLike,
   IndexedCollectionLike,
   KeyedCollectionLike,
@@ -162,10 +163,10 @@ export interface ReducerAccumulatorLike<T, TAcc> {
   [ReducerAccumulatorLike_reducer]: Reducer<T, TAcc>;
 }
 
-export interface Lift<C extends Container.Type> {
+export interface Lift<C extends Container> {
   lift<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): Container.Operator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 }
 
 export interface WithLatestLike<TA, TB, T> {

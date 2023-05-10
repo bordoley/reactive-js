@@ -5,27 +5,35 @@ import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.i
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
-import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
-import { EventSourceContainer } from "./containers.js";
 import { Function1, SideEffect1 } from "./functions.js";
-import { DisposableLike, EventSourceLike } from "./types.js";
+import { ContainerTypeClass } from "./type-classes.js";
+import {
+  Container,
+  Container_T,
+  Container_type,
+  DisposableLike,
+  EventListenerLike,
+  EventSourceLike,
+} from "./types.js";
 
-export const addEventHandler: <T>(
-  handler: SideEffect1<T>,
-) => Function1<EventSourceLike<T>, DisposableLike> =
+export interface Type extends Container {
+  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+}
+
+export interface Signature extends ContainerTypeClass<Type> {
+  addEventHandler: <T>(
+    handler: SideEffect1<T>,
+  ) => Function1<EventSourceLike<T>, DisposableLike>;
+
+  create: <T>(setup: SideEffect1<EventListenerLike<T>>) => EventSourceLike<T>;
+}
+
+export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
-
-/**
- * @category Constructor
- */
-export const create = EventSource_create;
-
-export const forEach: EventSourceContainer.TypeClass["forEach"] =
-  EventSource_forEach;
-export const ignoreElements: EventSourceContainer.TypeClass["ignoreElements"] =
+export const create: Signature["create"] = EventSource_create;
+export const forEach: Signature["forEach"] = EventSource_forEach;
+export const ignoreElements: Signature["ignoreElements"] =
   EventSource_ignoreElements;
-export const keep: EventSourceContainer.TypeClass["keep"] = EventSource_keep;
-export const map: EventSourceContainer.TypeClass["map"] = EventSource_map;
-export const pick: EventSourceContainer.TypeClass["pick"] = EventSource_pick;
-export const toObservable: EventSourceContainer.TypeClass["toObservable"] =
-  EventSource_toObservable;
+export const keep: Signature["keep"] = EventSource_keep;
+export const map: Signature["map"] = EventSource_map;
+export const pick: Signature["pick"] = EventSource_pick;

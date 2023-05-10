@@ -1,14 +1,11 @@
+import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import { create, hasOwn } from "../../__internal__/Object.js";
-import { ReadonlyObjectMapContainer } from "../../containers.js";
 import { Function1, Function2 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
-const ReadonlyObjectMap_keepWithKey: ReadonlyObjectMapContainer.TypeClass["keepWithKey"] =
+const ReadonlyObjectMap_keepWithKey: ReadonlyObjectMap.Signature["keepWithKey"] =
 
-    <
-      T,
-      TKey extends ReadonlyObjectMapContainer.TKey = ReadonlyObjectMapContainer.TKey,
-    >(
+    <T, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
       predicate: Function2<T, TKey, boolean>,
     ): Function1<
       ReadonlyObjectMapLike<TKey, T>,

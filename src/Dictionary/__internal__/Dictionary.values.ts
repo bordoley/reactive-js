@@ -1,5 +1,5 @@
+import type * as Dictionary from "../../Dictionary.js";
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
-import { DictionaryContainer } from "../../containers.js";
 import { pipe } from "../../functions.js";
 import {
   DictionaryLike,
@@ -8,8 +8,8 @@ import {
 } from "../../types.js";
 import Dictionary_keys from "./Dictionary.keys.js";
 
-const Dictionary_values =
-  <T, TKey extends DictionaryContainer.TKey = DictionaryContainer.TKey>() =>
+const Dictionary_values: Dictionary.Signature["values"] =
+  <T, TKey extends Dictionary.TKey = Dictionary.TKey>() =>
   (dict: DictionaryLike<TKey, T>): EnumeratorLike<T> =>
     pipe(
       dict,

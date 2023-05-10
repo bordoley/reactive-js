@@ -1,8 +1,8 @@
-import { ReadonlyMapContainer } from "../../containers.js";
+import type * as ReadonlyMap from "../../ReadonlyMap.js";
 import { Function2 } from "../../functions.js";
 
-const ReadonlyMap_mapWithKey: ReadonlyMapContainer.TypeClass["mapWithKey"] =
-  <TA, TB, TKey extends ReadonlyMapContainer.TKey = ReadonlyMapContainer.TKey>(
+const ReadonlyMap_mapWithKey: ReadonlyMap.Signature["mapWithKey"] =
+  <TA, TB, TKey extends ReadonlyMap.TKey = ReadonlyMap.TKey>(
     selector: Function2<TA, TKey, TB>,
   ) =>
   (map: ReadonlyMap<TKey, TA>): ReadonlyMap<TKey, TB> => {

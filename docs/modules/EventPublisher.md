@@ -13,20 +13,13 @@
 
 ### create
 
-▸ **create**<`T`\>(`options?`): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+▸ **create**<`T`\>(): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
 
 #### Returns
 
@@ -36,20 +29,13 @@ ___
 
 ### createRefCounted
 
-▸ **createRefCounted**<`T`\>(`options?`): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+▸ **createRefCounted**<`T`\>(): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.replay?` | `number` |
 
 #### Returns
 

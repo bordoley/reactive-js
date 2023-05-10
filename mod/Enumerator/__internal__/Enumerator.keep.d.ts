@@ -1,3 +1,3 @@
-import { EnumeratorContainer } from "../../containers.js";
-declare const Enumerator_keep: EnumeratorContainer.TypeClass["keep"];
+import type * as Enumerator from "../../Enumerator.js";
+declare const Enumerator_keep: Enumerator.Signature["keep"];
 export default Enumerator_keep;

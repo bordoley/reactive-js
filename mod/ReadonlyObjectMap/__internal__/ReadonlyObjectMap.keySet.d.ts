@@ -1,3 +1,3 @@
-import { ReadonlyObjectMapContainer } from "../../containers.js";
-declare const ReadonlyObjectMap_keySet: ReadonlyObjectMapContainer.TypeClass["keySet"];
+import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
+declare const ReadonlyObjectMap_keySet: ReadonlyObjectMap.Signature["keySet"];
 export default ReadonlyObjectMap_keySet;

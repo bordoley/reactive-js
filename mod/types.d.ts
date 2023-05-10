@@ -1,11 +1,14 @@
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventListenerLike_notify, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __ObserverLike_notify, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
-import { Optional, SideEffect1 } from "./functions.js";
+import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventListenerLike_notify, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __ObserverLike_notify, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { Function1, Optional, SideEffect1 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
+export declare const Container_T: typeof __Container_T;
+export declare const Container_type: typeof __Container_type;
 export declare const EnumeratorLike_current: typeof __EnumeratorLike_current;
 export declare const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurrent;
 export declare const EnumeratorLike_move: typeof __EnumeratorLike_move;
 export declare const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get;
+export declare const KeyedContainer_TKey: typeof __KeyedContainer_TKey;
 export declare const MulticastObservableLike_buffer: typeof __MulticastObservableLike_buffer;
 export declare const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred;
 export declare const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable;
@@ -478,3 +481,36 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
     }): TStream & DisposableLike;
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
+export interface Container {
+    readonly [Container_T]?: unknown;
+    readonly [Container_type]?: unknown;
+}
+export type ContainerOf<C extends Container, T> = C extends {
+    readonly [Container_type]?: unknown;
+} ? NonNullable<(C & {
+    readonly [Container_T]: T;
+})[typeof Container_type]> : {
+    readonly _C: C;
+    readonly _T: () => T;
+};
+export type ContainerOperator<C extends Container, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+export interface KeyedContainer extends Container {
+    readonly [KeyedContainer_TKey]?: unknown;
+}
+export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
+    readonly [Container_type]?: unknown;
+} ? NonNullable<(C & {
+    readonly [Container_T]: T;
+    readonly [KeyedContainer_TKey]: TKey;
+})[typeof Container_type]> : {
+    readonly _C: C;
+    readonly _T: () => T;
+    readonly _TKey: () => TKey;
+};
+export type KeyOf<C extends KeyedContainer> = C extends {
+    readonly [Container_type]?: unknown;
+} ? NonNullable<C[typeof KeyedContainer_TKey]> : {};
+/**
+ * Utility type for a generic operator function that transforms a Container's inner value type.
+ */
+export type KeyedContainerOperator<C extends KeyedContainer, TKey, TA, TB> = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;

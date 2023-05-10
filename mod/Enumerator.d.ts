@@ -1,6 +1,12 @@
-import { EnumeratorContainer } from "./containers.js";
-export declare const empty: EnumeratorContainer.TypeClass["empty"];
-export declare const keep: EnumeratorContainer.TypeClass["keep"];
-export declare const map: EnumeratorContainer.TypeClass["map"];
-export declare const pick: EnumeratorContainer.TypeClass["pick"];
-export declare const toReadonlyArray: EnumeratorContainer.TypeClass["toReadonlyArray"];
+import { ContainerTypeClass, DeferredTypeClass, RunnableTypeClass } from "./type-classes.js";
+import { Container, Container_T, Container_type, EnumeratorLike } from "./types.js";
+export interface Type extends Container {
+    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
+export interface Signature extends ContainerTypeClass<Type>, DeferredTypeClass<Type>, RunnableTypeClass<Type> {
+}
+export declare const empty: Signature["empty"];
+export declare const keep: Signature["keep"];
+export declare const map: Signature["map"];
+export declare const pick: Signature["pick"];
+export declare const toReadonlyArray: Signature["toReadonlyArray"];

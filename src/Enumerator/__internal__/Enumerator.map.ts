@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
   include,
@@ -12,7 +13,6 @@ import {
   MappingLike,
   MappingLike_selector,
 } from "../../__internal__/types.js";
-import { EnumeratorContainer } from "../../containers.js";
 import { Function1, none } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -24,7 +24,7 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_map: EnumeratorContainer.TypeClass["map"] = /*@__PURE__*/ (<
+const Enumerator_map: Enumerator.Signature["map"] = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {

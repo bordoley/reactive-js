@@ -1,3 +1,4 @@
+import type * as Dictionary from "../../Dictionary.js";
 import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 import { none } from "../../functions.js";
 import {
@@ -15,7 +16,9 @@ const empty: DictionaryLike = {
   [CollectionLike_count]: 0,
 };
 
-const Dictionary_empty = <T, TKey>(): DictionaryLike<T, TKey> =>
-  empty as DictionaryLike<T, TKey>;
+const Dictionary_empty: Dictionary.Signature["empty"] = <
+  T,
+  TKey,
+>(): DictionaryLike<T, TKey> => empty as DictionaryLike<T, TKey>;
 
 export default Dictionary_empty;

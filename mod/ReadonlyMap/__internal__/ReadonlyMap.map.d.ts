@@ -1,3 +1,3 @@
-import { ReadonlyMapContainer } from "../../containers.js";
-declare const ReadonlyMap_map: ReadonlyMapContainer.TypeClass["map"];
+import type * as ReadonlyMap from "../../ReadonlyMap.js";
+declare const ReadonlyMap_map: ReadonlyMap.Signature["map"];
 export default ReadonlyMap_map;

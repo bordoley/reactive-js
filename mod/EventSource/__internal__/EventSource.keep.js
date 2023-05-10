@@ -7,8 +7,7 @@ import { DelegatingLike_delegate, PredicatedLike_predicate, } from "../../__inte
 import { none, partial, pipe } from "../../functions.js";
 import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
-const EventSource_keep = 
-/*@__PURE__*/ (() => {
+const EventSource_keep = /*@__PURE__*/ (() => {
     const createKeepEventListener = (() => createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function KeepEventListener(instance, delegate, predicate) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);

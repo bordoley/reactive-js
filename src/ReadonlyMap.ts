@@ -3,12 +3,30 @@ import ReadonlyMap_entries from "./ReadonlyMap/__internal__/ReadonlyMap.entries.
 import ReadonlyMap_keys from "./ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import ReadonlyMap_map from "./ReadonlyMap/__internal__/ReadonlyMap.map.js";
 import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWithKey.js";
-import { ReadonlyMapContainer } from "./containers.js";
+import { KeyedContainerTypeClass } from "./type-classes.js";
+import {
+  Container,
+  Container_T,
+  Container_type,
+  KeyOf,
+  KeyedContainer_TKey,
+} from "./types.js";
 
-export const empty: ReadonlyMapContainer.TypeClass["empty"] = ReadonlyMap_empty;
-export const entries: ReadonlyMapContainer.TypeClass["entries"] =
-  ReadonlyMap_entries;
-export const keys: ReadonlyMapContainer.TypeClass["keys"] = ReadonlyMap_keys;
-export const map: ReadonlyMapContainer.TypeClass["map"] = ReadonlyMap_map;
-export const mapWithKey: ReadonlyMapContainer.TypeClass["mapWithKey"] =
-  ReadonlyMap_mapWithKey;
+export interface Type extends Container {
+  readonly [Container_type]?: ReadonlyMap<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: unknown;
+}
+
+export type TKey = KeyOf<Type>;
+
+export interface Signature extends KeyedContainerTypeClass<Type> {}
+
+export const empty: Signature["empty"] = ReadonlyMap_empty;
+export const entries: Signature["entries"] = ReadonlyMap_entries;
+export const keys: Signature["keys"] = ReadonlyMap_keys;
+export const map: Signature["map"] = ReadonlyMap_map;
+export const mapWithKey: Signature["mapWithKey"] = ReadonlyMap_mapWithKey;
