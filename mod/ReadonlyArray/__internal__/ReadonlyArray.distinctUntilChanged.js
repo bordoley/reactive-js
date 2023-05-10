@@ -15,6 +15,7 @@ const ReadonlyArray_distinctUntilChanged = (options) => (arr) => {
         if (equality(next, last)) {
             continue;
         }
+        last = next;
         result.push(next);
     }
     return result;

@@ -1,8 +1,8 @@
 /// <reference types="./ReadonlyArray.takeLast.d.ts" />
 
-import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
+import { clampPositiveInteger } from "../../__internal__/math.js";
 const ReadonlyArray_takeLast = (options) => {
-    const count = clampPositiveNonZeroInteger(options?.count ?? 1);
-    return (arr) => count > arr.length ? arr : arr.slice(arr.length - count, count);
+    const count = clampPositiveInteger(options?.count ?? 1);
+    return (arr) => count > arr.length ? arr : arr.slice(arr.length - count, arr.length);
 };
 export default ReadonlyArray_takeLast;
