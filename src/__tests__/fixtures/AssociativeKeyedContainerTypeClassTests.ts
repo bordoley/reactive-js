@@ -148,6 +148,21 @@ const AssociativeKeyedContainerTypeClassTests = <
           ),
         ),
       ),
+      describe("keySet", test("returns a keyset with all the keys", () =>{
+        const keys = pipe(
+          [
+            ["a", "b"],
+            ["c", none],
+            ["e", "v"],
+          ],
+          ReadonlyArray.enumerate<[string, Optional<string>]>(),
+          m.fromEntries(),
+          m.keySet(),
+        );
+
+        pipe(keys.size, expectEquals(3));
+        pipe(Array.from(keys), expectArrayEquals(["a", "c", "e"]));
+      })),
       describe(
         "map",
         test(
