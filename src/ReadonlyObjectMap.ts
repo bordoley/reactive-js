@@ -23,18 +23,48 @@ import {
   ReadonlyObjectMapLike,
 } from "./types.js";
 
-export interface Type extends KeyedContainer {
+export interface Type<
+  TKey extends symbol | number | string = symbol | number | string,
+> extends KeyedContainer {
   readonly [Container_type]?: ReadonlyObjectMapLike<
     NonNullable<this[typeof KeyedContainer_TKey]>,
     this[typeof Container_T]
   >;
 
-  readonly [KeyedContainer_TKey]?: symbol | number | string;
+  readonly [KeyedContainer_TKey]?: TKey;
 }
 
-export type TKey = KeyOf<Type>;
+export type TKeyBase = KeyOf<Type>;
 
-export interface Signature extends AssociativeKeyedContainerTypeClass<Type> {}
+export interface Signature<
+  TType extends Type = Type,
+  TKey extends TKeyBase = TKeyBase,
+> extends AssociativeKeyedContainerTypeClass<TType, TKey> {}
+
+/**
+ * @category Functor
+ */
+export const CreateModule = <TKey extends TKeyBase>(): Signature<
+  Type<TKey>,
+  TKey
+> =>
+  ({
+    empty: ReadonlyObjectMap_empty,
+    entries: ReadonlyObjectMap_entries,
+    fromEntries: ReadonlyObjectMap_fromEntries,
+    forEach: ReadonlyObjectMap_forEach,
+    forEachWithKey: ReadonlyObjectMap_forEachWithKey,
+    keep: ReadonlyObjectMap_keep,
+    keepType: ReadonlyObjectMap_keepType,
+    keepWithKey: ReadonlyObjectMap_keepWithKey,
+    keys: ReadonlyObjectMap_keys,
+    keySet: ReadonlyObjectMap_keySet,
+    map: ReadonlyObjectMap_map,
+    mapWithKey: ReadonlyObjectMap_mapWithKey,
+    reduce: ReadonlyObjectMap_reduce,
+    reduceWithKey: ReadonlyObjectMap_reduceWithKey,
+    values: ReadonlyObjectMap_values,
+  } as AssociativeKeyedContainerTypeClass<Type<TKey>, TKey>);
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;

@@ -5,7 +5,7 @@ import { pipe } from "../../functions.js";
 import { EnumeratorLike, ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_entries: ReadonlyObjectMap.Signature["entries"] =
-  <T, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>() =>
+  <T, TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>() =>
   (obj: ReadonlyObjectMapLike<TKey, T>): EnumeratorLike<[TKey, T]> => {
     function* ReadonlyObjectMapEntries(): Iterator<[TKey, T]> {
       for (const key in obj) {

@@ -14,8 +14,6 @@
 
   ↳ [`Type`](Iterable.Type.md)
 
-  ↳ [`Type`](ReadonlyMap.Type.md)
-
   ↳ [`KeyedContainer`](types.KeyedContainer.md)
 
 ## Table of contents

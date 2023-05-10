@@ -23,6 +23,7 @@ import {
   KeyedContainer,
   KeyedContainerOf,
   KeyedContainerOperator,
+  KeyedContainer_TKey,
 } from "./types.js";
 
 export interface ContainerTypeClass<C extends Container> {
@@ -529,19 +530,27 @@ export interface EnumerableContainerTypeClass<
   toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
 
-export interface KeyedContainerTypeClass<C extends KeyedContainer> {
+export interface KeyedContainerTypeClass<
+  C extends KeyedContainer,
+  TKeyBase extends KeyOf<C> = KeyOf<C>,
+> {
   /**
    * Return an Container that emits no items.
    *
    * @category Constructor
    */
-  empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedContainerOf<C, TKey, T>;
+  empty<
+    T,
+    TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<
+      C[typeof KeyedContainer_TKey]
+    >,
+  >(): KeyedContainerOf<C, TKey, T>;
 
   /**
    *
    * @category Transform
    */
-  entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+  entries<T, TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, T>,
     EnumeratorLike<[TKey, T]>
   >;
@@ -552,7 +561,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
+  forEach<T, TKey extends TKeyBase>(
     effect: SideEffect1<T>,
   ): KeyedContainerOperator<C, TKey, T, T>;
 
@@ -562,7 +571,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
+  forEachWithKey<T, TKey extends TKeyBase>(
     effect: SideEffect2<T, TKey>,
   ): KeyedContainerOperator<C, TKey, T, T>;
 
@@ -572,7 +581,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  keep<T, TKey extends KeyOf<C> = KeyOf<C>>(
+  keep<T, TKey extends TKeyBase>(
     predicate: Predicate<T>,
   ): KeyedContainerOperator<C, TKey, T, T>;
 
@@ -580,7 +589,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(
+  keepType<TA, TB extends TA, TKey extends TKeyBase>(
     predicate: TypePredicate<TA, TB>,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 
@@ -590,7 +599,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
+  keepWithKey<T, TKey extends TKeyBase>(
     predicate: Function2<T, TKey, boolean>,
   ): KeyedContainerOperator<C, TKey, T, T>;
 
@@ -604,7 +613,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
+  map<TA, TB, TKey extends TKeyBase>(
     selector: Function1<TA, TB>,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 
@@ -618,14 +627,14 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
    *
    * @category Operator
    */
-  mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
+  mapWithKey<TA, TB, TKey extends TKeyBase>(
     selector: Function2<TA, TKey, TB>,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 
   /**
    * @category Transform
    */
-  reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(
+  reduce<T, TAcc, TKey extends TKeyBase>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
@@ -633,7 +642,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
   /**
    * @category Transform
    */
-  reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(
+  reduceWithKey<T, TAcc, TKey extends TKeyBase>(
     reducer: Function3<TAcc, T, TKey, TAcc>,
     initialValue: Factory<TAcc>,
   ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
@@ -645,12 +654,14 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
   values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }
 
-export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer>
-  extends KeyedContainerTypeClass<C> {
+export interface AssociativeKeyedContainerTypeClass<
+  C extends KeyedContainer,
+  TKeyBase extends KeyOf<C> = KeyOf<C>,
+> extends KeyedContainerTypeClass<C, TKeyBase> {
   /**
    * @category Constructor
    */
-  fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+  fromEntries<T, TKey extends TKeyBase>(): Function1<
     EnumeratorLike<[TKey, T]>,
     KeyedContainerOf<C, TKey, T>
   >;
@@ -659,7 +670,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer>
    *
    * @category Transform
    */
-  keys<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+  keys<TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
     EnumeratorLike<TKey>
   >;
@@ -668,7 +679,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer>
    *
    * @category Transform
    */
-  keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+  keySet<TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
     ReadonlySet<TKey>
   >;

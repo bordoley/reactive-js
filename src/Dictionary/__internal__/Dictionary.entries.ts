@@ -9,7 +9,7 @@ import {
 import Dictionary_keys from "./Dictionary.keys.js";
 
 const Dictionary_entries: Dictionary.Signature["entries"] =
-  <T, TKey extends Dictionary.TKey = Dictionary.TKey>() =>
+  <T, TKey extends Dictionary.TKeyBase = Dictionary.TKeyBase>() =>
   (dict: DictionaryLike<TKey, T>): EnumeratorLike<[TKey, T]> =>
     pipe(
       dict,

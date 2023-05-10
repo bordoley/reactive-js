@@ -5,7 +5,7 @@ import ReadonlyMap_keep from "./ReadonlyMap.keep.js";
 const ReadonlyMap_keepType = (<
   TA,
   TB extends TA,
-  TKey extends ReadonlyMap.TKey,
+  TKey extends ReadonlyMap.TKeyBase,
 >(
   predicate: TypePredicate<TA, TB>,
 ) =>

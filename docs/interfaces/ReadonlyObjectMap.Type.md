@@ -1,8 +1,14 @@
 [Reactive-JS](../README.md) / [ReadonlyObjectMap](../modules/ReadonlyObjectMap.md) / Type
 
-# Interface: Type
+# Interface: Type<TKey\>
 
 [ReadonlyObjectMap](../modules/ReadonlyObjectMap.md).Type
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `symbol` \| `number` \| `string` = `symbol` \| `number` \| `string` |
 
 ## Hierarchy
 
@@ -32,7 +38,7 @@ ___
 
 ### [\_\_\_Container\_type]
 
-• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\>, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey` & {}, `unknown`\>
 
 #### Overrides
 
@@ -42,7 +48,7 @@ ___
 
 ### [\_\_\_KeyedContainer\_TKey]
 
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `string` \| `number` \| `symbol`
+• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `TKey`
 
 #### Overrides
 

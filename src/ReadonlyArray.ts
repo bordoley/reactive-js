@@ -38,7 +38,7 @@ export interface Type extends KeyedContainer {
   readonly [KeyedContainer_TKey]?: number;
 }
 
-export type TKey = KeyOf<Type>;
+export type TKeyBase = KeyOf<Type>;
 
 export interface Signature
   extends KeyedContainerTypeClass<Type>,

@@ -805,7 +805,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -835,7 +835,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -885,7 +885,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -913,7 +913,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -943,7 +943,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -982,7 +982,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -1048,7 +1048,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -1667,7 +1667,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Returns
 
@@ -1853,7 +1853,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 
@@ -1882,7 +1882,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `number` = `number` |
+| `TKey` | extends `number` |
 
 #### Parameters
 

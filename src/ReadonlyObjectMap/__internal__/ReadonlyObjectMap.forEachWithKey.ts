@@ -5,7 +5,7 @@ import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_forEachWithKey: ReadonlyObjectMap.Signature["forEachWithKey"] =
 
-    <T, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
+    <T, TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>(
       effect: SideEffect2<T, TKey>,
     ): Function1<
       ReadonlyObjectMapLike<TKey, T>,

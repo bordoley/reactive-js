@@ -7,23 +7,25 @@ import {
   Container_T,
   Container_type,
   DictionaryLike,
-  KeyOf,
   KeyedContainer,
   KeyedContainer_TKey,
 } from "./types.js";
 
-export interface Type extends KeyedContainer {
+export interface Type<TKey = unknown> extends KeyedContainer {
   readonly [Container_type]?: DictionaryLike<
     this[typeof KeyedContainer_TKey],
     this[typeof Container_T]
   >;
 
-  readonly [KeyedContainer_TKey]?: unknown;
+  readonly [KeyedContainer_TKey]?: TKey;
 }
 
-export type TKey = KeyOf<Type>;
+export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
 
-export interface Signature extends AssociativeKeyedContainerTypeClass<Type> {}
+export interface Signature<
+  TType extends Type = Type,
+  TKey extends TKeyBase = TKeyBase,
+> extends AssociativeKeyedContainerTypeClass<TType, TKey> {}
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;

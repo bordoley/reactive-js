@@ -11,12 +11,16 @@
 
 ### Type Aliases
 
-- [TKey](ReadonlyMap.md#tkey)
+- [TKeyBase](ReadonlyMap.md#tkeybase)
 
 ### Constructor Functions
 
 - [empty](ReadonlyMap.md#empty)
 - [fromEntries](ReadonlyMap.md#fromentries)
+
+### Functor Functions
+
+- [CreateModule](ReadonlyMap.md#createmodule)
 
 ### Operator Functions
 
@@ -39,9 +43,9 @@
 
 ## Type Aliases
 
-### TKey
+### TKeyBase
 
-Ƭ **TKey**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyMap.Type.md)\>
+Ƭ **TKeyBase**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyMap.Type.md)\>
 
 ## Constructor Functions
 
@@ -73,7 +77,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -81,11 +85,29 @@ ___
 
 ___
 
+## Functor Functions
+
+### CreateModule
+
+▸ **CreateModule**<`TKey`\>(): [`Signature`](../interfaces/ReadonlyMap.Signature.md)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`TKey`\>, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Signature`](../interfaces/ReadonlyMap.Signature.md)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`TKey`\>, `TKey`\>
+
+___
+
 ## Operator Functions
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -95,7 +117,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -105,13 +127,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 Returns a KeyedContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -121,7 +143,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -131,13 +153,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -147,7 +169,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -157,13 +179,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -171,7 +193,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -181,13 +203,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -197,7 +219,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -207,13 +229,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -232,7 +254,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -242,13 +264,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -267,7 +289,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -277,7 +299,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyMap.Type.md)<`unknown`\>, `TKey`, `TA`, `TB`\>
 
 ___
 
@@ -292,7 +314,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -308,7 +330,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -324,7 +346,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -342,7 +364,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -367,7 +389,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Parameters
 

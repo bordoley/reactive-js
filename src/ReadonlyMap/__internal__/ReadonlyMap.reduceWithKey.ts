@@ -2,7 +2,7 @@ import type * as ReadonlyMap from "../../ReadonlyMap.js";
 import { Factory, Function3 } from "../../functions.js";
 
 const ReadonlyMap_reduceWithKey: ReadonlyMap.Signature["reduceWithKey"] =
-  <T, TAcc, TKey extends ReadonlyMap.TKey = ReadonlyMap.TKey>(
+  <T, TAcc, TKey extends ReadonlyMap.TKeyBase = ReadonlyMap.TKeyBase>(
     reducer: Function3<TAcc, T, TKey, TAcc>,
     initialValue: Factory<TAcc>,
   ) =>

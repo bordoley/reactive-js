@@ -16,6 +16,26 @@ import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
 import { Container_type, KeyedContainer_TKey, } from "./types.js";
+/**
+ * @category Functor
+ */
+export const CreateModule = () => ({
+    empty: ReadonlyMap_empty,
+    entries: ReadonlyMap_entries,
+    fromEntries: ReadonlyMap_fromEntries,
+    forEach: ReadonlyMap_forEach,
+    forEachWithKey: ReadonlyMap_forEachWithKey,
+    keep: ReadonlyMap_keep,
+    keepType: ReadonlyMap_keepType,
+    keepWithKey: ReadonlyMap_keepWithKey,
+    keys: ReadonlyMap_keys,
+    keySet: ReadonlyMap_keySet,
+    map: ReadonlyMap_map,
+    mapWithKey: ReadonlyMap_mapWithKey,
+    reduce: ReadonlyMap_reduce,
+    reduceWithKey: ReadonlyMap_reduceWithKey,
+    values: ReadonlyMap_values,
+});
 export const empty = ReadonlyMap_empty;
 export const entries = ReadonlyMap_entries;
 export const fromEntries = ReadonlyMap_fromEntries;

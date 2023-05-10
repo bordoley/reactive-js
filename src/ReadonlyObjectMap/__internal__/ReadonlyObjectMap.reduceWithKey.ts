@@ -5,7 +5,11 @@ import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_reduceWithKey: ReadonlyObjectMap.Signature["reduceWithKey"] =
 
-    <T, TAcc, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
+    <
+      T,
+      TAcc,
+      TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase,
+    >(
       reducer: Function3<TAcc, T, TKey, TAcc>,
       initialValue: Factory<TAcc>,
     ) =>

@@ -494,8 +494,8 @@ export type ContainerOf<C extends Container, T> = C extends {
     readonly _T: () => T;
 };
 export type ContainerOperator<C extends Container, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
-export interface KeyedContainer extends Container {
-    readonly [KeyedContainer_TKey]?: unknown;
+export interface KeyedContainer<TKey = unknown> extends Container {
+    readonly [KeyedContainer_TKey]?: TKey;
 }
 export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
     readonly [Container_type]?: unknown;

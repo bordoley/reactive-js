@@ -1,4 +1,4 @@
 import { AssociativeKeyedContainerTypeClass } from "../../type-classes.js";
-import { Container } from "../../types.js";
-declare const AssociativeKeyedContainerTypeClassTests: <C extends Container>(m: AssociativeKeyedContainerTypeClass<C>) => import("../../__internal__/testing.js").Describe;
+import { KeyedContainer } from "../../types.js";
+declare const AssociativeKeyedContainerTypeClassTests: <C extends KeyedContainer<string>>(m: AssociativeKeyedContainerTypeClass<C, string>) => import("../../__internal__/testing.js").Describe;
 export default AssociativeKeyedContainerTypeClassTests;

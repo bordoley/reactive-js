@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -308,51 +308,51 @@ export interface EnumerableContainerTypeClass<C extends Container, CEnumerator e
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
-export interface KeyedContainerTypeClass<C extends KeyedContainer> {
+export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**
      * Return an Container that emits no items.
      *
      * @category Constructor
      */
-    empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedContainerOf<C, TKey, T>;
+    empty<T, TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<C[typeof KeyedContainer_TKey]>>(): KeyedContainerOf<C, TKey, T>;
     /**
      *
      * @category Transform
      */
-    entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
+    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
      *
      * @category Operator
      */
-    forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect1<T>): KeyedContainerOperator<C, TKey, T, T>;
+    forEach<T, TKey extends TKeyBase>(effect: SideEffect1<T>): KeyedContainerOperator<C, TKey, T, T>;
     /**
      * Returns a KeyedContainerOperator that applies the side effect function to each
      * value emitted by the source.
      *
      * @category Operator
      */
-    forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect2<T, TKey>): KeyedContainerOperator<C, TKey, T, T>;
+    forEachWithKey<T, TKey extends TKeyBase>(effect: SideEffect2<T, TKey>): KeyedContainerOperator<C, TKey, T, T>;
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
      *
      * @category Operator
      */
-    keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Predicate<T>): KeyedContainerOperator<C, TKey, T, T>;
+    keep<T, TKey extends TKeyBase>(predicate: Predicate<T>): KeyedContainerOperator<C, TKey, T, T>;
     /**
      *
      * @category Operator
      */
-    keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+    keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
      *
      * @category Operator
      */
-    keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): KeyedContainerOperator<C, TKey, T, T>;
+    keepWithKey<T, TKey extends TKeyBase>(predicate: Function2<T, TKey, boolean>): KeyedContainerOperator<C, TKey, T, T>;
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -363,7 +363,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
      *
      * @category Operator
      */
-    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function1<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+    map<TA, TB, TKey extends TKeyBase>(selector: Function1<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -374,34 +374,34 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer> {
      *
      * @category Operator
      */
-    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+    mapWithKey<TA, TB, TKey extends TKeyBase>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
     /**
      * @category Transform
      */
-    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    reduce<T, TAcc, TKey extends TKeyBase>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
     /**
      * @category Transform
      */
-    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    reduceWithKey<T, TAcc, TKey extends TKeyBase>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
     /**
      *
      * @category Transform
      */
     values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }
-export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer> extends KeyedContainerTypeClass<C> {
+export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     /**
      * @category Constructor
      */
-    fromEntries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
+    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
     /**
      *
      * @category Transform
      */
-    keys<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorLike<TKey>>;
+    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorLike<TKey>>;
     /**
      *
      * @category Transform
      */
-    keySet<TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
+    keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
 }

@@ -6,7 +6,7 @@ import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_keepWithKey: ReadonlyObjectMap.Signature["keepWithKey"] =
 
-    <T, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
+    <T, TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>(
       predicate: Function2<T, TKey, boolean>,
     ): Function1<
       ReadonlyObjectMapLike<TKey, T>,

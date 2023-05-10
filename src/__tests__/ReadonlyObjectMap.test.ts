@@ -4,5 +4,7 @@ import AssociativeKeyedContainerTypeClassTests from "./fixtures/AssociativeKeyed
 
 testModule(
   "ReadonlyObjectMap",
-  AssociativeKeyedContainerTypeClassTests(ReadonlyObjectMap),
+  AssociativeKeyedContainerTypeClassTests(
+    ReadonlyObjectMap.CreateModule<string>(),
+  ),
 );

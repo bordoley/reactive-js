@@ -8,7 +8,7 @@ import type * as ReadonlyObjectMap from "./../../ReadonlyObjectMap.js";
 
 const ReadonlyObjectMap_fromEntries: ReadonlyObjectMap.Signature["fromEntries"] =
 
-    <T, TKey extends ReadonlyObjectMap.TKey>() =>
+    <T, TKey extends ReadonlyObjectMap.TKeyBase>() =>
     (entries: EnumeratorLike<readonly [TKey, T]>) => {
       const obj = Obj.create(null);
 
