@@ -1,12 +1,12 @@
 import { Function1 } from "./functions.js";
-import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
+import { ConcreteContainerTypeClass, EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
 import { Container_T, Container_type, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
 }
 export type TKeyBase = KeyOf<Type>;
-export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
+export interface Signature extends ConcreteContainerTypeClass<Type>, KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
     /**
      *
      * @category Transform

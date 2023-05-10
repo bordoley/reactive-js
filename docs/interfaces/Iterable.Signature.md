@@ -6,6 +6,8 @@
 
 ## Hierarchy
 
+- [`ConcreteContainerTypeClass`](type_classes.ConcreteContainerTypeClass.md)<[`Type`](Iterable.Type.md)\>
+
 - [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](Iterable.Type.md)\>
 
   ↳ **`Signature`**
@@ -276,7 +278,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[empty](type_classes.EnumerableContainerTypeClass.md#empty)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[empty](type_classes.ConcreteContainerTypeClass.md#empty)
 
 ___
 
@@ -296,7 +298,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromEnumerable](type_classes.EnumerableContainerTypeClass.md#fromenumerable)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -322,7 +324,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.EnumerableContainerTypeClass.md#fromenumeratorfactory)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -348,7 +350,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromFactory](type_classes.EnumerableContainerTypeClass.md#fromfactory)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromFactory](type_classes.ConcreteContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -368,7 +370,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromIterable](type_classes.EnumerableContainerTypeClass.md#fromiterable)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromIterable](type_classes.ConcreteContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -388,7 +390,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromOptional](type_classes.EnumerableContainerTypeClass.md#fromoptional)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromOptional](type_classes.ConcreteContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -416,7 +418,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromReadonlyArray](type_classes.EnumerableContainerTypeClass.md#fromreadonlyarray)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -436,7 +438,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromValue](type_classes.EnumerableContainerTypeClass.md#fromvalue)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromValue](type_classes.ConcreteContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -466,7 +468,7 @@ that is applied to an accumulator value between emitted items.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[generate](type_classes.EnumerableContainerTypeClass.md#generate)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[generate](type_classes.ConcreteContainerTypeClass.md#generate)
 
 ___
 

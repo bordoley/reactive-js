@@ -20,6 +20,7 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import { Function1 } from "./functions.js";
 import {
+  ConcreteContainerTypeClass,
   EnumerableContainerTypeClass,
   KeyedContainerTypeClass,
 } from "./type-classes.js";
@@ -41,7 +42,8 @@ export interface Type extends KeyedContainer {
 export type TKeyBase = KeyOf<Type>;
 
 export interface Signature
-  extends KeyedContainerTypeClass<Type>,
+  extends ConcreteContainerTypeClass<Type>,
+    KeyedContainerTypeClass<Type>,
     Omit<
       EnumerableContainerTypeClass<Type>,
       keyof KeyedContainerTypeClass<Type>

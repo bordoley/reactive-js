@@ -21,10 +21,6 @@
 
 ## Table of contents
 
-### Constructor Methods
-
-- [empty](type_classes.KeyedContainerTypeClass.md#empty)
-
 ### Operator Methods
 
 - [forEach](type_classes.KeyedContainerTypeClass.md#foreach)
@@ -41,27 +37,6 @@
 - [reduce](type_classes.KeyedContainerTypeClass.md#reduce)
 - [reduceWithKey](type_classes.KeyedContainerTypeClass.md#reducewithkey)
 - [values](type_classes.KeyedContainerTypeClass.md#values)
-
-## Constructor Methods
-
-### empty
-
-▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = `NonNullable`<`C`[typeof `__KeyedContainer_TKey`]\> |
-
-#### Returns
-
-[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
-
-___
 
 ## Operator Methods
 

@@ -13,6 +13,8 @@
 
 ## Hierarchy
 
+- [`ConcreteAssociativeKeyedContainerTypeClass`](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
+
 - [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
 
   ↳ **`Signature`**
@@ -64,7 +66,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[empty](type_classes.AssociativeKeyedContainerTypeClass.md#empty)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[empty](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#empty)
 
 ___
 
@@ -85,7 +87,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromEntries](type_classes.AssociativeKeyedContainerTypeClass.md#fromentries)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[fromEntries](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#fromentries)
 
 ___
 

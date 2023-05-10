@@ -38,67 +38,6 @@ export interface ContainerTypeClass<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
-   * Return an Container that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumeratorFactory<T>(
-    factory: Factory<EnumeratorLike<T>>,
-  ): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<T>(options?: {
-    readonly start?: number;
-    readonly count?: number;
-  }): Function1<readonly T[], ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
-
-  /**
-   * Generates a Container from a generator function
-   * that is applied to an accumulator value between emitted items.
-   *
-   * @param generator - The generator function.
-   * @param initialValue - Factory function used to generate the initial accumulator.
-   *
-   * @category Constructor
-   */
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
-
-  /**
    *
    * @category Transform
    */
@@ -366,8 +305,70 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
-export interface AsyncContainerTypeClass<C extends Container>
-  extends ContainerTypeClass<C> {
+export interface ConcreteContainerTypeClass<C extends Container> {
+  /**
+   * Return an Container that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(
+    factory: Factory<EnumeratorLike<T>>,
+  ): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
+
+  /**
+   * Generates a Container from a generator function
+   * that is applied to an accumulator value between emitted items.
+   *
+   * @param generator - The generator function.
+   * @param initialValue - Factory function used to generate the initial accumulator.
+   *
+   * @category Constructor
+   */
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): ContainerOf<C, T>;
+}
+
+export interface ConcreteAsyncContainerTypeClass<C extends Container> {
   fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
 }
 
@@ -535,18 +536,6 @@ export interface KeyedContainerTypeClass<
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > {
   /**
-   * Return an Container that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<
-    T,
-    TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<
-      C[typeof KeyedContainer_TKey]
-    >,
-  >(): KeyedContainerOf<C, TKey, T>;
-
-  /**
    *
    * @category Transform
    */
@@ -659,14 +648,6 @@ export interface AssociativeKeyedContainerTypeClass<
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > extends KeyedContainerTypeClass<C, TKeyBase> {
   /**
-   * @category Constructor
-   */
-  fromEntries<T, TKey extends TKeyBase>(): Function1<
-    EnumeratorLike<[TKey, T]>,
-    KeyedContainerOf<C, TKey, T>
-  >;
-
-  /**
    *
    * @category Transform
    */
@@ -682,5 +663,30 @@ export interface AssociativeKeyedContainerTypeClass<
   keySet<TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
     ReadonlySet<TKey>
+  >;
+}
+
+export interface ConcreteAssociativeKeyedContainerTypeClass<
+  C extends KeyedContainer,
+  TKeyBase extends KeyOf<C> = KeyOf<C>,
+> {
+  /**
+   * Return an Container that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<
+    T,
+    TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<
+      C[typeof KeyedContainer_TKey]
+    >,
+  >(): KeyedContainerOf<C, TKey, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromEntries<T, TKey extends TKeyBase>(): Function1<
+    EnumeratorLike<[TKey, T]>,
+    KeyedContainerOf<C, TKey, T>
   >;
 }

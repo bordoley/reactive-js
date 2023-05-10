@@ -6,6 +6,8 @@
 
 ## Hierarchy
 
+- [`ConcreteContainerTypeClass`](type_classes.ConcreteContainerTypeClass.md)<[`Type`](Enumerator.Type.md)\>
+
 - [`BlockingContainerTypeClass`](type_classes.BlockingContainerTypeClass.md)<[`Type`](Enumerator.Type.md)\>
 
   ↳ **`Signature`**
@@ -104,7 +106,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[empty](type_classes.BlockingContainerTypeClass.md#empty)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[empty](type_classes.ConcreteContainerTypeClass.md#empty)
 
 ___
 
@@ -124,7 +126,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromEnumerable](type_classes.BlockingContainerTypeClass.md#fromenumerable)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -150,7 +152,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromEnumeratorFactory](type_classes.BlockingContainerTypeClass.md#fromenumeratorfactory)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -176,7 +178,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromFactory](type_classes.BlockingContainerTypeClass.md#fromfactory)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromFactory](type_classes.ConcreteContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -196,7 +198,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromIterable](type_classes.BlockingContainerTypeClass.md#fromiterable)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromIterable](type_classes.ConcreteContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -216,7 +218,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromOptional](type_classes.BlockingContainerTypeClass.md#fromoptional)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromOptional](type_classes.ConcreteContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -244,7 +246,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromReadonlyArray](type_classes.BlockingContainerTypeClass.md#fromreadonlyarray)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -264,7 +266,7 @@ ___
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[fromValue](type_classes.BlockingContainerTypeClass.md#fromvalue)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromValue](type_classes.ConcreteContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -294,7 +296,7 @@ that is applied to an accumulator value between emitted items.
 
 #### Inherited from
 
-[BlockingContainerTypeClass](type_classes.BlockingContainerTypeClass.md).[generate](type_classes.BlockingContainerTypeClass.md#generate)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[generate](type_classes.ConcreteContainerTypeClass.md#generate)
 
 ___
 

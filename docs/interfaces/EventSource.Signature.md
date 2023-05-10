@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`AsyncContainerTypeClass`](type_classes.AsyncContainerTypeClass.md)<[`Type`](EventSource.Type.md)\>
+- [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<[`Type`](EventSource.Type.md)\>
 
   ↳ **`Signature`**
 
@@ -23,15 +23,6 @@
 
 ### Constructor Methods
 
-- [empty](EventSource.Signature.md#empty)
-- [fromEnumerable](EventSource.Signature.md#fromenumerable)
-- [fromEnumeratorFactory](EventSource.Signature.md#fromenumeratorfactory)
-- [fromFactory](EventSource.Signature.md#fromfactory)
-- [fromIterable](EventSource.Signature.md#fromiterable)
-- [fromOptional](EventSource.Signature.md#fromoptional)
-- [fromReadonlyArray](EventSource.Signature.md#fromreadonlyarray)
-- [fromValue](EventSource.Signature.md#fromvalue)
-- [generate](EventSource.Signature.md#generate)
 - [zip](EventSource.Signature.md#zip)
 
 ### Operator Methods
@@ -51,10 +42,6 @@
 - [takeLast](EventSource.Signature.md#takelast)
 - [takeWhile](EventSource.Signature.md#takewhile)
 - [zipWith](EventSource.Signature.md#zipwith)
-
-### Other Methods
-
-- [fromAsyncIterable](EventSource.Signature.md#fromasynciterable)
 
 ### Transform Methods
 
@@ -90,7 +77,7 @@
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[flatMapIterable](type_classes.AsyncContainerTypeClass.md#flatmapiterable)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -148,218 +135,6 @@ ___
 
 ## Constructor Methods
 
-### empty
-
-▸ **empty**<`T`\>(): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[empty](type_classes.AsyncContainerTypeClass.md#empty)
-
-___
-
-### fromEnumerable
-
-▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromEnumerable](type_classes.AsyncContainerTypeClass.md#fromenumerable)
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
-
-#### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromEnumeratorFactory](type_classes.AsyncContainerTypeClass.md#fromenumeratorfactory)
-
-___
-
-### fromFactory
-
-▸ **fromFactory**<`T`\>(`factory`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromFactory](type_classes.AsyncContainerTypeClass.md#fromfactory)
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromIterable](type_classes.AsyncContainerTypeClass.md#fromiterable)
-
-___
-
-### fromOptional
-
-▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromOptional](type_classes.AsyncContainerTypeClass.md#fromoptional)
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromReadonlyArray](type_classes.AsyncContainerTypeClass.md#fromreadonlyarray)
-
-___
-
-### fromValue
-
-▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`T`, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromValue](type_classes.AsyncContainerTypeClass.md#fromvalue)
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-Generates a Container from a generator function
-that is applied to an accumulator value between emitted items.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-
-#### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[generate](type_classes.AsyncContainerTypeClass.md#generate)
-
-___
-
 ### zip
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`]\>
@@ -387,7 +162,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
@@ -413,7 +188,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -441,7 +216,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -471,7 +246,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -503,7 +278,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -537,7 +312,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -573,7 +348,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EventSourceLike`](types.EventSourceLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -611,7 +386,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zip](type_classes.AsyncContainerTypeClass.md#zip)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
 
 ___
 
@@ -643,7 +418,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[distinctUntilChanged](type_classes.AsyncContainerTypeClass.md#distinctuntilchanged)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -672,7 +447,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[forEach](type_classes.AsyncContainerTypeClass.md#foreach)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
 
 ___
 
@@ -692,7 +467,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[ignoreElements](type_classes.AsyncContainerTypeClass.md#ignoreelements)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -721,7 +496,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[keep](type_classes.AsyncContainerTypeClass.md#keep)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keep](type_classes.ContainerTypeClass.md#keep)
 
 ___
 
@@ -748,7 +523,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[keepType](type_classes.AsyncContainerTypeClass.md#keeptype)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keepType](type_classes.ContainerTypeClass.md#keeptype)
 
 ___
 
@@ -786,7 +561,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[map](type_classes.AsyncContainerTypeClass.md#map)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[map](type_classes.ContainerTypeClass.md#map)
 
 ___
 
@@ -813,7 +588,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[mapTo](type_classes.AsyncContainerTypeClass.md#mapto)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[mapTo](type_classes.ContainerTypeClass.md#mapto)
 
 ___
 
@@ -833,7 +608,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[pairwise](type_classes.AsyncContainerTypeClass.md#pairwise)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pairwise](type_classes.ContainerTypeClass.md#pairwise)
 
 ___
 
@@ -860,7 +635,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[pick](type_classes.AsyncContainerTypeClass.md#pick)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -885,7 +660,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[pick](type_classes.AsyncContainerTypeClass.md#pick)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -912,7 +687,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[pick](type_classes.AsyncContainerTypeClass.md#pick)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
 
 ___
 
@@ -943,7 +718,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[scan](type_classes.AsyncContainerTypeClass.md#scan)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[scan](type_classes.ContainerTypeClass.md#scan)
 
 ___
 
@@ -972,7 +747,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[skipFirst](type_classes.AsyncContainerTypeClass.md#skipfirst)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[skipFirst](type_classes.ContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -1001,7 +776,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[takeFirst](type_classes.AsyncContainerTypeClass.md#takefirst)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeFirst](type_classes.ContainerTypeClass.md#takefirst)
 
 ___
 
@@ -1030,7 +805,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[takeLast](type_classes.AsyncContainerTypeClass.md#takelast)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeLast](type_classes.ContainerTypeClass.md#takelast)
 
 ___
 
@@ -1062,7 +837,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[takeWhile](type_classes.AsyncContainerTypeClass.md#takewhile)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeWhile](type_classes.ContainerTypeClass.md#takewhile)
 
 ___
 
@@ -1089,7 +864,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1114,7 +889,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1141,7 +916,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1170,7 +945,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1201,7 +976,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1234,7 +1009,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1269,7 +1044,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1306,29 +1081,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[zipWith](type_classes.AsyncContainerTypeClass.md#zipwith)
-
-___
-
-## Other Methods
-
-### fromAsyncIterable
-
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[fromAsyncIterable](type_classes.AsyncContainerTypeClass.md#fromasynciterable)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
 
 ___
 
@@ -1350,7 +1103,7 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[firstAsync](type_classes.AsyncContainerTypeClass.md#firstasync)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[firstAsync](type_classes.ContainerTypeClass.md#firstasync)
 
 ___
 
@@ -1370,4 +1123,4 @@ ___
 
 #### Inherited from
 
-[AsyncContainerTypeClass](type_classes.AsyncContainerTypeClass.md).[lastAsync](type_classes.AsyncContainerTypeClass.md#lastasync)
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[lastAsync](type_classes.ContainerTypeClass.md#lastasync)

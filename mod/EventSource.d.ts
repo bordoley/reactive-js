@@ -1,10 +1,10 @@
 import { Function1, SideEffect1 } from "./functions.js";
-import { AsyncContainerTypeClass } from "./type-classes.js";
+import { ContainerTypeClass } from "./type-classes.js";
 import { Container, Container_T, Container_type, DisposableLike, EventListenerLike, EventSourceLike } from "./types.js";
 export interface Type extends Container {
     readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
-export interface Signature extends AsyncContainerTypeClass<Type> {
+export interface Signature extends ContainerTypeClass<Type> {
     addEventHandler: <T>(handler: SideEffect1<T>) => Function1<EventSourceLike<T>, DisposableLike>;
     create: <T>(setup: SideEffect1<EventListenerLike<T>>) => EventSourceLike<T>;
 }

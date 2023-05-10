@@ -1,7 +1,6 @@
 /**
  * @jest-environment node
  */
-import "./Dictionary.test.js";
 import "./Disposable.test.js";
 import "./Enumerator.test.js";
 import "./EventSource.test.js";

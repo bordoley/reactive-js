@@ -13,7 +13,10 @@ import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWi
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
-import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
+import {
+  AssociativeKeyedContainerTypeClass,
+  ConcreteAssociativeKeyedContainerTypeClass,
+} from "./type-classes.js";
 import {
   Container_T,
   Container_type,
@@ -36,7 +39,8 @@ export type TKeyBase = KeyOf<Type>;
 export interface Signature<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends AssociativeKeyedContainerTypeClass<TType, TKey> {}
+> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>,
+    AssociativeKeyedContainerTypeClass<TType, TKey> {}
 
 /**
  * @category Functor
@@ -61,7 +65,7 @@ export const CreateModule = <TKey extends TKeyBase>(): Signature<
     reduce: ReadonlyMap_reduce,
     reduceWithKey: ReadonlyMap_reduceWithKey,
     values: ReadonlyMap_values,
-  } as AssociativeKeyedContainerTypeClass<Type<TKey>, TKey>);
+  } as Signature<Type<TKey>, TKey>);
 
 export const empty: Signature["empty"] = ReadonlyMap_empty;
 export const entries: Signature["entries"] = ReadonlyMap_entries;

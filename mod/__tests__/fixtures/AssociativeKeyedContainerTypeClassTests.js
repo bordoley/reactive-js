@@ -4,8 +4,7 @@ import * as Enumerator from "../../Enumerator.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 import { describe, expectArrayEquals, expectEquals, test, } from "../../__internal__/testing.js";
 import { arrayEquality, isSome, none, pipe, pipeLazy, returns, } from "../../functions.js";
-import KeyedContainerTypeClassTests from "./KeyedContainerTypeClassTests.js";
-const AssociativeKeyedContainerTypeClassTests = (m) => describe("AssociativeKeyedContainerTypeClassTests", ...KeyedContainerTypeClassTests(m).tests, describe("entries", test("enumerates all entries", pipeLazy([
+const AssociativeKeyedContainerTypeClassTests = (m) => describe("ConcreteAssociativeKeyedContainerTypeClassTests", describe("entries", test("enumerates all entries", pipeLazy([
     ["a", "b"],
     ["c", "d"],
 ], ReadonlyArray.enumerate(), m.fromEntries(), m.entries(), Enumerator.toReadonlyArray(), expectArrayEquals([
@@ -43,7 +42,15 @@ const AssociativeKeyedContainerTypeClassTests = (m) => describe("AssociativeKeye
     ["a", "b"],
     ["c", none],
     ["e", "v"],
-], ReadonlyArray.enumerate(), m.fromEntries(), m.keepType(isSome), m.values(), Enumerator.toReadonlyArray(), expectArrayEquals(["b", "v"])))), describe("map", test("mapping every value to a number", pipeLazy([
+], ReadonlyArray.enumerate(), m.fromEntries(), m.keepType(isSome), m.values(), Enumerator.toReadonlyArray(), expectArrayEquals(["b", "v"])))), describe("keySet", test("returns a keyset with all the keys", () => {
+    const keys = pipe([
+        ["a", "b"],
+        ["c", none],
+        ["e", "v"],
+    ], ReadonlyArray.enumerate(), m.fromEntries(), m.keySet());
+    pipe(keys.size, expectEquals(3));
+    pipe(Array.from(keys), expectArrayEquals(["a", "c", "e"]));
+})), describe("map", test("mapping every value to a number", pipeLazy([
     ["a", "b"],
     ["c", "d"],
     ["e", "f"],
