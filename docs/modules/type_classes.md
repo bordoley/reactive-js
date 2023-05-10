@@ -6,6 +6,8 @@
 
 ### Interfaces
 
+- [AsyncContainerTypeClass](../interfaces/type_classes.AsyncContainerTypeClass.md)
+- [BlockingContainerTypeClass](../interfaces/type_classes.BlockingContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/type_classes.ContainerTypeClass.md)
 - [DeferredTypeClass](../interfaces/type_classes.DeferredTypeClass.md)
 - [EnumerableTypeClass](../interfaces/type_classes.EnumerableTypeClass.md)

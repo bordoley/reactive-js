@@ -8,61 +8,62 @@
 
 - [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
 
-- [`DeferredTypeClass`](type_classes.DeferredTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
-
-- [`RunnableTypeClass`](type_classes.RunnableTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
+- `Omit`<[`EnumerableTypeClass`](type_classes.EnumerableTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>\>
 
   ↳ **`Signature`**
 
 ## Table of contents
-
-### Constructor Properties
-
-- [empty](ReadonlyArray.Signature.md#empty)
-- [fromReadonlyArray](ReadonlyArray.Signature.md#fromreadonlyarray)
 
 ### Operator Properties
 
 - [concatAll](ReadonlyArray.Signature.md#concatall)
 - [concatMap](ReadonlyArray.Signature.md#concatmap)
 - [concatWith](ReadonlyArray.Signature.md#concatwith)
+- [flatMapIterable](ReadonlyArray.Signature.md#flatmapiterable)
 
 ### Transform Properties
 
 - [contains](ReadonlyArray.Signature.md#contains)
-- [reduce](ReadonlyArray.Signature.md#reduce)
-- [toReadonlyArray](ReadonlyArray.Signature.md#toreadonlyarray)
 
 ### Constructor Methods
 
 - [concat](ReadonlyArray.Signature.md#concat)
+- [empty](ReadonlyArray.Signature.md#empty)
 - [fromEntries](ReadonlyArray.Signature.md#fromentries)
 - [fromEnumerable](ReadonlyArray.Signature.md#fromenumerable)
 - [fromEnumeratorFactory](ReadonlyArray.Signature.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.Signature.md#fromfactory)
 - [fromIterable](ReadonlyArray.Signature.md#fromiterable)
 - [fromOptional](ReadonlyArray.Signature.md#fromoptional)
+- [fromReadonlyArray](ReadonlyArray.Signature.md#fromreadonlyarray)
 - [fromValue](ReadonlyArray.Signature.md#fromvalue)
 - [generate](ReadonlyArray.Signature.md#generate)
+- [zip](ReadonlyArray.Signature.md#zip)
 
 ### Operator Methods
 
+- [distinctUntilChanged](ReadonlyArray.Signature.md#distinctuntilchanged)
 - [endWith](ReadonlyArray.Signature.md#endwith)
 - [forEach](ReadonlyArray.Signature.md#foreach)
 - [forEachWithKey](ReadonlyArray.Signature.md#foreachwithkey)
-- [forkConcat](ReadonlyArray.Signature.md#forkconcat)
 - [identity](ReadonlyArray.Signature.md#identity)
+- [ignoreElements](ReadonlyArray.Signature.md#ignoreelements)
 - [keep](ReadonlyArray.Signature.md#keep)
 - [keepType](ReadonlyArray.Signature.md#keeptype)
 - [keepWithKey](ReadonlyArray.Signature.md#keepwithkey)
 - [map](ReadonlyArray.Signature.md#map)
+- [mapTo](ReadonlyArray.Signature.md#mapto)
 - [mapWithKey](ReadonlyArray.Signature.md#mapwithkey)
+- [pairwise](ReadonlyArray.Signature.md#pairwise)
+- [pick](ReadonlyArray.Signature.md#pick)
 - [repeat](ReadonlyArray.Signature.md#repeat)
+- [scan](ReadonlyArray.Signature.md#scan)
+- [skipFirst](ReadonlyArray.Signature.md#skipfirst)
 - [startWith](ReadonlyArray.Signature.md#startwith)
-
-### Other Methods
-
-- [fromAsyncIterable](ReadonlyArray.Signature.md#fromasynciterable)
+- [takeFirst](ReadonlyArray.Signature.md#takefirst)
+- [takeLast](ReadonlyArray.Signature.md#takelast)
+- [takeWhile](ReadonlyArray.Signature.md#takewhile)
+- [zipWith](ReadonlyArray.Signature.md#zipwith)
 
 ### Transform Methods
 
@@ -70,76 +71,18 @@
 - [enumerate](ReadonlyArray.Signature.md#enumerate)
 - [everySatisfy](ReadonlyArray.Signature.md#everysatisfy)
 - [first](ReadonlyArray.Signature.md#first)
+- [firstAsync](ReadonlyArray.Signature.md#firstasync)
 - [keySet](ReadonlyArray.Signature.md#keyset)
 - [keys](ReadonlyArray.Signature.md#keys)
 - [last](ReadonlyArray.Signature.md#last)
+- [lastAsync](ReadonlyArray.Signature.md#lastasync)
 - [noneSatisfy](ReadonlyArray.Signature.md#nonesatisfy)
+- [reduce](ReadonlyArray.Signature.md#reduce)
 - [reduceWithKey](ReadonlyArray.Signature.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.Signature.md#somesatisfy)
 - [toIterable](ReadonlyArray.Signature.md#toiterable)
+- [toReadonlyArray](ReadonlyArray.Signature.md#toreadonlyarray)
 - [values](ReadonlyArray.Signature.md#values)
-
-## Constructor Properties
-
-### empty
-
-• **empty**: <T, TKey\>() => readonly `T`[]
-
-#### Type declaration
-
-▸ <`T`, `TKey`\>(): readonly `T`[]
-
-Return an Container that emits no items.
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-##### Returns
-
-readonly `T`[]
-
-#### Overrides
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[empty](type_classes.DeferredTypeClass.md#empty)
-
-___
-
-### fromReadonlyArray
-
-• **fromReadonlyArray**: <T, TKey\>(`options?`: { `count?`: `number` ; `start?`: `number`  }) => [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Type declaration
-
-▸ <`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Overrides
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromReadonlyArray](type_classes.DeferredTypeClass.md#fromreadonlyarray)
-
-___
 
 ## Operator Properties
 
@@ -166,7 +109,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[concatAll](type_classes.DeferredTypeClass.md#concatall)
+Omit.concatAll
 
 ___
 
@@ -197,7 +140,7 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[concatMap](type_classes.DeferredTypeClass.md#concatmap)
+Omit.concatMap
 
 ___
 
@@ -228,7 +171,38 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[concatWith](type_classes.DeferredTypeClass.md#concatwith)
+Omit.concatWith
+
+___
+
+### flatMapIterable
+
+• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Type declaration
+
+▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Inherited from
+
+Omit.flatMapIterable
 
 ___
 
@@ -262,67 +236,7 @@ ___
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[contains](type_classes.RunnableTypeClass.md#contains)
-
-___
-
-### reduce
-
-• **reduce**: <T, TAcc, TKey\>(`reducer`: [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\>, `initialValue`: [`Factory`](../modules/functions.md#factory)<`TAcc`\>) => [`Function1`](../modules/functions.md#function1)<readonly `T`[], `TAcc`\>
-
-#### Type declaration
-
-▸ <`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `TAcc`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TAcc` | `TAcc` |
-| `TKey` | extends `number` = `number` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], `TAcc`\>
-
-#### Overrides
-
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[reduce](type_classes.RunnableTypeClass.md#reduce)
-
-___
-
-### toReadonlyArray
-
-• **toReadonlyArray**: <T, TKey\>() => [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Type declaration
-
-▸ <`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-#### Overrides
-
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[toReadonlyArray](type_classes.RunnableTypeClass.md#toreadonlyarray)
+Omit.contains
 
 ## Constructor Methods
 
@@ -352,7 +266,30 @@ readonly `T`[]
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[concat](type_classes.DeferredTypeClass.md#concat)
+Omit.concat
+
+___
+
+### empty
+
+▸ **empty**<`T`, `TKey`\>(): readonly `T`[]
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Returns
+
+readonly `T`[]
+
+#### Inherited from
+
+[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[empty](type_classes.KeyedContainerTypeClass.md#empty)
 
 ___
 
@@ -393,7 +330,7 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromEnumerable](type_classes.DeferredTypeClass.md#fromenumerable)
+Omit.fromEnumerable
 
 ___
 
@@ -419,7 +356,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromEnumeratorFactory](type_classes.DeferredTypeClass.md#fromenumeratorfactory)
+Omit.fromEnumeratorFactory
 
 ___
 
@@ -445,7 +382,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromFactory](type_classes.DeferredTypeClass.md#fromfactory)
+Omit.fromFactory
 
 ___
 
@@ -465,7 +402,7 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromIterable](type_classes.DeferredTypeClass.md#fromiterable)
+Omit.fromIterable
 
 ___
 
@@ -485,7 +422,36 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromOptional](type_classes.DeferredTypeClass.md#fromoptional)
+Omit.fromOptional
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+#### Inherited from
+
+[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromReadonlyArray](type_classes.KeyedContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -505,7 +471,7 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromValue](type_classes.DeferredTypeClass.md#fromvalue)
+Omit.fromValue
 
 ___
 
@@ -535,11 +501,296 @@ readonly `T`[]
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[generate](type_classes.DeferredTypeClass.md#generate)
+Omit.generate
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): readonly readonly [`TA`, `TB`][]
+
+Combines multiple sources to create a Container whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): readonly readonly [`TA`, `TB`, `TC`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): readonly readonly [`TA`, `TB`, `TC`, `TD`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+| `h` | readonly `TH`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`][]
+
+#### Inherited from
+
+Omit.zip
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`][]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | readonly `TA`[] |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+| `h` | readonly `TH`[] |
+| `i` | readonly `TI`[] |
+
+#### Returns
+
+readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`][]
+
+#### Inherited from
+
+Omit.zip
 
 ___
 
 ## Operator Methods
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.distinctUntilChanged
+
+___
 
 ### endWith
 
@@ -564,7 +815,7 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[endWith](type_classes.DeferredTypeClass.md#endwith)
+Omit.endWith
 
 ___
 
@@ -628,35 +879,6 @@ value emitted by the source.
 
 ___
 
-### forkConcat
-
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TIn`, `TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TIn`, `TOut`\> |
-| `snd` | [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TIn`, `TOut`\> |
-| `...tail` | readonly [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TIn`, `TOut`\>[] |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TIn`, `TOut`\>
-
-#### Inherited from
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[forkConcat](type_classes.DeferredTypeClass.md#forkconcat)
-
-___
-
 ### identity
 
 ▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
@@ -675,6 +897,26 @@ ___
 #### Inherited from
 
 [KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[identity](type_classes.KeyedContainerTypeClass.md#identity)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `unknown`, `T`\>
+
+#### Inherited from
+
+Omit.ignoreElements
 
 ___
 
@@ -805,6 +1047,33 @@ TB - The inner type of the mapped container
 
 ___
 
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Inherited from
+
+Omit.mapTo
+
+___
+
 ### mapWithKey
 
 ▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
@@ -844,6 +1113,105 @@ TB - The inner type of the mapped container
 
 ___
 
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, readonly [`T`, `T`]\>
+
+#### Inherited from
+
+Omit.pairwise
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKey`]\>
+
+#### Inherited from
+
+Omit.pick
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Inherited from
+
+Omit.pick
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Inherited from
+
+Omit.pick
+
+___
+
 ### repeat
 
 ▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
@@ -868,7 +1236,7 @@ Returns a Container that mirrors the source, repeating it whenever the predicate
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[repeat](type_classes.DeferredTypeClass.md#repeat)
+Omit.repeat
 
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
 
@@ -892,7 +1260,7 @@ Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[repeat](type_classes.DeferredTypeClass.md#repeat)
+Omit.repeat
 
 ▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
 
@@ -910,7 +1278,67 @@ Returns a Container that mirrors the source, continually repeating it.
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[repeat](type_classes.DeferredTypeClass.md#repeat)
+Omit.repeat
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `TAcc`\>
+
+Returns a Container that applies an accumulator function over the source,
+and emits each intermediate result.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+Omit.scan
+
+___
+
+### skipFirst
+
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+Returns a Container that skips the first count items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.skipFirst
 
 ___
 
@@ -937,15 +1365,15 @@ ___
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[startWith](type_classes.DeferredTypeClass.md#startwith)
+Omit.startWith
 
 ___
 
-## Other Methods
+### takeFirst
 
-### fromAsyncIterable
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
 
-▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, readonly `T`[]\>
+Returns a Container that only emits the first `count` values emitted by the source.
 
 #### Type parameters
 
@@ -953,13 +1381,325 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, readonly `T`[]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
 
 #### Inherited from
 
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromAsyncIterable](type_classes.DeferredTypeClass.md#fromasynciterable)
+Omit.takeFirst
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.takeLast
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+Returns a Container which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.takeWhile
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+| `h` | readonly `TH`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Inherited from
+
+Omit.zipWith
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | readonly `TB`[] |
+| `c` | readonly `TC`[] |
+| `d` | readonly `TD`[] |
+| `e` | readonly `TE`[] |
+| `f` | readonly `TF`[] |
+| `g` | readonly `TG`[] |
+| `h` | readonly `TH`[] |
+| `i` | readonly `TI`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Inherited from
+
+Omit.zipWith
 
 ___
 
@@ -1008,6 +1748,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
+#### Overrides
+
+Omit.enumerate
+
 ___
 
 ### everySatisfy
@@ -1036,7 +1780,7 @@ it returns false, or until the end of the Container.
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[everySatisfy](type_classes.RunnableTypeClass.md#everysatisfy)
+Omit.everySatisfy
 
 ___
 
@@ -1056,7 +1800,27 @@ ___
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[first](type_classes.RunnableTypeClass.md#first)
+Omit.first
+
+___
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Inherited from
+
+Omit.firstAsync
 
 ___
 
@@ -1116,7 +1880,27 @@ ___
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[last](type_classes.RunnableTypeClass.md#last)
+Omit.last
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Inherited from
+
+Omit.lastAsync
 
 ___
 
@@ -1142,7 +1926,36 @@ ___
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[noneSatisfy](type_classes.RunnableTypeClass.md#nonesatisfy)
+Omit.noneSatisfy
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], `TAcc`\>
+
+#### Inherited from
+
+[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduce](type_classes.KeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -1197,7 +2010,7 @@ ___
 
 #### Inherited from
 
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[someSatisfy](type_classes.RunnableTypeClass.md#somesatisfy)
+Omit.someSatisfy
 
 ___
 
@@ -1222,6 +2035,33 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
+
+#### Overrides
+
+Omit.toIterable
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+Converts the Container to a `ReadonlyArrayContainer`.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+
+#### Inherited from
+
+[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[toReadonlyArray](type_classes.KeyedContainerTypeClass.md#toreadonlyarray)
 
 ___
 

@@ -17,9 +17,8 @@ import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import { Function1 } from "./functions.js";
 import {
-  DeferredTypeClass,
+  EnumerableTypeClass,
   KeyedContainerTypeClass,
-  RunnableTypeClass,
 } from "./type-classes.js";
 import {
   Container_T,
@@ -40,9 +39,7 @@ export type TKey = KeyOf<Type>;
 
 export interface Signature
   extends KeyedContainerTypeClass<Type>,
-    DeferredTypeClass<Type>,
-    RunnableTypeClass<Type> {
-  empty: KeyedContainerTypeClass<Type>["empty"];
+    Omit<EnumerableTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
   /**
    *
    * @category Transform
@@ -51,14 +48,12 @@ export interface Signature
     readonly start?: number;
     readonly count?: number;
   }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-  fromReadonlyArray: KeyedContainerTypeClass<Type>["fromReadonlyArray"];
-  reduce: KeyedContainerTypeClass<Type>["reduce"];
+
   /** @category Transform */
   toIterable<T>(options?: {
     readonly count?: number;
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, Iterable<T>>;
-  toReadonlyArray: KeyedContainerTypeClass<Type>["toReadonlyArray"];
 }
 
 export const empty: Signature["empty"] = ReadonlyArray_empty;

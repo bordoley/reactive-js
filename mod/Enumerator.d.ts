@@ -1,9 +1,9 @@
-import { ContainerTypeClass, DeferredTypeClass, RunnableTypeClass } from "./type-classes.js";
+import { BlockingContainerTypeClass } from "./type-classes.js";
 import { Container, Container_T, Container_type, EnumeratorLike } from "./types.js";
 export interface Type extends Container {
     readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
 }
-export interface Signature extends ContainerTypeClass<Type>, DeferredTypeClass<Type>, RunnableTypeClass<Type> {
+export interface Signature extends BlockingContainerTypeClass<Type> {
 }
 export declare const empty: Signature["empty"];
 export declare const keep: Signature["keep"];

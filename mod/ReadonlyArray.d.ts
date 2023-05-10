@@ -1,13 +1,12 @@
 import { Function1 } from "./functions.js";
-import { DeferredTypeClass, KeyedContainerTypeClass, RunnableTypeClass } from "./type-classes.js";
+import { EnumerableTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
 import { Container_T, Container_type, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
 }
 export type TKey = KeyOf<Type>;
-export interface Signature extends KeyedContainerTypeClass<Type>, DeferredTypeClass<Type>, RunnableTypeClass<Type> {
-    empty: KeyedContainerTypeClass<Type>["empty"];
+export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
     /**
      *
      * @category Transform
@@ -16,14 +15,11 @@ export interface Signature extends KeyedContainerTypeClass<Type>, DeferredTypeCl
         readonly start?: number;
         readonly count?: number;
     }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-    fromReadonlyArray: KeyedContainerTypeClass<Type>["fromReadonlyArray"];
-    reduce: KeyedContainerTypeClass<Type>["reduce"];
     /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
-    toReadonlyArray: KeyedContainerTypeClass<Type>["toReadonlyArray"];
 }
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
