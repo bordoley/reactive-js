@@ -20,7 +20,6 @@
 
 - [empty](ReadonlyArray.Signature.md#empty)
 - [fromReadonlyArray](ReadonlyArray.Signature.md#fromreadonlyarray)
-- [fromRunnable](ReadonlyArray.Signature.md#fromrunnable)
 
 ### Operator Properties
 
@@ -43,6 +42,7 @@
 - [fromFactory](ReadonlyArray.Signature.md#fromfactory)
 - [fromIterable](ReadonlyArray.Signature.md#fromiterable)
 - [fromOptional](ReadonlyArray.Signature.md#fromoptional)
+- [fromValue](ReadonlyArray.Signature.md#fromvalue)
 - [generate](ReadonlyArray.Signature.md#generate)
 
 ### Operator Methods
@@ -58,8 +58,11 @@
 - [map](ReadonlyArray.Signature.md#map)
 - [mapWithKey](ReadonlyArray.Signature.md#mapwithkey)
 - [repeat](ReadonlyArray.Signature.md#repeat)
-- [retry](ReadonlyArray.Signature.md#retry)
 - [startWith](ReadonlyArray.Signature.md#startwith)
+
+### Other Methods
+
+- [fromAsyncIterable](ReadonlyArray.Signature.md#fromasynciterable)
 
 ### Transform Methods
 
@@ -67,7 +70,6 @@
 - [enumerate](ReadonlyArray.Signature.md#enumerate)
 - [everySatisfy](ReadonlyArray.Signature.md#everysatisfy)
 - [first](ReadonlyArray.Signature.md#first)
-- [flow](ReadonlyArray.Signature.md#flow)
 - [keySet](ReadonlyArray.Signature.md#keyset)
 - [keys](ReadonlyArray.Signature.md#keys)
 - [last](ReadonlyArray.Signature.md#last)
@@ -136,30 +138,6 @@ ___
 #### Overrides
 
 [DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromReadonlyArray](type_classes.DeferredTypeClass.md#fromreadonlyarray)
-
-___
-
-### fromRunnable
-
-• **fromRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, readonly `T`[]\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, readonly `T`[]\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, readonly `T`[]\>
-
-#### Inherited from
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromRunnable](type_classes.DeferredTypeClass.md#fromrunnable)
 
 ___
 
@@ -508,6 +486,26 @@ ___
 #### Inherited from
 
 [DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromOptional](type_classes.DeferredTypeClass.md#fromoptional)
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, readonly `T`[]\>
+
+#### Inherited from
+
+[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromValue](type_classes.DeferredTypeClass.md#fromvalue)
 
 ___
 
@@ -916,54 +914,6 @@ Returns a Container that mirrors the source, continually repeating it.
 
 ___
 
-### retry
-
-▸ **retry**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, re-subscribing
-if the source completes with an error.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-#### Inherited from
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[retry](type_classes.DeferredTypeClass.md#retry)
-
-▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, resubscrbing
-if the source completes with an error which satisfies the predicate function.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](../modules/functions.md#function2)<`number`, `unknown`, `boolean`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
-
-#### Inherited from
-
-[DeferredTypeClass](type_classes.DeferredTypeClass.md).[retry](type_classes.DeferredTypeClass.md#retry)
-
-___
-
 ### startWith
 
 ▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `T`, `T`\>
@@ -988,6 +938,28 @@ ___
 #### Inherited from
 
 [DeferredTypeClass](type_classes.DeferredTypeClass.md).[startWith](type_classes.DeferredTypeClass.md#startwith)
+
+___
+
+## Other Methods
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+[DeferredTypeClass](type_classes.DeferredTypeClass.md).[fromAsyncIterable](type_classes.DeferredTypeClass.md#fromasynciterable)
 
 ___
 
@@ -1085,35 +1057,6 @@ ___
 #### Inherited from
 
 [RunnableTypeClass](type_classes.RunnableTypeClass.md).[first](type_classes.RunnableTypeClass.md#first)
-
-___
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Inherited from
-
-[RunnableTypeClass](type_classes.RunnableTypeClass.md).[flow](type_classes.RunnableTypeClass.md#flow)
 
 ___
 

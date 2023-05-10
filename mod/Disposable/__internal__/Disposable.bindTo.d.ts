@@ -1,4 +1,3 @@
-import { Updater } from "../../functions.js";
-import { DisposableLike } from "../../types.js";
-declare const Disposable_bindTo: <T extends DisposableLike>(child: DisposableLike) => Updater<T>;
+import type * as Disposable from "../../Disposable.js";
+declare const Disposable_bindTo: Disposable.Signature["bindTo"];
 export default Disposable_bindTo;

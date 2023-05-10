@@ -1,4 +1,3 @@
-import { SideEffect, Updater } from "../../functions.js";
-import { DisposableLike } from "../../types.js";
-declare const Disposable_onComplete: <T extends DisposableLike>(teardown: SideEffect) => Updater<T>;
+import type * as Disposable from "../../Disposable.js";
+declare const Disposable_onComplete: Disposable.Signature["onComplete"];
 export default Disposable_onComplete;

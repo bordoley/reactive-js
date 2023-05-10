@@ -22,10 +22,6 @@
 
 ## Table of contents
 
-### Constructor Properties
-
-- [fromRunnable](type_classes.DeferredTypeClass.md#fromrunnable)
-
 ### Operator Properties
 
 - [concatAll](type_classes.DeferredTypeClass.md#concatall)
@@ -42,6 +38,7 @@
 - [fromIterable](type_classes.DeferredTypeClass.md#fromiterable)
 - [fromOptional](type_classes.DeferredTypeClass.md#fromoptional)
 - [fromReadonlyArray](type_classes.DeferredTypeClass.md#fromreadonlyarray)
+- [fromValue](type_classes.DeferredTypeClass.md#fromvalue)
 - [generate](type_classes.DeferredTypeClass.md#generate)
 
 ### Operator Methods
@@ -49,30 +46,11 @@
 - [endWith](type_classes.DeferredTypeClass.md#endwith)
 - [forkConcat](type_classes.DeferredTypeClass.md#forkconcat)
 - [repeat](type_classes.DeferredTypeClass.md#repeat)
-- [retry](type_classes.DeferredTypeClass.md#retry)
 - [startWith](type_classes.DeferredTypeClass.md#startwith)
 
-## Constructor Properties
+### Other Methods
 
-### fromRunnable
-
-• **fromRunnable**: <T\>() => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-___
+- [fromAsyncIterable](type_classes.DeferredTypeClass.md#fromasynciterable)
 
 ## Operator Properties
 
@@ -313,6 +291,22 @@ ___
 
 ___
 
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+___
+
 ### generate
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
@@ -447,46 +441,6 @@ Returns a Container that mirrors the source, continually repeating it.
 
 ___
 
-### retry
-
-▸ **retry**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, re-subscribing
-if the source completes with an error.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-▸ **retry**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns an `ObservableLike` that mirrors the source, resubscrbing
-if the source completes with an error which satisfies the predicate function.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](../modules/functions.md#function2)<`number`, `unknown`, `boolean`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
 ### startWith
 
 ▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
@@ -507,3 +461,21 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+## Other Methods
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>

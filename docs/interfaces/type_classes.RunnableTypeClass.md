@@ -30,7 +30,6 @@
 
 - [everySatisfy](type_classes.RunnableTypeClass.md#everysatisfy)
 - [first](type_classes.RunnableTypeClass.md#first)
-- [flow](type_classes.RunnableTypeClass.md#flow)
 - [last](type_classes.RunnableTypeClass.md#last)
 - [noneSatisfy](type_classes.RunnableTypeClass.md#nonesatisfy)
 - [reduce](type_classes.RunnableTypeClass.md#reduce)
@@ -106,31 +105,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
-
-___
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 ___
 

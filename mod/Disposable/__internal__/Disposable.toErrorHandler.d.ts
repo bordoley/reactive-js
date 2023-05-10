@@ -1,4 +1,3 @@
-import { SideEffect1 } from "../../functions.js";
-import { DisposableLike } from "../../types.js";
-declare const Disposable_toErrorHandler: (disposable: DisposableLike) => SideEffect1<unknown>;
+import type * as Disposable from "../../Disposable.js";
+declare const Disposable_toErrorHandler: Disposable.Signature["toErrorHandler"];
 export default Disposable_toErrorHandler;

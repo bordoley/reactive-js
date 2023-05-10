@@ -20,8 +20,5 @@ export const onComplete = Disposable_onComplete;
 export const onDisposed = Disposable_onDisposed;
 export const onError = Disposable_onError;
 export const toAbortSignal = Disposable_toAbortSignal;
-/**
- * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
- */
 export const toErrorHandler = Disposable_toErrorHandler;
 export const usingAsync = Disposable_usingAsync;

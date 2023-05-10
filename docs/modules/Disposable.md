@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [Signature](../interfaces/Disposable.Signature.md)
+
 ### Variables
 
 - [disposed](Disposable.md#disposed)
@@ -25,19 +29,19 @@
 
 ### disposed
 
-• `Const` **disposed**: [`DisposableLike`](../interfaces/types.DisposableLike.md)
+• `Const` **disposed**: [`Signature`](../interfaces/Disposable.Signature.md)[``"disposed"``]
 
 ## Functions
 
 ### add
 
-▸ **add**<`T`\>(`child`, `options?`): (`parent`: `T`) => `T`
+▸ **add**<`TDisposable`\>(`child`, `options?`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -49,31 +53,19 @@
 
 #### Returns
 
-`fn`
-
-▸ (`parent`): `T`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `parent` | `T` |
-
-##### Returns
-
-`T`
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
 ### addTo
 
-▸ **addTo**<`T`\>(`parent`, `options?`): [`Updater`](functions.md#updater)<`T`\>
+▸ **addTo**<`TDisposable`\>(`parent`, `options?`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -85,19 +77,19 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
 ### bindTo
 
-▸ **bindTo**<`T`\>(`child`): [`Updater`](functions.md#updater)<`T`\>
+▸ **bindTo**<`TDisposable`\>(`child`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -107,7 +99,7 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
@@ -123,13 +115,13 @@ ___
 
 ### onComplete
 
-▸ **onComplete**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onComplete**<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -139,19 +131,19 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
 ### onDisposed
 
-▸ **onDisposed**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onDisposed**<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -161,19 +153,19 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
 ### onError
 
-▸ **onError**<`T`\>(`teardown`): [`Updater`](functions.md#updater)<`T`\>
+▸ **onError**<`TDisposable`\>(`teardown`): [`Updater`](functions.md#updater)<`TDisposable`\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 
 #### Parameters
 
@@ -183,7 +175,7 @@ ___
 
 #### Returns
 
-[`Updater`](functions.md#updater)<`T`\>
+[`Updater`](functions.md#updater)<`TDisposable`\>
 
 ___
 
@@ -242,7 +234,7 @@ ___
 
 [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
-▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TResult_1`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult_1`\>\>, `Promise`<`TResult_1`\>\>
+▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
 #### Type parameters
 
@@ -250,7 +242,7 @@ ___
 | :------ | :------ |
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult_1` | `unknown` |
+| `TResult` | `unknown` |
 
 #### Parameters
 
@@ -261,27 +253,27 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult_1`\>\>, `Promise`<`TResult_1`\>\>
+[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
-▸ **usingAsync**<`TDisposableA_1`, `TDisposableB_1`, `TDisposableC`, `TResult_2`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA_1`, `TDisposableB_1`, `TDisposableC`, `Promise`<`TResult_2`\>\>, `Promise`<`TResult_2`\>\>
+▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TDisposableA_1` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TDisposableB_1` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult_2` | `unknown` |
+| `TResult` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA_1` \| [`Factory`](functions.md#factory)<`TDisposableA_1`\> |
-| `factoryOrDisposableB` | `TDisposableB_1` \| [`Factory`](functions.md#factory)<`TDisposableB_1`\> |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
 | `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA_1`, `TDisposableB_1`, `TDisposableC`, `Promise`<`TResult_2`\>\>, `Promise`<`TResult_2`\>\>
+[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
