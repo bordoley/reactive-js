@@ -2,7 +2,9 @@
 
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
+import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
 import ReadonlyObjectMap_forEachWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
+import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromEntries.js";
 import ReadonlyObjectMap_keep from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keep.js";
 import ReadonlyObjectMap_keepType from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepType.js";
 import ReadonlyObjectMap_keepWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepWithKey.js";
@@ -16,7 +18,9 @@ import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyO
 import { Container_type, KeyedContainer_TKey, } from "./types.js";
 export const empty = ReadonlyObjectMap_empty;
 export const entries = ReadonlyObjectMap_entries;
+export const forEach = ReadonlyObjectMap_forEach;
 export const forEachWithKey = ReadonlyObjectMap_forEachWithKey;
+export const fromEntries = ReadonlyObjectMap_fromEntries;
 export const keep = ReadonlyObjectMap_keep;
 export const keepType = ReadonlyObjectMap_keepType;
 export const keepWithKey = ReadonlyObjectMap_keepWithKey;

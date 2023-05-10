@@ -13,11 +13,14 @@ import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
+import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
+import ReadonlyArray_reduceWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.reduceWithKey.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import { Function1 } from "./functions.js";
 import {
-  EnumerableTypeClass,
+  EnumerableContainerTypeClass,
   KeyedContainerTypeClass,
 } from "./type-classes.js";
 import {
@@ -39,7 +42,10 @@ export type TKey = KeyOf<Type>;
 
 export interface Signature
   extends KeyedContainerTypeClass<Type>,
-    Omit<EnumerableTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
+    Omit<
+      EnumerableContainerTypeClass<Type>,
+      keyof KeyedContainerTypeClass<Type>
+    > {
   /**
    *
    * @category Transform
@@ -75,8 +81,12 @@ export const keepWithKey: Signature["keepWithKey"] = ReadonlyArray_keepWithKey;
 export const last: Signature["last"] = ReadonlyArray_last;
 export const map: Signature["map"] = ReadonlyArray_map;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyArray_mapWithKey;
+export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
+export const reduceWithKey: Signature["reduceWithKey"] =
+  ReadonlyArray_reduceWithKey;
 export const someSatisfy: Signature["someSatisfy"] = ReadonlyArray_someSatisfy;
 export const toIterable: Signature["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
+export const values: Signature["values"] = ReadonlyArray_values;

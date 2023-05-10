@@ -18,7 +18,7 @@
 
   ↳ [`BlockingContainerTypeClass`](type_classes.BlockingContainerTypeClass.md)
 
-  ↳ [`DeferredTypeClass`](type_classes.DeferredTypeClass.md)
+  ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
 
 ## Table of contents
 

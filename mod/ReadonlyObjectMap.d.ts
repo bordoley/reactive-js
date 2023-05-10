@@ -1,15 +1,17 @@
-import { KeyedContainerTypeClass } from "./type-classes.js";
+import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey, ReadonlyObjectMapLike } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedContainer_TKey]>, this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: symbol | number | string;
 }
 export type TKey = KeyOf<Type>;
-export interface Signature extends KeyedContainerTypeClass<Type> {
+export interface Signature extends AssociativeKeyedContainerTypeClass<Type> {
 }
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
+export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
+export declare const fromEntries: Signature["fromEntries"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const keepWithKey: Signature["keepWithKey"];

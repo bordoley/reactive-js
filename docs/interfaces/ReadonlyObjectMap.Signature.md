@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyObjectMap.Type.md)\>
+- [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)<[`Type`](ReadonlyObjectMap.Type.md)\>
 
   ↳ **`Signature`**
 
@@ -16,13 +16,11 @@
 
 - [empty](ReadonlyObjectMap.Signature.md#empty)
 - [fromEntries](ReadonlyObjectMap.Signature.md#fromentries)
-- [fromReadonlyArray](ReadonlyObjectMap.Signature.md#fromreadonlyarray)
 
 ### Operator Methods
 
 - [forEach](ReadonlyObjectMap.Signature.md#foreach)
 - [forEachWithKey](ReadonlyObjectMap.Signature.md#foreachwithkey)
-- [identity](ReadonlyObjectMap.Signature.md#identity)
 - [keep](ReadonlyObjectMap.Signature.md#keep)
 - [keepType](ReadonlyObjectMap.Signature.md#keeptype)
 - [keepWithKey](ReadonlyObjectMap.Signature.md#keepwithkey)
@@ -36,7 +34,6 @@
 - [keys](ReadonlyObjectMap.Signature.md#keys)
 - [reduce](ReadonlyObjectMap.Signature.md#reduce)
 - [reduceWithKey](ReadonlyObjectMap.Signature.md#reducewithkey)
-- [toReadonlyArray](ReadonlyObjectMap.Signature.md#toreadonlyarray)
 - [values](ReadonlyObjectMap.Signature.md#values)
 
 ## Constructor Methods
@@ -52,7 +49,7 @@ Return an Container that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -60,7 +57,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[empty](type_classes.KeyedContainerTypeClass.md#empty)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[empty](type_classes.AssociativeKeyedContainerTypeClass.md#empty)
 
 ___
 
@@ -73,7 +70,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -81,36 +78,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromEntries](type_classes.KeyedContainerTypeClass.md#fromentries)
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromReadonlyArray](type_classes.KeyedContainerTypeClass.md#fromreadonlyarray)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromEntries](type_classes.AssociativeKeyedContainerTypeClass.md#fromentries)
 
 ___
 
@@ -128,7 +96,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -142,7 +110,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEach](type_classes.KeyedContainerTypeClass.md#foreach)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEach](type_classes.AssociativeKeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -158,7 +126,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -172,28 +140,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEachWithKey](type_classes.KeyedContainerTypeClass.md#foreachwithkey)
-
-___
-
-### identity
-
-▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
-
-#### Returns
-
-[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.Type.md), `TKey`, `T`, `T`\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[identity](type_classes.KeyedContainerTypeClass.md#identity)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEachWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -209,7 +156,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -223,7 +170,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keep](type_classes.KeyedContainerTypeClass.md#keep)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keep](type_classes.AssociativeKeyedContainerTypeClass.md#keep)
 
 ___
 
@@ -237,7 +184,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -251,7 +198,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepType](type_classes.AssociativeKeyedContainerTypeClass.md#keeptype)
 
 ___
 
@@ -267,7 +214,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -281,7 +228,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepWithKey](type_classes.KeyedContainerTypeClass.md#keepwithkey)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#keepwithkey)
 
 ___
 
@@ -306,7 +253,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -320,7 +267,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[map](type_classes.KeyedContainerTypeClass.md#map)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[map](type_classes.AssociativeKeyedContainerTypeClass.md#map)
 
 ___
 
@@ -345,7 +292,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -359,7 +306,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[mapWithKey](type_classes.KeyedContainerTypeClass.md#mapwithkey)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#mapwithkey)
 
 ___
 
@@ -374,7 +321,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -382,7 +329,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[entries](type_classes.KeyedContainerTypeClass.md#entries)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[entries](type_classes.AssociativeKeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -394,7 +341,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -402,7 +349,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keySet](type_classes.KeyedContainerTypeClass.md#keyset)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keySet](type_classes.AssociativeKeyedContainerTypeClass.md#keyset)
 
 ___
 
@@ -414,7 +361,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Returns
 
@@ -422,7 +369,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keys](type_classes.KeyedContainerTypeClass.md#keys)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keys](type_classes.AssociativeKeyedContainerTypeClass.md#keys)
 
 ___
 
@@ -436,7 +383,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -451,7 +398,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduce](type_classes.KeyedContainerTypeClass.md#reduce)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduce](type_classes.AssociativeKeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -465,7 +412,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> = [`KeyOf`](../modules/types.md#keyof)<[`Type`](ReadonlyObjectMap.Type.md)\> |
 
 #### Parameters
 
@@ -480,30 +427,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduceWithKey](type_classes.KeyedContainerTypeClass.md#reducewithkey)
-
-___
-
-### toReadonlyArray
-
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, readonly `T`[]\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[toReadonlyArray](type_classes.KeyedContainerTypeClass.md#toreadonlyarray)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduceWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -523,4 +447,4 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[values](type_classes.KeyedContainerTypeClass.md#values)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[values](type_classes.AssociativeKeyedContainerTypeClass.md#values)

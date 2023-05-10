@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`EnumerableTypeClass`](type_classes.EnumerableTypeClass.md)<[`Type`](Iterable.Type.md)\>
+- [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](Iterable.Type.md)\>
 
   ↳ **`Signature`**
 
@@ -97,7 +97,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[concatAll](type_classes.EnumerableTypeClass.md#concatall)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concatAll](type_classes.EnumerableContainerTypeClass.md#concatall)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[concatMap](type_classes.EnumerableTypeClass.md#concatmap)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concatMap](type_classes.EnumerableContainerTypeClass.md#concatmap)
 
 ___
 
@@ -159,7 +159,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[concatWith](type_classes.EnumerableTypeClass.md#concatwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concatWith](type_classes.EnumerableContainerTypeClass.md#concatwith)
 
 ___
 
@@ -190,7 +190,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[flatMapIterable](type_classes.EnumerableTypeClass.md#flatmapiterable)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[flatMapIterable](type_classes.EnumerableContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -224,7 +224,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[contains](type_classes.EnumerableTypeClass.md#contains)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[contains](type_classes.EnumerableContainerTypeClass.md#contains)
 
 ## Constructor Methods
 
@@ -254,7 +254,7 @@ Returns a Container which emits all values from each source sequentially.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[concat](type_classes.EnumerableTypeClass.md#concat)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concat](type_classes.EnumerableContainerTypeClass.md#concat)
 
 ___
 
@@ -276,7 +276,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[empty](type_classes.EnumerableTypeClass.md#empty)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[empty](type_classes.EnumerableContainerTypeClass.md#empty)
 
 ___
 
@@ -296,7 +296,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromEnumerable](type_classes.EnumerableTypeClass.md#fromenumerable)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromEnumerable](type_classes.EnumerableContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -322,7 +322,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromEnumeratorFactory](type_classes.EnumerableTypeClass.md#fromenumeratorfactory)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.EnumerableContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -348,7 +348,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromFactory](type_classes.EnumerableTypeClass.md#fromfactory)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromFactory](type_classes.EnumerableContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromIterable](type_classes.EnumerableTypeClass.md#fromiterable)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromIterable](type_classes.EnumerableContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -388,7 +388,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromOptional](type_classes.EnumerableTypeClass.md#fromoptional)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromOptional](type_classes.EnumerableContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -416,7 +416,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromReadonlyArray](type_classes.EnumerableTypeClass.md#fromreadonlyarray)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromReadonlyArray](type_classes.EnumerableContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -436,7 +436,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[fromValue](type_classes.EnumerableTypeClass.md#fromvalue)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[fromValue](type_classes.EnumerableContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -466,7 +466,7 @@ that is applied to an accumulator value between emitted items.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[generate](type_classes.EnumerableTypeClass.md#generate)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[generate](type_classes.EnumerableContainerTypeClass.md#generate)
 
 ___
 
@@ -497,7 +497,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): `Iterable`<readonly [`TA`, `TB`, `TC`]\>
 
@@ -523,7 +523,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -551,7 +551,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -581,7 +581,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -613,7 +613,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -647,7 +647,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -683,7 +683,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): `Iterable`<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -721,7 +721,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zip](type_classes.EnumerableTypeClass.md#zip)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zip](type_classes.EnumerableContainerTypeClass.md#zip)
 
 ___
 
@@ -753,7 +753,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[distinctUntilChanged](type_classes.EnumerableTypeClass.md#distinctuntilchanged)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[distinctUntilChanged](type_classes.EnumerableContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -780,7 +780,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[endWith](type_classes.EnumerableTypeClass.md#endwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[endWith](type_classes.EnumerableContainerTypeClass.md#endwith)
 
 ___
 
@@ -809,7 +809,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[forEach](type_classes.EnumerableTypeClass.md#foreach)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[forEach](type_classes.EnumerableContainerTypeClass.md#foreach)
 
 ___
 
@@ -829,7 +829,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[ignoreElements](type_classes.EnumerableTypeClass.md#ignoreelements)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[ignoreElements](type_classes.EnumerableContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -858,7 +858,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[keep](type_classes.EnumerableTypeClass.md#keep)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[keep](type_classes.EnumerableContainerTypeClass.md#keep)
 
 ___
 
@@ -885,7 +885,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[keepType](type_classes.EnumerableTypeClass.md#keeptype)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[keepType](type_classes.EnumerableContainerTypeClass.md#keeptype)
 
 ___
 
@@ -923,7 +923,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[map](type_classes.EnumerableTypeClass.md#map)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[map](type_classes.EnumerableContainerTypeClass.md#map)
 
 ___
 
@@ -950,7 +950,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[mapTo](type_classes.EnumerableTypeClass.md#mapto)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[mapTo](type_classes.EnumerableContainerTypeClass.md#mapto)
 
 ___
 
@@ -970,7 +970,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[pairwise](type_classes.EnumerableTypeClass.md#pairwise)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[pairwise](type_classes.EnumerableContainerTypeClass.md#pairwise)
 
 ___
 
@@ -997,7 +997,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[pick](type_classes.EnumerableTypeClass.md#pick)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[pick](type_classes.EnumerableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -1022,7 +1022,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[pick](type_classes.EnumerableTypeClass.md#pick)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[pick](type_classes.EnumerableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -1049,7 +1049,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[pick](type_classes.EnumerableTypeClass.md#pick)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[pick](type_classes.EnumerableContainerTypeClass.md#pick)
 
 ___
 
@@ -1077,7 +1077,7 @@ Returns a Container that mirrors the source, repeating it whenever the predicate
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[repeat](type_classes.EnumerableTypeClass.md#repeat)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[repeat](type_classes.EnumerableContainerTypeClass.md#repeat)
 
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `T`, `T`\>
 
@@ -1101,7 +1101,7 @@ Returns a Container that mirrors the source, repeating it `count` times.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[repeat](type_classes.EnumerableTypeClass.md#repeat)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[repeat](type_classes.EnumerableContainerTypeClass.md#repeat)
 
 ▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `T`, `T`\>
 
@@ -1119,7 +1119,7 @@ Returns a Container that mirrors the source, continually repeating it.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[repeat](type_classes.EnumerableTypeClass.md#repeat)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[repeat](type_classes.EnumerableContainerTypeClass.md#repeat)
 
 ___
 
@@ -1150,7 +1150,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[scan](type_classes.EnumerableTypeClass.md#scan)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[scan](type_classes.EnumerableContainerTypeClass.md#scan)
 
 ___
 
@@ -1179,7 +1179,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[skipFirst](type_classes.EnumerableTypeClass.md#skipfirst)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[skipFirst](type_classes.EnumerableContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -1206,7 +1206,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[startWith](type_classes.EnumerableTypeClass.md#startwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[startWith](type_classes.EnumerableContainerTypeClass.md#startwith)
 
 ___
 
@@ -1235,7 +1235,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[takeFirst](type_classes.EnumerableTypeClass.md#takefirst)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[takeFirst](type_classes.EnumerableContainerTypeClass.md#takefirst)
 
 ___
 
@@ -1264,7 +1264,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[takeLast](type_classes.EnumerableTypeClass.md#takelast)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[takeLast](type_classes.EnumerableContainerTypeClass.md#takelast)
 
 ___
 
@@ -1296,7 +1296,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[takeWhile](type_classes.EnumerableTypeClass.md#takewhile)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[takeWhile](type_classes.EnumerableContainerTypeClass.md#takewhile)
 
 ___
 
@@ -1323,7 +1323,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1348,7 +1348,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1375,7 +1375,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1404,7 +1404,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1435,7 +1435,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1468,7 +1468,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1503,7 +1503,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Iterable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1540,7 +1540,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[zipWith](type_classes.EnumerableTypeClass.md#zipwith)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
 ___
 
@@ -1562,7 +1562,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[enumerate](type_classes.EnumerableTypeClass.md#enumerate)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[enumerate](type_classes.EnumerableContainerTypeClass.md#enumerate)
 
 ___
 
@@ -1592,7 +1592,7 @@ it returns false, or until the end of the Container.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[everySatisfy](type_classes.EnumerableTypeClass.md#everysatisfy)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[everySatisfy](type_classes.EnumerableContainerTypeClass.md#everysatisfy)
 
 ___
 
@@ -1612,7 +1612,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[first](type_classes.EnumerableTypeClass.md#first)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[first](type_classes.EnumerableContainerTypeClass.md#first)
 
 ___
 
@@ -1632,7 +1632,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[firstAsync](type_classes.EnumerableTypeClass.md#firstasync)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[firstAsync](type_classes.EnumerableContainerTypeClass.md#firstasync)
 
 ___
 
@@ -1652,7 +1652,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[last](type_classes.EnumerableTypeClass.md#last)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[last](type_classes.EnumerableContainerTypeClass.md#last)
 
 ___
 
@@ -1672,7 +1672,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[lastAsync](type_classes.EnumerableTypeClass.md#lastasync)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[lastAsync](type_classes.EnumerableContainerTypeClass.md#lastasync)
 
 ___
 
@@ -1698,7 +1698,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[noneSatisfy](type_classes.EnumerableTypeClass.md#nonesatisfy)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[noneSatisfy](type_classes.EnumerableContainerTypeClass.md#nonesatisfy)
 
 ___
 
@@ -1726,7 +1726,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[reduce](type_classes.EnumerableTypeClass.md#reduce)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[reduce](type_classes.EnumerableContainerTypeClass.md#reduce)
 
 ___
 
@@ -1752,7 +1752,7 @@ ___
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[someSatisfy](type_classes.EnumerableTypeClass.md#somesatisfy)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[someSatisfy](type_classes.EnumerableContainerTypeClass.md#somesatisfy)
 
 ___
 
@@ -1774,7 +1774,7 @@ Converts the Container to a `IterableLike`.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[toIterable](type_classes.EnumerableTypeClass.md#toiterable)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[toIterable](type_classes.EnumerableContainerTypeClass.md#toiterable)
 
 ___
 
@@ -1796,4 +1796,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[EnumerableTypeClass](type_classes.EnumerableTypeClass.md).[toReadonlyArray](type_classes.EnumerableTypeClass.md#toreadonlyarray)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[toReadonlyArray](type_classes.EnumerableContainerTypeClass.md#toreadonlyarray)

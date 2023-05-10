@@ -710,12 +710,9 @@ export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
       readonly _TKey: () => TKey;
     };
 
-export type KeyOf<C extends KeyedContainer> = C extends {
-  readonly [Container_type]?: unknown;
-}
-  ? NonNullable<C[typeof KeyedContainer_TKey]>
-  : // eslint-disable-next-line @typescript-eslint/ban-types
-    {};
+export type KeyOf<C extends KeyedContainer> = NonNullable<
+  C[typeof KeyedContainer_TKey]
+>;
 
 /**
  * Utility type for a generic operator function that transforms a Container's inner value type.

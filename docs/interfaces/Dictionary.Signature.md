@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](Dictionary.Type.md)\>
+- [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)<[`Type`](Dictionary.Type.md)\>
 
   ↳ **`Signature`**
 
@@ -16,13 +16,11 @@
 
 - [empty](Dictionary.Signature.md#empty)
 - [fromEntries](Dictionary.Signature.md#fromentries)
-- [fromReadonlyArray](Dictionary.Signature.md#fromreadonlyarray)
 
 ### Operator Methods
 
 - [forEach](Dictionary.Signature.md#foreach)
 - [forEachWithKey](Dictionary.Signature.md#foreachwithkey)
-- [identity](Dictionary.Signature.md#identity)
 - [keep](Dictionary.Signature.md#keep)
 - [keepType](Dictionary.Signature.md#keeptype)
 - [keepWithKey](Dictionary.Signature.md#keepwithkey)
@@ -36,7 +34,6 @@
 - [keys](Dictionary.Signature.md#keys)
 - [reduce](Dictionary.Signature.md#reduce)
 - [reduceWithKey](Dictionary.Signature.md#reducewithkey)
-- [toReadonlyArray](Dictionary.Signature.md#toreadonlyarray)
 - [values](Dictionary.Signature.md#values)
 
 ## Constructor Methods
@@ -60,7 +57,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[empty](type_classes.KeyedContainerTypeClass.md#empty)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[empty](type_classes.AssociativeKeyedContainerTypeClass.md#empty)
 
 ___
 
@@ -81,36 +78,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromEntries](type_classes.KeyedContainerTypeClass.md#fromentries)
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromReadonlyArray](type_classes.KeyedContainerTypeClass.md#fromreadonlyarray)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromEntries](type_classes.AssociativeKeyedContainerTypeClass.md#fromentries)
 
 ___
 
@@ -142,7 +110,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEach](type_classes.KeyedContainerTypeClass.md#foreach)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEach](type_classes.AssociativeKeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -172,28 +140,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEachWithKey](type_classes.KeyedContainerTypeClass.md#foreachwithkey)
-
-___
-
-### identity
-
-▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](Dictionary.Type.md), `TKey`, `T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = {} |
-
-#### Returns
-
-[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](Dictionary.Type.md), `TKey`, `T`, `T`\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[identity](type_classes.KeyedContainerTypeClass.md#identity)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEachWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -223,7 +170,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keep](type_classes.KeyedContainerTypeClass.md#keep)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keep](type_classes.AssociativeKeyedContainerTypeClass.md#keep)
 
 ___
 
@@ -251,7 +198,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepType](type_classes.AssociativeKeyedContainerTypeClass.md#keeptype)
 
 ___
 
@@ -281,7 +228,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepWithKey](type_classes.KeyedContainerTypeClass.md#keepwithkey)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#keepwithkey)
 
 ___
 
@@ -320,7 +267,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[map](type_classes.KeyedContainerTypeClass.md#map)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[map](type_classes.AssociativeKeyedContainerTypeClass.md#map)
 
 ___
 
@@ -359,7 +306,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[mapWithKey](type_classes.KeyedContainerTypeClass.md#mapwithkey)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#mapwithkey)
 
 ___
 
@@ -382,7 +329,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[entries](type_classes.KeyedContainerTypeClass.md#entries)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[entries](type_classes.AssociativeKeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -402,7 +349,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keySet](type_classes.KeyedContainerTypeClass.md#keyset)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keySet](type_classes.AssociativeKeyedContainerTypeClass.md#keyset)
 
 ___
 
@@ -422,7 +369,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keys](type_classes.KeyedContainerTypeClass.md#keys)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keys](type_classes.AssociativeKeyedContainerTypeClass.md#keys)
 
 ___
 
@@ -451,7 +398,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduce](type_classes.KeyedContainerTypeClass.md#reduce)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduce](type_classes.AssociativeKeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -480,30 +427,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduceWithKey](type_classes.KeyedContainerTypeClass.md#reducewithkey)
-
-___
-
-### toReadonlyArray
-
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>, readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = {} |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>, readonly `T`[]\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[toReadonlyArray](type_classes.KeyedContainerTypeClass.md#toreadonlyarray)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduceWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -523,4 +447,4 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[values](type_classes.KeyedContainerTypeClass.md#values)
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[values](type_classes.AssociativeKeyedContainerTypeClass.md#values)

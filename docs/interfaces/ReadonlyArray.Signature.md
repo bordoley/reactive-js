@@ -8,7 +8,7 @@
 
 - [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
 
-- `Omit`<[`EnumerableTypeClass`](type_classes.EnumerableTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>\>
+- `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>\>
 
   ↳ **`Signature`**
 
@@ -29,7 +29,6 @@
 
 - [concat](ReadonlyArray.Signature.md#concat)
 - [empty](ReadonlyArray.Signature.md#empty)
-- [fromEntries](ReadonlyArray.Signature.md#fromentries)
 - [fromEnumerable](ReadonlyArray.Signature.md#fromenumerable)
 - [fromEnumeratorFactory](ReadonlyArray.Signature.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.Signature.md#fromfactory)
@@ -46,7 +45,6 @@
 - [endWith](ReadonlyArray.Signature.md#endwith)
 - [forEach](ReadonlyArray.Signature.md#foreach)
 - [forEachWithKey](ReadonlyArray.Signature.md#foreachwithkey)
-- [identity](ReadonlyArray.Signature.md#identity)
 - [ignoreElements](ReadonlyArray.Signature.md#ignoreelements)
 - [keep](ReadonlyArray.Signature.md#keep)
 - [keepType](ReadonlyArray.Signature.md#keeptype)
@@ -72,8 +70,6 @@
 - [everySatisfy](ReadonlyArray.Signature.md#everysatisfy)
 - [first](ReadonlyArray.Signature.md#first)
 - [firstAsync](ReadonlyArray.Signature.md#firstasync)
-- [keySet](ReadonlyArray.Signature.md#keyset)
-- [keys](ReadonlyArray.Signature.md#keys)
 - [last](ReadonlyArray.Signature.md#last)
 - [lastAsync](ReadonlyArray.Signature.md#lastasync)
 - [noneSatisfy](ReadonlyArray.Signature.md#nonesatisfy)
@@ -293,27 +289,6 @@ readonly `T`[]
 
 ___
 
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, readonly `T`[]\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, readonly `T`[]\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromEntries](type_classes.KeyedContainerTypeClass.md#fromentries)
-
-___
-
 ### fromEnumerable
 
 ▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
@@ -428,14 +403,13 @@ ___
 
 ### fromReadonlyArray
 
-▸ **fromReadonlyArray**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
@@ -451,7 +425,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[fromReadonlyArray](type_classes.KeyedContainerTypeClass.md#fromreadonlyarray)
+Omit.fromReadonlyArray
 
 ___
 
@@ -876,27 +850,6 @@ value emitted by the source.
 #### Inherited from
 
 [KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEachWithKey](type_classes.KeyedContainerTypeClass.md#foreachwithkey)
-
-___
-
-### identity
-
-▸ **identity**<`T`, `TKey`\>(): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Returns
-
-[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`Type`](ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[identity](type_classes.KeyedContainerTypeClass.md#identity)
 
 ___
 
@@ -1824,46 +1777,6 @@ Omit.firstAsync
 
 ___
 
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<readonly `unknown`[], `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `number` = `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `unknown`[], `ReadonlySet`<`TKey`\>\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keySet](type_classes.KeyedContainerTypeClass.md#keyset)
-
-___
-
-### keys
-
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<readonly `unknown`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `number` = `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `unknown`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>\>
-
-#### Inherited from
-
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keys](type_classes.KeyedContainerTypeClass.md#keys)
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -2044,16 +1957,15 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 
@@ -2061,7 +1973,7 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[toReadonlyArray](type_classes.KeyedContainerTypeClass.md#toreadonlyarray)
+Omit.toReadonlyArray
 
 ___
 

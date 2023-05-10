@@ -1,12 +1,12 @@
 import { Function1 } from "./functions.js";
-import { EnumerableTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
+import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
 import { Container_T, Container_type, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
 }
 export type TKey = KeyOf<Type>;
-export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
+export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
     /**
      *
      * @category Transform
@@ -37,6 +37,9 @@ export declare const keepWithKey: Signature["keepWithKey"];
 export declare const last: Signature["last"];
 export declare const map: Signature["map"];
 export declare const mapWithKey: Signature["mapWithKey"];
+export declare const reduce: Signature["reduce"];
+export declare const reduceWithKey: Signature["reduceWithKey"];
 export declare const someSatisfy: Signature["someSatisfy"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
+export declare const values: Signature["values"];

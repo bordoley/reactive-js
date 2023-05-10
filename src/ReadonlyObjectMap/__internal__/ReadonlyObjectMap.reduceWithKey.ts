@@ -9,7 +9,7 @@ const ReadonlyObjectMap_reduceWithKey: ReadonlyObjectMap.Signature["reduceWithKe
       reducer: Function3<TAcc, T, TKey, TAcc>,
       initialValue: Factory<TAcc>,
     ) =>
-    (obj: ReadonlyObjectMapLike<TKey, T>): TAcc => {
+    (obj: ReadonlyObjectMapLike<TKey, T>) => {
       let result = initialValue();
 
       for (const key in obj) {

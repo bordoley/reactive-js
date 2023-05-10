@@ -6,10 +6,11 @@
 
 ### Interfaces
 
+- [AssociativeKeyedContainerTypeClass](../interfaces/type_classes.AssociativeKeyedContainerTypeClass.md)
 - [AsyncContainerTypeClass](../interfaces/type_classes.AsyncContainerTypeClass.md)
 - [BlockingContainerTypeClass](../interfaces/type_classes.BlockingContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/type_classes.ContainerTypeClass.md)
-- [DeferredTypeClass](../interfaces/type_classes.DeferredTypeClass.md)
-- [EnumerableTypeClass](../interfaces/type_classes.EnumerableTypeClass.md)
+- [DeferredContainerTypeClass](../interfaces/type_classes.DeferredContainerTypeClass.md)
+- [EnumerableContainerTypeClass](../interfaces/type_classes.EnumerableContainerTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/type_classes.KeyedContainerTypeClass.md)
-- [RunnableTypeClass](../interfaces/type_classes.RunnableTypeClass.md)
+- [RunnableContainerTypeClass](../interfaces/type_classes.RunnableContainerTypeClass.md)
