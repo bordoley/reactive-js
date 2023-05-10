@@ -19,11 +19,6 @@
 
 ## Table of contents
 
-### Constructor Methods
-
-- [empty](Dictionary.Signature.md#empty)
-- [fromEntries](Dictionary.Signature.md#fromentries)
-
 ### Operator Methods
 
 - [forEach](Dictionary.Signature.md#foreach)
@@ -42,52 +37,6 @@
 - [reduce](Dictionary.Signature.md#reduce)
 - [reduceWithKey](Dictionary.Signature.md#reducewithkey)
 - [values](Dictionary.Signature.md#values)
-
-## Constructor Methods
-
-### empty
-
-▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = `NonNullable`<`TType`[typeof `__KeyedContainer_TKey`]\> |
-
-#### Returns
-
-[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>
-
-#### Inherited from
-
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[empty](type_classes.AssociativeKeyedContainerTypeClass.md#empty)
-
-___
-
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
-
-#### Inherited from
-
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromEntries](type_classes.AssociativeKeyedContainerTypeClass.md#fromentries)
-
-___
 
 ## Operator Methods
 

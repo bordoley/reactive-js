@@ -15,18 +15,20 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import { AssociativeKeyedContainerTypeClass } from "../../type-classes.js";
+import {
+  AssociativeKeyedContainerTypeClass,
+  ConcreteAssociativeKeyedContainerTypeClass,
+} from "../../type-classes.js";
 import { KeyedContainer } from "../../types.js";
-import KeyedContainerTypeClassTests from "./KeyedContainerTypeClassTests.js";
 
 const AssociativeKeyedContainerTypeClassTests = <
   C extends KeyedContainer<string>,
 >(
-  m: AssociativeKeyedContainerTypeClass<C, string>,
+  m: AssociativeKeyedContainerTypeClass<C, string> &
+    ConcreteAssociativeKeyedContainerTypeClass<C, string>,
 ) =>
   describe(
-    "AssociativeKeyedContainerTypeClassTests",
-    ...KeyedContainerTypeClassTests(m).tests,
+    "ConcreteAssociativeKeyedContainerTypeClassTests",
     describe(
       "entries",
       test(
@@ -148,21 +150,24 @@ const AssociativeKeyedContainerTypeClassTests = <
           ),
         ),
       ),
-      describe("keySet", test("returns a keyset with all the keys", () =>{
-        const keys = pipe(
-          [
-            ["a", "b"],
-            ["c", none],
-            ["e", "v"],
-          ],
-          ReadonlyArray.enumerate<[string, Optional<string>]>(),
-          m.fromEntries(),
-          m.keySet(),
-        );
+      describe(
+        "keySet",
+        test("returns a keyset with all the keys", () => {
+          const keys = pipe(
+            [
+              ["a", "b"],
+              ["c", none],
+              ["e", "v"],
+            ],
+            ReadonlyArray.enumerate<[string, Optional<string>]>(),
+            m.fromEntries(),
+            m.keySet(),
+          );
 
-        pipe(keys.size, expectEquals(3));
-        pipe(Array.from(keys), expectArrayEquals(["a", "c", "e"]));
-      })),
+          pipe(keys.size, expectEquals(3));
+          pipe(Array.from(keys), expectArrayEquals(["a", "c", "e"]));
+        }),
+      ),
       describe(
         "map",
         test(

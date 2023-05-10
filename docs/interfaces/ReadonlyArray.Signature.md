@@ -6,6 +6,8 @@
 
 ## Hierarchy
 
+- [`ConcreteContainerTypeClass`](type_classes.ConcreteContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
+
 - [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>
 
 - `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](ReadonlyArray.Type.md)\>\>
@@ -268,16 +270,15 @@ ___
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): readonly `T`[]
+▸ **empty**<`T`\>(): readonly `T`[]
 
 Return an Container that emits no items.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 
@@ -285,7 +286,7 @@ readonly `T`[]
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[empty](type_classes.KeyedContainerTypeClass.md#empty)
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[empty](type_classes.ConcreteContainerTypeClass.md#empty)
 
 ___
 
@@ -305,7 +306,7 @@ ___
 
 #### Inherited from
 
-Omit.fromEnumerable
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -331,7 +332,7 @@ readonly `T`[]
 
 #### Inherited from
 
-Omit.fromEnumeratorFactory
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -357,7 +358,7 @@ readonly `T`[]
 
 #### Inherited from
 
-Omit.fromFactory
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromFactory](type_classes.ConcreteContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -377,7 +378,7 @@ ___
 
 #### Inherited from
 
-Omit.fromIterable
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromIterable](type_classes.ConcreteContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -397,7 +398,7 @@ ___
 
 #### Inherited from
 
-Omit.fromOptional
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromOptional](type_classes.ConcreteContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -425,7 +426,7 @@ ___
 
 #### Inherited from
 
-Omit.fromReadonlyArray
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -445,7 +446,7 @@ ___
 
 #### Inherited from
 
-Omit.fromValue
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[fromValue](type_classes.ConcreteContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -475,7 +476,7 @@ readonly `T`[]
 
 #### Inherited from
 
-Omit.generate
+[ConcreteContainerTypeClass](type_classes.ConcreteContainerTypeClass.md).[generate](type_classes.ConcreteContainerTypeClass.md#generate)
 
 ___
 

@@ -13,10 +13,6 @@
 
 - [TKeyBase](Dictionary.md#tkeybase)
 
-### Constructor Functions
-
-- [empty](Dictionary.md#empty)
-
 ### Transform Functions
 
 - [entries](Dictionary.md#entries)
@@ -28,27 +24,6 @@
 ### TKeyBase
 
 Ƭ **TKeyBase**: `NonNullable`<[`Type`](../interfaces/Dictionary.Type.md)[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
-
-## Constructor Functions
-
-### empty
-
-▸ **empty**<`T`, `TKey`\>(): [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = {} |
-
-#### Returns
-
-[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>
-
-___
 
 ## Transform Functions
 

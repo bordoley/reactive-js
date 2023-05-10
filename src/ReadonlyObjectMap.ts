@@ -13,7 +13,10 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
+import {
+  AssociativeKeyedContainerTypeClass,
+  ConcreteAssociativeKeyedContainerTypeClass,
+} from "./type-classes.js";
 import {
   Container_T,
   Container_type,
@@ -39,7 +42,8 @@ export type TKeyBase = KeyOf<Type>;
 export interface Signature<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends AssociativeKeyedContainerTypeClass<TType, TKey> {}
+> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>,
+    AssociativeKeyedContainerTypeClass<TType, TKey> {}
 
 /**
  * @category Functor
@@ -64,7 +68,7 @@ export const CreateModule = <TKey extends TKeyBase>(): Signature<
     reduce: ReadonlyObjectMap_reduce,
     reduceWithKey: ReadonlyObjectMap_reduceWithKey,
     values: ReadonlyObjectMap_values,
-  } as AssociativeKeyedContainerTypeClass<Type<TKey>, TKey>);
+  } as Signature<Type<TKey>, TKey>);
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;

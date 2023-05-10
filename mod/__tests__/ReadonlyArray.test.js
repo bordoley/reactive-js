@@ -4,8 +4,7 @@ import * as Enumerator from "../Enumerator.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, pipe, pipeLazy, returns } from "../functions.js";
-import KeyedContainerTests from "./fixtures/KeyedContainerTypeClassTests.js";
-testModule("ReadonlyArray", KeyedContainerTests(ReadonlyArray), 
+testModule("ReadonlyArray", 
 //EnumerableContainerTypeClassTests(ReadonlyArray),
 describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], ReadonlyArray.entries(), Enumerator.toReadonlyArray(), expectArrayEquals([
     [0, "b"],

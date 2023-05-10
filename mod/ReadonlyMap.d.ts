@@ -1,11 +1,11 @@
-import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
+import { AssociativeKeyedContainerTypeClass, ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 export interface Type<TKey = unknown> extends KeyedContainer<TKey> {
     readonly [Container_type]?: ReadonlyMap<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: TKey;
 }
 export type TKeyBase = KeyOf<Type>;
-export interface Signature<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends AssociativeKeyedContainerTypeClass<TType, TKey> {
+export interface Signature<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>, AssociativeKeyedContainerTypeClass<TType, TKey> {
 }
 /**
  * @category Functor
