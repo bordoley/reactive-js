@@ -1,4 +1,4 @@
-import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
+import { clampPositiveInteger } from "../../__internal__/math.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
 const ReadonlyArray_takeLast: ReadonlyArray.Signature["takeLast"] = <
@@ -6,9 +6,9 @@ const ReadonlyArray_takeLast: ReadonlyArray.Signature["takeLast"] = <
 >(options?: {
   readonly count?: number;
 }) => {
-  const count = clampPositiveNonZeroInteger(options?.count ?? 1);
+  const count = clampPositiveInteger(options?.count ?? 1);
 
   return (arr: ReadonlyArray<T>) =>
-    count > arr.length ? arr : arr.slice(arr.length - count, count);
+    count > arr.length ? arr : arr.slice(arr.length - count, arr.length);
 };
 export default ReadonlyArray_takeLast;

@@ -22,6 +22,7 @@ const ReadonlyArray_distinctUntilChanged: ReadonlyArray.Signature["distinctUntil
         if (equality(next, last)) {
           continue;
         }
+        last = next;
         result.push(next);
       }
 
