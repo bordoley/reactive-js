@@ -7,7 +7,7 @@ import {
 import type * as ReadonlyMap from "./../../ReadonlyMap.js";
 
 const ReadonlyMap_fromEntries: ReadonlyMap.Signature["fromEntries"] =
-  <T, TKey extends ReadonlyMap.TKey>() =>
+  <T, TKey extends ReadonlyMap.TKeyBase>() =>
   (entries: EnumeratorLike<readonly [TKey, T]>) => {
     const map = newInstance(Map<TKey, T>);
 

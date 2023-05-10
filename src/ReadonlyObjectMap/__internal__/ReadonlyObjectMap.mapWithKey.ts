@@ -5,7 +5,11 @@ import { Function2 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_mapWithKey: ReadonlyObjectMap.Signature["mapWithKey"] =
-  <TA, TB, TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>(
+  <
+    TA,
+    TB,
+    TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase,
+  >(
     selector: Function2<TA, TKey, TB>,
   ) =>
   (obj: ReadonlyObjectMapLike<TKey, TA>): ReadonlyObjectMapLike<TKey, TB> => {

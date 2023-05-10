@@ -11,7 +11,7 @@
 
 ### Type Aliases
 
-- [TKey](Dictionary.md#tkey)
+- [TKeyBase](Dictionary.md#tkeybase)
 
 ### Constructor Functions
 
@@ -25,9 +25,9 @@
 
 ## Type Aliases
 
-### TKey
+### TKeyBase
 
-Ƭ **TKey**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/Dictionary.Type.md)\>
+Ƭ **TKeyBase**: `NonNullable`<[`Type`](../interfaces/Dictionary.Type.md)[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
 
 ## Constructor Functions
 
@@ -61,7 +61,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -77,7 +77,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = {} |
+| `TKey` | extends `Object` |
 
 #### Returns
 

@@ -1,8 +1,14 @@
 [Reactive-JS](../README.md) / [types](../modules/types.md) / KeyedContainer
 
-# Interface: KeyedContainer
+# Interface: KeyedContainer<TKey\>
 
 [types](../modules/types.md).KeyedContainer
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | `unknown` |
 
 ## Hierarchy
 
@@ -13,6 +19,8 @@
   ↳↳ [`Type`](Dictionary.Type.md)
 
   ↳↳ [`Type`](ReadonlyArray.Type.md)
+
+  ↳↳ [`Type`](ReadonlyMap.Type.md)
 
   ↳↳ [`Type`](ReadonlyObjectMap.Type.md)
 
@@ -48,4 +56,4 @@ ___
 
 ### [\_\_\_KeyedContainer\_TKey]
 
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `TKey`

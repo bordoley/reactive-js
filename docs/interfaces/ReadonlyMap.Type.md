@@ -1,12 +1,18 @@
 [Reactive-JS](../README.md) / [ReadonlyMap](../modules/ReadonlyMap.md) / Type
 
-# Interface: Type
+# Interface: Type<TKey\>
 
 [ReadonlyMap](../modules/ReadonlyMap.md).Type
 
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | `unknown` |
+
 ## Hierarchy
 
-- [`Container`](types.Container.md)
+- [`KeyedContainer`](types.KeyedContainer.md)<`TKey`\>
 
   ↳ **`Type`**
 
@@ -26,20 +32,24 @@
 
 #### Inherited from
 
-[Container](types.Container.md).[[___Container_T]](types.Container.md#[___container_t])
+[KeyedContainer](types.KeyedContainer.md).[[___Container_T]](types.KeyedContainer.md#[___container_t])
 
 ___
 
 ### [\_\_\_Container\_type]
 
-• `Optional` `Readonly` **[\_\_\_Container\_type]**: `ReadonlyMap`<`unknown`, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_Container\_type]**: `ReadonlyMap`<`undefined` \| `TKey`, `unknown`\>
 
 #### Overrides
 
-[Container](types.Container.md).[[___Container_type]](types.Container.md#[___container_type])
+[KeyedContainer](types.KeyedContainer.md).[[___Container_type]](types.KeyedContainer.md#[___container_type])
 
 ___
 
 ### [\_\_\_KeyedContainer\_TKey]
 
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `TKey`
+
+#### Overrides
+
+[KeyedContainer](types.KeyedContainer.md).[[___KeyedContainer_TKey]](types.KeyedContainer.md#[___keyedcontainer_tkey])

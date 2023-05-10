@@ -2,7 +2,7 @@ import type * as ReadonlyMap from "../../ReadonlyMap.js";
 import { Function2 } from "../../functions.js";
 
 const ReadonlyMap_mapWithKey: ReadonlyMap.Signature["mapWithKey"] =
-  <TA, TB, TKey extends ReadonlyMap.TKey = ReadonlyMap.TKey>(
+  <TA, TB, TKey extends ReadonlyMap.TKeyBase = ReadonlyMap.TKeyBase>(
     selector: Function2<TA, TKey, TB>,
   ) =>
   (map: ReadonlyMap<TKey, TA>): ReadonlyMap<TKey, TB> => {

@@ -3,7 +3,7 @@ import { hasOwn } from "../../__internal__/Object.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_keySet: ReadonlyObjectMap.Signature["keySet"] =
-  <TKey extends ReadonlyObjectMap.TKey = ReadonlyObjectMap.TKey>() =>
+  <TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>() =>
   (obj: ReadonlyObjectMapLike<TKey, unknown>): ReadonlySet<TKey> => {
     const keys = new Set<TKey>();
 

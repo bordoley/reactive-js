@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [type-classes](../modules/type_classes.md) / AssociativeKeyedContainerTypeClass
 
-# Interface: AssociativeKeyedContainerTypeClass<C\>
+# Interface: AssociativeKeyedContainerTypeClass<C, TKeyBase\>
 
 [type-classes](../modules/type_classes.md).AssociativeKeyedContainerTypeClass
 
@@ -9,10 +9,11 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`KeyedContainer`](types.KeyedContainer.md) |
+| `TKeyBase` | extends [`KeyOf`](../modules/types.md#keyof)<`C`\> = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
 
 ## Hierarchy
 
-- [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<`C`\>
+- [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<`C`, `TKeyBase`\>
 
   ↳ **`AssociativeKeyedContainerTypeClass`**
 
@@ -61,7 +62,7 @@ Return an Container that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` = `NonNullable`<`C`[typeof `__KeyedContainer_TKey`]\> |
 
 #### Returns
 
@@ -82,7 +83,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -104,7 +105,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -134,7 +135,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -164,7 +165,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -192,7 +193,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -222,7 +223,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -261,7 +262,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -300,7 +301,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -329,7 +330,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -349,7 +350,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -365,7 +366,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Returns
 
@@ -383,7 +384,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 
@@ -412,7 +413,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+| `TKey` | extends `Object` |
 
 #### Parameters
 

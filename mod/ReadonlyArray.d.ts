@@ -5,7 +5,7 @@ export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
 }
-export type TKey = KeyOf<Type>;
+export type TKeyBase = KeyOf<Type>;
 export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type>> {
     /**
      *

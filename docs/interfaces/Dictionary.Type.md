@@ -1,8 +1,14 @@
 [Reactive-JS](../README.md) / [Dictionary](../modules/Dictionary.md) / Type
 
-# Interface: Type
+# Interface: Type<TKey\>
 
 [Dictionary](../modules/Dictionary.md).Type
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | `unknown` |
 
 ## Hierarchy
 
@@ -32,7 +38,7 @@ ___
 
 ### [\_\_\_Container\_type]
 
-• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`DictionaryLike`](types.DictionaryLike.md)<`unknown`, `unknown`\>
+• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`DictionaryLike`](types.DictionaryLike.md)<`undefined` \| `TKey`, `unknown`\>
 
 #### Overrides
 
@@ -42,7 +48,7 @@ ___
 
 ### [\_\_\_KeyedContainer\_TKey]
 
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `unknown`
+• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `TKey`
 
 #### Overrides
 
