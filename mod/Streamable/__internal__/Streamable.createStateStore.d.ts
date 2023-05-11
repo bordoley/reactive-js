@@ -1,6 +1,3 @@
-import { Equality, Factory, Updater } from "../../functions.js";
-import { StreamableLike } from "../../types.js";
-declare const Streamable_createStateStore: <T>(initialState: Factory<T>, options?: {
-    readonly equality?: Equality<T> | undefined;
-} | undefined) => StreamableLike<Updater<T>, T, import("../../types.js").StreamLike<Updater<T>, T>>;
+import type * as Streamable from "../../Streamable.js";
+declare const Streamable_createStateStore: Streamable.Signature["createStateStore"];
 export default Streamable_createStateStore;

@@ -1,3 +1,3 @@
-import { StreamableLike } from "../../types.js";
-declare const Streamable_identity: <T>() => StreamableLike<T, T, import("../../types.js").StreamLike<T, T>>;
+import type * as Streamable from "../../Streamable.js";
+declare const Streamable_identity: Streamable.Signature["identity"];
 export default Streamable_identity;
