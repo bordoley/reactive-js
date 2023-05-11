@@ -11,10 +11,10 @@ import {
   pipe,
 } from "../../functions.js";
 import {
+  DeferredObservableLike,
   DispatcherLike_complete,
   DisposableLike,
   DisposableLike_dispose,
-  ObservableLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
@@ -128,7 +128,10 @@ export const flow =
 export const sinkInto =
   (
     factory: Writable | Factory<Writable>,
-  ): Function1<PauseableObservableLike<Uint8Array>, ObservableLike<void>> =>
+  ): Function1<
+    PauseableObservableLike<Uint8Array>,
+    DeferredObservableLike<void>
+  > =>
   flowable =>
     Observable.create<void>(observer => {
       const writable = isFunction(factory)

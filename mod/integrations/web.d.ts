@@ -1,6 +1,6 @@
 import { __WindowLocationLike_canGoBack as WindowLocationLike_canGoBack, __WindowLocationLike_goBack as WindowLocationLike_goBack, __WindowLocationLike_push as WindowLocationLike_push, __WindowLocationLike_replace as WindowLocationLike_replace } from "../__internal__/symbols.js";
 import { Updater } from "../functions.js";
-import { MulticastObservableLike, ObservableLike, ReadonlyObjectMapLike } from "../types.js";
+import { MulticastObservableLike, ReadonlyObjectMapLike, SharedObservableLike } from "../types.js";
 export { WindowLocationLike_push, WindowLocationLike_goBack, WindowLocationLike_canGoBack, WindowLocationLike_replace, };
 /**
  * @noInheritDoc
@@ -15,7 +15,7 @@ export interface WindowLocationURI {
  * @noInheritDoc
  */
 export interface WindowLocationLike extends MulticastObservableLike<WindowLocationURI> {
-    readonly [WindowLocationLike_canGoBack]: ObservableLike<boolean>;
+    readonly [WindowLocationLike_canGoBack]: SharedObservableLike<boolean>;
     [WindowLocationLike_goBack](): void;
     [WindowLocationLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;
     [WindowLocationLike_replace](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;

@@ -32,7 +32,7 @@ ___
 
 ### sinkInto
 
-▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`void`\>\>
+▸ **sinkInto**(`factory`): [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`void`\>\>
 
 #### Parameters
 
@@ -42,4 +42,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`void`\>\>
+[`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`Uint8Array`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`void`\>\>

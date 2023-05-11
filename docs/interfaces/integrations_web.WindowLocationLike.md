@@ -26,7 +26,7 @@
 
 ### [\_\_\_WindowLocationLike\_canGoBack]
 
-• `Readonly` **[\_\_\_WindowLocationLike\_canGoBack]**: [`ObservableLike`](types.ObservableLike.md)<`boolean`\>
+• `Readonly` **[\_\_\_WindowLocationLike\_canGoBack]**: [`SharedObservableLike`](types.SharedObservableLike.md)<`boolean`\>
 
 ## Methods
 
