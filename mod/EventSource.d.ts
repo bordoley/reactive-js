@@ -6,6 +6,9 @@ export interface Type extends Container {
 }
 export interface Signature extends ContainerTypeClass<Type>, StatefulContainerBaseTypeClass<Type> {
     addEventHandler: <T>(handler: SideEffect1<T>) => Function1<EventSourceLike<T>, DisposableLike>;
+    /**
+     * @category Constructor
+     */
     create: <T>(setup: SideEffect1<EventListenerLike<T>>) => EventSourceLike<T>;
 }
 export declare const addEventHandler: Signature["addEventHandler"];

@@ -22,10 +22,6 @@
 
 ## Table of contents
 
-### Operator Properties
-
-- [flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
-
 ### Constructor Methods
 
 - [zip](type_classes.ContainerTypeClass.md#zip)
@@ -33,6 +29,7 @@
 ### Operator Methods
 
 - [distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
+- [flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
 - [forEach](type_classes.ContainerTypeClass.md#foreach)
 - [keep](type_classes.ContainerTypeClass.md#keep)
 - [keepType](type_classes.ContainerTypeClass.md#keeptype)
@@ -51,33 +48,6 @@
 
 - [firstAsync](type_classes.ContainerTypeClass.md#firstasync)
 - [lastAsync](type_classes.ContainerTypeClass.md#lastasync)
-
-## Operator Properties
-
-### flatMapIterable
-
-• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ## Constructor Methods
 
@@ -329,6 +299,29 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 

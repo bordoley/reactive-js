@@ -2,8 +2,12 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
+  expectIsNone,
   expectToThrowError,
+  expectTrue,
   test,
+  testAsync,
 } from "../../__internal__/testing.js";
 import {
   Optional,
@@ -84,26 +88,64 @@ const RunnableContainerTypeClassTests = <C extends Container>(
     ),
     describe(
       "contains",
-      test(
-        "source is empty",
-        pipeLazy([], m.fromReadonlyArray(), m.contains(1), expectEquals(false)),
-      ),
-      test(
-        "source contains value",
-        pipeLazy(
-          [0, 1, 2],
-          m.fromReadonlyArray(),
-          m.contains(1),
-          expectEquals(true),
+      describe(
+        "strict equality comparator",
+        test(
+          "source is empty",
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.contains(1),
+            expectEquals(false),
+          ),
+        ),
+        test(
+          "source contains value",
+          pipeLazy(
+            [0, 1, 2],
+            m.fromReadonlyArray(),
+            m.contains(1),
+            expectEquals(true),
+          ),
+        ),
+        test(
+          "source does not contain value",
+          pipeLazy(
+            [2, 3, 4],
+            m.fromReadonlyArray(),
+            m.contains(1),
+            expectEquals(false),
+          ),
         ),
       ),
-      test(
-        "source does not contain value",
-        pipeLazy(
-          [2, 3, 4],
-          m.fromReadonlyArray(),
-          m.contains(1),
-          expectEquals(false),
+      describe(
+        "custom equality comparator",
+        test(
+          "source is empty",
+          pipeLazy(
+            [],
+            m.fromReadonlyArray(),
+            m.contains(1, { equality: (a, b) => a === b }),
+            expectEquals(false),
+          ),
+        ),
+        test(
+          "source contains value",
+          pipeLazy(
+            [0, 1, 2],
+            m.fromReadonlyArray(),
+            m.contains(1, { equality: (a, b) => a === b }),
+            expectEquals(true),
+          ),
+        ),
+        test(
+          "source does not contain value",
+          pipeLazy(
+            [2, 3, 4],
+            m.fromReadonlyArray(),
+            m.contains(1, { equality: (a, b) => a === b }),
+            expectEquals(false),
+          ),
         ),
       ),
     ),
@@ -190,6 +232,21 @@ const RunnableContainerTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
+      "firstAsync",
+      testAsync("empty source", async () => {
+        const result = await pipe([], m.fromReadonlyArray(), m.firstAsync());
+        pipe(result, expectIsNone);
+      }),
+      testAsync("it returns the first value", async () => {
+        const result = await pipe(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.firstAsync(),
+        );
+        pipe(result, expectEquals<Optional<number>>(1));
+      }),
+    ),
+    describe(
       "flatMapIterable",
       test(
         "maps the incoming value with the inline generator function",
@@ -237,6 +294,30 @@ const RunnableContainerTypeClassTests = <C extends Container>(
           expectToThrowError(err),
         );
       }),
+    ),
+    describe(
+      "fromFactory",
+      test(
+        "it produces the factory result",
+        pipeLazy(
+          () => 1,
+          m.fromFactory(),
+          m.first(),
+          expectEquals<Optional<number>>(1),
+        ),
+      ),
+    ),
+    describe(
+      "fromValue",
+      test(
+        "it produces the value",
+        pipeLazy(
+          none,
+          m.fromValue(),
+          m.toReadonlyArray(),
+          expectArrayEquals([none]),
+        ),
+      ),
     ),
     describe(
       "fromReadonlyArray",
@@ -319,6 +400,32 @@ const RunnableContainerTypeClassTests = <C extends Container>(
       }),
     ),
     describe(
+      "last",
+      test("empty source", () => {
+        const result = pipe([], m.fromReadonlyArray(), m.last());
+        pipe(result, expectIsNone);
+      }),
+      test("it returns the last value", () => {
+        const result = pipe([1, 2, 3], m.fromReadonlyArray(), m.last());
+        pipe(result, expectEquals<Optional<number>>(3));
+      }),
+    ),
+    describe(
+      "lastAsync",
+      testAsync("empty source", async () => {
+        const result = await pipe([], m.fromReadonlyArray(), m.lastAsync());
+        pipe(result, expectIsNone);
+      }),
+      testAsync("it returns the last value", async () => {
+        const result = await pipe(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.lastAsync(),
+        );
+        pipe(result, expectEquals<Optional<number>>(3));
+      }),
+    ),
+    describe(
       "map",
       test(
         "maps every value",
@@ -357,6 +464,36 @@ const RunnableContainerTypeClassTests = <C extends Container>(
           m.mapTo(2),
           m.toReadonlyArray(),
           expectArrayEquals([2, 2, 2]),
+        ),
+      ),
+    ),
+    describe(
+      "noneSatisfy",
+      test(
+        "no values satisfy the predicate",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.noneSatisfy(greaterThan(5)),
+          expectTrue,
+        ),
+      ),
+      test(
+        "empty input",
+        pipeLazy(
+          [],
+          m.fromReadonlyArray(),
+          m.noneSatisfy(greaterThan(5)),
+          expectTrue,
+        ),
+      ),
+      test(
+        "some satisfy",
+        pipeLazy(
+          [1, 2, 30, 4, 3],
+          m.fromReadonlyArray(),
+          m.noneSatisfy(greaterThan(5)),
+          expectFalse,
         ),
       ),
     ),
@@ -520,6 +657,18 @@ const RunnableContainerTypeClassTests = <C extends Container>(
           m.skipFirst({ count: 4 }),
           m.toReadonlyArray(),
           expectArrayEquals([] as number[]),
+        ),
+      ),
+    ),
+    describe(
+      "someSatisfy",
+      test(
+        "some satisfies predicate",
+        pipeLazy(
+          [1, 2, 30, 4],
+          m.fromReadonlyArray(),
+          m.someSatisfy(greaterThan(5)),
+          expectTrue,
         ),
       ),
     ),
