@@ -19,6 +19,7 @@
 
 - [concatWith](Runnable.md#concatwith)
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
+- [endWith](Runnable.md#endwith)
 - [forEach](Runnable.md#foreach)
 - [keep](Runnable.md#keep)
 - [keepType](Runnable.md#keeptype)
@@ -28,6 +29,7 @@
 - [pick](Runnable.md#pick)
 - [scan](Runnable.md#scan)
 - [skipFirst](Runnable.md#skipfirst)
+- [startWith](Runnable.md#startwith)
 - [takeFirst](Runnable.md#takefirst)
 - [takeLast](Runnable.md#takelast)
 - [takeWhile](Runnable.md#takewhile)
@@ -41,6 +43,7 @@
 - [contains](Runnable.md#contains)
 - [everySatisfy](Runnable.md#everysatisfy)
 - [first](Runnable.md#first)
+- [firstAsync](Runnable.md#firstasync)
 - [last](Runnable.md#last)
 - [lastAsync](Runnable.md#lastasync)
 - [noneSatisfy](Runnable.md#nonesatisfy)
@@ -154,6 +157,29 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+___
+
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -426,6 +452,29 @@ Returns a Container that skips the first count items emitted by the source.
 
 ___
 
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+___
+
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
@@ -595,6 +644,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

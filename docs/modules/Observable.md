@@ -33,7 +33,9 @@
 - [distinctUntilChanged](Observable.md#distinctuntilchanged)
 - [empty](Observable.md#empty)
 - [encodeUtf8](Observable.md#encodeutf8)
+- [endWith](Observable.md#endwith)
 - [enqueue](Observable.md#enqueue)
+- [firstAsync](Observable.md#firstasync)
 - [forEach](Observable.md#foreach)
 - [fromFactory](Observable.md#fromfactory)
 - [ignoreElements](Observable.md#ignoreelements)
@@ -46,12 +48,16 @@
 - [lastAsync](Observable.md#lastasync)
 - [map](Observable.md#map)
 - [mapTo](Observable.md#mapto)
+- [merge](Observable.md#merge)
+- [mergeMany](Observable.md#mergemany)
+- [mergeWith](Observable.md#mergewith)
 - [never](Observable.md#never)
 - [onSubscribe](Observable.md#onsubscribe)
 - [pairwise](Observable.md#pairwise)
 - [pick](Observable.md#pick)
 - [scan](Observable.md#scan)
 - [skipFirst](Observable.md#skipfirst)
+- [startWith](Observable.md#startwith)
 - [subscribe](Observable.md#subscribe)
 - [subscribeOn](Observable.md#subscribeon)
 - [takeFirst](Observable.md#takefirst)
@@ -588,6 +594,29 @@ ___
 
 ___
 
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
 ### enqueue
 
 ▸ **enqueue**<`T`\>(`queue`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
@@ -607,6 +636,43 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 
@@ -899,6 +965,246 @@ ___
 
 ___
 
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `snd` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
+| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `snd` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+___
+
+### mergeMany
+
+▸ **mergeMany**<`T`\>(`observables`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+___
+
+### mergeWith
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> \| [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
 ### never
 
 ▸ **never**<`T`\>(): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
@@ -1060,6 +1366,29 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.count?` | `number` |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
 #### Returns
 
