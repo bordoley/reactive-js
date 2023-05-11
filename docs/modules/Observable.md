@@ -20,27 +20,34 @@
 - [defer](Observable.md#defer)
 - [dispatchTo](Observable.md#dispatchto)
 - [distinctUntilChanged](Observable.md#distinctuntilchanged)
+- [empty](Observable.md#empty)
 - [encodeUtf8](Observable.md#encodeutf8)
 - [enqueue](Observable.md#enqueue)
 - [forEach](Observable.md#foreach)
+- [fromFactory](Observable.md#fromfactory)
 - [ignoreElements](Observable.md#ignoreelements)
 - [isDeferredObservable](Observable.md#isdeferredobservable)
 - [isEnumerable](Observable.md#isenumerable)
 - [isRunnable](Observable.md#isrunnable)
 - [isSharedObservable](Observable.md#issharedobservable)
 - [keep](Observable.md#keep)
+- [keepType](Observable.md#keeptype)
 - [lastAsync](Observable.md#lastasync)
 - [map](Observable.md#map)
 - [mapTo](Observable.md#mapto)
+- [never](Observable.md#never)
+- [onSubscribe](Observable.md#onsubscribe)
 - [pairwise](Observable.md#pairwise)
 - [pick](Observable.md#pick)
 - [scan](Observable.md#scan)
 - [skipFirst](Observable.md#skipfirst)
 - [subscribe](Observable.md#subscribe)
+- [subscribeOn](Observable.md#subscribeon)
 - [takeFirst](Observable.md#takefirst)
 - [takeLast](Observable.md#takelast)
 - [takeWhile](Observable.md#takewhile)
 - [throwIfEmpty](Observable.md#throwifempty)
+- [throws](Observable.md#throws)
 - [toEventSource](Observable.md#toeventsource)
 - [withCurrentTime](Observable.md#withcurrenttime)
 
@@ -186,6 +193,41 @@ ___
 
 ___
 
+### empty
+
+▸ **empty**<`T`\>(): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **empty**<`T`\>(`options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
 ### encodeUtf8
 
 ▸ **encodeUtf8**<`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`string`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`string`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`string`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`string`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`Uint8Array`\> : `never`
@@ -249,6 +291,41 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromFactory**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -378,6 +455,29 @@ ___
 
 ___
 
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+
+___
+
 ### lastAsync
 
 ▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
@@ -458,6 +558,44 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+___
+
+### onSubscribe
+
+▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<`void` \| [`DisposableOrTeardown`](types.md#disposableorteardown)\> |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
 
 ___
 
@@ -616,6 +754,52 @@ ___
 
 ___
 
+### subscribeOn
+
+▸ **subscribeOn**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
+
+▸ **subscribeOn**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) \| [`Factory`](functions.md#factory)<[`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+
+___
+
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
@@ -706,6 +890,61 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **throws**<`T`\>(`options`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.raise` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **throws**<`T`\>(`options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 

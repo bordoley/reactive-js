@@ -3,27 +3,34 @@ import Observable_decodeWithCharset from "./Observable/__internal__/Observable.d
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_isSharedObservable from "./Observable/__internal__/Observable.isSharedObservable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
+import Observable_never from "./Observable/__internal__/Observable.never.js";
+import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import {
@@ -35,6 +42,7 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  TypePredicate,
   Updater,
 } from "./functions.js";
 import {
@@ -44,6 +52,7 @@ import {
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
+  DisposableOrTeardown,
   EnumerableLike,
   EventSourceLike,
   ObservableLike,
@@ -97,11 +106,19 @@ export interface Signature {
     readonly equality?: Equality<T>;
   }): ObservableOperator<T, T>;
 
+  empty<T>(): EnumerableLike<T>;
+  empty<T>(options: { readonly delay: number }): RunnableLike<T>;
+
   encodeUtf8: ObservableOperator<string, Uint8Array>;
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperator<T, T>;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperator<T, T>;
+
+  fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
+  fromFactory<T>(options: {
+    readonly delay: number;
+  }): Function1<Factory<T>, RunnableLike<T>>;
 
   generate<T>(
     generator: Updater<T>,
@@ -132,6 +149,10 @@ export interface Signature {
 
   keep<T>(predicate: Predicate<T>): ObservableOperator<T, T>;
 
+  keepType<TA, TB extends TA>(
+    predicate: TypePredicate<TA, TB>,
+  ): ObservableOperator<TA, TB>;
+
   lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
   lastAsync<T>(
     scheduler: SchedulerLike,
@@ -144,6 +165,12 @@ export interface Signature {
   map<TA, TB>(selector: Function1<TA, TB>): ObservableOperator<TA, TB>;
 
   mapTo<TA, TB>(value: TB): ObservableOperator<TA, TB>;
+
+  never<T>(): SharedObservableLike<T>;
+
+  onSubscribe<T>(
+    f: Factory<DisposableOrTeardown | void>,
+  ): ObservableOperator<T, T>;
 
   pairwise<T>(): ObservableOperator<T, readonly [T, T]>;
 
@@ -178,6 +205,21 @@ export interface Signature {
     },
   ): Function1<ObservableLike<T>, DisposableLike>;
 
+  subscribeOn<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<DeferredObservableLike<T>, DeferredObservableLike<T>>;
+  subscribeOn<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<SharedObservableLike<T>, SharedObservableLike<T>>;
+
   takeFirst<T>(options?: { readonly count?: number }): ObservableOperator<T, T>;
 
   takeLast<T>(options?: { readonly count?: number }): ObservableOperator<T, T>;
@@ -193,6 +235,13 @@ export interface Signature {
     factory: Factory<unknown>,
     options?: undefined,
   ): ObservableOperator<T, T>;
+
+  throws<T>(): EnumerableLike<T>;
+  throws<T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
+  throws<T>(options: {
+    readonly delay: number;
+    readonly raise?: Factory<unknown>;
+  }): RunnableLike<T>;
 
   toEventSource<T>(
     scheduler: SchedulerLike,
@@ -215,9 +264,11 @@ export const defer: Signature["defer"] = Observable_defer;
 export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
+export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const isDeferredObservable: Signature["isDeferredObservable"] =
@@ -227,18 +278,23 @@ export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const isSharedObservable: Signature["isSharedObservable"] =
   Observable_isSharedObservable;
 export const keep: Signature["keep"] = Observable_keep;
+export const keepType: Signature["keepType"] = Observable_keepType;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
+export const never: Signature["never"] = Observable_never;
+export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
+export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
+export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
 export const withCurrentTime: Signature["withCurrentTime"] =

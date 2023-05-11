@@ -1,7 +1,10 @@
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
@@ -45,11 +48,15 @@ export interface Signature
 export const contains: Signature["contains"] = Runnable_contains;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
+export const empty: Signature["empty"] = Observable_empty;
 export const enumerate: Signature["enumerate"] = Enumerable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
 export const first: Signature["first"] = Runnable_first;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const keep: Signature["keep"] = Observable_keep;
+export const keepType: Signature["keepType"] =
+  Observable_keepType as Signature["keepType"];
 export const last: Signature["last"] = Runnable_last;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
