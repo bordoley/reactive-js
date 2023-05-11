@@ -26,6 +26,8 @@
 
   ↳ [`Type`](Observable.Type.md)
 
+  ↳ [`Type`](PauseableObservable.Type.md)
+
   ↳ [`Type`](Promise.Type.md)
 
   ↳ [`Type`](Runnable.Type.md)

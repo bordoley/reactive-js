@@ -18,6 +18,8 @@
 
   ↳ [`Signature`](EventSource.Signature.md)
 
+  ↳ [`Signature`](PauseableObservable.Signature.md)
+
   ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
 
 ## Table of contents
