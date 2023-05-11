@@ -12,11 +12,13 @@
 
 ### Constructor Functions
 
+- [concat](Enumerable.md#concat)
 - [empty](Enumerable.md#empty)
 - [fromFactory](Enumerable.md#fromfactory)
 
 ### Operator Functions
 
+- [concatWith](Enumerable.md#concatwith)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [forEach](Enumerable.md#foreach)
 - [keep](Enumerable.md#keep)
@@ -45,6 +47,32 @@
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
 
 ## Constructor Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+Returns a Container which emits all values from each source sequentially.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `snd` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
 
 ### empty
 
@@ -81,6 +109,29 @@ ___
 ___
 
 ## Operator Functions
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+___
 
 ### distinctUntilChanged
 

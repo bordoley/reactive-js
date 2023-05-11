@@ -1,4 +1,6 @@
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Observable_concat from "./Observable/__internal__/Observable.concat.js";
+import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
@@ -45,6 +47,8 @@ export interface DisposableEnumeratorType extends Container {
 export interface Signature
   extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {}
 
+export const concat: Signature["concat"] = Observable_concat;
+export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const contains: Signature["contains"] = Runnable_contains;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
