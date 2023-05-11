@@ -1,7 +1,7 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createTakeWhileObserver from "../../Observer/__internal__/Observer.createTakeWhileObserver.js";
 import { Predicate, partial, pipe } from "../../functions.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 
 const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
   predicate: Predicate<T>,
@@ -11,7 +11,7 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = <T>(
   return pipe(
     Observer_createTakeWhileObserver,
     partial(predicate, inclusive),
-    Observable_liftSource,
+    Observable_liftEnumerableUpperBounded,
   );
 };
 

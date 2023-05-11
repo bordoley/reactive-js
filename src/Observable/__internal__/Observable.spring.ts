@@ -41,7 +41,7 @@ const Observable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<[unknown, unknown, number], 2>(2),
+    Observable_pick<[number, number, number], 2>(2),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

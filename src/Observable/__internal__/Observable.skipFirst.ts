@@ -4,7 +4,7 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 
 import { partial, pipe } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 
 const Observable_skipFirst: Observable.Signature["skipFirst"] = (<T>(
   options: { readonly count?: number } = {},
@@ -13,7 +13,7 @@ const Observable_skipFirst: Observable.Signature["skipFirst"] = (<T>(
   const op = pipe(
     Observer_createSkipFirstObserver<T>,
     partial(count),
-    Observable_liftSource<T, T>,
+    Observable_liftEnumerableUpperBounded<T, T>,
   );
   return (obs: ObservableLike<T>) => (count > 0 ? op(obs) : obs);
 }) as Observable.Signature["skipFirst"];
