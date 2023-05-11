@@ -4,6 +4,7 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
+import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
@@ -50,6 +51,7 @@ export const backpressureStrategy = Observable_backpressureStrategy;
 export const concat = Observable_concat;
 export const concatMany = Observable_concatMany;
 export const concatWith = Observable_concatWith;
+export const create = Observable_create;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Observable_defer;
 export const dispatchTo = Observable_dispatchTo;

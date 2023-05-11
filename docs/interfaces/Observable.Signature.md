@@ -17,6 +17,7 @@
 - [concat](Observable.Signature.md#concat)
 - [concatMany](Observable.Signature.md#concatmany)
 - [concatWith](Observable.Signature.md#concatwith)
+- [create](Observable.Signature.md#create)
 - [currentTime](Observable.Signature.md#currenttime)
 - [decodeWithCharset](Observable.Signature.md#decodewithcharset)
 - [defer](Observable.Signature.md#defer)
@@ -331,6 +332,28 @@ ___
 #### Returns
 
 [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`ObserverLike`](types.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
 
 ___
 
