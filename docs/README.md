@@ -26,6 +26,7 @@ Reactive-JS
 - [Scheduler](modules/Scheduler.md)
 - [SharedObservable](modules/SharedObservable.md)
 - [Store](modules/Store.md)
+- [Streamable](modules/Streamable.md)
 - [functions](modules/functions.md)
 - [type-classes](modules/type_classes.md)
 - [types](modules/types.md)
