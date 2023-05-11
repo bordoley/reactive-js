@@ -5,3 +5,4 @@ export interface Type extends Container {
 }
 export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
 }
+export declare const toSharedObservable: Signature["toSharedObservable"];

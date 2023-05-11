@@ -19,7 +19,6 @@
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [EnumerableUpperBoundObservableOperator](Observable.md#enumerableupperboundobservableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
-- [SharedObservableUpperBoundObservableOperator](Observable.md#sharedobservableupperboundobservableoperator)
 
 ### Functions
 
@@ -179,33 +178,6 @@ ___
 ##### Returns
 
 `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\> : `never`
-
-___
-
-### SharedObservableUpperBoundObservableOperator
-
-Ƭ **SharedObservableUpperBoundObservableOperator**<`TIn`, `TOut`\>: (`observable`: [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>) => [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ (`observable`): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\> |
-
-##### Returns
-
-[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>
 
 ## Functions
 
@@ -1184,7 +1156,7 @@ ___
 
 [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1201,7 +1173,7 @@ ___
 
 #### Returns
 
-[`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`T`, `T`\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 ___
 
@@ -1728,7 +1700,7 @@ ___
 
 [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1747,4 +1719,4 @@ ___
 
 #### Returns
 
-[`SharedObservableUpperBoundObservableOperator`](Observable.md#sharedobservableupperboundobservableoperator)<`TA`, `T`\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
