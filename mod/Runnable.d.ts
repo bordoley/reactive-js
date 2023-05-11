@@ -1,10 +1,14 @@
-import { SideEffect1 } from "./functions.js";
+import { Function1, SideEffect1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export interface Type extends Container {
     readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 export interface Signature extends RunnableContainerTypeClass<Type> {
+    flow<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -19,6 +23,7 @@ export declare const endWith: Signature["endWith"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];
+export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const keep: Signature["keep"];

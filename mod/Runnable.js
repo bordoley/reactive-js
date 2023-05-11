@@ -24,6 +24,7 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_flow from "./Runnable/__internal__/Runnable.flow.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
@@ -40,6 +41,7 @@ export const endWith = Observable_endWith;
 export const everySatisfy = Runnable_everySatisfy;
 export const first = Runnable_first;
 export const firstAsync = Observable_firstAsync;
+export const flow = Runnable_flow;
 export const forEach = Observable_forEach;
 export const fromFactory = Observable_fromFactory;
 export const keep = Observable_keep;

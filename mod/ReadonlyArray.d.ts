@@ -1,6 +1,6 @@
 import { Function1, TypePredicate } from "./functions.js";
 import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
-import { ContainerOperator, Container_T, Container_type, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
+import { ContainerOperator, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
@@ -15,6 +15,10 @@ export interface Signature extends KeyedContainerTypeClass<Type>, Omit<Enumerabl
         readonly start?: number;
         readonly count?: number;
     }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
+    flow<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
     /**
      * @category Operator
      */
@@ -71,6 +75,7 @@ export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
+export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
 export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];

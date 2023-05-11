@@ -14,6 +14,7 @@ import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArr
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_firstAsync from "./ReadonlyArray/__internal__/ReadonlyArray.firstAsync.js";
 import ReadonlyArray_flatMapIterable from "./ReadonlyArray/__internal__/ReadonlyArray.flatMapIterable.js";
+import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_fromEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromEnumeratorFactory.js";
@@ -61,6 +62,7 @@ export const everySatisfy = ReadonlyArray_everySatisfy;
 export const first = ReadonlyArray_first;
 export const firstAsync = ReadonlyArray_firstAsync;
 export const flatMapIterable = ReadonlyArray_flatMapIterable;
+export const flow = ReadonlyArray_flow;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
 export const fromEnumeratorFactory = ReadonlyArray_fromEnumeratorFactory;
