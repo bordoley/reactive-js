@@ -4,13 +4,17 @@
 
 ## Table of contents
 
-### Constructor Functions
+### Interfaces
+
+- [Signature](../interfaces/Streamable.Signature.md)
+
+### Functions
 
 - [create](Streamable.md#create)
 - [createStateStore](Streamable.md#createstatestore)
 - [identity](Streamable.md#identity)
 
-## Constructor Functions
+## Functions
 
 ### create
 
@@ -39,10 +43,6 @@ ___
 
 ▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/types.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/types.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
 
-Returns a new `StateStoreLike` instance that stores state which can
-be updated by notifying the instance with a `StateUpdater` that computes a
-new state based upon the previous state.
-
 #### Type parameters
 
 | Name |
@@ -51,11 +51,11 @@ new state based upon the previous state.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
-| `options?` | `Object` | - |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
+| Name | Type |
+| :------ | :------ |
+| `initialState` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
 
 #### Returns
 

@@ -1,4 +1,3 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
-import { ContainerOperator, StreamableLike } from "../../types.js";
-declare const Streamable_create: <TReq, T>(op: ContainerOperator<DeferredObservable.Type, TReq, T>) => StreamableLike<TReq, T>;
+import type * as Streamable from "../../Streamable.js";
+declare const Streamable_create: Streamable.Signature["create"];
 export default Streamable_create;
