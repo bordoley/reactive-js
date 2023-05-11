@@ -15,6 +15,8 @@ import Observable_endWith from "./Observable/__internal__/Observable.endWith.js"
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
+import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
@@ -62,6 +64,8 @@ export const endWith = Observable_endWith;
 export const enqueue = Observable_enqueue;
 export const firstAsync = Observable_firstAsync;
 export const forEach = Observable_forEach;
+export const forkConcat = Observable_forkConcat;
+export const forkMerge = Observable_forkMerge;
 export const fromFactory = Observable_fromFactory;
 export const ignoreElements = Observable_ignoreElements;
 export const isDeferredObservable = Observable_isDeferredObservable;
