@@ -1,10 +1,13 @@
-import { Function1, SideEffect1 } from "./functions.js";
+import { Factory, Function1, SideEffect1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
 import { Container, Container_T, Container_type, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export interface Type extends Container {
     readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 export interface Signature extends RunnableContainerTypeClass<Type> {
+    compute<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): RunnableLike<T>;
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -14,6 +17,7 @@ export interface Signature extends RunnableContainerTypeClass<Type> {
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
 }
+export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatWith: Signature["concatWith"];
 export declare const contains: Signature["contains"];

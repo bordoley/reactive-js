@@ -1,3 +1,4 @@
+import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -29,7 +30,7 @@ import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { Function1, SideEffect1 } from "./functions.js";
+import { Factory, Function1, SideEffect1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
@@ -48,6 +49,13 @@ export interface Type extends Container {
 }
 
 export interface Signature extends RunnableContainerTypeClass<Type> {
+  compute<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): RunnableLike<T>;
+
   // FIXME: should be defined on a typeclass
   flow<T>(
     scheduler: SchedulerLike,
@@ -63,6 +71,7 @@ export interface Signature extends RunnableContainerTypeClass<Type> {
   }): SideEffect1<RunnableLike<T>>;
 }
 
+export const compute: Signature["compute"] = Runnable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const contains: Signature["contains"] = Runnable_contains;

@@ -56,6 +56,7 @@
 
 ### Other Methods
 
+- [compute](Runnable.Signature.md#compute)
 - [flow](Runnable.Signature.md#flow)
 - [run](Runnable.Signature.md#run)
 
@@ -1388,6 +1389,30 @@ ___
 ___
 
 ## Other Methods
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+___
 
 ### flow
 

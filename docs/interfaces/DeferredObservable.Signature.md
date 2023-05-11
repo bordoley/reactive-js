@@ -8,12 +8,37 @@
 
 ### Methods
 
+- [compute](DeferredObservable.Signature.md#compute)
 - [multicast](DeferredObservable.Signature.md#multicast)
 - [repeat](DeferredObservable.Signature.md#repeat)
 - [retry](DeferredObservable.Signature.md#retry)
 - [share](DeferredObservable.Signature.md#share)
 
 ## Methods
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
+
+___
 
 ### multicast
 

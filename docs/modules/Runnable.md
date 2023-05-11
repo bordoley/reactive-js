@@ -36,6 +36,7 @@
 
 ### Other Functions
 
+- [compute](Runnable.md#compute)
 - [flow](Runnable.md#flow)
 - [run](Runnable.md#run)
 
@@ -555,6 +556,30 @@ this predicate is not satisfied.
 ___
 
 ## Other Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
 
 ### flow
 

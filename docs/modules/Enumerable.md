@@ -35,6 +35,10 @@
 - [takeLast](Enumerable.md#takelast)
 - [takeWhile](Enumerable.md#takewhile)
 
+### Other Functions
+
+- [compute](Enumerable.md#compute)
+
 ### Transform Functions
 
 - [contains](Enumerable.md#contains)
@@ -548,6 +552,32 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+___
+
+## Other Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
 
 ___
 
