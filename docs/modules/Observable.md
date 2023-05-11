@@ -26,6 +26,7 @@
 - [concat](Observable.md#concat)
 - [concatMany](Observable.md#concatmany)
 - [concatWith](Observable.md#concatwith)
+- [create](Observable.md#create)
 - [decodeWithCharset](Observable.md#decodewithcharset)
 - [defer](Observable.md#defer)
 - [dispatchTo](Observable.md#dispatchto)
@@ -422,6 +423,28 @@ ___
 #### Returns
 
 [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### create
+
+▸ **create**<`T`\>(`f`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect1`](functions.md#sideeffect1)<[`ObserverLike`](../interfaces/types.ObserverLike.md)<`T`\>\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 ___
 
