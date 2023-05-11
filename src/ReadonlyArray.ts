@@ -12,6 +12,7 @@ import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArr
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
 import ReadonlyArray_firstAsync from "./ReadonlyArray/__internal__/ReadonlyArray.firstAsync.js";
 import ReadonlyArray_flatMapIterable from "./ReadonlyArray/__internal__/ReadonlyArray.flatMapIterable.js";
+import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_fromEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromEnumeratorFactory.js";
@@ -53,13 +54,18 @@ import {
   ContainerOperator,
   Container_T,
   Container_type,
+  DisposableLike,
   EnumerableLike,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
   KeyedContainerOperator,
   KeyedContainer_TKey,
+  PauseableObservableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   RunnableLike,
+  SchedulerLike,
 } from "./types.js";
 
 export interface Type extends KeyedContainer {
@@ -84,6 +90,15 @@ export interface Signature
     readonly start?: number;
     readonly count?: number;
   }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
+
+  // FIXME: should be defined on a typeclass
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
 
   /**
    * @category Operator
@@ -153,6 +168,7 @@ export const first: Signature["first"] = ReadonlyArray_first;
 export const firstAsync: Signature["firstAsync"] = ReadonlyArray_firstAsync;
 export const flatMapIterable: Signature["flatMapIterable"] =
   ReadonlyArray_flatMapIterable;
+export const flow: Signature["flow"] = ReadonlyArray_flow;
 export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;

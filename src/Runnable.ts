@@ -22,21 +22,25 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_flow from "./Runnable/__internal__/Runnable.flow.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { SideEffect1 } from "./functions.js";
+import { Function1, SideEffect1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
   Container_type,
+  DisposableLike,
+  PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableLike,
+  SchedulerLike,
 } from "./types.js";
 
 export interface Type extends Container {
@@ -44,6 +48,15 @@ export interface Type extends Container {
 }
 
 export interface Signature extends RunnableContainerTypeClass<Type> {
+  // FIXME: should be defined on a typeclass
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
+
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
@@ -60,6 +73,7 @@ export const endWith: Signature["endWith"] = Observable_endWith;
 export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
 export const first: Signature["first"] = Runnable_first;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
+export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const keep: Signature["keep"] = Observable_keep;

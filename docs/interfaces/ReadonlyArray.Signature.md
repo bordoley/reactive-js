@@ -61,6 +61,7 @@
 
 ### Other Methods
 
+- [flow](ReadonlyArray.Signature.md#flow)
 - [toEnumerable](ReadonlyArray.Signature.md#toenumerable)
 - [toRunnable](ReadonlyArray.Signature.md#torunnable)
 
@@ -1524,6 +1525,31 @@ Omit.zipWith
 ___
 
 ## Other Methods
+
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+___
 
 ### toEnumerable
 
