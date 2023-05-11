@@ -4,6 +4,12 @@
 
 [Disposable](../modules/Disposable.md).Signature
 
+## Hierarchy
+
+- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](Disposable.Type.md)\>
+
+  ↳ **`Signature`**
+
 ## Table of contents
 
 ### Properties
@@ -21,6 +27,7 @@
 - [onError](Disposable.Signature.md#onerror)
 - [toAbortSignal](Disposable.Signature.md#toabortsignal)
 - [toErrorHandler](Disposable.Signature.md#toerrorhandler)
+- [toSharedObservable](Disposable.Signature.md#tosharedobservable)
 - [usingAsync](Disposable.Signature.md#usingasync)
 
 ## Properties
@@ -208,6 +215,26 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<`unknown`\>
+
+___
+
+### toSharedObservable
+
+▸ **toSharedObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
 
 ___
 

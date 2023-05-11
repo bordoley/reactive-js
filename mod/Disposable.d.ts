@@ -1,6 +1,10 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
-import { DisposableLike } from "./types.js";
-export interface Signature {
+import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
+import { Container, Container_type, DisposableLike } from "./types.js";
+export interface Type extends Container {
+    readonly [Container_type]?: DisposableLike;
+}
+export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {
         readonly ignoreChildErrors?: boolean;
@@ -32,4 +36,5 @@ export declare const onDisposed: Signature["onDisposed"];
 export declare const onError: Signature["onError"];
 export declare const toAbortSignal: Signature["toAbortSignal"];
 export declare const toErrorHandler: Signature["toErrorHandler"];
+export declare const toSharedObservable: Signature["toSharedObservable"];
 export declare const usingAsync: Signature["usingAsync"];

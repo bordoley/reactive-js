@@ -8,11 +8,17 @@
 
 - **`Container`**
 
+  ↳ [`Type`](Disposable.Type.md)
+
   ↳ [`Type`](Enumerator.Type.md)
 
   ↳ [`Type`](EventSource.Type.md)
 
   ↳ [`Type`](Iterable.Type.md)
+
+  ↳ [`Type`](Runnable.Type.md)
+
+  ↳ [`Type`](Store.Type.md)
 
   ↳ [`KeyedContainer`](types.KeyedContainer.md)
 

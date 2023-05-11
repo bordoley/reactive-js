@@ -40,6 +40,7 @@ import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
 import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
+import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
@@ -52,11 +53,13 @@ import {
   ContainerOperator,
   Container_T,
   Container_type,
+  EnumerableLike,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
   KeyedContainerOperator,
   KeyedContainer_TKey,
+  RunnableLike,
 } from "./types.js";
 
 export interface Type extends KeyedContainer {
@@ -101,6 +104,36 @@ export interface Signature
     readonly count?: number;
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, Iterable<T>>;
+
+  toEnumerable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toEnumerable<T>(options: {
+    readonly count: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toEnumerable<T>(options: {
+    readonly count: number;
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toEnumerable<T>(options: {
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+
+  toRunnable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toRunnable<T>(options: {
+    readonly count: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toRunnable<T>(options: {
+    readonly count: number;
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toRunnable<T>(options: {
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toRunnable<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
 
 export const concat: Signature["concat"] = ReadonlyArray_concat;
@@ -158,6 +191,8 @@ export const toIterable: Signature["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
+export const toEnumerable: Signature["toEnumerable"] = ReadonlyArray_toRunnable;
+export const toRunnable: Signature["toRunnable"] = ReadonlyArray_toRunnable;
 export const values: Signature["values"] = ReadonlyArray_values;
 export const zip: Signature["zip"] = ReadonlyArray_zip;
 export const zipWith: Signature["zipWith"] = ReadonlyArray_zipWith;
