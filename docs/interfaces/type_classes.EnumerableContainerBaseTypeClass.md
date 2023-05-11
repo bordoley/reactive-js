@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](types.Container.md) |
-| `CEnumerator` | extends [`Type`](Enumerator.Type.md) = [`Type`](Enumerator.Type.md) |
+| `CEnumerator` | extends [`Type`](../modules/Enumerator.md#type) = [`Type`](../modules/Enumerator.md#type) |
 
 ## Hierarchy
 

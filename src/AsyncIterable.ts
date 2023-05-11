@@ -2,9 +2,7 @@ import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.
 import AsyncIterable_toDeferredObservable from "./AsyncIterable/__internal__/AsyncIterable.toDeferredObservable.js";
 import { Function1 } from "./functions.js";
 import {
-  Container,
-  Container_T,
-  Container_type,
+  AsyncIterableContainer,
   DeferredObservableLike,
   DisposableLike,
   PauseableObservableLike,
@@ -13,9 +11,7 @@ import {
   SchedulerLike,
 } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
-}
+export type Type = AsyncIterableContainer;
 
 export interface Signature {
   // FIXME: should be defined on a typeclass

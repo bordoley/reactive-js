@@ -17,25 +17,11 @@ import {
   AssociativeKeyedContainerTypeClass,
   ConcreteAssociativeKeyedContainerTypeClass,
 } from "./type-classes.js";
-import {
-  Container_T,
-  Container_type,
-  KeyOf,
-  KeyedContainer,
-  KeyedContainer_TKey,
-  ReadonlyObjectMapLike,
-} from "./types.js";
+import { KeyOf, ReadonlyObjectMapContainer } from "./types.js";
 
-export interface Type<
+export type Type<
   TKey extends symbol | number | string = symbol | number | string,
-> extends KeyedContainer {
-  readonly [Container_type]?: ReadonlyObjectMapLike<
-    NonNullable<this[typeof KeyedContainer_TKey]>,
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: TKey;
-}
+> = ReadonlyObjectMapContainer<TKey>;
 
 export type TKeyBase = KeyOf<Type>;
 

@@ -25,7 +25,7 @@ export interface Signature {
      */
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 }
-export declare const create: <TReq, T>(op: ContainerOperator<DeferredObservable.Type, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
+export declare const create: <TReq, T>(op: ContainerOperator<import("./types.js").DeferredObservableContainer, TReq, T>) => StreamableLike<TReq, T, StreamLike<TReq, T>>;
 export declare const createStateStore: <T>(initialState: Factory<T>, options?: {
     readonly equality?: Equality<T> | undefined;
 } | undefined) => StreamableLike<Updater<T>, T, StreamLike<Updater<T>, T>>;

@@ -7,11 +7,11 @@
 ### Interfaces
 
 - [Signature](../interfaces/DeferredObservable.Signature.md)
-- [Type](../interfaces/DeferredObservable.Type.md)
 
 ### Type Aliases
 
 - [EnumerableUpperBoundObservableOperator](DeferredObservable.md#enumerableupperboundobservableoperator)
+- [Type](DeferredObservable.md#type)
 
 ### Functions
 
@@ -53,6 +53,12 @@
 ##### Returns
 
 `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+___
+
+### Type
+
+Ƭ **Type**: [`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md)
 
 ## Functions
 

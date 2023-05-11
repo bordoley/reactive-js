@@ -29,7 +29,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](DeferredObservable.Type.md), `TReq`, `T`\> |
+| `op` | [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TReq`, `T`\> |
 
 #### Returns
 

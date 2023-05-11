@@ -8,16 +8,9 @@ import {
   ConcreteContainerBaseTypeClass,
   ContainerTypeClass,
 } from "./type-classes.js";
-import {
-  Container,
-  Container_T,
-  Container_type,
-  EnumeratorLike,
-} from "./types.js";
+import { EnumeratorContainer } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
-}
+export type Type = EnumeratorContainer;
 
 export interface Signature
   extends ConcreteContainerBaseTypeClass<Type>,

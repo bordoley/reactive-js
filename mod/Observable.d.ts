@@ -1,11 +1,9 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EventSourceLike, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
+import { DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EventSourceLike, ObservableContainer, ObservableLike, ObserverLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
-export interface Type extends Container {
-    readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
-}
+export type Type = ObservableContainer;
 export declare namespace Animation {
     /**
      * @noInheritDoc

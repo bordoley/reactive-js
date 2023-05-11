@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<[`Type`](Runnable.Type.md)\>
+- [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
 
   ↳ **`Signature`**
 
@@ -76,11 +76,11 @@
 
 ### concatAll
 
-• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -93,7 +93,7 @@ Container by concatenating the inner sources in order.
 
 ##### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -103,11 +103,11 @@ ___
 
 ### concatMap
 
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 ##### Type parameters
 
@@ -124,7 +124,7 @@ ___
 
 ##### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -134,11 +134,11 @@ ___
 
 ### concatWith
 
-• **concatWith**: <T\>(`snd`: [`RunnableLike`](types.RunnableLike.md)<`T`\>, ...`tail`: readonly [`RunnableLike`](types.RunnableLike.md)<`T`\>[]) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+• **concatWith**: <T\>(`snd`: [`RunnableLike`](types.RunnableLike.md)<`T`\>, ...`tail`: readonly [`RunnableLike`](types.RunnableLike.md)<`T`\>[]) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Type declaration
 
-▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 ##### Type parameters
 
@@ -155,7 +155,7 @@ ___
 
 ##### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -636,7 +636,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -656,7 +656,7 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -666,7 +666,7 @@ ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -683,7 +683,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -693,7 +693,7 @@ ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -710,7 +710,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -720,7 +720,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -739,7 +739,7 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -749,7 +749,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -768,7 +768,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -778,7 +778,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -795,7 +795,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -805,7 +805,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -833,7 +833,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -843,7 +843,7 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -860,7 +860,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -870,7 +870,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -880,7 +880,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, readonly [`T`, `T`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, readonly [`T`, `T`]\>
 
 #### Inherited from
 
@@ -890,7 +890,7 @@ ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -907,13 +907,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKey`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -932,13 +932,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -959,7 +959,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Inherited from
 
@@ -969,7 +969,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -990,7 +990,7 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `TAcc`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -1000,7 +1000,7 @@ ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -1019,7 +1019,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1029,7 +1029,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -1046,7 +1046,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1056,7 +1056,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -1075,7 +1075,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1085,7 +1085,7 @@ ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -1104,7 +1104,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1114,7 +1114,7 @@ ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -1136,7 +1136,7 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -1146,7 +1146,7 @@ ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1163,13 +1163,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1188,13 +1188,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1215,13 +1215,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1244,13 +1244,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1275,13 +1275,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1308,13 +1308,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1343,13 +1343,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1380,7 +1380,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](Runnable.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Inherited from
 

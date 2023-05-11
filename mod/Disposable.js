@@ -12,7 +12,6 @@ import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbo
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_toSharedObservable from "./Disposable/__internal__/Disposable.toSharedObservable.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
-import { Container_type } from "./types.js";
 export const add = Disposable_add;
 export const addTo = Disposable_addTo;
 export const bindTo = Disposable_bindTo;

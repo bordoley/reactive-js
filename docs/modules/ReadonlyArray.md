@@ -7,11 +7,11 @@
 ### Interfaces
 
 - [Signature](../interfaces/ReadonlyArray.Signature.md)
-- [Type](../interfaces/ReadonlyArray.Type.md)
 
 ### Type Aliases
 
 - [TKeyBase](ReadonlyArray.md#tkeybase)
+- [Type](ReadonlyArray.md#type)
 
 ### Constructor Functions
 
@@ -79,7 +79,13 @@
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: [`KeyOf`](types.md#keyof)<[`Type`](../interfaces/ReadonlyArray.Type.md)\>
+Ƭ **TKeyBase**: [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyArray.md#type)\>
+
+___
+
+### Type
+
+Ƭ **Type**: [`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md)
 
 ## Constructor Functions
 
@@ -458,7 +464,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), readonly `T`[], `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -471,13 +477,13 @@ Container by concatenating the inner sources in order.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), readonly `T`[], `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
 
 ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -494,13 +500,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -517,13 +523,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -543,13 +549,13 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -566,13 +572,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -589,13 +595,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -615,13 +621,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 Returns a KeyedContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -641,13 +647,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -667,13 +673,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -690,9 +696,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -710,13 +716,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -736,13 +742,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `T`, `T`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -771,13 +777,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -794,13 +800,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, `TB`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -829,13 +835,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TKey`, `TA`, `TB`\>
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -845,13 +851,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, readonly [`T`, `T`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -868,9 +874,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -889,9 +895,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -912,13 +918,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -939,13 +945,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `TAcc`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -964,13 +970,13 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -987,13 +993,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -1012,13 +1018,13 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -1037,13 +1043,13 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -1065,13 +1071,13 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1088,9 +1094,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1109,9 +1115,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1132,9 +1138,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1157,9 +1163,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1184,9 +1190,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1213,9 +1219,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1244,9 +1250,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1277,7 +1283,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/ReadonlyArray.Type.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 

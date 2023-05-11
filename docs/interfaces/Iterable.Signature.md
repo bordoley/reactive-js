@@ -6,11 +6,11 @@
 
 ## Hierarchy
 
-- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<[`Type`](Iterable.Type.md)\>
+- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
 
-- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<[`Type`](Iterable.Type.md)\>
+- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
 
-- [`EnumerableContainerBaseTypeClass`](type_classes.EnumerableContainerBaseTypeClass.md)<[`Type`](Iterable.Type.md)\>
+- [`EnumerableContainerBaseTypeClass`](type_classes.EnumerableContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
 
   ↳ **`Signature`**
 

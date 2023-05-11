@@ -7,7 +7,6 @@ import PauseableObservable_keep from "./PauseableObservable/__internal__/Pauseab
 import PauseableObservable_map from "./PauseableObservable/__internal__/PauseableObservable.map.js";
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
-import { Container_type, } from "./types.js";
 export const dispatchTo = PauseableObservable_dispatchTo;
 export const enqueue = PauseableObservable_enqueue;
 export const forEach = PauseableObservable_forEach;

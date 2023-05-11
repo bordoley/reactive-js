@@ -1,8 +1,6 @@
 import { Factory } from "./functions.js";
-import { Container, Container_T, Container_type, SharedObservableLike } from "./types.js";
-export interface Type extends Container {
-    readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
-}
+import { SharedObservableContainer, SharedObservableLike } from "./types.js";
+export type Type = SharedObservableContainer;
 export interface Signature {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

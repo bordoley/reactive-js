@@ -16,13 +16,13 @@
 
   ↳ **`KeyedContainer`**
 
-  ↳↳ [`Type`](Dictionary.Type.md)
+  ↳↳ [`DictionaryContainer`](types.DictionaryContainer.md)
 
-  ↳↳ [`Type`](ReadonlyArray.Type.md)
+  ↳↳ [`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md)
 
-  ↳↳ [`Type`](ReadonlyMap.Type.md)
+  ↳↳ [`ReadonlyMapContainer`](types.ReadonlyMapContainer.md)
 
-  ↳↳ [`Type`](ReadonlyObjectMap.Type.md)
+  ↳↳ [`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)
 
 ## Table of contents
 

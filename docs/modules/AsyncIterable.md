@@ -7,12 +7,21 @@
 ### Interfaces
 
 - [Signature](../interfaces/AsyncIterable.Signature.md)
-- [Type](../interfaces/AsyncIterable.Type.md)
+
+### Type Aliases
+
+- [Type](AsyncIterable.md#type)
 
 ### Functions
 
 - [flow](AsyncIterable.md#flow)
 - [toDeferredObservable](AsyncIterable.md#todeferredobservable)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`AsyncIterableContainer`](../interfaces/types.AsyncIterableContainer.md)
 
 ## Functions
 

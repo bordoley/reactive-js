@@ -18,6 +18,7 @@
 - [EnumerableContainerBaseTypeClass](../interfaces/type_classes.EnumerableContainerBaseTypeClass.md)
 - [EnumerableContainerTypeClass](../interfaces/type_classes.EnumerableContainerTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/type_classes.KeyedContainerTypeClass.md)
+- [ObservableBaseTypeClass](../interfaces/type_classes.ObservableBaseTypeClass.md)
 - [RunnableContainerBaseTypeClass](../interfaces/type_classes.RunnableContainerBaseTypeClass.md)
 - [RunnableContainerTypeClass](../interfaces/type_classes.RunnableContainerTypeClass.md)
 - [StatefulContainerBaseTypeClass](../interfaces/type_classes.StatefulContainerBaseTypeClass.md)

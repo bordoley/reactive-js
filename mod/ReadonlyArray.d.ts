@@ -1,10 +1,7 @@
 import { Function1, TypePredicate } from "./functions.js";
 import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
-import { ContainerOperator, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
-export interface Type extends KeyedContainer {
-    readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: number;
-}
+import { ContainerOperator, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainerOperator, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyArrayContainer, RunnableLike, SchedulerLike } from "./types.js";
+export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
 export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
     /**

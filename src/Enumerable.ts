@@ -36,13 +36,12 @@ import {
   Container_T,
   Container_type,
   DisposableLike,
+  EnumerableContainer,
   EnumerableLike,
   EnumeratorLike,
 } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
-}
+export type Type = EnumerableContainer;
 
 export interface DisposableEnumeratorType extends Container {
   readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> &

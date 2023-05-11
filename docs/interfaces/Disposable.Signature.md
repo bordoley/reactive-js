@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](Disposable.Type.md)\>
+- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](../modules/Disposable.md#type)\>
 
   ↳ **`Signature`**
 

@@ -47,7 +47,6 @@ import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
-import { Container_type, KeyedContainer_TKey, } from "./types.js";
 export const concat = ReadonlyArray_concat;
 export const concatAll = ReadonlyArray_concatAll;
 export const concatMap = ReadonlyArray_concatMap;

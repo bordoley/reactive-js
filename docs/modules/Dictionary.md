@@ -7,11 +7,11 @@
 ### Interfaces
 
 - [Signature](../interfaces/Dictionary.Signature.md)
-- [Type](../interfaces/Dictionary.Type.md)
 
 ### Type Aliases
 
 - [TKeyBase](Dictionary.md#tkeybase)
+- [Type](Dictionary.md#type)
 
 ### Transform Functions
 
@@ -23,7 +23,19 @@
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: `NonNullable`<[`Type`](../interfaces/Dictionary.Type.md)[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
+Ƭ **TKeyBase**: `NonNullable`<[`Type`](Dictionary.md#type)[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
+
+___
+
+### Type
+
+Ƭ **Type**<`TKey`\>: [`DictionaryContainer`](../interfaces/types.DictionaryContainer.md)<`TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | `unknown` |
 
 ## Transform Functions
 

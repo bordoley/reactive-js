@@ -7,7 +7,10 @@
 ### Interfaces
 
 - [Signature](../interfaces/EventSource.Signature.md)
-- [Type](../interfaces/EventSource.Type.md)
+
+### Type Aliases
+
+- [Type](EventSource.md#type)
 
 ### Constructor Functions
 
@@ -25,6 +28,12 @@
 
 - [addEventHandler](EventSource.md#addeventhandler)
 - [toSharedObservable](EventSource.md#tosharedobservable)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`EventSourceContainer`](../interfaces/types.EventSourceContainer.md)
 
 ## Constructor Functions
 
@@ -54,7 +63,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -73,13 +82,13 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
 
 ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `unknown`, `T`\>
 
 #### Type parameters
 
@@ -89,13 +98,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `unknown`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -114,13 +123,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -148,13 +157,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `TA`, `TB`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -171,9 +180,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -192,9 +201,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -215,7 +224,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

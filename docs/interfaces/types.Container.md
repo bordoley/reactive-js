@@ -8,35 +8,35 @@
 
 - **`Container`**
 
-  ↳ [`Type`](AsyncIterable.Type.md)
-
-  ↳ [`Type`](DeferredObservable.Type.md)
-
-  ↳ [`Type`](Disposable.Type.md)
-
-  ↳ [`Type`](Enumerable.Type.md)
-
   ↳ [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)
 
-  ↳ [`Type`](Enumerator.Type.md)
-
-  ↳ [`Type`](EventSource.Type.md)
-
-  ↳ [`Type`](Iterable.Type.md)
-
-  ↳ [`Type`](Observable.Type.md)
-
-  ↳ [`Type`](PauseableObservable.Type.md)
-
-  ↳ [`Type`](Promise.Type.md)
-
-  ↳ [`Type`](Runnable.Type.md)
-
-  ↳ [`Type`](SharedObservable.Type.md)
-
-  ↳ [`Type`](Store.Type.md)
-
   ↳ [`KeyedContainer`](types.KeyedContainer.md)
+
+  ↳ [`AsyncIterableContainer`](types.AsyncIterableContainer.md)
+
+  ↳ [`DisposableContainer`](types.DisposableContainer.md)
+
+  ↳ [`DeferredObservableContainer`](types.DeferredObservableContainer.md)
+
+  ↳ [`EnumerableContainer`](types.EnumerableContainer.md)
+
+  ↳ [`EnumeratorContainer`](types.EnumeratorContainer.md)
+
+  ↳ [`EventSourceContainer`](types.EventSourceContainer.md)
+
+  ↳ [`IterableContainer`](types.IterableContainer.md)
+
+  ↳ [`ObservableContainer`](types.ObservableContainer.md)
+
+  ↳ [`PauseableObservableContainer`](types.PauseableObservableContainer.md)
+
+  ↳ [`PromiseContainer`](types.PromiseContainer.md)
+
+  ↳ [`RunnableContainer`](types.RunnableContainer.md)
+
+  ↳ [`SharedObservableContainer`](types.SharedObservableContainer.md)
+
+  ↳ [`StoreContainer`](types.StoreContainer.md)
 
 ## Table of contents
 

@@ -11,7 +11,6 @@
 ### Interfaces
 
 - [Signature](../interfaces/Observable.Signature.md)
-- [Type](../interfaces/Observable.Type.md)
 
 ### Type Aliases
 
@@ -19,6 +18,7 @@
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [EnumerableUpperBoundObservableOperator](Observable.md#enumerableupperboundobservableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
+- [Type](Observable.md#type)
 
 ### Functions
 
@@ -181,6 +181,12 @@ ___
 ##### Returns
 
 `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\> : `never`
+
+___
+
+### Type
+
+Ƭ **Type**: [`ObservableContainer`](../interfaces/types.ObservableContainer.md)
 
 ## Functions
 

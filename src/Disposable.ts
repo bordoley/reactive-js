@@ -21,11 +21,9 @@ import {
   Updater,
 } from "./functions.js";
 import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
-import { Container, Container_type, DisposableLike } from "./types.js";
+import { DisposableContainer, DisposableLike } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: DisposableLike;
-}
+export type Type = DisposableContainer;
 
 export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
   readonly disposed: DisposableLike;

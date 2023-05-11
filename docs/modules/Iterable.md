@@ -7,7 +7,10 @@
 ### Interfaces
 
 - [Signature](../interfaces/Iterable.Signature.md)
-- [Type](../interfaces/Iterable.Type.md)
+
+### Type Aliases
+
+- [Type](Iterable.md#type)
 
 ### Constructor Functions
 
@@ -17,6 +20,12 @@
 
 - [enumerate](Iterable.md#enumerate)
 - [toReadonlyArray](Iterable.md#toreadonlyarray)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`IterableContainer`](../interfaces/types.IterableContainer.md)
 
 ## Constructor Functions
 

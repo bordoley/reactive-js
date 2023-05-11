@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](Store.Type.md)\>
+- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](../modules/Store.md#type)\>
 
   ↳ **`Signature`**
 
