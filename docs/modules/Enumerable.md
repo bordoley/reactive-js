@@ -18,6 +18,7 @@
 - [map](Enumerable.md#map)
 - [mapTo](Enumerable.md#mapto)
 - [pairwise](Enumerable.md#pairwise)
+- [pick](Enumerable.md#pick)
 - [scan](Enumerable.md#scan)
 - [skipFirst](Enumerable.md#skipfirst)
 - [takeFirst](Enumerable.md#takefirst)
@@ -27,6 +28,7 @@
 ### Transform Functions
 
 - [contains](Enumerable.md#contains)
+- [enumerate](Enumerable.md#enumerate)
 - [everySatisfy](Enumerable.md#everysatisfy)
 - [first](Enumerable.md#first)
 - [last](Enumerable.md#last)
@@ -187,6 +189,73 @@ ___
 
 ___
 
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
 ### scan
 
 ▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `TAcc`\>
@@ -340,6 +409,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `boolean`\>
+
+___
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 

@@ -16,6 +16,8 @@
 
   ↳ [`Signature`](Disposable.Signature.md)
 
+  ↳ [`Signature`](Promise.Signature.md)
+
   ↳ [`Signature`](Store.Signature.md)
 
 ## Table of contents

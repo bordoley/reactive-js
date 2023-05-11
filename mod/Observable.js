@@ -1,8 +1,11 @@
 /// <reference types="./Observable.d.ts" />
 
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
+import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -15,6 +18,7 @@ import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
@@ -24,9 +28,13 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
+import { Container_type, } from "./types.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
+export const decodeWithCharset = Observable_decodeWithCharset;
+export const defer = Observable_defer;
 export const dispatchTo = Observable_dispatchTo;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
+export const encodeUtf8 = Observable_encodeUtf8;
 export const enqueue = Observable_enqueue;
 export const forEach = Observable_forEach;
 export const ignoreElements = Observable_ignoreElements;
@@ -39,6 +47,7 @@ export const lastAsync = Observable_lastAsync;
 export const map = Observable_map;
 export const mapTo = Observable_mapTo;
 export const pairwise = Observable_pairwise;
+export const pick = Observable_pick;
 export const scan = Observable_scan;
 export const skipFirst = Observable_skipFirst;
 export const subscribe = Observable_subscribe;

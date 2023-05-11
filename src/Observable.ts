@@ -1,6 +1,9 @@
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
+import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -13,6 +16,7 @@ import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
@@ -34,6 +38,9 @@ import {
   Updater,
 } from "./functions.js";
 import {
+  Container,
+  Container_T,
+  Container_type,
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
@@ -61,6 +68,10 @@ export type ObservableOperator<TIn, TOut> = <
   ? SharedObservableLike<TOut>
   : never;
 
+export interface Type extends Container {
+  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+}
+
 export interface Signature {
   backpressureStrategy<T>(
     capacity: number,
@@ -72,11 +83,21 @@ export interface Signature {
     readonly delayStart?: boolean;
   }): RunnableLike<number>;
 
+  decodeWithCharset(options?: {
+    readonly charset?: string;
+  }): ObservableOperator<ArrayBuffer, string>;
+
+  defer<T>(
+    f: Factory<SharedObservableLike<T> & DisposableLike>,
+  ): DeferredObservableLike<T>;
+
   dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperator<T, T>;
 
   distinctUntilChanged<T>(options?: {
     readonly equality?: Equality<T>;
   }): ObservableOperator<T, T>;
+
+  encodeUtf8: ObservableOperator<string, Uint8Array>;
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperator<T, T>;
 
@@ -126,6 +147,22 @@ export interface Signature {
 
   pairwise<T>(): ObservableOperator<T, readonly [T, T]>;
 
+  pick<T, TKey extends keyof T>(key: TKey): ObservableOperator<T, T[TKey]>;
+  pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
+    keyA: TKeyA,
+    keyB: TKeyB,
+  ): ObservableOperator<T, T[TKeyA][TKeyB]>;
+  pick<
+    T,
+    TKeyA extends keyof T,
+    TKeyB extends keyof T[TKeyA],
+    TKeyC extends keyof T[TKeyA][TKeyB],
+  >(
+    keyA: TKeyA,
+    keyB: TKeyB,
+    keyC: TKeyC,
+  ): ObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
+
   scan<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -172,9 +209,13 @@ export interface Signature {
 
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
+export const decodeWithCharset: Signature["decodeWithCharset"] =
+  Observable_decodeWithCharset;
+export const defer: Signature["defer"] = Observable_defer;
 export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
+export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const ignoreElements: Signature["ignoreElements"] =
@@ -190,6 +231,7 @@ export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
+export const pick: Signature["pick"] = Observable_pick;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;

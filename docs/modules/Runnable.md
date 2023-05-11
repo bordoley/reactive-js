@@ -17,6 +17,7 @@
 - [map](Runnable.md#map)
 - [mapTo](Runnable.md#mapto)
 - [pairwise](Runnable.md#pairwise)
+- [pick](Runnable.md#pick)
 - [scan](Runnable.md#scan)
 - [skipFirst](Runnable.md#skipfirst)
 - [takeFirst](Runnable.md#takefirst)
@@ -187,6 +188,73 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
