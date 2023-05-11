@@ -10,11 +10,17 @@
 - [Signature](../interfaces/Enumerable.Signature.md)
 - [Type](../interfaces/Enumerable.Type.md)
 
+### Constructor Functions
+
+- [empty](Enumerable.md#empty)
+- [fromFactory](Enumerable.md#fromfactory)
+
 ### Operator Functions
 
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [forEach](Enumerable.md#foreach)
 - [keep](Enumerable.md#keep)
+- [keepType](Enumerable.md#keeptype)
 - [map](Enumerable.md#map)
 - [mapTo](Enumerable.md#mapto)
 - [pairwise](Enumerable.md#pairwise)
@@ -37,6 +43,42 @@
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
+
+## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`\>(): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+___
 
 ## Operator Functions
 
@@ -113,6 +155,29 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
 
 ___
 

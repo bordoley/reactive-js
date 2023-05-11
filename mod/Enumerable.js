@@ -2,8 +2,11 @@
 
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
@@ -25,11 +28,14 @@ import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonl
 import { Container_type, } from "./types.js";
 export const contains = Runnable_contains;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
+export const empty = Observable_empty;
 export const enumerate = Enumerable_enumerate;
 export const everySatisfy = Runnable_everySatisfy;
 export const first = Runnable_first;
 export const forEach = Observable_forEach;
+export const fromFactory = Observable_fromFactory;
 export const keep = Observable_keep;
+export const keepType = Observable_keepType;
 export const last = Runnable_last;
 export const lastAsync = Observable_lastAsync;
 export const map = Observable_map;

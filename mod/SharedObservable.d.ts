@@ -3,4 +3,6 @@ export interface Type extends Container {
     readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
 }
 export interface Signature {
+    never<T>(): SharedObservableLike<T>;
 }
+export declare const never: Signature["never"];

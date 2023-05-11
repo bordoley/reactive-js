@@ -9,11 +9,17 @@
 - [Signature](../interfaces/Runnable.Signature.md)
 - [Type](../interfaces/Runnable.Type.md)
 
+### Constructor Functions
+
+- [empty](Runnable.md#empty)
+- [fromFactory](Runnable.md#fromfactory)
+
 ### Operator Functions
 
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
 - [forEach](Runnable.md#foreach)
 - [keep](Runnable.md#keep)
+- [keepType](Runnable.md#keeptype)
 - [map](Runnable.md#map)
 - [mapTo](Runnable.md#mapto)
 - [pairwise](Runnable.md#pairwise)
@@ -39,6 +45,42 @@
 - [reduce](Runnable.md#reduce)
 - [someSatisfy](Runnable.md#somesatisfy)
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
+
+## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`\>(): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+___
 
 ## Operator Functions
 
@@ -115,6 +157,29 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `TA`, `TB`\>
 
 ___
 
