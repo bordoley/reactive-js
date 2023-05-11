@@ -1,3 +1,5 @@
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
+import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -30,10 +32,7 @@ import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Factory } from "./functions.js";
-import {
-  EnumerableContainerTypeClass,
-  HigherOrderObservableBaseTypeClass,
-} from "./type-classes.js";
+import { EnumerableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
@@ -52,8 +51,7 @@ export interface DisposableEnumeratorType extends Container {
 }
 
 export interface Signature
-  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType>,
-    HigherOrderObservableBaseTypeClass<Type, Type> {
+  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -72,6 +70,8 @@ export const empty: Signature["empty"] = Observable_empty;
 export const endWith: Signature["endWith"] = Observable_endWith;
 export const enumerate: Signature["enumerate"] = Enumerable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
+export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
+export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
 export const first: Signature["first"] = Runnable_first;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;

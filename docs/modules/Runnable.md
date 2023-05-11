@@ -20,6 +20,8 @@
 
 ### Operator Functions
 
+- [concatAll](Runnable.md#concatall)
+- [concatMap](Runnable.md#concatmap)
 - [concatWith](Runnable.md#concatwith)
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
 - [endWith](Runnable.md#endwith)
@@ -28,6 +30,8 @@
 - [keepType](Runnable.md#keeptype)
 - [map](Runnable.md#map)
 - [mapTo](Runnable.md#mapto)
+- [mergeAll](Runnable.md#mergeall)
+- [mergeMap](Runnable.md#mergemap)
 - [pairwise](Runnable.md#pairwise)
 - [pick](Runnable.md#pick)
 - [scan](Runnable.md#scan)
@@ -40,6 +44,8 @@
 ### Other Functions
 
 - [compute](Runnable.md#compute)
+- [exhaust](Runnable.md#exhaust)
+- [exhaustMap](Runnable.md#exhaustmap)
 - [flow](Runnable.md#flow)
 - [run](Runnable.md#run)
 
@@ -125,6 +131,48 @@ ___
 ___
 
 ## Operator Functions
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+___
 
 ### concatWith
 
@@ -321,6 +369,58 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+___
+
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### mergeMap
+
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
 
 #### Returns
 
@@ -587,6 +687,45 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
 
 ___
 

@@ -8,8 +8,6 @@
 
 - [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](../modules/Enumerable.md#type), [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)\>
 
-- [`HigherOrderObservableBaseTypeClass`](type_classes.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/Enumerable.md#type), [`Type`](../modules/Enumerable.md#type)\>
-
   ↳ **`Signature`**
 
 ## Table of contents
@@ -46,15 +44,11 @@
 - [keepType](Enumerable.Signature.md#keeptype)
 - [map](Enumerable.Signature.md#map)
 - [mapTo](Enumerable.Signature.md#mapto)
-- [mergeAll](Enumerable.Signature.md#mergeall)
-- [mergeMap](Enumerable.Signature.md#mergemap)
 - [pairwise](Enumerable.Signature.md#pairwise)
 - [pick](Enumerable.Signature.md#pick)
 - [scan](Enumerable.Signature.md#scan)
 - [skipFirst](Enumerable.Signature.md#skipfirst)
 - [startWith](Enumerable.Signature.md#startwith)
-- [switchAll](Enumerable.Signature.md#switchall)
-- [switchMap](Enumerable.Signature.md#switchmap)
 - [takeFirst](Enumerable.Signature.md#takefirst)
 - [takeLast](Enumerable.Signature.md#takelast)
 - [takeWhile](Enumerable.Signature.md#takewhile)
@@ -103,7 +97,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatAll](type_classes.HigherOrderObservableBaseTypeClass.md#concatall)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concatAll](type_classes.EnumerableContainerTypeClass.md#concatall)
 
 ___
 
@@ -134,7 +128,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[concatMap](type_classes.EnumerableContainerTypeClass.md#concatmap)
 
 ___
 
@@ -874,66 +868,6 @@ ___
 
 ___
 
-### mergeAll
-
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
-
-___
-
-### mergeMap
-
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](types.EnumerableLike.md)<`TB`\>\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
-
-___
-
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `T`, readonly [`T`, `T`]\>
@@ -1117,53 +1051,6 @@ ___
 #### Inherited from
 
 [EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[startWith](type_classes.EnumerableContainerTypeClass.md#startwith)
-
-___
-
-### switchAll
-
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
-
-___
-
-### switchMap
-
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](types.EnumerableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 

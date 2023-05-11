@@ -309,6 +309,8 @@ export interface HigherOrderObservableBaseTypeClass<C extends ObservableContaine
      * @category Operator
      */
     concatMap<TA, TB>(selector: Function1<TA, ContainerOf<CInner, TB>>): ContainerOperator<C, TA, TB>;
+    exhaust<T>(): ContainerOperator<C, ContainerOf<CInner, T>, T>;
+    exhaustMap<TA, TB>(selector: Function1<TA, ContainerOf<CInner, TB>>): ContainerOperator<C, TA, TB>;
     /**
      * @category Operator
      */

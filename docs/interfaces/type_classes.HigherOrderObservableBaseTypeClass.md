@@ -17,8 +17,6 @@
 
   ↳ [`Signature`](DeferredObservable.Signature.md)
 
-  ↳ [`Signature`](Enumerable.Signature.md)
-
   ↳ [`Signature`](Runnable.Signature.md)
 
   ↳ [`Signature`](SharedObservable.Signature.md)
@@ -33,6 +31,11 @@
 - [mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
 - [switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
 - [switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
+
+### Other Methods
+
+- [exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
+- [exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ## Operator Methods
 
@@ -162,6 +165,47 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
+## Other Methods
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `TB`\>\> |
 
 #### Returns
 
