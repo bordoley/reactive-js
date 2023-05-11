@@ -56,6 +56,7 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 } : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
     readonly selector: Function1<number, T>;
 });
+type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
 export interface Signature {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
@@ -99,6 +100,16 @@ export interface Signature {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     forEach<T>(effect: SideEffect1<T>): EnumerableUpperBoundObservableOperator<T, T>;
+    forkConcat<TIn, TOut>(fst: Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>, snd: Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>, ...tail: readonly Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>[]): Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>;
+    forkConcat<TIn, TOut>(fst: Function1<RunnableLike<TIn>, RunnableLike<TOut>>, snd: Function1<RunnableLike<TIn>, RunnableLike<TOut>>, ...tail: readonly Function1<RunnableLike<TIn>, RunnableLike<TOut>>[]): Function1<RunnableLike<TIn>, RunnableLike<TOut>>;
+    forkConcat<TIn, TOut>(fst: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, snd: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, ...tail: readonly Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>[]): Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>;
+    forkConcat<TIn, TOut>(fst: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, snd: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, ...tail: readonly Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>[]): Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>;
+    forkConcat<TIn, TOut>(fst: Function1<DeferredObservableLike<TIn>, SharedObservableLike<TOut>>, snd: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, ...tail: readonly Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>[]): Function1<DeferredObservableLike<TIn>, SharedObservableLike<TOut>>;
+    forkMerge<TIn, TOut>(fst: Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>, snd: Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>, ...tail: readonly Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>[]): Function1<EnumerableLike<TIn>, EnumerableLike<TOut>>;
+    forkMerge<TIn, TOut>(fst: Function1<RunnableLike<TIn>, RunnableLike<TOut>>, snd: Function1<RunnableLike<TIn>, RunnableLike<TOut>>, ...tail: readonly Function1<RunnableLike<TIn>, RunnableLike<TOut>>[]): Function1<RunnableLike<TIn>, RunnableLike<TOut>>;
+    forkMerge<TIn, TOut>(fst: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, snd: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, ...tail: readonly Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>[]): Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>;
+    forkMerge<TIn, TOut>(fst: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, snd: Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>, ...tail: readonly Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>[]): Function1<DeferredObservableLike<TIn>, DeferredObservableLike<TOut>>;
+    forkMerge<TIn, TOut>(fst: Function1<SharedObservableLike<TIn>, SharedObservableLike<TOut>>, snd: Function1<SharedObservableLike<TIn>, SharedObservableLike<TOut>>, ...tail: readonly Function1<SharedObservableLike<TIn>, SharedObservableLike<TOut>>[]): Function1<SharedObservableLike<TIn>, SharedObservableLike<TOut>>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromFactory<T>(options: {
         readonly delay: number;
@@ -128,15 +139,15 @@ export interface Signature {
     merge<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     merge<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
-    merge<T>(fst: SharedObservableLike<T> | ObservableLike<T>, snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableLike<T>;
+    merge<T>(fst: MaybeSharedObservableLike<T>, snd: MaybeSharedObservableLike<T>, ...tail: readonly MaybeSharedObservableLike<T>[]): SharedObservableLike<T>;
     mergeWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableUpperBoundObservableOperator<T, T>;
-    mergeWith<T>(snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): Function1<ObservableLike<T>, SharedObservableLike<T>>;
+    mergeWith<T>(snd: MaybeSharedObservableLike<T>, ...tail: readonly MaybeSharedObservableLike<T>[]): Function1<ObservableLike<T>, SharedObservableLike<T>>;
     mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
     mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
-    mergeMany<T>(observables: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableLike<T>;
+    mergeMany<T>(observables: readonly MaybeSharedObservableLike<T>[]): SharedObservableLike<T>;
     mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
     never<T>(): SharedObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): EnumerableUpperBoundObservableOperator<T, T>;
@@ -204,6 +215,8 @@ export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
+export declare const forkConcat: Signature["forkConcat"];
+export declare const forkMerge: Signature["forkMerge"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];
@@ -235,3 +248,4 @@ export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLastestFrom"];
+export {};
