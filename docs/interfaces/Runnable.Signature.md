@@ -19,9 +19,6 @@
 - [concatAll](Runnable.Signature.md#concatall)
 - [concatMap](Runnable.Signature.md#concatmap)
 - [concatWith](Runnable.Signature.md#concatwith)
-- [mergeMap](Runnable.Signature.md#mergemap)
-- [switchAll](Runnable.Signature.md#switchall)
-- [switchMap](Runnable.Signature.md#switchmap)
 
 ### Transform Properties
 
@@ -50,11 +47,14 @@
 - [map](Runnable.Signature.md#map)
 - [mapTo](Runnable.Signature.md#mapto)
 - [mergeAll](Runnable.Signature.md#mergeall)
+- [mergeMap](Runnable.Signature.md#mergemap)
 - [pairwise](Runnable.Signature.md#pairwise)
 - [pick](Runnable.Signature.md#pick)
 - [scan](Runnable.Signature.md#scan)
 - [skipFirst](Runnable.Signature.md#skipfirst)
 - [startWith](Runnable.Signature.md#startwith)
+- [switchAll](Runnable.Signature.md#switchall)
+- [switchMap](Runnable.Signature.md#switchmap)
 - [takeFirst](Runnable.Signature.md#takefirst)
 - [takeLast](Runnable.Signature.md#takelast)
 - [takeWhile](Runnable.Signature.md#takewhile)
@@ -166,96 +166,6 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatWith](type_classes.RunnableContainerTypeClass.md#concatwith)
-
-___
-
-### mergeMap
-
-• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>, `options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.concurrency?` | `number` |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
-
-___
-
-### switchAll
-
-• **switchAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
-
-___
-
-### switchMap
-
-• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 
@@ -993,6 +903,37 @@ ___
 
 ___
 
+### mergeMap
+
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+
+___
+
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, readonly [`T`, `T`]\>
@@ -1176,6 +1117,53 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[startWith](type_classes.RunnableContainerTypeClass.md#startwith)
+
+___
+
+### switchAll
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
+
+___
+
+### switchMap
+
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 

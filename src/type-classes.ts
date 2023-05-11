@@ -543,14 +543,14 @@ export interface HigherOrderObservableBaseTypeClass<
    *
    * @category Operator
    */
-  concatAll: <T>() => ContainerOperator<C, ContainerOf<CInner, T>, T>;
+  concatAll<T>(): ContainerOperator<C, ContainerOf<CInner, T>, T>;
 
   /**
    * @category Operator
    */
-  concatMap: <TA, TB>(
+  concatMap<TA, TB>(
     selector: Function1<TA, ContainerOf<CInner, TB>>,
-  ) => ContainerOperator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 
   /**
    * @category Operator
@@ -564,27 +564,27 @@ export interface HigherOrderObservableBaseTypeClass<
   /**
    * @category Operator
    */
-  mergeMap: <TA, TB>(
+  mergeMap<TA, TB>(
     selector: Function1<TA, ContainerOf<CInner, TB>>,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
       readonly concurrency?: number;
     },
-  ) => ContainerOperator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 
   /**
    *
    * @category Operator
    */
-  switchAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
+  switchAll<T>(): ContainerOperator<C, ContainerOf<C, T>, T>;
 
   /**
    * @category Operator
    */
-  switchMap: <TA, TB>(
+  switchMap<TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-  ) => ContainerOperator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 }
 
 export interface KeyedContainerTypeClass<
