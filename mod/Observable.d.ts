@@ -91,7 +91,13 @@ export interface Signature {
         readonly delay: number;
     }): RunnableLike<T>;
     encodeUtf8: EnumerableUpperBoundObservableOperator<string, Uint8Array>;
+    endWith<T>(value: T, ...values: readonly T[]): EnumerableUpperBoundObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
+    firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    firstAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     forEach<T>(effect: SideEffect1<T>): EnumerableUpperBoundObservableOperator<T, T>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromFactory<T>(options: {
@@ -119,6 +125,18 @@ export interface Signature {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     map<TA, TB>(selector: Function1<TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
+    merge<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
+    merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
+    merge<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
+    merge<T>(fst: SharedObservableLike<T> | ObservableLike<T>, snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableLike<T>;
+    mergeWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableUpperBoundObservableOperator<T, T>;
+    mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableUpperBoundObservableOperator<T, T>;
+    mergeWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableUpperBoundObservableOperator<T, T>;
+    mergeWith<T>(snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableUpperBoundObservableOperator<T, T>;
+    mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
+    mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
+    mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
+    mergeMany<T>(observables: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableLike<T>;
     mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
     never<T>(): SharedObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): EnumerableUpperBoundObservableOperator<T, T>;
@@ -130,6 +148,7 @@ export interface Signature {
     skipFirst<T>(options?: {
         readonly count?: number;
     }): EnumerableUpperBoundObservableOperator<T, T>;
+    startWith<T>(value: T, ...values: readonly T[]): EnumerableUpperBoundObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -180,7 +199,9 @@ export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
+export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const ignoreElements: Signature["ignoreElements"];
@@ -193,12 +214,16 @@ export declare const keepType: Signature["keepType"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
+export declare const merge: Signature["merge"];
+export declare const mergeMany: Signature["mergeMany"];
+export declare const mergeWith: Signature["mergeWith"];
 export declare const never: Signature["never"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
+export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];

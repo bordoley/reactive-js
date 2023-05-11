@@ -20,6 +20,7 @@
 
 - [concatWith](Enumerable.md#concatwith)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
+- [endWith](Enumerable.md#endwith)
 - [forEach](Enumerable.md#foreach)
 - [keep](Enumerable.md#keep)
 - [keepType](Enumerable.md#keeptype)
@@ -29,6 +30,7 @@
 - [pick](Enumerable.md#pick)
 - [scan](Enumerable.md#scan)
 - [skipFirst](Enumerable.md#skipfirst)
+- [startWith](Enumerable.md#startwith)
 - [takeFirst](Enumerable.md#takefirst)
 - [takeLast](Enumerable.md#takelast)
 - [takeWhile](Enumerable.md#takewhile)
@@ -39,6 +41,7 @@
 - [enumerate](Enumerable.md#enumerate)
 - [everySatisfy](Enumerable.md#everysatisfy)
 - [first](Enumerable.md#first)
+- [firstAsync](Enumerable.md#firstasync)
 - [last](Enumerable.md#last)
 - [lastAsync](Enumerable.md#lastasync)
 - [noneSatisfy](Enumerable.md#nonesatisfy)
@@ -152,6 +155,29 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+___
+
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
 
 #### Returns
 
@@ -424,6 +450,29 @@ Returns a Container that skips the first count items emitted by the source.
 
 ___
 
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+
+___
+
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
@@ -583,6 +632,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

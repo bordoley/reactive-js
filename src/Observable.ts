@@ -8,7 +8,9 @@ import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatch
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
+import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
+import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -21,12 +23,16 @@ import Observable_keepType from "./Observable/__internal__/Observable.keepType.j
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
+import Observable_merge from "./Observable/__internal__/Observable.merge.js";
+import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
+import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
+import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
@@ -253,9 +259,23 @@ export interface Signature {
 
   encodeUtf8: EnumerableUpperBoundObservableOperator<string, Uint8Array>;
 
+  endWith<T>(
+    value: T,
+    ...values: readonly T[]
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+
   enqueue<T>(
     queue: QueueableLike<T>,
   ): EnumerableUpperBoundObservableOperator<T, T>;
+
+  firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+  firstAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
 
   forEach<T>(
     effect: SideEffect1<T>,
@@ -314,6 +334,53 @@ export interface Signature {
     selector: Function1<TA, TB>,
   ): EnumerableUpperBoundObservableOperator<TA, TB>;
 
+  merge<T>(
+    fst: EnumerableLike<T>,
+    snd: EnumerableLike<T>,
+    ...tail: readonly EnumerableLike<T>[]
+  ): EnumerableLike<T>;
+  merge<T>(
+    fst: RunnableLike<T>,
+    snd: RunnableLike<T>,
+    ...tail: readonly RunnableLike<T>[]
+  ): RunnableLike<T>;
+  merge<T>(
+    fst: DeferredObservableLike<T>,
+    snd: DeferredObservableLike<T>,
+    ...tail: readonly DeferredObservableLike<T>[]
+  ): DeferredObservableLike<T>;
+  merge<T>(
+    fst: SharedObservableLike<T> | ObservableLike<T>,
+    snd: SharedObservableLike<T> | ObservableLike<T>,
+    ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]
+  ): SharedObservableLike<T>;
+
+  mergeWith<T>(
+    snd: EnumerableLike<T>,
+    ...tail: readonly EnumerableLike<T>[]
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+  mergeWith<T>(
+    snd: RunnableLike<T>,
+    ...tail: readonly RunnableLike<T>[]
+  ): RunnableUpperBoundObservableOperator<T, T>;
+  mergeWith<T>(
+    snd: DeferredObservableLike<T>,
+    ...tail: readonly DeferredObservableLike<T>[]
+  ): DeferredObservableUpperBoundObservableOperator<T, T>;
+  mergeWith<T>(
+    snd: SharedObservableLike<T> | ObservableLike<T>,
+    ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]
+  ): SharedObservableUpperBoundObservableOperator<T, T>;
+
+  mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
+  mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
+  mergeMany<T>(
+    observables: readonly DeferredObservableLike<T>[],
+  ): DeferredObservableLike<T>;
+  mergeMany<T>(
+    observables: readonly (SharedObservableLike<T> | ObservableLike<T>)[],
+  ): SharedObservableLike<T>;
+
   mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
 
   never<T>(): SharedObservableLike<T>;
@@ -350,6 +417,11 @@ export interface Signature {
   skipFirst<T>(options?: {
     readonly count?: number;
   }): EnumerableUpperBoundObservableOperator<T, T>;
+
+  startWith<T>(
+    value: T,
+    ...values: readonly T[]
+  ): EnumerableUpperBoundObservableOperator<T, T>;
 
   subscribe<T>(
     scheduler: SchedulerLike,
@@ -444,7 +516,9 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
+export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
+export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const ignoreElements: Signature["ignoreElements"] =
@@ -460,12 +534,16 @@ export const keepType: Signature["keepType"] = Observable_keepType;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
+export const merge: Signature["merge"] = Observable_merge;
+export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
+export const mergeWith: Signature["mergeWith"] = Observable_mergeWith;
 export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
+export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
