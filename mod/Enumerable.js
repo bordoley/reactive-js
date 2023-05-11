@@ -1,5 +1,7 @@
 /// <reference types="./Enumerable.d.ts" />
 
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
+import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -41,6 +43,8 @@ export const empty = Observable_empty;
 export const endWith = Observable_endWith;
 export const enumerate = Enumerable_enumerate;
 export const everySatisfy = Runnable_everySatisfy;
+export const concatAll = Enumerable_concatAll;
+export const concatMap = Enumerable_concatMap;
 export const first = Runnable_first;
 export const firstAsync = Observable_firstAsync;
 export const forEach = Observable_forEach;

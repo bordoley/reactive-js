@@ -21,6 +21,8 @@
 
 ### Operator Functions
 
+- [concatAll](Enumerable.md#concatall)
+- [concatMap](Enumerable.md#concatmap)
 - [concatWith](Enumerable.md#concatwith)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [endWith](Enumerable.md#endwith)
@@ -125,6 +127,48 @@ ___
 ___
 
 ## Operator Functions
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `T`\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
+
+___
 
 ### concatWith
 
