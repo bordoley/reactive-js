@@ -54,6 +54,10 @@
 - [takeWhile](Enumerable.Signature.md#takewhile)
 - [zipWith](Enumerable.Signature.md#zipwith)
 
+### Other Methods
+
+- [compute](Enumerable.Signature.md#compute)
+
 ### Transform Methods
 
 - [enumerate](Enumerable.Signature.md#enumerate)
@@ -1381,6 +1385,32 @@ ___
 #### Inherited from
 
 [EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
 
 ___
 

@@ -1,4 +1,5 @@
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -28,6 +29,7 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { Factory } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
@@ -48,8 +50,16 @@ export interface DisposableEnumeratorType extends Container {
 }
 
 export interface Signature
-  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {}
+  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
+  compute<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): EnumerableLike<T>;
+}
 
+export const compute: Signature["compute"] = Enumerable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const contains: Signature["contains"] = Runnable_contains;

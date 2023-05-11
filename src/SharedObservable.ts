@@ -1,4 +1,5 @@
 import Observable_never from "./Observable/__internal__/Observable.never.js";
+import { Factory } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -11,6 +12,13 @@ export interface Type extends Container {
 }
 
 export interface Signature {
+  compute<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): SharedObservableLike<T>;
+
   never<T>(): SharedObservableLike<T>;
 }
 

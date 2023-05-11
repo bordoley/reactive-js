@@ -2,6 +2,7 @@ import DeferredObservable_multicast from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
+import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory, Function1, Predicate } from "./functions.js";
 import {
   Container,
@@ -35,6 +36,13 @@ export interface Type extends Container {
 }
 
 export interface Signature {
+  compute<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): DeferredObservableLike<T>;
+
   multicast<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {
@@ -67,6 +75,7 @@ export interface Signature {
   ): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
 }
 
+export const compute: Signature["compute"] = DeferredObservable_compute;
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
 export const retry: Signature["retry"] = DeferredObservable_retry;

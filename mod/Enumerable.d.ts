@@ -1,3 +1,4 @@
+import { Factory } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
 import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike } from "./types.js";
 export interface Type extends Container {
@@ -7,7 +8,11 @@ export interface DisposableEnumeratorType extends Container {
     readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> & DisposableLike;
 }
 export interface Signature extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
+    compute<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): EnumerableLike<T>;
 }
+export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatWith: Signature["concatWith"];
 export declare const contains: Signature["contains"];

@@ -5,6 +5,9 @@ export interface Type extends Container {
     readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
 export interface Signature {
+    compute<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): DeferredObservableLike<T>;
     multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
         readonly capacity?: number;
@@ -20,6 +23,7 @@ export interface Signature {
         readonly capacity?: number;
     }): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
 }
+export declare const compute: Signature["compute"];
 export declare const multicast: Signature["multicast"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
