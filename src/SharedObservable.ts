@@ -11,7 +11,6 @@ export interface Type extends Container {
 }
 
 export interface Signature {
-  // FIXME: Should be on a typeclass
   never<T>(): SharedObservableLike<T>;
 }
 

@@ -10,20 +10,15 @@
 
 - [`StatefulContainerBaseTypeClass`](type_classes.StatefulContainerBaseTypeClass.md)<[`Type`](EventSource.Type.md)\>
 
+- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](EventSource.Type.md)\>
+
   ↳ **`Signature`**
 
 ## Table of contents
 
-### Constructor Properties
-
-- [create](EventSource.Signature.md#create)
-
-### Other Properties
-
-- [addEventHandler](EventSource.Signature.md#addeventhandler)
-
 ### Constructor Methods
 
+- [create](EventSource.Signature.md#create)
 - [generate](EventSource.Signature.md#generate)
 - [zip](EventSource.Signature.md#zip)
 
@@ -46,66 +41,39 @@
 - [takeWhile](EventSource.Signature.md#takewhile)
 - [zipWith](EventSource.Signature.md#zipwith)
 
+### Other Methods
+
+- [addEventHandler](EventSource.Signature.md#addeventhandler)
+- [toSharedObservable](EventSource.Signature.md#tosharedobservable)
+
 ### Transform Methods
 
 - [firstAsync](EventSource.Signature.md#firstasync)
 - [lastAsync](EventSource.Signature.md#lastasync)
 
-## Constructor Properties
+## Constructor Methods
 
 ### create
 
-• **create**: <T\>(`setup`: [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\>) => [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+▸ **create**<`T`\>(`setup`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
-#### Type declaration
-
-▸ <`T`\>(`setup`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-##### Type parameters
+#### Type parameters
 
 | Name |
 | :------ |
 | `T` |
 
-##### Parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `setup` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\> |
 
-##### Returns
+#### Returns
 
 [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ___
-
-## Other Properties
-
-### addEventHandler
-
-• **addEventHandler**: <T\>(`handler`: [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\>) => [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Type declaration
-
-▸ <`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
-
-## Constructor Methods
 
 ### generate
 
@@ -1111,6 +1079,50 @@ ___
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+### toSharedObservable
+
+▸ **toSharedObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
 
 ___
 

@@ -109,10 +109,6 @@ export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   ? SharedObservableLike<TOut>
   : never;
 
-export type SharedObservableUpperBoundObservableOperator<TIn, TOut> = (
-  observable: SharedObservableLike<TIn>,
-) => SharedObservableLike<TOut>;
-
 export interface Type extends Container {
   readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
@@ -370,7 +366,7 @@ export interface Signature {
   mergeWith<T>(
     snd: SharedObservableLike<T> | ObservableLike<T>,
     ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]
-  ): SharedObservableUpperBoundObservableOperator<T, T>;
+  ): Function1<ObservableLike<T>, SharedObservableLike<T>>;
 
   mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
   mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
@@ -500,7 +496,7 @@ export interface Signature {
   withLastestFrom<TA, TB, T>(
     other: SharedObservableLike<T>,
     selector: Function2<TA, TB, T>,
-  ): SharedObservableUpperBoundObservableOperator<TA, T>;
+  ): Function1<ObservableLike<T>, SharedObservableLike<T>>;
 }
 
 export const backpressureStrategy: Signature["backpressureStrategy"] =

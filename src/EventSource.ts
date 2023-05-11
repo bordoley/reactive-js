@@ -5,8 +5,10 @@ import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.i
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
+import EventSource_toSharedObservable from "./EventSource/__internal__/EventSource.toSharedObservable.js";
 import { Function1, SideEffect1 } from "./functions.js";
 import {
+  AsynchronousContainerBaseTypeClass,
   ContainerTypeClass,
   StatefulContainerBaseTypeClass,
 } from "./type-classes.js";
@@ -25,15 +27,16 @@ export interface Type extends Container {
 
 export interface Signature
   extends ContainerTypeClass<Type>,
-    StatefulContainerBaseTypeClass<Type> {
-  addEventHandler: <T>(
+    StatefulContainerBaseTypeClass<Type>,
+    AsynchronousContainerBaseTypeClass<Type> {
+  addEventHandler<T>(
     handler: SideEffect1<T>,
-  ) => Function1<EventSourceLike<T>, DisposableLike>;
+  ): Function1<EventSourceLike<T>, DisposableLike>;
 
   /**
    * @category Constructor
    */
-  create: <T>(setup: SideEffect1<EventListenerLike<T>>) => EventSourceLike<T>;
+  create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
 }
 
 export const addEventHandler: Signature["addEventHandler"] =
@@ -45,3 +48,5 @@ export const ignoreElements: Signature["ignoreElements"] =
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const pick: Signature["pick"] = EventSource_pick;
+export const toSharedObservable: Signature["toSharedObservable"] =
+  EventSource_toSharedObservable;

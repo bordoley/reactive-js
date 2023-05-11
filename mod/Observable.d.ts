@@ -3,7 +3,6 @@ import { Container, Container_T, Container_type, DeferredObservableLike, Dispatc
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
-export type SharedObservableUpperBoundObservableOperator<TIn, TOut> = (observable: SharedObservableLike<TIn>) => SharedObservableLike<TOut>;
 export interface Type extends Container {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
@@ -132,7 +131,7 @@ export interface Signature {
     mergeWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableUpperBoundObservableOperator<T, T>;
-    mergeWith<T>(snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): SharedObservableUpperBoundObservableOperator<T, T>;
+    mergeWith<T>(snd: SharedObservableLike<T> | ObservableLike<T>, ...tail: readonly (SharedObservableLike<T> | ObservableLike<T>)[]): Function1<ObservableLike<T>, SharedObservableLike<T>>;
     mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
     mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
@@ -187,7 +186,7 @@ export interface Signature {
     withLastestFrom<TA, TB, T>(other: EnumerableLike<T>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
     withLastestFrom<TA, TB, T>(other: RunnableLike<T>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
     withLastestFrom<TA, TB, T>(other: DeferredObservableLike<T>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: SharedObservableLike<T>, selector: Function2<TA, TB, T>): SharedObservableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: SharedObservableLike<T>, selector: Function2<TA, TB, T>): Function1<ObservableLike<T>, SharedObservableLike<T>>;
 }
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const concat: Signature["concat"];
