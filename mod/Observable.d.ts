@@ -7,7 +7,58 @@ export type SharedObservableUpperBoundObservableOperator<TIn, TOut> = (observabl
 export interface Type extends Container {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
+export declare namespace Animation {
+    /**
+     * @noInheritDoc
+     */
+    interface Delay {
+        readonly type: "delay";
+        readonly duration: number;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface KeyFrame {
+        readonly type: "keyframe";
+        readonly from: number;
+        readonly to: number;
+        readonly duration: number;
+        readonly easing?: Function1<number, number>;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface Frame {
+        readonly type: "frame";
+        readonly value: number;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface Loop<T> {
+        readonly type: "loop";
+        readonly animation: Animation<T> | readonly Animation<T>[];
+        readonly count?: number;
+    }
+    /**
+     * @noInheritDoc
+     */
+    interface Spring {
+        readonly type: "spring";
+        readonly from: number;
+        readonly to: number;
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }
+}
+export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T extends number ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+    readonly selector?: never;
+} : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+    readonly selector: Function1<number, T>;
+});
 export interface Signature {
+    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;

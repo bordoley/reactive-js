@@ -9,6 +9,8 @@
 ### Methods
 
 - [multicast](DeferredObservable.Signature.md#multicast)
+- [repeat](DeferredObservable.Signature.md#repeat)
+- [retry](DeferredObservable.Signature.md#retry)
 - [share](DeferredObservable.Signature.md#share)
 
 ## Methods
@@ -36,6 +38,80 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`predicate`): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 

@@ -1,18 +1,34 @@
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
+import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
-import { Factory, Function1 } from "./functions.js";
+import { Factory, Function1, Predicate } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
   DeferredObservableLike,
   DisposableLike,
+  EnumerableLike,
   MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  RunnableLike,
   SchedulerLike,
   SharedObservableLike,
 } from "./types.js";
+
+export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
+  TObservableIn extends DeferredObservableLike<TIn>,
+>(
+  observable: TObservableIn,
+) => TObservableIn extends EnumerableLike<TIn>
+  ? EnumerableLike<TOut>
+  : TObservableIn extends RunnableLike<TIn>
+  ? RunnableLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableLike<TOut>
+  : never;
 
 export interface Type extends Container {
   readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
@@ -31,6 +47,16 @@ export interface Signature {
     MulticastObservableLike<T> & DisposableLike
   >;
 
+  repeat<T>(
+    predicate: Predicate<number>,
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+  repeat<T>(count: number): EnumerableUpperBoundObservableOperator<T, T>;
+  repeat<T>(): EnumerableUpperBoundObservableOperator<T, T>;
+
+  retry<T>(
+    shouldRetry: (count: number, error: Error) => boolean,
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+
   share<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {
@@ -42,4 +68,6 @@ export interface Signature {
 }
 
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
+export const repeat: Signature["repeat"] = DeferredObservable_repeat;
+export const retry: Signature["retry"] = DeferredObservable_retry;
 export const share: Signature["share"] = DeferredObservable_share;
