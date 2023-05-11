@@ -7,6 +7,7 @@ import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
@@ -34,6 +35,7 @@ export const map = Observable_map;
 export const mapTo = Observable_mapTo;
 export const noneSatisfy = Runnable_noneSatisfy;
 export const pairwise = Observable_pairwise;
+export const pick = Observable_pick;
 export const reduce = Runnable_reduce;
 export const run = Runnable_run;
 export const scan = Observable_scan;

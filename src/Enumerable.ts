@@ -1,3 +1,4 @@
+import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -5,6 +6,7 @@ import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
@@ -43,6 +45,7 @@ export interface Signature
 export const contains: Signature["contains"] = Runnable_contains;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
+export const enumerate: Signature["enumerate"] = Enumerable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
 export const first: Signature["first"] = Runnable_first;
 export const forEach: Signature["forEach"] = Observable_forEach;
@@ -53,6 +56,7 @@ export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const noneSatisfy: Signature["noneSatisfy"] = Runnable_noneSatisfy;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
+export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Runnable_reduce;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;

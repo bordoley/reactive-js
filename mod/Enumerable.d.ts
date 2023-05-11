@@ -10,6 +10,7 @@ export interface Signature extends EnumerableContainerTypeClass<Type, Disposable
 }
 export declare const contains: Signature["contains"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
+export declare const enumerate: Signature["enumerate"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
 export declare const forEach: Signature["forEach"];
@@ -20,6 +21,7 @@ export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
 export declare const noneSatisfy: Signature["noneSatisfy"];
 export declare const pairwise: Signature["pairwise"];
+export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];

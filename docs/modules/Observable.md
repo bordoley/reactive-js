@@ -7,6 +7,7 @@
 ### Interfaces
 
 - [Signature](../interfaces/Observable.Signature.md)
+- [Type](../interfaces/Observable.Type.md)
 
 ### Type Aliases
 
@@ -15,8 +16,11 @@
 ### Functions
 
 - [backpressureStrategy](Observable.md#backpressurestrategy)
+- [decodeWithCharset](Observable.md#decodewithcharset)
+- [defer](Observable.md#defer)
 - [dispatchTo](Observable.md#dispatchto)
 - [distinctUntilChanged](Observable.md#distinctuntilchanged)
+- [encodeUtf8](Observable.md#encodeutf8)
 - [enqueue](Observable.md#enqueue)
 - [forEach](Observable.md#foreach)
 - [ignoreElements](Observable.md#ignoreelements)
@@ -29,6 +33,7 @@
 - [map](Observable.md#map)
 - [mapTo](Observable.md#mapto)
 - [pairwise](Observable.md#pairwise)
+- [pick](Observable.md#pick)
 - [scan](Observable.md#scan)
 - [skipFirst](Observable.md#skipfirst)
 - [subscribe](Observable.md#subscribe)
@@ -97,6 +102,45 @@
 
 ___
 
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.charset?` | `string` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`f`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](functions.md#factory)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+___
+
 ### dispatchTo
 
 ▸ **dispatchTo**<`T`\>(`dispatcher`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
@@ -139,6 +183,28 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**<`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`string`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`string`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`string`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`string`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`Uint8Array`\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`string`, `TObservableIn`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`string`\> |
+
+#### Returns
+
+`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`string`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`string`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`string`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`string`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`Uint8Array`\> : `never`
 
 ___
 
@@ -408,6 +474,73 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 

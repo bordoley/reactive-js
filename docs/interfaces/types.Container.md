@@ -10,6 +10,8 @@
 
   ↳ [`Type`](AsyncIterable.Type.md)
 
+  ↳ [`Type`](DeferredObservable.Type.md)
+
   ↳ [`Type`](Disposable.Type.md)
 
   ↳ [`Type`](Enumerable.Type.md)
@@ -22,7 +24,13 @@
 
   ↳ [`Type`](Iterable.Type.md)
 
+  ↳ [`Type`](Observable.Type.md)
+
+  ↳ [`Type`](Promise.Type.md)
+
   ↳ [`Type`](Runnable.Type.md)
+
+  ↳ [`Type`](SharedObservable.Type.md)
 
   ↳ [`Type`](Store.Type.md)
 

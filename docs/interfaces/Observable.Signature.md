@@ -6,10 +6,16 @@
 
 ## Table of contents
 
+### Properties
+
+- [encodeUtf8](Observable.Signature.md#encodeutf8)
+
 ### Methods
 
 - [backpressureStrategy](Observable.Signature.md#backpressurestrategy)
 - [currentTime](Observable.Signature.md#currenttime)
+- [decodeWithCharset](Observable.Signature.md#decodewithcharset)
+- [defer](Observable.Signature.md#defer)
 - [dispatchTo](Observable.Signature.md#dispatchto)
 - [distinctUntilChanged](Observable.Signature.md#distinctuntilchanged)
 - [enqueue](Observable.Signature.md#enqueue)
@@ -25,6 +31,7 @@
 - [map](Observable.Signature.md#map)
 - [mapTo](Observable.Signature.md#mapto)
 - [pairwise](Observable.Signature.md#pairwise)
+- [pick](Observable.Signature.md#pick)
 - [scan](Observable.Signature.md#scan)
 - [skipFirst](Observable.Signature.md#skipfirst)
 - [subscribe](Observable.Signature.md#subscribe)
@@ -34,6 +41,12 @@
 - [throwIfEmpty](Observable.Signature.md#throwifempty)
 - [toEventSource](Observable.Signature.md#toeventsource)
 - [withCurrentTime](Observable.Signature.md#withcurrenttime)
+
+## Properties
+
+### encodeUtf8
+
+• **encodeUtf8**: [`ObservableOperator`](../modules/Observable.md#observableoperator)<`string`, `Uint8Array`\>
 
 ## Methods
 
@@ -75,6 +88,45 @@ ___
 #### Returns
 
 [`RunnableLike`](types.RunnableLike.md)<`number`\>
+
+___
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.charset?` | `string` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](../modules/functions.md#factory)<[`SharedObservableLike`](types.SharedObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\> |
+
+#### Returns
+
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
 
 ___
 
@@ -456,6 +508,73 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
