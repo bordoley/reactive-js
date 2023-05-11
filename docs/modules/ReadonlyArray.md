@@ -123,7 +123,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): readonly `T`[]
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -131,21 +131,15 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\> |
-
 #### Returns
 
-readonly `T`[]
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
 
 ___
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`): readonly `T`[]
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -153,15 +147,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<`T`\> |
-
 #### Returns
 
-readonly `T`[]
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, readonly `T`[]\>
 
 ___
 

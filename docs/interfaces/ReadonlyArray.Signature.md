@@ -19,7 +19,6 @@
 - [concatAll](ReadonlyArray.Signature.md#concatall)
 - [concatMap](ReadonlyArray.Signature.md#concatmap)
 - [concatWith](ReadonlyArray.Signature.md#concatwith)
-- [flatMapIterable](ReadonlyArray.Signature.md#flatmapiterable)
 
 ### Transform Properties
 
@@ -41,6 +40,7 @@
 
 - [distinctUntilChanged](ReadonlyArray.Signature.md#distinctuntilchanged)
 - [endWith](ReadonlyArray.Signature.md#endwith)
+- [flatMapIterable](ReadonlyArray.Signature.md#flatmapiterable)
 - [forEach](ReadonlyArray.Signature.md#foreach)
 - [forEachWithKey](ReadonlyArray.Signature.md#foreachwithkey)
 - [keep](ReadonlyArray.Signature.md#keep)
@@ -167,37 +167,6 @@ Omit.concatWith
 
 ___
 
-### flatMapIterable
-
-• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
-
-#### Inherited from
-
-Omit.flatMapIterable
-
-___
-
 ## Transform Properties
 
 ### contains
@@ -286,7 +255,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): readonly `T`[]
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -294,15 +263,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
-
 #### Returns
 
-readonly `T`[]
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
 
 #### Inherited from
 
@@ -312,7 +275,7 @@ ___
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`): readonly `T`[]
+▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -320,15 +283,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-
 #### Returns
 
-readonly `T`[]
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, readonly `T`[]\>
 
 #### Inherited from
 
@@ -735,6 +692,33 @@ ___
 #### Inherited from
 
 Omit.endWith
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](ReadonlyArray.Type.md), `TA`, `TB`\>
+
+#### Inherited from
+
+Omit.flatMapIterable
 
 ___
 

@@ -9,9 +9,14 @@
 - [Signature](../interfaces/EventSource.Signature.md)
 - [Type](../interfaces/EventSource.Type.md)
 
+### Constructor Functions
+
+- [create](EventSource.md#create)
+
 ### Operator Functions
 
 - [forEach](EventSource.md#foreach)
+- [ignoreElements](EventSource.md#ignoreelements)
 - [keep](EventSource.md#keep)
 - [map](EventSource.md#map)
 - [pick](EventSource.md#pick)
@@ -19,8 +24,30 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
-- [create](EventSource.md#create)
-- [ignoreElements](EventSource.md#ignoreelements)
+
+## Constructor Functions
+
+### create
+
+▸ **create**<`T`\>(`setup`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>\> |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
 
 ## Operator Functions
 
@@ -46,6 +73,22 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
 
 ___
 
@@ -196,41 +239,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-___
-
-### create
-
-▸ **create**<`T`\>(`setup`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `setup` | [`SideEffect1`](functions.md#sideeffect1)<[`EventListenerLike`](../interfaces/types.EventListenerLike.md)<`T`\>\> |
-
-#### Returns
-
-[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/EventSource.Type.md), `unknown`, `T`\>

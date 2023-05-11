@@ -29,7 +29,6 @@
 - [concatAll](type_classes.RunnableContainerTypeClass.md#concatall)
 - [concatMap](type_classes.RunnableContainerTypeClass.md#concatmap)
 - [concatWith](type_classes.RunnableContainerTypeClass.md#concatwith)
-- [flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
 
 ### Transform Properties
 
@@ -51,6 +50,7 @@
 
 - [distinctUntilChanged](type_classes.RunnableContainerTypeClass.md#distinctuntilchanged)
 - [endWith](type_classes.RunnableContainerTypeClass.md#endwith)
+- [flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
 - [forEach](type_classes.RunnableContainerTypeClass.md#foreach)
 - [keep](type_classes.RunnableContainerTypeClass.md#keep)
 - [keepType](type_classes.RunnableContainerTypeClass.md#keeptype)
@@ -169,37 +169,6 @@ ___
 
 ___
 
-### flatMapIterable
-
-• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Inherited from
-
-[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[flatMapIterable](type_classes.DeferredContainerTypeClass.md#flatmapiterable)
-
-___
-
 ## Transform Properties
 
 ### contains
@@ -288,7 +257,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -296,15 +265,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
-
 #### Returns
 
-[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Inherited from
 
@@ -314,7 +277,7 @@ ___
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -322,15 +285,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-
 #### Returns
 
-[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Inherited from
 
@@ -737,6 +694,33 @@ ___
 #### Inherited from
 
 [DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[endWith](type_classes.DeferredContainerTypeClass.md#endwith)
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[flatMapIterable](type_classes.DeferredContainerTypeClass.md#flatmapiterable)
 
 ___
 

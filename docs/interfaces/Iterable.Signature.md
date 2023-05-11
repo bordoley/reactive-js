@@ -58,7 +58,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(`factory`): `Iterable`<`T`\>
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, `Iterable`<`T`\>\>
 
 #### Type parameters
 
@@ -66,15 +66,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\> |
-
 #### Returns
 
-`Iterable`<`T`\>
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, `Iterable`<`T`\>\>
 
 #### Inherited from
 
@@ -84,7 +78,7 @@ ___
 
 ### fromFactory
 
-▸ **fromFactory**<`T`\>(`factory`): `Iterable`<`T`\>
+▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, `Iterable`<`T`\>\>
 
 #### Type parameters
 
@@ -92,15 +86,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `factory` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-
 #### Returns
 
-`Iterable`<`T`\>
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, `Iterable`<`T`\>\>
 
 #### Inherited from
 

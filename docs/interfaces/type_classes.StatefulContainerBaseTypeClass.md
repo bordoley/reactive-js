@@ -22,7 +22,7 @@
 
 - [generate](type_classes.StatefulContainerBaseTypeClass.md#generate)
 
-### Other Methods
+### Operator Methods
 
 - [ignoreElements](type_classes.StatefulContainerBaseTypeClass.md#ignoreelements)
 
@@ -54,7 +54,7 @@ that is applied to an accumulator value between emitted items.
 
 ___
 
-## Other Methods
+## Operator Methods
 
 ### ignoreElements
 

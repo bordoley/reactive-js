@@ -14,14 +14,13 @@
 
 ## Table of contents
 
-### Operator Properties
+### Constructor Properties
 
-- [flatMapIterable](EventSource.Signature.md#flatmapiterable)
+- [create](EventSource.Signature.md#create)
 
 ### Other Properties
 
 - [addEventHandler](EventSource.Signature.md#addeventhandler)
-- [create](EventSource.Signature.md#create)
 
 ### Constructor Methods
 
@@ -31,7 +30,9 @@
 ### Operator Methods
 
 - [distinctUntilChanged](EventSource.Signature.md#distinctuntilchanged)
+- [flatMapIterable](EventSource.Signature.md#flatmapiterable)
 - [forEach](EventSource.Signature.md#foreach)
+- [ignoreElements](EventSource.Signature.md#ignoreelements)
 - [keep](EventSource.Signature.md#keep)
 - [keepType](EventSource.Signature.md#keeptype)
 - [map](EventSource.Signature.md#map)
@@ -45,45 +46,36 @@
 - [takeWhile](EventSource.Signature.md#takewhile)
 - [zipWith](EventSource.Signature.md#zipwith)
 
-### Other Methods
-
-- [ignoreElements](EventSource.Signature.md#ignoreelements)
-
 ### Transform Methods
 
 - [firstAsync](EventSource.Signature.md#firstasync)
 - [lastAsync](EventSource.Signature.md#lastasync)
 
-## Operator Properties
+## Constructor Properties
 
-### flatMapIterable
+### create
 
-• **flatMapIterable**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, `TB`\>
+• **create**: <T\>(`setup`: [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\>) => [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 #### Type declaration
 
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, `TB`\>
+▸ <`T`\>(`setup`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ##### Type parameters
 
 | Name |
 | :------ |
-| `TA` |
-| `TB` |
+| `T` |
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+| `setup` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\> |
 
 ##### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
+[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ___
 
@@ -112,32 +104,6 @@ ___
 ##### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
-
-___
-
-### create
-
-• **create**: <T\>(`setup`: [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\>) => [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Type declaration
-
-▸ <`T`\>(`setup`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `setup` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`EventListenerLike`](types.EventListenerLike.md)<`T`\>\> |
-
-##### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ## Constructor Methods
 
@@ -458,6 +424,33 @@ are distinct by comparison from the previous item.
 
 ___
 
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
+
+___
+
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `T`, `T`\>
@@ -484,6 +477,26 @@ value emitted by the source.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[ignoreElements](type_classes.StatefulContainerBaseTypeClass.md#ignoreelements)
 
 ___
 
@@ -1098,28 +1111,6 @@ ___
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
-
-___
-
-## Other Methods
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`Type`](EventSource.Type.md), `unknown`, `T`\>
-
-#### Inherited from
-
-[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[ignoreElements](type_classes.StatefulContainerBaseTypeClass.md#ignoreelements)
 
 ___
 

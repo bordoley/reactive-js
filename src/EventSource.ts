@@ -30,6 +30,9 @@ export interface Signature
     handler: SideEffect1<T>,
   ) => Function1<EventSourceLike<T>, DisposableLike>;
 
+  /**
+   * @category Constructor
+   */
   create: <T>(setup: SideEffect1<EventListenerLike<T>>) => EventSourceLike<T>;
 }
 

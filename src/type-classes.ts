@@ -45,9 +45,9 @@ export interface ContainerTypeClass<C extends Container> {
   /**
    * @category Operator
    */
-  flatMapIterable: <TA, TB>(
+  flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
-  ) => ContainerOperator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 
   /**
    * Returns a ContainerOperator that applies the side effect function to each
@@ -314,14 +314,15 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
   /**
    * @category Constructor
    */
-  fromEnumeratorFactory<T>(
-    factory: Factory<EnumeratorLike<T>>,
-  ): ContainerOf<C, T>;
+  fromEnumeratorFactory<T>(): Function1<
+    Factory<EnumeratorLike<T>>,
+    ContainerOf<C, T>
+  >;
 
   /**
    * @category Constructor
    */
-  fromFactory<T>(factory: Factory<T>): ContainerOf<C, T>;
+  fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
 
   /**
    * @category Constructor
@@ -366,6 +367,9 @@ export interface StatefulContainerBaseTypeClass<C extends Container> {
     initialValue: Factory<T>,
   ): ContainerOf<C, T>;
 
+  /**
+   * @category Operator
+   */
   ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 }
 
