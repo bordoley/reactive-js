@@ -22,6 +22,7 @@ import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const dispatchTo = Observable_dispatchTo;
@@ -45,4 +46,5 @@ export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const throwIfEmpty = Observable_throwIfEmpty;
+export const toEventSource = Observable_toEventSource;
 export const withCurrentTime = Observable_withCurrentTime;

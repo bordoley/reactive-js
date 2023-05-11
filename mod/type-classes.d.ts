@@ -295,7 +295,7 @@ export interface DeferredContainerTypeClass<C extends Container> extends Deferre
 }
 export interface RunnableContainerTypeClass<C extends Container> extends DeferredContainerTypeClass<C>, RunnableContainerBaseTypeClass<C>, BlockingContainerBaseTypeClass<C> {
 }
-export interface EnumerableContainerTypeClass<C extends Container> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C>, ConcreteContainerBaseTypeClass<C> {
+export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C, CEnumerator>, ConcreteContainerBaseTypeClass<C> {
 }
 export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**

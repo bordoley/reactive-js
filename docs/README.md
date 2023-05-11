@@ -6,8 +6,10 @@ Reactive-JS
 
 ### Modules
 
+- [AsyncIterable](modules/AsyncIterable.md)
 - [Dictionary](modules/Dictionary.md)
 - [Disposable](modules/Disposable.md)
+- [Enumerable](modules/Enumerable.md)
 - [Enumerator](modules/Enumerator.md)
 - [EventListener](modules/EventListener.md)
 - [EventPublisher](modules/EventPublisher.md)
