@@ -9,10 +9,12 @@
 ### Methods
 
 - [backpressureStrategy](Observable.Signature.md#backpressurestrategy)
+- [currentTime](Observable.Signature.md#currenttime)
 - [dispatchTo](Observable.Signature.md#dispatchto)
 - [distinctUntilChanged](Observable.Signature.md#distinctuntilchanged)
 - [enqueue](Observable.Signature.md#enqueue)
 - [forEach](Observable.Signature.md#foreach)
+- [generate](Observable.Signature.md#generate)
 - [ignoreElements](Observable.Signature.md#ignoreelements)
 - [isDeferredObservable](Observable.Signature.md#isdeferredobservable)
 - [isEnumerable](Observable.Signature.md#isenumerable)
@@ -30,6 +32,7 @@
 - [takeLast](Observable.Signature.md#takelast)
 - [takeWhile](Observable.Signature.md#takewhile)
 - [throwIfEmpty](Observable.Signature.md#throwifempty)
+- [toEventSource](Observable.Signature.md#toeventsource)
 - [withCurrentTime](Observable.Signature.md#withcurrenttime)
 
 ## Methods
@@ -54,6 +57,24 @@
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### currentTime
+
+▸ **currentTime**(`options?`): [`RunnableLike`](types.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -143,6 +164,73 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -533,6 +621,31 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 ___
 

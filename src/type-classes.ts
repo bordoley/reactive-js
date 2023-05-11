@@ -522,9 +522,11 @@ export interface RunnableContainerTypeClass<C extends Container>
     RunnableContainerBaseTypeClass<C>,
     BlockingContainerBaseTypeClass<C> {}
 
-export interface EnumerableContainerTypeClass<C extends Container>
-  extends RunnableContainerTypeClass<C>,
-    EnumerableContainerBaseTypeClass<C>,
+export interface EnumerableContainerTypeClass<
+  C extends Container,
+  CEnumerator extends Enumerator.Type = Enumerator.Type,
+> extends RunnableContainerTypeClass<C>,
+    EnumerableContainerBaseTypeClass<C, CEnumerator>,
     ConcreteContainerBaseTypeClass<C> {}
 
 export interface KeyedContainerTypeClass<

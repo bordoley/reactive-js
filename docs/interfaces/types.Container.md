@@ -8,7 +8,13 @@
 
 - **`Container`**
 
+  ↳ [`Type`](AsyncIterable.Type.md)
+
   ↳ [`Type`](Disposable.Type.md)
+
+  ↳ [`Type`](Enumerable.Type.md)
+
+  ↳ [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)
 
   ↳ [`Type`](Enumerator.Type.md)
 

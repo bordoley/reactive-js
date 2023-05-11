@@ -1,14 +1,27 @@
-import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "./functions.js";
-import { DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableLike, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
+import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, Updater } from "./functions.js";
+import { DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableLike, EventSourceLike, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
 export type ObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: ObservableLike<TIn>) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export interface Signature {
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): ObservableOperator<T, T>;
+    currentTime(options?: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    }): RunnableLike<number>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperator<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperator<T, T>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperator<T, T>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): RunnableLike<T>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
+        readonly delay?: number;
+        readonly delayStart?: boolean;
+    }): RunnableLike<T>;
     ignoreElements<T>(): ObservableOperator<unknown, T>;
     isDeferredObservable<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
     isEnumerable<T>(obs: ObservableLike<T>): obs is EnumerableLike<T>;
@@ -41,6 +54,10 @@ export interface Signature {
         readonly inclusive?: boolean;
     }): ObservableOperator<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ObservableOperator<T, T>;
+    toEventSource<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): ObservableOperator<TA, TB>;
 }
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
@@ -65,4 +82,5 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
+export declare const toEventSource: Signature["toEventSource"];
 export declare const withCurrentTime: Signature["withCurrentTime"];

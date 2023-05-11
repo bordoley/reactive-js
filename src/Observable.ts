@@ -20,6 +20,7 @@ import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
+import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import {
   Equality,
@@ -30,12 +31,14 @@ import {
   Predicate,
   Reducer,
   SideEffect1,
+  Updater,
 } from "./functions.js";
 import {
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
   EnumerableLike,
+  EventSourceLike,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -64,6 +67,11 @@ export interface Signature {
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ): ObservableOperator<T, T>;
 
+  currentTime(options?: {
+    readonly delay?: number;
+    readonly delayStart?: boolean;
+  }): RunnableLike<number>;
+
   dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperator<T, T>;
 
   distinctUntilChanged<T>(options?: {
@@ -73,6 +81,21 @@ export interface Signature {
   enqueue<T>(queue: QueueableLike<T>): ObservableOperator<T, T>;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperator<T, T>;
+
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableLike<T>;
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options: { readonly delay: number; readonly delayStart?: boolean },
+  ): RunnableLike<T>;
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+    options?: { readonly delay?: number; readonly delayStart?: boolean },
+  ): RunnableLike<T>;
 
   ignoreElements<T>(): ObservableOperator<unknown, T>;
 
@@ -134,6 +157,14 @@ export interface Signature {
     options?: undefined,
   ): ObservableOperator<T, T>;
 
+  toEventSource<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, EventSourceLike<T>>;
+
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
   ): ObservableOperator<TA, TB>;
@@ -166,5 +197,7 @@ export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
+export const toEventSource: Signature["toEventSource"] =
+  Observable_toEventSource;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;

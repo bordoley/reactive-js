@@ -36,6 +36,7 @@
 - [takeLast](Observable.md#takelast)
 - [takeWhile](Observable.md#takewhile)
 - [throwIfEmpty](Observable.md#throwifempty)
+- [toEventSource](Observable.md#toeventsource)
 - [withCurrentTime](Observable.md#withcurrenttime)
 
 ## Type Aliases
@@ -572,6 +573,31 @@ ___
 #### Returns
 
 [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 
