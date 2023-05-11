@@ -1,5 +1,7 @@
 /// <reference types="./Runnable.d.ts" />
 
+import Observable_concat from "./Observable/__internal__/Observable.concat.js";
+import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
@@ -26,6 +28,8 @@ import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Container_type, } from "./types.js";
+export const concat = Observable_concat;
+export const concatWith = Observable_concatWith;
 export const contains = Runnable_contains;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const empty = Observable_empty;

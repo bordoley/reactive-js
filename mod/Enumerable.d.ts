@@ -8,6 +8,8 @@ export interface DisposableEnumeratorType extends Container {
 }
 export interface Signature extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
 }
+export declare const concat: Signature["concat"];
+export declare const concatWith: Signature["concatWith"];
 export declare const contains: Signature["contains"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];

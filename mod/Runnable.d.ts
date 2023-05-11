@@ -10,6 +10,8 @@ export interface Signature extends RunnableContainerTypeClass<Type> {
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
 }
+export declare const concat: Signature["concat"];
+export declare const concatWith: Signature["concatWith"];
 export declare const contains: Signature["contains"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];

@@ -11,11 +11,13 @@
 
 ### Constructor Functions
 
+- [concat](Runnable.md#concat)
 - [empty](Runnable.md#empty)
 - [fromFactory](Runnable.md#fromfactory)
 
 ### Operator Functions
 
+- [concatWith](Runnable.md#concatwith)
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
 - [forEach](Runnable.md#foreach)
 - [keep](Runnable.md#keep)
@@ -47,6 +49,32 @@
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
 
 ## Constructor Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+Returns a Container which emits all values from each source sequentially.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
 
 ### empty
 
@@ -83,6 +111,29 @@ ___
 ___
 
 ## Operator Functions
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Runnable.Type.md), `T`, `T`\>
+
+___
 
 ### distinctUntilChanged
 
