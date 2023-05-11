@@ -111,7 +111,71 @@ export interface Type extends Container {
   readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 
+export namespace Animation {
+  /**
+   * @noInheritDoc
+   */
+  export interface Delay {
+    readonly type: "delay";
+    readonly duration: number;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface KeyFrame {
+    readonly type: "keyframe";
+    readonly from: number;
+    readonly to: number;
+    readonly duration: number;
+    readonly easing?: Function1<number, number>;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface Frame {
+    readonly type: "frame";
+    readonly value: number;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface Loop<T> {
+    readonly type: "loop";
+    readonly animation: Animation<T> | readonly Animation<T>[];
+    readonly count?: number;
+  }
+
+  /**
+   * @noInheritDoc
+   */
+  export interface Spring {
+    readonly type: "spring";
+    readonly from: number;
+    readonly to: number;
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }
+}
+export type Animation<T = number> =
+  | Animation.Delay
+  | Animation.Loop<T>
+  | (T extends number
+      ? (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+          readonly selector?: never;
+        }
+      : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
+          readonly selector: Function1<number, T>;
+        });
+
 export interface Signature {
+  animate<T = number>(
+    configs: Animation<T> | readonly Animation<T>[],
+  ): RunnableLike<T>;
+
   backpressureStrategy<T>(
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],

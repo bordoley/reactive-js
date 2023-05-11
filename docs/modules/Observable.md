@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Namespaces
+
+- [Animation](Observable.Animation.md)
+
 ### Interfaces
 
 - [Signature](../interfaces/Observable.Signature.md)
@@ -11,6 +15,7 @@
 
 ### Type Aliases
 
+- [Animation](Observable.md#animation)
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [EnumerableUpperBoundObservableOperator](Observable.md#enumerableupperboundobservableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
@@ -59,6 +64,18 @@
 - [withLatestFrom](Observable.md#withlatestfrom)
 
 ## Type Aliases
+
+### Animation
+
+Ƭ **Animation**<`T`\>: [`Delay`](../interfaces/Observable.Animation.Delay.md) \| [`Loop`](../interfaces/Observable.Animation.Loop.md)<`T`\> \| `T` extends `number` ? [`KeyFrame`](../interfaces/Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/Observable.Animation.Spring.md) \| [`Frame`](../interfaces/Observable.Animation.Frame.md) & { `selector?`: `never`  } : [`KeyFrame`](../interfaces/Observable.Animation.KeyFrame.md) \| [`Spring`](../interfaces/Observable.Animation.Spring.md) \| [`Frame`](../interfaces/Observable.Animation.Frame.md) & { `selector`: [`Function1`](functions.md#function1)<`number`, `T`\>  }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+___
 
 ### DeferredObservableUpperBoundObservableOperator
 

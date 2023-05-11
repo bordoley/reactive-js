@@ -12,6 +12,7 @@
 
 ### Methods
 
+- [animate](Observable.Signature.md#animate)
 - [backpressureStrategy](Observable.Signature.md#backpressurestrategy)
 - [concat](Observable.Signature.md#concat)
 - [concatMany](Observable.Signature.md#concatmany)
@@ -60,6 +61,28 @@
 • **encodeUtf8**: [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 ## Methods
+
+### animate
+
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `configs` | [`Animation`](../modules/Observable.md#animation)<`T`\> \| readonly [`Animation`](../modules/Observable.md#animation)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+___
 
 ### backpressureStrategy
 
