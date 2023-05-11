@@ -13,17 +13,13 @@ import {
   StatefulContainerBaseTypeClass,
 } from "./type-classes.js";
 import {
-  Container,
-  Container_T,
-  Container_type,
   DisposableLike,
   EventListenerLike,
+  EventSourceContainer,
   EventSourceLike,
 } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
-}
+export type Type = EventSourceContainer;
 
 export interface Signature
   extends ContainerTypeClass<Type>,

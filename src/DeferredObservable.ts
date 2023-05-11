@@ -5,9 +5,7 @@ import DeferredObservable_share from "./DeferredObservable/__internal__/Deferred
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory, Function1, Predicate } from "./functions.js";
 import {
-  Container,
-  Container_T,
-  Container_type,
+  DeferredObservableContainer,
   DeferredObservableLike,
   DisposableLike,
   EnumerableLike,
@@ -31,9 +29,7 @@ export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
   ? DeferredObservableLike<TOut>
   : never;
 
-export interface Type extends Container {
-  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
-}
+export type Type = DeferredObservableContainer;
 
 export interface Signature {
   compute<T>(

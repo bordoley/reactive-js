@@ -7,7 +7,10 @@
 ### Interfaces
 
 - [Signature](../interfaces/PauseableObservable.Signature.md)
-- [Type](../interfaces/PauseableObservable.Type.md)
+
+### Type Aliases
+
+- [Type](PauseableObservable.md#type)
 
 ### Operator Functions
 
@@ -22,11 +25,17 @@
 - [enqueue](PauseableObservable.md#enqueue)
 - [sinkInto](PauseableObservable.md#sinkinto)
 
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md)
+
 ## Operator Functions
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -45,13 +54,13 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -70,13 +79,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -104,13 +113,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -127,9 +136,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -148,9 +157,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -171,7 +180,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
@@ -179,7 +188,7 @@ ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -195,13 +204,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -217,7 +226,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/PauseableObservable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 ___
 

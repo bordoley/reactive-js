@@ -1,9 +1,7 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
 import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
-import { Container, Container_type, DisposableLike } from "./types.js";
-export interface Type extends Container {
-    readonly [Container_type]?: DisposableLike;
-}
+import { DisposableContainer, DisposableLike } from "./types.js";
+export type Type = DisposableContainer;
 export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {

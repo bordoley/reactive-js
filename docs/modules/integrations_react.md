@@ -319,7 +319,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/SharedObservable.Type.md), `TProps`, `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `fn` | [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TProps`, `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

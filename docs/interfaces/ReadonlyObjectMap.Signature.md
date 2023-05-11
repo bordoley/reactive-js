@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TType` | extends [`Type`](ReadonlyObjectMap.Type.md) = [`Type`](ReadonlyObjectMap.Type.md) |
+| `TType` | extends [`Type`](../modules/ReadonlyObjectMap.md#type) = [`Type`](../modules/ReadonlyObjectMap.md#type) |
 | `TKey` | extends [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) = [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) |
 
 ## Hierarchy

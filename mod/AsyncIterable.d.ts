@@ -1,8 +1,6 @@
 import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
-export interface Type extends Container {
-    readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
-}
+import { AsyncIterableContainer, DeferredObservableLike, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
+export type Type = AsyncIterableContainer;
 export interface Signature {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

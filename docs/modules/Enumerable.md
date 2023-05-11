@@ -8,7 +8,10 @@
 
 - [DisposableEnumeratorType](../interfaces/Enumerable.DisposableEnumeratorType.md)
 - [Signature](../interfaces/Enumerable.Signature.md)
-- [Type](../interfaces/Enumerable.Type.md)
+
+### Type Aliases
+
+- [Type](Enumerable.md#type)
 
 ### Constructor Functions
 
@@ -52,6 +55,12 @@
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`EnumerableContainer`](../interfaces/types.EnumerableContainer.md)
 
 ## Constructor Functions
 
@@ -119,7 +128,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -136,13 +145,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -162,13 +171,13 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -185,13 +194,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -210,13 +219,13 @@ value emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -235,13 +244,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -258,13 +267,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -292,13 +301,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -315,13 +324,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -331,13 +340,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, readonly [`T`, `T`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -354,9 +363,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -375,9 +384,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -398,13 +407,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -425,13 +434,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `TAcc`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -450,13 +459,13 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -473,13 +482,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -498,13 +507,13 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -523,13 +532,13 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -551,7 +560,7 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](../interfaces/Enumerable.Type.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
 
 ___
 

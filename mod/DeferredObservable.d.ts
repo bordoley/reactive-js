@@ -1,9 +1,7 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
+import { DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
-export interface Type extends Container {
-    readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
-}
+export type Type = DeferredObservableContainer;
 export interface Signature {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

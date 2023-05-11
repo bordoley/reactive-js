@@ -8,7 +8,6 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toSharedObservable from "./EventSource/__internal__/EventSource.toSharedObservable.js";
-import { Container_type, } from "./types.js";
 export const addEventHandler = EventSource_addEventHandler;
 export const create = EventSource_create;
 export const forEach = EventSource_forEach;

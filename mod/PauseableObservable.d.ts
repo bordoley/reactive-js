@@ -1,9 +1,7 @@
 import { Function1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
-import { Container, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike, QueueableLike } from "./types.js";
-export interface Type extends Container {
-    readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
-}
+import { ContainerOperator, DeferredObservableLike, DispatcherLike, PauseableObservableContainer, PauseableObservableLike, QueueableLike } from "./types.js";
+export type Type = PauseableObservableContainer;
 export interface Signature extends ContainerTypeClass<Type> {
     enqueue<T>(queue: QueueableLike<T>): ContainerOperator<Type, T, T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<Type, T, T>;

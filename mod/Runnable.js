@@ -32,7 +32,6 @@ import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { Container_type, } from "./types.js";
 export const compute = Runnable_compute;
 export const concat = Observable_concat;
 export const concatWith = Observable_concatWith;

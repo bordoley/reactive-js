@@ -7,11 +7,20 @@
 ### Interfaces
 
 - [Signature](../interfaces/SharedObservable.Signature.md)
-- [Type](../interfaces/SharedObservable.Type.md)
+
+### Type Aliases
+
+- [Type](SharedObservable.md#type)
 
 ### Functions
 
 - [never](SharedObservable.md#never)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md)
 
 ## Functions
 

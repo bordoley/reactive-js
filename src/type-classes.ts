@@ -17,12 +17,16 @@ import {
   Container,
   ContainerOf,
   ContainerOperator,
+  DeferredObservableContainer,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
   KeyedContainerOf,
   KeyedContainerOperator,
   KeyedContainer_TKey,
+  ObservableContainer,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
   SharedObservableLike,
 } from "./types.js";
 
@@ -528,6 +532,60 @@ export interface EnumerableContainerTypeClass<
 > extends RunnableContainerTypeClass<C>,
     EnumerableContainerBaseTypeClass<C, CEnumerator>,
     ConcreteContainerBaseTypeClass<C> {}
+
+export interface ObservableBaseTypeClass<
+  C extends ObservableContainer,
+  CInner extends DeferredObservableContainer,
+> {
+  /**
+   * Converts a higher-order Container into a first-order
+   * Container by concatenating the inner sources in order.
+   *
+   * @category Operator
+   */
+  concatAll: <T>() => ContainerOperator<C, ContainerOf<CInner, T>, T>;
+
+  /**
+   * @category Operator
+   */
+  concatMap: <TA, TB>(
+    selector: Function1<TA, ContainerOf<CInner, TB>>,
+  ) => ContainerOperator<C, TA, TB>;
+
+  /**
+   * @category Operator
+   */
+  mergeAll<T>(options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): ContainerOperator<C, ContainerOf<CInner, T>, T>;
+
+  /**
+   * @category Operator
+   */
+  mergeMap: <TA, TB>(
+    selector: Function1<TA, ContainerOf<CInner, TB>>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+  ) => ContainerOperator<C, TA, TB>;
+
+  /**
+   *
+   * @category Operator
+   */
+  switchAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
+
+  /**
+   * @category Operator
+   */
+  switchMap: <TA, TB>(
+    selector: Function1<TA, ContainerOf<C, TB>>,
+  ) => ContainerOperator<C, TA, TB>;
+}
 
 export interface KeyedContainerTypeClass<
   C extends KeyedContainer,

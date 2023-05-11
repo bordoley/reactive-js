@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TType` | extends [`Type`](Dictionary.Type.md) = [`Type`](Dictionary.Type.md) |
+| `TType` | extends [`Type`](../modules/Dictionary.md#type) = [`Type`](../modules/Dictionary.md#type) |
 | `TKey` | extends [`TKeyBase`](../modules/Dictionary.md#tkeybase) = [`TKeyBase`](../modules/Dictionary.md#tkeybase) |
 
 ## Hierarchy

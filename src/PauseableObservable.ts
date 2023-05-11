@@ -8,19 +8,15 @@ import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/Pau
 import { Function1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
-  Container,
   ContainerOperator,
-  Container_T,
-  Container_type,
   DeferredObservableLike,
   DispatcherLike,
+  PauseableObservableContainer,
   PauseableObservableLike,
   QueueableLike,
 } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
-}
+export type Type = PauseableObservableContainer;
 
 export interface Signature extends ContainerTypeClass<Type> {
   enqueue<T>(queue: QueueableLike<T>): ContainerOperator<Type, T, T>;

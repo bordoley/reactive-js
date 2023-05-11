@@ -7,7 +7,10 @@
 ### Interfaces
 
 - [Signature](../interfaces/Disposable.Signature.md)
-- [Type](../interfaces/Disposable.Type.md)
+
+### Type Aliases
+
+- [Type](Disposable.md#type)
 
 ### Variables
 
@@ -26,6 +29,12 @@
 - [toErrorHandler](Disposable.md#toerrorhandler)
 - [toSharedObservable](Disposable.md#tosharedobservable)
 - [usingAsync](Disposable.md#usingasync)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`DisposableContainer`](../interfaces/types.DisposableContainer.md)
 
 ## Variables
 

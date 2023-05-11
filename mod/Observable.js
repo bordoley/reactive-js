@@ -48,7 +48,6 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
-import { Container_type, } from "./types.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const concat = Observable_concat;
 export const concatMany = Observable_concatMany;

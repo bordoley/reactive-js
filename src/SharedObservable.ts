@@ -1,15 +1,8 @@
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import { Factory } from "./functions.js";
-import {
-  Container,
-  Container_T,
-  Container_type,
-  SharedObservableLike,
-} from "./types.js";
+import { SharedObservableContainer, SharedObservableLike } from "./types.js";
 
-export interface Type extends Container {
-  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
-}
+export type Type = SharedObservableContainer;
 
 export interface Signature {
   compute<T>(

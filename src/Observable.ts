@@ -59,15 +59,13 @@ import {
   Updater,
 } from "./functions.js";
 import {
-  Container,
-  Container_T,
-  Container_type,
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
   DisposableOrTeardown,
   EnumerableLike,
   EventSourceLike,
+  ObservableContainer,
   ObservableLike,
   ObserverLike,
   QueueableLike,
@@ -113,9 +111,7 @@ export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   ? SharedObservableLike<TOut>
   : never;
 
-export interface Type extends Container {
-  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
-}
+export type Type = ObservableContainer;
 
 export namespace Animation {
   /**

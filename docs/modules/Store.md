@@ -7,11 +7,20 @@
 ### Interfaces
 
 - [Signature](../interfaces/Store.Signature.md)
-- [Type](../interfaces/Store.Type.md)
+
+### Type Aliases
+
+- [Type](Store.md#type)
 
 ### Functions
 
 - [toSharedObservable](Store.md#tosharedobservable)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`StoreContainer`](../interfaces/types.StoreContainer.md)
 
 ## Functions
 

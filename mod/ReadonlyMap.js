@@ -15,7 +15,6 @@ import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWi
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
-import { Container_type, KeyedContainer_TKey, } from "./types.js";
 /**
  * @category Functor
  */

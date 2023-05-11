@@ -7,11 +7,20 @@
 ### Interfaces
 
 - [Signature](../interfaces/Promise.Signature.md)
-- [Type](../interfaces/Promise.Type.md)
+
+### Type Aliases
+
+- [Type](Promise.md#type)
 
 ### Functions
 
 - [toSharedObservable](Promise.md#tosharedobservable)
+
+## Type Aliases
+
+### Type
+
+Ƭ **Type**: [`PromiseContainer`](../interfaces/types.PromiseContainer.md)
 
 ## Functions
 

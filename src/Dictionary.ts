@@ -2,23 +2,9 @@ import Dictionary_entries from "./Dictionary/__internal__/Dictionary.entries.js"
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
 import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
-import {
-  Container_T,
-  Container_type,
-  DictionaryLike,
-  KeyedContainer,
-  KeyedContainer_TKey,
-} from "./types.js";
+import { DictionaryContainer, KeyedContainer_TKey } from "./types.js";
 
-export interface Type<TKey = unknown> extends KeyedContainer {
-  readonly [Container_type]?: DictionaryLike<
-    this[typeof KeyedContainer_TKey],
-    this[typeof Container_T]
-  >;
-
-  readonly [KeyedContainer_TKey]?: TKey;
-}
-
+export type Type<TKey = unknown> = DictionaryContainer<TKey>;
 export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
 
 export interface Signature<

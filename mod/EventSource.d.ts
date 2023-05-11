@@ -1,9 +1,7 @@
 import { Function1, SideEffect1 } from "./functions.js";
 import { AsynchronousContainerBaseTypeClass, ContainerTypeClass, StatefulContainerBaseTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DisposableLike, EventListenerLike, EventSourceLike } from "./types.js";
-export interface Type extends Container {
-    readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
-}
+import { DisposableLike, EventListenerLike, EventSourceContainer, EventSourceLike } from "./types.js";
+export type Type = EventSourceContainer;
 export interface Signature extends ContainerTypeClass<Type>, StatefulContainerBaseTypeClass<Type>, AsynchronousContainerBaseTypeClass<Type> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
     /**

@@ -723,3 +723,159 @@ export type KeyedContainerOperator<
   TA,
   TB,
 > = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncIterableContainer extends Container {
+  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DictionaryContainer<TKey = unknown> extends KeyedContainer {
+  readonly [Container_type]?: DictionaryLike<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: TKey;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DisposableContainer extends Container {
+  readonly [Container_type]?: DisposableLike;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableContainer extends Container {
+  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableContainer extends Container {
+  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EventSourceContainer extends Container {
+  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface IterableContainer extends Container {
+  readonly [Container_type]?: Iterable<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ObservableContainer extends Container {
+  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface PauseableObservableContainer extends Container {
+  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface PromiseContainer extends Container {
+  readonly [Container_type]?: PromiseLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlyArrayContainer extends KeyedContainer {
+  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+
+  readonly [KeyedContainer_TKey]?: number;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlyMapContainer<TKey = unknown>
+  extends KeyedContainer<TKey> {
+  readonly [Container_type]?: ReadonlyMap<
+    this[typeof KeyedContainer_TKey],
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: TKey;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlyObjectMapContainer<
+  TKey extends symbol | number | string = symbol | number | string,
+> extends KeyedContainer {
+  readonly [Container_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedContainer_TKey]>,
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: TKey;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface RunnableContainer extends Container {
+  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface SharedObservableContainer extends Container {
+  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface StoreContainer extends Container {
+  readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
+}

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](Promise.Type.md)\>
+- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](../modules/Promise.md#type)\>
 
   ↳ **`Signature`**
 

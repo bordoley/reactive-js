@@ -52,27 +52,20 @@ import {
 } from "./type-classes.js";
 import {
   ContainerOperator,
-  Container_T,
-  Container_type,
   DisposableLike,
   EnumerableLike,
   EnumeratorLike,
   KeyOf,
-  KeyedContainer,
   KeyedContainerOperator,
-  KeyedContainer_TKey,
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReadonlyArrayContainer,
   RunnableLike,
   SchedulerLike,
 } from "./types.js";
 
-export interface Type extends KeyedContainer {
-  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-
-  readonly [KeyedContainer_TKey]?: number;
-}
+export type Type = ReadonlyArrayContainer;
 
 export type TKeyBase = KeyOf<Type>;
 
