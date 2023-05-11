@@ -4,6 +4,7 @@ import DeferredObservable_retry from "./DeferredObservable/__internal__/Deferred
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory, Function1, Predicate } from "./functions.js";
+import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
   DeferredObservableContainer,
   DeferredObservableLike,
@@ -31,7 +32,8 @@ export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
 
 export type Type = DeferredObservableContainer;
 
-export interface Signature {
+export interface Signature
+  extends HigherOrderObservableBaseTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

@@ -31,7 +31,10 @@ import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { RunnableContainerTypeClass } from "./type-classes.js";
+import {
+  HigherOrderObservableBaseTypeClass,
+  RunnableContainerTypeClass,
+} from "./type-classes.js";
 import {
   DisposableLike,
   PauseableObservableLike,
@@ -44,7 +47,9 @@ import {
 
 export type Type = RunnableContainer;
 
-export interface Signature extends RunnableContainerTypeClass<Type> {
+export interface Signature
+  extends RunnableContainerTypeClass<Type>,
+    HigherOrderObservableBaseTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

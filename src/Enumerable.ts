@@ -30,7 +30,10 @@ import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Factory } from "./functions.js";
-import { EnumerableContainerTypeClass } from "./type-classes.js";
+import {
+  EnumerableContainerTypeClass,
+  HigherOrderObservableBaseTypeClass,
+} from "./type-classes.js";
 import {
   Container,
   Container_T,
@@ -49,7 +52,8 @@ export interface DisposableEnumeratorType extends Container {
 }
 
 export interface Signature
-  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
+  extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType>,
+    HigherOrderObservableBaseTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

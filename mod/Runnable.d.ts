@@ -1,8 +1,8 @@
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { RunnableContainerTypeClass } from "./type-classes.js";
+import { HigherOrderObservableBaseTypeClass, RunnableContainerTypeClass } from "./type-classes.js";
 import { DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainer, RunnableLike, SchedulerLike } from "./types.js";
 export type Type = RunnableContainer;
-export interface Signature extends RunnableContainerTypeClass<Type> {
+export interface Signature extends RunnableContainerTypeClass<Type>, HigherOrderObservableBaseTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableLike<T>;

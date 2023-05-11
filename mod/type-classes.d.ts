@@ -297,7 +297,7 @@ export interface RunnableContainerTypeClass<C extends Container> extends Deferre
 }
 export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C, CEnumerator>, ConcreteContainerBaseTypeClass<C> {
 }
-export interface ObservableBaseTypeClass<C extends ObservableContainer, CInner extends DeferredObservableContainer> {
+export interface HigherOrderObservableBaseTypeClass<C extends ObservableContainer, CInner extends DeferredObservableContainer> {
     /**
      * Converts a higher-order Container into a first-order
      * Container by concatenating the inner sources in order.

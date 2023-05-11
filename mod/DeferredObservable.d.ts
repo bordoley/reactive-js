@@ -1,8 +1,9 @@
 import { Factory, Function1, Predicate } from "./functions.js";
+import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import { DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type Type = DeferredObservableContainer;
-export interface Signature {
+export interface Signature extends HigherOrderObservableBaseTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;
