@@ -14,6 +14,7 @@ import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal
 import MulticastObservable_isMulticastObservable from "../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
 import * as Observable from "../Observable.js";
 import * as Publisher from "../Publisher.js";
+import type * as SharedObservable from "../SharedObservable.js";
 import {
   Factory,
   Function1,
@@ -29,6 +30,7 @@ import {
 } from "../functions.js";
 import {
   CollectionLike_count,
+  ContainerOperator,
   DispatcherLike,
   DispatcherLike_complete,
   DisposableLike,
@@ -428,7 +430,7 @@ export const usePauseable = (
 };
 
 export const createComponent = <TProps>(
-  fn: (props: ObservableLike<TProps>) => ObservableLike<ReactElement>,
+  fn: ContainerOperator<SharedObservable.Type, TProps, ReactElement>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

@@ -7,8 +7,8 @@ import {
 import { Updater } from "../functions.js";
 import {
   MulticastObservableLike,
-  ObservableLike,
   ReadonlyObjectMapLike,
+  SharedObservableLike,
 } from "../types.js";
 
 export {
@@ -36,7 +36,7 @@ export interface WindowLocationURI {
  */
 export interface WindowLocationLike
   extends MulticastObservableLike<WindowLocationURI> {
-  readonly [WindowLocationLike_canGoBack]: ObservableLike<boolean>;
+  readonly [WindowLocationLike_canGoBack]: SharedObservableLike<boolean>;
 
   [WindowLocationLike_goBack](): void;
 
