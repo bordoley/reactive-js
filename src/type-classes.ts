@@ -23,6 +23,7 @@ import {
   KeyedContainerOf,
   KeyedContainerOperator,
   KeyedContainer_TKey,
+  SharedObservableLike,
 } from "./types.js";
 
 export interface ContainerTypeClass<C extends Container> {
@@ -371,6 +372,13 @@ export interface StatefulContainerBaseTypeClass<C extends Container> {
    * @category Operator
    */
   ignoreElements<T>(): ContainerOperator<C, unknown, T>;
+}
+
+export interface AsynchronousContainerBaseTypeClass<C extends Container> {
+  toSharedObservable<T>(): Function1<
+    ContainerOf<C, T>,
+    SharedObservableLike<T>
+  >;
 }
 
 export interface BlockingContainerBaseTypeClass<C extends Container> {

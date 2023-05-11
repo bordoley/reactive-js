@@ -1,6 +1,6 @@
 import { Function1, TypePredicate } from "./functions.js";
 import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
-import { ContainerOperator, Container_T, Container_type, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
+import { ContainerOperator, Container_T, Container_type, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
 export interface Type extends KeyedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
     readonly [KeyedContainer_TKey]?: number;
@@ -28,6 +28,34 @@ export interface Signature extends KeyedContainerTypeClass<Type>, Omit<Enumerabl
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
+    toEnumerable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toEnumerable<T>(options: {
+        readonly count: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toEnumerable<T>(options: {
+        readonly count: number;
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toEnumerable<T>(options: {
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toRunnable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toRunnable<T>(options: {
+        readonly count: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toRunnable<T>(options: {
+        readonly count: number;
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toRunnable<T>(options: {
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toRunnable<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
@@ -73,6 +101,8 @@ export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
+export declare const toEnumerable: Signature["toEnumerable"];
+export declare const toRunnable: Signature["toRunnable"];
 export declare const values: Signature["values"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];

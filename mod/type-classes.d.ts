@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, SharedObservableLike } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -196,6 +196,9 @@ export interface StatefulContainerBaseTypeClass<C extends Container> {
      * @category Operator
      */
     ignoreElements<T>(): ContainerOperator<C, unknown, T>;
+}
+export interface AsynchronousContainerBaseTypeClass<C extends Container> {
+    toSharedObservable<T>(): Function1<ContainerOf<C, T>, SharedObservableLike<T>>;
 }
 export interface BlockingContainerBaseTypeClass<C extends Container> {
     /**
