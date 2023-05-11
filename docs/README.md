@@ -17,6 +17,7 @@ Reactive-JS
 - [EventSource](modules/EventSource.md)
 - [Iterable](modules/Iterable.md)
 - [Observable](modules/Observable.md)
+- [PauseableObservable](modules/PauseableObservable.md)
 - [Promise](modules/Promise.md)
 - [Publisher](modules/Publisher.md)
 - [ReadonlyArray](modules/ReadonlyArray.md)
