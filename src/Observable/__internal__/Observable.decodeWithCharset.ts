@@ -1,7 +1,7 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createDecodeWithCharsetObserver from "../../Observer/__internal__/Observer.createDecodeWithCharsetObserver.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 
 const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
   options => {
@@ -9,7 +9,7 @@ const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
     return pipe(
       Observer_createDecodeWithCharsetObserver,
       partial(charset),
-      Observable_liftSource,
+      Observable_liftEnumerableUpperBounded,
     );
   };
 

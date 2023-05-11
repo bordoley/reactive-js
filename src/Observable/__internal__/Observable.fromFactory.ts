@@ -3,12 +3,11 @@ import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable
 import { Factory, compose } from "../../functions.js";
 import Observable_map from "./Observable.map.js";
 
-const Observable_fromFactory: Observable.Signature["fromFactory"] = (options?: {
-  readonly delay: number;
-}) =>
-  compose(
-    Optional_toRunnable(options),
-    Observable_map((f: Factory<unknown>) => f()),
-  );
+const Observable_fromFactory: Observable.Signature["fromFactory"] =
+  ((options?: { readonly delay: number }) =>
+    compose(
+      Optional_toRunnable(options),
+      Observable_map((f: Factory<unknown>) => f()),
+    )) as Observable.Signature["fromFactory"];
 
 export default Observable_fromFactory;

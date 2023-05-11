@@ -6,7 +6,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../types.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
   (
@@ -19,7 +19,7 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
         [BufferLike_capacity]: capacity,
       }),
-      Observable_liftSource,
+      Observable_liftEnumerableUpperBounded,
     );
 
 export default Observable_backpressureStrategy;

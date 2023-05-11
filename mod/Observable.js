@@ -35,6 +35,7 @@ import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwI
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
+import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import { Container_type, } from "./types.js";
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const decodeWithCharset = Observable_decodeWithCharset;
@@ -71,3 +72,4 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const toEventSource = Observable_toEventSource;
 export const withCurrentTime = Observable_withCurrentTime;
+export const withLatestFrom = Observable_withLatestFrom;

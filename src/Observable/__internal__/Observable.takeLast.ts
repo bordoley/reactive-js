@@ -2,7 +2,7 @@ import type * as Observable from "../../Observable.js";
 import Observer_createTakeLastObserver from "../../Observer/__internal__/Observer.createTakeLastObserver.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 
 const Observable_takeLast: Observable.Signature["takeLast"] = (
   options: { readonly count?: number } = {},
@@ -11,7 +11,7 @@ const Observable_takeLast: Observable.Signature["takeLast"] = (
   return pipe(
     Observer_createTakeLastObserver,
     partial(count),
-    Observable_liftSource,
+    Observable_liftEnumerableUpperBounded,
   );
 };
 

@@ -1,30 +1,33 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
 import { Container, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EventSourceLike, ObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
-export type ObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: ObservableLike<TIn>) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
+export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
+export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
+export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
+export type SharedObservableUpperBoundObservableOperator<TIn, TOut> = (observable: SharedObservableLike<TIn>) => SharedObservableLike<TOut>;
 export interface Type extends Container {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 export interface Signature {
-    backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): ObservableOperator<T, T>;
+    backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
     currentTime(options?: {
         readonly delay?: number;
         readonly delayStart?: boolean;
     }): RunnableLike<number>;
     decodeWithCharset(options?: {
         readonly charset?: string;
-    }): ObservableOperator<ArrayBuffer, string>;
+    }): EnumerableUpperBoundObservableOperator<ArrayBuffer, string>;
     defer<T>(f: Factory<SharedObservableLike<T> & DisposableLike>): DeferredObservableLike<T>;
-    dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperator<T, T>;
+    dispatchTo<T>(dispatcher: DispatcherLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
-    }): ObservableOperator<T, T>;
+    }): EnumerableUpperBoundObservableOperator<T, T>;
     empty<T>(): EnumerableLike<T>;
     empty<T>(options: {
         readonly delay: number;
     }): RunnableLike<T>;
-    encodeUtf8: ObservableOperator<string, Uint8Array>;
-    enqueue<T>(queue: QueueableLike<T>): ObservableOperator<T, T>;
-    forEach<T>(effect: SideEffect1<T>): ObservableOperator<T, T>;
+    encodeUtf8: EnumerableUpperBoundObservableOperator<string, Uint8Array>;
+    enqueue<T>(queue: QueueableLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
+    forEach<T>(effect: SideEffect1<T>): EnumerableUpperBoundObservableOperator<T, T>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromFactory<T>(options: {
         readonly delay: number;
@@ -38,30 +41,30 @@ export interface Signature {
         readonly delay?: number;
         readonly delayStart?: boolean;
     }): RunnableLike<T>;
-    ignoreElements<T>(): ObservableOperator<unknown, T>;
+    ignoreElements<T>(): EnumerableUpperBoundObservableOperator<unknown, T>;
     isDeferredObservable<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
     isEnumerable<T>(obs: ObservableLike<T>): obs is EnumerableLike<T>;
     isRunnable<T>(obs: ObservableLike<T>): obs is RunnableLike<T>;
     isSharedObservable<T>(obs: ObservableLike<T>): obs is SharedObservableLike<T>;
-    keep<T>(predicate: Predicate<T>): ObservableOperator<T, T>;
-    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ObservableOperator<TA, TB>;
+    keep<T>(predicate: Predicate<T>): EnumerableUpperBoundObservableOperator<T, T>;
+    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
-    map<TA, TB>(selector: Function1<TA, TB>): ObservableOperator<TA, TB>;
-    mapTo<TA, TB>(value: TB): ObservableOperator<TA, TB>;
+    map<TA, TB>(selector: Function1<TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
+    mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
     never<T>(): SharedObservableLike<T>;
-    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): ObservableOperator<T, T>;
-    pairwise<T>(): ObservableOperator<T, readonly [T, T]>;
-    pick<T, TKey extends keyof T>(key: TKey): ObservableOperator<T, T[TKey]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): ObservableOperator<T, T[TKeyA][TKeyB]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): ObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
-    scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): ObservableOperator<T, TAcc>;
+    onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): EnumerableUpperBoundObservableOperator<T, T>;
+    pairwise<T>(): EnumerableUpperBoundObservableOperator<T, readonly [T, T]>;
+    pick<T, TKey extends keyof T>(key: TKey): EnumerableUpperBoundObservableOperator<T, T[TKey]>;
+    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): EnumerableUpperBoundObservableOperator<T, T[TKeyA][TKeyB]>;
+    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): EnumerableUpperBoundObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
+    scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): EnumerableUpperBoundObservableOperator<T, TAcc>;
     skipFirst<T>(options?: {
         readonly count?: number;
-    }): ObservableOperator<T, T>;
+    }): EnumerableUpperBoundObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -76,14 +79,14 @@ export interface Signature {
     }): Function1<SharedObservableLike<T>, SharedObservableLike<T>>;
     takeFirst<T>(options?: {
         readonly count?: number;
-    }): ObservableOperator<T, T>;
+    }): EnumerableUpperBoundObservableOperator<T, T>;
     takeLast<T>(options?: {
         readonly count?: number;
-    }): ObservableOperator<T, T>;
+    }): EnumerableUpperBoundObservableOperator<T, T>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
-    }): ObservableOperator<T, T>;
-    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): ObservableOperator<T, T>;
+    }): EnumerableUpperBoundObservableOperator<T, T>;
+    throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): EnumerableUpperBoundObservableOperator<T, T>;
     throws<T>(): EnumerableLike<T>;
     throws<T>(options: {
         readonly raise: Factory<unknown>;
@@ -96,7 +99,11 @@ export interface Signature {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
-    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): ObservableOperator<TA, TB>;
+    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
+    withLastestFrom<TA, TB, T>(other: EnumerableLike<T>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: RunnableLike<T>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: DeferredObservableLike<T>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: SharedObservableLike<T>, selector: Function2<TA, TB, T>): SharedObservableUpperBoundObservableOperator<TA, T>;
 }
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
@@ -133,3 +140,4 @@ export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
+export declare const withLatestFrom: Signature["withLastestFrom"];

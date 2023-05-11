@@ -2,6 +2,6 @@
 
 import Observer_createThrowIfEmptyObserver from "../../Observer/__internal__/Observer.createThrowIfEmptyObserver.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftSource from "./Observable.liftSource.js";
-const Observable_throwIfEmpty = (factory) => pipe(Observer_createThrowIfEmptyObserver, partial(factory), Observable_liftSource);
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
+const Observable_throwIfEmpty = (factory) => pipe(Observer_createThrowIfEmptyObserver, partial(factory), Observable_liftEnumerableUpperBounded);
 export default Observable_throwIfEmpty;

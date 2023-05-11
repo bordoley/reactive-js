@@ -3,9 +3,9 @@
 import Observer_createTakeFirstObserver from "../../Observer/__internal__/Observer.takeFirstObserver.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftSource from "./Observable.liftSource.js";
+import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
 const Observable_takeFirst = (options = {}) => {
     const count = clampPositiveInteger(options.count ?? 1);
-    return pipe(Observer_createTakeFirstObserver, partial(count), Observable_liftSource);
+    return pipe(Observer_createTakeFirstObserver, partial(count), Observable_liftEnumerableUpperBounded);
 };
 export default Observable_takeFirst;
