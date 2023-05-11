@@ -8,6 +8,8 @@
 
 - [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
 
+- [`HigherOrderObservableBaseTypeClass`](type_classes.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
+
   ↳ **`Signature`**
 
 ## Table of contents
@@ -17,6 +19,9 @@
 - [concatAll](Runnable.Signature.md#concatall)
 - [concatMap](Runnable.Signature.md#concatmap)
 - [concatWith](Runnable.Signature.md#concatwith)
+- [mergeMap](Runnable.Signature.md#mergemap)
+- [switchAll](Runnable.Signature.md#switchall)
+- [switchMap](Runnable.Signature.md#switchmap)
 
 ### Transform Properties
 
@@ -44,6 +49,7 @@
 - [keepType](Runnable.Signature.md#keeptype)
 - [map](Runnable.Signature.md#map)
 - [mapTo](Runnable.Signature.md#mapto)
+- [mergeAll](Runnable.Signature.md#mergeall)
 - [pairwise](Runnable.Signature.md#pairwise)
 - [pick](Runnable.Signature.md#pick)
 - [scan](Runnable.Signature.md#scan)
@@ -97,7 +103,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatAll](type_classes.RunnableContainerTypeClass.md#concatall)
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatAll](type_classes.HigherOrderObservableBaseTypeClass.md#concatall)
 
 ___
 
@@ -128,7 +134,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatMap](type_classes.RunnableContainerTypeClass.md#concatmap)
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
 
 ___
 
@@ -160,6 +166,96 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatWith](type_classes.RunnableContainerTypeClass.md#concatwith)
+
+___
+
+### mergeMap
+
+• **mergeMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>, `options?`: { `backpressureStrategy?`: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` ; `capacity?`: `number` ; `concurrency?`: `number`  }) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type declaration
+
+▸ <`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+
+___
+
+### switchAll
+
+• **switchAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type declaration
+
+▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
+
+___
+
+### switchMap
+
+• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type declaration
+
+▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 
@@ -865,6 +961,35 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[mapTo](type_classes.RunnableContainerTypeClass.md#mapto)
+
+___
+
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
 
 ___
 

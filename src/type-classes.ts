@@ -533,7 +533,7 @@ export interface EnumerableContainerTypeClass<
     EnumerableContainerBaseTypeClass<C, CEnumerator>,
     ConcreteContainerBaseTypeClass<C> {}
 
-export interface ObservableBaseTypeClass<
+export interface HigherOrderObservableBaseTypeClass<
   C extends ObservableContainer,
   CInner extends DeferredObservableContainer,
 > {
