@@ -15,6 +15,7 @@ import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsy
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -344,6 +345,100 @@ export interface Signature {
       MaybeSharedObservableLike<TOut>
     >[]
   ): Function1<TObservableIn, SharedObservableLike<TOut>>;
+
+  forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB]>>;
+  forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+    c: Function1<TObservableIn, EnumerableLike<TC>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB, TC]>>;
+  forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC, TD>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+    c: Function1<TObservableIn, EnumerableLike<TC>>,
+    d: Function1<TObservableIn, EnumerableLike<TD>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB, TC, TD]>>;
+
+  forkZip<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB]>>;
+  forkZip<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+    c: Function1<TObservableIn, RunnableLike<TC>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB, TC]>>;
+  forkZip<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB, TC, TD>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+    c: Function1<TObservableIn, RunnableLike<TC>>,
+    d: Function1<TObservableIn, RunnableLike<TD>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB, TC, TD]>>;
+
+  forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB]>>;
+  forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+    c: Function1<TObservableIn, DeferredObservableLike<TC>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC]>>;
+  forkZip<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+    TD,
+  >(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+    c: Function1<TObservableIn, DeferredObservableLike<TC>>,
+    d: Function1<TObservableIn, DeferredObservableLike<TD>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC, TD]>>;
+
+  forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, SharedObservableLike<TA>>,
+    b: Function1<TObservableIn, SharedObservableLike<TB>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB]>>;
+  forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, SharedObservableLike<TA>>,
+    b: Function1<TObservableIn, SharedObservableLike<TB>>,
+    c: Function1<TObservableIn, SharedObservableLike<TC>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC]>>;
+  forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB, TC, TD>(
+    a: Function1<TObservableIn, SharedObservableLike<TA>>,
+    b: Function1<TObservableIn, SharedObservableLike<TB>>,
+    c: Function1<TObservableIn, SharedObservableLike<TC>>,
+    d: Function1<TObservableIn, SharedObservableLike<TD>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC, TD]>>;
+
+  forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB]>>;
+  forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>,
+    c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC]>>;
+  forkZip<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+    TD,
+  >(
+    a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>,
+    c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>,
+    d: Function1<TObservableIn, MaybeSharedObservableLike<TD>>,
+  ): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC, TD]>>;
 
   fromAsyncFactory<T>(): Function1<
     Function1<AbortSignal, Promise<T>>,
@@ -1130,6 +1225,7 @@ export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkConcat: Signature["forkConcat"] = Observable_forkConcat;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
+export const forkZip: Signature["forkZip"] = Observable_forkZip;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;

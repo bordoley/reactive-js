@@ -17,6 +17,7 @@ import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsy
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -71,6 +72,7 @@ export const firstAsync = Observable_firstAsync;
 export const forEach = Observable_forEach;
 export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
+export const forkZip = Observable_forkZip;
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromFactory = Observable_fromFactory;
 export const fromOptional = Optional_toRunnable;
