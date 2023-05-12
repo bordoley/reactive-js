@@ -27,15 +27,12 @@
 
 - [concatAll](type_classes.HigherOrderObservableBaseTypeClass.md#concatall)
 - [concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
+- [exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
+- [exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 - [mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
 - [mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
 - [switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
 - [switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
-
-### Other Methods
-
-- [exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
-- [exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ## Operator Methods
 
@@ -61,6 +58,45 @@ ___
 ### concatMap
 
 ▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -135,48 +171,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
-
-___
-
-### switchMap
-
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-___
-
-## Other Methods
-
-### exhaust
-
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>, `T`\>
 
 #### Type parameters
 
@@ -190,9 +185,9 @@ ___
 
 ___
 
-### exhaustMap
+### switchMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 

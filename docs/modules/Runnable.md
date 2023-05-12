@@ -25,6 +25,8 @@
 - [concatWith](Runnable.md#concatwith)
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
 - [endWith](Runnable.md#endwith)
+- [exhaust](Runnable.md#exhaust)
+- [exhaustMap](Runnable.md#exhaustmap)
 - [forEach](Runnable.md#foreach)
 - [keep](Runnable.md#keep)
 - [keepType](Runnable.md#keeptype)
@@ -37,6 +39,8 @@
 - [scan](Runnable.md#scan)
 - [skipFirst](Runnable.md#skipfirst)
 - [startWith](Runnable.md#startwith)
+- [switchAll](Runnable.md#switchall)
+- [switchMap](Runnable.md#switchmap)
 - [takeFirst](Runnable.md#takefirst)
 - [takeLast](Runnable.md#takelast)
 - [takeWhile](Runnable.md#takewhile)
@@ -44,8 +48,6 @@
 ### Other Functions
 
 - [compute](Runnable.md#compute)
-- [exhaust](Runnable.md#exhaust)
-- [exhaustMap](Runnable.md#exhaustmap)
 - [flow](Runnable.md#flow)
 - [run](Runnable.md#run)
 
@@ -243,6 +245,45 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
 
 ___
 
@@ -586,6 +627,45 @@ ___
 
 ___
 
+### switchAll
+
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
+
+___
+
+### switchMap
+
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+___
+
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
@@ -687,45 +767,6 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-___
-
-### exhaust
-
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `T`\>
-
-___
-
-### exhaustMap
-
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
 
 ___
 

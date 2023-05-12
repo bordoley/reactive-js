@@ -1,7 +1,13 @@
+import DeferredObservable_concatAll from "./DeferredObservable/__internal__/DeferredObservable.concatAll.js";
+import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
+import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
+import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
+import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
+import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory, Function1, Predicate } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
@@ -74,7 +80,14 @@ export interface Signature
 }
 
 export const compute: Signature["compute"] = DeferredObservable_compute;
+export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
+export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
+export const exhaust: Signature["exhaust"] = DeferredObservable_exhaust;
+export const exhaustMap: Signature["exhaustMap"] =
+  DeferredObservable_exhaustMap;
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
 export const retry: Signature["retry"] = DeferredObservable_retry;
 export const share: Signature["share"] = DeferredObservable_share;
+export const switchAll: Signature["switchAll"] = DeferredObservable_switchAll;
+export const switchMap: Signature["switchMap"] = DeferredObservable_switchMap;
