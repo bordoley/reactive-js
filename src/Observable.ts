@@ -49,6 +49,8 @@ import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
+import Observable_zip from "./Observable/__internal__/Observable.zip.js";
+import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
 import {
   Equality,
@@ -63,6 +65,7 @@ import {
   Updater,
 } from "./functions.js";
 import {
+  ContainerOf,
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
@@ -76,6 +79,7 @@ import {
   QueueableLike_backpressureStrategy,
   RunnableLike,
   SchedulerLike,
+  SharedObservableContainer,
   SharedObservableLike,
 } from "./types.js";
 
@@ -576,6 +580,534 @@ export interface Signature {
     other: SharedObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
+
+  zip<TA, TB>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+  ): EnumerableLike<readonly [TA, TB]>;
+  zip<TA, TB, TC>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+  ): EnumerableLike<readonly [TA, TB, TC]>;
+  zip<TA, TB, TC, TD>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD]>;
+  zip<TA, TB, TC, TD, TE>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD, TE]>;
+  zip<TA, TB, TC, TD, TE, TF>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zip<TA, TB, TC, TD, TE, TF, TG>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+    h: EnumerableLike<TH>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: EnumerableLike<TA>,
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+    h: EnumerableLike<TH>,
+    i: EnumerableLike<TI>,
+  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  zip<TA, TB>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+  ): RunnableLike<readonly [TA, TB]>;
+  zip<TA, TB, TC>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+  ): RunnableLike<readonly [TA, TB, TC]>;
+  zip<TA, TB, TC, TD>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  zip<TA, TB, TC, TD, TE>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  zip<TA, TB, TC, TD, TE, TF>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zip<TA, TB, TC, TD, TE, TF, TG>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+    i: RunnableLike<TI>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  zip<TA, TB>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+  ): DeferredObservableLike<readonly [TA, TB]>;
+  zip<TA, TB, TC>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  zip<TA, TB, TC, TD>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  zip<TA, TB, TC, TD, TE>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  zip<TA, TB, TC, TD, TE, TF>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zip<TA, TB, TC, TD, TE, TF, TG>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+    i: DeferredObservableLike<TI>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  zip<TA, TB>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+  ): SharedObservableLike<readonly [TA, TB]>;
+  zip<TA, TB, TC>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+  ): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC]>;
+  zip<TA, TB, TC, TD>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+  ): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD]>;
+  zip<TA, TB, TC, TD, TE>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+  ): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE]>;
+  zip<TA, TB, TC, TD, TE, TF>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+  ): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE, TF]>;
+  zip<TA, TB, TC, TD, TE, TF, TG>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+  ): ContainerOf<
+    SharedObservableContainer,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+    h: MaybeSharedObservableLike<TH>,
+  ): ContainerOf<
+    SharedObservableContainer,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
+  zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: MaybeSharedObservableLike<TA>,
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+    h: MaybeSharedObservableLike<TH>,
+    i: MaybeSharedObservableLike<TI>,
+  ): ContainerOf<
+    SharedObservableContainer,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
+
+  zipWith<TA, TB>(
+    b: EnumerableLike<TB>,
+  ): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB]>;
+  zipWith<TA, TB, TC>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+  ): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB, TC]>;
+  zipWith<TA, TB, TC, TD>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+  ): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD]>;
+  zipWith<TA, TB, TC, TD, TE>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+  ): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD, TE]>;
+  zipWith<TA, TB, TC, TD, TE, TF>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+  ): EnumerableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+  ): EnumerableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+    h: EnumerableLike<TH>,
+  ): EnumerableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    b: EnumerableLike<TB>,
+    c: EnumerableLike<TC>,
+    d: EnumerableLike<TD>,
+    e: EnumerableLike<TE>,
+    f: EnumerableLike<TF>,
+    g: EnumerableLike<TG>,
+    h: EnumerableLike<TH>,
+    i: EnumerableLike<TI>,
+  ): EnumerableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
+
+  zipWith<TA, TB>(
+    b: RunnableLike<TB>,
+  ): RunnableUpperBoundObservableOperator<TA, readonly [TA, TB]>;
+  zipWith<TA, TB, TC>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+  ): RunnableUpperBoundObservableOperator<TA, readonly [TA, TB, TC]>;
+  zipWith<TA, TB, TC, TD>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+  ): RunnableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD]>;
+  zipWith<TA, TB, TC, TD, TE>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+  ): RunnableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD, TE]>;
+  zipWith<TA, TB, TC, TD, TE, TF>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+  ): RunnableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+  ): RunnableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+  ): RunnableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+    i: RunnableLike<TI>,
+  ): RunnableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
+
+  zipWith<TA, TB>(
+    b: DeferredObservableLike<TB>,
+  ): DeferredObservableUpperBoundObservableOperator<TA, readonly [TA, TB]>;
+  zipWith<TA, TB, TC>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): DeferredObservableUpperBoundObservableOperator<TA, readonly [TA, TB, TC]>;
+  zipWith<TA, TB, TC, TD>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD]
+  >;
+  zipWith<TA, TB, TC, TD, TE>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+    i: DeferredObservableLike<TI>,
+  ): DeferredObservableUpperBoundObservableOperator<
+    TA,
+    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+  >;
+
+  zipWith<TA, TB>(
+    b: SharedObservableLike<TB>,
+  ): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB]>>;
+  zipWith<TA, TB, TC>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC]>
+  >;
+  zipWith<TA, TB, TC, TD>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD]>
+  >;
+  zipWith<TA, TB, TC, TD, TE>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD, TE]>
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF]>
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+    h: MaybeSharedObservableLike<TH>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>
+  >;
+  zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    b: MaybeSharedObservableLike<TB>,
+    c: MaybeSharedObservableLike<TC>,
+    d: MaybeSharedObservableLike<TD>,
+    e: MaybeSharedObservableLike<TE>,
+    f: MaybeSharedObservableLike<TF>,
+    g: MaybeSharedObservableLike<TG>,
+    h: MaybeSharedObservableLike<TH>,
+    i: MaybeSharedObservableLike<TI>,
+  ): Function1<
+    AnyObservableLike<TA>,
+    SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>
+  >;
 }
 
 export const backpressureStrategy: Signature["backpressureStrategy"] =
@@ -640,3 +1172,5 @@ export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLastestFrom"] =
   Observable_withLatestFrom;
+export const zip: Signature["zip"] = Observable_zip;
+export const zipWith: Signature["zipWith"] = Observable_zipWith;

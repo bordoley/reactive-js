@@ -17,6 +17,7 @@
 - [concat](Runnable.md#concat)
 - [empty](Runnable.md#empty)
 - [fromFactory](Runnable.md#fromfactory)
+- [zip](Runnable.md#zip)
 
 ### Operator Functions
 
@@ -45,6 +46,7 @@
 - [takeFirst](Runnable.md#takefirst)
 - [takeLast](Runnable.md#takelast)
 - [takeWhile](Runnable.md#takewhile)
+- [zipWith](Runnable.md#zipwith)
 
 ### Other Functions
 
@@ -130,6 +132,229 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create a Container whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -765,6 +990,218 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
