@@ -8,6 +8,7 @@ export interface Signature extends HigherOrderObservableBaseTypeClass<Type, Defe
     }): SharedObservableLike<T>;
     never<T>(): SharedObservableLike<T>;
 }
+export declare const compute: Signature["compute"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const exhaust: Signature["exhaust"];

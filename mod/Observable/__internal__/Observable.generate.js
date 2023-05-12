@@ -5,7 +5,7 @@ import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.j
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
 import { DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, SchedulerLike_yield, } from "../../types.js";
-const Runnable_generate = ((generator, initialValue, options) => {
+const Observable_generate = ((generator, initialValue, options) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
         let acc = initialValue();
@@ -22,4 +22,4 @@ const Runnable_generate = ((generator, initialValue, options) => {
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
 });
-export default Runnable_generate;
+export default Observable_generate;

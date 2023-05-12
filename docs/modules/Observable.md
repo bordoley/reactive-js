@@ -41,6 +41,7 @@
 - [forkMerge](Observable.md#forkmerge)
 - [fromFactory](Observable.md#fromfactory)
 - [fromOptional](Observable.md#fromoptional)
+- [generate](Observable.md#generate)
 - [ignoreElements](Observable.md#ignoreelements)
 - [isDeferredObservable](Observable.md#isdeferredobservable)
 - [isEnumerable](Observable.md#isenumerable)
@@ -988,6 +989,73 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -1961,7 +2029,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> |
+| `other` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -1982,7 +2050,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `other` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -2003,14 +2071,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
+| `other` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
 
 [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2024,9 +2092,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\> |
+| `other` | [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>

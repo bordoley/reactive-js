@@ -18,6 +18,7 @@ import Observable_forEach from "./Observable/__internal__/Observable.forEach.js"
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
@@ -69,6 +70,7 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const fromFactory = Observable_fromFactory;
 export const fromOptional = Optional_toRunnable;
+export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const isDeferredObservable = Observable_isDeferredObservable;
 export const isEnumerable = Observable_isEnumerable;

@@ -1,5 +1,6 @@
 /// <reference types="./SharedObservable.d.ts" />
 
+import { SharedObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import SharedObservable_concatAll from "./SharedObservable/__internal__/SharedObservable.concatAll.js";
 import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedObservable.concatMap.js";
@@ -9,6 +10,7 @@ import SharedObservable_mergeAll from "./SharedObservable/__internal__/SharedObs
 import SharedObservable_mergeMap from "./SharedObservable/__internal__/SharedObservable.mergeMap.js";
 import SharedObservable_switchAll from "./SharedObservable/__internal__/SharedObservable.switchAll.js";
 import SharedObservable_switchMap from "./SharedObservable/__internal__/SharedObservable.switchMap.js";
+export const compute = SharedObservable_compute;
 export const concatAll = SharedObservable_concatAll;
 export const concatMap = SharedObservable_concatMap;
 export const exhaust = SharedObservable_exhaust;

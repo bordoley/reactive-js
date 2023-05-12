@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Enumerable from "@reactive-js/core/Enumerable";
 import * as Runnable from "@reactive-js/core/Runnable";
 import * as Observable from "@reactive-js/core/Observable";
+import * as SharedObservable from "@reactive-js/core/SharedObservable";
 import {
   createComponent,
   useDispatcher,
@@ -177,7 +177,7 @@ const Cache = () => {
 
 const EnumeratorComponent = () => {
   const enumerator = useEnumerate(
-    () => Enumerable.generate(increment, () => -1),
+    () => Observable.generate(increment, () => -1),
     [],
   );
 
@@ -213,8 +213,8 @@ const Counter = () => {
   const counter = useDisposable(
     () =>
       pipe(
-        Runnable.generate(increment, returns(counterInitialValue ?? -1)),
-        Runnable.forEach<number>(value =>
+        Observable.generate(increment, returns(counterInitialValue ?? -1)),
+        Observable.forEach<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
             query: `v=${value}`,
@@ -320,7 +320,7 @@ const RxComponent = createComponent(
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 
-    return Observable.compute(() => {
+    return SharedObservable.compute(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
@@ -331,7 +331,7 @@ const RxComponent = createComponent(
       );
 
       const pauseableScheduler = __using(
-        Scheduler.toPausableScheduler,
+        Scheduler.createPausableScheduler,
         animationScheduler,
       );
 
@@ -343,7 +343,10 @@ const RxComponent = createComponent(
 
       const isAnimationRunning = __observe(animationGroupEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
-        pipe(pauseableScheduler[PauseableLike_isPaused], Store.toObservable()),
+        pipe(
+          pauseableScheduler[PauseableLike_isPaused],
+          Store.toSharedObservable(),
+        ),
         pauseableScheduler,
       );
 
