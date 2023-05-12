@@ -303,52 +303,34 @@ export interface Signature {
   forkConcat<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, DeferredObservableLike<TOut>>,
     snd: Function1<TObservableIn, DeferredObservableLike<TOut>>,
-    ...tail: readonly Function1<
-    TObservableIn,
-      DeferredObservableLike<TOut>
-    >[]
+    ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]
   ): Function1<TObservableIn, DeferredObservableLike<TOut>>;
   forkConcat<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, SharedObservableLike<TOut>>,
     snd: Function1<TObservableIn, DeferredObservableLike<TOut>>,
-    ...tail: readonly Function1<
-      TObservableIn,
-      DeferredObservableLike<TOut>
-    >[]
+    ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]
   ): Function1<TObservableIn, SharedObservableLike<TOut>>;
 
   forkMerge<TObservableIn extends EnumerableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, EnumerableLike<TOut>>,
     snd: Function1<TObservableIn, EnumerableLike<TOut>>,
-    ...tail: readonly Function1<
-      TObservableIn,
-      EnumerableLike<TOut>
-    >[]
-  ): Function1<TObservableIn, EnumerableLike<TOut>>
+    ...tail: readonly Function1<TObservableIn, EnumerableLike<TOut>>[]
+  ): Function1<TObservableIn, EnumerableLike<TOut>>;
   forkMerge<TObservableIn extends RunnableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, RunnableLike<TOut>>,
     snd: Function1<TObservableIn, RunnableLike<TOut>>,
-    ...tail: readonly Function1<
-      TObservableIn,
-      RunnableLike<TOut>
-    >[]
-  ): Function1<TObservableIn, RunnableLike<TOut>>
+    ...tail: readonly Function1<TObservableIn, RunnableLike<TOut>>[]
+  ): Function1<TObservableIn, RunnableLike<TOut>>;
   forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, DeferredObservableLike<TOut>>,
     snd: Function1<TObservableIn, DeferredObservableLike<TOut>>,
-    ...tail: readonly Function1<
-      TObservableIn,
-      DeferredObservableLike<TOut>
-    >[]
-  ): Function1<TObservableIn, DeferredObservableLike<TOut>>
+    ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]
+  ): Function1<TObservableIn, DeferredObservableLike<TOut>>;
   forkMerge<TObservableIn extends SharedObservableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, SharedObservableLike<TOut>>,
     snd: Function1<TObservableIn, SharedObservableLike<TOut>>,
-    ...tail: readonly Function1<
-      TObservableIn,
-      SharedObservableLike<TOut>
-    >[]
-  ): Function1<TObservableIn, SharedObservableLike<TOut>>
+    ...tail: readonly Function1<TObservableIn, SharedObservableLike<TOut>>[]
+  ): Function1<TObservableIn, SharedObservableLike<TOut>>;
   forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(
     fst: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>,
     snd: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>,
@@ -356,8 +338,8 @@ export interface Signature {
       TObservableIn,
       MaybeSharedObservableLike<TOut>
     >[]
-  ): Function1<TObservableIn, SharedObservableLike<TOut>>
-  
+  ): Function1<TObservableIn, SharedObservableLike<TOut>>;
+
   fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
   fromFactory<T>(options: {
     readonly delay: number;
