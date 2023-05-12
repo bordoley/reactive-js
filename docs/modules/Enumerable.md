@@ -18,6 +18,7 @@
 - [concat](Enumerable.md#concat)
 - [empty](Enumerable.md#empty)
 - [fromFactory](Enumerable.md#fromfactory)
+- [zip](Enumerable.md#zip)
 
 ### Operator Functions
 
@@ -40,6 +41,7 @@
 - [takeFirst](Enumerable.md#takefirst)
 - [takeLast](Enumerable.md#takelast)
 - [takeWhile](Enumerable.md#takewhile)
+- [zipWith](Enumerable.md#zipwith)
 
 ### Other Functions
 
@@ -124,6 +126,229 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create a Container whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TH`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TI`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -629,6 +854,218 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TH`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TI`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 

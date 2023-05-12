@@ -26,6 +26,8 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_zip from "./Observable/__internal__/Observable.zip.js";
+import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
@@ -69,3 +71,5 @@ export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const toReadonlyArray = Runnable_toReadonlyArray;
+export const zip = Observable_zip;
+export const zipWith = Observable_zipWith;
