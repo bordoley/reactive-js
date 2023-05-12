@@ -30,6 +30,7 @@
 - [forEach](Observable.Signature.md#foreach)
 - [forkConcat](Observable.Signature.md#forkconcat)
 - [forkMerge](Observable.Signature.md#forkmerge)
+- [fromAsyncFactory](Observable.Signature.md#fromasyncfactory)
 - [fromFactory](Observable.Signature.md#fromfactory)
 - [fromOptional](Observable.Signature.md#fromoptional)
 - [generate](Observable.Signature.md#generate)
@@ -805,6 +806,22 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](types.SharedObservableLike.md)<`TOut`\>\>
+
+___
+
+### fromAsyncFactory
+
+▸ **fromAsyncFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Function1`](../modules/functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Function1`](../modules/functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
 
 ___
 

@@ -4,6 +4,7 @@ import DeferredObservable_concatAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
 import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
+import DeferredObservable_flatMapAsync from "./DeferredObservable/__internal__/DeferredObservable.flatMapAsync.js";
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
@@ -16,6 +17,7 @@ export const concatAll = DeferredObservable_concatAll;
 export const concatMap = DeferredObservable_concatMap;
 export const exhaust = DeferredObservable_exhaust;
 export const exhaustMap = DeferredObservable_exhaustMap;
+export const flatMapAsync = DeferredObservable_flatMapAsync;
 export const multicast = DeferredObservable_multicast;
 export const repeat = DeferredObservable_repeat;
 export const retry = DeferredObservable_retry;
