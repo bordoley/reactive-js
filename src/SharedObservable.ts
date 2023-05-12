@@ -4,13 +4,15 @@ import SharedObservable_concatAll from "./SharedObservable/__internal__/SharedOb
 import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedObservable.concatMap.js";
 import SharedObservable_exhaust from "./SharedObservable/__internal__/SharedObservable.exhaust.js";
 import SharedObservable_exhaustMap from "./SharedObservable/__internal__/SharedObservable.exhaustMap.js";
+import SharedObservable_flatMapAsync from "./SharedObservable/__internal__/SharedObservable.flatMapAsync.js";
 import SharedObservable_mergeAll from "./SharedObservable/__internal__/SharedObservable.mergeAll.js";
 import SharedObservable_mergeMap from "./SharedObservable/__internal__/SharedObservable.mergeMap.js";
 import SharedObservable_switchAll from "./SharedObservable/__internal__/SharedObservable.switchAll.js";
 import SharedObservable_switchMap from "./SharedObservable/__internal__/SharedObservable.switchMap.js";
-import { Factory } from "./functions.js";
+import { Factory, Function2 } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
+  ContainerOperator,
   DeferredObservableContainer,
   SharedObservableContainer,
   SharedObservableLike,
@@ -30,6 +32,10 @@ export interface Signature
     },
   ): SharedObservableLike<T>;
 
+  flatMapAsync<TA, TB>(
+    f: Function2<TA, AbortSignal, Promise<TB>>,
+  ): ContainerOperator<Type, TA, TB>;
+
   never<T>(): SharedObservableLike<T>;
 }
 
@@ -38,6 +44,8 @@ export const concatAll: Signature["concatAll"] = SharedObservable_concatAll;
 export const concatMap: Signature["concatMap"] = SharedObservable_concatMap;
 export const exhaust: Signature["exhaust"] = SharedObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] = SharedObservable_exhaustMap;
+export const flatMapAsync: Signature["flatMapAsync"] =
+  SharedObservable_flatMapAsync;
 export const mergeAll: Signature["mergeAll"] = SharedObservable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = SharedObservable_mergeMap;
 export const never: Signature["never"] = Observable_never;

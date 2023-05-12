@@ -108,6 +108,7 @@ export interface Signature {
     forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, DeferredObservableLike<TOut>>, snd: Function1<TObservableIn, DeferredObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]): Function1<TObservableIn, DeferredObservableLike<TOut>>;
     forkMerge<TObservableIn extends SharedObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, SharedObservableLike<TOut>>, snd: Function1<TObservableIn, SharedObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, SharedObservableLike<TOut>>[]): Function1<TObservableIn, SharedObservableLike<TOut>>;
     forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>, snd: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, MaybeSharedObservableLike<TOut>>[]): Function1<TObservableIn, SharedObservableLike<TOut>>;
+    fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromFactory<T>(options: {
         readonly delay: number;
@@ -222,6 +223,7 @@ export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
 export declare const forkConcat: Signature["forkConcat"];
 export declare const forkMerge: Signature["forkMerge"];
+export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const generate: Signature["generate"];

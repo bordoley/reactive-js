@@ -15,6 +15,7 @@ import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsy
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
+import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -340,6 +341,11 @@ export interface Signature {
     >[]
   ): Function1<TObservableIn, SharedObservableLike<TOut>>;
 
+  fromAsyncFactory<T>(): Function1<
+    Function1<AbortSignal, Promise<T>>,
+    DeferredObservableLike<T>
+  >;
+
   fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
   fromFactory<T>(options: {
     readonly delay: number;
@@ -592,6 +598,8 @@ export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkConcat: Signature["forkConcat"] = Observable_forkConcat;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
+export const fromAsyncFactory: Signature["fromAsyncFactory"] =
+  Observable_fromAsyncFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
 export const generate: Signature["generate"] = Observable_generate;

@@ -1,12 +1,13 @@
-import { Factory, Function1, Predicate } from "./functions.js";
+import { Factory, Function1, Function2, Predicate } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
-import { DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
+import { ContainerOperator, DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type Type = DeferredObservableContainer;
 export interface Signature extends HigherOrderObservableBaseTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;
+    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): ContainerOperator<Type, TA, TB>;
     multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
         readonly capacity?: number;
@@ -27,6 +28,7 @@ export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
+export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const multicast: Signature["multicast"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
