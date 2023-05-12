@@ -1927,7 +1927,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`EnumerableLike`](types.EnumerableLike.md)<`T`\> |
+| `other` | [`EnumerableLike`](types.EnumerableLike.md)<`TB`\> |
 | `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -1948,7 +1948,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`RunnableLike`](types.RunnableLike.md)<`T`\> |
+| `other` | [`RunnableLike`](types.RunnableLike.md)<`TB`\> |
 | `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -1969,14 +1969,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\> |
+| `other` | [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
 
 [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../modules/functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1990,9 +1990,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\> |
+| `other` | [`SharedObservableLike`](types.SharedObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>

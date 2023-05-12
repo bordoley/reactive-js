@@ -8,6 +8,7 @@ import {
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/Observable";
+import * as SharedObservable from "@reactive-js/core/SharedObservable";
 import {
   useDispatcher,
   useDisposable,
@@ -19,10 +20,12 @@ import * as EventSource from "@reactive-js/core/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
 import * as Streamable from "@reactive-js/core/Streamable";
-import { KeyedCollectionLike_get } from "@reactive-js/core/types";
+import {
+  DeferredObservableLike,
+  KeyedCollectionLike_get,
+} from "@reactive-js/core/types";
 import { getScheduler } from "@reactive-js/core/integrations/scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
-import * as DeferredObservable from "@reactive-js/core/DeferredObservable";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -66,38 +69,40 @@ const Measure = () => {
 
   const { enqueue } = useDispatcher(animationGroup);
 
-  const { width: boxWidth } = useObserve<Rect>(
-    pipeSomeLazy(
-      container,
-      WebElement.observeMeasure(),
-      Observable.distinctUntilChanged({
-        equality: (a, b) => a.width === b.width,
-      }),
-      Observable.forkMerge(
-        compose(
-          Observable.withLatestFrom(
-            pipeSome(animation, EventSource.toObservable()) ??
-              DeferredObservable.empty<number>(),
-            ({ width: boxWidth }, currentWidth) => [boxWidth, currentWidth],
+  const boxWidth =
+    useObserve<number>(
+      pipeSomeLazy(
+        container,
+        WebElement.observeMeasure(),
+        Observable.distinctUntilChanged<Rect>({
+          equality: (a, b) => a.width === b.width,
+        }),
+        Observable.pick<Rect, "width">("width"),
+        Observable.forkMerge<DeferredObservableLike<number>, number, number>(
+          compose(
+            Observable.withLatestFrom<number, number, [number, number]>(
+              pipeSome(animation, EventSource.toSharedObservable()) ??
+                SharedObservable.never<number>(),
+              (boxWidth, currentWidth) => [boxWidth, currentWidth],
+            ),
+            Observable.forEach<[number, number]>(([boxWidth, currentWidth]) => {
+              if (currentWidth > 0) {
+                enqueue({ width: boxWidth });
+              }
+            }),
+            Observable.ignoreElements(),
           ),
-          Observable.forEach(([boxWidth, currentWidth]) => {
-            if (currentWidth > 0) {
-              enqueue({ width: boxWidth });
-            }
-          }),
-          Observable.ignoreElements(),
+          Observable.throttle(50, { mode: "interval" }),
         ),
-        Observable.throttle(50, { mode: "interval" }),
       ),
-    ),
-    [container, animation, enqueue],
-  ) ?? { width: 0 };
+      [container, animation, enqueue],
+    ) ?? 0;
 
   const width =
     useObserve(
       pipeSomeLazy(
         animation,
-        EventSource.toObservable(),
+        EventSource.toSharedObservable(),
         Observable.throttle(50),
         Observable.map(Math.floor),
       ),

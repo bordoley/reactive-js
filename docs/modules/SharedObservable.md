@@ -25,6 +25,7 @@
 
 ### Other Functions
 
+- [compute](SharedObservable.md#compute)
 - [never](SharedObservable.md#never)
 
 ## Type Aliases
@@ -208,6 +209,30 @@ ___
 ___
 
 ## Other Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
+
+___
 
 ### never
 

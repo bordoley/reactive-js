@@ -1,5 +1,6 @@
 <script>
 import * as Scheduler from "@reactive-js/core/Scheduler";
+import * as Observable from "@reactive-js/core/Observable";
 import * as Runnable from "@reactive-js/core/Runnable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
@@ -17,7 +18,7 @@ import * as Store from "@reactive-js/core/Store";
   const scheduler = Scheduler.createHostScheduler();
 
   const counter = pipe(
-    Runnable.generate(increment, returns(-1), { delay: 500 }),
+    Observable.generate(increment, returns(-1), { delay: 500 }),
     Runnable.flow(scheduler),
   );
 
@@ -27,7 +28,7 @@ import * as Store from "@reactive-js/core/Store";
   const isPaused = pipe(
     counter[PauseableLike_isPaused],
     // FIXME: Maybe we should add a function to avoid the need for scheduling?
-    Store.toObservable(),
+    Store.toSharedObservable(),
     subscribe(scheduler),
   );
 

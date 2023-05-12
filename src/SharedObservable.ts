@@ -1,3 +1,4 @@
+import { SharedObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import SharedObservable_concatAll from "./SharedObservable/__internal__/SharedObservable.concatAll.js";
 import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedObservable.concatMap.js";
@@ -32,6 +33,7 @@ export interface Signature
   never<T>(): SharedObservableLike<T>;
 }
 
+export const compute: Signature["compute"] = SharedObservable_compute;
 export const concatAll: Signature["concatAll"] = SharedObservable_concatAll;
 export const concatMap: Signature["concatMap"] = SharedObservable_concatMap;
 export const exhaust: Signature["exhaust"] = SharedObservable_exhaust;

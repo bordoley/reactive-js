@@ -13,7 +13,7 @@ import {
   SchedulerLike_yield,
 } from "../../types.js";
 
-const Runnable_generate: Observable.Signature["generate"] = (<T>(
+const Observable_generate: Observable.Signature["generate"] = (<T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
   options?: { readonly delay?: number; readonly delayStart?: boolean },
@@ -44,4 +44,4 @@ const Runnable_generate: Observable.Signature["generate"] = (<T>(
     : Enumerable_create(onSubscribe);
 }) as Observable.Signature["generate"];
 
-export default Runnable_generate;
+export default Observable_generate;

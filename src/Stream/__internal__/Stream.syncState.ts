@@ -42,19 +42,13 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
       stateStore as SharedObservableLike<T>,
       Observable_forkMerge(
         compose(
-          Observable_takeFirst() as Function1<
-            SharedObservableLike<T>,
-            SharedObservableLike<T>
-          >,
+          Observable_takeFirst<T>() as Function1<SharedObservableLike<T>, SharedObservableLike<T>>,
           SharedObservable_concatMap(onInit),
-        ),
+        ) ,
         compose(
           (throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity) as Function1<
-            SharedObservableLike<T>,
-            SharedObservableLike<T>
-          >,
+            : identity)  as Function1<SharedObservableLike<T>, SharedObservableLike<T>>,
           Observable_pairwise<T>(),
           SharedObservable_concatMap<readonly [T, T], Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),

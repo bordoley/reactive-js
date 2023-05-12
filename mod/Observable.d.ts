@@ -55,6 +55,7 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
     readonly selector: Function1<number, T>;
 });
 type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
+type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | SharedObservableLike<T> | ObservableLike<T>;
 export interface Signature {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
@@ -200,10 +201,10 @@ export interface Signature {
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
-    withLastestFrom<TA, TB, T>(other: EnumerableLike<T>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: RunnableLike<T>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: DeferredObservableLike<T>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: SharedObservableLike<T>, selector: Function2<TA, TB, T>): Function1<ObservableLike<T>, SharedObservableLike<T>>;
+    withLastestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
+    withLastestFrom<TA, TB, T>(other: SharedObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
 }
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const concat: Signature["concat"];
@@ -224,6 +225,7 @@ export declare const forkConcat: Signature["forkConcat"];
 export declare const forkMerge: Signature["forkMerge"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromOptional: Signature["fromOptional"];
+export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];
 export declare const isEnumerable: Signature["isEnumerable"];
