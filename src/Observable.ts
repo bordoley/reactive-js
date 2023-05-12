@@ -41,11 +41,13 @@ import Observable_subscribeOn from "./Observable/__internal__/Observable.subscri
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
+import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
 import {
   Equality,
   Factory,
@@ -356,6 +358,11 @@ export interface Signature {
     readonly delay: number;
   }): Function1<Factory<T>, RunnableLike<T>>;
 
+  fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
+  fromFactory<T>(options: {
+    readonly delay: number;
+  }): Function1<Factory<T>, RunnableLike<T>>;
+
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -531,6 +538,11 @@ export interface Signature {
     },
   ): EnumerableUpperBoundObservableOperator<T, T>;
 
+  throttle<T>(
+    duration: number,
+    options?: { readonly mode?: "first" | "last" | "interval" },
+  ): RunnableUpperBoundObservableOperator<T, T>;
+
   throwIfEmpty<T>(
     factory: Factory<unknown>,
     options?: undefined,
@@ -594,6 +606,7 @@ export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkConcat: Signature["forkConcat"] = Observable_forkConcat;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
+export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const isDeferredObservable: Signature["isDeferredObservable"] =
@@ -622,6 +635,7 @@ export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =

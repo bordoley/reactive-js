@@ -30,6 +30,7 @@
 - [repeat](DeferredObservable.Signature.md#repeat)
 - [retry](DeferredObservable.Signature.md#retry)
 - [share](DeferredObservable.Signature.md#share)
+- [throttle](DeferredObservable.Signature.md#throttle)
 
 ## Operator Methods
 
@@ -386,3 +387,31 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+___
+
+### throttle
+
+▸ **throttle**<`T`\>(`wait`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `wait` | [`Function1`](../modules/functions.md#function1)<`T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[throttle](type_classes.HigherOrderObservableBaseTypeClass.md#throttle)

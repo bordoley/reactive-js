@@ -31,6 +31,7 @@
 - [forkConcat](Observable.Signature.md#forkconcat)
 - [forkMerge](Observable.Signature.md#forkmerge)
 - [fromFactory](Observable.Signature.md#fromfactory)
+- [fromOptional](Observable.Signature.md#fromoptional)
 - [generate](Observable.Signature.md#generate)
 - [ignoreElements](Observable.Signature.md#ignoreelements)
 - [isDeferredObservable](Observable.Signature.md#isdeferredobservable)
@@ -57,6 +58,7 @@
 - [takeFirst](Observable.Signature.md#takefirst)
 - [takeLast](Observable.Signature.md#takelast)
 - [takeWhile](Observable.Signature.md#takewhile)
+- [throttle](Observable.Signature.md#throttle)
 - [throwIfEmpty](Observable.Signature.md#throwifempty)
 - [throws](Observable.Signature.md#throws)
 - [toEventSource](Observable.Signature.md#toeventsource)
@@ -850,6 +852,41 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+▸ **fromFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -1721,6 +1758,30 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### throttle
+
+▸ **throttle**<`T`\>(`duration`, `options?`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `options?` | `Object` |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 

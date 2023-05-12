@@ -67,6 +67,7 @@
 - [compute](Runnable.Signature.md#compute)
 - [flow](Runnable.Signature.md#flow)
 - [run](Runnable.Signature.md#run)
+- [throttle](Runnable.Signature.md#throttle)
 
 ### Transform Methods
 
@@ -1622,6 +1623,34 @@ ___
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
+### throttle
+
+▸ **throttle**<`T`\>(`wait`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `wait` | [`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`unknown`\>\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[throttle](type_classes.HigherOrderObservableBaseTypeClass.md#throttle)
 
 ___
 
