@@ -770,7 +770,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[flatMapIterable](type_classes.HigherOrderObservableBaseTypeClass.md#flatmapiterable)
 
 ___
 

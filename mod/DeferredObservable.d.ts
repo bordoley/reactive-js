@@ -29,6 +29,7 @@ export declare const concatMap: Signature["concatMap"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
 export declare const flatMapAsync: Signature["flatMapAsync"];
+export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const multicast: Signature["multicast"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];

@@ -27,6 +27,7 @@
 - [endWith](Runnable.md#endwith)
 - [exhaust](Runnable.md#exhaust)
 - [exhaustMap](Runnable.md#exhaustmap)
+- [flatMapIterable](Runnable.md#flatmapiterable)
 - [forEach](Runnable.md#foreach)
 - [keep](Runnable.md#keep)
 - [keepType](Runnable.md#keeptype)
@@ -280,6 +281,29 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
 
 #### Returns
 

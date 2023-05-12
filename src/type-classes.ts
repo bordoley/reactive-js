@@ -567,6 +567,13 @@ export interface HigherOrderObservableBaseTypeClass<
   /**
    * @category Operator
    */
+  flatMapIterable<TA, TB>(
+    selector: Function1<TA, Iterable<TB>>,
+  ): ContainerOperator<C, TA, TB>;
+
+  /**
+   * @category Operator
+   */
   mergeAll<T>(options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
