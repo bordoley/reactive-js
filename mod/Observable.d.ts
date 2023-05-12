@@ -112,6 +112,10 @@ export interface Signature {
     fromFactory<T>(options: {
         readonly delay: number;
     }): Function1<Factory<T>, RunnableLike<T>>;
+    fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
+    fromFactory<T>(options: {
+        readonly delay: number;
+    }): Function1<Factory<T>, RunnableLike<T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
         readonly delay: number;
@@ -179,6 +183,9 @@ export interface Signature {
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
     }): EnumerableUpperBoundObservableOperator<T, T>;
+    throttle<T>(duration: number, options?: {
+        readonly mode?: "first" | "last" | "interval";
+    }): RunnableUpperBoundObservableOperator<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): EnumerableUpperBoundObservableOperator<T, T>;
     throws<T>(): EnumerableLike<T>;
     throws<T>(options: {
@@ -216,6 +223,7 @@ export declare const forEach: Signature["forEach"];
 export declare const forkConcat: Signature["forkConcat"];
 export declare const forkMerge: Signature["forkMerge"];
 export declare const fromFactory: Signature["fromFactory"];
+export declare const fromOptional: Signature["fromOptional"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];
 export declare const isEnumerable: Signature["isEnumerable"];
@@ -241,6 +249,7 @@ export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];

@@ -40,6 +40,7 @@
 - [forkConcat](Observable.md#forkconcat)
 - [forkMerge](Observable.md#forkmerge)
 - [fromFactory](Observable.md#fromfactory)
+- [fromOptional](Observable.md#fromoptional)
 - [ignoreElements](Observable.md#ignoreelements)
 - [isDeferredObservable](Observable.md#isdeferredobservable)
 - [isEnumerable](Observable.md#isenumerable)
@@ -65,6 +66,7 @@
 - [takeFirst](Observable.md#takefirst)
 - [takeLast](Observable.md#takelast)
 - [takeWhile](Observable.md#takewhile)
+- [throttle](Observable.md#throttle)
 - [throwIfEmpty](Observable.md#throwifempty)
 - [throws](Observable.md#throws)
 - [toEventSource](Observable.md#toeventsource)
@@ -952,6 +954,41 @@ ___
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
+▸ **fromFactory**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
 ___
 
 ### ignoreElements
@@ -1755,6 +1792,30 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### throttle
+
+▸ **throttle**<`T`\>(`duration`, `options?`): [`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `duration` | `number` |
+| `options?` | `Object` |
+| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
