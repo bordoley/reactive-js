@@ -23,6 +23,7 @@ export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];
+export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const forEach: Signature["forEach"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const keep: Signature["keep"];

@@ -29,6 +29,7 @@ import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy
 import Runnable_exhaust from "./Runnable/__internal__/Runnable.exhaust.js";
 import Runnable_exhaustMap from "./Runnable/__internal__/Runnable.exhaustMap.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_flatMapIterable from "./Runnable/__internal__/Runnable.flatMapIterable.js";
 import Runnable_flow from "./Runnable/__internal__/Runnable.flow.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_mergeAll from "./Runnable/__internal__/Runnable.mergeAll.js";
@@ -54,6 +55,7 @@ export const exhaust = Runnable_exhaust;
 export const exhaustMap = Runnable_exhaustMap;
 export const first = Runnable_first;
 export const firstAsync = Observable_firstAsync;
+export const flatMapIterable = Runnable_flatMapIterable;
 export const flow = Runnable_flow;
 export const forEach = Observable_forEach;
 export const fromFactory = Observable_fromFactory;

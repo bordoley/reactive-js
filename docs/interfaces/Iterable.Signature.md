@@ -26,6 +26,11 @@
 - [fromReadonlyArray](Iterable.Signature.md#fromreadonlyarray)
 - [fromValue](Iterable.Signature.md#fromvalue)
 
+### Other Methods
+
+- [toEnumerable](Iterable.Signature.md#toenumerable)
+- [toRunnable](Iterable.Signature.md#torunnable)
+
 ### Transform Methods
 
 - [enumerate](Iterable.Signature.md#enumerate)
@@ -181,6 +186,60 @@ ___
 #### Inherited from
 
 [ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
+
+___
+
+## Other Methods
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toRunnable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 

@@ -16,6 +16,11 @@
 
 - [fromReadonlyArray](Iterable.md#fromreadonlyarray)
 
+### Other Functions
+
+- [toEnumerable](Iterable.md#toenumerable)
+- [toRunnable](Iterable.md#torunnable)
+
 ### Transform Functions
 
 - [enumerate](Iterable.md#enumerate)
@@ -50,6 +55,60 @@
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
+
+___
+
+## Other Functions
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **toRunnable**<`T`\>(`options`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 

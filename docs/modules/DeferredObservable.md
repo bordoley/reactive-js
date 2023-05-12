@@ -19,6 +19,7 @@
 - [concatMap](DeferredObservable.md#concatmap)
 - [exhaust](DeferredObservable.md#exhaust)
 - [exhaustMap](DeferredObservable.md#exhaustmap)
+- [flatMapIterable](DeferredObservable.md#flatmapiterable)
 - [switchAll](DeferredObservable.md#switchall)
 - [switchMap](DeferredObservable.md#switchmap)
 
@@ -146,6 +147,29 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `TA`, `TB`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
 
 #### Returns
 

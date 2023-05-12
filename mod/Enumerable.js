@@ -3,6 +3,7 @@
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_flatMapIterable from "./Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -47,6 +48,7 @@ export const concatAll = Enumerable_concatAll;
 export const concatMap = Enumerable_concatMap;
 export const first = Runnable_first;
 export const firstAsync = Observable_firstAsync;
+export const flatMapIterable = Enumerable_flatMapIterable;
 export const forEach = Observable_forEach;
 export const fromFactory = Observable_fromFactory;
 export const keep = Observable_keep;

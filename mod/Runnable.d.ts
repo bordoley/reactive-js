@@ -29,6 +29,7 @@ export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
 export declare const first: Signature["first"];
 export declare const firstAsync: Signature["firstAsync"];
+export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const fromFactory: Signature["fromFactory"];

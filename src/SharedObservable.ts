@@ -5,6 +5,7 @@ import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedOb
 import SharedObservable_exhaust from "./SharedObservable/__internal__/SharedObservable.exhaust.js";
 import SharedObservable_exhaustMap from "./SharedObservable/__internal__/SharedObservable.exhaustMap.js";
 import SharedObservable_flatMapAsync from "./SharedObservable/__internal__/SharedObservable.flatMapAsync.js";
+import SharedObservable_flatMapIterable from "./SharedObservable/__internal__/SharedObservable.flatMapIterable.js";
 import SharedObservable_mergeAll from "./SharedObservable/__internal__/SharedObservable.mergeAll.js";
 import SharedObservable_mergeMap from "./SharedObservable/__internal__/SharedObservable.mergeMap.js";
 import SharedObservable_switchAll from "./SharedObservable/__internal__/SharedObservable.switchAll.js";
@@ -46,6 +47,8 @@ export const exhaust: Signature["exhaust"] = SharedObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] = SharedObservable_exhaustMap;
 export const flatMapAsync: Signature["flatMapAsync"] =
   SharedObservable_flatMapAsync;
+export const flatMapIterable: Signature["flatMapIterable"] =
+  SharedObservable_flatMapIterable;
 export const mergeAll: Signature["mergeAll"] = SharedObservable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = SharedObservable_mergeMap;
 export const never: Signature["never"] = Observable_never;

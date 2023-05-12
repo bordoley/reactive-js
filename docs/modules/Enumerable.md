@@ -26,6 +26,7 @@
 - [concatWith](Enumerable.md#concatwith)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [endWith](Enumerable.md#endwith)
+- [flatMapIterable](Enumerable.md#flatmapiterable)
 - [forEach](Enumerable.md#foreach)
 - [keep](Enumerable.md#keep)
 - [keepType](Enumerable.md#keeptype)
@@ -239,6 +240,29 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `TA`, `TB`\>
 
 ___
 
