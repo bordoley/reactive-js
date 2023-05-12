@@ -40,6 +40,8 @@
 
 - [distinctUntilChanged](Runnable.Signature.md#distinctuntilchanged)
 - [endWith](Runnable.Signature.md#endwith)
+- [exhaust](Runnable.Signature.md#exhaust)
+- [exhaustMap](Runnable.Signature.md#exhaustmap)
 - [flatMapIterable](Runnable.Signature.md#flatmapiterable)
 - [forEach](Runnable.Signature.md#foreach)
 - [keep](Runnable.Signature.md#keep)
@@ -63,8 +65,6 @@
 ### Other Methods
 
 - [compute](Runnable.Signature.md#compute)
-- [exhaust](Runnable.Signature.md#exhaust)
-- [exhaustMap](Runnable.Signature.md#exhaustmap)
 - [flow](Runnable.Signature.md#flow)
 - [run](Runnable.Signature.md#run)
 
@@ -696,6 +696,53 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[endWith](type_classes.RunnableContainerTypeClass.md#endwith)
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ___
 
@@ -1526,53 +1573,6 @@ ___
 #### Returns
 
 [`RunnableLike`](types.RunnableLike.md)<`T`\>
-
-___
-
-### exhaust
-
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), [`RunnableLike`](types.RunnableLike.md)<`T`\>, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
-
-___
-
-### exhaustMap
-
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ___
 

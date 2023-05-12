@@ -37,6 +37,8 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
+import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
+import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 export const compute = Runnable_compute;
 export const concat = Observable_concat;
@@ -72,6 +74,8 @@ export const scan = Observable_scan;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Runnable_someSatisfy;
 export const startWith = Observable_startWith;
+export const switchAll = Runnable_switchAll;
+export const switchMap = Runnable_switchMap;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;

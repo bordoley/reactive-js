@@ -15,3 +15,5 @@ export declare const exhaustMap: Signature["exhaustMap"];
 export declare const mergeAll: Signature["mergeAll"];
 export declare const mergeMap: Signature["mergeMap"];
 export declare const never: Signature["never"];
+export declare const switchAll: Signature["switchAll"];
+export declare const switchMap: Signature["switchMap"];

@@ -49,6 +49,8 @@ export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];
 export declare const startWith: Signature["startWith"];
+export declare const switchAll: Signature["switchAll"];
+export declare const switchMap: Signature["switchMap"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];

@@ -23,7 +23,13 @@ export interface Signature extends HigherOrderObservableBaseTypeClass<Type, Type
     }): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
 }
 export declare const compute: Signature["compute"];
+export declare const concatAll: Signature["concatAll"];
+export declare const concatMap: Signature["concatMap"];
+export declare const exhaust: Signature["exhaust"];
+export declare const exhaustMap: Signature["exhaustMap"];
 export declare const multicast: Signature["multicast"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const share: Signature["share"];
+export declare const switchAll: Signature["switchAll"];
+export declare const switchMap: Signature["switchMap"];

@@ -35,6 +35,8 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
+import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
+import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
 import {
@@ -114,6 +116,8 @@ export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] = Runnable_someSatisfy;
 export const startWith: Signature["startWith"] = Observable_startWith;
+export const switchAll: Signature["switchAll"] = Runnable_switchAll;
+export const switchMap: Signature["switchMap"] = Runnable_switchMap;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;

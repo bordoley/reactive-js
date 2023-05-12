@@ -16,13 +16,15 @@
 
 - [concatAll](SharedObservable.md#concatall)
 - [concatMap](SharedObservable.md#concatmap)
+- [exhaust](SharedObservable.md#exhaust)
+- [exhaustMap](SharedObservable.md#exhaustmap)
 - [mergeAll](SharedObservable.md#mergeall)
 - [mergeMap](SharedObservable.md#mergemap)
+- [switchAll](SharedObservable.md#switchall)
+- [switchMap](SharedObservable.md#switchmap)
 
 ### Other Functions
 
-- [exhaust](SharedObservable.md#exhaust)
-- [exhaustMap](SharedObservable.md#exhaustmap)
 - [never](SharedObservable.md#never)
 
 ## Type Aliases
@@ -55,6 +57,45 @@ ___
 ### concatMap
 
 ▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -127,11 +168,9 @@ ___
 
 ___
 
-## Other Functions
+### switchAll
 
-### exhaust
-
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -145,9 +184,9 @@ ___
 
 ___
 
-### exhaustMap
+### switchMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -167,6 +206,8 @@ ___
 [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
 
 ___
+
+## Other Functions
 
 ### never
 
