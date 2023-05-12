@@ -706,219 +706,207 @@ ___
 
 ### forkConcat
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
+▸ **forkConcat**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
+▸ **forkConcat**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+▸ **forkConcat**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
 
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+▸ **forkConcat**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
-
-▸ **forkConcat**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
 ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\>\>
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\>\>
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
-▸ **forkMerge**<`TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TObservableIn`, `TIn`, `TOut`\>(`fst`, `snd`, `...tail`): [`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`, `TObservableIn`\> |
+| `TIn` | `TIn` |
+| `TOut` | `TOut` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, `MaybeSharedObservableLike`<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, `MaybeSharedObservableLike`<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, `MaybeSharedObservableLike`<`TOut`\>\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
+[`Function1`](functions.md#function1)<`TObservableIn`, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\>\>
 
 ___
 

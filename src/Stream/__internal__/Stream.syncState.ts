@@ -6,13 +6,7 @@ import Observable_takeFirst from "../../Observable/__internal__/Observable.takeF
 import Observable_throttle from "../../Observable/__internal__/Observable.throttle.js";
 import SharedObservable_concatMap from "../../SharedObservable/__internal__/SharedObservable.concatMap.js";
 import type * as Stream from "../../Stream.js";
-import {
-  Function1,
-  Updater,
-  compose,
-  identity,
-  pipe,
-} from "../../functions.js";
+import { Updater, compose, identity, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
   QueueableLike,
@@ -39,17 +33,14 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
     const scheduler = options?.scheduler ?? stateStore[StreamLike_scheduler];
 
     return pipe(
-      stateStore as SharedObservableLike<T>,
-      Observable_forkMerge(
+      stateStore,
+      Observable_forkMerge<SharedObservableLike<T>, T, Updater<T>>(
+        compose(Observable_takeFirst(), SharedObservable_concatMap(onInit)),
         compose(
-          Observable_takeFirst<T>() as Function1<SharedObservableLike<T>, SharedObservableLike<T>>,
-          SharedObservable_concatMap(onInit),
-        ) ,
-        compose(
-          (throttleDuration > 0
+          throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity)  as Function1<SharedObservableLike<T>, SharedObservableLike<T>>,
-          Observable_pairwise<T>(),
+            : identity,
+          Observable_pairwise(),
           SharedObservable_concatMap<readonly [T, T], Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
           ),
