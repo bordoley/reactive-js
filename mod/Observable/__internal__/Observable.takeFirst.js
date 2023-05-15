@@ -1,6 +1,6 @@
 /// <reference types="./Observable.takeFirst.d.ts" />
 
-import Observer_createTakeFirstObserver from "../../Observer/__internal__/Observer.takeFirstObserver.js";
+import Observer_createTakeFirstObserver from "../../Observer/__internal__/Observer.createTakeFirstObserver.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { partial, pipe } from "../../functions.js";
 import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
