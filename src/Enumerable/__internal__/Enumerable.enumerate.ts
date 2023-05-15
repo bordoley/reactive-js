@@ -52,6 +52,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike_now,
+  SchedulerLike_shouldYield,
 } from "../../types.js";
 
 const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
@@ -79,7 +80,7 @@ const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
         > &
           Mutable<TEnumeratorSchedulerProperties>,
       ): EnumeratorScheduler<T> {
-        init(MutableEnumerator_mixin(), instance);
+        init(MutableEnumerator_mixin<T>(), instance);
         init(SchedulerImplementation_mixin, instance, 0);
         init(Observer_baseMixin<T>(), instance, {
           [QueueableLike_backpressureStrategy]: "overflow",
@@ -89,8 +90,7 @@ const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
         instance[__EnumerableEnumerator_continuationQueue] =
           Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
 
-        // FIXME: Cast needed to coalesce the type of[Container_type] field
-        return instance as EnumeratorScheduler<T>;
+        return instance;
       },
       props<TEnumeratorSchedulerProperties>({
         [__EnumerableEnumerator_continuationQueue]: none,
@@ -98,6 +98,11 @@ const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
       {
         [SchedulerLike_now]: 0,
         get [SchedulerImplementationLike_shouldYield](): boolean {
+          unsafeCast<EnumeratorLike>(this);
+          return this[EnumeratorLike_hasCurrent];
+        },
+        // Override for perf
+        get [SchedulerLike_shouldYield](): boolean {
           unsafeCast<EnumeratorLike>(this);
           return this[EnumeratorLike_hasCurrent];
         },

@@ -63,7 +63,7 @@ import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
-import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as Store from "@reactive-js/core/Store";
 
 const AnimatedBox = ({
@@ -98,7 +98,7 @@ const AnimatedBox = ({
 
 const AnimationGroup = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
     [],
   );
 
@@ -220,7 +220,7 @@ const Counter = () => {
             query: `v=${value}`,
           })),
         ),
-        Runnable.flow(getScheduler()),
+        Runnable.flow(ReactScheduler.get()),
       ),
     [history.replace, counterInitialValue],
   );
@@ -407,7 +407,7 @@ const RxComponent = createComponent(
 );
 
 // Subscribe to the window location using react's normal priority scheduler.
-const windowLocation = WindowLocation.subscribe(getScheduler());
+const windowLocation = WindowLocation.subscribe(ReactScheduler.get());
 const rootElement = document.getElementById("root");
 
 ReactDOMClient.createRoot(rootElement as any).render(

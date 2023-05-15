@@ -45,6 +45,11 @@
 - [takeWhile](Enumerator.Signature.md#takewhile)
 - [zipWith](Enumerator.Signature.md#zipwith)
 
+### Other Methods
+
+- [toEnumerable](Enumerator.Signature.md#toenumerable)
+- [toRunnable](Enumerator.Signature.md#torunnable)
+
 ### Transform Methods
 
 - [toReadonlyArray](Enumerator.Signature.md#toreadonlyarray)
@@ -1155,6 +1160,60 @@ ___
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### toEnumerable
+
+▸ **toEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### toRunnable
+
+▸ **toRunnable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toRunnable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 

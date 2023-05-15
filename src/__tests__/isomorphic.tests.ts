@@ -13,6 +13,6 @@ import "./Queue.test.js";
 import "./ReadonlyArray.test.js";
 import "./ReadonlyMap.test.js";
 import "./ReadonlyObjectMap.test.js";
-import "./Runnable.test.ts";
+import "./Runnable.test.js";
 import "./Scheduler.test.js";
 import "./Streamable.test.js";

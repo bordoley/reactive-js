@@ -1,5 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
+import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
@@ -24,7 +25,9 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
+import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
@@ -85,9 +88,12 @@ export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
 export const fromAsyncFactory = Observable_fromAsyncFactory;
+export const fromEnumeratorFactory = Observable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
+export const fromIterable = Iterable_toRunnable;
 export const fromOptional = Optional_toRunnable;
 export const fromReadonlyArray = ReadonlyArray_toRunnable;
+export const fromValue = Observable_fromValue;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const isDeferredObservable = Observable_isDeferredObservable;

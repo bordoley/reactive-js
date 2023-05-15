@@ -25,7 +25,7 @@ Both Ecmascript and Typescript modules that may be directly imported into your p
 ## Example Usage
 
 ```typescript
-import * as Observable from "@reactive-js/core/rx/Observable";
+import * as Observable from "@reactive-js/core/Observable";
 import {
   SideEffect,
   bindMethod,
@@ -33,11 +33,11 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import * as Scheduler from "@reactive-js/core/util/Scheduler";
+import * as Scheduler from "@reactive-js/core/Scheduler";
 import {
   DisposableLike_dispose,
   SchedulerLike_schedule,
-} from "@reactive-js/core/util";
+} from "@reactive-js/core/types";
 
 const scheduler = Scheduler.createHostScheduler();
 
