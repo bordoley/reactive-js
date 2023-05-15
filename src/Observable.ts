@@ -3,6 +3,8 @@ import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
+import Observable_createPublisher from "./Observable/__internal__/Observable.createPublisher.js";
+import Observable_createRefCountedPublisher from "./Observable/__internal__/Observable.createRefCountedPublisher.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
@@ -76,6 +78,7 @@ import {
   ObservableContainer,
   ObservableLike,
   ObserverLike,
+  PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableLike,
@@ -247,6 +250,12 @@ export interface Signature {
   ): DeferredObservableUpperBoundObservableOperator<T, T>;
 
   create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableLike<T>;
+
+  createPublisher<T>(options?: { readonly replay?: number }): PublisherLike<T>;
+
+  createRefCountedPublisher<T>(options?: {
+    readonly replay?: number;
+  }): PublisherLike<T>;
 
   currentTime(options?: {
     readonly delay?: number;
@@ -1211,6 +1220,10 @@ export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;
+export const createPublisher: Signature["createPublisher"] =
+  Observable_createPublisher;
+export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
+  Observable_createRefCountedPublisher;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const defer: Signature["defer"] = Observable_defer;

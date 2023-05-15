@@ -1,5 +1,4 @@
 import * as Observable from "../Observable.js";
-import * as Publisher from "../Publisher.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import {
@@ -21,7 +20,7 @@ testModule(
   test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const publisher = Publisher.create<number>({ replay: 2 });
+    const publisher = Observable.createPublisher<number>({ replay: 2 });
     pipe(
       [1, 2, 3, 4],
       ReadonlyArray.forEach(bindMethod(publisher, EventListenerLike_notify)),
@@ -45,7 +44,7 @@ testModule(
   test("with multiple observers", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
 
-    const publisher = Publisher.create();
+    const publisher = Observable.createPublisher();
     pipe(publisher[PublisherLike_observerCount], expectEquals(0));
     const sub1 = pipe(publisher, Observable.subscribe(scheduler));
     pipe(publisher[PublisherLike_observerCount], expectEquals(1));

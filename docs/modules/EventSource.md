@@ -15,6 +15,8 @@
 ### Constructor Functions
 
 - [create](EventSource.md#create)
+- [createPublisher](EventSource.md#createpublisher)
+- [createRefCountedPublisher](EventSource.md#createrefcountedpublisher)
 
 ### Operator Functions
 
@@ -56,6 +58,38 @@
 #### Returns
 
 [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### createPublisher
+
+▸ **createPublisher**<`T`\>(): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+
+___
+
+### createRefCountedPublisher
+
+▸ **createRefCountedPublisher**<`T`\>(): [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
 
 ___
 

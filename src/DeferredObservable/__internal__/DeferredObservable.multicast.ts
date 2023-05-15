@@ -1,5 +1,5 @@
 import type * as DeferredObservable from "../../DeferredObservable.js";
-import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
+import Observable_createPublisher from "../../Observable/__internal__/Observable.createPublisher.js";
 import { Factory } from "../../functions.js";
 import {
   DisposableLike,
@@ -18,6 +18,10 @@ const DeferredObservable_multicast: DeferredObservable.Signature["multicast"] =
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     } = {},
   ) =>
-    Observable_multicastImpl<T>(Publisher_create, schedulerOrFactory, options);
+    Observable_multicastImpl<T>(
+      Observable_createPublisher,
+      schedulerOrFactory,
+      options,
+    );
 
 export default DeferredObservable_multicast;

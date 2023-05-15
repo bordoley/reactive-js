@@ -13,7 +13,6 @@ import * as EventSource from "../EventSource.js";
 import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 import MulticastObservable_isMulticastObservable from "../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
 import * as Observable from "../Observable.js";
-import * as Publisher from "../Publisher.js";
 import type * as SharedObservable from "../SharedObservable.js";
 import {
   Factory,
@@ -439,7 +438,7 @@ export const createComponent = <TProps>(
 ): ComponentType<TProps> => {
   const ObservableComponent = (props: TProps) => {
     const propsPublisher = useDisposable(
-      () => Publisher.create<TProps>({ replay: 1 }),
+      () => Observable.createPublisher<TProps>({ replay: 1 }),
       [],
     );
 

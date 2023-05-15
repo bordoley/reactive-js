@@ -1,7 +1,7 @@
 import type * as DeferredObservable from "../../DeferredObservable.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -59,7 +59,7 @@ const PauseableObservable_create: <T>(
       include(
         Disposable_delegatingMixin,
         Delegating_mixin(),
-        EventPublisher_lazyInitMixin(),
+        EventSource_lazyInitPublisherMixin(),
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
@@ -90,7 +90,7 @@ const PauseableObservable_create: <T>(
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);
         init(Disposable_delegatingMixin, instance, stream);
         init(Delegating_mixin(), instance, stream);
-        init(EventPublisher_lazyInitMixin(), instance);
+        init(EventSource_lazyInitPublisherMixin(), instance);
 
         instance[PauseableLike_isPaused] = Store_createMutable(true);
 

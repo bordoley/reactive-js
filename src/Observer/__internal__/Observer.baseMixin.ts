@@ -1,6 +1,6 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
-import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import Queue_indexedQueueMixin from "../../Queue/__internal__/Queue.indexedQueueMixin.js";
 import {
   Mixin1,
@@ -118,7 +118,7 @@ const Observer_baseMixin: <T>() => Mixin1<
       >,
       DisposableLike
     >(
-      include(Queue_indexedQueueMixin(), EventPublisher_lazyInitMixin()),
+      include(Queue_indexedQueueMixin(), EventSource_lazyInitPublisherMixin()),
       function ObserverMixin(
         instance: Pick<
           ObserverLike,
@@ -138,7 +138,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           config[QueueableLike_backpressureStrategy],
         );
 
-        init(EventPublisher_lazyInitMixin(), instance);
+        init(EventSource_lazyInitPublisherMixin(), instance);
 
         return instance;
       },

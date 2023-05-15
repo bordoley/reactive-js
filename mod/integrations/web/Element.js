@@ -2,7 +2,6 @@
 
 import * as Disposable from "../../Disposable.js";
 import * as EventListener from "../../EventListener.js";
-import * as EventPublisher from "../../EventPublisher.js";
 import * as EventSource from "../../EventSource.js";
 import * as Observable from "../../Observable.js";
 import * as CurrentTime from "../../Scheduler/__internal__/CurrentTime.js";
@@ -46,7 +45,7 @@ let windowResizeEventSourceRef = none;
 const getWindowResizeEventSource = () => {
     const windowResizeEventSource = windowResizeEventSourceRef ??
         (() => {
-            const windowResizeEventPublisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+            const windowResizeEventPublisher = pipe(EventSource.createRefCountedPublisher(), Disposable.onDisposed(() => {
                 windowResizeEventSourceRef = none;
             }));
             windowResizeEventSourceRef = windowResizeEventPublisher;
@@ -59,7 +58,7 @@ let windowScrollEventSourceRef = none;
 const getWindowScrollEventSource = () => {
     const windowScrollEventSource = windowScrollEventSourceRef ??
         (() => {
-            const windowScrollEventsPublisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+            const windowScrollEventsPublisher = pipe(EventSource.createRefCountedPublisher(), Disposable.onDisposed(() => {
                 windowScrollEventSourceRef = none;
             }));
             windowScrollEventSourceRef = windowScrollEventsPublisher;
@@ -148,7 +147,7 @@ export const addResizeListener = /*@__PURE__*/ (() => {
                 (() => newInstance(ResizeObserver, resizeObserverCallback))();
         const publisher = publishers.get(element) ??
             (() => {
-                const publisher = pipe(EventPublisher.createRefCounted(), Disposable.onDisposed(() => {
+                const publisher = pipe(EventSource.createRefCountedPublisher(), Disposable.onDisposed(() => {
                     resizeObserver?.unobserve(element);
                     publishers.delete(element);
                     if (publishers.size > 0) {
@@ -250,7 +249,7 @@ export const intersectionWith =
     return (root = document) => child => EventSource.create(listener => {
         const publisher = eventPublishers.get(root)?.get(child) ??
             (() => {
-                const publisher = EventPublisher.createRefCounted();
+                const publisher = EventSource.createRefCountedPublisher();
                 const parentMap = eventPublishers.get(root) ??
                     (() => {
                         const parentMap = newInstance(Map);

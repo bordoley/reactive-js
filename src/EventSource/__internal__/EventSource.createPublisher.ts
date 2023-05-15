@@ -1,6 +1,6 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import type * as EventPublisher from "../../EventPublisher.js";
+import type * as EventSource from "../../EventSource.js";
 import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
 import {
   Mutable,
@@ -25,7 +25,7 @@ import {
   EventSourceLike_addEventListener,
 } from "../../types.js";
 
-const EventPublisher_create: EventPublisher.Signature["create"] =
+const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly [__EventPublisher_listeners]: Set<EventListenerLike<T>>;
@@ -114,4 +114,4 @@ const EventPublisher_create: EventPublisher.Signature["create"] =
     );
   })();
 
-export default EventPublisher_create;
+export default EventSource_createPublisher;

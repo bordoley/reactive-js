@@ -27,6 +27,8 @@
 - [concatMany](Observable.md#concatmany)
 - [concatWith](Observable.md#concatwith)
 - [create](Observable.md#create)
+- [createPublisher](Observable.md#createpublisher)
+- [createRefCountedPublisher](Observable.md#createrefcountedpublisher)
 - [decodeWithCharset](Observable.md#decodewithcharset)
 - [defer](Observable.md#defer)
 - [dispatchTo](Observable.md#dispatchto)
@@ -460,6 +462,52 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+___
+
+### createPublisher
+
+▸ **createPublisher**<`T`\>(`options?`): [`PublisherLike`](../interfaces/types.PublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`PublisherLike`](../interfaces/types.PublisherLike.md)<`T`\>
+
+___
+
+### createRefCountedPublisher
+
+▸ **createRefCountedPublisher**<`T`\>(`options?`): [`PublisherLike`](../interfaces/types.PublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`PublisherLike`](../interfaces/types.PublisherLike.md)<`T`\>
 
 ___
 

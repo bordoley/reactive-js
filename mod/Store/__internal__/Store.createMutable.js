@@ -1,14 +1,14 @@
 /// <reference types="./Store.createMutable.d.ts" />
 
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { none, unsafeCast } from "../../functions.js";
 import { EventListenerLike_notify, StoreLike_value, } from "../../types.js";
 const Store_createMutable = (() => {
-    return createInstanceFactory(mix(include(EventPublisher_lazyInitMixin(), Disposable_mixin), function MutableStore(instance) {
+    return createInstanceFactory(mix(include(EventSource_lazyInitPublisherMixin(), Disposable_mixin), function MutableStore(instance) {
         init(Disposable_mixin, instance);
-        init(EventPublisher_lazyInitMixin(), instance);
+        init(EventSource_lazyInitPublisherMixin(), instance);
         return instance;
     }, props({
         v: none,

@@ -2,7 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import EventPublisher_createRefCounted from "../../EventPublisher/__internal__/EventPublisher.createRefCounted.js";
+import EventSource_createRefCountedPublisher from "../../EventSource/__internal__/EventSource.createRefCountedPublisher.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __CreateEventSource_createDelegate } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -12,7 +12,7 @@ const EventSource_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Delegating_mixin()), function CreateEventSource(instance, setup) {
         init(Delegating_mixin(), instance, none);
         instance[__CreateEventSource_createDelegate] = () => {
-            const delegate = pipe(EventPublisher_createRefCounted(), Disposable_onDisposed(() => {
+            const delegate = pipe(EventSource_createRefCountedPublisher(), Disposable_onDisposed(() => {
                 instance[DelegatingLike_delegate] = none;
             }));
             instance[DelegatingLike_delegate] = delegate;

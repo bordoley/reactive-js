@@ -19,6 +19,8 @@
 ### Constructor Methods
 
 - [create](EventSource.Signature.md#create)
+- [createPublisher](EventSource.Signature.md#createpublisher)
+- [createRefCountedPublisher](EventSource.Signature.md#createrefcountedpublisher)
 - [generate](EventSource.Signature.md#generate)
 - [zip](EventSource.Signature.md#zip)
 
@@ -72,6 +74,38 @@
 #### Returns
 
 [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+___
+
+### createPublisher
+
+▸ **createPublisher**<`T`\>(): [`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
+
+___
+
+### createRefCountedPublisher
+
+▸ **createRefCountedPublisher**<`T`\>(): [`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
 
 ___
 
