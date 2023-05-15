@@ -1,7 +1,6 @@
 /// <reference types="./SharedObservable.d.ts" />
 
 import { SharedObservable_compute } from "./Observable/__internal__/Observable.compute.js";
-import Observable_never from "./Observable/__internal__/Observable.never.js";
 import SharedObservable_concatAll from "./SharedObservable/__internal__/SharedObservable.concatAll.js";
 import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedObservable.concatMap.js";
 import SharedObservable_exhaust from "./SharedObservable/__internal__/SharedObservable.exhaust.js";
@@ -21,6 +20,5 @@ export const flatMapAsync = SharedObservable_flatMapAsync;
 export const flatMapIterable = SharedObservable_flatMapIterable;
 export const mergeAll = SharedObservable_mergeAll;
 export const mergeMap = SharedObservable_mergeMap;
-export const never = Observable_never;
 export const switchAll = SharedObservable_switchAll;
 export const switchMap = SharedObservable_switchMap;

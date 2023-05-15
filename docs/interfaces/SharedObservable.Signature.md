@@ -28,7 +28,6 @@
 
 - [compute](SharedObservable.Signature.md#compute)
 - [flatMapAsync](SharedObservable.Signature.md#flatmapasync)
-- [never](SharedObservable.Signature.md#never)
 - [throttle](SharedObservable.Signature.md#throttle)
 
 ## Operator Methods
@@ -310,22 +309,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<[`SharedObservableContainer`](types.SharedObservableContainer.md), `TA`, `TB`\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(): [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>
 
 ___
 

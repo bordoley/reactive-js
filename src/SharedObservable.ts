@@ -1,5 +1,4 @@
 import { SharedObservable_compute } from "./Observable/__internal__/Observable.compute.js";
-import Observable_never from "./Observable/__internal__/Observable.never.js";
 import SharedObservable_concatAll from "./SharedObservable/__internal__/SharedObservable.concatAll.js";
 import SharedObservable_concatMap from "./SharedObservable/__internal__/SharedObservable.concatMap.js";
 import SharedObservable_exhaust from "./SharedObservable/__internal__/SharedObservable.exhaust.js";
@@ -36,8 +35,6 @@ export interface Signature
   flatMapAsync<TA, TB>(
     f: Function2<TA, AbortSignal, Promise<TB>>,
   ): ContainerOperator<Type, TA, TB>;
-
-  never<T>(): SharedObservableLike<T>;
 }
 
 export const compute: Signature["compute"] = SharedObservable_compute;
@@ -51,6 +48,5 @@ export const flatMapIterable: Signature["flatMapIterable"] =
   SharedObservable_flatMapIterable;
 export const mergeAll: Signature["mergeAll"] = SharedObservable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = SharedObservable_mergeMap;
-export const never: Signature["never"] = Observable_never;
 export const switchAll: Signature["switchAll"] = SharedObservable_switchAll;
 export const switchMap: Signature["switchMap"] = SharedObservable_switchMap;
