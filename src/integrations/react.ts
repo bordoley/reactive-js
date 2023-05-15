@@ -55,7 +55,7 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../types.js";
-import { getScheduler } from "./scheduler.js";
+import * as ReactScheduler from "./react/Scheduler.js";
 
 /**
  * @category Hook
@@ -141,7 +141,7 @@ export const useObserve: UseObserve["useObserve"] = <T>(
     pipeSomeLazy(
       observable,
       Observable.forEach((v: T) => updateState(_ => v)),
-      Observable.subscribe(getScheduler({ priority }), {
+      Observable.subscribe(ReactScheduler.get(priority), {
         backpressureStrategy,
         capacity,
       }),
@@ -270,7 +270,7 @@ export const useStream: UseStream["useStream"] = <
 
   const stream = useDisposable(
     () =>
-      streamable[StreamableLike_stream](getScheduler({ priority }), {
+      streamable[StreamableLike_stream](ReactScheduler.get(priority), {
         replay,
         backpressureStrategy,
         capacity,
