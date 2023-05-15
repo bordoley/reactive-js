@@ -5,29 +5,29 @@ import {
   unstable_scheduleCallback,
   unstable_shouldYield,
 } from "scheduler";
-import * as Disposable from "../Disposable.js";
+import * as Disposable from "../../Disposable.js";
 import {
   SchedulerImplementationLike,
   SchedulerImplementationLike_runContinuation,
   SchedulerImplementationLike_scheduleContinuation,
   SchedulerImplementationLike_shouldYield,
   SchedulerImplementation_mixin,
-} from "../Scheduler/__internal__/SchedulerImplementation.mixin.js";
+} from "../../Scheduler/__internal__/SchedulerImplementation.mixin.js";
 import {
   createInstanceFactory,
   include,
   init,
   mix,
   props,
-} from "../__internal__/mixins.js";
-import { ContinuationLike } from "../__internal__/types.js";
-import { newInstance, none, pipe, pipeLazy } from "../functions.js";
+} from "../../__internal__/mixins.js";
+import { ContinuationLike } from "../../__internal__/types.js";
+import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   SchedulerLike,
   SchedulerLike_now,
-} from "../types.js";
+} from "../../types.js";
 
 const createReactScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
@@ -92,20 +92,15 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   );
 })();
 
-export const getScheduler: (options?: {
-  priority?: 1 | 2 | 3 | 4 | 5;
-}) => SchedulerLike = /*@__PURE__*/ (() => {
-  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-  return (options = {}) => {
-    const priority = options.priority ?? unstable_NormalPriority;
-    return (
+export const get: (priority?: 1 | 2 | 3 | 4 | 5) => SchedulerLike =
+  /*@__PURE__*/ (() => {
+    const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
+      newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
+    return (priority = unstable_NormalPriority) =>
       schedulerCache.get(priority) ??
       (() => {
         const scheduler = createReactScheduler(priority);
         schedulerCache.set(priority, scheduler);
         return scheduler;
-      })()
-    );
-  };
-})();
+      })();
+  })();
