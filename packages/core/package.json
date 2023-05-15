@@ -51,8 +51,8 @@
     "./functions": "./functions.js",
     "./integrations/node/Stream": "./integrations/node/Stream.js",
     "./integrations/react": "./integrations/react.js",
+    "./integrations/react/Scheduler": "./integrations/react/Scheduler.js",
     "./integrations/react/web": "./integrations/react/web.js",
-    "./integrations/scheduler": "./integrations/scheduler.js",
     "./integrations/svelte": "./integrations/svelte.js",
     "./integrations/web": "./integrations/web.js",
     "./integrations/web/effects": "./integrations/web/effects.js",
@@ -81,7 +81,8 @@
     "./Store": "./Store.js",
     "./Stream": "./Stream.js",
     "./Streamable": "./Streamable.js",
-    "./types": "./types.js"
+    "./types": "./types.js",
+    "./type-classes": "./type-classes.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

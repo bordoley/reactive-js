@@ -1,5 +1,4 @@
 import * as Observable from "@reactive-js/core/Observable";
-import * as DeferredObservable from "@reactive-js/core/DeferredObservable";
 import {
   SideEffect,
   bindMethod,
@@ -11,12 +10,12 @@ import * as Scheduler from "@reactive-js/core/Scheduler";
 import {
   DisposableLike_dispose,
   SchedulerLike_schedule,
-} from "@reactive-js/core";
+} from "@reactive-js/core/types";
 
 const scheduler = Scheduler.createHostScheduler();
 
 const subscription = pipe(
-  DeferredObservable.generate(incrementBy(1), returns(0), { delay: 1 }),
+  Observable.generate(incrementBy(1), returns(0), { delay: 1 }),
   Observable.throttle(2000),
   Observable.map(x => `${x}`),
   Observable.forEach(x => console.log(x)),

@@ -17,9 +17,8 @@ import {
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/EventSource";
-import * as EventPublisher from "@reactive-js/core/EventPublisher";
 import * as Streamable from "@reactive-js/core/Streamable";
-import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 
 const AnimatedCircle = ({
@@ -54,7 +53,7 @@ const AnimatedCircle = ({
 
 const ScrollApp = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
     [],
   );
 
@@ -101,7 +100,7 @@ const ScrollApp = () => {
 
   const springAnimation = animationGroup?.[KeyedCollectionLike_get](0);
 
-  const publishedAnimation = useDisposable(EventPublisher.create, []);
+  const publishedAnimation = useDisposable(EventSource.createPublisher, []);
 
   const containerRef = useScroll<HTMLDivElement>(
     ({ y }: ScrollValue) => {

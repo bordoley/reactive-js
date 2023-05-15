@@ -1,3 +1,4 @@
+import type * as Enumerable from "../../Enumerable.js";
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
 import { isSome, pipe, raiseError } from "../../functions.js";
 import {
@@ -6,7 +7,6 @@ import {
   EnumerableLike,
 } from "../../types.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
-import type * as Enumerable from "../../Enumerable.js";
 
 const Enumerable_toReadonlyArray: Enumerable.Signature["toReadonlyArray"] =
   <T>() =>

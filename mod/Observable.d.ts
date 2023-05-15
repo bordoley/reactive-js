@@ -1,5 +1,5 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { ContainerOf, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EventSourceLike, ObservableContainer, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableContainer, SharedObservableLike } from "./types.js";
+import { ContainerOf, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EnumeratorLike, EventSourceLike, ObservableContainer, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableContainer, SharedObservableLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : never;
@@ -135,10 +135,20 @@ export interface Signature {
     forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>, b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>, c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC]>>;
     forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>, b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>, c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>, d: Function1<TObservableIn, MaybeSharedObservableLike<TD>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC, TD]>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
+    fromEnumeratorFactory<T>(): Function1<Factory<EnumeratorLike<T>>, EnumerableLike<T>>;
+    fromEnumeratorFactory<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): Function1<Factory<EnumeratorLike<T>>, RunnableLike<T>>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromFactory<T>(options: {
         readonly delay: number;
     }): Function1<Factory<T>, RunnableLike<T>>;
+    fromIterable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
+    fromIterable<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): Function1<Iterable<T>, RunnableLike<T>>;
     fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
     fromOptional<T>(options: {
         readonly delay: number;
@@ -160,6 +170,10 @@ export interface Signature {
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+    fromValue<T>(): Function1<T, EnumerableLike<T>>;
+    fromValue<T>(options: {
+        readonly delay: number;
+    }): Function1<T, RunnableLike<T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
         readonly delay: number;
@@ -337,9 +351,12 @@ export declare const forkConcat: Signature["forkConcat"];
 export declare const forkMerge: Signature["forkMerge"];
 export declare const forkZip: Signature["forkZip"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
+export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
+export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
+export declare const fromValue: Signature["fromValue"];
 export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];

@@ -10,7 +10,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __EnumerableEnumerator_continuationQueue } from "../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../__internal__/types.js";
 import { isSome, none, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
-import { BufferLike_capacity, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isEnumerable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_now, } from "../../types.js";
+import { BufferLike_capacity, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isEnumerable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_shouldYield, } from "../../types.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), SchedulerImplementation_mixin), function EnumeratorScheduler(instance) {
         init(MutableEnumerator_mixin(), instance);
@@ -21,13 +21,17 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
         });
         instance[__EnumerableEnumerator_continuationQueue] =
             Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
-        // FIXME: Cast needed to coalesce the type of[Container_type] field
         return instance;
     }, props({
         [__EnumerableEnumerator_continuationQueue]: none,
     }), {
         [SchedulerLike_now]: 0,
         get [SchedulerImplementationLike_shouldYield]() {
+            unsafeCast(this);
+            return this[EnumeratorLike_hasCurrent];
+        },
+        // Override for perf
+        get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             return this[EnumeratorLike_hasCurrent];
         },

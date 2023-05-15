@@ -90,7 +90,7 @@ export const fromIterable: Signature["fromIterable"] = Iterable_toRunnable;
 export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toRunnable;
-  export const fromValue: Signature["fromValue"] = Observable_fromValue;
+export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];

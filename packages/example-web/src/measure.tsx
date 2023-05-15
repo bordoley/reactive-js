@@ -8,7 +8,6 @@ import {
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/Observable";
-import * as SharedObservable from "@reactive-js/core/SharedObservable";
 import {
   useDispatcher,
   useDisposable,
@@ -24,14 +23,14 @@ import {
   DeferredObservableLike,
   KeyedCollectionLike_get,
 } from "@reactive-js/core/types";
-import { getScheduler } from "@reactive-js/core/integrations/scheduler";
+import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
   const animationScheduler = useDisposable(
-    pipeLazy(getScheduler(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
     [],
   );
 
@@ -82,7 +81,7 @@ const Measure = () => {
           compose(
             Observable.withLatestFrom<number, number, [number, number]>(
               pipeSome(animation, EventSource.toSharedObservable()) ??
-                SharedObservable.never<number>(),
+                Observable.never<number>(),
               (boxWidth, currentWidth) => [boxWidth, currentWidth],
             ),
             Observable.forEach<[number, number]>(([boxWidth, currentWidth]) => {
