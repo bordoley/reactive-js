@@ -12,7 +12,6 @@ export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
-export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const mergeAll: Signature["mergeAll"];
 export declare const mergeMap: Signature["mergeMap"];
 export declare const switchAll: Signature["switchAll"];

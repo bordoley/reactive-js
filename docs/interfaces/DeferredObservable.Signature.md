@@ -18,7 +18,6 @@
 - [concatMap](DeferredObservable.Signature.md#concatmap)
 - [exhaust](DeferredObservable.Signature.md#exhaust)
 - [exhaustMap](DeferredObservable.Signature.md#exhaustmap)
-- [flatMapIterable](DeferredObservable.Signature.md#flatmapiterable)
 - [mergeAll](DeferredObservable.Signature.md#mergeall)
 - [mergeMap](DeferredObservable.Signature.md#mergemap)
 - [switchAll](DeferredObservable.Signature.md#switchall)
@@ -129,33 +128,6 @@ ___
 #### Inherited from
 
 [HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[flatMapIterable](type_classes.HigherOrderObservableBaseTypeClass.md#flatmapiterable)
 
 ___
 

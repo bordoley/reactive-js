@@ -1,13 +1,13 @@
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_flatMapIterable from "./Enumerable/__internal__/Enumerable.flatMapIterable.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
+import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -75,7 +75,7 @@ export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
 export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
 export const first: Signature["first"] = Runnable_first;
 export const flatMapIterable: Signature["flatMapIterable"] =
-  Enumerable_flatMapIterable;
+  Observable_flatMapIterable;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const keep: Signature["keep"] = Observable_keep;

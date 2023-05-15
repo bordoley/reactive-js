@@ -2,7 +2,6 @@ import DeferredObservable_concatAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
 import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
-import DeferredObservable_flatMapIterable from "./DeferredObservable/__internal__/DeferredObservable.flatMapIterable.js";
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
@@ -86,8 +85,6 @@ export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
 export const exhaust: Signature["exhaust"] = DeferredObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] =
   DeferredObservable_exhaustMap;
-export const flatMapIterable: Signature["flatMapIterable"] =
-  DeferredObservable_flatMapIterable;
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
 export const retry: Signature["retry"] = DeferredObservable_retry;

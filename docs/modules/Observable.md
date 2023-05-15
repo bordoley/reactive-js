@@ -20,7 +20,11 @@
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
 - [Type](Observable.md#type)
 
-### Functions
+### Operator Functions
+
+- [flatMapIterable](Observable.md#flatmapiterable)
+
+### Other Functions
 
 - [backpressureStrategy](Observable.md#backpressurestrategy)
 - [concat](Observable.md#concat)
@@ -200,7 +204,32 @@ ___
 
 Ƭ **Type**: [`ObservableContainer`](../interfaces/types.ObservableContainer.md)
 
-## Functions
+## Operator Functions
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
+
+___
+
+## Other Functions
 
 ### backpressureStrategy
 
