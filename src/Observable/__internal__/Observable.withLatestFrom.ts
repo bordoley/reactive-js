@@ -5,7 +5,7 @@ import { Function2, partial, pipe } from "../../functions.js";
 import { ObservableLike } from "../../types.js";
 import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
 
-const Observable_withLatestFrom: Observable.Signature["withLastestFrom"] = (<
+const Observable_withLatestFrom: Observable.Signature["withLatestFrom"] = (<
   TA,
   TB,
   T,
@@ -17,6 +17,6 @@ const Observable_withLatestFrom: Observable.Signature["withLastestFrom"] = (<
     Observer_createWithLatestObserver,
     partial(other, selector),
     Observable_liftUpperBoundedBy(other),
-  )) as Observable.Signature["withLastestFrom"];
+  )) as Observable.Signature["withLatestFrom"];
 
 export default Observable_withLatestFrom;

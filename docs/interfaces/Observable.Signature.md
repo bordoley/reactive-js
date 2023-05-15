@@ -73,7 +73,7 @@
 - [throws](Observable.Signature.md#throws)
 - [toEventSource](Observable.Signature.md#toeventsource)
 - [withCurrentTime](Observable.Signature.md#withcurrenttime)
-- [withLastestFrom](Observable.Signature.md#withlastestfrom)
+- [withLatestFrom](Observable.Signature.md#withlatestfrom)
 - [zip](Observable.Signature.md#zip)
 - [zipWith](Observable.Signature.md#zipwith)
 
@@ -2592,9 +2592,9 @@ ___
 
 ___
 
-### withLastestFrom
+### withLatestFrom
 
-▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
@@ -2615,7 +2615,7 @@ ___
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
@@ -2636,7 +2636,7 @@ ___
 
 [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
@@ -2657,7 +2657,7 @@ ___
 
 [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
 
-▸ **withLastestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../modules/functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../modules/functions.md#function1)<`AnyObservableLike`<`TA`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

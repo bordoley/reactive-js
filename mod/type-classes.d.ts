@@ -342,9 +342,6 @@ export interface HigherOrderObservableBaseTypeClass<C extends ObservableContaine
      * @category Operator
      */
     switchMap<TA, TB>(selector: Function1<TA, ContainerOf<CInner, TB>>): ContainerOperator<C, TA, TB>;
-    throttle<T>(wait: Function1<T, ContainerOf<CInner, unknown>>, options?: {
-        readonly mode?: "first" | "last" | "interval";
-    }): ContainerOperator<C, T, T>;
 }
 export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**

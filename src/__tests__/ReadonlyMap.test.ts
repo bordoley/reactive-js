@@ -6,3 +6,5 @@ testModule(
   "ReadonlyMap",
   AssociativeKeyedContainerTypeClassTests(ReadonlyMap.CreateModule<string>()),
 );
+
+((_: ReadonlyMap.Signature) => {})(ReadonlyMap);

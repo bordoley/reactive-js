@@ -96,3 +96,4 @@ testModule("Disposable", describe("add", test("disposes child disposable when di
     errorHandler2("message");
     pipe(disposable2[DisposableLike_error]?.message, expectEquals("message"));
 })));
+((_) => { })(Disposable);

@@ -26,6 +26,7 @@
 
 ### Other Functions
 
+- [animate](Observable.md#animate)
 - [backpressureStrategy](Observable.md#backpressurestrategy)
 - [concat](Observable.md#concat)
 - [concatMany](Observable.md#concatmany)
@@ -233,6 +234,28 @@ ___
 ___
 
 ## Other Functions
+
+### animate
+
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `configs` | [`Animation`](Observable.md#animation)<`T`\> \| readonly [`Animation`](Observable.md#animation)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
 
 ### backpressureStrategy
 

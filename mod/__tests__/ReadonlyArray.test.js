@@ -15,3 +15,4 @@ testModule("ReadonlyArray", EnumerableContainerTypeClassTests(ReadonlyArray), de
     }));
     pipe(result, expectEquals(3));
 })), describe("keepWithKey", test("filters out entries by key", pipeLazy(["b", "d", "v"], ReadonlyArray.keepWithKey((_, key) => key === 1), expectArrayEquals(["d"])))), describe("mapWithKey", test("mapping every value to its key", pipeLazy(["b", "d", "f"], ReadonlyArray.mapWithKey((_, key) => key), expectArrayEquals([0, 1, 2])))), describe("reduceWithKey", test("summing the keys", pipeLazy(["a", "B", "c"], ReadonlyArray.reduceWithKey((acc, _, key) => acc + key, returns(0)), expectEquals(3)))), describe("values"));
+((_) => { })(ReadonlyArray);

@@ -26,7 +26,6 @@
 ### Other Methods
 
 - [compute](SharedObservable.Signature.md#compute)
-- [throttle](SharedObservable.Signature.md#throttle)
 
 ## Operator Methods
 
@@ -257,31 +256,3 @@ ___
 #### Returns
 
 [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>
-
-___
-
-### throttle
-
-▸ **throttle**<`T`\>(`wait`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`SharedObservableContainer`](types.SharedObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `wait` | [`Function1`](../modules/functions.md#function1)<`T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"interval"`` \| ``"first"`` \| ``"last"`` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`SharedObservableContainer`](types.SharedObservableContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[throttle](type_classes.HigherOrderObservableBaseTypeClass.md#throttle)

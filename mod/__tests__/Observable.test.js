@@ -42,3 +42,4 @@ testModule("Observable", describe("createPublisher", test("with replay", () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectEquals(3));
 })));
+((_) => { })(Observable);

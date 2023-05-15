@@ -34,3 +34,5 @@ testModule(
     }),
   ),
 );
+
+//((_: PromiseT.Signature) => {})(PromiseT);

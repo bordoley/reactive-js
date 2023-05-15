@@ -146,3 +146,5 @@ testModule(
     );
   }),
 );
+
+((_: Scheduler.Signature) => {})(Scheduler);

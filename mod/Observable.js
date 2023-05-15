@@ -1,6 +1,7 @@
 /// <reference types="./Observable.d.ts" />
 
 import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
@@ -64,6 +65,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
 import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const concat = Observable_concat;
 export const concatMany = Observable_concatMany;
