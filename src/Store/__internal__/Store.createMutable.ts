@@ -24,11 +24,16 @@ const Store_createMutable: <T>(initialValue: T) => MutableStoreLike<T> = (<
   return createInstanceFactory(
     mix(
       include(EventSource_lazyInitPublisherMixin(), Disposable_mixin),
-      function MutableStore(instance: {
-        [StoreLike_value]: T;
-      }): MutableStoreLike<T> {
+      function MutableStore(
+        instance: {
+          [StoreLike_value]: T;
+        } & TProperties,
+        initialValue: T,
+      ): MutableStoreLike<T> {
         init(Disposable_mixin, instance);
         init(EventSource_lazyInitPublisherMixin(), instance);
+
+        instance.v = initialValue;
 
         return instance;
       },
