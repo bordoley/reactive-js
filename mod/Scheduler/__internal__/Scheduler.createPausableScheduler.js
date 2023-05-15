@@ -5,7 +5,7 @@ import SerialDisposable_mixin from "../../Disposable/__internal__/SerialDisposab
 import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../../Queue/__internal__/Queue.createPriorityQueue.js";
-import Store_createMutable from "../../Store/__internal__/Store.createMutable.js";
+import Store_create from "../../Store/__internal__/Store.create.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
@@ -99,7 +99,7 @@ const Scheduler_createPauseableScheduler =
         instance[__PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
-        instance[PauseableLike_isPaused] = Store_createMutable(false);
+        instance[PauseableLike_isPaused] = Store_create(false);
         return instance;
     }, props({
         [__PauseableScheduler_delayed]: none,

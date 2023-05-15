@@ -14,6 +14,7 @@
 
 ### Other Methods
 
+- [create](Store.Signature.md#create)
 - [toSharedObservable](Store.Signature.md#tosharedobservable)
 
 ### Transform Methods
@@ -22,6 +23,28 @@
 - [lastAsync](Store.Signature.md#lastasync)
 
 ## Other Methods
+
+### create
+
+▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](types.WritableStoreLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `initialValue` | `T` |
+
+#### Returns
+
+[`WritableStoreLike`](types.WritableStoreLike.md)<`T`\>
+
+___
 
 ### toSharedObservable
 

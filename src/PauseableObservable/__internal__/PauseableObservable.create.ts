@@ -7,7 +7,7 @@ import Observable_distinctUntilChanged from "../../Observable/__internal__/Obser
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
-import Store_createMutable from "../../Store/__internal__/Store.createMutable.js";
+import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import {
   createInstanceFactory,
@@ -19,7 +19,6 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  MutableStoreLike,
 } from "../../__internal__/types.js";
 import { Updater, compose, none, pipe } from "../../functions.js";
 import {
@@ -40,6 +39,7 @@ import {
   SchedulerLike,
   StoreLike_value,
   StreamLike,
+  WritableStoreLike,
 } from "../../types.js";
 
 const PauseableObservable_create: <T>(
@@ -51,7 +51,7 @@ const PauseableObservable_create: <T>(
   },
 ) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [PauseableLike_isPaused]: MutableStoreLike<boolean>;
+    [PauseableLike_isPaused]: WritableStoreLike<boolean>;
   };
 
   return createInstanceFactory(
@@ -92,7 +92,7 @@ const PauseableObservable_create: <T>(
         init(Delegating_mixin(), instance, stream);
         init(EventSource_lazyInitPublisherMixin(), instance);
 
-        instance[PauseableLike_isPaused] = Store_createMutable(true);
+        instance[PauseableLike_isPaused] = Store_create(true);
 
         return instance;
       },

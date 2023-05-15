@@ -338,6 +338,14 @@ export interface StoreLike<T = unknown> extends EventSourceLike<T> {
 }
 
 /**
+ * @noInheritDoc
+ * @category Event
+ */
+export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
+  [StoreLike_value]: T;
+}
+
+/**
  * @category EventMap
  */
 export interface DispatcherLikeEventMap {
