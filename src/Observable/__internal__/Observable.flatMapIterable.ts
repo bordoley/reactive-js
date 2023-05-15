@@ -1,6 +1,6 @@
 import DeferredObservable_concatMap from "../../DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import Enumerable_concatMap from "../../Enumerable/__internal__/Enumerable.concatMap.js";
-import Iterable_toRunnable from "../../Iterable/__internal__/Iterable.toRunnable.js";
+import Iterable_toObservable from "../../Iterable/__internal__/Iterable.toObservable.js";
 import type * as Observable from "../../Observable.js";
 import Runnable_concatMap from "../../Runnable/__internal__/Runnable.concatMap.js";
 import SharedObservable_concatMap from "../../SharedObservable/__internal__/SharedObservable.concatMap.js";
@@ -22,7 +22,7 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
 >(
   selector: Function1<TA, Iterable<TB>>,
 ) => {
-  const mapper = compose(selector, Iterable_toRunnable<TB>());
+  const mapper = compose(selector, Iterable_toObservable<TB>());
 
   return (observable: ObservableLike<TA>) =>
     Observable_isEnumerable(observable)

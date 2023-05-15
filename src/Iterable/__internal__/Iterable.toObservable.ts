@@ -14,7 +14,9 @@ import {
   SchedulerLike_yield,
 } from "../../types.js";
 
-const Iterable_toRunnable: Iterable.Signature["toRunnable"] = (<T>(options?: {
+const Iterable_toObservable: Iterable.Signature["toObservable"] = (<
+    T,
+  >(options?: {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }) =>
@@ -50,6 +52,6 @@ const Iterable_toRunnable: Iterable.Signature["toRunnable"] = (<T>(options?: {
       delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
 
     return retval;
-  }) as Iterable.Signature["toRunnable"];
+  }) as Iterable.Signature["toObservable"];
 
-export default Iterable_toRunnable;
+export default Iterable_toObservable;

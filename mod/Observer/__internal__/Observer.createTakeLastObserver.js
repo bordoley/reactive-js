@@ -3,7 +3,7 @@
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
-import ReadonlyArray_toRunnable from "../../ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { createInstanceFactory, include, mix, props, } from "../../__internal__/mixins.js";
 import { __TakeLastObserver_takeLastQueue } from "../../__internal__/symbols.js";
 import { invoke, none, pipe } from "../../functions.js";
@@ -15,7 +15,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
         Observer_mixin_initFromDelegate(instance, delegate);
         instance[__TakeLastObserver_takeLastQueue] = Queue_createIndexedQueue(takeLastCount, "drop-oldest");
         pipe(instance, Disposable_onComplete(() => {
-            pipe(instance[__TakeLastObserver_takeLastQueue], IndexedCollection_toReadonlyArray(), ReadonlyArray_toRunnable(), invoke(ObservableLike_observe, delegate));
+            pipe(instance[__TakeLastObserver_takeLastQueue], IndexedCollection_toReadonlyArray(), ReadonlyArray_toObservable(), invoke(ObservableLike_observe, delegate));
         }));
         return instance;
     }, props({

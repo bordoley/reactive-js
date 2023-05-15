@@ -1,5 +1,5 @@
 import type * as Observable from "../../Observable.js";
-import ReadonlyArray_toRunnable from "../../ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { pipe } from "../../functions.js";
 import { DeferredObservableLike } from "../../types.js";
 import Observable_concatWith from "./Observable.concatWith.js";
@@ -11,7 +11,7 @@ const Observable_endWith: Observable.Signature["endWith"] = (<T>(
   (observable: DeferredObservableLike<T>) =>
     pipe(
       observable,
-      Observable_concatWith<T>(pipe(values, ReadonlyArray_toRunnable())),
+      Observable_concatWith<T>(pipe(values, ReadonlyArray_toObservable())),
     )) as Observable.Signature["endWith"];
 
 export default Observable_endWith;

@@ -18,7 +18,7 @@ testModule(
 
       const result = await pipe(
         promise,
-        PromiseT.toSharedObservable(),
+        PromiseT.toObservable(),
         Observable.lastAsync(),
       );
       pipe(result, expectEquals<Optional<number>>(1));
@@ -28,7 +28,7 @@ testModule(
       const promise = Promise.reject(error);
 
       await pipe(
-        pipe(promise, PromiseT.toSharedObservable(), Observable.lastAsync()),
+        pipe(promise, PromiseT.toObservable(), Observable.lastAsync()),
         expectPromiseToThrow,
       );
     }),

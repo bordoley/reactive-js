@@ -1,4 +1,4 @@
-import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
+import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -61,8 +61,8 @@ import Observable_withCurrentTime from "./Observable/__internal__/Observable.wit
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Equality,
   Factory,
@@ -1307,10 +1307,10 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] =
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
-export const fromIterable: Signature["fromIterable"] = Iterable_toRunnable;
-export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
+export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
+export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  ReadonlyArray_toRunnable;
+  ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =

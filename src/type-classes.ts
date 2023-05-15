@@ -379,10 +379,7 @@ export interface AsynchronousContainerBaseTypeClass<C extends Container> {
    */
   lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
 
-  toSharedObservable<T>(): Function1<
-    ContainerOf<C, T>,
-    SharedObservableLike<T>
-  >;
+  toObservable<T>(): Function1<ContainerOf<C, T>, SharedObservableLike<T>>;
 }
 
 export interface BlockingContainerBaseTypeClass<C extends Container> {

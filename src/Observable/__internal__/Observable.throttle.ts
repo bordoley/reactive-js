@@ -1,6 +1,6 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createThrottleObserver from "../../Observer/__internal__/Observer.createThrottleObserver.js";
-import ReadonlyArray_toRunnable from "../../ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
@@ -17,7 +17,7 @@ const Observable_throttle: Observable.Signature["throttle"] = ((
 
   const durationObservable = pipeLazy(
     [none],
-    ReadonlyArray_toRunnable({
+    ReadonlyArray_toObservable({
       delay: duration,
       delayStart: true,
     }),

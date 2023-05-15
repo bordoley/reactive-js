@@ -27,7 +27,7 @@
 - [onError](Disposable.md#onerror)
 - [toAbortSignal](Disposable.md#toabortsignal)
 - [toErrorHandler](Disposable.md#toerrorhandler)
-- [toSharedObservable](Disposable.md#tosharedobservable)
+- [toObservable](Disposable.md#toobservable)
 - [usingAsync](Disposable.md#usingasync)
 
 ## Type Aliases
@@ -224,9 +224,9 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 
 ___
 
-### toSharedObservable
+### toObservable
 
-▸ **toSharedObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

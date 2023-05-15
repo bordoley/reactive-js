@@ -14,7 +14,7 @@
 
 ### Other Methods
 
-- [toSharedObservable](Promise.Signature.md#tosharedobservable)
+- [toObservable](Promise.Signature.md#toobservable)
 
 ### Transform Methods
 
@@ -23,9 +23,9 @@
 
 ## Other Methods
 
-### toSharedObservable
+### toObservable
 
-▸ **toSharedObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -39,7 +39,7 @@
 
 #### Inherited from
 
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
+[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toObservable](type_classes.AsynchronousContainerBaseTypeClass.md#toobservable)
 
 ___
 

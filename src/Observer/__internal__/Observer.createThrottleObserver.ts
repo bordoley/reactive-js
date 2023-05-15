@@ -8,7 +8,7 @@ import Observable_subscribeWithConfig from "../../Observable/__internal__/Observ
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
-import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -125,7 +125,7 @@ const Observer_createThrottleObserver: <T>(
             ) {
               pipe(
                 instance[__ThrottleObserver_value],
-                Optional_toRunnable(),
+                Optional_toObservable(),
                 invoke(ObservableLike_observe, delegate),
               );
             }

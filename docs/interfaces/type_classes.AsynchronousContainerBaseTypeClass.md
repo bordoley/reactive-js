@@ -24,7 +24,7 @@
 
 ### Other Methods
 
-- [toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
+- [toObservable](type_classes.AsynchronousContainerBaseTypeClass.md#toobservable)
 
 ### Transform Methods
 
@@ -33,9 +33,9 @@
 
 ## Other Methods
 
-### toSharedObservable
+### toObservable
 
-▸ **toSharedObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

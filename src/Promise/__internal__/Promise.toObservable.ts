@@ -7,7 +7,7 @@ import {
   QueueableLike_enqueue,
 } from "../../types.js";
 
-const Promise_toSharedObservable: Promise.Signature["toSharedObservable"] =
+const Promise_toObservable: Promise.Signature["toObservable"] =
   <T>() =>
   (promise: PromiseLike<T>) =>
     SharedObservable_create<T>(observer => {
@@ -19,4 +19,4 @@ const Promise_toSharedObservable: Promise.Signature["toSharedObservable"] =
       }, Disposable_toErrorHandler(observer));
     });
 
-export default Promise_toSharedObservable;
+export default Promise_toObservable;

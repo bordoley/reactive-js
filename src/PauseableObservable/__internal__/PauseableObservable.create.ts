@@ -6,7 +6,7 @@ import Observable_backpressureStrategy from "../../Observable/__internal__/Obser
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
-import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import {
@@ -78,7 +78,7 @@ const PauseableObservable_create: <T>(
             ),
             Observable_mergeWith<boolean>(
               // Initialize to paused state
-              pipe(true, Optional_toRunnable()),
+              pipe(true, Optional_toObservable()),
             ),
             Observable_distinctUntilChanged<boolean>(),
             Observable_forEach((isPaused: boolean) => {

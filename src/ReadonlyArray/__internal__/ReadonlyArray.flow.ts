@@ -8,7 +8,7 @@ import {
   QueueableLike_backpressureStrategy,
   SchedulerLike,
 } from "../../types.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
 
 const ReadonlyArray_flow: ReadonlyArray.Signature["flow"] = <T>(
   scheduler: SchedulerLike,
@@ -22,7 +22,7 @@ const ReadonlyArray_flow: ReadonlyArray.Signature["flow"] = <T>(
   },
 ): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike> =>
   compose(
-    ReadonlyArray_toRunnable(
+    ReadonlyArray_toObservable(
       options as {
         readonly delay: number;
         readonly delayStart?: boolean;

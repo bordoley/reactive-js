@@ -29,7 +29,7 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
-- [toSharedObservable](EventSource.md#tosharedobservable)
+- [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
 
@@ -286,9 +286,9 @@ ___
 
 ___
 
-### toSharedObservable
+### toObservable
 
-▸ **toSharedObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

@@ -19,7 +19,7 @@ export interface Signature {
      * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
      */
     toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
-    toSharedObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
+    toObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
     usingAsync<TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | Factory<TDisposable>): Function1<Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>, Promise<TResult>>;
@@ -34,5 +34,5 @@ export declare const onDisposed: Signature["onDisposed"];
 export declare const onError: Signature["onError"];
 export declare const toAbortSignal: Signature["toAbortSignal"];
 export declare const toErrorHandler: Signature["toErrorHandler"];
-export declare const toSharedObservable: Signature["toSharedObservable"];
+export declare const toObservable: Signature["toObservable"];
 export declare const usingAsync: Signature["usingAsync"];

@@ -8,7 +8,7 @@ import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDispos
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
-import Disposable_toSharedObservable from "./Disposable/__internal__/Disposable.toSharedObservable.js";
+import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import {
   Factory,
@@ -70,7 +70,7 @@ export interface Signature {
    */
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
 
-  toSharedObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
+  toObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
 
   usingAsync<TDisposable extends DisposableLike, TResult = unknown>(
     factoryOrDisposable: TDisposable | Factory<TDisposable>,
@@ -113,6 +113,5 @@ export const toAbortSignal: Signature["toAbortSignal"] =
   Disposable_toAbortSignal;
 export const toErrorHandler: Signature["toErrorHandler"] =
   Disposable_toErrorHandler;
-export const toSharedObservable: Signature["toSharedObservable"] =
-  Disposable_toSharedObservable;
+export const toObservable: Signature["toObservable"] = Disposable_toObservable;
 export const usingAsync: Signature["usingAsync"] = Disposable_usingAsync;

@@ -7,7 +7,7 @@ import Observable_backpressureStrategy from "../../Observable/__internal__/Obser
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
-import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
@@ -18,7 +18,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin(), EventSource_lazyInitPublisherMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = compose(Observable_backpressureStrategy(1, "drop-oldest"), Observable_mergeWith(
         // Initialize to paused state
-        pipe(true, Optional_toRunnable())), Observable_distinctUntilChanged(), Observable_forEach((isPaused) => {
+        pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_forEach((isPaused) => {
             instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
         }), op);
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);

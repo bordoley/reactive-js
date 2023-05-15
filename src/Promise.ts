@@ -1,9 +1,8 @@
-import Promise_toSharedObservable from "./Promise/__internal__/Promise.toSharedObservable.js";
+import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
 import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
 import { PromiseContainer } from "./types.js";
 
 export type Type = PromiseContainer;
 export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {}
 
-export const toSharedObservable: Signature["toSharedObservable"] =
-  Promise_toSharedObservable;
+export const toObservable: Signature["toObservable"] = Promise_toObservable;

@@ -26,4 +26,4 @@ export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pick: Signature["pick"];
-export declare const toSharedObservable: Signature["toSharedObservable"];
+export declare const toObservable: Signature["toObservable"];

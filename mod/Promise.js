@@ -1,4 +1,4 @@
 /// <reference types="./Promise.d.ts" />
 
-import Promise_toSharedObservable from "./Promise/__internal__/Promise.toSharedObservable.js";
-export const toSharedObservable = Promise_toSharedObservable;
+import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
+export const toObservable = Promise_toObservable;

@@ -1,5 +1,5 @@
 import { EnumerableUpperBoundObservableOperator } from "../../Observable.js";
-import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Equality,
   Factory,
@@ -30,7 +30,7 @@ const Observable_actionReducer = <TAction, T>(
       return pipe(
         obs,
         Observable_scan<TAction, T>(reducer, returns(acc)),
-        Observable_mergeWith<T>(pipe(acc, Optional_toRunnable())),
+        Observable_mergeWith<T>(pipe(acc, Optional_toObservable())),
         Observable_distinctUntilChanged<T>(options) as Function1<
           ObservableLike<T>,
           ObservableLike<T>
