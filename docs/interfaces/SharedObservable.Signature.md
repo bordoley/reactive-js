@@ -27,7 +27,6 @@
 ### Other Methods
 
 - [compute](SharedObservable.Signature.md#compute)
-- [flatMapAsync](SharedObservable.Signature.md#flatmapasync)
 - [throttle](SharedObservable.Signature.md#throttle)
 
 ## Operator Methods
@@ -286,29 +285,6 @@ ___
 #### Returns
 
 [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>
-
-___
-
-### flatMapAsync
-
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`SharedObservableContainer`](types.SharedObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function2`](../modules/functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`SharedObservableContainer`](types.SharedObservableContainer.md), `TA`, `TB`\>
 
 ___
 

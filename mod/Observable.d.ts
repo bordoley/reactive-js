@@ -104,6 +104,7 @@ export interface Signature {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): DeferredObservableUpperBoundObservableOperator<TA, TB>;
     forEach<T>(effect: SideEffect1<T>): EnumerableUpperBoundObservableOperator<T, T>;
     forkConcat<TObservableIn extends EnumerableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, EnumerableLike<TOut>>, snd: Function1<TObservableIn, EnumerableLike<TOut>>, ...tail: readonly Function1<TObservableIn, EnumerableLike<TOut>>[]): Function1<TObservableIn, EnumerableLike<TOut>>;
     forkConcat<TObservableIn extends RunnableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, RunnableLike<TOut>>, snd: Function1<TObservableIn, RunnableLike<TOut>>, ...tail: readonly Function1<TObservableIn, RunnableLike<TOut>>[]): Function1<TObservableIn, RunnableLike<TOut>>;
@@ -307,6 +308,7 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
 export declare const firstAsync: Signature["firstAsync"];
+export declare const flatMapAsync: Signature["flatMapAsync"];
 export declare const forEach: Signature["forEach"];
 export declare const forkConcat: Signature["forkConcat"];
 export declare const forkMerge: Signature["forkMerge"];

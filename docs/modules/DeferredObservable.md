@@ -26,7 +26,6 @@
 ### Other Functions
 
 - [compute](DeferredObservable.md#compute)
-- [flatMapAsync](DeferredObservable.md#flatmapasync)
 - [multicast](DeferredObservable.md#multicast)
 - [repeat](DeferredObservable.md#repeat)
 - [retry](DeferredObservable.md#retry)
@@ -239,29 +238,6 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
-
-### flatMapAsync
-
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function2`](functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `TA`, `TB`\>
 
 ___
 

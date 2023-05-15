@@ -2,7 +2,6 @@ import DeferredObservable_concatAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
 import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
-import DeferredObservable_flatMapAsync from "./DeferredObservable/__internal__/DeferredObservable.flatMapAsync.js";
 import DeferredObservable_flatMapIterable from "./DeferredObservable/__internal__/DeferredObservable.flatMapIterable.js";
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
@@ -11,10 +10,9 @@ import DeferredObservable_share from "./DeferredObservable/__internal__/Deferred
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
-import { Factory, Function1, Function2, Predicate } from "./functions.js";
+import { Factory, Function1, Predicate } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
-  ContainerOperator,
   DeferredObservableContainer,
   DeferredObservableLike,
   DisposableLike,
@@ -49,10 +47,6 @@ export interface Signature
       mode?: "batched" | "combine-latest";
     },
   ): DeferredObservableLike<T>;
-
-  flatMapAsync<TA, TB>(
-    f: Function2<TA, AbortSignal, Promise<TB>>,
-  ): ContainerOperator<Type, TA, TB>;
 
   multicast<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
@@ -92,8 +86,6 @@ export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
 export const exhaust: Signature["exhaust"] = DeferredObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] =
   DeferredObservable_exhaustMap;
-export const flatMapAsync: Signature["flatMapAsync"] =
-  DeferredObservable_flatMapAsync;
 export const flatMapIterable: Signature["flatMapIterable"] =
   DeferredObservable_flatMapIterable;
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
