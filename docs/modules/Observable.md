@@ -38,6 +38,7 @@
 - [endWith](Observable.md#endwith)
 - [enqueue](Observable.md#enqueue)
 - [firstAsync](Observable.md#firstasync)
+- [flatMapAsync](Observable.md#flatmapasync)
 - [forEach](Observable.md#foreach)
 - [forkConcat](Observable.md#forkconcat)
 - [forkMerge](Observable.md#forkmerge)
@@ -731,6 +732,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+___
+
+### flatMapAsync
+
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function2`](functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 

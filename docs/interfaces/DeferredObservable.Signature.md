@@ -27,7 +27,6 @@
 ### Other Methods
 
 - [compute](DeferredObservable.Signature.md#compute)
-- [flatMapAsync](DeferredObservable.Signature.md#flatmapasync)
 - [multicast](DeferredObservable.Signature.md#multicast)
 - [repeat](DeferredObservable.Signature.md#repeat)
 - [retry](DeferredObservable.Signature.md#retry)
@@ -290,29 +289,6 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
-
-___
-
-### flatMapAsync
-
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function2`](../modules/functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
 
 ___
 

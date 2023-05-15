@@ -27,7 +27,6 @@
 ### Other Functions
 
 - [compute](SharedObservable.md#compute)
-- [flatMapAsync](SharedObservable.md#flatmapasync)
 
 ## Type Aliases
 
@@ -255,26 +254,3 @@ ___
 #### Returns
 
 [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
-
-___
-
-### flatMapAsync
-
-▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | [`Function2`](functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>

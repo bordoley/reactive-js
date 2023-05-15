@@ -29,6 +29,7 @@
 - [endWith](Observable.Signature.md#endwith)
 - [enqueue](Observable.Signature.md#enqueue)
 - [firstAsync](Observable.Signature.md#firstasync)
+- [flatMapAsync](Observable.Signature.md#flatmapasync)
 - [forEach](Observable.Signature.md#foreach)
 - [forkConcat](Observable.Signature.md#forkconcat)
 - [forkMerge](Observable.Signature.md#forkmerge)
@@ -629,6 +630,29 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
+### flatMapAsync
+
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function2`](../modules/functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 

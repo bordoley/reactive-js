@@ -14,6 +14,7 @@ import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUt
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
+import Observable_flatMapAsync from "./Observable/__internal__/Observable.flatMapAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
@@ -300,6 +301,10 @@ export interface Signature {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+
+  flatMapAsync<TA, TB>(
+    f: Function2<TA, AbortSignal, Promise<TB>>,
+  ): DeferredObservableUpperBoundObservableOperator<TA, TB>;
 
   forEach<T>(
     effect: SideEffect1<T>,
@@ -1235,6 +1240,7 @@ export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
+export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const forkConcat: Signature["forkConcat"] = Observable_forkConcat;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
