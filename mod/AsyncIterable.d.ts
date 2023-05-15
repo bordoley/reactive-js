@@ -6,7 +6,7 @@ export interface Signature {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<AsyncIterable<T>, PauseableObservableLike<T> & DisposableLike>;
-    toDeferredObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
+    toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
 }
 export declare const flow: Signature["flow"];
-export declare const toDeferredObservable: Signature["toDeferredObservable"];
+export declare const toObservable: Signature["toObservable"];

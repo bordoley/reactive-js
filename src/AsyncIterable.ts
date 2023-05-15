@@ -1,5 +1,5 @@
 import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.js";
-import AsyncIterable_toDeferredObservable from "./AsyncIterable/__internal__/AsyncIterable.toDeferredObservable.js";
+import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import { Function1 } from "./functions.js";
 import {
   AsyncIterableContainer,
@@ -23,12 +23,9 @@ export interface Signature {
     },
   ): Function1<AsyncIterable<T>, PauseableObservableLike<T> & DisposableLike>;
 
-  toDeferredObservable<T>(): Function1<
-    AsyncIterable<T>,
-    DeferredObservableLike<T>
-  >;
+  toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
 }
 
 export const flow: Signature["flow"] = AsyncIterable_flow;
-export const toDeferredObservable: Signature["toDeferredObservable"] =
-  AsyncIterable_toDeferredObservable;
+export const toObservable: Signature["toObservable"] =
+  AsyncIterable_toObservable;

@@ -15,7 +15,7 @@
 ### Functions
 
 - [flow](AsyncIterable.md#flow)
-- [toDeferredObservable](AsyncIterable.md#todeferredobservable)
+- [toObservable](AsyncIterable.md#toobservable)
 
 ## Type Aliases
 
@@ -50,9 +50,9 @@
 
 ___
 
-### toDeferredObservable
+### toObservable
 
-▸ **toDeferredObservable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

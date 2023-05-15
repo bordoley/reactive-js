@@ -9,7 +9,7 @@
 ### Methods
 
 - [flow](AsyncIterable.Signature.md#flow)
-- [toDeferredObservable](AsyncIterable.Signature.md#todeferredobservable)
+- [toObservable](AsyncIterable.Signature.md#toobservable)
 
 ## Methods
 
@@ -38,9 +38,9 @@
 
 ___
 
-### toDeferredObservable
+### toObservable
 
-▸ **toDeferredObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
