@@ -4,19 +4,13 @@
 
 [Disposable](../modules/Disposable.md).Signature
 
-## Hierarchy
-
-- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](../modules/Disposable.md#type)\>
-
-  ↳ **`Signature`**
-
 ## Table of contents
 
 ### Properties
 
 - [disposed](Disposable.Signature.md#disposed)
 
-### Other Methods
+### Methods
 
 - [add](Disposable.Signature.md#add)
 - [addTo](Disposable.Signature.md#addto)
@@ -30,18 +24,13 @@
 - [toSharedObservable](Disposable.Signature.md#tosharedobservable)
 - [usingAsync](Disposable.Signature.md#usingasync)
 
-### Transform Methods
-
-- [firstAsync](Disposable.Signature.md#firstasync)
-- [lastAsync](Disposable.Signature.md#lastasync)
-
 ## Properties
 
 ### disposed
 
 • `Readonly` **disposed**: [`DisposableLike`](types.DisposableLike.md)
 
-## Other Methods
+## Methods
 
 ### add
 
@@ -237,10 +226,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
 
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
-
 ___
 
 ### usingAsync
@@ -307,45 +292,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Function3`](../modules/functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
-
-___
-
-## Transform Methods
-
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[firstAsync](type_classes.AsynchronousContainerBaseTypeClass.md#firstasync)
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[lastAsync](type_classes.AsynchronousContainerBaseTypeClass.md#lastasync)

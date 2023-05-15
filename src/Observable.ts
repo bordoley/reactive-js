@@ -1,4 +1,5 @@
 import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
@@ -725,19 +726,19 @@ export interface Signature {
     selector: Function2<number, TA, TB>,
   ): EnumerableUpperBoundObservableOperator<TA, TB>;
 
-  withLastestFrom<TA, TB, T>(
+  withLatestFrom<TA, TB, T>(
     other: EnumerableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): EnumerableUpperBoundObservableOperator<TA, T>;
-  withLastestFrom<TA, TB, T>(
+  withLatestFrom<TA, TB, T>(
     other: RunnableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): RunnableUpperBoundObservableOperator<TA, T>;
-  withLastestFrom<TA, TB, T>(
+  withLatestFrom<TA, TB, T>(
     other: DeferredObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): DeferredObservableUpperBoundObservableOperator<TA, T>;
-  withLastestFrom<TA, TB, T>(
+  withLatestFrom<TA, TB, T>(
     other: SharedObservableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
@@ -1271,6 +1272,7 @@ export interface Signature {
   >;
 }
 
+export const animate: Signature["animate"] = Observable_animate;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
 export const concat: Signature["concat"] = Observable_concat;
@@ -1346,7 +1348,7 @@ export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
-export const withLatestFrom: Signature["withLastestFrom"] =
+export const withLatestFrom: Signature["withLatestFrom"] =
   Observable_withLatestFrom;
 export const zip: Signature["zip"] = Observable_zip;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;

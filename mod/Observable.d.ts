@@ -258,10 +258,10 @@ export interface Signature {
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
-    withLastestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
-    withLastestFrom<TA, TB, T>(other: SharedObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
+    withLatestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
+    withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
+    withLatestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
+    withLatestFrom<TA, TB, T>(other: SharedObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
     zip<TA, TB>(a: EnumerableLike<TA>, b: EnumerableLike<TB>): EnumerableLike<readonly [TA, TB]>;
     zip<TA, TB, TC>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>): EnumerableLike<readonly [TA, TB, TC]>;
     zip<TA, TB, TC, TD>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): EnumerableLike<readonly [TA, TB, TC, TD]>;
@@ -327,6 +327,7 @@ export interface Signature {
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>, i: MaybeSharedObservableLike<TI>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>>;
 }
+export declare const animate: Signature["animate"];
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const concat: Signature["concat"];
 export declare const concatMany: Signature["concatMany"];
@@ -388,7 +389,7 @@ export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
-export declare const withLatestFrom: Signature["withLastestFrom"];
+export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];
 export {};

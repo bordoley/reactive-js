@@ -84,3 +84,5 @@ testModule(
   ),
   describe("values"),
 );
+
+((_: ReadonlyArray.Signature) => {})(ReadonlyArray);

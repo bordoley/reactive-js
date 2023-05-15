@@ -49,9 +49,7 @@ const parseAnimationConfig = <T = number>(
             >),
       );
 
-const Observable_animate: <T = number>(
-  configs: Observable.Animation<T> | readonly Observable.Animation<T>[],
-) => RunnableLike<T> = <T = number>(
+const Observable_animate: Observable.Signature["animate"] = <T = number>(
   config: Observable.Animation<T> | readonly Observable.Animation<T>[],
 ) => {
   const configs = isReadonlyArray<Observable.Animation<T>>(config)

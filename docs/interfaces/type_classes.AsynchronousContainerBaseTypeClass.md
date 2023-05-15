@@ -14,8 +14,6 @@
 
 - **`AsynchronousContainerBaseTypeClass`**
 
-  ↳ [`Signature`](Disposable.Signature.md)
-
   ↳ [`Signature`](EventSource.Signature.md)
 
   ↳ [`Signature`](Promise.Signature.md)

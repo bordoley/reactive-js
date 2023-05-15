@@ -212,3 +212,4 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         [2, 4],
     ], arrayEquality()));
 })));
+((_) => { })(Streamable);

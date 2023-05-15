@@ -20,12 +20,15 @@ import {
   SideEffect1,
   Updater,
 } from "./functions.js";
-import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
-import { DisposableContainer, DisposableLike } from "./types.js";
+import {
+  DisposableContainer,
+  DisposableLike,
+  SharedObservableLike,
+} from "./types.js";
 
 export type Type = DisposableContainer;
 
-export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
+export interface Signature {
   readonly disposed: DisposableLike;
 
   add<TDisposable extends DisposableLike>(
@@ -66,6 +69,8 @@ export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
    * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
    */
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
+
+  toSharedObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
 
   usingAsync<TDisposable extends DisposableLike, TResult = unknown>(
     factoryOrDisposable: TDisposable | Factory<TDisposable>,

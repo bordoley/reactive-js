@@ -8,3 +8,5 @@ testModule(
     ReadonlyObjectMap.CreateModule<string>(),
   ),
 );
+
+((_: ReadonlyObjectMap.Signature) => {})(ReadonlyObjectMap);

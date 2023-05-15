@@ -367,3 +367,5 @@ testModule(
     }),
   ),
 );
+
+((_: Streamable.Signature) => {})(Streamable);
