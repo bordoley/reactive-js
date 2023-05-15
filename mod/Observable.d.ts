@@ -136,9 +136,26 @@ export interface Signature {
         readonly delay: number;
     }): Function1<Factory<T>, RunnableLike<T>>;
     fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-    fromFactory<T>(options: {
+    fromOptional<T>(options: {
         readonly delay: number;
-    }): Function1<Factory<T>, RunnableLike<T>>;
+    }): Function1<Optional<T>, RunnableLike<T>>;
+    fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    fromReadonlyArray<T>(options: {
+        readonly count: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    fromReadonlyArray<T>(options: {
+        readonly count: number;
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    fromReadonlyArray<T>(options: {
+        readonly start: number;
+    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    fromReadonlyArray<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
         readonly delay: number;
@@ -299,6 +316,7 @@ export declare const concatWith: Signature["concatWith"];
 export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];
+export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const defer: Signature["defer"];
 export declare const dispatchTo: Signature["dispatchTo"];
@@ -316,6 +334,7 @@ export declare const forkZip: Signature["forkZip"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromOptional: Signature["fromOptional"];
+export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];

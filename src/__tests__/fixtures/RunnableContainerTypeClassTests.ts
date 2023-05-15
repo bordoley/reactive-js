@@ -7,7 +7,6 @@ import {
   expectToThrowError,
   expectTrue,
   test,
-  testAsync,
 } from "../../__internal__/testing.js";
 import {
   Optional,
@@ -232,21 +231,6 @@ const RunnableContainerTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
-      "firstAsync",
-      testAsync("empty source", async () => {
-        const result = await pipe([], m.fromReadonlyArray(), m.firstAsync());
-        pipe(result, expectIsNone);
-      }),
-      testAsync("it returns the first value", async () => {
-        const result = await pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.firstAsync(),
-        );
-        pipe(result, expectEquals<Optional<number>>(1));
-      }),
-    ),
-    describe(
       "flatMapIterable",
       test(
         "maps the incoming value with the inline generator function",
@@ -407,21 +391,6 @@ const RunnableContainerTypeClassTests = <C extends Container>(
       }),
       test("it returns the last value", () => {
         const result = pipe([1, 2, 3], m.fromReadonlyArray(), m.last());
-        pipe(result, expectEquals<Optional<number>>(3));
-      }),
-    ),
-    describe(
-      "lastAsync",
-      testAsync("empty source", async () => {
-        const result = await pipe([], m.fromReadonlyArray(), m.lastAsync());
-        pipe(result, expectIsNone);
-      }),
-      testAsync("it returns the last value", async () => {
-        const result = await pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.lastAsync(),
-        );
         pipe(result, expectEquals<Optional<number>>(3));
       }),
     ),

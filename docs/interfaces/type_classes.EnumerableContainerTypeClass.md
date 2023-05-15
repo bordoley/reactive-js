@@ -72,9 +72,7 @@
 - [enumerate](type_classes.EnumerableContainerTypeClass.md#enumerate)
 - [everySatisfy](type_classes.EnumerableContainerTypeClass.md#everysatisfy)
 - [first](type_classes.EnumerableContainerTypeClass.md#first)
-- [firstAsync](type_classes.EnumerableContainerTypeClass.md#firstasync)
 - [last](type_classes.EnumerableContainerTypeClass.md#last)
-- [lastAsync](type_classes.EnumerableContainerTypeClass.md#lastasync)
 - [noneSatisfy](type_classes.EnumerableContainerTypeClass.md#nonesatisfy)
 - [reduce](type_classes.EnumerableContainerTypeClass.md#reduce)
 - [someSatisfy](type_classes.EnumerableContainerTypeClass.md#somesatisfy)
@@ -1469,26 +1467,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[firstAsync](type_classes.RunnableContainerTypeClass.md#firstasync)
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -1506,26 +1484,6 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[last](type_classes.RunnableContainerTypeClass.md#last)
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[lastAsync](type_classes.RunnableContainerTypeClass.md#lastasync)
 
 ___
 

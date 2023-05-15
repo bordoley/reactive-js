@@ -63,9 +63,7 @@
 - [enumerate](Enumerable.Signature.md#enumerate)
 - [everySatisfy](Enumerable.Signature.md#everysatisfy)
 - [first](Enumerable.Signature.md#first)
-- [firstAsync](Enumerable.Signature.md#firstasync)
 - [last](Enumerable.Signature.md#last)
-- [lastAsync](Enumerable.Signature.md#lastasync)
 - [noneSatisfy](Enumerable.Signature.md#nonesatisfy)
 - [reduce](Enumerable.Signature.md#reduce)
 - [someSatisfy](Enumerable.Signature.md#somesatisfy)
@@ -1486,26 +1484,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[firstAsync](type_classes.EnumerableContainerTypeClass.md#firstasync)
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -1523,26 +1501,6 @@ ___
 #### Inherited from
 
 [EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[last](type_classes.EnumerableContainerTypeClass.md#last)
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[lastAsync](type_classes.EnumerableContainerTypeClass.md#lastasync)
 
 ___
 

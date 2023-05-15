@@ -1,6 +1,6 @@
 /// <reference types="./RunnableContainerTypeClassTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowError, expectTrue, test, testAsync, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowError, expectTrue, test, } from "../../__internal__/testing.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
 const RunnableContainerTypeClassTests = (m) => describe("RunnableContainerTypeClass", describe("concat", test("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concats the input containers in order", pipeLazy([
     pipe([1, 2, 3], m.fromReadonlyArray()),
@@ -11,13 +11,7 @@ const RunnableContainerTypeClassTests = (m) => describe("RunnableContainerTypeCl
         throw err;
     };
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.distinctUntilChanged({ equality }), m.toReadonlyArray()), expectToThrowError(err));
-})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], m.fromReadonlyArray(), m.endWith(2, 3, 4), m.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("everySatisfy", test("source is empty", pipeLazy([], m.fromReadonlyArray(), m.everySatisfy(alwaysFalse), expectEquals(true))), test("source values pass predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.everySatisfy(alwaysTrue), expectEquals(true))), test("source values fail predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.everySatisfy(alwaysFalse), expectEquals(false)))), describe("firstAsync", testAsync("empty source", async () => {
-    const result = await pipe([], m.fromReadonlyArray(), m.firstAsync());
-    pipe(result, expectIsNone);
-}), testAsync("it returns the first value", async () => {
-    const result = await pipe([1, 2, 3], m.fromReadonlyArray(), m.firstAsync());
-    pipe(result, expectEquals(1));
-})), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], m.fromReadonlyArray(), m.flatMapIterable(function* (_) {
+})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], m.fromReadonlyArray(), m.endWith(2, 3, 4), m.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("everySatisfy", test("source is empty", pipeLazy([], m.fromReadonlyArray(), m.everySatisfy(alwaysFalse), expectEquals(true))), test("source values pass predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.everySatisfy(alwaysTrue), expectEquals(true))), test("source values fail predicate", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.everySatisfy(alwaysFalse), expectEquals(false)))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], m.fromReadonlyArray(), m.flatMapIterable(function* (_) {
     yield 1;
     yield 2;
     yield 3;
@@ -55,12 +49,6 @@ const RunnableContainerTypeClassTests = (m) => describe("RunnableContainerTypeCl
     pipe(result, expectIsNone);
 }), test("it returns the last value", () => {
     const result = pipe([1, 2, 3], m.fromReadonlyArray(), m.last());
-    pipe(result, expectEquals(3));
-})), describe("lastAsync", testAsync("empty source", async () => {
-    const result = await pipe([], m.fromReadonlyArray(), m.lastAsync());
-    pipe(result, expectIsNone);
-}), testAsync("it returns the last value", async () => {
-    const result = await pipe([1, 2, 3], m.fromReadonlyArray(), m.lastAsync());
     pipe(result, expectEquals(3));
 })), describe("map", test("maps every value", pipeLazy([1, 2, 3], m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray(), expectArrayEquals([2, 3, 4]))), test("when selector throws", () => {
     const err = new Error();

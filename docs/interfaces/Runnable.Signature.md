@@ -73,9 +73,7 @@
 
 - [everySatisfy](Runnable.Signature.md#everysatisfy)
 - [first](Runnable.Signature.md#first)
-- [firstAsync](Runnable.Signature.md#firstasync)
 - [last](Runnable.Signature.md#last)
-- [lastAsync](Runnable.Signature.md#lastasync)
 - [noneSatisfy](Runnable.Signature.md#nonesatisfy)
 - [reduce](Runnable.Signature.md#reduce)
 - [someSatisfy](Runnable.Signature.md#somesatisfy)
@@ -1706,26 +1704,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[firstAsync](type_classes.RunnableContainerTypeClass.md#firstasync)
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -1743,26 +1721,6 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[last](type_classes.RunnableContainerTypeClass.md#last)
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[lastAsync](type_classes.RunnableContainerTypeClass.md#lastasync)
 
 ___
 
