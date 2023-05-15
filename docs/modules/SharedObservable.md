@@ -28,7 +28,6 @@
 
 - [compute](SharedObservable.md#compute)
 - [flatMapAsync](SharedObservable.md#flatmapasync)
-- [never](SharedObservable.md#never)
 
 ## Type Aliases
 
@@ -279,19 +278,3 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
-
-___
-
-### never
-
-▸ **never**<`T`\>(): [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>
