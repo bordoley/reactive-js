@@ -29,7 +29,6 @@
 - [concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
 - [exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
 - [exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
-- [flatMapIterable](type_classes.HigherOrderObservableBaseTypeClass.md#flatmapiterable)
 - [mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
 - [mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
 - [switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
@@ -115,29 +114,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
 
 #### Returns
 

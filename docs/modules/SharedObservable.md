@@ -18,7 +18,6 @@
 - [concatMap](SharedObservable.md#concatmap)
 - [exhaust](SharedObservable.md#exhaust)
 - [exhaustMap](SharedObservable.md#exhaustmap)
-- [flatMapIterable](SharedObservable.md#flatmapiterable)
 - [mergeAll](SharedObservable.md#mergeall)
 - [mergeMap](SharedObservable.md#mergemap)
 - [switchAll](SharedObservable.md#switchall)
@@ -110,29 +109,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`SharedObservableContainer`](../interfaces/types.SharedObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
 
 #### Returns
 

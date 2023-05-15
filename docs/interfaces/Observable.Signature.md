@@ -6,7 +6,11 @@
 
 ## Table of contents
 
-### Methods
+### Operator Methods
+
+- [flatMapIterable](Observable.Signature.md#flatmapiterable)
+
+### Other Methods
 
 - [animate](Observable.Signature.md#animate)
 - [backpressureStrategy](Observable.Signature.md#backpressurestrategy)
@@ -70,7 +74,32 @@
 - [zip](Observable.Signature.md#zip)
 - [zipWith](Observable.Signature.md#zipwith)
 
-## Methods
+## Operator Methods
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
+
+___
+
+## Other Methods
 
 ### animate
 
