@@ -16,8 +16,6 @@ import {
   ObserverLike,
   QueueableLike,
   SchedulerLike,
-  StoreLike,
-  StoreLike_value,
 } from "../types.js";
 import {
   __ContinuationLike_activeChild as ContinuationLike_activeChild,
@@ -135,10 +133,6 @@ export interface SchedulerTaskLike {
   readonly [SchedulerTaskLike_continuation]: ContinuationLike;
   [SchedulerTaskLike_dueTime]: number;
   [SchedulerTaskLike_id]: number;
-}
-
-export interface MutableStoreLike<T = unknown> extends StoreLike<T> {
-  [StoreLike_value]: T;
 }
 
 export interface LiftedLike<TSrc, TState> {

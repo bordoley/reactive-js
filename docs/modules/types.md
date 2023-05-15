@@ -39,6 +39,7 @@
 - [EventPublisherLike](../interfaces/types.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/types.EventSourceLike.md)
 - [StoreLike](../interfaces/types.StoreLike.md)
+- [WritableStoreLike](../interfaces/types.WritableStoreLike.md)
 
 ### EventMap Interfaces
 

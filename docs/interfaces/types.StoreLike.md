@@ -16,6 +16,8 @@
 
   ↳ **`StoreLike`**
 
+  ↳↳ [`WritableStoreLike`](types.WritableStoreLike.md)
+
 ## Table of contents
 
 ### Properties

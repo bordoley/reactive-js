@@ -6,7 +6,7 @@ import MutableEnumerator_mixin, {
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import Queue_createPriorityQueue from "../../Queue/__internal__/Queue.createPriorityQueue.js";
 import type * as Scheduler from "../../Scheduler.js";
-import Store_createMutable from "../../Store/__internal__/Store.createMutable.js";
+import Store_create from "../../Store/__internal__/Store.create.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import {
@@ -29,7 +29,6 @@ import {
 } from "../../__internal__/symbols.js";
 import {
   ContinuationLike,
-  MutableStoreLike,
   QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
@@ -68,6 +67,7 @@ import {
   SchedulerLike_shouldYield,
   SchedulerLike_yield,
   StoreLike_value,
+  WritableStoreLike,
 } from "../../types.js";
 import {
   SchedulerImplementationLike,
@@ -206,7 +206,7 @@ const Scheduler_createPauseableScheduler: Scheduler.Signature["createPausableSch
       [__PauseableScheduler_hostContinuation]: Optional<
         SideEffect1<SchedulerLike>
       >;
-      [PauseableLike_isPaused]: MutableStoreLike<boolean>;
+      [PauseableLike_isPaused]: WritableStoreLike<boolean>;
       readonly [__PauseableScheduler_queue]: QueueLike<SchedulerTaskLike>;
       [__PauseableScheduler_taskIDCounter]: number;
       [__PauseableScheduler_initialTime]: number;
@@ -255,7 +255,7 @@ const Scheduler_createPauseableScheduler: Scheduler.Signature["createPausableSch
           instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
 
-          instance[PauseableLike_isPaused] = Store_createMutable(false);
+          instance[PauseableLike_isPaused] = Store_create(false);
 
           return instance;
         },

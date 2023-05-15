@@ -14,6 +14,7 @@
 
 ### Functions
 
+- [create](Store.md#create)
 - [toSharedObservable](Store.md#tosharedobservable)
 
 ## Type Aliases
@@ -23,6 +24,28 @@
 Ƭ **Type**: [`StoreContainer`](../interfaces/types.StoreContainer.md)
 
 ## Functions
+
+### create
+
+▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `initialValue` | `T` |
+
+#### Returns
+
+[`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\>
+
+___
 
 ### toSharedObservable
 

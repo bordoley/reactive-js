@@ -8,7 +8,7 @@ import Observable_distinctUntilChanged from "../../Observable/__internal__/Obser
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
-import Store_createMutable from "../../Store/__internal__/Store.createMutable.js";
+import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -25,7 +25,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         init(Disposable_delegatingMixin, instance, stream);
         init(Delegating_mixin(), instance, stream);
         init(EventSource_lazyInitPublisherMixin(), instance);
-        instance[PauseableLike_isPaused] = Store_createMutable(true);
+        instance[PauseableLike_isPaused] = Store_create(true);
         return instance;
     }, props({
         [PauseableLike_isPaused]: none,
