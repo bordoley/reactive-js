@@ -1,3 +1,4 @@
+import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -6,7 +7,9 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -21,6 +24,8 @@ import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.j
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
+import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
+import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
@@ -99,7 +104,14 @@ export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
 export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
+  Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
+export const fromIterable: Signature["fromIterable"] = Iterable_toRunnable;
+export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  ReadonlyArray_toRunnable;
+export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];
