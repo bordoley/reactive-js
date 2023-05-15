@@ -284,7 +284,7 @@ export interface Signature {
   empty<T>(): EnumerableLike<T>;
   empty<T>(options: { readonly delay: number }): RunnableLike<T>;
 
-  encodeUtf8: EnumerableUpperBoundObservableOperator<string, Uint8Array>;
+  encodeUtf8(): EnumerableUpperBoundObservableOperator<string, Uint8Array>;
 
   endWith<T>(
     value: T,

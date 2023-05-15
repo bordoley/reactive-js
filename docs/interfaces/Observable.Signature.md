@@ -6,10 +6,6 @@
 
 ## Table of contents
 
-### Properties
-
-- [encodeUtf8](Observable.Signature.md#encodeutf8)
-
 ### Methods
 
 - [animate](Observable.Signature.md#animate)
@@ -26,6 +22,7 @@
 - [dispatchTo](Observable.Signature.md#dispatchto)
 - [distinctUntilChanged](Observable.Signature.md#distinctuntilchanged)
 - [empty](Observable.Signature.md#empty)
+- [encodeUtf8](Observable.Signature.md#encodeutf8)
 - [endWith](Observable.Signature.md#endwith)
 - [enqueue](Observable.Signature.md#enqueue)
 - [firstAsync](Observable.Signature.md#firstasync)
@@ -72,12 +69,6 @@
 - [withLastestFrom](Observable.Signature.md#withlastestfrom)
 - [zip](Observable.Signature.md#zip)
 - [zipWith](Observable.Signature.md#zipwith)
-
-## Properties
-
-### encodeUtf8
-
-• **encodeUtf8**: [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 ## Methods
 
@@ -549,6 +540,16 @@ ___
 #### Returns
 
 [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**(): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 ___
 

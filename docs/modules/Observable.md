@@ -653,23 +653,11 @@ ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**<`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`string`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`string`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`string`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`string`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`Uint8Array`\> : `never`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`string`, `TObservableIn`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
+▸ **encodeUtf8**(): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 #### Returns
 
-`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`string`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`string`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`string`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Uint8Array`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`string`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`Uint8Array`\> : `never`
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 ___
 
