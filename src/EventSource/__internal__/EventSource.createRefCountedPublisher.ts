@@ -1,7 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import type * as EventPublisher from "../../EventPublisher.js";
+import type * as EventSource from "../../EventSource.js";
 import {
   createInstanceFactory,
   include,
@@ -23,9 +23,9 @@ import {
   EventPublisherLike_listenerCount,
   EventSourceLike_addEventListener,
 } from "../../types.js";
-import EventPublisher_create from "./EventPublisher.create.js";
+import EventSource_createPublisher from "./EventSource.createPublisher.js";
 
-const EventPublisher_createRefCounted: EventPublisher.Signature["createRefCounted"] =
+const EventSource_createRefCountedPublisher: EventSource.Signature["createRefCountedPublisher"] =
   /*@__PURE__*/ (<T>() => {
     const createRefCountedEventPublisherInstance = createInstanceFactory(
       mix(
@@ -84,9 +84,9 @@ const EventPublisher_createRefCounted: EventPublisher.Signature["createRefCounte
     );
 
     return (): EventPublisherLike<T> => {
-      const delegate = EventPublisher_create<T>();
+      const delegate = EventSource_createPublisher<T>();
       return createRefCountedEventPublisherInstance(delegate);
     };
   })();
 
-export default EventPublisher_createRefCounted;
+export default EventSource_createRefCountedPublisher;

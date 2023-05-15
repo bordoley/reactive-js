@@ -4,7 +4,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
-import EventPublisher_create from "../../EventPublisher/__internal__/EventPublisher.create.js";
+import EventSource_createPublisher from "../../EventSource/__internal__/EventSource.createPublisher.js";
 import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
@@ -34,7 +34,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
             return Observable_mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
-        const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventPublisher_create(), Disposable_addTo(instance))));
+        const publishers = pipe(animationGroup, ReadonlyObjectMap_map(_ => pipe(EventSource_createPublisher(), Disposable_addTo(instance))));
         const animationScheduler = creationOptions?.scheduler ?? scheduler;
         instance[CollectionLike_count] = pipe(publishers, ReadonlyObjectMap_reduce(incrementBy(1), returns(0)));
         init(Delegating_mixin(), instance, publishers);

@@ -1,6 +1,5 @@
 import * as Disposable from "../../Disposable.js";
 import * as EventListener from "../../EventListener.js";
-import * as EventPublisher from "../../EventPublisher.js";
 import * as EventSource from "../../EventSource.js";
 import * as Observable from "../../Observable.js";
 import * as CurrentTime from "../../Scheduler/__internal__/CurrentTime.js";
@@ -1758,7 +1757,7 @@ const getWindowResizeEventSource = () => {
     windowResizeEventSourceRef ??
     (() => {
       const windowResizeEventPublisher = pipe(
-        EventPublisher.createRefCounted(),
+        EventSource.createRefCountedPublisher(),
         Disposable.onDisposed(() => {
           windowResizeEventSourceRef = none;
         }),
@@ -1784,7 +1783,7 @@ const getWindowScrollEventSource = () => {
     windowScrollEventSourceRef ??
     (() => {
       const windowScrollEventsPublisher = pipe(
-        EventPublisher.createRefCounted(),
+        EventSource.createRefCountedPublisher(),
         Disposable.onDisposed(() => {
           windowScrollEventSourceRef = none;
         }),
@@ -1928,7 +1927,7 @@ export const addResizeListener: <TElement extends Element>(
       publishers.get(element) ??
       (() => {
         const publisher = pipe(
-          EventPublisher.createRefCounted<ResizeObserverEntry>(),
+          EventSource.createRefCountedPublisher<ResizeObserverEntry>(),
           Disposable.onDisposed(() => {
             resizeObserver?.unobserve(element);
             publishers.delete(element);
@@ -2109,7 +2108,7 @@ export const intersectionWith: (
             eventPublishers.get(root)?.get(child) ??
             (() => {
               const publisher =
-                EventPublisher.createRefCounted<IntersectionObserverEntry>();
+                EventSource.createRefCountedPublisher<IntersectionObserverEntry>();
 
               const parentMap =
                 eventPublishers.get(root) ??

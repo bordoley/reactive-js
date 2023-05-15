@@ -2,7 +2,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
-import EventPublisher_create from "../../EventPublisher/__internal__/EventPublisher.create.js";
+import EventSource_createPublisher from "../../EventSource/__internal__/EventSource.createPublisher.js";
 import type { Animation } from "../../Observable.js";
 import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -181,7 +181,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
         const publishers = pipe(
           animationGroup,
           ReadonlyObjectMap_map<unknown, EventPublisherLike<T>, string>(_ =>
-            pipe(EventPublisher_create<T>(), Disposable_addTo(instance)),
+            pipe(EventSource_createPublisher<T>(), Disposable_addTo(instance)),
           ),
         );
 

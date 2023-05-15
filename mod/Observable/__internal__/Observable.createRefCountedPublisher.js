@@ -1,0 +1,42 @@
+/// <reference types="./Observable.createRefCountedPublisher.d.ts" />
+
+import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
+import { DelegatingLike_delegate, } from "../../__internal__/types.js";
+import { pipe, unsafeCast } from "../../functions.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, ObservableLike_observe, PublisherLike_observerCount, } from "../../types.js";
+import Observable_createPublisher from "./Observable.createPublisher.js";
+const Observable_createRefCountedPublisher = 
+/*@__PURE__*/ (() => {
+    const createRefCountedPublisherInstance = createInstanceFactory(mix(include(Disposable_delegatingMixin, MulticastObservable_delegatingMixin(), Delegating_mixin()), function RefCountedPublisher(instance, delegate) {
+        init(Disposable_delegatingMixin, instance, delegate);
+        init(MulticastObservable_delegatingMixin(), instance, delegate);
+        init(Delegating_mixin(), instance, delegate);
+        return instance;
+    }, props({}), {
+        get [PublisherLike_observerCount]() {
+            unsafeCast(this);
+            return this[DelegatingLike_delegate][PublisherLike_observerCount];
+        },
+        [EventListenerLike_isErrorSafe]: true,
+        [EventListenerLike_notify](next) {
+            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+        },
+        [ObservableLike_observe](observer) {
+            this[DelegatingLike_delegate][ObservableLike_observe](observer);
+            pipe(observer, Disposable_onDisposed(() => {
+                if (this[PublisherLike_observerCount] === 0) {
+                    this[DisposableLike_dispose]();
+                }
+            }));
+        },
+    }));
+    return (options) => {
+        const delegate = Observable_createPublisher(options);
+        return createRefCountedPublisherInstance(delegate);
+    };
+})();
+export default Observable_createRefCountedPublisher;

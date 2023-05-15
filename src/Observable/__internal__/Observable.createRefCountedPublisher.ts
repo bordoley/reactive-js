@@ -2,7 +2,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
-import type * as Publisher from "../../Publisher.js";
+import type * as Observable from "../../Observable.js";
 import {
   createInstanceFactory,
   include,
@@ -24,9 +24,9 @@ import {
   PublisherLike,
   PublisherLike_observerCount,
 } from "../../types.js";
-import Publisher_create from "./Publisher.create.js";
+import Observable_createPublisher from "./Observable.createPublisher.js";
 
-const Publisher_createRefCounted: Publisher.Signature["createRefCounted"] =
+const Observable_createRefCountedPublisher: Observable.Signature["createRefCountedPublisher"] =
   /*@__PURE__*/ (<T>() => {
     const createRefCountedPublisherInstance = createInstanceFactory(
       mix(
@@ -87,9 +87,9 @@ const Publisher_createRefCounted: Publisher.Signature["createRefCounted"] =
     );
 
     return (options?: { readonly replay?: number }) => {
-      const delegate = Publisher_create<T>(options);
+      const delegate = Observable_createPublisher<T>(options);
       return createRefCountedPublisherInstance(delegate);
     };
   })();
 
-export default Publisher_createRefCounted;
+export default Observable_createRefCountedPublisher;

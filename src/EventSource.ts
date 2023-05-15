@@ -1,5 +1,7 @@
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
+import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
+import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
 import EventSource_forEach from "./EventSource/__internal__/EventSource.forEach.js";
 import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.ignoreElements.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
@@ -15,6 +17,7 @@ import {
 import {
   DisposableLike,
   EventListenerLike,
+  EventPublisherLike,
   EventSourceContainer,
   EventSourceLike,
 } from "./types.js";
@@ -33,11 +36,25 @@ export interface Signature
    * @category Constructor
    */
   create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
+
+  /**
+   * @category Constructor
+   */
+  createPublisher<T>(): EventPublisherLike<T>;
+
+  /**
+   * @category Constructor
+   */
+  createRefCountedPublisher<T>(): EventPublisherLike<T>;
 }
 
 export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
 export const create: Signature["create"] = EventSource_create;
+export const createPublisher: Signature["createPublisher"] =
+  EventSource_createPublisher;
+export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
+  EventSource_createRefCountedPublisher;
 export const forEach: Signature["forEach"] = EventSource_forEach;
 export const ignoreElements: Signature["ignoreElements"] =
   EventSource_ignoreElements;

@@ -3,11 +3,11 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
-import Publisher_createRefCounted from "../../Publisher/__internal__/Publisher.createRefCounted.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyMap_keys from "../../ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import ReadonlyObjectMap_forEachWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
@@ -345,7 +345,9 @@ const createCacheStream: <T>(
           return (
             subscriptions.get(key) ??
             (() => {
-              const publisher = Publisher_createRefCounted<T>({ replay: 1 });
+              const publisher = Observable_createRefCountedPublisher<T>({
+                replay: 1,
+              });
               subscriptions.set(key, publisher);
 
               pipe(

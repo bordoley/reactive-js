@@ -1,7 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import EventPublisher_createRefCounted from "../../EventPublisher/__internal__/EventPublisher.createRefCounted.js";
 import type * as EventSource from "../../EventSource.js";
+import EventSource_createRefCountedPublisher from "../../EventSource/__internal__/EventSource.createRefCountedPublisher.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -53,7 +53,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
 
         instance[__CreateEventSource_createDelegate] = () => {
           const delegate = pipe(
-            EventPublisher_createRefCounted<T>(),
+            EventSource_createRefCountedPublisher<T>(),
             Disposable_onDisposed(() => {
               (
                 instance as Mutable<

@@ -2,7 +2,7 @@
 
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
-import EventPublisher_lazyInitMixin from "../../EventPublisher/__internal__/EventPublisher.lazyInitMixin.js";
+import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import Queue_indexedQueueMixin from "../../Queue/__internal__/Queue.indexedQueueMixin.js";
 import { getPrototype, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ObserverMixin_dispatchSubscription, __ObserverMixin_isCompleted, } from "../../__internal__/symbols.js";
@@ -32,11 +32,11 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
         }
     };
     const indexedQueueProtoype = getPrototype(Queue_indexedQueueMixin());
-    return returns(mix(include(Queue_indexedQueueMixin(), EventPublisher_lazyInitMixin()), function ObserverMixin(instance, config) {
+    return returns(mix(include(Queue_indexedQueueMixin(), EventSource_lazyInitPublisherMixin()), function ObserverMixin(instance, config) {
         init(
         // FIXME: Change this to take a config
         Queue_indexedQueueMixin(), instance, config[BufferLike_capacity], config[QueueableLike_backpressureStrategy]);
-        init(EventPublisher_lazyInitMixin(), instance);
+        init(EventSource_lazyInitPublisherMixin(), instance);
         return instance;
     }, props({
         [__ObserverMixin_isCompleted]: false,

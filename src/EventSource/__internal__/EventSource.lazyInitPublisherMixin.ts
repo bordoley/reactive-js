@@ -12,9 +12,9 @@ import {
   EventSourceLike,
   EventSourceLike_addEventListener,
 } from "../../types.js";
-import EventPublisher_create from "./EventPublisher.create.js";
+import EventSource_createPublisher from "./EventSource.createPublisher.js";
 
-const EventPublisher_lazyInitMixin: <T>() => Mixin<
+const EventSource_lazyInitPublisherMixin: <T>() => Mixin<
   EventPublisherLike<T>,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
@@ -61,7 +61,7 @@ const EventPublisher_lazyInitMixin: <T>() => Mixin<
             this[__LazyInitEventMixin_eventPublisher] ??
             (() => {
               const publisher = pipe(
-                EventPublisher_create(),
+                EventSource_createPublisher(),
                 Disposable_addTo(this),
               );
               this[__LazyInitEventMixin_eventPublisher] = publisher;
@@ -75,4 +75,4 @@ const EventPublisher_lazyInitMixin: <T>() => Mixin<
   );
 })();
 
-export default EventPublisher_lazyInitMixin;
+export default EventSource_lazyInitPublisherMixin;
