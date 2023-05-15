@@ -1,3 +1,4 @@
+import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
@@ -22,7 +23,9 @@ import Observable_forkConcat from "./Observable/__internal__/Observable.forkConc
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
+import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
@@ -78,6 +81,7 @@ import {
   DisposableLike,
   DisposableOrTeardown,
   EnumerableLike,
+  EnumeratorLike,
   EventSourceLike,
   ObservableContainer,
   ObservableLike,
@@ -469,10 +473,25 @@ export interface Signature {
     DeferredObservableLike<T>
   >;
 
+  fromEnumeratorFactory<T>(): Function1<
+    Factory<EnumeratorLike<T>>,
+    EnumerableLike<T>
+  >;
+  fromEnumeratorFactory<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+  }): Function1<Factory<EnumeratorLike<T>>, RunnableLike<T>>;
+
   fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
   fromFactory<T>(options: {
     readonly delay: number;
   }): Function1<Factory<T>, RunnableLike<T>>;
+
+  fromIterable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
+  fromIterable<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+  }): Function1<Iterable<T>, RunnableLike<T>>;
 
   fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
   fromOptional<T>(options: {
@@ -496,6 +515,11 @@ export interface Signature {
     readonly count?: number;
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+
+  fromValue<T>(): Function1<T, EnumerableLike<T>>;
+  fromValue<T>(options: {
+    readonly delay: number;
+  }): Function1<T, RunnableLike<T>>;
 
   generate<T>(
     generator: Updater<T>,
@@ -1278,10 +1302,14 @@ export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const forkZip: Signature["forkZip"] = Observable_forkZip;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
+export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
+  Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
+export const fromIterable: Signature["fromIterable"] = Iterable_toRunnable;
 export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toRunnable;
+export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
