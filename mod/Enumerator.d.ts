@@ -3,9 +3,8 @@ import { BlockingContainerBaseTypeClass, ConcreteContainerBaseTypeClass, Contain
 import { EnumerableLike, EnumeratorContainer, EnumeratorLike, RunnableLike } from "./types.js";
 export type Type = EnumeratorContainer;
 export interface Signature extends ConcreteContainerBaseTypeClass<Type>, BlockingContainerBaseTypeClass<Type>, ContainerTypeClass<Type> {
-    toEnumerable<T>(): Function1<EnumeratorLike<T>, EnumerableLike<T>>;
-    toRunnable<T>(): Function1<EnumeratorLike<T>, EnumerableLike<T>>;
-    toRunnable<T>(options: {
+    toObservable<T>(): Function1<EnumeratorLike<T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
         readonly delay: number;
         readonly delayStart?: boolean;
     }): Function1<EnumeratorLike<T>, RunnableLike<T>>;
@@ -14,4 +13,5 @@ export declare const empty: Signature["empty"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pick: Signature["pick"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

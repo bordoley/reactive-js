@@ -1,7 +1,7 @@
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
-import ReadonlyArray_toRunnable from "../../ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -49,7 +49,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
             pipe(
               instance[__TakeLastObserver_takeLastQueue],
               IndexedCollection_toReadonlyArray<T>(),
-              ReadonlyArray_toRunnable(),
+              ReadonlyArray_toObservable(),
               invoke(ObservableLike_observe, delegate),
             );
           }),

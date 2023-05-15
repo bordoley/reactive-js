@@ -1,6 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
-import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
+import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -63,8 +63,8 @@ import Observable_withCurrentTime from "./Observable/__internal__/Observable.wit
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const concat = Observable_concat;
@@ -92,9 +92,9 @@ export const forkZip = Observable_forkZip;
 export const fromAsyncFactory = Observable_fromAsyncFactory;
 export const fromEnumeratorFactory = Observable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
-export const fromIterable = Iterable_toRunnable;
-export const fromOptional = Optional_toRunnable;
-export const fromReadonlyArray = ReadonlyArray_toRunnable;
+export const fromIterable = Iterable_toObservable;
+export const fromOptional = Optional_toObservable;
+export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromValue = Observable_fromValue;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;

@@ -1,5 +1,5 @@
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
-import Enumerator_toRunnable from "../../Enumerator/__internal__/Enumerator.toRunnable.js";
+import Enumerator_toObservable from "../../Enumerator/__internal__/Enumerator.toObservable.js";
 import type * as Observable from "../../Observable.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { Factory, invoke, pipe } from "../../functions.js";
@@ -18,7 +18,7 @@ const Observable_fromEnumeratorFactory: Observable.Signature["fromEnumeratorFact
 
         pipe(
           enumerator,
-          Enumerator_toRunnable(
+          Enumerator_toObservable(
             options as {
               readonly delay: number;
               readonly delayStart?: boolean;

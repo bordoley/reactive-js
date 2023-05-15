@@ -38,8 +38,8 @@ import ReadonlyArray_startWith from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.takeFirst.js";
 import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
 import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
@@ -111,30 +111,18 @@ export interface Signature
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, Iterable<T>>;
 
-  toEnumerable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toEnumerable<T>(options: {
+  toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  toObservable<T>(options: {
     readonly count: number;
   }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toEnumerable<T>(options: {
-    readonly count: number;
-    readonly start: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toEnumerable<T>(options: {
-    readonly start: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-
-  toRunnable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toRunnable<T>(options: {
-    readonly count: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toRunnable<T>(options: {
+  toObservable<T>(options: {
     readonly count: number;
     readonly start: number;
   }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toRunnable<T>(options: {
+  toObservable<T>(options: {
     readonly start: number;
   }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toRunnable<T>(options: {
+  toObservable<T>(options: {
     readonly delay: number;
     readonly delayStart?: boolean;
     readonly count?: number;
@@ -196,8 +184,8 @@ export const toIterable: Signature["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
-export const toEnumerable: Signature["toEnumerable"] = ReadonlyArray_toRunnable;
-export const toRunnable: Signature["toRunnable"] = ReadonlyArray_toRunnable;
+export const toObservable: Signature["toObservable"] =
+  ReadonlyArray_toObservable;
 export const values: Signature["values"] = ReadonlyArray_values;
 export const zip: Signature["zip"] = ReadonlyArray_zip;
 export const zipWith: Signature["zipWith"] = ReadonlyArray_zipWith;

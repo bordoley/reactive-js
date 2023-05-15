@@ -14,7 +14,7 @@
 
 ### Functions
 
-- [toSharedObservable](Promise.md#tosharedobservable)
+- [toObservable](Promise.md#toobservable)
 
 ## Type Aliases
 
@@ -24,9 +24,9 @@
 
 ## Functions
 
-### toSharedObservable
+### toObservable
 
-▸ **toSharedObservable**<`T`\>(): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
 
 #### Type parameters
 

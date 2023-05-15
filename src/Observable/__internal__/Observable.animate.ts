@@ -1,6 +1,6 @@
 import DeferredObservable_repeat from "../../DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import type * as Observable from "../../Observable.js";
-import Optional_toRunnable from "../../Optional/__internal__/Optional.toRunnable.js";
+import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
@@ -28,7 +28,7 @@ const parseAnimationConfig = <T = number>(
     : config.type === "frame"
     ? pipe(
         config.value,
-        Optional_toRunnable(),
+        Optional_toObservable(),
         isSome(config.selector)
           ? Observable_map(config.selector)
           : (identity as Observable.EnumerableUpperBoundObservableOperator<

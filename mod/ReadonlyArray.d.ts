@@ -29,29 +29,18 @@ export interface Signature extends KeyedContainerTypeClass<Type>, Omit<Enumerabl
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
-    toEnumerable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toEnumerable<T>(options: {
+    toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
         readonly count: number;
     }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toEnumerable<T>(options: {
-        readonly count: number;
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toEnumerable<T>(options: {
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toRunnable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toRunnable<T>(options: {
-        readonly count: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toRunnable<T>(options: {
+    toObservable<T>(options: {
         readonly count: number;
         readonly start: number;
     }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toRunnable<T>(options: {
+    toObservable<T>(options: {
         readonly start: number;
     }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toRunnable<T>(options: {
+    toObservable<T>(options: {
         readonly delay: number;
         readonly delayStart?: boolean;
         readonly count?: number;
@@ -101,8 +90,7 @@ export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
-export declare const toEnumerable: Signature["toEnumerable"];
-export declare const toRunnable: Signature["toRunnable"];
+export declare const toObservable: Signature["toObservable"];
 export declare const values: Signature["values"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];

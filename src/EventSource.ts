@@ -7,7 +7,7 @@ import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.i
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
-import EventSource_toSharedObservable from "./EventSource/__internal__/EventSource.toSharedObservable.js";
+import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
 import { Function1, SideEffect1 } from "./functions.js";
 import {
   AsynchronousContainerBaseTypeClass,
@@ -61,5 +61,4 @@ export const ignoreElements: Signature["ignoreElements"] =
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const pick: Signature["pick"] = EventSource_pick;
-export const toSharedObservable: Signature["toSharedObservable"] =
-  EventSource_toSharedObservable;
+export const toObservable: Signature["toObservable"] = EventSource_toObservable;

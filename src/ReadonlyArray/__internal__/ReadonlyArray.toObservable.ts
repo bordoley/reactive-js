@@ -15,7 +15,7 @@ import {
 } from "../../types.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
-const ReadonlyArray_toRunnable: ReadonlyArray.Signature["toRunnable"] =
+const ReadonlyArray_toObservable: ReadonlyArray.Signature["toObservable"] =
   /*@__PURE__*/
   ReadonlyArray_toContainer<
     Runnable.Type,
@@ -69,6 +69,6 @@ const ReadonlyArray_toRunnable: ReadonlyArray.Signature["toRunnable"] =
         ? Runnable_create(onSubscribe)
         : Enumerable_create(onSubscribe);
     },
-  ) as ReadonlyArray.Signature["toRunnable"];
+  ) as ReadonlyArray.Signature["toObservable"];
 
-export default ReadonlyArray_toRunnable;
+export default ReadonlyArray_toObservable;

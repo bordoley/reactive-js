@@ -3,7 +3,7 @@ import SharedObservable_create from "../../SharedObservable/__internal__/SharedO
 import { compose } from "../../functions.js";
 import Disposable_addTo from "./Disposable.addTo.js";
 
-const Disposable_toSharedObservable: Disposable.Signature["toSharedObservable"] =
-  () => compose(Disposable_addTo, SharedObservable_create);
+const Disposable_toObservable: Disposable.Signature["toObservable"] = () =>
+  compose(Disposable_addTo, SharedObservable_create);
 
-export default Disposable_toSharedObservable;
+export default Disposable_toObservable;

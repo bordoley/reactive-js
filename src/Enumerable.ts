@@ -3,7 +3,7 @@ import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import Iterable_toRunnable from "./Iterable/__internal__/Iterable.toRunnable.js";
+import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -29,8 +29,8 @@ import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.j
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
-import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
+import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
+import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
@@ -86,10 +86,10 @@ export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
-export const fromIterable: Signature["fromIterable"] = Iterable_toRunnable;
-export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
+export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
+export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
-  ReadonlyArray_toRunnable;
+  ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =

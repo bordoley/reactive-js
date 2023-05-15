@@ -47,8 +47,7 @@
 
 ### Other Methods
 
-- [toEnumerable](Enumerator.Signature.md#toenumerable)
-- [toRunnable](Enumerator.Signature.md#torunnable)
+- [toObservable](Enumerator.Signature.md#toobservable)
 
 ### Transform Methods
 
@@ -1165,25 +1164,9 @@ ___
 
 ## Other Methods
 
-### toEnumerable
+### toObservable
 
-▸ **toEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-___
-
-### toRunnable
-
-▸ **toRunnable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1195,7 +1178,7 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
-▸ **toRunnable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 

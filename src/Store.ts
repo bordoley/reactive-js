@@ -1,5 +1,5 @@
 import Store_create from "./Store/__internal__/Store.create.js";
-import Store_toSharedObservable from "./Store/__internal__/Store.toSharedObservable.js";
+import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
 import { AsynchronousContainerBaseTypeClass } from "./type-classes.js";
 import { StoreContainer, WritableStoreLike } from "./types.js";
 
@@ -10,5 +10,4 @@ export interface Signature extends AsynchronousContainerBaseTypeClass<Type> {
 }
 
 export const create: Signature["create"] = Store_create;
-export const toSharedObservable: Signature["toSharedObservable"] =
-  Store_toSharedObservable;
+export const toObservable: Signature["toObservable"] = Store_toObservable;
