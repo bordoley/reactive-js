@@ -96,7 +96,7 @@ export interface Signature {
     empty<T>(options: {
         readonly delay: number;
     }): RunnableLike<T>;
-    encodeUtf8: EnumerableUpperBoundObservableOperator<string, Uint8Array>;
+    encodeUtf8(): EnumerableUpperBoundObservableOperator<string, Uint8Array>;
     endWith<T>(value: T, ...values: readonly T[]): EnumerableUpperBoundObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
     firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
