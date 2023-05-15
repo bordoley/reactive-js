@@ -71,9 +71,7 @@
 - [enumerate](ReadonlyArray.Signature.md#enumerate)
 - [everySatisfy](ReadonlyArray.Signature.md#everysatisfy)
 - [first](ReadonlyArray.Signature.md#first)
-- [firstAsync](ReadonlyArray.Signature.md#firstasync)
 - [last](ReadonlyArray.Signature.md#last)
-- [lastAsync](ReadonlyArray.Signature.md#lastasync)
 - [noneSatisfy](ReadonlyArray.Signature.md#nonesatisfy)
 - [reduce](ReadonlyArray.Signature.md#reduce)
 - [reduceWithKey](ReadonlyArray.Signature.md#reducewithkey)
@@ -1818,26 +1816,6 @@ Omit.first
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-Omit.firstAsync
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -1855,26 +1833,6 @@ ___
 #### Inherited from
 
 Omit.last
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-Omit.lastAsync
 
 ___
 

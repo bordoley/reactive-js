@@ -5,6 +5,7 @@ import Observable_concatWith from "./Observable/__internal__/Observable.concatWi
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_createPublisher from "./Observable/__internal__/Observable.createPublisher.js";
 import Observable_createRefCountedPublisher from "./Observable/__internal__/Observable.createRefCountedPublisher.js";
+import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
@@ -56,6 +57,7 @@ import Observable_withLatestFrom from "./Observable/__internal__/Observable.with
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toRunnable from "./Optional/__internal__/Optional.toRunnable.js";
+import ReadonlyArray_toRunnable from "./ReadonlyArray/__internal__/ReadonlyArray.toRunnable.js";
 import {
   Equality,
   Factory,
@@ -465,9 +467,27 @@ export interface Signature {
   }): Function1<Factory<T>, RunnableLike<T>>;
 
   fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-  fromFactory<T>(options: {
+  fromOptional<T>(options: {
     readonly delay: number;
-  }): Function1<Factory<T>, RunnableLike<T>>;
+  }): Function1<Optional<T>, RunnableLike<T>>;
+
+  fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  fromReadonlyArray<T>(options: {
+    readonly count: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  fromReadonlyArray<T>(options: {
+    readonly count: number;
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  fromReadonlyArray<T>(options: {
+    readonly start: number;
+  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
+  fromReadonlyArray<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 
   generate<T>(
     generator: Updater<T>,
@@ -1229,6 +1249,7 @@ export const createPublisher: Signature["createPublisher"] =
   Observable_createPublisher;
 export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
   Observable_createRefCountedPublisher;
+export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const defer: Signature["defer"] = Observable_defer;
@@ -1249,6 +1270,8 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromOptional: Signature["fromOptional"] = Optional_toRunnable;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  ReadonlyArray_toRunnable;
 export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;

@@ -64,9 +64,7 @@
 - [enumerate](ReadonlyArray.md#enumerate)
 - [everySatisfy](ReadonlyArray.md#everysatisfy)
 - [first](ReadonlyArray.md#first)
-- [firstAsync](ReadonlyArray.md#firstasync)
 - [last](ReadonlyArray.md#last)
-- [lastAsync](ReadonlyArray.md#lastasync)
 - [noneSatisfy](ReadonlyArray.md#nonesatisfy)
 - [reduce](ReadonlyArray.md#reduce)
 - [reduceWithKey](ReadonlyArray.md#reducewithkey)
@@ -1593,22 +1591,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`Optional`](functions.md#optional)<`T`\>\>
@@ -1622,22 +1604,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`Optional`](functions.md#optional)<`T`\>\>
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

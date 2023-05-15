@@ -8,12 +8,10 @@ import Observable_concatWith from "./Observable/__internal__/Observable.concatWi
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
-import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
-import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
@@ -76,7 +74,6 @@ export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
 export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
 export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
 export const first: Signature["first"] = Runnable_first;
-export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Enumerable_flatMapIterable;
 export const forEach: Signature["forEach"] = Observable_forEach;
@@ -85,7 +82,6 @@ export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];
 export const last: Signature["last"] = Runnable_last;
-export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const noneSatisfy: Signature["noneSatisfy"] = Runnable_noneSatisfy;

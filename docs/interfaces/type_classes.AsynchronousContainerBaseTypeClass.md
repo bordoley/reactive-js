@@ -24,11 +24,16 @@
 
 ## Table of contents
 
-### Methods
+### Other Methods
 
 - [toSharedObservable](type_classes.AsynchronousContainerBaseTypeClass.md#tosharedobservable)
 
-## Methods
+### Transform Methods
+
+- [firstAsync](type_classes.AsynchronousContainerBaseTypeClass.md#firstasync)
+- [lastAsync](type_classes.AsynchronousContainerBaseTypeClass.md#lastasync)
+
+## Other Methods
 
 ### toSharedObservable
 
@@ -43,3 +48,37 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+
+___
+
+## Transform Methods
+
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>

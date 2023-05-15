@@ -59,9 +59,7 @@
 - [contains](Runnable.md#contains)
 - [everySatisfy](Runnable.md#everysatisfy)
 - [first](Runnable.md#first)
-- [firstAsync](Runnable.md#firstasync)
 - [last](Runnable.md#last)
-- [lastAsync](Runnable.md#lastasync)
 - [noneSatisfy](Runnable.md#nonesatisfy)
 - [reduce](Runnable.md#reduce)
 - [someSatisfy](Runnable.md#somesatisfy)
@@ -1348,22 +1346,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
@@ -1377,22 +1359,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

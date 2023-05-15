@@ -53,9 +53,7 @@
 - [enumerate](Enumerable.md#enumerate)
 - [everySatisfy](Enumerable.md#everysatisfy)
 - [first](Enumerable.md#first)
-- [firstAsync](Enumerable.md#firstasync)
 - [last](Enumerable.md#last)
-- [lastAsync](Enumerable.md#lastasync)
 - [noneSatisfy](Enumerable.md#nonesatisfy)
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
@@ -1179,22 +1177,6 @@ ___
 
 ___
 
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
@@ -1208,22 +1190,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `PromiseLike`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 

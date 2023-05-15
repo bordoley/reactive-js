@@ -29,6 +29,7 @@
 - [create](Observable.md#create)
 - [createPublisher](Observable.md#createpublisher)
 - [createRefCountedPublisher](Observable.md#createrefcountedpublisher)
+- [currentTime](Observable.md#currenttime)
 - [decodeWithCharset](Observable.md#decodewithcharset)
 - [defer](Observable.md#defer)
 - [dispatchTo](Observable.md#dispatchto)
@@ -46,6 +47,7 @@
 - [fromAsyncFactory](Observable.md#fromasyncfactory)
 - [fromFactory](Observable.md#fromfactory)
 - [fromOptional](Observable.md#fromoptional)
+- [fromReadonlyArray](Observable.md#fromreadonlyarray)
 - [generate](Observable.md#generate)
 - [ignoreElements](Observable.md#ignoreelements)
 - [isDeferredObservable](Observable.md#isdeferredobservable)
@@ -509,6 +511,24 @@ ___
 #### Returns
 
 [`PublisherLike`](../interfaces/types.PublisherLike.md)<`T`\>
+
+___
+
+### currentTime
+
+▸ **currentTime**(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -1399,7 +1419,23 @@ ___
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
-▸ **fromFactory**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromOptional**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1416,13 +1452,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
-### fromOptional
+### fromReadonlyArray
 
-▸ **fromOptional**<`T`\>(): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1432,7 +1468,87 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count?` | `number` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 

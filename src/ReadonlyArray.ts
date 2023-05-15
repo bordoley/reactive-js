@@ -10,7 +10,6 @@ import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.en
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_first from "./ReadonlyArray/__internal__/ReadonlyArray.first.js";
-import ReadonlyArray_firstAsync from "./ReadonlyArray/__internal__/ReadonlyArray.firstAsync.js";
 import ReadonlyArray_flatMapIterable from "./ReadonlyArray/__internal__/ReadonlyArray.flatMapIterable.js";
 import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
@@ -24,7 +23,6 @@ import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
 import ReadonlyArray_last from "./ReadonlyArray/__internal__/ReadonlyArray.last.js";
-import ReadonlyArray_lastAsync from "./ReadonlyArray/__internal__/ReadonlyArray.lastAsync.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapTo from "./ReadonlyArray/__internal__/ReadonlyArray.mapTo.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
@@ -158,7 +156,6 @@ export const enumerate: Signature["enumerate"] = ReadonlyArray_enumerate;
 export const everySatisfy: Signature["everySatisfy"] =
   ReadonlyArray_everySatisfy;
 export const first: Signature["first"] = ReadonlyArray_first;
-export const firstAsync: Signature["firstAsync"] = ReadonlyArray_firstAsync;
 export const flatMapIterable: Signature["flatMapIterable"] =
   ReadonlyArray_flatMapIterable;
 export const flow: Signature["flow"] = ReadonlyArray_flow;
@@ -179,7 +176,6 @@ export const keep: Signature["keep"] = ReadonlyArray_keep;
 export const keepType: Signature["keepType"] = ReadonlyArray_keepType;
 export const keepWithKey: Signature["keepWithKey"] = ReadonlyArray_keepWithKey;
 export const last: Signature["last"] = ReadonlyArray_last;
-export const lastAsync: Signature["lastAsync"] = ReadonlyArray_lastAsync;
 export const map: Signature["map"] = ReadonlyArray_map;
 export const mapTo: Signature["mapTo"] = ReadonlyArray_mapTo;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyArray_mapWithKey;

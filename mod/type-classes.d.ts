@@ -12,11 +12,6 @@ export interface ContainerTypeClass<C extends Container> {
         readonly equality?: Equality<T>;
     }): ContainerOperator<C, T, T>;
     /**
-     *
-     * @category Transform
-     */
-    firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
-    /**
      * @category Operator
      */
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<C, TA, TB>;
@@ -38,11 +33,6 @@ export interface ContainerTypeClass<C extends Container> {
      * @category Operator
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB>;
-    /**
-     *
-     * @category Transform
-     */
-    lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -198,6 +188,16 @@ export interface StatefulContainerBaseTypeClass<C extends Container> {
     ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 }
 export interface AsynchronousContainerBaseTypeClass<C extends Container> {
+    /**
+     *
+     * @category Transform
+     */
+    firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
+    /**
+     *
+     * @category Transform
+     */
+    lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
     toSharedObservable<T>(): Function1<ContainerOf<C, T>, SharedObservableLike<T>>;
 }
 export interface BlockingContainerBaseTypeClass<C extends Container> {
