@@ -6,9 +6,10 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { none, unsafeCast } from "../../functions.js";
 import { EventListenerLike_notify, StoreLike_value, } from "../../types.js";
 const Store_createMutable = (() => {
-    return createInstanceFactory(mix(include(EventSource_lazyInitPublisherMixin(), Disposable_mixin), function MutableStore(instance) {
+    return createInstanceFactory(mix(include(EventSource_lazyInitPublisherMixin(), Disposable_mixin), function MutableStore(instance, initialValue) {
         init(Disposable_mixin, instance);
         init(EventSource_lazyInitPublisherMixin(), instance);
+        instance.v = initialValue;
         return instance;
     }, props({
         v: none,
