@@ -9,9 +9,18 @@ export interface PauseableObservableModule extends ContainerTypeClass<Type> {
 }
 export type Signature = PauseableObservableModule;
 export declare const dispatchTo: Signature["dispatchTo"];
+export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const enqueue: Signature["enqueue"];
 export declare const forEach: Signature["forEach"];
 export declare const keep: Signature["keep"];
+export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];
+export declare const mapTo: Signature["mapTo"];
+export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
+export declare const scan: Signature["scan"];
 export declare const sinkInto: Signature["sinkInto"];
+export declare const skipFirst: Signature["skipFirst"];
+export declare const takeFirst: Signature["takeFirst"];
+export declare const takeLast: Signature["takeLast"];
+export declare const takeWhile: Signature["takeWhile"];

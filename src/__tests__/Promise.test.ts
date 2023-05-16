@@ -35,4 +35,4 @@ testModule(
   ),
 );
 
-//((_: PromiseT.Signature) => {})(PromiseT);
+((_: PromiseT.Signature) => {})(PromiseT);
