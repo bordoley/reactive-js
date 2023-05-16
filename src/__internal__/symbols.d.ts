@@ -162,10 +162,6 @@ export declare const __ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const __ObserverMixin_isCompleted: unique symbol;
 
-export declare const __PairwiseSinkMixin_prev: unique symbol;
-
-export declare const __PairwiseSinkMixin_hasPrev: unique symbol;
-
 export declare const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 
 export declare const __SchedulerImplementationMixin_startTime: unique symbol;
@@ -191,6 +187,10 @@ export declare const __LiftedLike_operators: unique symbol;
 export declare const __ForEachLike_effect: unique symbol;
 
 export declare const __MappingLike_selector: unique symbol;
+
+export declare const __PairwiseLike_prev: unique symbol;
+
+export declare const __PairwiseLike_hasPrev: unique symbol;
 
 export declare const __PredicatedLike_predicate: unique symbol;
 

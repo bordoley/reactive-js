@@ -30,6 +30,7 @@
 - [keepType](Enumerator.md#keeptype)
 - [map](Enumerator.md#map)
 - [mapTo](Enumerator.md#mapto)
+- [pairwise](Enumerator.md#pairwise)
 - [pick](Enumerator.md#pick)
 - [scan](Enumerator.md#scan)
 
@@ -306,6 +307,22 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
