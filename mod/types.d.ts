@@ -93,7 +93,7 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends Collec
  * @category Collection
  */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown> extends KeyedCollectionLike<TKey, T> {
-    readonly [AssociativeCollectionLike_keys]: EnumeratorLike<TKey>;
+    [AssociativeCollectionLike_keys](): EnumeratorLike<TKey>;
 }
 /**
  * @noInheritDoc

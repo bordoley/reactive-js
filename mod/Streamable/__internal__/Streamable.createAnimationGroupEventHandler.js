@@ -42,7 +42,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
     }, props({
         [CollectionLike_count]: 0,
     }), {
-        get [AssociativeCollectionLike_keys]() {
+        [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
             return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
         },

@@ -204,7 +204,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
         [CollectionLike_count]: 0,
       }),
       {
-        get [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
+        [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
           unsafeCast<DelegatingLike<ReadonlyObjectMapLike<TKey, unknown>>>(
             this,
           );

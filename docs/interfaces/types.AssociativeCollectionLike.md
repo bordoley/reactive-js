@@ -21,12 +21,16 @@
 
 ## Table of contents
 
-### Properties
+### Methods
 
 - [[\_\_\_AssociativeCollectionLike\_keys]](types.AssociativeCollectionLike.md#[___associativecollectionlike_keys])
 
-## Properties
+## Methods
 
 ### [\_\_\_AssociativeCollectionLike\_keys]
 
-• `Readonly` **[\_\_\_AssociativeCollectionLike\_keys]**: [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>
+▸ **[___AssociativeCollectionLike_keys]**(): [`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<`TKey`\>

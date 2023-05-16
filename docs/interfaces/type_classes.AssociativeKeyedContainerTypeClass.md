@@ -17,8 +17,6 @@
 
   ↳ **`AssociativeKeyedContainerTypeClass`**
 
-  ↳↳ [`Signature`](Dictionary.Signature.md)
-
   ↳↳ [`Signature`](ReadonlyMap.Signature.md)
 
   ↳↳ [`Signature`](ReadonlyObjectMap.Signature.md)

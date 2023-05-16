@@ -103,7 +103,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             unsafeCast(this);
             return this.store.size;
         },
-        get [AssociativeCollectionLike_keys]() {
+        [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
             return pipe(this.store, ReadonlyMap_keys());
         },
