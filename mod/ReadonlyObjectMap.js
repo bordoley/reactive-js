@@ -16,7 +16,9 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
+import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
+import { identityLazy } from "./functions.js";
 /**
  * @category Functor
  */
@@ -26,6 +28,7 @@ export const CreateModule = () => ({
     fromEntries: ReadonlyObjectMap_fromEntries,
     forEach: ReadonlyObjectMap_forEach,
     forEachWithKey: ReadonlyObjectMap_forEachWithKey,
+    fromReadonlyObjectMap: identityLazy,
     keep: ReadonlyObjectMap_keep,
     keepType: ReadonlyObjectMap_keepType,
     keepWithKey: ReadonlyObjectMap_keepWithKey,
@@ -36,6 +39,7 @@ export const CreateModule = () => ({
     reduce: ReadonlyObjectMap_reduce,
     reduceWithKey: ReadonlyObjectMap_reduceWithKey,
     toDictionary: ReadonlyObjectMap_toDictionary,
+    toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
     values: ReadonlyObjectMap_values,
 });
 export const empty = ReadonlyObjectMap_empty;
@@ -44,6 +48,7 @@ export const forEach = ReadonlyObjectMap_forEach;
 export const forEachWithKey = ReadonlyObjectMap_forEachWithKey;
 export const fromEntries = ReadonlyObjectMap_fromEntries;
 export const fromReadonlyMap = ReadonlyObjectMap_fromReadonlyMap;
+export const fromReadonlyObjectMap = identityLazy;
 export const keep = ReadonlyObjectMap_keep;
 export const keepType = ReadonlyObjectMap_keepType;
 export const keepWithKey = ReadonlyObjectMap_keepWithKey;
@@ -54,4 +59,5 @@ export const mapWithKey = ReadonlyObjectMap_mapWithKey;
 export const reduce = ReadonlyObjectMap_reduce;
 export const reduceWithKey = ReadonlyObjectMap_reduceWithKey;
 export const toDictionary = ReadonlyObjectMap_toDictionary;
+export const toReadonlyMap = ReadonlyObjectMap_toReadonlyMap;
 export const values = ReadonlyObjectMap_values;

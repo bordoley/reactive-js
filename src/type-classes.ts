@@ -28,6 +28,8 @@ import {
   ObservableContainer,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReadonlyObjectMapContainer,
+  ReadonlyObjectMapLike,
 } from "./types.js";
 
 export interface ContainerTypeClass<C extends Container> {
@@ -675,6 +677,13 @@ export interface AssociativeKeyedContainerTypeClass<
     KeyedContainerOf<C, TKey, T>
   >;
 
+  fromReadonlyObjectMap<
+    T,
+    TKey extends TKeyBase,
+  >(): TKey extends KeyOf<ReadonlyObjectMapContainer>
+    ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>>
+    : never;
+
   /**
    *
    * @category Transform
@@ -722,5 +731,10 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<
   fromEntries<T, TKey extends TKeyBase>(): Function1<
     EnumeratorLike<[TKey, T]>,
     KeyedContainerOf<C, TKey, T>
+  >;
+
+  toReadonlyMap<T, TKey extends TKeyBase>(): Function1<
+    KeyedContainerOf<C, TKey, T>,
+    ReadonlyMap<TKey, T>
   >;
 }
