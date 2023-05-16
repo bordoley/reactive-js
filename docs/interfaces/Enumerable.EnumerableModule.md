@@ -58,6 +58,8 @@
 ### Other Methods
 
 - [compute](Enumerable.EnumerableModule.md#compute)
+- [generate](Enumerable.EnumerableModule.md#generate)
+- [throws](Enumerable.EnumerableModule.md#throws)
 
 ### Transform Methods
 
@@ -1426,6 +1428,45 @@ ___
 | `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
 | `options?` | `Object` |
 | `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Returns
 

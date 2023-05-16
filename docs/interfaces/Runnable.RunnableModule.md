@@ -29,12 +29,6 @@
 - [concat](Runnable.RunnableModule.md#concat)
 - [empty](Runnable.RunnableModule.md#empty)
 - [fromEnumerable](Runnable.RunnableModule.md#fromenumerable)
-- [fromEnumeratorFactory](Runnable.RunnableModule.md#fromenumeratorfactory)
-- [fromFactory](Runnable.RunnableModule.md#fromfactory)
-- [fromIterable](Runnable.RunnableModule.md#fromiterable)
-- [fromOptional](Runnable.RunnableModule.md#fromoptional)
-- [fromReadonlyArray](Runnable.RunnableModule.md#fromreadonlyarray)
-- [fromValue](Runnable.RunnableModule.md#fromvalue)
 - [zip](Runnable.RunnableModule.md#zip)
 
 ### Operator Methods
@@ -67,7 +61,15 @@
 
 - [compute](Runnable.RunnableModule.md#compute)
 - [flow](Runnable.RunnableModule.md#flow)
+- [fromEnumeratorFactory](Runnable.RunnableModule.md#fromenumeratorfactory)
+- [fromFactory](Runnable.RunnableModule.md#fromfactory)
+- [fromIterable](Runnable.RunnableModule.md#fromiterable)
+- [fromOptional](Runnable.RunnableModule.md#fromoptional)
+- [fromReadonlyArray](Runnable.RunnableModule.md#fromreadonlyarray)
+- [fromValue](Runnable.RunnableModule.md#fromvalue)
+- [generate](Runnable.RunnableModule.md#generate)
 - [run](Runnable.RunnableModule.md#run)
+- [throws](Runnable.RunnableModule.md#throws)
 
 ### Transform Methods
 
@@ -273,134 +275,6 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
-
-___
-
-### fromFactory
-
-▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
-
-___
-
-### fromOptional
-
-▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
-
-___
-
-### fromValue
-
-▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -1620,6 +1494,406 @@ ___
 
 ___
 
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
+
+▸ **fromEnumeratorFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromEnumeratorFactory
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
+
+▸ **fromFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromFactory
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
+
+▸ **fromIterable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromIterable
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
+
+▸ **fromOptional**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromOptional
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count?` | `number` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromReadonlyArray
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
+
+▸ **fromValue**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+RunnableContainerTypeClass.fromValue
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+___
+
 ### run
 
 ▸ **run**<`T`\>(`options?`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
@@ -1641,6 +1915,61 @@ ___
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+▸ **throws**<`T`\>(`options`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.raise` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+▸ **throws**<`T`\>(`options`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
 
 ___
 
