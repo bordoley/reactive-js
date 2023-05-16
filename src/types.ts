@@ -288,13 +288,16 @@ export interface IndexedBufferCollectionLike<T = unknown>
   extends BufferLike,
     IndexedCollectionLike<T> {}
 
+/**
+ * @category Reactive
+ */
 export interface SinkLike<T = unknown> extends DisposableLike {
   [SinkLike_notify](event: T): void;
 }
 
 /**
  * @noInheritDoc
- * @category Event
+ * @category Reactive
  */
 export interface EventListenerLike<T = unknown> extends SinkLike<T> {
   readonly [EventListenerLike_isErrorSafe]: boolean;
@@ -302,7 +305,7 @@ export interface EventListenerLike<T = unknown> extends SinkLike<T> {
 
 /**
  * @noInheritDoc
- * @category Event
+ * @category Reactive
  */
 export interface ErrorSafeEventListenerLike<T = unknown>
   extends EventListenerLike<T> {
@@ -504,7 +507,7 @@ export interface ObserverLike<T = unknown>
  * The source of notifications which can be consumed by an `ObserverLike` instance.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface ObservableLike<T = unknown> {
   /**
@@ -533,7 +536,7 @@ export interface ObservableLike<T = unknown> {
 
 /**
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
@@ -545,7 +548,7 @@ export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
@@ -555,7 +558,7 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
@@ -575,7 +578,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface MulticastObservableLike<T = unknown>
   extends SharedObservableLike<T> {
@@ -590,7 +593,7 @@ export interface MulticastObservableLike<T = unknown>
  * An `EventListener` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface PublisherLike<T = unknown>
   extends ErrorSafeEventListenerLike<T>,
@@ -606,7 +609,7 @@ export interface PublisherLike<T = unknown>
  * via the pause and resume methods.
  *
  * @noInheritDoc
- * @category Reactive
+ * @category Obsevable
  */
 export interface PauseableObservableLike<T = unknown>
   extends ObservableLike<T>,
