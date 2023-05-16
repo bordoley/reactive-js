@@ -4,8 +4,6 @@
 
 [types](../modules/types.md).MulticastObservableLike
 
-A stateful ObservableLike resource.
-
 ## Type parameters
 
 | Name | Type |
@@ -14,32 +12,21 @@ A stateful ObservableLike resource.
 
 ## Hierarchy
 
-- [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>
+- [`ObservableLike`](types.ObservableLike.md)<`T`\>
 
   ↳ **`MulticastObservableLike`**
 
-  ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)
-
-  ↳↳ [`PublisherLike`](types.PublisherLike.md)
-
-  ↳↳ [`StreamLike`](types.StreamLike.md)
+  ↳↳ [`ReplayObservableLike`](types.ReplayObservableLike.md)
 
 ## Table of contents
 
 ### Properties
 
-- [[\_\_\_MulticastObservableLike\_buffer]](types.MulticastObservableLike.md#[___multicastobservablelike_buffer])
 - [[\_\_\_ObservableLike\_isDeferred]](types.MulticastObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](types.MulticastObservableLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isRunnable]](types.MulticastObservableLike.md#[___observablelike_isrunnable])
 
 ## Properties
-
-### [\_\_\_MulticastObservableLike\_buffer]
-
-• `Readonly` **[\_\_\_MulticastObservableLike\_buffer]**: [`IndexedBufferCollectionLike`](types.IndexedBufferCollectionLike.md)<`T`\>
-
-___
 
 ### [\_\_\_ObservableLike\_isDeferred]
 
@@ -49,7 +36,7 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 
 #### Overrides
 
-[SharedObservableLike](types.SharedObservableLike.md).[[___ObservableLike_isDeferred]](types.SharedObservableLike.md#[___observablelike_isdeferred])
+[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isDeferred]](types.ObservableLike.md#[___observablelike_isdeferred])
 
 ___
 
@@ -61,7 +48,7 @@ Indicates if the `ObservableLike` supports interactive enumeration.
 
 #### Overrides
 
-[SharedObservableLike](types.SharedObservableLike.md).[[___ObservableLike_isEnumerable]](types.SharedObservableLike.md#[___observablelike_isenumerable])
+[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isEnumerable]](types.ObservableLike.md#[___observablelike_isenumerable])
 
 ___
 
@@ -74,4 +61,4 @@ on a VirtualTimeScheduler.
 
 #### Overrides
 
-[SharedObservableLike](types.SharedObservableLike.md).[[___ObservableLike_isRunnable]](types.SharedObservableLike.md#[___observablelike_isrunnable])
+[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isRunnable]](types.ObservableLike.md#[___observablelike_isrunnable])

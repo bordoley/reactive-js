@@ -24,6 +24,7 @@
 - [EventSourceContainer](../interfaces/types.EventSourceContainer.md)
 - [IterableContainer](../interfaces/types.IterableContainer.md)
 - [KeyedContainer](../interfaces/types.KeyedContainer.md)
+- [MulticastObservableContainer](../interfaces/types.MulticastObservableContainer.md)
 - [ObservableContainer](../interfaces/types.ObservableContainer.md)
 - [PauseableObservableContainer](../interfaces/types.PauseableObservableContainer.md)
 - [PromiseContainer](../interfaces/types.PromiseContainer.md)
@@ -31,7 +32,6 @@
 - [ReadonlyMapContainer](../interfaces/types.ReadonlyMapContainer.md)
 - [ReadonlyObjectMapContainer](../interfaces/types.ReadonlyObjectMapContainer.md)
 - [RunnableContainer](../interfaces/types.RunnableContainer.md)
-- [SharedObservableContainer](../interfaces/types.SharedObservableContainer.md)
 - [StoreContainer](../interfaces/types.StoreContainer.md)
 
 ### Event Interfaces
@@ -59,8 +59,8 @@
 - [ObservableLike](../interfaces/types.ObservableLike.md)
 - [PauseableObservableLike](../interfaces/types.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/types.PublisherLike.md)
+- [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
-- [SharedObservableLike](../interfaces/types.SharedObservableLike.md)
 
 ### Queueing Interfaces
 
@@ -124,7 +124,6 @@
 - [EventSourceLike\_addEventListener](types.md#eventsourcelike_addeventlistener)
 - [KeyedCollectionLike\_get](types.md#keyedcollectionlike_get)
 - [KeyedContainer\_TKey](types.md#keyedcontainer_tkey)
-- [MulticastObservableLike\_buffer](types.md#multicastobservablelike_buffer)
 - [ObservableLike\_isDeferred](types.md#observablelike_isdeferred)
 - [ObservableLike\_isEnumerable](types.md#observablelike_isenumerable)
 - [ObservableLike\_isRunnable](types.md#observablelike_isrunnable)
@@ -135,6 +134,7 @@
 - [PublisherLike\_observerCount](types.md#publisherlike_observercount)
 - [QueueableLike\_backpressureStrategy](types.md#queueablelike_backpressurestrategy)
 - [QueueableLike\_enqueue](types.md#queueablelike_enqueue)
+- [ReplayObservableLike\_buffer](types.md#replayobservablelike_buffer)
 - [SchedulerLike\_inContinuation](types.md#schedulerlike_incontinuation)
 - [SchedulerLike\_maxYieldInterval](types.md#schedulerlike_maxyieldinterval)
 - [SchedulerLike\_now](types.md#schedulerlike_now)
@@ -382,12 +382,6 @@ ___
 
 ___
 
-### MulticastObservableLike\_buffer
-
-• `Const` **MulticastObservableLike\_buffer**: typeof `__MulticastObservableLike_buffer`
-
-___
-
 ### ObservableLike\_isDeferred
 
 • `Const` **ObservableLike\_isDeferred**: typeof `__ObservableLike_isDeferred`
@@ -445,6 +439,12 @@ ___
 ### QueueableLike\_enqueue
 
 • `Const` **QueueableLike\_enqueue**: typeof `__QueueableLike_enqueue`
+
+___
+
+### ReplayObservableLike\_buffer
+
+• `Const` **ReplayObservableLike\_buffer**: typeof `__ReplayObservableLike_buffer`
 
 ___
 

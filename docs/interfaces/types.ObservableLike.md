@@ -16,7 +16,7 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 - **`ObservableLike`**
 
-  ↳ [`SharedObservableLike`](types.SharedObservableLike.md)
+  ↳ [`MulticastObservableLike`](types.MulticastObservableLike.md)
 
   ↳ [`DeferredObservableLike`](types.DeferredObservableLike.md)
 

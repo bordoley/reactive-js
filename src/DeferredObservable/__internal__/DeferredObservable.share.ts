@@ -1,22 +1,24 @@
 import type * as DeferredObservable from "../../DeferredObservable.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
-import SharedObservable_create from "../../SharedObservable/__internal__/SharedObservable.create.js";
 import { Factory, Optional, none, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
   DisposableLike,
-  MulticastObservableLike,
   ObservableLike,
   ObservableLike_observe,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReplayObservableLike,
   SchedulerLike,
 } from "../../types.js";
 import DeferredObservable_multicastImpl from "./DeferredObservable.multicastImpl.js";
 
-const createLazySharedObservable = <T>(factory: Factory<ObservableLike<T>>) =>
-  SharedObservable_create(observer => {
+const createLazyMulticastObservable = <T>(
+  factory: Factory<ObservableLike<T>>,
+) =>
+  MulticastObservable_create(observer => {
     factory()[ObservableLike_observe](observer);
   });
 
@@ -30,9 +32,9 @@ const DeferredObservable_share: DeferredObservable.Signature["share"] =
     },
   ) =>
   (source: DeferredObservableLike<T>) => {
-    let multicasted: Optional<MulticastObservableLike<T>> = none;
+    let multicasted: Optional<ReplayObservableLike<T>> = none;
 
-    return createLazySharedObservable<T>(
+    return createLazyMulticastObservable<T>(
       () =>
         multicasted ??
         (() => {

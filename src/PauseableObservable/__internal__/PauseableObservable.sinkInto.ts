@@ -11,10 +11,10 @@ import {
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
+  MulticastObservableLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  SharedObservableLike,
 } from "../../types.js";
 
 const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
@@ -39,7 +39,7 @@ const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
       );
 
       pipe(
-        pauseableObservable as SharedObservableLike,
+        pauseableObservable as MulticastObservableLike,
         Observable_dispatchTo(sink),
         Observable_subscribe(observer),
         Disposable_addTo(observer),

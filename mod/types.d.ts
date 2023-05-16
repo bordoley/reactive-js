@@ -1,4 +1,4 @@
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
@@ -9,7 +9,7 @@ export declare const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurre
 export declare const EnumeratorLike_move: typeof __EnumeratorLike_move;
 export declare const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get;
 export declare const KeyedContainer_TKey: typeof __KeyedContainer_TKey;
-export declare const MulticastObservableLike_buffer: typeof __MulticastObservableLike_buffer;
+export declare const ReplayObservableLike_buffer: typeof __ReplayObservableLike_buffer;
 export declare const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred;
 export declare const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable;
 export declare const ObservableLike_isRunnable: typeof __ObservableLike_isRunnable;
@@ -375,7 +375,7 @@ export interface ObservableLike<T = unknown> {
  * @noInheritDoc
  * @category Obsevable
  */
-export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
+export interface MulticastObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
@@ -413,11 +413,11 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Obsevable
  */
-export interface MulticastObservableLike<T = unknown> extends SharedObservableLike<T> {
+export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isEnumerable]: false;
     readonly [ObservableLike_isRunnable]: false;
-    readonly [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<T>;
+    readonly [ReplayObservableLike_buffer]: IndexedBufferCollectionLike<T>;
 }
 /**
  * An `EventListener` that can be used to publish notifications to one or more observers.
@@ -425,7 +425,7 @@ export interface MulticastObservableLike<T = unknown> extends SharedObservableLi
  * @noInheritDoc
  * @category Obsevable
  */
-export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T>, MulticastObservableLike<T> {
+export interface PublisherLike<T = unknown> extends ErrorSafeEventListenerLike<T>, ReplayObservableLike<T> {
     /**
      * The number of observers currently observing the `Publisher`.
      */
@@ -449,7 +449,7 @@ export interface PauseableObservableLike<T = unknown> extends ObservableLike<T>,
  * @noInheritDoc
  * @category Interactive
  */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObservableLike<T> {
+export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
 /**
@@ -646,8 +646,8 @@ export interface RunnableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface SharedObservableContainer extends Container {
-    readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+export interface MulticastObservableContainer extends Container {
+    readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc

@@ -233,7 +233,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -243,7 +243,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

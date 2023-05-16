@@ -34,7 +34,7 @@
 
   ↳ [`RunnableContainer`](types.RunnableContainer.md)
 
-  ↳ [`SharedObservableContainer`](types.SharedObservableContainer.md)
+  ↳ [`MulticastObservableContainer`](types.MulticastObservableContainer.md)
 
   ↳ [`StoreContainer`](types.StoreContainer.md)
 

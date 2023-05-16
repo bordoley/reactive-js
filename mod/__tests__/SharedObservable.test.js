@@ -1,4 +1,4 @@
 /// <reference types="./SharedObservable.test.d.ts" />
 
-import * as SharedObservable from "../SharedObservable.js";
-((_) => { })(SharedObservable);
+import * as MulticastObservable from "../MulticastObservable.js";
+((_) => { })(MulticastObservable);

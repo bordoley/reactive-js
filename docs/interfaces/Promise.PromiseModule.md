@@ -14,7 +14,7 @@
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -24,4 +24,4 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>

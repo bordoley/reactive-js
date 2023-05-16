@@ -15,10 +15,10 @@ import {
   BufferLike_capacity,
   DeferredObservableLike,
   DisposableLike,
-  MulticastObservableLike,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReplayObservableLike,
   SchedulerLike,
   SinkLike_notify,
 } from "../../types.js";
@@ -39,7 +39,7 @@ const DeferredObservable_multicastImpl =
     } = {},
   ): Function1<
     DeferredObservableLike<T>,
-    MulticastObservableLike<T> & DisposableLike
+    ReplayObservableLike<T> & DisposableLike
   > =>
   observable => {
     const {

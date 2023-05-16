@@ -4,12 +4,12 @@ import type * as Observable from "../../Observable.js";
 import { Factory, invoke, pipe } from "../../functions.js";
 import {
   DisposableLike,
+  MulticastObservableLike,
   ObservableLike_observe,
-  SharedObservableLike,
 } from "../../types.js";
 
 const Observable_defer: Observable.Signature["defer"] = <T>(
-  factory: Factory<SharedObservableLike<T> & DisposableLike>,
+  factory: Factory<MulticastObservableLike<T> & DisposableLike>,
 ) =>
   DeferredObservable_create<T>(observer => {
     pipe(

@@ -2,7 +2,7 @@ import Store_create from "./Store/__internal__/Store.create.js";
 import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
 import { Function1 } from "./functions.js";
 import {
-  SharedObservableLike,
+  MulticastObservableLike,
   StoreContainer,
   StoreLike,
   WritableStoreLike,
@@ -13,7 +13,7 @@ export type Type = StoreContainer;
 export interface StoreModule {
   create<T>(initialValue: T): WritableStoreLike<T>;
 
-  toObservable<T>(): Function1<StoreLike<T>, SharedObservableLike<T>>;
+  toObservable<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = StoreModule;

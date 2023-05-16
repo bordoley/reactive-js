@@ -1,5 +1,5 @@
 import { SideEffect1 } from "../../functions.js";
-import { DeferredObservableLike, EnumerableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike, SharedObservableLike } from "../../types.js";
+import { DeferredObservableLike, EnumerableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike, RunnableLike } from "../../types.js";
 interface ObservableCreateWithConfig {
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
         readonly [ObservableLike_isDeferred]: true;
@@ -20,7 +20,7 @@ interface ObservableCreateWithConfig {
         readonly [ObservableLike_isDeferred]: false;
         readonly [ObservableLike_isEnumerable]: false;
         readonly [ObservableLike_isRunnable]: false;
-    }): SharedObservableLike<T>;
+    }): MulticastObservableLike<T>;
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
         readonly [ObservableLike_isDeferred]: boolean;
         readonly [ObservableLike_isEnumerable]: boolean;

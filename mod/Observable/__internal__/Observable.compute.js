@@ -4,11 +4,11 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import MulticastObservable_isMulticastObservable from "../../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
+import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../__internal__/symbols.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../functions.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, KeyedCollectionLike_get, MulticastObservableLike_buffer, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, SchedulerLike_schedule, SinkLike_notify, } from "../../types.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, KeyedCollectionLike_get, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ReplayObservableLike_buffer, SchedulerLike_schedule, SinkLike_notify, } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -131,8 +131,8 @@ class ComputeContext {
                             : scheduledComputationSubscription;
                 }
             }), Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer), Disposable_onComplete(this[__ComputeContext_cleanup]));
-            const buffer = MulticastObservable_isMulticastObservable(observable)
-                ? observable[MulticastObservableLike_buffer]
+            const buffer = Observable_isReplayObservable(observable)
+                ? observable[ReplayObservableLike_buffer]
                 : IndexedBufferCollection_empty();
             const hasDefaultValue = buffer[CollectionLike_count] > 0;
             const defaultValue = hasDefaultValue
@@ -252,7 +252,7 @@ const Observable_computeWithConfig = ((computation, config, { mode = "batched" }
     const ctx = newInstance(ComputeContext, observer, runComputation, mode, config);
     pipe(observer[SchedulerLike_schedule](runComputation), Disposable_addTo(observer));
 }, config));
-export const SharedObservable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+export const MulticastObservable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
     [ObservableLike_isDeferred]: false,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,

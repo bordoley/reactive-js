@@ -1,6 +1,6 @@
 import { Factory, Function1, Predicate } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
-import { DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableLike } from "./types.js";
+import { DeferredObservableContainer, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type Type = DeferredObservableContainer;
 export interface DeferredObservableModule extends HigherOrderObservableBaseTypeClass<Type, Type> {
@@ -11,7 +11,7 @@ export interface DeferredObservableModule extends HigherOrderObservableBaseTypeC
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T> & DisposableLike>;
+    }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     repeat<T>(predicate: Predicate<number>): EnumerableUpperBoundObservableOperator<T, T>;
     repeat<T>(count: number): EnumerableUpperBoundObservableOperator<T, T>;
     repeat<T>(): EnumerableUpperBoundObservableOperator<T, T>;
@@ -20,7 +20,7 @@ export interface DeferredObservableModule extends HigherOrderObservableBaseTypeC
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
+    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = DeferredObservableModule;
 export declare const compute: Signature["compute"];

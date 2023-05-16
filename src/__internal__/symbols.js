@@ -100,11 +100,6 @@ export const __KeyedContainer_TKey = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol(
-  "MulticastObservableLike_buffer",
-);
-
-/** @type {unique symbol} */
 export const __ObservableLike_observe = /*@__PURE__*/ symbol(
   "ObservableLike_observe",
 );
@@ -152,6 +147,11 @@ export const __QueueableLike_enqueue = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
   "QueueableLike_backpressureStrategy",
+);
+
+/** @type {unique symbol} */
+export const __ReplayObservableLike_buffer = /*@__PURE__*/ symbol(
+  "ReplayObservableLike_buffer",
 );
 
 /** @type {unique symbol} */
@@ -314,8 +314,9 @@ export const __DelegatingDisposableMixin_delegate = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __DelegatingMulticastObservableMixin_delegate =
-  /*@__PURE__*/ symbol("DelegatingMulticastObservableMixin_delegate");
+export const __DelegatingReplayObservableMixin_delegate = /*@__PURE__*/ symbol(
+  "DelegatingReplayObservableMixin_delegate",
+);
 
 /** @type {unique symbol} */
 export const __DelegatingPauseableMixin_delegate = /*@__PURE__*/ symbol(

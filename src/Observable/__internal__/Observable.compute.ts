@@ -4,10 +4,10 @@ import Disposable_disposed from "../../Disposable/__internal__/Disposable.dispos
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import type * as Enumerable from "../../Enumerable.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import MulticastObservable_isMulticastObservable from "../../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
+import type * as MulticastObservable from "../../MulticastObservable.js";
+import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import type * as Runnable from "../../Runnable.js";
-import type * as SharedObservable from "../../SharedObservable.js";
 import {
   __AwaitOrObserveEffect_hasValue,
   __AwaitOrObserveEffect_observable,
@@ -53,15 +53,15 @@ import {
   DisposableLike_isDisposed,
   EnumerableLike,
   KeyedCollectionLike_get,
-  MulticastObservableLike_buffer,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
+  ReplayObservableLike_buffer,
   RunnableLike,
   SchedulerLike_schedule,
-  SharedObservableLike,
   SinkLike_notify,
 } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -329,8 +329,8 @@ class ComputeContext {
         Disposable_onComplete(this[__ComputeContext_cleanup]),
       );
 
-      const buffer = MulticastObservable_isMulticastObservable<T>(observable)
-        ? observable[MulticastObservableLike_buffer]
+      const buffer = Observable_isReplayObservable<T>(observable)
+        ? observable[ReplayObservableLike_buffer]
         : IndexedBufferCollection_empty<T>();
       const hasDefaultValue = buffer[CollectionLike_count] > 0;
       const defaultValue = hasDefaultValue
@@ -464,7 +464,7 @@ interface ObservableComputeWithConfig {
       readonly [ObservableLike_isRunnable]: boolean;
     },
     options?: { readonly mode?: "batched" | "combine-latest" },
-  ): SharedObservableLike<T>;
+  ): MulticastObservableLike<T>;
 }
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
@@ -580,21 +580,20 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
       );
     }, config)) as ObservableComputeWithConfig["computeWithConfig"];
 
-export const SharedObservable_compute: SharedObservable.Signature["compute"] = <
-  T,
->(
-  computation: Factory<T>,
-  options: { mode?: "batched" | "combine-latest" } = {},
-): SharedObservableLike<T> =>
-  Observable_computeWithConfig(
-    computation,
-    {
-      [ObservableLike_isDeferred]: false,
-      [ObservableLike_isEnumerable]: false,
-      [ObservableLike_isRunnable]: false,
-    },
-    options,
-  );
+export const MulticastObservable_compute: MulticastObservable.Signature["compute"] =
+  <T>(
+    computation: Factory<T>,
+    options: { mode?: "batched" | "combine-latest" } = {},
+  ): MulticastObservableLike<T> =>
+    Observable_computeWithConfig(
+      computation,
+      {
+        [ObservableLike_isDeferred]: false,
+        [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isRunnable]: false,
+      },
+      options,
+    );
 
 export const DeferredObservable_compute: DeferredObservable.Signature["compute"] =
   <T>(

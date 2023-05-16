@@ -6,6 +6,7 @@ import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onCo
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Enumerable_enumerate from "../../Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
+import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -15,7 +16,6 @@ import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_someSatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-import SharedObservable_create from "../../SharedObservable/__internal__/SharedObservable.create.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -267,7 +267,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
       ? Runnable_create(onSubscribe(observables))
       : isDeferred
       ? DeferredObservable_create(onSubscribe(observables))
-      : SharedObservable_create(onSubscribe(observables));
+      : MulticastObservable_create(onSubscribe(observables));
   };
 })();
 

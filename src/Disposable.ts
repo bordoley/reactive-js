@@ -23,7 +23,7 @@ import {
 import {
   DisposableContainer,
   DisposableLike,
-  SharedObservableLike,
+  MulticastObservableLike,
 } from "./types.js";
 
 export type Type = DisposableContainer;
@@ -70,7 +70,7 @@ export interface DisposableModule {
    */
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
 
-  toObservable<T>(): Function1<DisposableLike, SharedObservableLike<T>>;
+  toObservable<T>(): Function1<DisposableLike, MulticastObservableLike<T>>;
 
   usingAsync<TDisposable extends DisposableLike, TResult = unknown>(
     factoryOrDisposable: TDisposable | Factory<TDisposable>,

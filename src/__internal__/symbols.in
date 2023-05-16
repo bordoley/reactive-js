@@ -19,7 +19,6 @@ EventListenerLike_isErrorSafe
 EventPublisherLike_listenerCount
 KeyedCollectionLike_get
 KeyedContainer_TKey
-MulticastObservableLike_buffer
 ObservableLike_observe
 ObservableLike_isDeferred
 ObservableLike_isEnumerable
@@ -30,6 +29,7 @@ PauseableLike_resume
 PublisherLike_observerCount
 QueueableLike_enqueue
 QueueableLike_backpressureStrategy
+ReplayObservableLike_buffer
 SchedulerLike_inContinuation
 SchedulerLike_maxYieldInterval
 SchedulerLike_now
@@ -67,7 +67,7 @@ StackLike_head
 
 DelegatingDispatcherMixin_delegate
 DelegatingDisposableMixin_delegate
-DelegatingMulticastObservableMixin_delegate
+DelegatingReplayObservableMixin_delegate
 DelegatingPauseableMixin_delegate
 DelegatingQueueableMixin_delegate
 DelegatingSchedulerImplementationMixin_delegate
