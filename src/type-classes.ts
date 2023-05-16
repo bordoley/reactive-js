@@ -17,6 +17,7 @@ import {
   ContainerOf,
   ContainerOperator,
   DeferredObservableContainer,
+  DictionaryLike,
   EnumerableLike,
   EnumeratorLike,
   KeyOf,
@@ -669,6 +670,11 @@ export interface AssociativeKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > extends KeyedContainerTypeClass<C, TKeyBase> {
+  fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<
+    ReadonlyMap<TKey, T>,
+    KeyedContainerOf<C, TKey, T>
+  >;
+
   /**
    *
    * @category Transform
@@ -685,6 +691,11 @@ export interface AssociativeKeyedContainerTypeClass<
   keySet<TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
     ReadonlySet<TKey>
+  >;
+
+  toDictionary<T, TKey extends TKeyBase>(): Function1<
+    KeyedContainerOf<C, TKey, T>,
+    DictionaryLike<TKey, T>
   >;
 }
 

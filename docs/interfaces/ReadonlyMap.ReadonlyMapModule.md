@@ -34,6 +34,11 @@
 - [map](ReadonlyMap.ReadonlyMapModule.md#map)
 - [mapWithKey](ReadonlyMap.ReadonlyMapModule.md#mapwithkey)
 
+### Other Methods
+
+- [fromReadonlyMap](ReadonlyMap.ReadonlyMapModule.md#fromreadonlymap)
+- [toDictionary](ReadonlyMap.ReadonlyMapModule.md#todictionary)
+
 ### Transform Methods
 
 - [entries](ReadonlyMap.ReadonlyMapModule.md#entries)
@@ -314,6 +319,50 @@ TB - The inner type of the mapped container
 #### Inherited from
 
 [ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#mapwithkey)
+
+___
+
+## Other Methods
+
+### fromReadonlyMap
+
+▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[fromReadonlyMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#fromreadonlymap)
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[toDictionary](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#todictionary)
 
 ___
 

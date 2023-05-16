@@ -1,9 +1,9 @@
 /// <reference types="./ReadonlyObjectMap.forEachWithKey.d.ts" />
 
-import { hasOwn } from "../../__internal__/Object.js";
+import * as Obj from "../../__internal__/Object.js";
 const ReadonlyObjectMap_forEachWithKey = (effect) => record => {
     for (const key in record) {
-        if (hasOwn(record, key)) {
+        if (Obj.hasOwn(record, key)) {
             const v = record[key];
             effect(v, key);
         }

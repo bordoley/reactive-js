@@ -12,6 +12,7 @@ export declare const CreateModule: <TKey extends {}>() => ReadonlyMapModule<Type
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const fromEntries: Signature["fromEntries"];
+export declare const fromReadonlyMap: Signature["fromReadonlyMap"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
 export declare const keep: Signature["keep"];
@@ -23,4 +24,5 @@ export declare const map: Signature["map"];
 export declare const mapWithKey: Signature["mapWithKey"];
 export declare const reduce: Signature["reduce"];
 export declare const reduceWithKey: Signature["reduceWithKey"];
+export declare const toDictionary: Signature["toDictionary"];
 export declare const values: Signature["values"];

@@ -33,6 +33,11 @@
 - [map](ReadonlyMap.md#map)
 - [mapWithKey](ReadonlyMap.md#mapwithkey)
 
+### Other Functions
+
+- [fromReadonlyMap](ReadonlyMap.md#fromreadonlymap)
+- [toDictionary](ReadonlyMap.md#todictionary)
+
 ### Transform Functions
 
 - [entries](ReadonlyMap.md#entries)
@@ -319,6 +324,42 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyMap.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+
+___
+
+## Other Functions
+
+### fromReadonlyMap
+
+▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
 
 ___
 

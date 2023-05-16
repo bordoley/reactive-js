@@ -1,5 +1,5 @@
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
-import { hasOwn } from "../../__internal__/Object.js";
+import * as Obj from "../../__internal__/Object.js";
 import { Factory, Function3 } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
@@ -17,7 +17,7 @@ const ReadonlyObjectMap_reduceWithKey: ReadonlyObjectMap.Signature["reduceWithKe
       let result = initialValue();
 
       for (const key in obj) {
-        if (hasOwn(obj, key)) {
+        if (Obj.hasOwn(obj, key)) {
           result = reducer(result, obj[key as TKey] as T, key as TKey);
         }
       }

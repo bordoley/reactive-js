@@ -74,7 +74,6 @@ export interface ReadonlyArrayModule
       EnumerableContainerTypeClass<Type>,
       keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"
     > {
-      
   /** @category Transform */
   enumerate<T>(options?: {
     readonly start?: number;
