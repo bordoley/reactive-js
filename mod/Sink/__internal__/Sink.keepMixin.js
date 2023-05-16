@@ -6,7 +6,7 @@ import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, PredicatedLike_predicate, } from "../../__internal__/types.js";
 import { none, returns } from "../../functions.js";
 import { SinkLike_notify } from "../../types.js";
-const Sink_keepMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function KeepSink(instance, delegate, predicate) {
+const Sink_keepMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function KeepSinkMixin(instance, delegate, predicate) {
     init(Delegating_mixin(), instance, delegate);
     init(Disposable_delegatingMixin, instance, delegate);
     instance[PredicatedLike_predicate] = predicate;

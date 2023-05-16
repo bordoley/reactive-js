@@ -30,6 +30,8 @@ export declare const createRefCountedPublisher: Signature["createRefCountedPubli
 export declare const forEach: Signature["forEach"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
+export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];
+export declare const mapTo: Signature["mapTo"];
 export declare const pick: Signature["pick"];
 export declare const toObservable: Signature["toObservable"];

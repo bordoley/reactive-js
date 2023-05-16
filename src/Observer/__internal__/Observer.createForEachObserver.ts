@@ -1,4 +1,4 @@
-import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -6,15 +6,9 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  ForEachLike,
-  ForEachLike_effect,
-} from "../../__internal__/types.js";
-import { SideEffect1, none } from "../../functions.js";
-import { ObserverLike, SinkLike_notify } from "../../types.js";
-import Observer_assertState from "./Observer.assertState.js";
+import { SideEffect1 } from "../../functions.js";
+import { ObserverLike } from "../../types.js";
+import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
 const Observer_createForEachObserver: <T>(
@@ -23,35 +17,19 @@ const Observer_createForEachObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), Delegating_mixin()),
+      include(Observer_delegatingMixin(), Sink_forEachMixin()),
       function ForEachObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          ForEachLike<T>,
+        instance: unknown,
         delegate: ObserverLike<T>,
         effect: SideEffect1<T>,
       ): ObserverLike<T> {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
-        init(Delegating_mixin(), instance, delegate);
-        instance[ForEachLike_effect] = effect;
+        init(Sink_forEachMixin(), instance, delegate, effect);
 
         return instance;
       },
-      props<ForEachLike<T>>({
-        [ForEachLike_effect]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: ForEachLike<T> &
-            DelegatingLike<ObserverLike<T>> &
-            ObserverLike<T>,
-          next: T,
-        ) {
-          Observer_assertState(this);
-
-          this[ForEachLike_effect](next);
-          this[DelegatingLike_delegate][SinkLike_notify](next);
-        },
-      },
+      props({}),
+      Observer_decorateNotifyWithStateAssert(Sink_forEachMixin<T>()),
     ),
   ))();
 
