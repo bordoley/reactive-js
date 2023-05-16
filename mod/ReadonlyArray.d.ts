@@ -1,13 +1,10 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-classes.js";
+import { ConcreteKeyedContainerTypeClass, EnumerableContainerTypeClass } from "./type-classes.js";
 import { ContainerOperator, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainerOperator, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyArrayContainer, RunnableLike, SchedulerLike } from "./types.js";
 export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyArrayModule extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
-    /**
-     *
-     * @category Transform
-     */
+export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
+    /** @category Transform */
     enumerate<T>(options?: {
         readonly start?: number;
         readonly count?: number;
@@ -29,6 +26,7 @@ export interface ReadonlyArrayModule extends KeyedContainerTypeClass<Type>, Omit
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, Iterable<T>>;
+    /** @category Transform */
     toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
     toObservable<T>(options: {
         readonly count: number;

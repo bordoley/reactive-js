@@ -46,8 +46,8 @@ import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
 import { Function1, TypePredicate } from "./functions.js";
 import {
+  ConcreteKeyedContainerTypeClass,
   EnumerableContainerTypeClass,
-  KeyedContainerTypeClass,
 } from "./type-classes.js";
 import {
   ContainerOperator,
@@ -69,15 +69,13 @@ export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
 
 export interface ReadonlyArrayModule
-  extends KeyedContainerTypeClass<Type>,
+  extends ConcreteKeyedContainerTypeClass<Type>,
     Omit<
       EnumerableContainerTypeClass<Type>,
-      keyof KeyedContainerTypeClass<Type> | "enumerate" | "keepType"
+      keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"
     > {
-  /**
-   *
-   * @category Transform
-   */
+      
+  /** @category Transform */
   enumerate<T>(options?: {
     readonly start?: number;
     readonly count?: number;
@@ -112,6 +110,7 @@ export interface ReadonlyArrayModule
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, Iterable<T>>;
 
+  /** @category Transform */
   toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly count: number;

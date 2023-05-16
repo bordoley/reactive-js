@@ -11,6 +11,7 @@
 - [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/type_classes.ConcreteAssociativeKeyedContainerTypeClass.md)
 - [ConcreteAsyncContainerBaseTypeClass](../interfaces/type_classes.ConcreteAsyncContainerBaseTypeClass.md)
 - [ConcreteContainerBaseTypeClass](../interfaces/type_classes.ConcreteContainerBaseTypeClass.md)
+- [ConcreteKeyedContainerTypeClass](../interfaces/type_classes.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/type_classes.ContainerTypeClass.md)
 - [EnumerableContainerBaseTypeClass](../interfaces/type_classes.EnumerableContainerBaseTypeClass.md)
 - [EnumerableContainerTypeClass](../interfaces/type_classes.EnumerableContainerTypeClass.md)

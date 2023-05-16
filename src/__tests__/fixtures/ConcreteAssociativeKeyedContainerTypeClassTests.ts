@@ -15,17 +15,13 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import {
-  AssociativeKeyedContainerTypeClass,
-  ConcreteAssociativeKeyedContainerTypeClass,
-} from "../../type-classes.js";
+import { ConcreteAssociativeKeyedContainerTypeClass } from "../../type-classes.js";
 import { KeyedContainer } from "../../types.js";
 
 const AssociativeKeyedContainerTypeClassTests = <
   C extends KeyedContainer<string>,
 >(
-  m: AssociativeKeyedContainerTypeClass<C, string> &
-    ConcreteAssociativeKeyedContainerTypeClass<C, string>,
+  m: ConcreteAssociativeKeyedContainerTypeClass<C, string>,
 ) =>
   describe(
     "ConcreteAssociativeKeyedContainerTypeClassTests",
