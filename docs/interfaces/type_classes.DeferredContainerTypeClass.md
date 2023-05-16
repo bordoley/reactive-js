@@ -670,7 +670,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[flatMapIterable](type_classes.DeferredContainerBaseTypeClass.md#flatmapiterable)
 
 ___
 
@@ -1064,7 +1064,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeLast](type_classes.ContainerTypeClass.md#takelast)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[takeLast](type_classes.DeferredContainerBaseTypeClass.md#takelast)
 
 ___
 

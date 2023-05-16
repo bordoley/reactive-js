@@ -40,13 +40,6 @@ export interface ContainerTypeClass<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
-   * @category Operator
-   */
-  flatMapIterable<TA, TB>(
-    selector: Function1<TA, Iterable<TB>>,
-  ): ContainerOperator<C, TA, TB>;
-
-  /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
    *
@@ -139,15 +132,6 @@ export interface ContainerTypeClass<C extends Container> {
    * @category Operator
    */
   takeFirst<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<C, T, T>;
-
-  /**
-   *  Returns a Container that only emits the last `count` items emitted by the source.
-   *
-   * @category Operator
-   */
-  takeLast<T>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 
@@ -272,7 +256,23 @@ export interface DeferredContainerBaseTypeClass<C extends Container> {
   /**
    * @category Operator
    */
+  flatMapIterable<TA, TB>(
+    selector: Function1<TA, Iterable<TB>>,
+  ): ContainerOperator<C, TA, TB>;
+
+  /**
+   * @category Operator
+   */
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+
+  /**
+   *  Returns a Container that only emits the last `count` items emitted by the source.
+   *
+   * @category Operator
+   */
+  takeLast<T>(options?: {
+    readonly count?: number;
+  }): ContainerOperator<C, T, T>;
 
   /**
    * Combines multiple sources to create a Container whose values are calculated from the values,

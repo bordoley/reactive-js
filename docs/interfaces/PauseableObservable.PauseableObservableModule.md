@@ -26,7 +26,6 @@
 - [scan](PauseableObservable.PauseableObservableModule.md#scan)
 - [skipFirst](PauseableObservable.PauseableObservableModule.md#skipfirst)
 - [takeFirst](PauseableObservable.PauseableObservableModule.md#takefirst)
-- [takeLast](PauseableObservable.PauseableObservableModule.md#takelast)
 - [takeWhile](PauseableObservable.PauseableObservableModule.md#takewhile)
 
 ### Other Methods
@@ -34,6 +33,7 @@
 - [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
 - [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
+- [takeLast](PauseableObservable.PauseableObservableModule.md#takelast)
 
 ## Operator Methods
 
@@ -87,10 +87,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -432,35 +428,6 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 ___
 
-### takeLast
-
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, `T`\>
-
-Returns a Container that only emits the last `count` items emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeLast](type_classes.ContainerTypeClass.md#takelast)
-
-___
-
 ### takeWhile
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, `T`\>
@@ -558,3 +525,26 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`void`\>\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, `T`\>

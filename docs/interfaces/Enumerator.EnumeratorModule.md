@@ -29,7 +29,6 @@
 ### Operator Methods
 
 - [distinctUntilChanged](Enumerator.EnumeratorModule.md#distinctuntilchanged)
-- [flatMapIterable](Enumerator.EnumeratorModule.md#flatmapiterable)
 - [forEach](Enumerator.EnumeratorModule.md#foreach)
 - [keep](Enumerator.EnumeratorModule.md#keep)
 - [keepType](Enumerator.EnumeratorModule.md#keeptype)
@@ -40,7 +39,6 @@
 - [scan](Enumerator.EnumeratorModule.md#scan)
 - [skipFirst](Enumerator.EnumeratorModule.md#skipfirst)
 - [takeFirst](Enumerator.EnumeratorModule.md#takefirst)
-- [takeLast](Enumerator.EnumeratorModule.md#takelast)
 - [takeWhile](Enumerator.EnumeratorModule.md#takewhile)
 
 ### Other Methods
@@ -232,33 +230,6 @@ are distinct by comparison from the previous item.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[flatMapIterable](type_classes.ContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -597,35 +568,6 @@ Returns a Container that only emits the first `count` values emitted by the sour
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeFirst](type_classes.ContainerTypeClass.md#takefirst)
-
-___
-
-### takeLast
-
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
-
-Returns a Container that only emits the last `count` items emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeLast](type_classes.ContainerTypeClass.md#takelast)
 
 ___
 
