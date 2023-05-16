@@ -9,8 +9,8 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  __PairwiseObserver_hasPrev,
-  __PairwiseObserver_prev,
+  __PairwiseSinkMixin_hasPrev,
+  __PairwiseSinkMixin_prev,
 } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
@@ -26,8 +26,8 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [__PairwiseObserver_prev]: T;
-    [__PairwiseObserver_hasPrev]: boolean;
+    [__PairwiseSinkMixin_prev]: T;
+    [__PairwiseSinkMixin_hasPrev]: boolean;
   };
 
   return returns(
@@ -44,8 +44,8 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
         return instance;
       },
       props<TProperties>({
-        [__PairwiseObserver_prev]: none,
-        [__PairwiseObserver_hasPrev]: false,
+        [__PairwiseSinkMixin_prev]: none,
+        [__PairwiseSinkMixin_hasPrev]: false,
       }),
       {
         [SinkLike_notify](
@@ -54,14 +54,14 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
             SinkLike<T>,
           next: T,
         ) {
-          const prev = this[__PairwiseObserver_prev];
+          const prev = this[__PairwiseSinkMixin_prev];
 
-          if (this[__PairwiseObserver_hasPrev]) {
+          if (this[__PairwiseSinkMixin_hasPrev]) {
             this[DelegatingLike_delegate][SinkLike_notify]([prev, next]);
           }
 
-          this[__PairwiseObserver_hasPrev] = true;
-          this[__PairwiseObserver_prev] = next;
+          this[__PairwiseSinkMixin_hasPrev] = true;
+          this[__PairwiseSinkMixin_prev] = next;
         },
       },
     ),

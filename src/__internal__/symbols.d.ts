@@ -142,6 +142,12 @@ export declare const __DelegatingSchedulerImplementationMixin_delegate: unique s
 
 export declare const __DisposableMixin_disposables: unique symbol;
 
+export declare const __DistinctUntilChangedSinkMixin_equality: unique symbol;
+
+export declare const __DistinctUntilChangedSinkMixin_prev: unique symbol;
+
+export declare const __DistinctUntilChangedSinkMixin_hasValue: unique symbol;
+
 export declare const __IndexedQueueMixin_head: unique symbol;
 
 export declare const __IndexedQueueMixin_tail: unique symbol;
@@ -156,6 +162,10 @@ export declare const __ObserverMixin_dispatchSubscription: unique symbol;
 
 export declare const __ObserverMixin_isCompleted: unique symbol;
 
+export declare const __PairwiseSinkMixin_prev: unique symbol;
+
+export declare const __PairwiseSinkMixin_hasPrev: unique symbol;
+
 export declare const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 
 export declare const __SchedulerImplementationMixin_startTime: unique symbol;
@@ -163,6 +173,16 @@ export declare const __SchedulerImplementationMixin_startTime: unique symbol;
 export declare const __SchedulerImplementationMixin_yieldRequested: unique symbol;
 
 export declare const __SerialDisposableMixin_current: unique symbol;
+
+export declare const __SkipFirstSinkMixin_skipCount: unique symbol;
+
+export declare const __SkipFirstSinkMixin_count: unique symbol;
+
+export declare const __TakeFirstSinkMixin_takeCount: unique symbol;
+
+export declare const __TakeFirstSinkMixin_count: unique symbol;
+
+export declare const __TakeWhileSinkMixin_inclusive: unique symbol;
 
 export declare const __LiftedLike_source: unique symbol;
 
@@ -244,12 +264,6 @@ export declare const __DecodeWithCharsetObserver_textDecoder: unique symbol;
 
 export declare const __DispatchedObservable_observer: unique symbol;
 
-export declare const __DistinctUntilChangedObserver_equality: unique symbol;
-
-export declare const __DistinctUntilChangedObserver_prev: unique symbol;
-
-export declare const __DistinctUntilChangedObserver_hasValue: unique symbol;
-
 export declare const __EnqueueObserver_queue: unique symbol;
 
 export declare const __Enumerator_private_current: unique symbol;
@@ -300,10 +314,6 @@ export declare const __Object_prototype: unique symbol;
 
 export declare const __Object_private_initializedProperties: unique symbol;
 
-export declare const __PairwiseObserver_prev: unique symbol;
-
-export declare const __PairwiseObserver_hasPrev: unique symbol;
-
 export declare const __PauseableScheduler_delayed: unique symbol;
 
 export declare const __PauseableScheduler_dueTime: unique symbol;
@@ -330,17 +340,7 @@ export declare const __ReadonlyArrayEnumerator_index: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_count: unique symbol;
 
-export declare const __SkipFirstObserver_skipCount: unique symbol;
-
-export declare const __SkipFirstObserver_count: unique symbol;
-
-export declare const __TakeFirstObserver_takeCount: unique symbol;
-
-export declare const __TakeFirstObserver_count: unique symbol;
-
 export declare const __TakeLastObserver_takeLastQueue: unique symbol;
-
-export declare const __TakeWhileObserver_inclusive: unique symbol;
 
 export declare const __ThrottleObserver_value: unique symbol;
 

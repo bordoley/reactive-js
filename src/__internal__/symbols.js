@@ -338,6 +338,21 @@ export const __DisposableMixin_disposables = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __DistinctUntilChangedSinkMixin_equality = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedSinkMixin_equality",
+);
+
+/** @type {unique symbol} */
+export const __DistinctUntilChangedSinkMixin_prev = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedSinkMixin_prev",
+);
+
+/** @type {unique symbol} */
+export const __DistinctUntilChangedSinkMixin_hasValue = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedSinkMixin_hasValue",
+);
+
+/** @type {unique symbol} */
 export const __IndexedQueueMixin_head = /*@__PURE__*/ symbol(
   "IndexedQueueMixin_head",
 );
@@ -373,6 +388,16 @@ export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __PairwiseSinkMixin_prev = /*@__PURE__*/ symbol(
+  "PairwiseSinkMixin_prev",
+);
+
+/** @type {unique symbol} */
+export const __PairwiseSinkMixin_hasPrev = /*@__PURE__*/ symbol(
+  "PairwiseSinkMixin_hasPrev",
+);
+
+/** @type {unique symbol} */
 export const __SchedulerImplementationMixin_currentContinuation =
   /*@__PURE__*/ symbol("SchedulerImplementationMixin_currentContinuation");
 
@@ -388,6 +413,31 @@ export const __SchedulerImplementationMixin_yieldRequested =
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol(
   "SerialDisposableMixin_current",
+);
+
+/** @type {unique symbol} */
+export const __SkipFirstSinkMixin_skipCount = /*@__PURE__*/ symbol(
+  "SkipFirstSinkMixin_skipCount",
+);
+
+/** @type {unique symbol} */
+export const __SkipFirstSinkMixin_count = /*@__PURE__*/ symbol(
+  "SkipFirstSinkMixin_count",
+);
+
+/** @type {unique symbol} */
+export const __TakeFirstSinkMixin_takeCount = /*@__PURE__*/ symbol(
+  "TakeFirstSinkMixin_takeCount",
+);
+
+/** @type {unique symbol} */
+export const __TakeFirstSinkMixin_count = /*@__PURE__*/ symbol(
+  "TakeFirstSinkMixin_count",
+);
+
+/** @type {unique symbol} */
+export const __TakeWhileSinkMixin_inclusive = /*@__PURE__*/ symbol(
+  "TakeWhileSinkMixin_inclusive",
 );
 
 /** @type {unique symbol} */
@@ -584,21 +634,6 @@ export const __DispatchedObservable_observer = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedObserver_equality = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedObserver_equality",
-);
-
-/** @type {unique symbol} */
-export const __DistinctUntilChangedObserver_prev = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedObserver_prev",
-);
-
-/** @type {unique symbol} */
-export const __DistinctUntilChangedObserver_hasValue = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedObserver_hasValue",
-);
-
-/** @type {unique symbol} */
 export const __EnqueueObserver_queue = /*@__PURE__*/ symbol(
   "EnqueueObserver_queue",
 );
@@ -712,16 +747,6 @@ export const __Object_private_initializedProperties = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __PairwiseObserver_prev = /*@__PURE__*/ symbol(
-  "PairwiseObserver_prev",
-);
-
-/** @type {unique symbol} */
-export const __PairwiseObserver_hasPrev = /*@__PURE__*/ symbol(
-  "PairwiseObserver_hasPrev",
-);
-
-/** @type {unique symbol} */
 export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
   "PauseableScheduler_delayed ",
 );
@@ -787,33 +812,8 @@ export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __SkipFirstObserver_skipCount = /*@__PURE__*/ symbol(
-  "SkipFirstObserver_skipCount",
-);
-
-/** @type {unique symbol} */
-export const __SkipFirstObserver_count = /*@__PURE__*/ symbol(
-  "SkipFirstObserver_count",
-);
-
-/** @type {unique symbol} */
-export const __TakeFirstObserver_takeCount = /*@__PURE__*/ symbol(
-  "TakeFirstObserver_takeCount",
-);
-
-/** @type {unique symbol} */
-export const __TakeFirstObserver_count = /*@__PURE__*/ symbol(
-  "TakeFirstObserver_count",
-);
-
-/** @type {unique symbol} */
 export const __TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol(
   "TakeLastObserver_takeLastQueue",
-);
-
-/** @type {unique symbol} */
-export const __TakeWhileObserver_inclusive = /*@__PURE__*/ symbol(
-  "TakeWhileObserver_inclusive",
 );
 
 /** @type {unique symbol} */
