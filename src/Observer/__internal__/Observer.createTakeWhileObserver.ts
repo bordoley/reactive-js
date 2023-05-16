@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -34,7 +35,11 @@ const Observer_createTakeWhileObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), Delegating_mixin()),
+      include(
+        Observer_delegatingMixin(),
+        Disposable_delegatingMixin,
+        Delegating_mixin(),
+      ),
       function TakeWhileObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -42,6 +47,7 @@ const Observer_createTakeWhileObserver: <T>(
         predicate: Predicate<T>,
         inclusive: boolean,
       ): ObserverLike<T> {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[PredicatedLike_predicate] = predicate;

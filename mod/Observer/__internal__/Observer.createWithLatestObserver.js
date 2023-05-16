@@ -2,6 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -12,7 +13,8 @@ import { none, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
-const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function WithLatestLike(instance, delegate, other, selector) {
+const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, Delegating_mixin()), function WithLatestLike(instance, delegate, other, selector) {
+    init(Disposable_delegatingMixin, instance, delegate);
     init(Observer_delegatingMixin(), instance, delegate, delegate);
     init(Delegating_mixin(), instance, delegate);
     instance[__WithLatestLike_selector] = selector;

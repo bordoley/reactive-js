@@ -7,7 +7,6 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-
 import { Predicate, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,

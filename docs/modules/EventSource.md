@@ -21,6 +21,7 @@
 
 ### Operator Functions
 
+- [distinctUntilChanged](EventSource.md#distinctuntilchanged)
 - [forEach](EventSource.md#foreach)
 - [ignoreElements](EventSource.md#ignoreelements)
 - [keep](EventSource.md#keep)
@@ -103,6 +104,32 @@ ___
 ___
 
 ## Operator Functions
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+___
 
 ### forEach
 

@@ -6,7 +6,6 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-
 import { Function1 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
