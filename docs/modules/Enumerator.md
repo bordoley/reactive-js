@@ -25,6 +25,7 @@
 
 ### Operator Functions
 
+- [distinctUntilChanged](Enumerator.md#distinctuntilchanged)
 - [forEach](Enumerator.md#foreach)
 - [keep](Enumerator.md#keep)
 - [keepType](Enumerator.md#keeptype)
@@ -33,6 +34,9 @@
 - [pairwise](Enumerator.md#pairwise)
 - [pick](Enumerator.md#pick)
 - [scan](Enumerator.md#scan)
+- [skipFirst](Enumerator.md#skipfirst)
+- [takeFirst](Enumerator.md#takefirst)
+- [takeWhile](Enumerator.md#takewhile)
 
 ### Other Functions
 
@@ -179,6 +183,32 @@ ___
 ___
 
 ## Operator Functions
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
 
 ### forEach
 
@@ -417,6 +447,84 @@ and emits each intermediate result.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `TAcc`\>
+
+___
+
+### skipFirst
+
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a Container that skips the first count items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### takeFirst
+
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a Container which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
 
 ___
 

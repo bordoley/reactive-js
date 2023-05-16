@@ -1,4 +1,3 @@
-//import * as Enumerator from "../Enumerator.js";
+import * as Enumerator from "../Enumerator.js";
 
-export {};
-//((_: Enumerator.Signature) => {})(Enumerator);
+((_: Enumerator.Signature) => {})(Enumerator);

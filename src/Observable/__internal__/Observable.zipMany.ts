@@ -137,10 +137,8 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
 
   const Enumerator_move =
     <TEnumerator extends EnumeratorLike<T>, T = unknown>() =>
-    (enumerator: EnumeratorLike<T> & TEnumerator): boolean => {
+    (enumerator: EnumeratorLike<T> & TEnumerator): boolean =>
       enumerator[EnumeratorLike_move]();
-      return enumerator[EnumeratorLike_hasCurrent];
-    };
 
   const shouldComplete = /*@__PURE__*/ (() =>
     compose(

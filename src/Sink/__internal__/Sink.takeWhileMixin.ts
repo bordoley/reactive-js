@@ -2,18 +2,17 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import {
   Mixin3,
-  Mutable,
   include,
   init,
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { __TakeWhileSinkMixin_inclusive } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  PredicatedLike,
   PredicatedLike_predicate,
+  TakeWhileLike,
+  TakeWhileLike_inclusive,
 } from "../../__internal__/types.js";
 import { Predicate, none, returns } from "../../functions.js";
 import {
@@ -29,17 +28,12 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   boolean,
   unknown,
   Pick<SinkLike<T>, typeof SinkLike_notify>
-> = /*@__PURE__*/ (<T>() => {
-  type TProperties = PredicatedLike<T> & {
-    readonly [__TakeWhileSinkMixin_inclusive]: boolean;
-  };
-
-  return returns(
+> = /*@__PURE__*/ (<T>() =>
+  returns(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
       function TakeWhileSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> & TakeWhileLike<T>,
         delegate: SinkLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
@@ -47,22 +41,22 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         init(Disposable_delegatingMixin, instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[PredicatedLike_predicate] = predicate;
-        instance[__TakeWhileSinkMixin_inclusive] = inclusive;
+        instance[TakeWhileLike_inclusive] = inclusive;
 
         return instance;
       },
-      props<TProperties>({
+      props<TakeWhileLike<T>>({
         [PredicatedLike_predicate]: none,
-        [__TakeWhileSinkMixin_inclusive]: none,
+        [TakeWhileLike_inclusive]: none,
       }),
       {
         [SinkLike_notify](
-          this: TProperties & DelegatingLike<SinkLike<T>> & SinkLike<T>,
+          this: TakeWhileLike<T> & DelegatingLike<SinkLike<T>> & SinkLike<T>,
           next: T,
         ) {
           const satisfiesPredicate = this[PredicatedLike_predicate](next);
 
-          if (satisfiesPredicate || this[__TakeWhileSinkMixin_inclusive]) {
+          if (satisfiesPredicate || this[TakeWhileLike_inclusive]) {
             this[DelegatingLike_delegate][SinkLike_notify](next);
           }
 
@@ -72,7 +66,6 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         },
       },
     ),
-  );
-})();
+  ))();
 
 export default Sink_takeWhileMixin;

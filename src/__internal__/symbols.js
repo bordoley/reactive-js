@@ -338,18 +338,18 @@ export const __DisposableMixin_disposables = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedSinkMixin_equality = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedSinkMixin_equality",
+export const __DistinctUntilChangedLike_equality = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedLike_equality",
 );
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedSinkMixin_prev = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedSinkMixin_prev",
+export const __DistinctUntilChangedLike_prev = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedLike_prev",
 );
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedSinkMixin_hasValue = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedSinkMixin_hasValue",
+export const __DistinctUntilChangedLike_hasValue = /*@__PURE__*/ symbol(
+  "DistinctUntilChangedLike_hasValue",
 );
 
 /** @type {unique symbol} */
@@ -406,28 +406,28 @@ export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __SkipFirstSinkMixin_skipCount = /*@__PURE__*/ symbol(
-  "SkipFirstSinkMixin_skipCount",
+export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol(
+  "SkipFirstLike_skipCount",
 );
 
 /** @type {unique symbol} */
-export const __SkipFirstSinkMixin_count = /*@__PURE__*/ symbol(
-  "SkipFirstSinkMixin_count",
+export const __SkipFirstLike_count = /*@__PURE__*/ symbol(
+  "SkipFirstLike_count",
 );
 
 /** @type {unique symbol} */
-export const __TakeFirstSinkMixin_takeCount = /*@__PURE__*/ symbol(
-  "TakeFirstSinkMixin_takeCount",
+export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol(
+  "TakeFirstLike_takeCount",
 );
 
 /** @type {unique symbol} */
-export const __TakeFirstSinkMixin_count = /*@__PURE__*/ symbol(
-  "TakeFirstSinkMixin_count",
+export const __TakeFirstLike_count = /*@__PURE__*/ symbol(
+  "TakeFirstLike_count",
 );
 
 /** @type {unique symbol} */
-export const __TakeWhileSinkMixin_inclusive = /*@__PURE__*/ symbol(
-  "TakeWhileSinkMixin_inclusive",
+export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol(
+  "TakeWhileLike_inclusive",
 );
 
 /** @type {unique symbol} */
