@@ -194,8 +194,10 @@ export type Animation<T = number> =
           readonly selector: Function1<number, T>;
         });
 
-type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
-type AnyObservableLike<T> =
+export type MaybeSharedObservableLike<T> =
+  | SharedObservableLike<T>
+  | ObservableLike<T>;
+export type AnyObservableLike<T> =
   | EnumerableLike<T>
   | RunnableLike<T>
   | DeferredObservableLike<T>

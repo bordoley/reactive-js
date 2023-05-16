@@ -54,8 +54,8 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 } : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
     readonly selector: Function1<number, T>;
 });
-type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
-type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | SharedObservableLike<T> | ObservableLike<T>;
+export type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
+export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | SharedObservableLike<T> | ObservableLike<T>;
 export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
@@ -389,4 +389,3 @@ export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];
-export {};
