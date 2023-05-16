@@ -13,4 +13,4 @@ testModule("Promise", describe("toObservable", testAsync("when the promise resol
     const promise = Promise.reject(error);
     await pipe(pipe(promise, PromiseT.toObservable(), Observable.lastAsync()), expectPromiseToThrow);
 })));
-//((_: PromiseT.Signature) => {})(PromiseT);
+((_) => { })(PromiseT);

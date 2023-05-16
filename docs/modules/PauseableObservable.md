@@ -15,10 +15,19 @@
 
 ### Operator Functions
 
+- [distinctUntilChanged](PauseableObservable.md#distinctuntilchanged)
 - [forEach](PauseableObservable.md#foreach)
 - [keep](PauseableObservable.md#keep)
+- [keepType](PauseableObservable.md#keeptype)
 - [map](PauseableObservable.md#map)
+- [mapTo](PauseableObservable.md#mapto)
+- [pairwise](PauseableObservable.md#pairwise)
 - [pick](PauseableObservable.md#pick)
+- [scan](PauseableObservable.md#scan)
+- [skipFirst](PauseableObservable.md#skipfirst)
+- [takeFirst](PauseableObservable.md#takefirst)
+- [takeLast](PauseableObservable.md#takelast)
+- [takeWhile](PauseableObservable.md#takewhile)
 
 ### Other Functions
 
@@ -39,6 +48,32 @@ ___
 Ƭ **Type**: [`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md)
 
 ## Operator Functions
+
+### distinctUntilChanged
+
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+___
 
 ### forEach
 
@@ -90,6 +125,29 @@ source that satisfy the specified predicate.
 
 ___
 
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
+
+___
+
 ### map
 
 ▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
@@ -121,6 +179,45 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `TA`, `TB`\>
+
+___
+
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, readonly [`T`, `T`]\>
 
 ___
 
@@ -188,6 +285,136 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `TAcc`\>
+
+Returns a Container that applies an accumulator function over the source,
+and emits each intermediate result.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `TAcc`\>
+
+___
+
+### skipFirst
+
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a Container that skips the first count items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+___
+
+### takeFirst
+
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a Container which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
 
 ___
 
