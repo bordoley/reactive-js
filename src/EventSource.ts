@@ -6,8 +6,10 @@ import EventSource_forEach from "./EventSource/__internal__/EventSource.forEach.
 import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.ignoreElements.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
+import EventSource_mapTo from "./EventSource/__internal__/EventSource.mapTo.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import EventSource_keepType from "./EventSource/__internal__/ReadonlyArray.keepType.js";
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
@@ -63,6 +65,8 @@ export const forEach: Signature["forEach"] = EventSource_forEach;
 export const ignoreElements: Signature["ignoreElements"] =
   EventSource_ignoreElements;
 export const keep: Signature["keep"] = EventSource_keep;
+export const keepType: Signature["keepType"] = EventSource_keepType;
 export const map: Signature["map"] = EventSource_map;
+export const mapTo: Signature["mapTo"] = EventSource_mapTo;
 export const pick: Signature["pick"] = EventSource_pick;
 export const toObservable: Signature["toObservable"] = EventSource_toObservable;

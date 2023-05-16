@@ -1,4 +1,4 @@
-import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -6,15 +6,10 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  MappingLike,
-  MappingLike_selector,
-} from "../../__internal__/types.js";
-import { Function1, none } from "../../functions.js";
-import { ObserverLike, SinkLike_notify } from "../../types.js";
-import Observer_assertState from "./Observer.assertState.js";
+
+import { Function1 } from "../../functions.js";
+import { ObserverLike } from "../../types.js";
+import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
 const Observer_createMapObserver: <TA, TB>(
@@ -23,35 +18,19 @@ const Observer_createMapObserver: <TA, TB>(
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin<TA>(), Delegating_mixin()),
+      include(Observer_delegatingMixin(), Sink_mapMixin()),
       function MapObserver(
-        instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
-          MappingLike<TA, TB>,
+        instance: unknown,
         delegate: ObserverLike<TB>,
         selector: Function1<TA, TB>,
       ): ObserverLike<TA> {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
-        init(Delegating_mixin(), instance, delegate);
-        instance[MappingLike_selector] = selector;
+        init(Sink_mapMixin<TA, TB>(), instance, delegate, selector);
 
         return instance;
       },
-      props<MappingLike<TA, TB>>({
-        [MappingLike_selector]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: MappingLike<TA, TB> &
-            DelegatingLike<ObserverLike<TB>> &
-            ObserverLike<TA>,
-          next: TA,
-        ) {
-          Observer_assertState(this);
-
-          const mapped = this[MappingLike_selector](next);
-          this[DelegatingLike_delegate][SinkLike_notify](mapped);
-        },
-      },
+      props({}),
+      Observer_decorateNotifyWithStateAssert(Sink_mapMixin<TA, TB>()),
     ),
   ))();
 

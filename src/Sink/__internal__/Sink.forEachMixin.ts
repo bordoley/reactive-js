@@ -10,47 +10,46 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  PredicatedLike,
-  PredicatedLike_predicate,
+  ForEachLike,
+  ForEachLike_effect,
 } from "../../__internal__/types.js";
-import { Predicate, none, returns } from "../../functions.js";
+import { SideEffect1, none, returns } from "../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../types.js";
 
-const Sink_keepMixin: <T>() => Mixin2<
+const Sink_forEachMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
-  Predicate<T>,
+  SideEffect1<T>,
   unknown,
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() =>
   returns(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
-      function KeepSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> & PredicatedLike<T>,
+      function ForEachSinkMixin(
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> & ForEachLike<T>,
         delegate: SinkLike<T>,
-        predicate: Predicate<T>,
+        effect: SideEffect1<T>,
       ): SinkLike<T> {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);
-        instance[PredicatedLike_predicate] = predicate;
+        instance[ForEachLike_effect] = effect;
 
         return instance;
       },
-      props<PredicatedLike<T>>({
-        [PredicatedLike_predicate]: none,
+      props<ForEachLike<T>>({
+        [ForEachLike_effect]: none,
       }),
       {
         [SinkLike_notify](
-          this: PredicatedLike<T> & DelegatingLike<SinkLike<T>> & SinkLike<T>,
+          this: ForEachLike<T> & DelegatingLike<SinkLike<T>> & SinkLike<T>,
           next: T,
         ) {
-          if (this[PredicatedLike_predicate](next)) {
-            this[DelegatingLike_delegate][SinkLike_notify](next);
-          }
+          this[ForEachLike_effect](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),
   ))();
 
-export default Sink_keepMixin;
+export default Sink_forEachMixin;

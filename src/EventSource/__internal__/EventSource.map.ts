@@ -1,6 +1,5 @@
-import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -8,17 +7,10 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-  MappingLike,
-  MappingLike_selector,
-} from "../../__internal__/types.js";
-import { Function1, none, partial, pipe } from "../../functions.js";
+import { Function1, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  SinkLike_notify,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
@@ -29,37 +21,22 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
   ) => EventListenerLike<TA> = (<TA, TB>() =>
     createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin, Delegating_mixin()),
+        include(Sink_mapMixin()),
         function MapEventListener(
           instance: Pick<
             EventListenerLike<TA>,
-            typeof EventListenerLike_isErrorSafe | typeof SinkLike_notify
-          > &
-            MappingLike<TA, TB>,
+            typeof EventListenerLike_isErrorSafe
+          >,
           delegate: EventListenerLike<TB>,
           selector: Function1<TA, TB>,
         ): EventListenerLike<TA> {
-          init(Delegating_mixin(), instance, delegate);
-          init(Disposable_delegatingMixin, instance, delegate);
-          instance[MappingLike_selector] = selector;
+          init(Sink_mapMixin<TA, TB>(), instance, delegate, selector);
 
           return instance;
         },
-        props<MappingLike<TA, TB>>({
-          [MappingLike_selector]: none,
-        }),
+        props({}),
         {
           [EventListenerLike_isErrorSafe]: false,
-
-          [SinkLike_notify](
-            this: MappingLike<TA, TB> &
-              DelegatingLike<EventListenerLike<TB>> &
-              EventListenerLike<TA>,
-            next: TA,
-          ) {
-            const mapped = this[MappingLike_selector](next);
-            this[DelegatingLike_delegate][SinkLike_notify](mapped);
-          },
         },
       ),
     ))();
