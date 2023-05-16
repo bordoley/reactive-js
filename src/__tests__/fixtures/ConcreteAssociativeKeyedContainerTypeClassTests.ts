@@ -17,14 +17,16 @@ import {
 } from "../../functions.js";
 import { ConcreteAssociativeKeyedContainerTypeClass } from "../../type-classes.js";
 import { KeyedContainer } from "../../types.js";
+import AssociativeKeyedContainerTypeClassTests from "./AssociativeKeyedContainerTypeClassTests.js";
 
-const AssociativeKeyedContainerTypeClassTests = <
+const ConcreteAssociativeKeyedContainerTypeClassTests = <
   C extends KeyedContainer<string>,
 >(
   m: ConcreteAssociativeKeyedContainerTypeClass<C, string>,
 ) =>
   describe(
     "ConcreteAssociativeKeyedContainerTypeClassTests",
+    ...AssociativeKeyedContainerTypeClassTests(m).tests,
     describe(
       "entries",
       test(
@@ -242,4 +244,4 @@ const AssociativeKeyedContainerTypeClassTests = <
     ),
   );
 
-export default AssociativeKeyedContainerTypeClassTests;
+export default ConcreteAssociativeKeyedContainerTypeClassTests;

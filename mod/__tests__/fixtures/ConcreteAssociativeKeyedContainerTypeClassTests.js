@@ -4,7 +4,8 @@ import * as Enumerator from "../../Enumerator.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 import { describe, expectArrayEquals, expectEquals, test, } from "../../__internal__/testing.js";
 import { arrayEquality, isSome, none, pipe, pipeLazy, returns, } from "../../functions.js";
-const AssociativeKeyedContainerTypeClassTests = (m) => describe("ConcreteAssociativeKeyedContainerTypeClassTests", describe("entries", test("enumerates all entries", pipeLazy([
+import AssociativeKeyedContainerTypeClassTests from "./AssociativeKeyedContainerTypeClassTests.js";
+const ConcreteAssociativeKeyedContainerTypeClassTests = (m) => describe("ConcreteAssociativeKeyedContainerTypeClassTests", ...AssociativeKeyedContainerTypeClassTests(m).tests, describe("entries", test("enumerates all entries", pipeLazy([
     ["a", "b"],
     ["c", "d"],
 ], ReadonlyArray.enumerate(), m.fromEntries(), m.entries(), Enumerator.toReadonlyArray(), expectArrayEquals([
@@ -67,4 +68,4 @@ const AssociativeKeyedContainerTypeClassTests = (m) => describe("ConcreteAssocia
     ["c", 2],
     ["e", 3],
 ], ReadonlyArray.enumerate(), m.fromEntries(), m.reduceWithKey((acc, _, key) => acc + key, returns("")), expectEquals("ace"))))));
-export default AssociativeKeyedContainerTypeClassTests;
+export default ConcreteAssociativeKeyedContainerTypeClassTests;
