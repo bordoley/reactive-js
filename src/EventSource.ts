@@ -5,11 +5,11 @@ import EventSource_createRefCountedPublisher from "./EventSource/__internal__/Ev
 import EventSource_forEach from "./EventSource/__internal__/EventSource.forEach.js";
 import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.ignoreElements.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
+import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_mapTo from "./EventSource/__internal__/EventSource.mapTo.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
-import EventSource_keepType from "./EventSource/__internal__/ReadonlyArray.keepType.js";
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
