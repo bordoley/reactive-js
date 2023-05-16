@@ -39,6 +39,7 @@
 - [fromReadonlyObjectMap](ReadonlyObjectMap.md#fromreadonlyobjectmap)
 - [toDictionary](ReadonlyObjectMap.md#todictionary)
 - [toReadonlyMap](ReadonlyObjectMap.md#toreadonlymap)
+- [toReadonlyObjectMap](ReadonlyObjectMap.md#toreadonlyobjectmap)
 
 ### Transform Functions
 
@@ -396,6 +397,23 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### toReadonlyObjectMap
+
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`ReadonlyObjectMapContainer`](../interfaces/types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+
+#### Returns
+
+`TKey` extends [`KeyOf`](types.md#keyof)<[`ReadonlyObjectMapContainer`](../interfaces/types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 ___
 

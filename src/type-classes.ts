@@ -737,4 +737,11 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<
     KeyedContainerOf<C, TKey, T>,
     ReadonlyMap<TKey, T>
   >;
+
+  toReadonlyObjectMap<
+    T,
+    TKey extends TKeyBase,
+  >(): TKey extends KeyOf<ReadonlyObjectMapContainer>
+    ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>>
+    : never;
 }

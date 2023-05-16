@@ -13,6 +13,7 @@ import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWi
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
+import ReadonlyMap_toReadonlyObjectMap from "./ReadonlyMap/__internal__/ReadonlyMap.toReadonlyObjectMap.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
 import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import { identityLazy } from "./functions.js";
@@ -56,6 +57,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
     reduceWithKey: ReadonlyMap_reduceWithKey,
     toDictionary: ReadonlyMap_toDictionary,
     toReadonlyMap: identityLazy,
+    toReadonlyObjectMap: ReadonlyMap_toReadonlyObjectMap,
     values: ReadonlyMap_values,
   } as ReadonlyMapModule<Type<TKey>, TKey>);
 
@@ -80,4 +82,6 @@ export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyMap_reduceWithKey;
 export const toDictionary: Signature["toDictionary"] = ReadonlyMap_toDictionary;
 export const toReadonlyMap: Signature["toReadonlyMap"] = identityLazy;
+export const toReadonlyObjectMap: Signature["toReadonlyObjectMap"] =
+  ReadonlyMap_toReadonlyObjectMap;
 export const values: Signature["values"] = ReadonlyMap_values;
