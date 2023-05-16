@@ -554,7 +554,6 @@ export interface KeyedContainerTypeClass<
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > {
   /**
-   *
    * @category Transform
    */
   entries<T, TKey extends TKeyBase>(): Function1<
@@ -582,6 +581,33 @@ export interface KeyedContainerTypeClass<
     effect: SideEffect2<T, TKey>,
   ): KeyedContainerOperator<C, TKey, T, T>;
 
+  /**
+   * @category Transform
+   */
+  reduce<T, TAcc, TKey extends TKeyBase>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+
+  /**
+   * @category Transform
+   */
+  reduceWithKey<T, TAcc, TKey extends TKeyBase>(
+    reducer: Function3<TAcc, T, TKey, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+
+  /**
+   *
+   * @category Transform
+   */
+  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+}
+
+export interface ConcreteKeyedContainerTypeClass<
+  C extends KeyedContainer,
+  TKeyBase extends KeyOf<C> = KeyOf<C>,
+> extends KeyedContainerTypeClass<C, TKeyBase> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -637,28 +663,6 @@ export interface KeyedContainerTypeClass<
   mapWithKey<TA, TB, TKey extends TKeyBase>(
     selector: Function2<TA, TKey, TB>,
   ): KeyedContainerOperator<C, TKey, TA, TB>;
-
-  /**
-   * @category Transform
-   */
-  reduce<T, TAcc, TKey extends TKeyBase>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
-
-  /**
-   * @category Transform
-   */
-  reduceWithKey<T, TAcc, TKey extends TKeyBase>(
-    reducer: Function3<TAcc, T, TKey, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
-
-  /**
-   *
-   * @category Transform
-   */
-  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }
 
 export interface AssociativeKeyedContainerTypeClass<
@@ -687,7 +691,8 @@ export interface AssociativeKeyedContainerTypeClass<
 export interface ConcreteAssociativeKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
-> {
+> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>,
+    AssociativeKeyedContainerTypeClass<C, TKeyBase> {
   /**
    * Return an Container that emits no items.
    *

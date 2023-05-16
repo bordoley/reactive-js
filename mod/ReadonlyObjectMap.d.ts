@@ -1,8 +1,8 @@
-import { AssociativeKeyedContainerTypeClass, ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
+import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { KeyOf, ReadonlyObjectMapContainer } from "./types.js";
 export type Type<TKey extends symbol | number | string = symbol | number | string> = ReadonlyObjectMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>, AssociativeKeyedContainerTypeClass<TType, TKey> {
+export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {
 }
 export type Signature = ReadonlyObjectMapModule;
 /**

@@ -311,7 +311,6 @@ export interface HigherOrderObservableBaseTypeClass<C extends ObservableContaine
 }
 export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**
-     *
      * @category Transform
      */
     entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
@@ -329,6 +328,21 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
      * @category Operator
      */
     forEachWithKey<T, TKey extends TKeyBase>(effect: SideEffect2<T, TKey>): KeyedContainerOperator<C, TKey, T, T>;
+    /**
+     * @category Transform
+     */
+    reduce<T, TAcc, TKey extends TKeyBase>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    /**
+     * @category Transform
+     */
+    reduceWithKey<T, TAcc, TKey extends TKeyBase>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    /**
+     *
+     * @category Transform
+     */
+    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+}
+export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -370,19 +384,6 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
      * @category Operator
      */
     mapWithKey<TA, TB, TKey extends TKeyBase>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
-    /**
-     * @category Transform
-     */
-    reduce<T, TAcc, TKey extends TKeyBase>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
-    /**
-     * @category Transform
-     */
-    reduceWithKey<T, TAcc, TKey extends TKeyBase>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
-    /**
-     *
-     * @category Transform
-     */
-    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
 }
 export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     /**
@@ -396,7 +397,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
      */
     keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
 }
-export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
+export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
     /**
      * Return an Container that emits no items.
      *

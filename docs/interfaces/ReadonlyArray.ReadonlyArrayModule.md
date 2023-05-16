@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
+- [`ConcreteKeyedContainerTypeClass`](type_classes.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
-- `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`KeyedContainerTypeClass`](type_classes.KeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
+- `Omit`<[`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerTypeClass`](type_classes.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -63,7 +63,6 @@
 ### Other Methods
 
 - [flow](ReadonlyArray.ReadonlyArrayModule.md#flow)
-- [toObservable](ReadonlyArray.ReadonlyArrayModule.md#toobservable)
 
 ### Transform Methods
 
@@ -77,6 +76,7 @@
 - [reduceWithKey](ReadonlyArray.ReadonlyArrayModule.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.ReadonlyArrayModule.md#somesatisfy)
 - [toIterable](ReadonlyArray.ReadonlyArrayModule.md#toiterable)
+- [toObservable](ReadonlyArray.ReadonlyArrayModule.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
 - [values](ReadonlyArray.ReadonlyArrayModule.md#values)
 
@@ -772,7 +772,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEach](type_classes.KeyedContainerTypeClass.md#foreach)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[forEach](type_classes.ConcreteKeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -802,7 +802,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[forEachWithKey](type_classes.KeyedContainerTypeClass.md#foreachwithkey)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[forEachWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -832,7 +832,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keep](type_classes.KeyedContainerTypeClass.md#keep)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[keep](type_classes.ConcreteKeyedContainerTypeClass.md#keep)
 
 ___
 
@@ -859,7 +859,7 @@ ___
 
 #### Overrides
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepType](type_classes.KeyedContainerTypeClass.md#keeptype)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[keepType](type_classes.ConcreteKeyedContainerTypeClass.md#keeptype)
 
 ▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
@@ -883,7 +883,7 @@ ___
 
 #### Overrides
 
-KeyedContainerTypeClass.keepType
+ConcreteKeyedContainerTypeClass.keepType
 
 ___
 
@@ -913,7 +913,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[keepWithKey](type_classes.KeyedContainerTypeClass.md#keepwithkey)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[keepWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#keepwithkey)
 
 ___
 
@@ -952,7 +952,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[map](type_classes.KeyedContainerTypeClass.md#map)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[map](type_classes.ConcreteKeyedContainerTypeClass.md#map)
 
 ___
 
@@ -1018,7 +1018,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[mapWithKey](type_classes.KeyedContainerTypeClass.md#mapwithkey)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[mapWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#mapwithkey)
 
 ___
 
@@ -1569,102 +1569,6 @@ ___
 
 ___
 
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-| `options.start` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.start` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count?` | `number` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-___
-
 ## Transform Methods
 
 ### entries
@@ -1684,7 +1588,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[entries](type_classes.KeyedContainerTypeClass.md#entries)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[entries](type_classes.ConcreteKeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -1833,7 +1737,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduce](type_classes.KeyedContainerTypeClass.md#reduce)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[reduce](type_classes.ConcreteKeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -1862,7 +1766,7 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[reduceWithKey](type_classes.KeyedContainerTypeClass.md#reducewithkey)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[reduceWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -1920,6 +1824,102 @@ Omit.toIterable
 
 ___
 
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count` | `number` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.start` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.count?` | `number` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
 ### toReadonlyArray
 
 ▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
@@ -1958,4 +1958,4 @@ ___
 
 #### Inherited from
 
-[KeyedContainerTypeClass](type_classes.KeyedContainerTypeClass.md).[values](type_classes.KeyedContainerTypeClass.md#values)
+[ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[values](type_classes.ConcreteKeyedContainerTypeClass.md#values)

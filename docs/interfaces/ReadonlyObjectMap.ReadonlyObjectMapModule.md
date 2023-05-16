@@ -15,8 +15,6 @@
 
 - [`ConcreteAssociativeKeyedContainerTypeClass`](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
 
-- [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
-
   ↳ **`ReadonlyObjectMapModule`**
 
 ## Table of contents
@@ -119,7 +117,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEach](type_classes.AssociativeKeyedContainerTypeClass.md#foreach)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[forEach](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -149,7 +147,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEachWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#foreachwithkey)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[forEachWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -179,7 +177,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keep](type_classes.AssociativeKeyedContainerTypeClass.md#keep)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[keep](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#keep)
 
 ___
 
@@ -207,7 +205,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepType](type_classes.AssociativeKeyedContainerTypeClass.md#keeptype)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[keepType](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#keeptype)
 
 ___
 
@@ -237,7 +235,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keepWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#keepwithkey)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[keepWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#keepwithkey)
 
 ___
 
@@ -276,7 +274,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[map](type_classes.AssociativeKeyedContainerTypeClass.md#map)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[map](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#map)
 
 ___
 
@@ -315,7 +313,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#mapwithkey)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#mapwithkey)
 
 ___
 
@@ -338,7 +336,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[entries](type_classes.AssociativeKeyedContainerTypeClass.md#entries)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[entries](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -358,7 +356,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keySet](type_classes.AssociativeKeyedContainerTypeClass.md#keyset)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[keySet](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#keyset)
 
 ___
 
@@ -378,7 +376,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keys](type_classes.AssociativeKeyedContainerTypeClass.md#keys)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[keys](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#keys)
 
 ___
 
@@ -407,7 +405,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduce](type_classes.AssociativeKeyedContainerTypeClass.md#reduce)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[reduce](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -436,7 +434,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduceWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#reducewithkey)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[reduceWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -456,4 +454,4 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[values](type_classes.AssociativeKeyedContainerTypeClass.md#values)
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[values](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#values)

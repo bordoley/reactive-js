@@ -13,10 +13,7 @@ import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWi
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
-import {
-  AssociativeKeyedContainerTypeClass,
-  ConcreteAssociativeKeyedContainerTypeClass,
-} from "./type-classes.js";
+import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { KeyOf, ReadonlyMapContainer } from "./types.js";
 
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
@@ -26,8 +23,7 @@ export type TKeyBase = KeyOf<Type>;
 export interface ReadonlyMapModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>,
-    AssociativeKeyedContainerTypeClass<TType, TKey> {}
+> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {}
 
 export type Signature = ReadonlyMapModule;
 
