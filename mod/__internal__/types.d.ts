@@ -1,7 +1,7 @@
-import { Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../functions.js";
+import { Equality, Function1, Function2, Optional, Predicate, Reducer, SideEffect1 } from "../functions.js";
 import { CollectionLike, Container, ContainerOperator, DisposableLike, IndexedCollectionLike, KeyedCollectionLike, ObserverLike, QueueableLike, SchedulerLike } from "../types.js";
-import { __ContinuationLike_activeChild as ContinuationLike_activeChild, __ContinuationLike_parent as ContinuationLike_parent, __ContinuationLike_run as ContinuationLike_run, __ContinuationLike_scheduler as ContinuationLike_scheduler, __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule, __DelegatingLike_delegate as DelegatingLike_delegate, __ForEachLike_effect as ForEachLike_effect, __LiftedLike_operators as LiftedLike_operators, __LiftedLike_source as LiftedLike_source, __MappingLike_selector as MappingLike_selector, __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __PairwiseLike_hasPrev as PairwiseLike_hasPrev, __PairwiseLike_prev as PairwiseLike_prev, __PredicatedLike_predicate as PredicatedLike_predicate, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __ReducerAccumulatorLike_acc as ReducerAccumulatorLike_acc, __ReducerAccumulatorLike_reducer as ReducerAccumulatorLike_reducer, __SchedulerTaskLike_continuation as SchedulerTaskLike_continuation, __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime, __SchedulerTaskLike_id as SchedulerTaskLike_id, __SerialDisposableLike_current as SerialDisposableLike_current, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop, __WithLatestLike_hasLatest, __WithLatestLike_otherLatest, __WithLatestLike_selector } from "./symbols.js";
-export { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, DelegatingLike_delegate, MutableKeyedCollectionLike_set, PairwiseLike_hasPrev, PairwiseLike_prev, QueueLike_dequeue, QueueLike_head, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SerialDisposableLike_current, StackLike_pop, StackLike_head, ForEachLike_effect, LiftedLike_operators, LiftedLike_source, MappingLike_selector, PredicatedLike_predicate, ReducerAccumulatorLike_acc, ReducerAccumulatorLike_reducer, };
+import { __ContinuationLike_activeChild as ContinuationLike_activeChild, __ContinuationLike_parent as ContinuationLike_parent, __ContinuationLike_run as ContinuationLike_run, __ContinuationLike_scheduler as ContinuationLike_scheduler, __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule, __DelegatingLike_delegate as DelegatingLike_delegate, __DistinctUntilChangedLike_equality as DistinctUntilChangedLike_equality, __DistinctUntilChangedLike_hasValue as DistinctUntilChangedLike_hasValue, __DistinctUntilChangedLike_prev as DistinctUntilChangedLike_prev, __ForEachLike_effect as ForEachLike_effect, __LiftedLike_operators as LiftedLike_operators, __LiftedLike_source as LiftedLike_source, __MappingLike_selector as MappingLike_selector, __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set, __PairwiseLike_hasPrev as PairwiseLike_hasPrev, __PairwiseLike_prev as PairwiseLike_prev, __PredicatedLike_predicate as PredicatedLike_predicate, __QueueLike_dequeue as QueueLike_dequeue, __QueueLike_head as QueueLike_head, __ReducerAccumulatorLike_acc as ReducerAccumulatorLike_acc, __ReducerAccumulatorLike_reducer as ReducerAccumulatorLike_reducer, __SchedulerTaskLike_continuation as SchedulerTaskLike_continuation, __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime, __SchedulerTaskLike_id as SchedulerTaskLike_id, __SerialDisposableLike_current as SerialDisposableLike_current, __SkipFirstLike_count as SkipFirstLike_count, __SkipFirstLike_skipCount as SkipFirstLike_skipCount, __StackLike_head as StackLike_head, __StackLike_pop as StackLike_pop, __TakeFirstLike_count as TakeFirstLike_count, __TakeFirstLike_takeCount as TakeFirstLike_takeCount, __TakeWhileLike_inclusive as TakeWhileLike_inclusive, __WithLatestLike_hasLatest as WithLatestLike_hasLatest, __WithLatestLike_otherLatest as WithLatestLike_otherLatest, __WithLatestLike_selector as WithLatestLike_selector } from "./symbols.js";
+export { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, DelegatingLike_delegate, DistinctUntilChangedLike_equality, DistinctUntilChangedLike_hasValue, DistinctUntilChangedLike_prev, ForEachLike_effect, LiftedLike_operators, LiftedLike_source, MappingLike_selector, MutableKeyedCollectionLike_set, PairwiseLike_hasPrev, PairwiseLike_prev, PredicatedLike_predicate, QueueLike_dequeue, QueueLike_head, ReducerAccumulatorLike_acc, ReducerAccumulatorLike_reducer, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, SerialDisposableLike_current, SkipFirstLike_count, SkipFirstLike_skipCount, StackLike_pop, StackLike_head, TakeFirstLike_count, TakeFirstLike_takeCount, TakeWhileLike_inclusive, WithLatestLike_hasLatest, WithLatestLike_otherLatest, WithLatestLike_selector, };
 export interface DelegatingLike<T> {
     readonly [DelegatingLike_delegate]: T;
 }
@@ -63,11 +63,27 @@ export interface PairwiseLike<T> {
     [PairwiseLike_prev]: T;
     [PairwiseLike_hasPrev]: boolean;
 }
+export interface DistinctUntilChangedLike<T> {
+    [DistinctUntilChangedLike_equality]: Equality<T>;
+    [DistinctUntilChangedLike_prev]: T;
+    [DistinctUntilChangedLike_hasValue]: boolean;
+}
 export interface Lift<C extends Container> {
     lift<TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>): ContainerOperator<C, TA, TB>;
 }
+export interface SkipFirstLike {
+    [SkipFirstLike_skipCount]: number;
+    [SkipFirstLike_count]: number;
+}
+export interface TakeFirstLike {
+    [TakeFirstLike_count]: number;
+    [TakeFirstLike_takeCount]: number;
+}
+export interface TakeWhileLike<T> extends PredicatedLike<T> {
+    [TakeWhileLike_inclusive]: boolean;
+}
 export interface WithLatestLike<TA, TB, T> {
-    [__WithLatestLike_hasLatest]: boolean;
-    [__WithLatestLike_otherLatest]: Optional<TB>;
-    [__WithLatestLike_selector]: Function2<TA, TB, T>;
+    [WithLatestLike_hasLatest]: boolean;
+    [WithLatestLike_otherLatest]: Optional<TB>;
+    [WithLatestLike_selector]: Function2<TA, TB, T>;
 }

@@ -24,8 +24,7 @@ const Enumerator_keep = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             const delegate = this[DelegatingLike_delegate];
             const predicate = this[PredicatedLike_predicate];
-            while ((delegate[EnumeratorLike_move](),
-                delegate[EnumeratorLike_hasCurrent]) &&
+            while (delegate[EnumeratorLike_move]() &&
                 !predicate(this[EnumeratorLike_current])) { }
             return delegate[EnumeratorLike_hasCurrent];
         },

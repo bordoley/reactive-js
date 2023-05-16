@@ -12,14 +12,12 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  __WithLatestLike_hasLatest,
-  __WithLatestLike_otherLatest,
-  __WithLatestLike_selector,
-} from "../../__internal__/symbols.js";
-import {
   DelegatingLike,
   DelegatingLike_delegate,
   WithLatestLike,
+  WithLatestLike_hasLatest,
+  WithLatestLike_otherLatest,
+  WithLatestLike_selector,
 } from "../../__internal__/types.js";
 import { Function2, none, pipe } from "../../functions.js";
 import {
@@ -54,18 +52,18 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
         init(Disposable_delegatingMixin, instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[__WithLatestLike_selector] = selector;
+        instance[WithLatestLike_selector] = selector;
 
         pipe(
           other,
           Observable_forEach((next: TB) => {
-            instance[__WithLatestLike_hasLatest] = true;
-            instance[__WithLatestLike_otherLatest] = next;
+            instance[WithLatestLike_hasLatest] = true;
+            instance[WithLatestLike_otherLatest] = next;
           }),
           Observable_subscribeWithConfig(delegate, delegate),
           Disposable_addTo(instance),
           Disposable_onComplete(() => {
-            if (!instance[__WithLatestLike_hasLatest]) {
+            if (!instance[WithLatestLike_hasLatest]) {
               instance[DisposableLike_dispose]();
             }
           }),
@@ -74,9 +72,9 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
         return instance;
       },
       props<WithLatestLike<TA, TB, T>>({
-        [__WithLatestLike_hasLatest]: false,
-        [__WithLatestLike_otherLatest]: none,
-        [__WithLatestLike_selector]: none,
+        [WithLatestLike_hasLatest]: false,
+        [WithLatestLike_otherLatest]: none,
+        [WithLatestLike_selector]: none,
       }),
       {
         [SinkLike_notify](
@@ -89,11 +87,11 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
 
           if (
             !this[DisposableLike_isDisposed] &&
-            this[__WithLatestLike_hasLatest]
+            this[WithLatestLike_hasLatest]
           ) {
-            const result = this[__WithLatestLike_selector](
+            const result = this[WithLatestLike_selector](
               next,
-              this[__WithLatestLike_otherLatest] as TB,
+              this[WithLatestLike_otherLatest] as TB,
             );
             this[DelegatingLike_delegate][SinkLike_notify](result);
           }

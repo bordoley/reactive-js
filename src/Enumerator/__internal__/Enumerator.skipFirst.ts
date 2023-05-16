@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import type * as Enumerator from "../../Enumerator.js";
+import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -10,10 +11,11 @@ import {
 import {
   DelegatingLike,
   DelegatingLike_delegate,
-  PredicatedLike,
-  PredicatedLike_predicate,
+  SkipFirstLike,
+  SkipFirstLike_count,
+  SkipFirstLike_skipCount,
 } from "../../__internal__/types.js";
-import { Predicate, none, unsafeCast } from "../../functions.js";
+import { unsafeCast } from "../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -21,23 +23,27 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_keep: Enumerator.Signature["keep"] = /*@__PURE__*/ (<T>() => {
-  const createKeepEnumerator = createInstanceFactory(
+const Enumerator_skipFirst: Enumerator.Signature["skipFirst"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const createSkipFirstEnumerator = createInstanceFactory(
     mix(
       include(Delegating_mixin()),
-      function KeepEnumerator(
-        instance: EnumeratorLike<T> & PredicatedLike<T>,
+      function SkipFirstEnumerator(
+        instance: EnumeratorLike<T> & SkipFirstLike,
         delegate: EnumeratorLike<T>,
-        predicate: Predicate<T>,
+        skipCount: number,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
 
-        instance[PredicatedLike_predicate] = predicate;
+        instance[SkipFirstLike_skipCount] = skipCount;
+        instance[SkipFirstLike_count] = 0;
 
         return instance;
       },
-      props<PredicatedLike<T>>({
-        [PredicatedLike_predicate]: none,
+      props<SkipFirstLike>({
+        [SkipFirstLike_skipCount]: 0,
+        [SkipFirstLike_count]: 0,
       }),
       {
         get [EnumeratorLike_current]() {
@@ -51,17 +57,19 @@ const Enumerator_keep: Enumerator.Signature["keep"] = /*@__PURE__*/ (<T>() => {
         },
 
         [EnumeratorLike_move](
-          this: PredicatedLike<T> &
+          this: SkipFirstLike &
             EnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
           const delegate = this[DelegatingLike_delegate];
-          const predicate = this[PredicatedLike_predicate];
 
-          while (
-            delegate[EnumeratorLike_move]() &&
-            !predicate(this[EnumeratorLike_current])
-          ) {}
+          while (delegate[EnumeratorLike_move]()) {
+            this[SkipFirstLike_count]++;
+
+            if (this[SkipFirstLike_count] > this[SkipFirstLike_skipCount]) {
+              break;
+            }
+          }
 
           return delegate[EnumeratorLike_hasCurrent];
         },
@@ -69,8 +77,11 @@ const Enumerator_keep: Enumerator.Signature["keep"] = /*@__PURE__*/ (<T>() => {
     ),
   );
 
-  return (predicate: Predicate<T>) => (delegate: EnumeratorLike<T>) =>
-    createKeepEnumerator(delegate, predicate);
+  return (options: { readonly count?: number } = {}) => {
+    const count = clampPositiveInteger(options.count ?? 1);
+    return (delegate: EnumeratorLike<T>) =>
+      createSkipFirstEnumerator(delegate, count);
+  };
 })();
 
-export default Enumerator_keep;
+export default Enumerator_skipFirst;

@@ -142,11 +142,11 @@ export declare const __DelegatingSchedulerImplementationMixin_delegate: unique s
 
 export declare const __DisposableMixin_disposables: unique symbol;
 
-export declare const __DistinctUntilChangedSinkMixin_equality: unique symbol;
+export declare const __DistinctUntilChangedLike_equality: unique symbol;
 
-export declare const __DistinctUntilChangedSinkMixin_prev: unique symbol;
+export declare const __DistinctUntilChangedLike_prev: unique symbol;
 
-export declare const __DistinctUntilChangedSinkMixin_hasValue: unique symbol;
+export declare const __DistinctUntilChangedLike_hasValue: unique symbol;
 
 export declare const __IndexedQueueMixin_head: unique symbol;
 
@@ -170,15 +170,15 @@ export declare const __SchedulerImplementationMixin_yieldRequested: unique symbo
 
 export declare const __SerialDisposableMixin_current: unique symbol;
 
-export declare const __SkipFirstSinkMixin_skipCount: unique symbol;
+export declare const __SkipFirstLike_skipCount: unique symbol;
 
-export declare const __SkipFirstSinkMixin_count: unique symbol;
+export declare const __SkipFirstLike_count: unique symbol;
 
-export declare const __TakeFirstSinkMixin_takeCount: unique symbol;
+export declare const __TakeFirstLike_takeCount: unique symbol;
 
-export declare const __TakeFirstSinkMixin_count: unique symbol;
+export declare const __TakeFirstLike_count: unique symbol;
 
-export declare const __TakeWhileSinkMixin_inclusive: unique symbol;
+export declare const __TakeWhileLike_inclusive: unique symbol;
 
 export declare const __LiftedLike_source: unique symbol;
 
