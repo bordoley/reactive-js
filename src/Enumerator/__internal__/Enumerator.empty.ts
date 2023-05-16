@@ -1,3 +1,4 @@
+import type * as Enumerator from "../../Enumerator.js";
 import { none } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -14,6 +15,7 @@ const empty: EnumeratorLike = {
   },
 };
 
-const Enumerator_empty = <T>(): EnumeratorLike<T> => empty as EnumeratorLike<T>;
+const Enumerator_empty: Enumerator.Signature["empty"] = <T>() =>
+  empty as EnumeratorLike<T>;
 
 export default Enumerator_empty;

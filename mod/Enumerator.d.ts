@@ -11,6 +11,12 @@ export interface EnumeratorModule extends ConcreteContainerBaseTypeClass<Type>, 
 }
 export type Signature = EnumeratorModule;
 export declare const empty: Signature["empty"];
+export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
+export declare const fromFactory: Signature["fromFactory"];
+export declare const fromIterable: Signature["fromIterable"];
+export declare const fromOptional: Signature["fromOptional"];
+export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
+export declare const fromValue: Signature["fromValue"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pick: Signature["pick"];
