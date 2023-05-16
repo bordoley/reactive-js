@@ -28,6 +28,7 @@
 
 - [concat](Runnable.RunnableModule.md#concat)
 - [empty](Runnable.RunnableModule.md#empty)
+- [fromEnumerable](Runnable.RunnableModule.md#fromenumerable)
 - [fromEnumeratorFactory](Runnable.RunnableModule.md#fromenumeratorfactory)
 - [fromFactory](Runnable.RunnableModule.md#fromfactory)
 - [fromIterable](Runnable.RunnableModule.md#fromiterable)
@@ -252,6 +253,26 @@ Return an Container that emits no items.
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[empty](type_classes.RunnableContainerTypeClass.md#empty)
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
 
 ___
 

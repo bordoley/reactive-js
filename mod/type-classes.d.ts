@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -103,6 +103,7 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
     /**
      * @category Constructor
      */
+    fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
     /**
      * @category Constructor
      */

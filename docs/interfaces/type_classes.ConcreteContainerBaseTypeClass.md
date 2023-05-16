@@ -27,6 +27,7 @@
 ### Constructor Methods
 
 - [empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+- [fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
 - [fromEnumeratorFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromenumeratorfactory)
 - [fromFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromfactory)
 - [fromIterable](type_classes.ConcreteContainerBaseTypeClass.md#fromiterable)
@@ -51,6 +52,22 @@ Return an Container that emits no items.
 #### Returns
 
 [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 ___
 

@@ -64,6 +64,7 @@ export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
+export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];

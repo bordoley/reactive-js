@@ -18,6 +18,7 @@
 
 - [concat](Enumerable.md#concat)
 - [empty](Enumerable.md#empty)
+- [fromEnumerable](Enumerable.md#fromenumerable)
 - [fromEnumeratorFactory](Enumerable.md#fromenumeratorfactory)
 - [fromFactory](Enumerable.md#fromfactory)
 - [fromIterable](Enumerable.md#fromiterable)
@@ -121,6 +122,22 @@ Return an Container that emits no items.
 #### Returns
 
 [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 ___
 

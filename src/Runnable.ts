@@ -44,7 +44,7 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { Factory, Function1, SideEffect1 } from "./functions.js";
+import { Factory, Function1, SideEffect1, identityLazy } from "./functions.js";
 import {
   HigherOrderObservableBaseTypeClass,
   RunnableContainerTypeClass,
@@ -106,6 +106,7 @@ export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
 export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;

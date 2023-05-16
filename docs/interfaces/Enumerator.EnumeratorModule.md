@@ -19,6 +19,7 @@
 ### Constructor Methods
 
 - [empty](Enumerator.EnumeratorModule.md#empty)
+- [fromEnumerable](Enumerator.EnumeratorModule.md#fromenumerable)
 - [fromEnumeratorFactory](Enumerator.EnumeratorModule.md#fromenumeratorfactory)
 - [fromFactory](Enumerator.EnumeratorModule.md#fromfactory)
 - [fromIterable](Enumerator.EnumeratorModule.md#fromiterable)
@@ -70,6 +71,26 @@ Return an Container that emits no items.
 #### Inherited from
 
 [ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
 
 ___
 

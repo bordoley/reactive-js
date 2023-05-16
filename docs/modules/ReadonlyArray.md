@@ -18,6 +18,7 @@
 
 - [concat](ReadonlyArray.md#concat)
 - [empty](ReadonlyArray.md#empty)
+- [fromEnumerable](ReadonlyArray.md#fromenumerable)
 - [fromEnumeratorFactory](ReadonlyArray.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.md#fromfactory)
 - [fromIterable](ReadonlyArray.md#fromiterable)
@@ -134,6 +135,22 @@ Return an Container that emits no items.
 #### Returns
 
 readonly `T`[]
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
 
 ___
 

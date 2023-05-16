@@ -318,6 +318,8 @@ export const decrementBy =
  */
 export const identity = <T>(v: T): T => v;
 
+export const identityLazy = <T>(): Function1<T, T> => identity;
+
 /**
  * A function that always returns `undefined`.
  */

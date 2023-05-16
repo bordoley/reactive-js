@@ -1,5 +1,6 @@
 /// <reference types="./Enumerator.d.ts" />
 
+import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerator_distinctUntilChanged from "./Enumerator/__internal__/Enumerator.distinctUntilChanged.js";
 import Enumerator_empty from "./Enumerator/__internal__/Enumerator.empty.js";
 import Enumerator_forEach from "./Enumerator/__internal__/Enumerator.forEach.js";
@@ -24,6 +25,7 @@ import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.
 export const distinctUntilChanged = Enumerator_distinctUntilChanged;
 export const empty = Enumerator_empty;
 export const forEach = Enumerator_forEach;
+export const fromEnumerable = Enumerable_enumerate;
 export const fromEnumeratorFactory = Enumerator_fromEnumeratorFactory;
 export const fromFactory = Enumerator_fromFactory;
 export const fromIterable = Iterable_enumerate;

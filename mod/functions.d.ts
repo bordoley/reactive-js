@@ -113,6 +113,7 @@ export declare const decrementBy: (decr: number) => Updater<number>;
  * @returns `v`
  */
 export declare const identity: <T>(v: T) => T;
+export declare const identityLazy: <T>() => Function1<T, T>;
 /**
  * A function that always returns `undefined`.
  */

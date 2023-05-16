@@ -57,6 +57,7 @@
 - [errorWithDebugMessage](functions.md#errorwithdebugmessage)
 - [greaterThan](functions.md#greaterthan)
 - [identity](functions.md#identity)
+- [identityLazy](functions.md#identitylazy)
 - [ignore](functions.md#ignore)
 - [increment](functions.md#increment)
 - [incrementBy](functions.md#incrementby)
@@ -1591,6 +1592,22 @@ The identity function.
 `T`
 
 `v`
+
+___
+
+### identityLazy
+
+▸ **identityLazy**<`T`\>(): [`Function1`](functions.md#function1)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`\>
 
 ___
 

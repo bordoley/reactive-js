@@ -1,3 +1,4 @@
+import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerator_distinctUntilChanged from "./Enumerator/__internal__/Enumerator.distinctUntilChanged.js";
 import Enumerator_empty from "./Enumerator/__internal__/Enumerator.empty.js";
 import Enumerator_forEach from "./Enumerator/__internal__/Enumerator.forEach.js";
@@ -51,6 +52,7 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Enumerator_distinctUntilChanged;
 export const empty: Signature["empty"] = Enumerator_empty;
 export const forEach: Signature["forEach"] = Enumerator_forEach;
+export const fromEnumerable: Signature["fromEnumerable"] = Enumerable_enumerate;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   Enumerator_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Enumerator_fromFactory;
