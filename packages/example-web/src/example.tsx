@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Runnable from "@reactive-js/core/Runnable";
 import * as Observable from "@reactive-js/core/Observable";
-import * as SharedObservable from "@reactive-js/core/SharedObservable";
+import * as MulticastObservable from "@reactive-js/core/MulticastObservable";
 import {
   createComponent,
   useDispatcher,
@@ -320,7 +320,7 @@ const RxComponent = createComponent(
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 
-    return SharedObservable.compute(() => {
+    return MulticastObservable.compute(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
