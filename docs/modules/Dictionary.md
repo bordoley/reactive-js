@@ -14,6 +14,10 @@
 - [TKeyBase](Dictionary.md#tkeybase)
 - [Type](Dictionary.md#type)
 
+### Functor Functions
+
+- [CreateModule](Dictionary.md#createmodule)
+
 ### Operator Functions
 
 - [forEach](Dictionary.md#foreach)
@@ -22,6 +26,7 @@
 ### Other Functions
 
 - [fromReadonlyMap](Dictionary.md#fromreadonlymap)
+- [fromReadonlyObjectMap](Dictionary.md#fromreadonlyobjectmap)
 - [toDictionary](Dictionary.md#todictionary)
 
 ### Transform Functions
@@ -56,6 +61,24 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TKey` | `unknown` |
+
+## Functor Functions
+
+### CreateModule
+
+▸ **CreateModule**<`TKey`\>(): [`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<[`Type`](Dictionary.md#type)<`TKey`\>, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<[`Type`](Dictionary.md#type)<`TKey`\>, `TKey`\>
+
+___
 
 ## Operator Functions
 
@@ -127,6 +150,23 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+___
+
+### fromReadonlyObjectMap
+
+▸ **fromReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`ReadonlyObjectMapContainer`](../interfaces/types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+`TKey` extends [`KeyOf`](types.md#keyof)<[`ReadonlyObjectMapContainer`](../interfaces/types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\> : `never`
 
 ___
 

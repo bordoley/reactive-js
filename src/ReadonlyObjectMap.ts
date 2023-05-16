@@ -14,7 +14,9 @@ import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/Reado
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
+import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
+import { identityLazy } from "./functions.js";
 import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { KeyOf, ReadonlyObjectMapContainer } from "./types.js";
 
@@ -44,6 +46,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyObjectMapModule<
     fromEntries: ReadonlyObjectMap_fromEntries,
     forEach: ReadonlyObjectMap_forEach,
     forEachWithKey: ReadonlyObjectMap_forEachWithKey,
+    fromReadonlyObjectMap: identityLazy as Signature["fromReadonlyObjectMap"],
     keep: ReadonlyObjectMap_keep,
     keepType: ReadonlyObjectMap_keepType,
     keepWithKey: ReadonlyObjectMap_keepWithKey,
@@ -54,6 +57,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyObjectMapModule<
     reduce: ReadonlyObjectMap_reduce,
     reduceWithKey: ReadonlyObjectMap_reduceWithKey,
     toDictionary: ReadonlyObjectMap_toDictionary,
+    toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
     values: ReadonlyObjectMap_values,
   } as ReadonlyObjectMapModule<Type<TKey>, TKey>);
 
@@ -66,6 +70,8 @@ export const fromEntries: Signature["fromEntries"] =
   ReadonlyObjectMap_fromEntries;
 export const fromReadonlyMap: Signature["fromReadonlyMap"] =
   ReadonlyObjectMap_fromReadonlyMap;
+export const fromReadonlyObjectMap: Signature["fromReadonlyObjectMap"] =
+  identityLazy as Signature["fromReadonlyObjectMap"];
 export const keep: Signature["keep"] = ReadonlyObjectMap_keep;
 export const keepType: Signature["keepType"] = ReadonlyObjectMap_keepType;
 export const keepWithKey: Signature["keepWithKey"] =
@@ -79,4 +85,6 @@ export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyObjectMap_reduceWithKey;
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyObjectMap_toDictionary;
+export const toReadonlyMap: Signature["toReadonlyMap"] =
+  ReadonlyObjectMap_toReadonlyMap;
 export const values: Signature["values"] = ReadonlyObjectMap_values;

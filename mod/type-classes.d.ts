@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapContainer, ReadonlyObjectMapLike } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -387,6 +387,7 @@ export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyB
 }
 export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<ReadonlyMap<TKey, T>, KeyedContainerOf<C, TKey, T>>;
+    fromReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>> : never;
     /**
      *
      * @category Transform
@@ -410,4 +411,5 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedConta
      * @category Constructor
      */
     fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
+    toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
 }

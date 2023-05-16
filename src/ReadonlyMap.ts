@@ -14,6 +14,7 @@ import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
+import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import { identityLazy } from "./functions.js";
 import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import { KeyOf, ReadonlyMapContainer } from "./types.js";
@@ -43,6 +44,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
     forEach: ReadonlyMap_forEach,
     forEachWithKey: ReadonlyMap_forEachWithKey,
     fromReadonlyMap: identityLazy,
+    fromReadonlyObjectMap: ReadonlyObjectMap_toReadonlyMap,
     keep: ReadonlyMap_keep,
     keepType: ReadonlyMap_keepType,
     keepWithKey: ReadonlyMap_keepWithKey,
@@ -53,6 +55,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
     reduce: ReadonlyMap_reduce,
     reduceWithKey: ReadonlyMap_reduceWithKey,
     toDictionary: ReadonlyMap_toDictionary,
+    toReadonlyMap: identityLazy,
     values: ReadonlyMap_values,
   } as ReadonlyMapModule<Type<TKey>, TKey>);
 
@@ -63,6 +66,8 @@ export const fromReadonlyMap: Signature["fromReadonlyMap"] = identityLazy;
 export const forEach: Signature["forEach"] = ReadonlyMap_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyMap_forEachWithKey;
+export const fromReadonlyObjectMap: Signature["fromReadonlyObjectMap"] =
+  ReadonlyObjectMap_toReadonlyMap as Signature["fromReadonlyObjectMap"];
 export const keep: Signature["keep"] = ReadonlyMap_keep;
 export const keepType: Signature["keepType"] = ReadonlyMap_keepType;
 export const keepWithKey: Signature["keepWithKey"] = ReadonlyMap_keepWithKey;
@@ -74,4 +79,5 @@ export const reduce: Signature["reduce"] = ReadonlyMap_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyMap_reduceWithKey;
 export const toDictionary: Signature["toDictionary"] = ReadonlyMap_toDictionary;
+export const toReadonlyMap: Signature["toReadonlyMap"] = identityLazy;
 export const values: Signature["values"] = ReadonlyMap_values;
