@@ -40,6 +40,11 @@
 - [map](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#map)
 - [mapWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#mapwithkey)
 
+### Other Methods
+
+- [fromReadonlyMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#fromreadonlymap)
+- [toDictionary](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#todictionary)
+
 ### Transform Methods
 
 - [entries](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#entries)
@@ -312,6 +317,50 @@ TB - The inner type of the mapped container
 #### Inherited from
 
 [ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[mapWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#mapwithkey)
+
+___
+
+## Other Methods
+
+### fromReadonlyMap
+
+▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#fromreadonlymap)
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toDictionary](type_classes.AssociativeKeyedContainerTypeClass.md#todictionary)
 
 ___
 

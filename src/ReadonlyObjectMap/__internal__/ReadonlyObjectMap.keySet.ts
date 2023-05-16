@@ -1,5 +1,5 @@
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
-import { hasOwn } from "../../__internal__/Object.js";
+import * as Obj from "../../__internal__/Object.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_keySet: ReadonlyObjectMap.Signature["keySet"] =
@@ -8,7 +8,7 @@ const ReadonlyObjectMap_keySet: ReadonlyObjectMap.Signature["keySet"] =
     const keys = new Set<TKey>();
 
     for (const key in obj) {
-      if (hasOwn(obj, key)) {
+      if (Obj.hasOwn(obj, key)) {
         keys.add(key as TKey);
       }
     }

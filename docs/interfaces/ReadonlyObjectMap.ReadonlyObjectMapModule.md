@@ -34,6 +34,11 @@
 - [map](ReadonlyObjectMap.ReadonlyObjectMapModule.md#map)
 - [mapWithKey](ReadonlyObjectMap.ReadonlyObjectMapModule.md#mapwithkey)
 
+### Other Methods
+
+- [fromReadonlyMap](ReadonlyObjectMap.ReadonlyObjectMapModule.md#fromreadonlymap)
+- [toDictionary](ReadonlyObjectMap.ReadonlyObjectMapModule.md#todictionary)
+
 ### Transform Methods
 
 - [entries](ReadonlyObjectMap.ReadonlyObjectMapModule.md#entries)
@@ -314,6 +319,50 @@ TB - The inner type of the mapped container
 #### Inherited from
 
 [ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[mapWithKey](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#mapwithkey)
+
+___
+
+## Other Methods
+
+### fromReadonlyMap
+
+▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[fromReadonlyMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#fromreadonlymap)
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteAssociativeKeyedContainerTypeClass](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md).[toDictionary](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#todictionary)
 
 ___
 

@@ -1,6 +1,6 @@
 import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
@@ -386,6 +386,7 @@ export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyB
     mapWithKey<TA, TB, TKey extends TKeyBase>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
+    fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<ReadonlyMap<TKey, T>, KeyedContainerOf<C, TKey, T>>;
     /**
      *
      * @category Transform
@@ -396,6 +397,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
      * @category Transform
      */
     keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
+    toDictionary<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, DictionaryLike<TKey, T>>;
 }
 export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
     /**

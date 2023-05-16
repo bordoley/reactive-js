@@ -14,7 +14,9 @@ import ReadonlyMap_map from "./ReadonlyMap/__internal__/ReadonlyMap.map.js";
 import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWithKey.js";
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
+import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
+import { identityLazy } from "./functions.js";
 /**
  * @category Functor
  */
@@ -24,6 +26,7 @@ export const CreateModule = () => ({
     fromEntries: ReadonlyMap_fromEntries,
     forEach: ReadonlyMap_forEach,
     forEachWithKey: ReadonlyMap_forEachWithKey,
+    fromReadonlyMap: identityLazy,
     keep: ReadonlyMap_keep,
     keepType: ReadonlyMap_keepType,
     keepWithKey: ReadonlyMap_keepWithKey,
@@ -33,11 +36,13 @@ export const CreateModule = () => ({
     mapWithKey: ReadonlyMap_mapWithKey,
     reduce: ReadonlyMap_reduce,
     reduceWithKey: ReadonlyMap_reduceWithKey,
+    toDictionary: ReadonlyMap_toDictionary,
     values: ReadonlyMap_values,
 });
 export const empty = ReadonlyMap_empty;
 export const entries = ReadonlyMap_entries;
 export const fromEntries = ReadonlyMap_fromEntries;
+export const fromReadonlyMap = identityLazy;
 export const forEach = ReadonlyMap_forEach;
 export const forEachWithKey = ReadonlyMap_forEachWithKey;
 export const keep = ReadonlyMap_keep;
@@ -49,4 +54,5 @@ export const map = ReadonlyMap_map;
 export const mapWithKey = ReadonlyMap_mapWithKey;
 export const reduce = ReadonlyMap_reduce;
 export const reduceWithKey = ReadonlyMap_reduceWithKey;
+export const toDictionary = ReadonlyMap_toDictionary;
 export const values = ReadonlyMap_values;
