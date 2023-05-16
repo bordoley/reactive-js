@@ -4,7 +4,6 @@ import DeferredObservable_multicast from "../../DeferredObservable/__internal__/
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -20,7 +19,7 @@ import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { invoke, none, pipe } from "../../functions.js";
 import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, StoreLike_value, } from "../../types.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin(), EventSource_lazyInitPublisherMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
+    return createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable_create(observer => {
             const pauseableScheduler = pipe(observer, Scheduler_createPausableScheduler, Disposable_addTo(observer));
             const multicastedMode = pipe(mode, Observable_mergeWith(
@@ -44,7 +43,6 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);
         init(Disposable_delegatingMixin, instance, stream);
         init(Delegating_mixin(), instance, stream);
-        init(EventSource_lazyInitPublisherMixin(), instance);
         instance[PauseableLike_isPaused] = Store_create(true);
         return instance;
     }, props({

@@ -13,14 +13,14 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __MergeAllObserver_activeCount, __MergeAllObserver_concurrency, __MergeAllObserver_observablesQueue, __MergeAllObserver_onDispose, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../__internal__/types.js";
 import { bindMethod, isSome, none, partial, pipe, } from "../../functions.js";
-import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, QueueableLike_enqueue, } from "../../types.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_mergeAll = (lift) => {
     const createMergeAllObserver = (() => {
         const subscribeToObservable = (observer, nextObs) => {
             observer[__MergeAllObserver_activeCount]++;
-            pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
+            pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], SinkLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
         };
         return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
             Observer_mixin_initFromDelegate(instance, delegate);
@@ -57,7 +57,7 @@ const Observable_mergeAll = (lift) => {
             [__MergeAllObserver_onDispose]: none,
             [__MergeAllObserver_observablesQueue]: none,
         }), {
-            [ObserverLike_notify](next) {
+            [SinkLike_notify](next) {
                 Observer_assertState(this);
                 if (this[__MergeAllObserver_activeCount] <
                     this[__MergeAllObserver_concurrency]) {

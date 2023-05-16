@@ -6,7 +6,7 @@ import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.j
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __EventPublisher_listeners } from "../../__internal__/symbols.js";
 import { error, newInstance, none, pipe, unsafeCast } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, SinkLike_notify, } from "../../types.js";
 const EventSource_createPublisher = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance) {
@@ -29,13 +29,13 @@ const EventSource_createPublisher =
             unsafeCast(this);
             return this[__EventPublisher_listeners].size;
         },
-        [EventListenerLike_notify](next) {
+        [SinkLike_notify](next) {
             if (this[DisposableLike_isDisposed]) {
                 return;
             }
             for (const listener of this[__EventPublisher_listeners]) {
                 try {
-                    listener[EventListenerLike_notify](next);
+                    listener[SinkLike_notify](next);
                 }
                 catch (e) {
                     listener[DisposableLike_dispose](error(e));

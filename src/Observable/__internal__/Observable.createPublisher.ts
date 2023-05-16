@@ -30,7 +30,6 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_move,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
   KeyedCollectionLike_get,
   MulticastObservableLike_buffer,
   ObservableLike_isDeferred,
@@ -41,6 +40,7 @@ import {
   PublisherLike,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Observable_createPublisher: Observable.Signature["createPublisher"] =
@@ -63,7 +63,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             | typeof PublisherLike_observerCount
             | typeof MulticastObservableLike_buffer
             | typeof EventListenerLike_isErrorSafe
-            | typeof EventListenerLike_notify
+            | typeof SinkLike_notify
           > &
             Mutable<TProperties>,
           replay: number,
@@ -113,10 +113,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             return this[__Publisher_observers].size;
           },
 
-          [EventListenerLike_notify](
-            this: TProperties & PublisherLike<T>,
-            next: T,
-          ) {
+          [SinkLike_notify](this: TProperties & PublisherLike<T>, next: T) {
             if (this[DisposableLike_isDisposed]) {
               return;
             }

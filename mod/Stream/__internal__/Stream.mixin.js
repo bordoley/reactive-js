@@ -8,7 +8,7 @@ import { __DEV__ } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __DispatchedObservable_observer } from "../../__internal__/symbols.js";
 import { isNone, isSome, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventSourceLike_addEventListener, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, StreamLike_scheduler, } from "../../types.js";
+import { BufferLike_capacity, CollectionLike_count, DispatcherLike_complete, DisposableLike_isDisposed, EventSourceLike_addEventListener, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_inContinuation, SinkLike_notify, StreamLike_scheduler, } from "../../types.js";
 const DispatchedObservable_create = 
 /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function DispatchedObservable(instance) {
@@ -44,7 +44,7 @@ const DispatchedObservable_create =
             const observerQueueIsEmpty = observer[CollectionLike_count] === 0;
             const isDisposed = observer[DisposableLike_isDisposed];
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
-                observer[ObserverLike_notify](next);
+                observer[SinkLike_notify](next);
                 return true;
             }
             else if (!isDisposed) {

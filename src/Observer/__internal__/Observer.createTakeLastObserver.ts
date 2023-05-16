@@ -16,8 +16,8 @@ import {
   DisposableLike,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -31,7 +31,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
     mix(
       include(Observer_mixin()),
       function TakeLastObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         takeLastCount: number,
@@ -61,7 +61,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         [__TakeLastObserver_takeLastQueue]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {

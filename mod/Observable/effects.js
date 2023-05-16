@@ -7,7 +7,7 @@ import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import { __ComputeContext_awaitOrObserve, __ComputeContext_constant, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
-import { DisposableLike_dispose, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike_notify, SchedulerLike_schedule, StreamableLike_stream, } from "../types.js";
+import { DisposableLike_dispose, ObservableLike_isEnumerable, ObservableLike_isRunnable, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, } from "../types.js";
 import { assertCurrentContext } from "./__internal__/Observable.compute.js";
 import Observable_subscribe from "./__internal__/Observable.subscribe.js";
 export const __memo = (f, ...args) => {
@@ -30,7 +30,7 @@ export const __do = /*@__PURE__*/ (() => {
     const deferSideEffect = (create, f, ...args) => create(observer => {
         const callback = () => {
             f(...args);
-            observer[ObserverLike_notify](none);
+            observer[SinkLike_notify](none);
             observer[DisposableLike_dispose]();
         };
         pipe(observer[SchedulerLike_schedule](callback), Disposable_addTo(observer));

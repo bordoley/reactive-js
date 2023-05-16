@@ -10,7 +10,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __EnumerableEnumerator_continuationQueue } from "../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../__internal__/types.js";
 import { isSome, none, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
-import { BufferLike_capacity, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isEnumerable, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_shouldYield, } from "../../types.js";
+import { BufferLike_capacity, DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isEnumerable, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_shouldYield, SinkLike_notify, } from "../../types.js";
 const Enumerable_enumerate = /*@__PURE__*/ (() => {
     const createEnumeratorScheduler = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Observer_baseMixin(), SchedulerImplementation_mixin), function EnumeratorScheduler(instance) {
         init(MutableEnumerator_mixin(), instance);
@@ -55,7 +55,7 @@ const Enumerable_enumerate = /*@__PURE__*/ (() => {
             }
             this[__EnumerableEnumerator_continuationQueue][QueueableLike_enqueue](continuation);
         },
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             this[EnumeratorLike_current] = next;
         },

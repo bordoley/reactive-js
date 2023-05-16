@@ -18,11 +18,11 @@ import { pipe, unsafeCast } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
   ObservableLike_observe,
   ObserverLike,
   PublisherLike,
   PublisherLike_observerCount,
+  SinkLike_notify,
 } from "../../types.js";
 import Observable_createPublisher from "./Observable.createPublisher.js";
 
@@ -39,7 +39,7 @@ const Observable_createRefCountedPublisher: Observable.Signature["createRefCount
           instance: Pick<
             PublisherLike<T>,
             | typeof EventListenerLike_isErrorSafe
-            | typeof EventListenerLike_notify
+            | typeof SinkLike_notify
             | typeof ObservableLike_observe
             | typeof PublisherLike_observerCount
           >,
@@ -60,11 +60,8 @@ const Observable_createRefCountedPublisher: Observable.Signature["createRefCount
 
           [EventListenerLike_isErrorSafe]: true as const,
 
-          [EventListenerLike_notify](
-            this: DelegatingLike<PublisherLike<T>>,
-            next: T,
-          ) {
-            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+          [SinkLike_notify](this: DelegatingLike<PublisherLike<T>>, next: T) {
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           },
 
           [ObservableLike_observe](

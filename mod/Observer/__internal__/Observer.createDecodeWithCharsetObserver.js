@@ -7,7 +7,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __DecodeWithCharsetObserver_textDecoder } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { invoke, newInstance, none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, ObservableLike_observe, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, ObservableLike_observe, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -32,13 +32,13 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     }, props({
         [__DecodeWithCharsetObserver_textDecoder]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             const data = this[__DecodeWithCharsetObserver_textDecoder].decode(next, {
                 stream: true,
             });
             if (data.length > 0) {
-                this[DelegatingLike_delegate][ObserverLike_notify](data);
+                this[DelegatingLike_delegate][SinkLike_notify](data);
             }
         },
     }));

@@ -16,12 +16,10 @@ EnumeratorLike_current
 EnumeratorLike_hasCurrent
 EventSourceLike_addEventListener
 EventListenerLike_isErrorSafe
-EventListenerLike_notify
 EventPublisherLike_listenerCount
 KeyedCollectionLike_get
 KeyedContainer_TKey
 MulticastObservableLike_buffer
-ObserverLike_notify
 ObservableLike_observe
 ObservableLike_isDeferred
 ObservableLike_isEnumerable
@@ -39,6 +37,7 @@ SchedulerLike_requestYield
 SchedulerLike_schedule
 SchedulerLike_shouldYield
 SchedulerLike_yield
+SinkLike_notify
 StoreLike_value
 StreamLike_scheduler
 StreamableLike_stream

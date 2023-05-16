@@ -7,7 +7,7 @@ import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/Readonl
 import { createInstanceFactory, include, mix, props, } from "../../__internal__/mixins.js";
 import { __TakeLastObserver_takeLastQueue } from "../../__internal__/symbols.js";
 import { invoke, none, pipe } from "../../functions.js";
-import { ObservableLike_observe, ObserverLike_notify, QueueableLike_enqueue, } from "../../types.js";
+import { ObservableLike_observe, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
@@ -21,7 +21,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
     }, props({
         [__TakeLastObserver_takeLastQueue]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             this[__TakeLastObserver_takeLastQueue][QueueableLike_enqueue](next);
         },
     }));

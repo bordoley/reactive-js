@@ -52,10 +52,10 @@ import {
   DisposableLike_isDisposed,
   ObservableLike,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -94,7 +94,7 @@ const Observable_mergeAll = <
       pipe(
         nextObs,
         Observable_forEach(
-          bindMethod(observer[DelegatingLike_delegate], ObserverLike_notify),
+          bindMethod(observer[DelegatingLike_delegate], SinkLike_notify),
         ),
         Observable_subscribeWithConfig(
           observer[DelegatingLike_delegate],
@@ -111,7 +111,7 @@ const Observable_mergeAll = <
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<CInner, T>>,
-            typeof ObserverLike_notify
+            typeof SinkLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -170,7 +170,7 @@ const Observable_mergeAll = <
           [__MergeAllObserver_observablesQueue]: none,
         }),
         {
-          [ObserverLike_notify](
+          [SinkLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<CInner, T>> &
               DelegatingLike<ObserverLike<T>> &

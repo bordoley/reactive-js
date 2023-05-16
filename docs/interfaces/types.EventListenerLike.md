@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`DisposableLike`](types.DisposableLike.md)
+- [`SinkLike`](types.SinkLike.md)<`T`\>
 
   ↳ **`EventListenerLike`**
 
@@ -24,28 +24,8 @@
 
 - [[\_\_\_EventListenerLike\_isErrorSafe]](types.EventListenerLike.md#[___eventlistenerlike_iserrorsafe])
 
-### Methods
-
-- [[\_\_\_EventListenerLike\_notify]](types.EventListenerLike.md#[___eventlistenerlike_notify])
-
 ## Properties
 
 ### [\_\_\_EventListenerLike\_isErrorSafe]
 
 • `Readonly` **[\_\_\_EventListenerLike\_isErrorSafe]**: `boolean`
-
-## Methods
-
-### [\_\_\_EventListenerLike\_notify]
-
-▸ **[___EventListenerLike_notify]**(`event`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | `T` |
-
-#### Returns
-
-`void`

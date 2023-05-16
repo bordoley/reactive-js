@@ -14,10 +14,10 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   ObserverLike,
-  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Enumerable_zipMany = /*@__PURE__*/ (() => {
@@ -50,7 +50,7 @@ const Enumerable_zipMany = /*@__PURE__*/ (() => {
           pipe(
             enumerators,
             ReadonlyArray_map(Enumerator_getCurrent),
-            bindMethod(observer, ObserverLike_notify),
+            bindMethod(observer, SinkLike_notify),
           );
 
           scheduler[SchedulerLike_yield]();

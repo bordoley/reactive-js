@@ -7,7 +7,7 @@ import MulticastObservable_delegatingMixin from "../../MulticastObservable/__int
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { pipe, unsafeCast } from "../../functions.js";
-import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, ObservableLike_observe, PublisherLike_observerCount, } from "../../types.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, ObservableLike_observe, PublisherLike_observerCount, SinkLike_notify, } from "../../types.js";
 import Observable_createPublisher from "./Observable.createPublisher.js";
 const Observable_createRefCountedPublisher = 
 /*@__PURE__*/ (() => {
@@ -22,8 +22,8 @@ const Observable_createRefCountedPublisher =
             return this[DelegatingLike_delegate][PublisherLike_observerCount];
         },
         [EventListenerLike_isErrorSafe]: true,
-        [EventListenerLike_notify](next) {
-            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+        [SinkLike_notify](next) {
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
         [ObservableLike_observe](observer) {
             this[DelegatingLike_delegate][ObservableLike_observe](observer);

@@ -5,11 +5,11 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { bindMethod, pipe } from "../functions.js";
-import { DisposableLike_dispose, EventListenerLike_notify, PublisherLike_observerCount, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { DisposableLike_dispose, PublisherLike_observerCount, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("createPublisher", test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const publisher = Observable.createPublisher({ replay: 2 });
-    pipe([1, 2, 3, 4], ReadonlyArray.forEach(bindMethod(publisher, EventListenerLike_notify)));
+    pipe([1, 2, 3, 4], ReadonlyArray.forEach(bindMethod(publisher, SinkLike_notify)));
     publisher[DisposableLike_dispose]();
     const result = [];
     pipe(publisher, Observable.forEach((x) => {

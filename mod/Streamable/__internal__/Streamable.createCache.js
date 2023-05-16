@@ -22,7 +22,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../__internal__/types.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, unsafeCast, } from "../../functions.js";
-import { AssociativeCollectionLike_keys, CollectionLike_count, DisposableLike_isDisposed, EventListenerLike_notify, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, StreamableLike_stream, } from "../../types.js";
+import { AssociativeCollectionLike_keys, CollectionLike_count, DisposableLike_isDisposed, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, StreamableLike_stream, } from "../../types.js";
 import Streamable_create from "./Streamable.create.js";
 const createCacheStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
@@ -84,7 +84,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             // when initially subscribing to the key.
             const shouldPublish = isNone(v) || oldValue !== v;
             if (isSome(observable) && shouldPublish) {
-                observable[EventListenerLike_notify](v);
+                observable[SinkLike_notify](v);
                 return;
             }
             instance.scheduleCleanup(key);
@@ -121,7 +121,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                     }), Disposable_addTo(this, { ignoreChildErrors: true }));
                     const initialValue = store.get(key);
                     if (isSome(initialValue)) {
-                        publisher[EventListenerLike_notify](initialValue);
+                        publisher[SinkLike_notify](initialValue);
                     }
                     else {
                         // Try to load the value from the persistence store

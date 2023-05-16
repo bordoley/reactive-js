@@ -9,7 +9,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __WithLatestLike_hasLatest, __WithLatestLike_otherLatest, __WithLatestLike_selector, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function WithLatestLike(instance, delegate, other, selector) {
@@ -30,12 +30,12 @@ const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFac
     [__WithLatestLike_otherLatest]: none,
     [__WithLatestLike_selector]: none,
 }), {
-    [ObserverLike_notify](next) {
+    [SinkLike_notify](next) {
         Observer_assertState(this);
         if (!this[DisposableLike_isDisposed] &&
             this[__WithLatestLike_hasLatest]) {
             const result = this[__WithLatestLike_selector](next, this[__WithLatestLike_otherLatest]);
-            this[DelegatingLike_delegate][ObserverLike_notify](result);
+            this[DelegatingLike_delegate][SinkLike_notify](result);
         }
     },
 })))();

@@ -11,10 +11,10 @@ import { returns } from "../../functions.js";
 import {
   BufferLike_capacity,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
@@ -35,7 +35,7 @@ const Observer_mixin: <T>() => Mixin2<
         Disposable_mixin,
       ),
       function ObserverMixin(
-        instance: Pick<ObserverLike, typeof ObserverLike_notify>,
+        instance: Pick<ObserverLike, typeof SinkLike_notify>,
         scheduler: SchedulerLike,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -50,7 +50,7 @@ const Observer_mixin: <T>() => Mixin2<
       },
       props({}),
       {
-        [ObserverLike_notify](this: ObserverLike, _: T) {
+        [SinkLike_notify](this: ObserverLike, _: T) {
           Observer_assertState(this);
         },
       },

@@ -1,5 +1,8 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
+import EventSource_lazyInitPublisherMixin, {
+  LazyInitEventMixin_eventPublisher,
+  LazyInitEventSource,
+} from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import type * as Store from "../../Store.js";
 import {
   createInstanceFactory,
@@ -10,8 +13,7 @@ import {
 } from "../../__internal__/mixins.js";
 import { none, unsafeCast } from "../../functions.js";
 import {
-  EventListenerLike,
-  EventListenerLike_notify,
+  SinkLike_notify,
   StoreLike_value,
   WritableStoreLike,
 } from "../../types.js";
@@ -45,9 +47,9 @@ const Store_create: Store.Signature["create"] = (<T>() => {
           return this.v;
         },
         set [StoreLike_value](value: T) {
-          unsafeCast<TProperties & EventListenerLike<T>>(this);
+          unsafeCast<TProperties & LazyInitEventSource<T>>(this);
           this.v = value;
-          this[EventListenerLike_notify](value);
+          this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](value);
         },
       },
     ),

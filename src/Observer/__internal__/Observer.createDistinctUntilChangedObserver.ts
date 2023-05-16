@@ -17,7 +17,7 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import { Equality, none } from "../../functions.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
@@ -35,7 +35,7 @@ const Observer_createDistinctUntilChangedObserver: <T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function DistinctUntilChangedObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         equality: Equality<T>,
@@ -52,7 +52,7 @@ const Observer_createDistinctUntilChangedObserver: <T>(
         [__DistinctUntilChangedObserver_hasValue]: false,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties & DelegatingLike<ObserverLike<T>> & ObserverLike<T>,
           next: T,
         ) {
@@ -68,7 +68,7 @@ const Observer_createDistinctUntilChangedObserver: <T>(
           if (shouldEmit) {
             this[__DistinctUntilChangedObserver_prev] = next;
             this[__DistinctUntilChangedObserver_hasValue] = true;
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           }
         },
       },

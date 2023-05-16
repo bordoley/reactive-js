@@ -1,6 +1,9 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
-import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
+import EventSource_lazyInitPublisherMixin, {
+  LazyInitEventMixin_eventPublisher,
+  LazyInitEventSource,
+} from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import Queue_indexedQueueMixin from "../../Queue/__internal__/Queue.indexedQueueMixin.js";
 import {
   Mixin1,
@@ -30,21 +33,19 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EventListenerLike,
-  EventListenerLike_notify,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 
 type TObserverBaseMixin<T> = Omit<
   ObserverLike<T>,
-  keyof SchedulerLike | typeof ObserverLike_notify
+  keyof SchedulerLike | typeof SinkLike_notify
 >;
 
 const Observer_baseMixin: <T>() => Mixin1<
@@ -64,7 +65,7 @@ const Observer_baseMixin: <T>() => Mixin1<
     observer: TProperties &
       ObserverLike<T> &
       IndexedQueueLike<T> &
-      EventListenerLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>,
+      LazyInitEventSource<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>,
   ) => {
     if (
       observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
@@ -74,7 +75,7 @@ const Observer_baseMixin: <T>() => Mixin1<
 
         while (observer[CollectionLike_count] > 0) {
           const next = observer[QueueLike_dequeue]() as T;
-          observer[ObserverLike_notify](next);
+          observer[SinkLike_notify](next);
 
           if (observer[CollectionLike_count] > 0) {
             scheduler[SchedulerLike_yield]();
@@ -84,7 +85,9 @@ const Observer_baseMixin: <T>() => Mixin1<
         if (observer[__ObserverMixin_isCompleted]) {
           observer[DisposableLike_dispose]();
         } else {
-          observer[EventListenerLike_notify](DispatcherLikeEvent_ready);
+          observer[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](
+            DispatcherLikeEvent_ready,
+          );
         }
       };
 
@@ -151,7 +154,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           this: TProperties &
             ObserverLike<T> &
             IndexedQueueLike<T> &
-            EventListenerLike<
+            LazyInitEventSource<
               DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
             >,
           next: T,
@@ -167,7 +170,7 @@ const Observer_baseMixin: <T>() => Mixin1<
             );
 
             if (!result) {
-              this[EventListenerLike_notify](
+              this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](
                 DispatcherLikeEvent_capacityExceeded,
               );
             }
@@ -182,7 +185,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           this: TProperties &
             ObserverLike<T> &
             IndexedQueueLike<T> &
-            EventListenerLike<
+            LazyInitEventSource<
               DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
             >,
         ) {
@@ -190,7 +193,9 @@ const Observer_baseMixin: <T>() => Mixin1<
           this[__ObserverMixin_isCompleted] = true;
 
           if (!isCompleted) {
-            this[EventListenerLike_notify](DispatcherLikeEvent_completed);
+            this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](
+              DispatcherLikeEvent_completed,
+            );
           }
 
           if (

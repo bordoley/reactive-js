@@ -4,7 +4,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, ReducerAccumulatorLike_acc, ReducerAccumulatorLike_reducer, } from "../../__internal__/types.js";
 import { error, none } from "../../functions.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createScanObserver = /*@__PURE__*/ (() => {
@@ -24,11 +24,11 @@ const Observer_createScanObserver = /*@__PURE__*/ (() => {
         [ReducerAccumulatorLike_acc]: none,
         [ReducerAccumulatorLike_reducer]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             const nextAcc = this[ReducerAccumulatorLike_reducer](this[ReducerAccumulatorLike_acc], next);
             this[ReducerAccumulatorLike_acc] = nextAcc;
-            this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
+            this[DelegatingLike_delegate][SinkLike_notify](nextAcc);
         },
     }));
 })();

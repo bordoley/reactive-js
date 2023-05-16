@@ -9,10 +9,10 @@ import {
   EnumeratorLike_current,
   EnumeratorLike_move,
   ObserverLike,
-  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Enumerator_toObservable: Enumerator.Signature["toObservable"] = (<
@@ -31,7 +31,7 @@ const Enumerator_toObservable: Enumerator.Signature["toObservable"] = (<
           enumerator[EnumeratorLike_move]()
         ) {
           const next = enumerator[EnumeratorLike_current];
-          observer[ObserverLike_notify](next);
+          observer[SinkLike_notify](next);
           scheduler[SchedulerLike_yield](delay);
         }
       };

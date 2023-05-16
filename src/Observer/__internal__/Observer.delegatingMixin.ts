@@ -11,15 +11,15 @@ import { returns } from "../../functions.js";
 import {
   BufferLike_capacity,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_baseMixin from "./Observer.baseMixin.js";
 
 type TObserverDelegatingMixin<T> = Omit<
   ObserverLike<T>,
-  typeof ObserverLike_notify
+  typeof SinkLike_notify
 >;
 
 const Observer_delegatingMixin: <T>() => Mixin2<

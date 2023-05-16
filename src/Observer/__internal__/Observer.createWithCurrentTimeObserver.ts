@@ -15,8 +15,8 @@ import {
 import { Function2, none } from "../../functions.js";
 import {
   ObserverLike,
-  ObserverLike_notify,
   SchedulerLike_now,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
@@ -33,7 +33,7 @@ const Observer_createWithCurrentTimeObserver: <TA, TB>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function WithCurrentTimeObserver(
-        instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<TB>,
         selector: Function2<number, TA, TB>,
@@ -48,7 +48,7 @@ const Observer_createWithCurrentTimeObserver: <TA, TB>(
         [__WithCurrentTimeObserver_selector]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties &
             DelegatingLike<ObserverLike<TB>> &
             ObserverLike<TA>,
@@ -60,7 +60,7 @@ const Observer_createWithCurrentTimeObserver: <TA, TB>(
             currentTime,
             next,
           );
-          this[DelegatingLike_delegate][ObserverLike_notify](mapped);
+          this[DelegatingLike_delegate][SinkLike_notify](mapped);
         },
       },
     ),

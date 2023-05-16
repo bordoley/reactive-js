@@ -8,7 +8,7 @@ import * as CurrentTime from "../../Scheduler/__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../__internal__/constants.js";
 import { clamp } from "../../__internal__/math.js";
 import { bindMethod, isNone, newInstance, none, pipe, returns, } from "../../functions.js";
-import { EventListenerLike_notify, EventSourceLike_addEventListener, QueueableLike_enqueue, } from "../../types.js";
+import { EventSourceLike_addEventListener, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 export const addEventHandler = (eventName, eventHandler, options) => source => {
     const listener = EventListener.create(eventHandler, { errorSafe: true });
     pipe(source, addEventListener(eventName, listener, options));
@@ -18,7 +18,7 @@ export const addEventListener = ((eventName, eventListener, options) => target =
     const errorSafeEventListener = pipe(eventListener, Disposable.onDisposed(_ => {
         target.removeEventListener(eventName, listener);
     }));
-    const listener = bindMethod(errorSafeEventListener, EventListenerLike_notify);
+    const listener = bindMethod(errorSafeEventListener, SinkLike_notify);
     const addEventListenerOptions = {
         capture: options?.capture ?? false,
         passive: options?.capture ?? true,
@@ -116,7 +116,7 @@ export const addScrollListener = /*@__PURE__*/ (() => {
             xVelocityPrev = xVelocity;
             yPrev = yCurrent;
             yVelocityPrev = yVelocity;
-            listener[EventListenerLike_notify]({ x, y });
+            listener[SinkLike_notify]({ x, y });
         }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addEventListener("scroll", eventListener));
         const windowResizeEventSource = getWindowResizeEventSource();
@@ -138,7 +138,7 @@ export const addResizeListener = /*@__PURE__*/ (() => {
             if (isNone(publisher)) {
                 continue;
             }
-            publisher[EventListenerLike_notify](entry);
+            publisher[SinkLike_notify](entry);
         }
     };
     return (listener, options) => element => {
@@ -199,7 +199,7 @@ export const addMeasureListener = /*@__PURE__*/ (() => {
                 size.width = state.current.element.offsetWidth
               }
               */
-            listener[EventListenerLike_notify](rect);
+            listener[SinkLike_notify](rect);
         }, { errorSafe: true }), Disposable.bindTo(listener));
         pipe(element, addResizeListener(eventListener));
         for (const scrollContainer of findScrollContainers(element)) {
@@ -266,7 +266,7 @@ export const intersectionWith =
                                 if (isNone(listener)) {
                                     continue;
                                 }
-                                listener[EventListenerLike_notify](entry);
+                                listener[SinkLike_notify](entry);
                             }
                         };
                         const intersectionObserver = newInstance(IntersectionObserver, cb, { root });

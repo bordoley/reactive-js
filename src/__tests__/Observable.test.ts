@@ -13,8 +13,8 @@ import {
 import { Optional, bindMethod, pipe } from "../functions.js";
 import {
   DisposableLike_dispose,
-  EventListenerLike_notify,
   PublisherLike_observerCount,
+  SinkLike_notify,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
 
@@ -28,7 +28,7 @@ testModule(
       const publisher = Observable.createPublisher<number>({ replay: 2 });
       pipe(
         [1, 2, 3, 4],
-        ReadonlyArray.forEach(bindMethod(publisher, EventListenerLike_notify)),
+        ReadonlyArray.forEach(bindMethod(publisher, SinkLike_notify)),
       );
       publisher[DisposableLike_dispose]();
 

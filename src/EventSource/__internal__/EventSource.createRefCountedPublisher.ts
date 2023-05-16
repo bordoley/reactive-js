@@ -18,10 +18,10 @@ import {
   DisposableLike_dispose,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
   EventPublisherLike,
   EventPublisherLike_listenerCount,
   EventSourceLike_addEventListener,
+  SinkLike_notify,
 } from "../../types.js";
 import EventSource_createPublisher from "./EventSource.createPublisher.js";
 
@@ -35,7 +35,7 @@ const EventSource_createRefCountedPublisher: EventSource.Signature["createRefCou
             EventPublisherLike<T>,
             | typeof EventSourceLike_addEventListener
             | typeof EventListenerLike_isErrorSafe
-            | typeof EventListenerLike_notify
+            | typeof SinkLike_notify
             | typeof EventPublisherLike_listenerCount
           >,
           delegate: EventPublisherLike<T>,
@@ -55,11 +55,11 @@ const EventSource_createRefCountedPublisher: EventSource.Signature["createRefCou
               EventPublisherLike_listenerCount
             ];
           },
-          [EventListenerLike_notify](
+          [SinkLike_notify](
             this: DelegatingLike<EventPublisherLike<T>>,
             next: T,
           ) {
-            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           },
 
           [EventSourceLike_addEventListener](

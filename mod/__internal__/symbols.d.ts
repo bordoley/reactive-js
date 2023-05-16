@@ -35,8 +35,6 @@ export const __EventSourceLike_addEventListener: unique symbol;
 /** @type {unique symbol} */
 export const __EventListenerLike_isErrorSafe: unique symbol;
 /** @type {unique symbol} */
-export const __EventListenerLike_notify: unique symbol;
-/** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
@@ -44,8 +42,6 @@ export const __KeyedCollectionLike_get: unique symbol;
 export const __KeyedContainer_TKey: unique symbol;
 /** @type {unique symbol} */
 export const __MulticastObservableLike_buffer: unique symbol;
-/** @type {unique symbol} */
-export const __ObserverLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_observe: unique symbol;
 /** @type {unique symbol} */
@@ -80,6 +76,8 @@ export const __SchedulerLike_schedule: unique symbol;
 export const __SchedulerLike_shouldYield: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerLike_yield: unique symbol;
+/** @type {unique symbol} */
+export const __SinkLike_notify: unique symbol;
 /** @type {unique symbol} */
 export const __StoreLike_value: unique symbol;
 /** @type {unique symbol} */

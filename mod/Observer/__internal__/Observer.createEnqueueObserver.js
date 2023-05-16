@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __EnqueueObserver_queue } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { ObserverLike_notify, QueueableLike_enqueue, SchedulerLike_requestYield, } from "../../types.js";
+import { QueueableLike_enqueue, SchedulerLike_requestYield, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
@@ -17,12 +17,12 @@ const Observer_createEnqueueObserver = /*@__PURE__*/ (() => {
     }, props({
         [__EnqueueObserver_queue]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             if (!this[__EnqueueObserver_queue][QueueableLike_enqueue](next)) {
                 this[SchedulerLike_requestYield]();
             }
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
     }));
 })();

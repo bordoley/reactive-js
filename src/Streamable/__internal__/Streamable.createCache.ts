@@ -52,7 +52,6 @@ import {
   DisposableLike,
   DisposableLike_isDisposed,
   EnumeratorLike,
-  EventListenerLike_notify,
   KeyedCollectionLike_get,
   ObservableLike,
   PublisherLike,
@@ -63,6 +62,7 @@ import {
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
   StreamLike,
   StreamOf,
   StreamableLike,
@@ -280,7 +280,7 @@ const createCacheStream: <T>(
                   const shouldPublish = isNone(v) || oldValue !== v;
 
                   if (isSome(observable) && shouldPublish) {
-                    observable[EventListenerLike_notify](v);
+                    observable[SinkLike_notify](v);
                     return;
                   }
 
@@ -362,7 +362,7 @@ const createCacheStream: <T>(
               const initialValue = store.get(key);
 
               if (isSome(initialValue)) {
-                publisher[EventListenerLike_notify](initialValue);
+                publisher[SinkLike_notify](initialValue);
               } else {
                 // Try to load the value from the persistence store
                 delegate[QueueableLike_enqueue]({

@@ -18,7 +18,7 @@ import { Predicate, none } from "../../functions.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
@@ -36,7 +36,7 @@ const Observer_createTakeWhileObserver: <T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function TakeWhileObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         predicate: Predicate<T>,
@@ -54,7 +54,7 @@ const Observer_createTakeWhileObserver: <T>(
         [__TakeWhileObserver_inclusive]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties & DelegatingLike<ObserverLike<T>> & ObserverLike<T>,
           next: T,
         ) {
@@ -63,7 +63,7 @@ const Observer_createTakeWhileObserver: <T>(
           const satisfiesPredicate = this[PredicatedLike_predicate](next);
 
           if (satisfiesPredicate || this[__TakeWhileObserver_inclusive]) {
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           }
 
           if (!satisfiesPredicate) {

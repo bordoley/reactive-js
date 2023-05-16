@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __WithCurrentTimeObserver_selector } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { ObserverLike_notify, SchedulerLike_now, } from "../../types.js";
+import { SchedulerLike_now, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
@@ -17,11 +17,11 @@ const Observer_createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
     }, props({
         [__WithCurrentTimeObserver_selector]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             const currentTime = this[SchedulerLike_now];
             const mapped = this[__WithCurrentTimeObserver_selector](currentTime, next);
-            this[DelegatingLike_delegate][ObserverLike_notify](mapped);
+            this[DelegatingLike_delegate][SinkLike_notify](mapped);
         },
     }));
 })();

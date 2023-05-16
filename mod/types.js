@@ -1,6 +1,6 @@
 /// <reference types="./types.d.ts" />
 
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventListenerLike_notify, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __ObserverLike_notify, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run, } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run, } from "./__internal__/symbols.js";
 export const AssociativeCollectionLike_keys = __AssociativeCollectionLike_keys;
 export const CollectionLike_count = __CollectionLike_count;
 export const Container_T = __Container_T;
@@ -15,7 +15,6 @@ export const ObservableLike_isDeferred = __ObservableLike_isDeferred;
 export const ObservableLike_isEnumerable = __ObservableLike_isEnumerable;
 export const ObservableLike_isRunnable = __ObservableLike_isRunnable;
 export const ObservableLike_observe = __ObservableLike_observe;
-export const ObserverLike_notify = __ObserverLike_notify;
 export const PublisherLike_observerCount = __PublisherLike_observerCount;
 export const StreamableLike_stream = __StreamableLike_stream;
 export const StreamLike_scheduler = __StreamLike_scheduler;
@@ -30,7 +29,6 @@ export const DisposableLike_dispose = __DisposableLike_dispose;
 export const DisposableLike_error = __DisposableLike_error;
 export const DisposableLike_isDisposed = __DisposableLike_isDisposed;
 export const EventListenerLike_isErrorSafe = __EventListenerLike_isErrorSafe;
-export const EventListenerLike_notify = __EventListenerLike_notify;
 export const EventPublisherLike_listenerCount = __EventPublisherLike_listenerCount;
 export const EventSourceLike_addEventListener = __EventSourceLike_addEventListener;
 export const PauseableLike_isPaused = __PauseableLike_isPaused;
@@ -45,5 +43,6 @@ export const SchedulerLike_now = __SchedulerLike_now;
 export const SchedulerLike_requestYield = __SchedulerLike_requestYield;
 export const SchedulerLike_schedule = __SchedulerLike_schedule;
 export const SchedulerLike_shouldYield = __SchedulerLike_shouldYield;
+export const SinkLike_notify = __SinkLike_notify;
 export const StoreLike_value = __StoreLike_value;
 export const VirtualTimeSchedulerLike_run = __VirtualTimeSchedulerLike_run;

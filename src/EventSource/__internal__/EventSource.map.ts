@@ -18,7 +18,7 @@ import { Function1, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
@@ -33,8 +33,7 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
         function MapEventListener(
           instance: Pick<
             EventListenerLike<TA>,
-            | typeof EventListenerLike_isErrorSafe
-            | typeof EventListenerLike_notify
+            typeof EventListenerLike_isErrorSafe | typeof SinkLike_notify
           > &
             MappingLike<TA, TB>,
           delegate: EventListenerLike<TB>,
@@ -52,14 +51,14 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
         {
           [EventListenerLike_isErrorSafe]: false,
 
-          [EventListenerLike_notify](
+          [SinkLike_notify](
             this: MappingLike<TA, TB> &
               DelegatingLike<EventListenerLike<TB>> &
               EventListenerLike<TA>,
             next: TA,
           ) {
             const mapped = this[MappingLike_selector](next);
-            this[DelegatingLike_delegate][EventListenerLike_notify](mapped);
+            this[DelegatingLike_delegate][SinkLike_notify](mapped);
           },
         },
       ),

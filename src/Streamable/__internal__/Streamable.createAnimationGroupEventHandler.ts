@@ -43,7 +43,6 @@ import {
   DictionaryLike,
   DisposableLike,
   EnumeratorLike,
-  EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
   KeyedCollectionLike_get,
@@ -52,6 +51,7 @@ import {
   ReadonlyObjectMapLike,
   RunnableLike,
   SchedulerLike,
+  SinkLike_notify,
   StreamLike,
   StreamOf,
   StreamableLike,
@@ -152,7 +152,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
                   Observable_forEach((value: T) => {
                     const publisher = publishers[key];
                     if (isSome(publisher)) {
-                      publisher[EventListenerLike_notify](value);
+                      publisher[SinkLike_notify](value);
                     }
                   }),
                   Observable_ignoreElements<T>(),

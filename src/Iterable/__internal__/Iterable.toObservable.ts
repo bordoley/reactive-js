@@ -8,10 +8,10 @@ import {
   DisposableLike_isDisposed,
   ObservableLike,
   ObserverLike,
-  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Iterable_toObservable: Iterable.Signature["toObservable"] = (<
@@ -31,7 +31,7 @@ const Iterable_toObservable: Iterable.Signature["toObservable"] = (<
           const next = iterator.next();
 
           if (!next.done) {
-            observer[ObserverLike_notify](next.value);
+            observer[SinkLike_notify](next.value);
             scheduler[SchedulerLike_yield](delay);
           } else {
             observer[DisposableLike_dispose]();

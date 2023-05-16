@@ -5,7 +5,7 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, ForEachLike_effect, } from "../../__internal__/types.js";
 import { none, partial, pipe } from "../../functions.js";
-import { EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../types.js";
+import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_forEach = 
 /*@__PURE__*/ (() => {
@@ -18,9 +18,9 @@ const EventSource_forEach =
         [ForEachLike_effect]: none,
     }), {
         [EventListenerLike_isErrorSafe]: false,
-        [EventListenerLike_notify](next) {
+        [SinkLike_notify](next) {
             this[ForEachLike_effect](next);
-            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
     })))();
     return (effect) => pipe(createForEachEventListener, partial(effect), EventSource_lift);

@@ -54,6 +54,10 @@
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
+### Other Interfaces
+
+- [SinkLike](../interfaces/types.SinkLike.md)
+
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)
@@ -116,7 +120,6 @@
 - [EnumeratorLike\_hasCurrent](types.md#enumeratorlike_hascurrent)
 - [EnumeratorLike\_move](types.md#enumeratorlike_move)
 - [EventListenerLike\_isErrorSafe](types.md#eventlistenerlike_iserrorsafe)
-- [EventListenerLike\_notify](types.md#eventlistenerlike_notify)
 - [EventPublisherLike\_listenerCount](types.md#eventpublisherlike_listenercount)
 - [EventSourceLike\_addEventListener](types.md#eventsourcelike_addeventlistener)
 - [KeyedCollectionLike\_get](types.md#keyedcollectionlike_get)
@@ -126,7 +129,6 @@
 - [ObservableLike\_isEnumerable](types.md#observablelike_isenumerable)
 - [ObservableLike\_isRunnable](types.md#observablelike_isrunnable)
 - [ObservableLike\_observe](types.md#observablelike_observe)
-- [ObserverLike\_notify](types.md#observerlike_notify)
 - [PauseableLike\_isPaused](types.md#pauseablelike_ispaused)
 - [PauseableLike\_pause](types.md#pauseablelike_pause)
 - [PauseableLike\_resume](types.md#pauseablelike_resume)
@@ -140,6 +142,7 @@
 - [SchedulerLike\_schedule](types.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](types.md#schedulerlike_shouldyield)
 - [SchedulerLike\_yield](types.md#schedulerlike_yield)
+- [SinkLike\_notify](types.md#sinklike_notify)
 - [StoreLike\_value](types.md#storelike_value)
 - [StreamLike\_scheduler](types.md#streamlike_scheduler)
 - [StreamableLike\_TStream](types.md#streamablelike_tstream)
@@ -355,12 +358,6 @@ ___
 
 ___
 
-### EventListenerLike\_notify
-
-• `Const` **EventListenerLike\_notify**: typeof `__EventListenerLike_notify`
-
-___
-
 ### EventPublisherLike\_listenerCount
 
 • `Const` **EventPublisherLike\_listenerCount**: typeof `__EventPublisherLike_listenerCount`
@@ -412,12 +409,6 @@ ___
 ### ObservableLike\_observe
 
 • `Const` **ObservableLike\_observe**: typeof `__ObservableLike_observe`
-
-___
-
-### ObserverLike\_notify
-
-• `Const` **ObserverLike\_notify**: typeof `__ObserverLike_notify`
 
 ___
 
@@ -496,6 +487,12 @@ ___
 ### SchedulerLike\_yield
 
 • `Const` **SchedulerLike\_yield**: typeof `__SchedulerLike_yield`
+
+___
+
+### SinkLike\_notify
+
+• `Const` **SinkLike\_notify**: typeof `__SinkLike_notify`
 
 ___
 

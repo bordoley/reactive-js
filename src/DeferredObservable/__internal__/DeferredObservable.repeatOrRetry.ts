@@ -11,7 +11,7 @@ import {
   DisposableLike_dispose,
   ObservableLike,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 
 type DeferredObservableRepeatOrRetry = <T>(
@@ -43,7 +43,7 @@ const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
 
           pipe(
             observable,
-            Observable_forEach(bindMethod(delegate, ObserverLike_notify)),
+            Observable_forEach(bindMethod(delegate, SinkLike_notify)),
             Observable_subscribeWithConfig(delegate, delegate),
             Disposable_addTo(delegate, { ignoreChildErrors: true }),
             Disposable_onDisposed(doOnDispose),

@@ -1,4 +1,4 @@
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventListenerLike_notify, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __ObserverLike_notify, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __MulticastObservableLike_buffer, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Function1, Optional, SideEffect1 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
@@ -14,7 +14,6 @@ export declare const ObservableLike_isDeferred: typeof __ObservableLike_isDeferr
 export declare const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable;
 export declare const ObservableLike_isRunnable: typeof __ObservableLike_isRunnable;
 export declare const ObservableLike_observe: typeof __ObservableLike_observe;
-export declare const ObserverLike_notify: typeof __ObserverLike_notify;
 export declare const PublisherLike_observerCount: typeof __PublisherLike_observerCount;
 export declare const StreamableLike_stream: typeof __StreamableLike_stream;
 export declare const StreamLike_scheduler: typeof __StreamLike_scheduler;
@@ -29,7 +28,6 @@ export declare const DisposableLike_dispose: typeof __DisposableLike_dispose;
 export declare const DisposableLike_error: typeof __DisposableLike_error;
 export declare const DisposableLike_isDisposed: typeof __DisposableLike_isDisposed;
 export declare const EventListenerLike_isErrorSafe: typeof __EventListenerLike_isErrorSafe;
-export declare const EventListenerLike_notify: typeof __EventListenerLike_notify;
 export declare const EventPublisherLike_listenerCount: typeof __EventPublisherLike_listenerCount;
 export declare const EventSourceLike_addEventListener: typeof __EventSourceLike_addEventListener;
 export declare const PauseableLike_isPaused: typeof __PauseableLike_isPaused;
@@ -44,6 +42,7 @@ export declare const SchedulerLike_now: typeof __SchedulerLike_now;
 export declare const SchedulerLike_requestYield: typeof __SchedulerLike_requestYield;
 export declare const SchedulerLike_schedule: typeof __SchedulerLike_schedule;
 export declare const SchedulerLike_shouldYield: typeof __SchedulerLike_shouldYield;
+export declare const SinkLike_notify: typeof __SinkLike_notify;
 export declare const StoreLike_value: typeof __StoreLike_value;
 export declare const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run;
 /**
@@ -172,13 +171,15 @@ export interface QueueableLike<T = unknown> extends BufferLike {
  */
 export interface IndexedBufferCollectionLike<T = unknown> extends BufferLike, IndexedCollectionLike<T> {
 }
+export interface SinkLike<T = unknown> extends DisposableLike {
+    [SinkLike_notify](event: T): void;
+}
 /**
  * @noInheritDoc
  * @category Event
  */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
+export interface EventListenerLike<T = unknown> extends SinkLike<T> {
     readonly [EventListenerLike_isErrorSafe]: boolean;
-    [EventListenerLike_notify](event: T): void;
 }
 /**
  * @noInheritDoc
@@ -338,16 +339,7 @@ export interface VirtualTimeSchedulerLike extends SchedulerLike, DisposableLike 
  * @noInheritDoc
  * @category Reactive
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, DisposableLike, SchedulerLike {
-    /**
-     * Notifies the the observer of the next notification produced by the observable source.
-     *
-     * Note: The `notify` method must be called from within a `SchedulerContinuationLike`
-     * scheduled using the observer's `schedule` method.
-     *
-     * @param next - The next notification value.
-     */
-    [ObserverLike_notify](next: T): void;
+export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SinkLike<T>, SchedulerLike {
 }
 /**
  * The source of notifications which can be consumed by an `ObserverLike` instance.

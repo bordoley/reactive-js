@@ -41,11 +41,11 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
   SchedulerLike_schedule,
+  SinkLike_notify,
   StreamLike,
   StreamOf,
   StreamableLike,
@@ -147,7 +147,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     create(observer => {
       const callback = () => {
         f(...args);
-        observer[ObserverLike_notify](none);
+        observer[SinkLike_notify](none);
         observer[DisposableLike_dispose]();
       };
 

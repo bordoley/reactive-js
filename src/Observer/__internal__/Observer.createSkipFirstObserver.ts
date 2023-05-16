@@ -15,7 +15,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
@@ -32,7 +32,7 @@ const Observer_createSkipFirstObserver: <T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function SkipFirstObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         skipCount: number,
@@ -48,7 +48,7 @@ const Observer_createSkipFirstObserver: <T>(
         [__SkipFirstObserver_count]: 0,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties & DelegatingLike<ObserverLike<T>> & ObserverLike<T>,
           next: T,
         ) {
@@ -59,7 +59,7 @@ const Observer_createSkipFirstObserver: <T>(
             this[__SkipFirstObserver_count] >
             this[__SkipFirstObserver_skipCount]
           ) {
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
           }
         },
       },

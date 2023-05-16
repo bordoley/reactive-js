@@ -13,7 +13,7 @@ import {
   DisposableLike_dispose,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 
 const EventListener_createInternal: <T>(
@@ -21,7 +21,7 @@ const EventListener_createInternal: <T>(
   isErrorSafe: boolean,
 ) => EventListenerLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [EventListenerLike_notify]: SideEffect1<T>;
+    [SinkLike_notify]: SideEffect1<T>;
     [EventListenerLike_isErrorSafe]: boolean;
   };
 
@@ -39,7 +39,7 @@ const EventListener_createInternal: <T>(
       ): EventListenerLike<T> {
         init(Disposable_mixin, instance);
 
-        instance[EventListenerLike_notify] = isErrorSafe
+        instance[SinkLike_notify] = isErrorSafe
           ? function (this: EventListenerLike<T>, ev: T) {
               try {
                 call(notify, this, ev);
@@ -53,7 +53,7 @@ const EventListener_createInternal: <T>(
         return instance;
       },
       props<TProperties>({
-        [EventListenerLike_notify]: none,
+        [SinkLike_notify]: none,
         [EventListenerLike_isErrorSafe]: false,
       }),
       {},

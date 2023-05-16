@@ -1,10 +1,10 @@
 /// <reference types="./Store.create.d.ts" />
 
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
+import EventSource_lazyInitPublisherMixin, { LazyInitEventMixin_eventPublisher, } from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { none, unsafeCast } from "../../functions.js";
-import { EventListenerLike_notify, StoreLike_value, } from "../../types.js";
+import { SinkLike_notify, StoreLike_value, } from "../../types.js";
 const Store_create = (() => {
     return createInstanceFactory(mix(include(EventSource_lazyInitPublisherMixin(), Disposable_mixin), function WritableStore(instance, initialValue) {
         init(Disposable_mixin, instance);
@@ -21,7 +21,7 @@ const Store_create = (() => {
         set [StoreLike_value](value) {
             unsafeCast(this);
             this.v = value;
-            this[EventListenerLike_notify](value);
+            this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](value);
         },
     }));
 })();

@@ -19,7 +19,7 @@ import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingM
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { incrementBy, isFunction, isSome, pipe, returns, unsafeCast, } from "../../functions.js";
-import { AssociativeCollectionLike_keys, CollectionLike_count, EventListenerLike_notify, KeyedCollectionLike_get, StreamableLike_stream, } from "../../types.js";
+import { AssociativeCollectionLike_keys, CollectionLike_count, KeyedCollectionLike_get, SinkLike_notify, StreamableLike_stream, } from "../../types.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
 export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function AnimationEventHandlerStream(instance, animationGroup, creationOptions, scheduler, streamOptions) {
@@ -27,7 +27,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
             const observables = pipe(animationGroup, ReadonlyObjectMap_mapWithKey((factory, key) => pipe(Observable_animate(isFunction(factory) ? factory(event) : factory), Observable_forEach((value) => {
                 const publisher = publishers[key];
                 if (isSome(publisher)) {
-                    publisher[EventListenerLike_notify](value);
+                    publisher[SinkLike_notify](value);
                 }
             }), Observable_ignoreElements())));
             const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), Enumerator_map(Observable_subscribeOn(animationScheduler)), Enumerator_toReadonlyArray());

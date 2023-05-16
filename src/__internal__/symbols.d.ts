@@ -34,8 +34,6 @@ export declare const __EventSourceLike_addEventListener: unique symbol;
 
 export declare const __EventListenerLike_isErrorSafe: unique symbol;
 
-export declare const __EventListenerLike_notify: unique symbol;
-
 export declare const __EventPublisherLike_listenerCount: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
@@ -43,8 +41,6 @@ export declare const __KeyedCollectionLike_get: unique symbol;
 export declare const __KeyedContainer_TKey: unique symbol;
 
 export declare const __MulticastObservableLike_buffer: unique symbol;
-
-export declare const __ObserverLike_notify: unique symbol;
 
 export declare const __ObservableLike_observe: unique symbol;
 
@@ -79,6 +75,8 @@ export declare const __SchedulerLike_schedule: unique symbol;
 export declare const __SchedulerLike_shouldYield: unique symbol;
 
 export declare const __SchedulerLike_yield: unique symbol;
+
+export declare const __SinkLike_notify: unique symbol;
 
 export declare const __StoreLike_value: unique symbol;
 

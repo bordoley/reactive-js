@@ -19,7 +19,7 @@ import {
   DisposableLike_dispose,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
@@ -34,7 +34,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     mix(
       include(Delegating_mixin(), Observer_mixin<ArrayBuffer>()),
       function DecodeWithCharsetObserver(
-        instance: Pick<ObserverLike<ArrayBuffer>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<string>,
         charset: string,
@@ -70,7 +70,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         [__DecodeWithCharsetObserver_textDecoder]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties &
             DelegatingLike<ObserverLike<string>> &
             ObserverLike<ArrayBuffer>,
@@ -85,7 +85,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
             },
           );
           if (data.length > 0) {
-            this[DelegatingLike_delegate][ObserverLike_notify](data);
+            this[DelegatingLike_delegate][SinkLike_notify](data);
           }
         },
       },

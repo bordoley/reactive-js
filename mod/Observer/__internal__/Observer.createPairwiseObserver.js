@@ -7,7 +7,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __PairwiseObserver_hasPrev, __PairwiseObserver_prev, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { ObserverLike_notify } from "../../types.js";
+import { SinkLike_notify } from "../../types.js";
 const Observer_createPairwiseObserver = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function PairwiseObserver(instance, delegate) {
         init(Observer_delegatingMixin(), instance, delegate, delegate);
@@ -17,11 +17,11 @@ const Observer_createPairwiseObserver = /*@__PURE__*/ (() => {
         [__PairwiseObserver_prev]: none,
         [__PairwiseObserver_hasPrev]: false,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             const prev = this[__PairwiseObserver_prev];
             if (this[__PairwiseObserver_hasPrev]) {
-                this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
+                this[DelegatingLike_delegate][SinkLike_notify]([prev, next]);
             }
             this[__PairwiseObserver_hasPrev] = true;
             this[__PairwiseObserver_prev] = next;

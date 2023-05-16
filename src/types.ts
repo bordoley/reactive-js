@@ -16,7 +16,6 @@ import {
   __EnumeratorLike_hasCurrent,
   __EnumeratorLike_move,
   __EventListenerLike_isErrorSafe,
-  __EventListenerLike_notify,
   __EventPublisherLike_listenerCount,
   __EventSourceLike_addEventListener,
   __KeyedCollectionLike_get,
@@ -26,7 +25,6 @@ import {
   __ObservableLike_isEnumerable,
   __ObservableLike_isRunnable,
   __ObservableLike_observe,
-  __ObserverLike_notify,
   __PauseableLike_isPaused,
   __PauseableLike_pause,
   __PauseableLike_resume,
@@ -40,6 +38,7 @@ import {
   __SchedulerLike_schedule,
   __SchedulerLike_shouldYield,
   __SchedulerLike_yield,
+  __SinkLike_notify,
   __StoreLike_value,
   __StreamLike_scheduler,
   __StreamableLike_TStream,
@@ -74,8 +73,6 @@ export const ObservableLike_isRunnable: typeof __ObservableLike_isRunnable =
   __ObservableLike_isRunnable;
 export const ObservableLike_observe: typeof __ObservableLike_observe =
   __ObservableLike_observe;
-export const ObserverLike_notify: typeof __ObserverLike_notify =
-  __ObserverLike_notify;
 export const PublisherLike_observerCount: typeof __PublisherLike_observerCount =
   __PublisherLike_observerCount;
 export const StreamableLike_stream: typeof __StreamableLike_stream =
@@ -104,8 +101,6 @@ export const DisposableLike_isDisposed: typeof __DisposableLike_isDisposed =
   __DisposableLike_isDisposed;
 export const EventListenerLike_isErrorSafe: typeof __EventListenerLike_isErrorSafe =
   __EventListenerLike_isErrorSafe;
-export const EventListenerLike_notify: typeof __EventListenerLike_notify =
-  __EventListenerLike_notify;
 export const EventPublisherLike_listenerCount: typeof __EventPublisherLike_listenerCount =
   __EventPublisherLike_listenerCount;
 export const EventSourceLike_addEventListener: typeof __EventSourceLike_addEventListener =
@@ -134,6 +129,7 @@ export const SchedulerLike_schedule: typeof __SchedulerLike_schedule =
   __SchedulerLike_schedule;
 export const SchedulerLike_shouldYield: typeof __SchedulerLike_shouldYield =
   __SchedulerLike_shouldYield;
+export const SinkLike_notify: typeof __SinkLike_notify = __SinkLike_notify;
 export const StoreLike_value: typeof __StoreLike_value = __StoreLike_value;
 export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run =
   __VirtualTimeSchedulerLike_run;
@@ -292,14 +288,16 @@ export interface IndexedBufferCollectionLike<T = unknown>
   extends BufferLike,
     IndexedCollectionLike<T> {}
 
+export interface SinkLike<T = unknown> extends DisposableLike {
+  [SinkLike_notify](event: T): void;
+}
+
 /**
  * @noInheritDoc
  * @category Event
  */
-export interface EventListenerLike<T = unknown> extends DisposableLike {
+export interface EventListenerLike<T = unknown> extends SinkLike<T> {
   readonly [EventListenerLike_isErrorSafe]: boolean;
-
-  [EventListenerLike_notify](event: T): void;
 }
 
 /**
@@ -490,7 +488,7 @@ export interface VirtualTimeSchedulerLike
  */
 export interface ObserverLike<T = unknown>
   extends DispatcherLike<T>,
-    DisposableLike,
+    SinkLike<T>,
     SchedulerLike {
   /**
    * Notifies the the observer of the next notification produced by the observable source.
@@ -500,7 +498,6 @@ export interface ObserverLike<T = unknown>
    *
    * @param next - The next notification value.
    */
-  [ObserverLike_notify](next: T): void;
 }
 
 /**
