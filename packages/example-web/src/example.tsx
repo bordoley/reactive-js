@@ -345,7 +345,7 @@ const RxComponent = createComponent(
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
         pipe(
           pauseableScheduler[PauseableLike_isPaused],
-          Store.toSharedObservable(),
+          Store.toObservable(),
         ),
         pauseableScheduler,
       );

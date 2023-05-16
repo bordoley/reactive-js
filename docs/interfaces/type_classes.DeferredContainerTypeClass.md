@@ -360,7 +360,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -386,7 +386,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -414,7 +414,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -444,7 +444,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -476,7 +476,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -510,7 +510,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -546,7 +546,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOf`](../modules/types.md#containerof)<`C`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -584,7 +584,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zip](type_classes.ContainerTypeClass.md#zip)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zip](type_classes.DeferredContainerBaseTypeClass.md#zip)
 
 ___
 
@@ -1123,7 +1123,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1148,7 +1148,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1175,7 +1175,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1204,7 +1204,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1235,7 +1235,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1268,7 +1268,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1303,7 +1303,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1340,4 +1340,4 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[zipWith](type_classes.ContainerTypeClass.md#zipwith)
+[DeferredContainerBaseTypeClass](type_classes.DeferredContainerBaseTypeClass.md).[zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)

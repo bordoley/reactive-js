@@ -1,5 +1,5 @@
-//import * as PauseableObservable from "../PauseableObservable.js";
+import * as PauseableObservable from "../PauseableObservable.js";
 
 export {};
 
-//((_: PauseableObservable.Signature) => {})(PauseableObservable);
+((_: PauseableObservable.Signature) => {})(PauseableObservable);
