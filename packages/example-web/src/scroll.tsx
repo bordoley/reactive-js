@@ -12,7 +12,7 @@ import {
 import {
   KeyedCollectionLike_get,
   EventSourceLike,
-  EventListenerLike_notify,
+  SinkLike_notify,
 } from "@reactive-js/core/types";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
@@ -107,7 +107,7 @@ const ScrollApp = () => {
       const pos = y.progress;
       const velocity = y.velocity;
 
-      publishedAnimation?.[EventListenerLike_notify](pos);
+      publishedAnimation?.[SinkLike_notify](pos);
 
       if (pos === 1 && Math.abs(velocity) > 0.5) {
         // FIXME: To make this really right, we should measure the velocity
@@ -130,7 +130,7 @@ const ScrollApp = () => {
     pipeSomeLazy(
       springAnimation,
       EventSource.addEventHandler(v =>
-        publishedAnimation?.[EventListenerLike_notify](v),
+        publishedAnimation?.[SinkLike_notify](v),
       ),
     ),
     [springAnimation, publishedAnimation],
