@@ -46,6 +46,7 @@
 - [fromReadonlyObjectMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#fromreadonlyobjectmap)
 - [toDictionary](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#todictionary)
 - [toReadonlyMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#toreadonlymap)
+- [toReadonlyObjectMap](type_classes.ConcreteAssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
 
 ### Transform Methods
 
@@ -401,6 +402,23 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### toReadonlyObjectMap
+
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 ___
 

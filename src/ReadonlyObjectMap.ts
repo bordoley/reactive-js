@@ -1,9 +1,9 @@
+import ReadonlyMap_toReadonlyObjectMap from "./ReadonlyMap/__internal__/ReadonlyMap.toReadonlyObjectMap.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
 import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
 import ReadonlyObjectMap_forEachWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
 import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromEntries.js";
-import ReadonlyObjectMap_fromReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromReadonlyMap.js";
 import ReadonlyObjectMap_keep from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keep.js";
 import ReadonlyObjectMap_keepType from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepType.js";
 import ReadonlyObjectMap_keepWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepWithKey.js";
@@ -69,7 +69,7 @@ export const forEachWithKey: Signature["forEachWithKey"] =
 export const fromEntries: Signature["fromEntries"] =
   ReadonlyObjectMap_fromEntries;
 export const fromReadonlyMap: Signature["fromReadonlyMap"] =
-  ReadonlyObjectMap_fromReadonlyMap;
+  ReadonlyMap_toReadonlyObjectMap as Signature["fromReadonlyMap"];
 export const fromReadonlyObjectMap: Signature["fromReadonlyObjectMap"] =
   identityLazy as Signature["fromReadonlyObjectMap"];
 export const keep: Signature["keep"] = ReadonlyObjectMap_keep;
@@ -87,4 +87,6 @@ export const toDictionary: Signature["toDictionary"] =
   ReadonlyObjectMap_toDictionary;
 export const toReadonlyMap: Signature["toReadonlyMap"] =
   ReadonlyObjectMap_toReadonlyMap;
+export const toReadonlyObjectMap: Signature["toReadonlyObjectMap"] =
+  identityLazy as Signature["toReadonlyObjectMap"];
 export const values: Signature["values"] = ReadonlyObjectMap_values;

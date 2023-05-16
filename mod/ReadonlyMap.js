@@ -15,6 +15,7 @@ import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWi
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
+import ReadonlyMap_toReadonlyObjectMap from "./ReadonlyMap/__internal__/ReadonlyMap.toReadonlyObjectMap.js";
 import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
 import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import { identityLazy } from "./functions.js";
@@ -40,6 +41,7 @@ export const CreateModule = () => ({
     reduceWithKey: ReadonlyMap_reduceWithKey,
     toDictionary: ReadonlyMap_toDictionary,
     toReadonlyMap: identityLazy,
+    toReadonlyObjectMap: ReadonlyMap_toReadonlyObjectMap,
     values: ReadonlyMap_values,
 });
 export const empty = ReadonlyMap_empty;
@@ -60,4 +62,5 @@ export const reduce = ReadonlyMap_reduce;
 export const reduceWithKey = ReadonlyMap_reduceWithKey;
 export const toDictionary = ReadonlyMap_toDictionary;
 export const toReadonlyMap = identityLazy;
+export const toReadonlyObjectMap = ReadonlyMap_toReadonlyObjectMap;
 export const values = ReadonlyMap_values;

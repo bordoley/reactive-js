@@ -412,4 +412,5 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedConta
      */
     fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
     toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
+    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
 }
