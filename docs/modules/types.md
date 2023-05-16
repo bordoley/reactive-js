@@ -15,6 +15,7 @@
 ### Container Interfaces
 
 - [AsyncIterableContainer](../interfaces/types.AsyncIterableContainer.md)
+- [Container](../interfaces/types.Container.md)
 - [DeferredObservableContainer](../interfaces/types.DeferredObservableContainer.md)
 - [DictionaryContainer](../interfaces/types.DictionaryContainer.md)
 - [DisposableContainer](../interfaces/types.DisposableContainer.md)
@@ -22,6 +23,7 @@
 - [EnumeratorContainer](../interfaces/types.EnumeratorContainer.md)
 - [EventSourceContainer](../interfaces/types.EventSourceContainer.md)
 - [IterableContainer](../interfaces/types.IterableContainer.md)
+- [KeyedContainer](../interfaces/types.KeyedContainer.md)
 - [ObservableContainer](../interfaces/types.ObservableContainer.md)
 - [PauseableObservableContainer](../interfaces/types.PauseableObservableContainer.md)
 - [PromiseContainer](../interfaces/types.PromiseContainer.md)
@@ -50,11 +52,6 @@
 - [EnumerableLike](../interfaces/types.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/types.EnumeratorLike.md)
 - [StreamLike](../interfaces/types.StreamLike.md)
-
-### Other Interfaces
-
-- [Container](../interfaces/types.Container.md)
-- [KeyedContainer](../interfaces/types.KeyedContainer.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
 ### Queueing Interfaces
@@ -86,13 +83,16 @@
 - [SchedulerLike](../interfaces/types.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/types.VirtualTimeSchedulerLike.md)
 
-### Type Aliases
+### Container Type Aliases
 
 - [ContainerOf](types.md#containerof)
 - [ContainerOperator](types.md#containeroperator)
-- [DisposableOrTeardown](types.md#disposableorteardown)
 - [KeyOf](types.md#keyof)
 - [KeyedContainerOf](types.md#keyedcontainerof)
+
+### Other Type Aliases
+
+- [DisposableOrTeardown](types.md#disposableorteardown)
 - [KeyedContainerOperator](types.md#keyedcontaineroperator)
 - [ReadonlyObjectMapLike](types.md#readonlyobjectmaplike)
 - [StreamOf](types.md#streamof)
@@ -146,7 +146,7 @@
 - [StreamableLike\_stream](types.md#streamablelike_stream)
 - [VirtualTimeSchedulerLike\_run](types.md#virtualtimeschedulerlike_run)
 
-## Type Aliases
+## Container Type Aliases
 
 ### ContainerOf
 
@@ -175,12 +175,6 @@ ___
 
 ___
 
-### DisposableOrTeardown
-
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
-
-___
-
 ### KeyOf
 
 Ƭ **KeyOf**<`C`\>: `NonNullable`<`C`[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
@@ -204,6 +198,14 @@ ___
 | `C` | extends [`KeyedContainer`](../interfaces/types.KeyedContainer.md) |
 | `TKey` | `TKey` |
 | `T` | `T` |
+
+___
+
+## Other Type Aliases
+
+### DisposableOrTeardown
+
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
 
 ___
 

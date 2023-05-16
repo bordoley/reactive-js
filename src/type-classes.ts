@@ -11,7 +11,6 @@ import {
   SideEffect1,
   SideEffect2,
   TypePredicate,
-  Updater,
 } from "./functions.js";
 import {
   Container,
@@ -27,7 +26,6 @@ import {
   ObservableContainer,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  SharedObservableLike,
 } from "./types.js";
 
 export interface ContainerTypeClass<C extends Container> {
@@ -343,43 +341,6 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
 
 export interface ConcreteAsyncContainerBaseTypeClass<C extends Container> {
   fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-}
-
-export interface StatefulContainerBaseTypeClass<C extends Container> {
-  /**
-   * Generates a Container from a generator function
-   * that is applied to an accumulator value between emitted items.
-   *
-   * @param generator - The generator function.
-   * @param initialValue - Factory function used to generate the initial accumulator.
-   *
-   * @category Constructor
-   */
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
-
-  /**
-   * @category Operator
-   */
-  ignoreElements<T>(): ContainerOperator<C, unknown, T>;
-}
-
-export interface AsynchronousContainerBaseTypeClass<C extends Container> {
-  /**
-   *
-   * @category Transform
-   */
-  firstAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
-
-  /**
-   *
-   * @category Transform
-   */
-  lastAsync<T>(): Function1<ContainerOf<C, T>, PromiseLike<Optional<T>>>;
-
-  toObservable<T>(): Function1<ContainerOf<C, T>, SharedObservableLike<T>>;
 }
 
 export interface BlockingContainerBaseTypeClass<C extends Container> {

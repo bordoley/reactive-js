@@ -9,25 +9,20 @@ import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
 import { Function1, SideEffect1 } from "./functions.js";
+import { ContainerTypeClass } from "./type-classes.js";
 import {
-  AsynchronousContainerBaseTypeClass,
-  ContainerTypeClass,
-  StatefulContainerBaseTypeClass,
-} from "./type-classes.js";
-import {
+  ContainerOperator,
   DisposableLike,
   EventListenerLike,
   EventPublisherLike,
   EventSourceContainer,
   EventSourceLike,
+  SharedObservableLike,
 } from "./types.js";
 
 export type Type = EventSourceContainer;
 
-export interface Signature
-  extends ContainerTypeClass<Type>,
-    StatefulContainerBaseTypeClass<Type>,
-    AsynchronousContainerBaseTypeClass<Type> {
+export interface Signature extends ContainerTypeClass<Type> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
@@ -46,6 +41,13 @@ export interface Signature
    * @category Constructor
    */
   createRefCountedPublisher<T>(): EventPublisherLike<T>;
+
+  /**
+   * @category Operator
+   */
+  ignoreElements<T>(): ContainerOperator<Type, unknown, T>;
+
+  toObservable<T>(): Function1<EventSourceLike<T>, SharedObservableLike<T>>;
 }
 
 export const addEventHandler: Signature["addEventHandler"] =

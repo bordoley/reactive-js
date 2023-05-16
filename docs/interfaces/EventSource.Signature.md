@@ -8,10 +8,6 @@
 
 - [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
 
-- [`StatefulContainerBaseTypeClass`](type_classes.StatefulContainerBaseTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
-
-- [`AsynchronousContainerBaseTypeClass`](type_classes.AsynchronousContainerBaseTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
-
   ↳ **`Signature`**
 
 ## Table of contents
@@ -21,7 +17,6 @@
 - [create](EventSource.Signature.md#create)
 - [createPublisher](EventSource.Signature.md#createpublisher)
 - [createRefCountedPublisher](EventSource.Signature.md#createrefcountedpublisher)
-- [generate](EventSource.Signature.md#generate)
 - [zip](EventSource.Signature.md#zip)
 
 ### Operator Methods
@@ -47,11 +42,6 @@
 
 - [addEventHandler](EventSource.Signature.md#addeventhandler)
 - [toObservable](EventSource.Signature.md#toobservable)
-
-### Transform Methods
-
-- [firstAsync](EventSource.Signature.md#firstasync)
-- [lastAsync](EventSource.Signature.md#lastasync)
 
 ## Constructor Methods
 
@@ -106,36 +96,6 @@ ___
 #### Returns
 
 [`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-Generates a Container from a generator function
-that is applied to an accumulator value between emitted items.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> | The generator function. |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> | Factory function used to generate the initial accumulator. |
-
-#### Returns
-
-[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
-
-#### Inherited from
-
-[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[generate](type_classes.StatefulContainerBaseTypeClass.md#generate)
 
 ___
 
@@ -495,10 +455,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](types.EventSourceContainer.md), `unknown`, `T`\>
-
-#### Inherited from
-
-[StatefulContainerBaseTypeClass](type_classes.StatefulContainerBaseTypeClass.md).[ignoreElements](type_classes.StatefulContainerBaseTypeClass.md#ignoreelements)
 
 ___
 
@@ -1153,49 +1109,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`SharedObservableLike`](types.SharedObservableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[toObservable](type_classes.AsynchronousContainerBaseTypeClass.md#toobservable)
-
-___
-
-## Transform Methods
-
-### firstAsync
-
-▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[firstAsync](type_classes.AsynchronousContainerBaseTypeClass.md#firstasync)
-
-___
-
-### lastAsync
-
-▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `PromiseLike`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
-
-#### Inherited from
-
-[AsynchronousContainerBaseTypeClass](type_classes.AsynchronousContainerBaseTypeClass.md).[lastAsync](type_classes.AsynchronousContainerBaseTypeClass.md#lastasync)

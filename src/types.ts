@@ -639,6 +639,7 @@ export interface StreamLike<TReq, T>
  * @typeparam TStream
  *
  * @noInheritDoc
+ * @category Interactive
  */
 export interface StreamableLike<
   TReq = unknown,
@@ -676,11 +677,17 @@ export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
 
+/**
+ * @category Container
+ */
 export interface Container {
   readonly [Container_T]?: unknown;
   readonly [Container_type]?: unknown;
 }
 
+/**
+ * @category Container
+ */
 export type ContainerOf<C extends Container, T> = C extends {
   readonly [Container_type]?: unknown;
 }
@@ -694,15 +701,24 @@ export type ContainerOf<C extends Container, T> = C extends {
       readonly _T: () => T;
     };
 
+/**
+ * @category Container
+ */
 export type ContainerOperator<C extends Container, TA, TB> = Function1<
   ContainerOf<C, TA>,
   ContainerOf<C, TB>
 >;
 
+/**
+ * @category Container
+ */
 export interface KeyedContainer<TKey = unknown> extends Container {
   readonly [KeyedContainer_TKey]?: TKey;
 }
 
+/**
+ * @category Container
+ */
 export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
   readonly [Container_type]?: unknown;
 }
@@ -718,6 +734,9 @@ export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
       readonly _TKey: () => TKey;
     };
 
+/**
+ * @category Container
+ */
 export type KeyOf<C extends KeyedContainer> = NonNullable<
   C[typeof KeyedContainer_TKey]
 >;

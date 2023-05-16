@@ -465,6 +465,7 @@ export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, MulticastObse
  * @typeparam TStream
  *
  * @noInheritDoc
+ * @category Interactive
  */
 export interface StreamableLike<TReq = unknown, T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
     readonly [StreamableLike_TStream]?: TStream;
@@ -488,10 +489,16 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
     }): TStream & DisposableLike;
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
+/**
+ * @category Container
+ */
 export interface Container {
     readonly [Container_T]?: unknown;
     readonly [Container_type]?: unknown;
 }
+/**
+ * @category Container
+ */
 export type ContainerOf<C extends Container, T> = C extends {
     readonly [Container_type]?: unknown;
 } ? NonNullable<(C & {
@@ -500,10 +507,19 @@ export type ContainerOf<C extends Container, T> = C extends {
     readonly _C: C;
     readonly _T: () => T;
 };
+/**
+ * @category Container
+ */
 export type ContainerOperator<C extends Container, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+/**
+ * @category Container
+ */
 export interface KeyedContainer<TKey = unknown> extends Container {
     readonly [KeyedContainer_TKey]?: TKey;
 }
+/**
+ * @category Container
+ */
 export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
     readonly [Container_type]?: unknown;
 } ? NonNullable<(C & {
@@ -514,6 +530,9 @@ export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
     readonly _T: () => T;
     readonly _TKey: () => TKey;
 };
+/**
+ * @category Container
+ */
 export type KeyOf<C extends KeyedContainer> = NonNullable<C[typeof KeyedContainer_TKey]>;
 /**
  * Utility type for a generic operator function that transforms a Container's inner value type.
