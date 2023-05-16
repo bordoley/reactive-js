@@ -4,7 +4,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, SchedulerLike_yield, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_toObservable = 
 /*@__PURE__*/
@@ -23,7 +23,7 @@ ReadonlyArray_toContainer((values, startIndex, count, options) => {
                     index--;
                     cnt++;
                 }
-                observer[ObserverLike_notify](value);
+                observer[SinkLike_notify](value);
                 scheduler[SchedulerLike_yield](delay);
             }
             observer[DisposableLike_dispose]();

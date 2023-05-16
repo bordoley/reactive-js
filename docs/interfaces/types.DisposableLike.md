@@ -10,11 +10,9 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
-  ↳ [`EventListenerLike`](types.EventListenerLike.md)
+  ↳ [`SinkLike`](types.SinkLike.md)
 
   ↳ [`VirtualTimeSchedulerLike`](types.VirtualTimeSchedulerLike.md)
-
-  ↳ [`ObserverLike`](types.ObserverLike.md)
 
 ## Table of contents
 

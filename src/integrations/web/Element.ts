@@ -21,11 +21,11 @@ import {
   DisposableLike,
   ErrorSafeEventListenerLike,
   EventListenerLike,
-  EventListenerLike_notify,
   EventPublisherLike,
   EventSourceLike,
   EventSourceLike_addEventListener,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../types.js";
 import type { Rect, ScrollValue } from "../web.js";
 
@@ -1123,10 +1123,7 @@ export const addEventListener: AddEventListener["addEventListener"] = ((
       }),
     );
 
-    const listener = bindMethod(
-      errorSafeEventListener,
-      EventListenerLike_notify,
-    );
+    const listener = bindMethod(errorSafeEventListener, SinkLike_notify);
 
     const addEventListenerOptions = {
       capture: options?.capture ?? false,
@@ -1869,7 +1866,7 @@ export const addScrollListener: <TElement extends HTMLElement>(
             yPrev = yCurrent;
             yVelocityPrev = yVelocity;
 
-            listener[EventListenerLike_notify]({ x, y });
+            listener[SinkLike_notify]({ x, y });
           },
           { errorSafe: true },
         ),
@@ -1914,7 +1911,7 @@ export const addResizeListener: <TElement extends Element>(
         continue;
       }
 
-      publisher[EventListenerLike_notify](entry);
+      publisher[SinkLike_notify](entry);
     }
   };
 
@@ -2009,7 +2006,7 @@ export const addMeasureListener: <TElement extends HTMLElement | SVGElement>(
             }
             */
 
-          listener[EventListenerLike_notify](rect);
+          listener[SinkLike_notify](rect);
         },
         { errorSafe: true },
       ),
@@ -2137,7 +2134,7 @@ export const intersectionWith: (
                         continue;
                       }
 
-                      listener[EventListenerLike_notify](entry);
+                      listener[SinkLike_notify](entry);
                     }
                   };
 

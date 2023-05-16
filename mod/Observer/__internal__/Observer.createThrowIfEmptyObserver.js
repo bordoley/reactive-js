@@ -6,7 +6,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ThrowIfEmptyObserver_isEmpty } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { error, none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -30,10 +30,10 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     }, props({
         [__ThrowIfEmptyObserver_isEmpty]: true,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             this[__ThrowIfEmptyObserver_isEmpty] = false;
-            this[DelegatingLike_delegate][ObserverLike_notify](next);
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
     }));
 })();

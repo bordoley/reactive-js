@@ -6,11 +6,11 @@ import { Factory, Updater, none, pipe } from "../../functions.js";
 import {
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
   RunnableLike,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Observable_generate: Observable.Signature["generate"] = (<T>(
@@ -25,7 +25,7 @@ const Observable_generate: Observable.Signature["generate"] = (<T>(
     const continuation = (scheduler: SchedulerLike) => {
       while (!observer[DisposableLike_isDisposed]) {
         acc = generator(acc);
-        observer[ObserverLike_notify](acc);
+        observer[SinkLike_notify](acc);
         scheduler[SchedulerLike_yield](delay);
       }
     };

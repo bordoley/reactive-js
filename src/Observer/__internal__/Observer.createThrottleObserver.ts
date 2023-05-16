@@ -45,7 +45,7 @@ import {
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Observer_createThrottleObserver: <T>(
@@ -86,7 +86,7 @@ const Observer_createThrottleObserver: <T>(
     mix(
       include(Observer_mixin(), Delegating_mixin()),
       function ThrottleObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         durationFunction: Function1<T, ObservableLike>,
@@ -109,7 +109,7 @@ const Observer_createThrottleObserver: <T>(
             instance[__ThrottleObserver_value] = none;
             instance[__ThrottleObserver_hasValue] = false;
 
-            delegate[ObserverLike_notify](value);
+            delegate[SinkLike_notify](value);
 
             setupDurationSubscription(instance, value);
           }
@@ -143,7 +143,7 @@ const Observer_createThrottleObserver: <T>(
         [__ThrottleObserver_onNotify]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: ObserverLike<T> & TProperties & DelegatingLike<ObserverLike>,
           next: T,
         ) {

@@ -8,10 +8,10 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
+  SinkLike_notify,
 } from "../../types.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 
@@ -50,7 +50,7 @@ const ReadonlyArray_toObservable: ReadonlyArray.Signature["toObservable"] =
               cnt++;
             }
 
-            observer[ObserverLike_notify](value);
+            observer[SinkLike_notify](value);
             scheduler[SchedulerLike_yield](delay);
           }
           observer[DisposableLike_dispose]();

@@ -12,7 +12,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __HigherOrderObservable_currentRef } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../__internal__/types.js";
 import { bind, bindMethod, none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_switchAll = (lift) => {
@@ -31,9 +31,9 @@ const Observable_switchAll = (lift) => {
         }, props({
             [__HigherOrderObservable_currentRef]: none,
         }), {
-            [ObserverLike_notify](next) {
+            [SinkLike_notify](next) {
                 Observer_assertState(this);
-                this[__HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], ObserverLike_notify)), Observable_subscribeWithConfig(this[DelegatingLike_delegate], this), Disposable_addTo(this[DelegatingLike_delegate]), Disposable_onComplete(() => {
+                this[__HigherOrderObservable_currentRef][SerialDisposableLike_current] = pipe(next, Observable_forEach(bindMethod(this[DelegatingLike_delegate], SinkLike_notify)), Observable_subscribeWithConfig(this[DelegatingLike_delegate], this), Disposable_addTo(this[DelegatingLike_delegate]), Disposable_onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
                         this[DelegatingLike_delegate][DisposableLike_dispose]();
                     }

@@ -13,7 +13,7 @@ import {
   ForEachLike_effect,
 } from "../../__internal__/types.js";
 import { SideEffect1, none } from "../../functions.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
@@ -25,7 +25,7 @@ const Observer_createForEachObserver: <T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function ForEachObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           ForEachLike<T>,
         delegate: ObserverLike<T>,
         effect: SideEffect1<T>,
@@ -40,7 +40,7 @@ const Observer_createForEachObserver: <T>(
         [ForEachLike_effect]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: ForEachLike<T> &
             DelegatingLike<ObserverLike<T>> &
             ObserverLike<T>,
@@ -49,7 +49,7 @@ const Observer_createForEachObserver: <T>(
           Observer_assertState(this);
 
           this[ForEachLike_effect](next);
-          this[DelegatingLike_delegate][ObserverLike_notify](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

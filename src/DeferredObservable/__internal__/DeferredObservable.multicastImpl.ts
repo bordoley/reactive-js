@@ -15,12 +15,12 @@ import {
   BufferLike_capacity,
   DeferredObservableLike,
   DisposableLike,
-  EventListenerLike_notify,
   MulticastObservableLike,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
+  SinkLike_notify,
 } from "../../types.js";
 
 const DeferredObservable_multicastImpl =
@@ -55,7 +55,7 @@ const DeferredObservable_multicastImpl =
 
     pipe(
       observable,
-      Observable_forEach(bindMethod(publisher, EventListenerLike_notify)),
+      Observable_forEach(bindMethod(publisher, SinkLike_notify)),
       Observable_subscribeWithConfig(scheduler, {
         [BufferLike_capacity]: capacity,
         [QueueableLike_backpressureStrategy]: backpressureStrategy,

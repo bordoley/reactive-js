@@ -17,7 +17,7 @@ import { Factory, Reducer, error, none } from "../../functions.js";
 import {
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
@@ -31,7 +31,7 @@ const Observer_createScanObserver: <T, TAcc>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function ScanObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           ReducerAccumulatorLike<T, TAcc>,
         delegate: ObserverLike<TAcc>,
         reducer: Reducer<T, TAcc>,
@@ -55,7 +55,7 @@ const Observer_createScanObserver: <T, TAcc>(
         [ReducerAccumulatorLike_reducer]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: ReducerAccumulatorLike<T, TAcc> &
             DelegatingLike<ObserverLike<TAcc>> &
             ObserverLike<T>,
@@ -68,7 +68,7 @@ const Observer_createScanObserver: <T, TAcc>(
             next,
           );
           this[ReducerAccumulatorLike_acc] = nextAcc;
-          this[DelegatingLike_delegate][ObserverLike_notify](nextAcc);
+          this[DelegatingLike_delegate][SinkLike_notify](nextAcc);
         },
       },
     ),

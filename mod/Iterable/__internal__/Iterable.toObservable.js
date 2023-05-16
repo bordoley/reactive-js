@@ -4,7 +4,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, ObserverLike_notify, SchedulerLike_schedule, SchedulerLike_yield, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
 const Iterable_toObservable = ((options) => (iterable) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const onSubscribe = (observer) => {
@@ -13,7 +13,7 @@ const Iterable_toObservable = ((options) => (iterable) => {
             while (!observer[DisposableLike_isDisposed]) {
                 const next = iterator.next();
                 if (!next.done) {
-                    observer[ObserverLike_notify](next.value);
+                    observer[SinkLike_notify](next.value);
                     scheduler[SchedulerLike_yield](delay);
                 }
                 else {

@@ -18,7 +18,7 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 
 const Observer_createPairwiseObserver: <T>(
   delegate: ObserverLike<readonly [T, T]>,
@@ -32,7 +32,7 @@ const Observer_createPairwiseObserver: <T>(
     mix(
       include(Observer_delegatingMixin<T>(), Delegating_mixin()),
       function PairwiseObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly [T, T]>,
       ): ObserverLike<T> {
@@ -46,7 +46,7 @@ const Observer_createPairwiseObserver: <T>(
         [__PairwiseObserver_hasPrev]: false,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties &
             DelegatingLike<ObserverLike<readonly [T, T]>> &
             ObserverLike<T>,
@@ -57,7 +57,7 @@ const Observer_createPairwiseObserver: <T>(
           const prev = this[__PairwiseObserver_prev];
 
           if (this[__PairwiseObserver_hasPrev]) {
-            this[DelegatingLike_delegate][ObserverLike_notify]([prev, next]);
+            this[DelegatingLike_delegate][SinkLike_notify]([prev, next]);
           }
 
           this[__PairwiseObserver_hasPrev] = true;

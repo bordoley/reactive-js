@@ -6,7 +6,7 @@ import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDi
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { pipe, unsafeCast } from "../../functions.js";
-import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, } from "../../types.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventPublisherLike_listenerCount, EventSourceLike_addEventListener, SinkLike_notify, } from "../../types.js";
 import EventSource_createPublisher from "./EventSource.createPublisher.js";
 const EventSource_createRefCountedPublisher = 
 /*@__PURE__*/ (() => {
@@ -20,8 +20,8 @@ const EventSource_createRefCountedPublisher =
             unsafeCast(this);
             return this[DelegatingLike_delegate][EventPublisherLike_listenerCount];
         },
-        [EventListenerLike_notify](next) {
-            this[DelegatingLike_delegate][EventListenerLike_notify](next);
+        [SinkLike_notify](next) {
+            this[DelegatingLike_delegate][SinkLike_notify](next);
         },
         [EventSourceLike_addEventListener](listener) {
             this[DelegatingLike_delegate][EventSourceLike_addEventListener](listener);

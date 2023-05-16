@@ -18,7 +18,7 @@ import { SideEffect1, none, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
@@ -34,8 +34,7 @@ const EventSource_forEach: EventSource.Signature["forEach"] =
           function ForEachEventListener(
             instance: Pick<
               EventListenerLike<T>,
-              | typeof EventListenerLike_isErrorSafe
-              | typeof EventListenerLike_notify
+              typeof EventListenerLike_isErrorSafe | typeof SinkLike_notify
             > &
               ForEachLike<T>,
             delegate: EventListenerLike<T>,
@@ -53,14 +52,14 @@ const EventSource_forEach: EventSource.Signature["forEach"] =
           {
             [EventListenerLike_isErrorSafe]: false,
 
-            [EventListenerLike_notify](
+            [SinkLike_notify](
               this: ForEachLike<T> &
                 DelegatingLike<EventListenerLike<T>> &
                 EventListenerLike<T>,
               next: T,
             ) {
               this[ForEachLike_effect](next);
-              this[DelegatingLike_delegate][EventListenerLike_notify](next);
+              this[DelegatingLike_delegate][SinkLike_notify](next);
             },
           },
         ),

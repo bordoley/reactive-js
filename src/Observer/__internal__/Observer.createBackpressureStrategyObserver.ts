@@ -14,9 +14,9 @@ import {
 import {
   BufferLike_capacity,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
@@ -35,7 +35,7 @@ const Observer_createBackpressureObserver: <T>(
         Delegating_mixin(),
       ),
       function EnqueueObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
         delegate: ObserverLike<T>,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -50,8 +50,8 @@ const Observer_createBackpressureObserver: <T>(
       },
       props({}),
       {
-        [ObserverLike_notify](this: DelegatingLike<ObserverLike<T>>, next: T) {
-          this[DelegatingLike_delegate][ObserverLike_notify](next);
+        [SinkLike_notify](this: DelegatingLike<ObserverLike<T>>, next: T) {
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

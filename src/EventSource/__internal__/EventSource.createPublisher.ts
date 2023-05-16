@@ -19,10 +19,10 @@ import {
   EnumeratorLike_move,
   EventListenerLike,
   EventListenerLike_isErrorSafe,
-  EventListenerLike_notify,
   EventPublisherLike,
   EventPublisherLike_listenerCount,
   EventSourceLike_addEventListener,
+  SinkLike_notify,
 } from "../../types.js";
 
 const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
@@ -38,7 +38,7 @@ const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
             EventPublisherLike<T>,
             | typeof EventSourceLike_addEventListener
             | typeof EventListenerLike_isErrorSafe
-            | typeof EventListenerLike_notify
+            | typeof SinkLike_notify
             | typeof EventPublisherLike_listenerCount
           > &
             Mutable<TProperties>,
@@ -76,7 +76,7 @@ const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
             return this[__EventPublisher_listeners].size;
           },
 
-          [EventListenerLike_notify](
+          [SinkLike_notify](
             this: TProperties & EventPublisherLike<T>,
             next: T,
           ) {
@@ -86,7 +86,7 @@ const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
 
             for (const listener of this[__EventPublisher_listeners]) {
               try {
-                listener[EventListenerLike_notify](next);
+                listener[SinkLike_notify](next);
               } catch (e) {
                 listener[DisposableLike_dispose](error(e));
               }

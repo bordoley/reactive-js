@@ -3,11 +3,11 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { call, error, none } from "../../functions.js";
-import { DisposableLike_dispose, EventListenerLike_isErrorSafe, EventListenerLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../types.js";
 const EventListener_createInternal = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin), function EventListener(instance, notify, isErrorSafe) {
         init(Disposable_mixin, instance);
-        instance[EventListenerLike_notify] = isErrorSafe
+        instance[SinkLike_notify] = isErrorSafe
             ? function (ev) {
                 try {
                     call(notify, this, ev);
@@ -20,7 +20,7 @@ const EventListener_createInternal = /*@__PURE__*/ (() => {
         instance[EventListenerLike_isErrorSafe] = isErrorSafe;
         return instance;
     }, props({
-        [EventListenerLike_notify]: none,
+        [SinkLike_notify]: none,
         [EventListenerLike_isErrorSafe]: false,
     }), {}));
 })();

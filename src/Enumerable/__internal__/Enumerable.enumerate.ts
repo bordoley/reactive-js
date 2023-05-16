@@ -48,11 +48,11 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike_now,
   SchedulerLike_shouldYield,
+  SinkLike_notify,
 } from "../../types.js";
 
 const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
@@ -76,7 +76,7 @@ const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
           EnumeratorScheduler<T>,
           | typeof SchedulerLike_now
           | typeof EnumeratorLike_move
-          | typeof ObserverLike_notify
+          | typeof SinkLike_notify
         > &
           Mutable<TEnumeratorSchedulerProperties>,
       ): EnumeratorScheduler<T> {
@@ -147,7 +147,7 @@ const Enumerable_enumerate: Enumerable.Signature["enumerate"] = /*@__PURE__*/ (<
             continuation,
           );
         },
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: MutableEnumeratorLike<T> & ObserverLike,
           next: T,
         ) {

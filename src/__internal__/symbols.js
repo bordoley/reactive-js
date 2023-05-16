@@ -85,11 +85,6 @@ export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EventListenerLike_notify = /*@__PURE__*/ symbol(
-  "EventListenerLike_notify",
-);
-
-/** @type {unique symbol} */
 export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
   "EventPublisherLike_listenerCount",
 );
@@ -107,11 +102,6 @@ export const __KeyedContainer_TKey = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol(
   "MulticastObservableLike_buffer",
-);
-
-/** @type {unique symbol} */
-export const __ObserverLike_notify = /*@__PURE__*/ symbol(
-  "ObserverLike_notify",
 );
 
 /** @type {unique symbol} */
@@ -196,6 +186,9 @@ export const __SchedulerLike_shouldYield = /*@__PURE__*/ symbol(
 export const __SchedulerLike_yield = /*@__PURE__*/ symbol(
   "SchedulerLike_yield",
 );
+
+/** @type {unique symbol} */
+export const __SinkLike_notify = /*@__PURE__*/ symbol("SinkLike_notify");
 
 /** @type {unique symbol} */
 export const __StoreLike_value = /*@__PURE__*/ symbol("StoreLike_value");

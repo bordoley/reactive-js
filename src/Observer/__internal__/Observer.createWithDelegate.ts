@@ -6,13 +6,13 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { bindMethod, none } from "../../functions.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      [ObserverLike_notify](next: T): void;
+      [SinkLike_notify](next: T): void;
     };
     return createInstanceFactory(
       mix(
@@ -22,15 +22,12 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
           delegate: ObserverLike<T>,
         ): ObserverLike<T> {
           init(Observer_mixin(), instance, delegate, delegate);
-          instance[ObserverLike_notify] = bindMethod(
-            delegate,
-            ObserverLike_notify,
-          );
+          instance[SinkLike_notify] = bindMethod(delegate, SinkLike_notify);
 
           return instance;
         },
         props<TProperties>({
-          [ObserverLike_notify]: none,
+          [SinkLike_notify]: none,
         }),
         {},
       ),

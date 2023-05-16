@@ -7,7 +7,7 @@ import Observable_liftEnumerableUpperBounded from "../../Observable/__internal__
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import { bindMethod, error, isSome, partial, pipe } from "../../functions.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, SinkLike_notify, } from "../../types.js";
 const DeferredObservable_repeatOrRetry = 
 /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
@@ -26,7 +26,7 @@ const DeferredObservable_repeatOrRetry =
             }
             else {
                 count++;
-                pipe(observable, Observable_forEach(bindMethod(delegate, ObserverLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable_addTo(delegate, { ignoreChildErrors: true }), Disposable_onDisposed(doOnDispose));
+                pipe(observable, Observable_forEach(bindMethod(delegate, SinkLike_notify)), Observable_subscribeWithConfig(delegate, delegate), Disposable_addTo(delegate, { ignoreChildErrors: true }), Disposable_onDisposed(doOnDispose));
             }
         };
         return pipe(Observer_createWithDelegate(delegate), Disposable_addTo(delegate, { ignoreChildErrors: true }), Disposable_onDisposed(doOnDispose));

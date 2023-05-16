@@ -18,7 +18,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
@@ -33,7 +33,7 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
     mix(
       include(Delegating_mixin(), Observer_mixin<T>()),
       function ThrowIfEmptyObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         factory: Factory<unknown>,
@@ -63,7 +63,7 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
         [__ThrowIfEmptyObserver_isEmpty]: true,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties &
             DisposableLike &
             DelegatingLike<ObserverLike<T>> &
@@ -73,7 +73,7 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
           Observer_assertState(this);
 
           this[__ThrowIfEmptyObserver_isEmpty] = false;
-          this[DelegatingLike_delegate][ObserverLike_notify](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

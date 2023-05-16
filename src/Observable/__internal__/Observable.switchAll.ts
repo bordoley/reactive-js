@@ -32,7 +32,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -70,7 +70,7 @@ const Observable_switchAll = <
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<CInner, T>>,
-            typeof ObserverLike_notify
+            typeof SinkLike_notify
           > &
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
@@ -91,7 +91,7 @@ const Observable_switchAll = <
           [__HigherOrderObservable_currentRef]: none,
         }),
         {
-          [ObserverLike_notify](
+          [SinkLike_notify](
             this: TProperties &
               ObserverLike<ContainerOf<CInner, T>> &
               SerialDisposableLike &
@@ -105,7 +105,7 @@ const Observable_switchAll = <
             ] = pipe(
               next,
               Observable_forEach(
-                bindMethod(this[DelegatingLike_delegate], ObserverLike_notify),
+                bindMethod(this[DelegatingLike_delegate], SinkLike_notify),
               ),
               Observable_subscribeWithConfig(
                 this[DelegatingLike_delegate],

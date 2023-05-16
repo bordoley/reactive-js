@@ -22,7 +22,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ZipObserver_enumerators, __ZipObserver_queuedEnumerator, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_observe, ObserverLike_notify, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../types.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -79,7 +79,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         [__ZipObserver_enumerators]: none,
         [__ZipObserver_queuedEnumerator]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
             const enumerators = this[__ZipObserver_enumerators];
@@ -87,7 +87,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
                 return;
             }
             const zippedNext = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));
-            this[DelegatingLike_delegate][ObserverLike_notify](zippedNext);
+            this[DelegatingLike_delegate][SinkLike_notify](zippedNext);
             if (shouldComplete(enumerators)) {
                 this[DisposableLike_dispose]();
             }

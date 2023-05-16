@@ -38,7 +38,6 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  EventListenerLike_notify,
   EventSourceLike,
   KeyedCollectionLike_get,
   MulticastObservableLike_buffer,
@@ -50,6 +49,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SinkLike_notify,
   StoreLike_value,
   StreamOf,
   StreamableLike,
@@ -444,7 +444,7 @@ export const createComponent = <TProps>(
 
     useEffect(() => {
       if (isSome(propsPublisher)) {
-        propsPublisher[EventListenerLike_notify](props);
+        propsPublisher[SinkLike_notify](props);
       }
     }, [propsPublisher, props]);
 

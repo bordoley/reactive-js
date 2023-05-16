@@ -13,7 +13,7 @@ import {
   MappingLike_selector,
 } from "../../__internal__/types.js";
 import { Function1, none } from "../../functions.js";
-import { ObserverLike, ObserverLike_notify } from "../../types.js";
+import { ObserverLike, SinkLike_notify } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 
@@ -25,7 +25,7 @@ const Observer_createMapObserver: <TA, TB>(
     mix(
       include(Observer_delegatingMixin<TA>(), Delegating_mixin()),
       function MapObserver(
-        instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
           MappingLike<TA, TB>,
         delegate: ObserverLike<TB>,
         selector: Function1<TA, TB>,
@@ -40,7 +40,7 @@ const Observer_createMapObserver: <TA, TB>(
         [MappingLike_selector]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: MappingLike<TA, TB> &
             DelegatingLike<ObserverLike<TB>> &
             ObserverLike<TA>,
@@ -49,7 +49,7 @@ const Observer_createMapObserver: <TA, TB>(
           Observer_assertState(this);
 
           const mapped = this[MappingLike_selector](next);
-          this[DelegatingLike_delegate][ObserverLike_notify](mapped);
+          this[DelegatingLike_delegate][SinkLike_notify](mapped);
         },
       },
     ),

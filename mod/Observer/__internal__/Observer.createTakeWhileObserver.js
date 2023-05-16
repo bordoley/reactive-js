@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __TakeWhileObserver_inclusive } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, PredicatedLike_predicate, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { DisposableLike_dispose, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createTakeWhileObserver = /*@__PURE__*/ (() => {
@@ -19,11 +19,11 @@ const Observer_createTakeWhileObserver = /*@__PURE__*/ (() => {
         [PredicatedLike_predicate]: none,
         [__TakeWhileObserver_inclusive]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             const satisfiesPredicate = this[PredicatedLike_predicate](next);
             if (satisfiesPredicate || this[__TakeWhileObserver_inclusive]) {
-                this[DelegatingLike_delegate][ObserverLike_notify](next);
+                this[DelegatingLike_delegate][SinkLike_notify](next);
             }
             if (!satisfiesPredicate) {
                 this[DisposableLike_dispose]();

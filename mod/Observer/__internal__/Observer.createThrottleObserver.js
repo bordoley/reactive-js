@@ -15,7 +15,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ThrottleObserver_durationFunction, __ThrottleObserver_durationSubscription, __ThrottleObserver_hasValue, __ThrottleObserver_mode, __ThrottleObserver_onNotify, __ThrottleObserver_value, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, SerialDisposableLike_current, } from "../../__internal__/types.js";
 import { invoke, none, pipe, } from "../../functions.js";
-import { DisposableLike_isDisposed, ObservableLike_observe, ObserverLike_notify, } from "../../types.js";
+import { DisposableLike_isDisposed, ObservableLike_observe, SinkLike_notify, } from "../../types.js";
 const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer, next) => {
         observer[__ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[__ThrottleObserver_durationFunction](next), Observable_forEach(observer[__ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]));
@@ -31,7 +31,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
                 const value = instance[__ThrottleObserver_value];
                 instance[__ThrottleObserver_value] = none;
                 instance[__ThrottleObserver_hasValue] = false;
-                delegate[ObserverLike_notify](value);
+                delegate[SinkLike_notify](value);
                 setupDurationSubscription(instance, value);
             }
         };
@@ -51,7 +51,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
         [__ThrottleObserver_mode]: "interval",
         [__ThrottleObserver_onNotify]: none,
     }), {
-        [ObserverLike_notify](next) {
+        [SinkLike_notify](next) {
             Observer_assertState(this);
             this[__ThrottleObserver_value] = next;
             this[__ThrottleObserver_hasValue] = true;

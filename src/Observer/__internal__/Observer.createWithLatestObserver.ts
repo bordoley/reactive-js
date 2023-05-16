@@ -26,7 +26,7 @@ import {
   DisposableLike_isDisposed,
   ObservableLike,
   ObserverLike,
-  ObserverLike_notify,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
@@ -40,7 +40,7 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function WithLatestLike(
-        instance: Pick<ObserverLike<TA>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
           WithLatestLike<TA, TB, T>,
         delegate: ObserverLike<T>,
         other: ObservableLike<TB>,
@@ -73,7 +73,7 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
         [__WithLatestLike_selector]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: WithLatestLike<TA, TB, T> &
             ObserverLike<TA> &
             DelegatingLike<ObserverLike<T>>,
@@ -89,7 +89,7 @@ const Observer_createWithLatestObserver: <TA, TB, T>(
               next,
               this[__WithLatestLike_otherLatest] as TB,
             );
-            this[DelegatingLike_delegate][ObserverLike_notify](result);
+            this[DelegatingLike_delegate][SinkLike_notify](result);
           }
         },
       },

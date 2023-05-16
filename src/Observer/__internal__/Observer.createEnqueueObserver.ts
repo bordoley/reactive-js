@@ -15,10 +15,10 @@ import {
 import { none } from "../../functions.js";
 import {
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_enqueue,
   SchedulerLike_requestYield,
+  SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
@@ -35,7 +35,7 @@ const Observer_createEnqueueObserver: <T>(
     mix(
       include(Observer_delegatingMixin(), Delegating_mixin()),
       function EnqueueObserver(
-        instance: Pick<ObserverLike<T>, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         queue: QueueableLike<T>,
@@ -50,7 +50,7 @@ const Observer_createEnqueueObserver: <T>(
         [__EnqueueObserver_queue]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: TProperties & DelegatingLike<ObserverLike<T>> & ObserverLike<T>,
           next: T,
         ) {
@@ -59,7 +59,7 @@ const Observer_createEnqueueObserver: <T>(
           if (!this[__EnqueueObserver_queue][QueueableLike_enqueue](next)) {
             this[SchedulerLike_requestYield]();
           }
-          this[DelegatingLike_delegate][ObserverLike_notify](next);
+          this[DelegatingLike_delegate][SinkLike_notify](next);
         },
       },
     ),

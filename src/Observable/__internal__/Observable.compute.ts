@@ -59,10 +59,10 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
-  ObserverLike_notify,
   RunnableLike,
   SchedulerLike_schedule,
   SharedObservableLike,
+  SinkLike_notify,
 } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";
@@ -559,7 +559,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         const shouldDispose = !hasOutstandingEffects || hasError;
 
         if (shouldNotify) {
-          observer[ObserverLike_notify](result as T);
+          observer[SinkLike_notify](result as T);
         }
 
         if (shouldDispose) {

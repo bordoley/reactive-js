@@ -48,10 +48,10 @@ import {
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
@@ -158,7 +158,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     mix(
       include(Observer_mixin(), Delegating_mixin()),
       function ZipObserver(
-        instance: Pick<ObserverLike, typeof ObserverLike_notify> &
+        instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly unknown[]>,
         enumerators: readonly (EnumeratorLike<any> & DisposableLike)[],
@@ -190,7 +190,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         [__ZipObserver_queuedEnumerator]: none,
       }),
       {
-        [ObserverLike_notify](
+        [SinkLike_notify](
           this: ObserverLike &
             TProperties &
             DelegatingLike<ObserverLike<readonly unknown[]>>,
@@ -210,7 +210,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
             ReadonlyArray_map(Enumerator_getCurrent),
           );
 
-          this[DelegatingLike_delegate][ObserverLike_notify](zippedNext);
+          this[DelegatingLike_delegate][SinkLike_notify](zippedNext);
 
           if (shouldComplete(enumerators)) {
             this[DisposableLike_dispose]();

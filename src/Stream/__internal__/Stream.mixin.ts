@@ -42,12 +42,12 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  ObserverLike_notify,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_inContinuation,
+  SinkLike_notify,
   StreamLike,
   StreamLike_scheduler,
 } from "../../types.js";
@@ -125,7 +125,7 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             const isDisposed = observer[DisposableLike_isDisposed];
 
             if (inContinuation && observerQueueIsEmpty && !isDisposed) {
-              observer[ObserverLike_notify](next);
+              observer[SinkLike_notify](next);
               return true;
             } else if (!isDisposed) {
               return observer[QueueableLike_enqueue](next);
