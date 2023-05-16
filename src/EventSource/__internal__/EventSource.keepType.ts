@@ -1,5 +1,5 @@
 import Container_keepType from "../../Container/__internal__/Container.keepType.js";
-import type * as EventSource from "./../../EventSource.js";
+import type * as EventSource from "../../EventSource.js";
 import EventSource_keep from "./EventSource.keep.js";
 
 const EventSource_keepType: EventSource.Signature["keepType"] =
