@@ -25,9 +25,13 @@
 
 ### Operator Functions
 
+- [forEach](Enumerator.md#foreach)
 - [keep](Enumerator.md#keep)
+- [keepType](Enumerator.md#keeptype)
 - [map](Enumerator.md#map)
+- [mapTo](Enumerator.md#mapto)
 - [pick](Enumerator.md#pick)
+- [scan](Enumerator.md#scan)
 
 ### Other Functions
 
@@ -175,6 +179,31 @@ ___
 
 ## Operator Functions
 
+### forEach
+
+▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
@@ -197,6 +226,29 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
 
 ___
 
@@ -227,6 +279,29 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
 
 #### Returns
 
@@ -298,6 +373,33 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `TAcc`\>
+
+Returns a Container that applies an accumulator function over the source,
+and emits each intermediate result.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `TAcc`\>
 
 ___
 
