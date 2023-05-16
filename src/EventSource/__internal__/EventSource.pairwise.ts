@@ -1,5 +1,5 @@
 import type * as EventSource from "../../EventSource.js";
-import Sink_forEachMixin from "../../Sink/__internal__/Sink.forEachMixin.js";
+import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -7,31 +7,29 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { SideEffect1, partial, pipe } from "../../functions.js";
+import { pipe, returns } from "../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_forEach: EventSource.Signature["forEach"] =
+const EventSource_pairwise: EventSource.Signature["pairwise"] =
   /*@__PURE__*/ (() => {
-    const createForEachEventListener: <T>(
-      delegate: EventListenerLike<T>,
-      effect: SideEffect1<T>,
+    const createPairwiseEventListener: <T>(
+      delegate: EventListenerLike<readonly [T, T]>,
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_forEachMixin()),
-          function ForEachEventListener(
+          include(Sink_pairwiseMixin()),
+          function PairwiseEventListener(
             instance: Pick<
               EventListenerLike<T>,
               typeof EventListenerLike_isErrorSafe
             >,
-            delegate: EventListenerLike<T>,
-            effect: SideEffect1<T>,
+            delegate: EventListenerLike<readonly [T, T]>,
           ): EventListenerLike<T> {
-            init(Sink_forEachMixin(), instance, delegate, effect);
+            init(Sink_pairwiseMixin<T>(), instance, delegate);
 
             return instance;
           },
@@ -42,8 +40,7 @@ const EventSource_forEach: EventSource.Signature["forEach"] =
         ),
       ))();
 
-    return <T>(effect: SideEffect1<T>) =>
-      pipe(createForEachEventListener, partial(effect), EventSource_lift);
+    return pipe(createPairwiseEventListener, EventSource_lift, returns);
   })();
 
-export default EventSource_forEach;
+export default EventSource_pairwise;

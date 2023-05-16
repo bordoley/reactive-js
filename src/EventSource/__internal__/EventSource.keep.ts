@@ -43,6 +43,6 @@ const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {
 
   return <T>(predicate: Predicate<T>) =>
     pipe(createKeepEventListener, partial(predicate), EventSource_lift);
-})() as EventSource.Signature["keep"];
+})();
 
 export default EventSource_keep;

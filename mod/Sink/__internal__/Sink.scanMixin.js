@@ -6,7 +6,7 @@ import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, ReducerAccumulatorLike_acc, ReducerAccumulatorLike_reducer, } from "../../__internal__/types.js";
 import { error, none, returns } from "../../functions.js";
 import { DisposableLike_dispose, SinkLike_notify, } from "../../types.js";
-const Sink_scanMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function ScanObserver(instance, delegate, reducer, initialValue) {
+const Sink_scanMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function ScanSinkMixin(instance, delegate, reducer, initialValue) {
     init(Disposable_delegatingMixin, instance, delegate);
     init(Delegating_mixin(), instance, delegate);
     instance[ReducerAccumulatorLike_reducer] = reducer;

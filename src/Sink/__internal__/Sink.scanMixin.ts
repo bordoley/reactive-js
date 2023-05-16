@@ -32,7 +32,7 @@ const Sink_scanMixin: <T, TAcc>() => Mixin3<
   returns(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
-      function ScanObserver(
+      function ScanSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> &
           ReducerAccumulatorLike<T, TAcc>,
         delegate: SinkLike<TAcc>,
