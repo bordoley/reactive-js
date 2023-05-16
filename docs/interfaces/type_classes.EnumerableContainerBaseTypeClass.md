@@ -15,7 +15,7 @@
 
 - **`EnumerableContainerBaseTypeClass`**
 
-  ↳ [`Signature`](Iterable.Signature.md)
+  ↳ [`IterableModule`](Iterable.IterableModule.md)
 
   ↳ [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)
 

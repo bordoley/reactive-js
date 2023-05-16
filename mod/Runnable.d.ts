@@ -2,7 +2,7 @@ import { Factory, Function1, SideEffect1 } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass, RunnableContainerTypeClass } from "./type-classes.js";
 import { DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainer, RunnableLike, SchedulerLike } from "./types.js";
 export type Type = RunnableContainer;
-export interface Signature extends RunnableContainerTypeClass<Type>, HigherOrderObservableBaseTypeClass<Type, Type> {
+export interface RunnableModule extends RunnableContainerTypeClass<Type>, HigherOrderObservableBaseTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableLike<T>;
@@ -15,6 +15,7 @@ export interface Signature extends RunnableContainerTypeClass<Type>, HigherOrder
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
 }
+export type Signature = RunnableModule;
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatWith: Signature["concatWith"];

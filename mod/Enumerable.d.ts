@@ -5,11 +5,12 @@ export type Type = EnumerableContainer;
 export interface DisposableEnumeratorType extends Container {
     readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> & DisposableLike;
 }
-export interface Signature extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
+export interface EnumerableModule extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
 }
+export type Signature = EnumerableModule;
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatWith: Signature["concatWith"];

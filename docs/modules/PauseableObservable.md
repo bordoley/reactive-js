@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/PauseableObservable.Signature.md)
+- [PauseableObservableModule](../interfaces/PauseableObservable.PauseableObservableModule.md)
 
 ### Type Aliases
 
+- [Signature](PauseableObservable.md#signature)
 - [Type](PauseableObservable.md#type)
 
 ### Operator Functions
@@ -26,6 +27,12 @@
 - [sinkInto](PauseableObservable.md#sinkinto)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`PauseableObservableModule`](../interfaces/PauseableObservable.PauseableObservableModule.md)
+
+___
 
 ### Type
 

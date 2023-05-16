@@ -17,7 +17,7 @@ import {
 
 export type Type = SharedObservableContainer;
 
-export interface Signature
+export interface SharedObservableModule
   extends HigherOrderObservableBaseTypeClass<
     Type,
     DeferredObservableContainer
@@ -29,6 +29,8 @@ export interface Signature
     },
   ): SharedObservableLike<T>;
 }
+
+export type Signature = SharedObservableModule;
 
 export const compute: Signature["compute"] = SharedObservable_compute;
 export const concatAll: Signature["concatAll"] = SharedObservable_concatAll;

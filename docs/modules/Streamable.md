@@ -6,7 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Streamable.Signature.md)
+- [StreamableModule](../interfaces/Streamable.StreamableModule.md)
+
+### Type Aliases
+
+- [Signature](Streamable.md#signature)
 
 ### Constructor Functions
 
@@ -20,6 +24,12 @@
 - [createEventHandler](Streamable.md#createeventhandler)
 - [createInMemoryCache](Streamable.md#createinmemorycache)
 - [createPersistentCache](Streamable.md#createpersistentcache)
+
+## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`StreamableModule`](../interfaces/Streamable.StreamableModule.md)
 
 ## Constructor Functions
 

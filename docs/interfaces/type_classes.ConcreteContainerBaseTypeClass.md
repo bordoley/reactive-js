@@ -14,9 +14,9 @@
 
 - **`ConcreteContainerBaseTypeClass`**
 
-  ↳ [`Signature`](Enumerator.Signature.md)
+  ↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
 
-  ↳ [`Signature`](Iterable.Signature.md)
+  ↳ [`IterableModule`](Iterable.IterableModule.md)
 
   ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
 

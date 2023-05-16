@@ -202,7 +202,7 @@ type AnyObservableLike<T> =
   | SharedObservableLike<T>
   | ObservableLike<T>;
 
-export interface Signature {
+export interface ObservableModule {
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
   ): RunnableLike<T>;
@@ -1271,6 +1271,8 @@ export interface Signature {
     SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>
   >;
 }
+
+export type Signature = ObservableModule;
 
 export const animate: Signature["animate"] = Observable_animate;
 export const backpressureStrategy: Signature["backpressureStrategy"] =

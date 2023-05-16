@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Dictionary.Signature.md)
+- [DictionaryModule](../interfaces/Dictionary.DictionaryModule.md)
 
 ### Type Aliases
 
+- [Signature](Dictionary.md#signature)
 - [TKeyBase](Dictionary.md#tkeybase)
 - [Type](Dictionary.md#type)
 
@@ -26,6 +27,12 @@
 - [values](Dictionary.md#values)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)
+
+___
 
 ### TKeyBase
 

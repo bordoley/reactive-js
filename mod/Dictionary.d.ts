@@ -2,7 +2,7 @@ import { Function1, SideEffect1, SideEffect2 } from "./functions.js";
 import { DictionaryContainer, DictionaryLike, EnumeratorLike, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
 export type Type<TKey = unknown> = DictionaryContainer<TKey>;
 export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
-export interface Signature<TKey extends TKeyBase = TKeyBase> {
+export interface DictionaryModule<TKey extends TKeyBase = TKeyBase> {
     /**
      *
      * @category Transform
@@ -38,6 +38,7 @@ export interface Signature<TKey extends TKeyBase = TKeyBase> {
      */
     values<T>(): Function1<DictionaryLike<TKey, T>, EnumeratorLike<T>>;
 }
+export type Signature = DictionaryModule;
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];

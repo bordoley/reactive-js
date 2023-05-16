@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/AsyncIterable.Signature.md)
+- [AsyncIterableModule](../interfaces/AsyncIterable.AsyncIterableModule.md)
 
 ### Type Aliases
 
+- [Signature](AsyncIterable.md#signature)
 - [Type](AsyncIterable.md#type)
 
 ### Functions
@@ -18,6 +19,12 @@
 - [toObservable](AsyncIterable.md#toobservable)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`AsyncIterableModule`](../interfaces/AsyncIterable.AsyncIterableModule.md)
+
+___
 
 ### Type
 

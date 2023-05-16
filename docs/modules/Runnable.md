@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Runnable.Signature.md)
+- [RunnableModule](../interfaces/Runnable.RunnableModule.md)
 
 ### Type Aliases
 
+- [Signature](Runnable.md#signature)
 - [Type](Runnable.md#type)
 
 ### Constructor Functions
@@ -71,6 +72,12 @@
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`RunnableModule`](../interfaces/Runnable.RunnableModule.md)
+
+___
 
 ### Type
 

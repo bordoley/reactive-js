@@ -13,7 +13,7 @@ import {
 
 export type Type = AsyncIterableContainer;
 
-export interface Signature {
+export interface AsyncIterableModule {
   // FIXME: should be defined on a typeclass
   flow<T>(
     scheduler: SchedulerLike,
@@ -25,6 +25,8 @@ export interface Signature {
 
   toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
 }
+
+export type Signature = AsyncIterableModule;
 
 export const flow: Signature["flow"] = AsyncIterable_flow;
 export const toObservable: Signature["toObservable"] =

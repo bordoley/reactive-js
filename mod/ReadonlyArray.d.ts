@@ -3,7 +3,7 @@ import { EnumerableContainerTypeClass, KeyedContainerTypeClass } from "./type-cl
 import { ContainerOperator, DisposableLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainerOperator, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyArrayContainer, RunnableLike, SchedulerLike } from "./types.js";
 export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
-export interface Signature extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
+export interface ReadonlyArrayModule extends KeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof KeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
     /**
      *
      * @category Transform
@@ -47,6 +47,7 @@ export interface Signature extends KeyedContainerTypeClass<Type>, Omit<Enumerabl
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
+export type Signature = ReadonlyArrayModule;
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

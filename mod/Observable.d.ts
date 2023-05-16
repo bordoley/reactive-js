@@ -56,7 +56,7 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 });
 type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
 type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | SharedObservableLike<T> | ObservableLike<T>;
-export interface Signature {
+export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
@@ -327,6 +327,7 @@ export interface Signature {
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>, i: MaybeSharedObservableLike<TI>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>>;
 }
+export type Signature = ObservableModule;
 export declare const animate: Signature["animate"];
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const concat: Signature["concat"];

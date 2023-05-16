@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Iterable.Signature.md)
+- [IterableModule](../interfaces/Iterable.IterableModule.md)
 
 ### Type Aliases
 
+- [Signature](Iterable.md#signature)
 - [Type](Iterable.md#type)
 
 ### Constructor Functions
@@ -26,6 +27,12 @@
 - [toReadonlyArray](Iterable.md#toreadonlyarray)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`IterableModule`](../interfaces/Iterable.IterableModule.md)
+
+___
 
 ### Type
 

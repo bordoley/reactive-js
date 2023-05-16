@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/SharedObservable.Signature.md)
+- [SharedObservableModule](../interfaces/SharedObservable.SharedObservableModule.md)
 
 ### Type Aliases
 
+- [Signature](SharedObservable.md#signature)
 - [Type](SharedObservable.md#type)
 
 ### Operator Functions
@@ -28,6 +29,12 @@
 - [compute](SharedObservable.md#compute)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`SharedObservableModule`](../interfaces/SharedObservable.SharedObservableModule.md)
+
+___
 
 ### Type
 

@@ -40,7 +40,7 @@ export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
 
 export type Type = DeferredObservableContainer;
 
-export interface Signature
+export interface DeferredObservableModule
   extends HigherOrderObservableBaseTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
@@ -80,6 +80,8 @@ export interface Signature
     },
   ): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
 }
+
+export type Signature = DeferredObservableModule;
 
 export const compute: Signature["compute"] = DeferredObservable_compute;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;

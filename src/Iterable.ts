@@ -12,7 +12,7 @@ import { EnumerableLike, IterableContainer, RunnableLike } from "./types.js";
 
 export type Type = IterableContainer;
 
-export interface Signature
+export interface IterableModule
   extends ConcreteContainerBaseTypeClass<Type>,
     BlockingContainerBaseTypeClass<Type>,
     EnumerableContainerBaseTypeClass<Type> {
@@ -22,6 +22,8 @@ export interface Signature
     readonly delayStart?: boolean;
   }): Function1<Iterable<T>, RunnableLike<T>>;
 }
+
+export type Signature = IterableModule;
 
 export const enumerate: Signature["enumerate"] = Iterable_enumerate;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =

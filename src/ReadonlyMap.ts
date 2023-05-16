@@ -23,16 +23,18 @@ export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface Signature<
+export interface ReadonlyMapModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
 > extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>,
     AssociativeKeyedContainerTypeClass<TType, TKey> {}
 
+export type Signature = ReadonlyMapModule;
+
 /**
  * @category Functor
  */
-export const CreateModule = <TKey extends TKeyBase>(): Signature<
+export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
   Type<TKey>,
   TKey
 > =>
@@ -52,7 +54,7 @@ export const CreateModule = <TKey extends TKeyBase>(): Signature<
     reduce: ReadonlyMap_reduce,
     reduceWithKey: ReadonlyMap_reduceWithKey,
     values: ReadonlyMap_values,
-  } as Signature<Type<TKey>, TKey>);
+  } as ReadonlyMapModule<Type<TKey>, TKey>);
 
 export const empty: Signature["empty"] = ReadonlyMap_empty;
 export const entries: Signature["entries"] = ReadonlyMap_entries;

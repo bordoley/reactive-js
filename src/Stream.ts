@@ -9,7 +9,7 @@ import {
   StreamLike,
 } from "./types.js";
 
-export interface Signature {
+export interface StreamModule {
   syncState<T>(
     onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
     onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
@@ -21,5 +21,7 @@ export interface Signature {
     },
   ): Function1<StreamLike<Updater<T>, T>, DisposableLike>;
 }
+
+export type Signature = StreamModule;
 
 export const syncState: Signature["syncState"] = Stream_syncState;

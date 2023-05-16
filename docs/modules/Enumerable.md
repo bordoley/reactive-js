@@ -7,10 +7,11 @@
 ### Interfaces
 
 - [DisposableEnumeratorType](../interfaces/Enumerable.DisposableEnumeratorType.md)
-- [Signature](../interfaces/Enumerable.Signature.md)
+- [EnumerableModule](../interfaces/Enumerable.EnumerableModule.md)
 
 ### Type Aliases
 
+- [Signature](Enumerable.md#signature)
 - [Type](Enumerable.md#type)
 
 ### Constructor Functions
@@ -66,6 +67,12 @@
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`EnumerableModule`](../interfaces/Enumerable.EnumerableModule.md)
+
+___
 
 ### Type
 
