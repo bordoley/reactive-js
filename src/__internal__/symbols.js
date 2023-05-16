@@ -388,16 +388,6 @@ export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __PairwiseSinkMixin_prev = /*@__PURE__*/ symbol(
-  "PairwiseSinkMixin_prev",
-);
-
-/** @type {unique symbol} */
-export const __PairwiseSinkMixin_hasPrev = /*@__PURE__*/ symbol(
-  "PairwiseSinkMixin_hasPrev",
-);
-
-/** @type {unique symbol} */
 export const __SchedulerImplementationMixin_currentContinuation =
   /*@__PURE__*/ symbol("SchedulerImplementationMixin_currentContinuation");
 
@@ -454,6 +444,14 @@ export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 /** @type {unique symbol} */
 export const __MappingLike_selector = /*@__PURE__*/ symbol(
   "MappingLike_selector",
+);
+
+/** @type {unique symbol} */
+export const __PairwiseLike_prev = /*@__PURE__*/ symbol("PairwiseLike_prev");
+
+/** @type {unique symbol} */
+export const __PairwiseLike_hasPrev = /*@__PURE__*/ symbol(
+  "PairwiseLike_hasPrev",
 );
 
 /** @type {unique symbol} */

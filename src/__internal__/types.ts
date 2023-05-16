@@ -29,6 +29,8 @@ import {
   __LiftedLike_source as LiftedLike_source,
   __MappingLike_selector as MappingLike_selector,
   __MutableKeyedCollectionLike_set as MutableKeyedCollectionLike_set,
+  __PairwiseLike_hasPrev as PairwiseLike_hasPrev,
+  __PairwiseLike_prev as PairwiseLike_prev,
   __PredicatedLike_predicate as PredicatedLike_predicate,
   __QueueLike_dequeue as QueueLike_dequeue,
   __QueueLike_head as QueueLike_head,
@@ -53,6 +55,8 @@ export {
   ContinuationSchedulerLike_schedule,
   DelegatingLike_delegate,
   MutableKeyedCollectionLike_set,
+  PairwiseLike_hasPrev,
+  PairwiseLike_prev,
   QueueLike_dequeue,
   QueueLike_head,
   SchedulerTaskLike_continuation,
@@ -155,6 +159,11 @@ export interface PredicatedLike<T> {
 export interface ReducerAccumulatorLike<T, TAcc> {
   [ReducerAccumulatorLike_acc]: TAcc;
   [ReducerAccumulatorLike_reducer]: Reducer<T, TAcc>;
+}
+
+export interface PairwiseLike<T> {
+  [PairwiseLike_prev]: T;
+  [PairwiseLike_hasPrev]: boolean;
 }
 
 export interface Lift<C extends Container> {

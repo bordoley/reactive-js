@@ -82,8 +82,6 @@ IndexedQueueMixin_values
 LazyInitEventMixin_eventPublisher
 ObserverMixin_dispatchSubscription
 ObserverMixin_isCompleted
-PairwiseSinkMixin_prev
-PairwiseSinkMixin_hasPrev
 SchedulerImplementationMixin_currentContinuation
 SchedulerImplementationMixin_startTime
 SchedulerImplementationMixin_yieldRequested
@@ -98,6 +96,8 @@ LiftedLike_source
 LiftedLike_operators
 ForEachLike_effect
 MappingLike_selector
+PairwiseLike_prev
+PairwiseLike_hasPrev
 PredicatedLike_predicate
 ReducerAccumulatorLike_acc
 ReducerAccumulatorLike_reducer

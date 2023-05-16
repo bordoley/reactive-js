@@ -163,10 +163,6 @@ export const __ObserverMixin_dispatchSubscription: unique symbol;
 /** @type {unique symbol} */
 export const __ObserverMixin_isCompleted: unique symbol;
 /** @type {unique symbol} */
-export const __PairwiseSinkMixin_prev: unique symbol;
-/** @type {unique symbol} */
-export const __PairwiseSinkMixin_hasPrev: unique symbol;
-/** @type {unique symbol} */
 export const __SchedulerImplementationMixin_currentContinuation: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerImplementationMixin_startTime: unique symbol;
@@ -192,6 +188,10 @@ export const __LiftedLike_operators: unique symbol;
 export const __ForEachLike_effect: unique symbol;
 /** @type {unique symbol} */
 export const __MappingLike_selector: unique symbol;
+/** @type {unique symbol} */
+export const __PairwiseLike_prev: unique symbol;
+/** @type {unique symbol} */
+export const __PairwiseLike_hasPrev: unique symbol;
 /** @type {unique symbol} */
 export const __PredicatedLike_predicate: unique symbol;
 /** @type {unique symbol} */
