@@ -17,6 +17,7 @@ import {
   ContainerOf,
   ContainerOperator,
   DeferredObservableContainer,
+  EnumerableLike,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
@@ -161,7 +162,7 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
   /**
    * @category Constructor
    */
-  //fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
 
   /**
    * @category Constructor

@@ -38,7 +38,7 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { Factory } from "./functions.js";
+import { Factory, identityLazy } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
@@ -85,6 +85,7 @@ export const first: Signature["first"] = Runnable_first;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   Observable_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;

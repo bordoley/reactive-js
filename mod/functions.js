@@ -39,6 +39,7 @@ export const decrementBy = (decr) => (x) => x - decr;
  * @returns `v`
  */
 export const identity = (v) => v;
+export const identityLazy = () => identity;
 /**
  * A function that always returns `undefined`.
  */

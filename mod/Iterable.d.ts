@@ -12,6 +12,7 @@ export interface IterableModule extends ConcreteContainerBaseTypeClass<Type>, Bl
 export type Signature = IterableModule;
 export declare const empty: Signature["empty"];
 export declare const enumerate: Signature["enumerate"];
+export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];

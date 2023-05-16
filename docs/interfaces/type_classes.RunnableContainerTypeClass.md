@@ -40,6 +40,7 @@
 
 - [concat](type_classes.RunnableContainerTypeClass.md#concat)
 - [empty](type_classes.RunnableContainerTypeClass.md#empty)
+- [fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
 - [fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
 - [fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
 - [fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
@@ -252,6 +253,26 @@ Return an Container that emits no items.
 #### Inherited from
 
 [DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[empty](type_classes.DeferredContainerTypeClass.md#empty)
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[DeferredContainerTypeClass](type_classes.DeferredContainerTypeClass.md).[fromEnumerable](type_classes.DeferredContainerTypeClass.md#fromenumerable)
 
 ___
 

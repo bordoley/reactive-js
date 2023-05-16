@@ -39,6 +39,7 @@
 
 - [concat](type_classes.EnumerableContainerTypeClass.md#concat)
 - [empty](type_classes.EnumerableContainerTypeClass.md#empty)
+- [fromEnumerable](type_classes.EnumerableContainerTypeClass.md#fromenumerable)
 - [fromEnumeratorFactory](type_classes.EnumerableContainerTypeClass.md#fromenumeratorfactory)
 - [fromFactory](type_classes.EnumerableContainerTypeClass.md#fromfactory)
 - [fromIterable](type_classes.EnumerableContainerTypeClass.md#fromiterable)
@@ -253,6 +254,26 @@ Return an Container that emits no items.
 #### Inherited from
 
 [ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+#### Inherited from
+
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
 
 ___
 

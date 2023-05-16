@@ -46,6 +46,7 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { identityLazy } from "./functions.js";
 export const compute = Runnable_compute;
 export const concat = Observable_concat;
 export const concatWith = Observable_concatWith;
@@ -62,6 +63,7 @@ export const first = Runnable_first;
 export const flatMapIterable = Observable_flatMapIterable;
 export const flow = Runnable_flow;
 export const forEach = Observable_forEach;
+export const fromEnumerable = identityLazy;
 export const fromEnumeratorFactory = Observable_fromEnumeratorFactory;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;

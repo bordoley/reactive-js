@@ -1,3 +1,4 @@
+import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
 import ReadonlyArray_concatMap from "./ReadonlyArray/__internal__/ReadonlyArray.concatMap.js";
@@ -152,6 +153,8 @@ export const flow: Signature["flow"] = ReadonlyArray_flow;
 export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
+export const fromEnumerable: Signature["fromEnumerable"] =
+  Enumerable_toReadonlyArray;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
   ReadonlyArray_fromEnumeratorFactory;
 export const fromFactory: Signature["fromFactory"] = ReadonlyArray_fromFactory;

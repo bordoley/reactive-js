@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
+import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
 import ReadonlyArray_concatMap from "./ReadonlyArray/__internal__/ReadonlyArray.concatMap.js";
@@ -61,6 +62,7 @@ export const flatMapIterable = ReadonlyArray_flatMapIterable;
 export const flow = ReadonlyArray_flow;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
+export const fromEnumerable = Enumerable_toReadonlyArray;
 export const fromEnumeratorFactory = ReadonlyArray_fromEnumeratorFactory;
 export const fromFactory = ReadonlyArray_fromFactory;
 export const fromIterable = ReadonlyArray_fromIterable;

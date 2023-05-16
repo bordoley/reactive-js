@@ -16,6 +16,7 @@
 ### Constructor Functions
 
 - [empty](Enumerator.md#empty)
+- [fromEnumerable](Enumerator.md#fromenumerable)
 - [fromEnumeratorFactory](Enumerator.md#fromenumeratorfactory)
 - [fromFactory](Enumerator.md#fromfactory)
 - [fromIterable](Enumerator.md#fromiterable)
@@ -75,6 +76,22 @@ Return an Container that emits no items.
 #### Returns
 
 [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
 
 ___
 

@@ -13,6 +13,7 @@ export type Signature = EnumeratorModule;
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const forEach: Signature["forEach"];
+export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];

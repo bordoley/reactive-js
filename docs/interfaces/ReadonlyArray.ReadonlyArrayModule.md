@@ -28,6 +28,7 @@
 
 - [concat](ReadonlyArray.ReadonlyArrayModule.md#concat)
 - [empty](ReadonlyArray.ReadonlyArrayModule.md#empty)
+- [fromEnumerable](ReadonlyArray.ReadonlyArrayModule.md#fromenumerable)
 - [fromEnumeratorFactory](ReadonlyArray.ReadonlyArrayModule.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.ReadonlyArrayModule.md#fromfactory)
 - [fromIterable](ReadonlyArray.ReadonlyArrayModule.md#fromiterable)
@@ -253,6 +254,26 @@ readonly `T`[]
 #### Inherited from
 
 Omit.empty
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
+
+#### Inherited from
+
+Omit.fromEnumerable
 
 ___
 
