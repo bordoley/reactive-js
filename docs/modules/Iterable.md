@@ -15,7 +15,13 @@
 
 ### Constructor Functions
 
+- [empty](Iterable.md#empty)
+- [fromEnumeratorFactory](Iterable.md#fromenumeratorfactory)
+- [fromFactory](Iterable.md#fromfactory)
+- [fromIterable](Iterable.md#fromiterable)
+- [fromOptional](Iterable.md#fromoptional)
 - [fromReadonlyArray](Iterable.md#fromreadonlyarray)
+- [fromValue](Iterable.md#fromvalue)
 
 ### Other Functions
 
@@ -24,6 +30,7 @@
 ### Transform Functions
 
 - [enumerate](Iterable.md#enumerate)
+- [toIterable](Iterable.md#toiterable)
 - [toReadonlyArray](Iterable.md#toreadonlyarray)
 
 ## Type Aliases
@@ -39,6 +46,88 @@ ___
 Ƭ **Type**: [`IterableContainer`](../interfaces/types.IterableContainer.md)
 
 ## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`\>(): `Iterable`<`T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`Iterable`<`T`\>
+
+___
+
+### fromEnumeratorFactory
+
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, `Iterable`<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, `Iterable`<`T`\>\>
+
+___
 
 ### fromReadonlyArray
 
@@ -61,6 +150,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `Iterable`<`T`\>\>
 
 ___
 
@@ -117,6 +222,24 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+
+___
+
+### toIterable
+
+▸ **toIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, `Iterable`<`T`\>\>
+
+Converts the Container to a `IterableLike`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, `Iterable`<`T`\>\>
 
 ___
 

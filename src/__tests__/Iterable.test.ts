@@ -1,5 +1,3 @@
-//import * as Iterable from "../Iterable.js";
+import * as Iterable from "../Iterable.js";
 
-export {};
-
-//((_: Iterable.Signature) => {})(Iterable);
+((_: Iterable.Signature) => {})(Iterable);

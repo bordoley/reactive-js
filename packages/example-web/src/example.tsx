@@ -343,10 +343,7 @@ const RxComponent = createComponent(
 
       const isAnimationRunning = __observe(animationGroupEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
-        pipe(
-          pauseableScheduler[PauseableLike_isPaused],
-          Store.toObservable(),
-        ),
+        pipe(pauseableScheduler[PauseableLike_isPaused], Store.toObservable()),
         pauseableScheduler,
       );
 
