@@ -1,6 +1,7 @@
 /// <reference types="./Observer.createSkipFirstObserver.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __SkipFirstObserver_count, __SkipFirstObserver_skipCount, } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -8,7 +9,8 @@ import { SinkLike_notify } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
 const Observer_createSkipFirstObserver = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Observer_delegatingMixin(), Delegating_mixin()), function SkipFirstObserver(instance, delegate, skipCount) {
+    return createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, Delegating_mixin()), function SkipFirstObserver(instance, delegate, skipCount) {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__SkipFirstObserver_skipCount] = skipCount;

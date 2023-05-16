@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
 import {
@@ -30,12 +31,17 @@ const Observer_createPairwiseObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin<T>(), Delegating_mixin()),
+      include(
+        Observer_delegatingMixin<T>(),
+        Disposable_delegatingMixin,
+        Delegating_mixin(),
+      ),
       function PairwiseObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly [T, T]>,
       ): ObserverLike<T> {
+        init(Disposable_delegatingMixin, instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
 

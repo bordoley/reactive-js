@@ -1,4 +1,3 @@
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Scheduler_delegatingMixin from "../../Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
   Mixin2,
@@ -7,9 +6,10 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { returns } from "../../functions.js";
+import { Function3, returns } from "../../functions.js";
 import {
   BufferLike_capacity,
+  DisposableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -28,24 +28,33 @@ const Observer_delegatingMixin: <T>() => Mixin2<
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;
-  }
+  },
+  DisposableLike
 > = /*@__PURE__*/ (<T>() =>
   returns(
-    mix(
-      include(
-        Observer_baseMixin(),
-        Scheduler_delegatingMixin,
-        Disposable_delegatingMixin,
-      ),
+    mix<
+      Function3<
+        DisposableLike,
+        ObserverLike,
+        {
+          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [BufferLike_capacity]: number;
+        },
+        TObserverDelegatingMixin<T>
+      >,
+      object,
+      object,
+      DisposableLike
+    >(
+      include(Observer_baseMixin(), Scheduler_delegatingMixin),
       function ObserverMixin(
-        instance: unknown,
+        instance: DisposableLike,
         delegate: ObserverLike,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
           readonly [BufferLike_capacity]: number;
         },
       ): TObserverDelegatingMixin<T> {
-        init(Disposable_delegatingMixin, instance, delegate);
         init(Scheduler_delegatingMixin, instance, delegate);
         init(Observer_baseMixin<T>(), instance, config);
 
