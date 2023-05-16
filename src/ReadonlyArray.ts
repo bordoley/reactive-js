@@ -67,7 +67,7 @@ export type Type = ReadonlyArrayContainer;
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface Signature
+export interface ReadonlyArrayModule
   extends KeyedContainerTypeClass<Type>,
     Omit<
       EnumerableContainerTypeClass<Type>,
@@ -129,6 +129,8 @@ export interface Signature
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
+
+export type Signature = ReadonlyArrayModule;
 
 export const concat: Signature["concat"] = ReadonlyArray_concat;
 export const concatAll: Signature["concatAll"] = ReadonlyArray_concatAll;

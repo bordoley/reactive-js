@@ -14,9 +14,9 @@
 
 - **`BlockingContainerBaseTypeClass`**
 
-  ↳ [`Signature`](Enumerator.Signature.md)
+  ↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
 
-  ↳ [`Signature`](Iterable.Signature.md)
+  ↳ [`IterableModule`](Iterable.IterableModule.md)
 
   ↳ [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)
 

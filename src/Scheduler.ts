@@ -8,7 +8,7 @@ import {
   VirtualTimeSchedulerLike,
 } from "./types.js";
 
-export interface Signature {
+export interface SchedulerModule {
   createHostScheduler(options?: {
     readonly maxYieldInterval?: number;
   }): SchedulerLike & DisposableLike;
@@ -21,6 +21,8 @@ export interface Signature {
     hostScheduler: SchedulerLike,
   ): PauseableSchedulerLike & DisposableLike;
 }
+
+export type Signature = SchedulerModule;
 
 export const createHostScheduler: Signature["createHostScheduler"] =
   Scheduler_createHostScheduler;

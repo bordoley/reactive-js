@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/EventSource.Signature.md)
+- [EventSourceModule](../interfaces/EventSource.EventSourceModule.md)
 
 ### Type Aliases
 
+- [Signature](EventSource.md#signature)
 - [Type](EventSource.md#type)
 
 ### Constructor Functions
@@ -32,6 +33,12 @@
 - [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`EventSourceModule`](../interfaces/EventSource.EventSourceModule.md)
+
+___
 
 ### Type
 

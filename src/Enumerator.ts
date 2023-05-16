@@ -19,7 +19,7 @@ import {
 
 export type Type = EnumeratorContainer;
 
-export interface Signature
+export interface EnumeratorModule
   extends ConcreteContainerBaseTypeClass<Type>,
     BlockingContainerBaseTypeClass<Type>,
     ContainerTypeClass<Type> {
@@ -29,6 +29,8 @@ export interface Signature
     readonly delayStart?: boolean;
   }): Function1<EnumeratorLike<T>, RunnableLike<T>>;
 }
+
+export type Signature = EnumeratorModule;
 
 export const empty: Signature["empty"] = Enumerator_empty;
 export const keep: Signature["keep"] = Enumerator_keep;

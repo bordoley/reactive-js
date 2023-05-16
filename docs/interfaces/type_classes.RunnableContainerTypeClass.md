@@ -20,7 +20,7 @@
 
   ↳ **`RunnableContainerTypeClass`**
 
-  ↳↳ [`Signature`](Runnable.Signature.md)
+  ↳↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
   ↳↳ [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)
 

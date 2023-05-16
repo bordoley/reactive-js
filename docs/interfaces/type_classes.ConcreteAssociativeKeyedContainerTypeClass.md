@@ -15,9 +15,9 @@
 
 - **`ConcreteAssociativeKeyedContainerTypeClass`**
 
-  ↳ [`Signature`](ReadonlyMap.Signature.md)
+  ↳ [`ReadonlyMapModule`](ReadonlyMap.ReadonlyMapModule.md)
 
-  ↳ [`Signature`](ReadonlyObjectMap.Signature.md)
+  ↳ [`ReadonlyObjectMapModule`](ReadonlyObjectMap.ReadonlyObjectMapModule.md)
 
 ## Table of contents
 

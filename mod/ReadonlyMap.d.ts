@@ -2,12 +2,13 @@ import { AssociativeKeyedContainerTypeClass, ConcreteAssociativeKeyedContainerTy
 import { KeyOf, ReadonlyMapContainer } from "./types.js";
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface Signature<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>, AssociativeKeyedContainerTypeClass<TType, TKey> {
+export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey>, AssociativeKeyedContainerTypeClass<TType, TKey> {
 }
+export type Signature = ReadonlyMapModule;
 /**
  * @category Functor
  */
-export declare const CreateModule: <TKey extends {}>() => Signature<Type<TKey>, TKey>;
+export declare const CreateModule: <TKey extends {}>() => ReadonlyMapModule<Type<TKey>, TKey>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const fromEntries: Signature["fromEntries"];

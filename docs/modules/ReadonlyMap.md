@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/ReadonlyMap.Signature.md)
+- [ReadonlyMapModule](../interfaces/ReadonlyMap.ReadonlyMapModule.md)
 
 ### Type Aliases
 
+- [Signature](ReadonlyMap.md#signature)
 - [TKeyBase](ReadonlyMap.md#tkeybase)
 - [Type](ReadonlyMap.md#type)
 
@@ -42,6 +43,12 @@
 - [values](ReadonlyMap.md#values)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`ReadonlyMapModule`](../interfaces/ReadonlyMap.ReadonlyMapModule.md)
+
+___
 
 ### TKeyBase
 
@@ -101,7 +108,7 @@ ___
 
 ### CreateModule
 
-▸ **CreateModule**<`TKey`\>(): [`Signature`](../interfaces/ReadonlyMap.Signature.md)<[`Type`](ReadonlyMap.md#type)<`TKey`\>, `TKey`\>
+▸ **CreateModule**<`TKey`\>(): [`ReadonlyMapModule`](../interfaces/ReadonlyMap.ReadonlyMapModule.md)<[`Type`](ReadonlyMap.md#type)<`TKey`\>, `TKey`\>
 
 #### Type parameters
 
@@ -111,7 +118,7 @@ ___
 
 #### Returns
 
-[`Signature`](../interfaces/ReadonlyMap.Signature.md)<[`Type`](ReadonlyMap.md#type)<`TKey`\>, `TKey`\>
+[`ReadonlyMapModule`](../interfaces/ReadonlyMap.ReadonlyMapModule.md)<[`Type`](ReadonlyMap.md#type)<`TKey`\>, `TKey`\>
 
 ___
 

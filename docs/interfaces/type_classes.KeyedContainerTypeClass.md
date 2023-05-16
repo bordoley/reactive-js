@@ -15,7 +15,7 @@
 
 - **`KeyedContainerTypeClass`**
 
-  ↳ [`Signature`](ReadonlyArray.Signature.md)
+  ↳ [`ReadonlyArrayModule`](ReadonlyArray.ReadonlyArrayModule.md)
 
   ↳ [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)
 

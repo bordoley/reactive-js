@@ -21,7 +21,7 @@
 
   ↳ **`EnumerableContainerTypeClass`**
 
-  ↳↳ [`Signature`](Enumerable.Signature.md)
+  ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
 ## Table of contents
 

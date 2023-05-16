@@ -61,7 +61,7 @@ import {
 
 export type Type = RunnableContainer;
 
-export interface Signature
+export interface RunnableModule
   extends RunnableContainerTypeClass<Type>,
     HigherOrderObservableBaseTypeClass<Type, Type> {
   compute<T>(
@@ -85,6 +85,8 @@ export interface Signature
     readonly capacity?: number;
   }): SideEffect1<RunnableLike<T>>;
 }
+
+export type Signature = RunnableModule;
 
 export const compute: Signature["compute"] = Runnable_compute;
 export const concat: Signature["concat"] = Observable_concat;

@@ -14,11 +14,11 @@
 
 - **`ContainerTypeClass`**
 
-  ↳ [`Signature`](Enumerator.Signature.md)
+  ↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
 
-  ↳ [`Signature`](EventSource.Signature.md)
+  ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
-  ↳ [`Signature`](PauseableObservable.Signature.md)
+  ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
   ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
 

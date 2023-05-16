@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/ReadonlyArray.Signature.md)
+- [ReadonlyArrayModule](../interfaces/ReadonlyArray.ReadonlyArrayModule.md)
 
 ### Type Aliases
 
+- [Signature](ReadonlyArray.md#signature)
 - [TKeyBase](ReadonlyArray.md#tkeybase)
 - [Type](ReadonlyArray.md#type)
 
@@ -73,6 +74,12 @@
 - [values](ReadonlyArray.md#values)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`ReadonlyArrayModule`](../interfaces/ReadonlyArray.ReadonlyArrayModule.md)
+
+___
 
 ### TKeyBase
 

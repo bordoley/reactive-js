@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Disposable.Signature.md)
+- [DisposableModule](../interfaces/Disposable.DisposableModule.md)
 
 ### Type Aliases
 
+- [Signature](Disposable.md#signature)
 - [Type](Disposable.md#type)
 
 ### Variables
@@ -32,6 +33,12 @@
 
 ## Type Aliases
 
+### Signature
+
+Ƭ **Signature**: [`DisposableModule`](../interfaces/Disposable.DisposableModule.md)
+
+___
+
 ### Type
 
 Ƭ **Type**: [`DisposableContainer`](../interfaces/types.DisposableContainer.md)
@@ -40,7 +47,7 @@
 
 ### disposed
 
-• `Const` **disposed**: [`Signature`](../interfaces/Disposable.Signature.md)[``"disposed"``]
+• `Const` **disposed**: [`Signature`](Disposable.md#signature)[``"disposed"``]
 
 ## Functions
 

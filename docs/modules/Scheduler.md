@@ -6,13 +6,23 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Scheduler.Signature.md)
+- [SchedulerModule](../interfaces/Scheduler.SchedulerModule.md)
+
+### Type Aliases
+
+- [Signature](Scheduler.md#signature)
 
 ### Functions
 
 - [createHostScheduler](Scheduler.md#createhostscheduler)
 - [createPausableScheduler](Scheduler.md#createpausablescheduler)
 - [createVirtualTimeScheduler](Scheduler.md#createvirtualtimescheduler)
+
+## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`SchedulerModule`](../interfaces/Scheduler.SchedulerModule.md)
 
 ## Functions
 

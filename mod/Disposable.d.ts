@@ -1,7 +1,7 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
 import { DisposableContainer, DisposableLike, SharedObservableLike } from "./types.js";
 export type Type = DisposableContainer;
-export interface Signature {
+export interface DisposableModule {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {
         readonly ignoreChildErrors?: boolean;
@@ -24,6 +24,7 @@ export interface Signature {
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>, Promise<TResult>>;
 }
+export type Signature = DisposableModule;
 export declare const add: Signature["add"];
 export declare const addTo: Signature["addTo"];
 export declare const bindTo: Signature["bindTo"];

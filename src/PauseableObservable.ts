@@ -18,7 +18,7 @@ import {
 
 export type Type = PauseableObservableContainer;
 
-export interface Signature extends ContainerTypeClass<Type> {
+export interface PauseableObservableModule extends ContainerTypeClass<Type> {
   enqueue<T>(queue: QueueableLike<T>): ContainerOperator<Type, T, T>;
 
   dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<Type, T, T>;
@@ -27,6 +27,8 @@ export interface Signature extends ContainerTypeClass<Type> {
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
 }
+
+export type Signature = PauseableObservableModule;
 
 export const dispatchTo: Signature["dispatchTo"] =
   PauseableObservable_dispatchTo;

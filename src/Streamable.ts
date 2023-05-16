@@ -28,7 +28,7 @@ import {
   StreamableLike,
 } from "./types.js";
 
-export interface Signature {
+export interface StreamableModule {
   /**
    * @category Constructor
    */
@@ -197,6 +197,8 @@ export interface Signature {
    */
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 }
+
+export type Signature = StreamableModule;
 
 export const create: Signature["create"] = Streamable_create;
 export const createEventHandler: Signature["createEventHandler"] =

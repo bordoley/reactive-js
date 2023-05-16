@@ -1,7 +1,7 @@
 import EventListener_create from "./EventListener/__internal__/EventListener.create.js";
 import { ErrorSafeEventListenerLike, EventListenerLike } from "./types.js";
 
-export interface Signature {
+export interface EventListenerModule {
   create<T>(
     notify: (this: EventListenerLike<T>, a: T) => void,
   ): EventListenerLike<T>;
@@ -16,5 +16,7 @@ export interface Signature {
     options?: { errorSafe?: boolean },
   ): EventListenerLike<T>;
 }
+
+export type Signature = EventListenerModule;
 
 export const create: Signature["create"] = EventListener_create;

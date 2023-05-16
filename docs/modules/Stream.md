@@ -6,11 +6,21 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Stream.Signature.md)
+- [StreamModule](../interfaces/Stream.StreamModule.md)
+
+### Type Aliases
+
+- [Signature](Stream.md#signature)
 
 ### Functions
 
 - [syncState](Stream.md#syncstate)
+
+## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`StreamModule`](../interfaces/Stream.StreamModule.md)
 
 ## Functions
 

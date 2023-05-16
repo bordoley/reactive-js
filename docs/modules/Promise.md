@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Promise.Signature.md)
+- [PromiseModule](../interfaces/Promise.PromiseModule.md)
 
 ### Type Aliases
 
+- [Signature](Promise.md#signature)
 - [Type](Promise.md#type)
 
 ### Functions
@@ -17,6 +18,12 @@
 - [toObservable](Promise.md#toobservable)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`PromiseModule`](../interfaces/Promise.PromiseModule.md)
+
+___
 
 ### Type
 

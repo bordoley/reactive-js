@@ -10,7 +10,7 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Observable.Signature.md)
+- [ObservableModule](../interfaces/Observable.ObservableModule.md)
 
 ### Type Aliases
 
@@ -18,6 +18,7 @@
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [EnumerableUpperBoundObservableOperator](Observable.md#enumerableupperboundobservableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
+- [Signature](Observable.md#signature)
 - [Type](Observable.md#type)
 
 ### Operator Functions
@@ -201,6 +202,12 @@ ___
 ##### Returns
 
 `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TIn`\> ? [`SharedObservableLike`](../interfaces/types.SharedObservableLike.md)<`TOut`\> : `never`
+
+___
+
+### Signature
+
+Ƭ **Signature**: [`ObservableModule`](../interfaces/Observable.ObservableModule.md)
 
 ___
 

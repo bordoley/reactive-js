@@ -15,11 +15,11 @@
 
 - **`HigherOrderObservableBaseTypeClass`**
 
-  ↳ [`Signature`](DeferredObservable.Signature.md)
+  ↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
 
-  ↳ [`Signature`](Runnable.Signature.md)
+  ↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
-  ↳ [`Signature`](SharedObservable.Signature.md)
+  ↳ [`SharedObservableModule`](SharedObservable.SharedObservableModule.md)
 
 ## Table of contents
 

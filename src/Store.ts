@@ -10,11 +10,13 @@ import {
 
 export type Type = StoreContainer;
 
-export interface Signature {
+export interface StoreModule {
   create<T>(initialValue: T): WritableStoreLike<T>;
 
   toObservable<T>(): Function1<StoreLike<T>, SharedObservableLike<T>>;
 }
+
+export type Signature = StoreModule;
 
 export const create: Signature["create"] = Store_create;
 export const toObservable: Signature["toObservable"] = Store_toObservable;

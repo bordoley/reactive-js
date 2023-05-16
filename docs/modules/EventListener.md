@@ -6,11 +6,21 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/EventListener.Signature.md)
+- [EventListenerModule](../interfaces/EventListener.EventListenerModule.md)
+
+### Type Aliases
+
+- [Signature](EventListener.md#signature)
 
 ### Functions
 
 - [create](EventListener.md#create)
+
+## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`EventListenerModule`](../interfaces/EventListener.EventListenerModule.md)
 
 ## Functions
 

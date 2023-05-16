@@ -28,7 +28,7 @@ import {
 
 export type Type = DisposableContainer;
 
-export interface Signature {
+export interface DisposableModule {
   readonly disposed: DisposableLike;
 
   add<TDisposable extends DisposableLike>(
@@ -100,6 +100,8 @@ export interface Signature {
     Promise<TResult>
   >;
 }
+
+export type Signature = DisposableModule;
 
 export const add: Signature["add"] = Disposable_add;
 export const addTo: Signature["addTo"] = Disposable_addTo;

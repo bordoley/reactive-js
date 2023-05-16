@@ -22,7 +22,7 @@ import {
 
 export type Type = EventSourceContainer;
 
-export interface Signature extends ContainerTypeClass<Type> {
+export interface EventSourceModule extends ContainerTypeClass<Type> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
@@ -49,6 +49,8 @@ export interface Signature extends ContainerTypeClass<Type> {
 
   toObservable<T>(): Function1<EventSourceLike<T>, SharedObservableLike<T>>;
 }
+
+export type Signature = EventSourceModule;
 
 export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;

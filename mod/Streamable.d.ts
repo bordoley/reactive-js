@@ -4,7 +4,7 @@ import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/
 import type Streamable_createCache from "./Streamable/__internal__/Streamable.createCache.js";
 import { Equality, Factory, Function1, Optional, Updater } from "./functions.js";
 import { ContainerOperator, DeferredObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
-export interface Signature {
+export interface StreamableModule {
     /**
      * @category Constructor
      */
@@ -79,6 +79,7 @@ export interface Signature {
      */
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 }
+export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const createEventHandler: Signature["createEventHandler"];
 export declare const createAnimationGroupEventHandler: Signature["createAnimationGroupEventHandler"];

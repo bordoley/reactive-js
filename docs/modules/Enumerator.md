@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Enumerator.Signature.md)
+- [EnumeratorModule](../interfaces/Enumerator.EnumeratorModule.md)
 
 ### Type Aliases
 
+- [Signature](Enumerator.md#signature)
 - [Type](Enumerator.md#type)
 
 ### Constructor Functions
@@ -31,6 +32,12 @@
 - [toReadonlyArray](Enumerator.md#toreadonlyarray)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`EnumeratorModule`](../interfaces/Enumerator.EnumeratorModule.md)
+
+___
 
 ### Type
 

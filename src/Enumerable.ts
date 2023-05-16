@@ -57,7 +57,7 @@ export interface DisposableEnumeratorType extends Container {
     DisposableLike;
 }
 
-export interface Signature
+export interface EnumerableModule
   extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
   compute<T>(
     computation: Factory<T>,
@@ -66,6 +66,8 @@ export interface Signature
     },
   ): EnumerableLike<T>;
 }
+
+export type Signature = EnumerableModule;
 
 export const compute: Signature["compute"] = Enumerable_compute;
 export const concat: Signature["concat"] = Observable_concat;

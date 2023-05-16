@@ -6,10 +6,11 @@
 
 ### Interfaces
 
-- [Signature](../interfaces/Store.Signature.md)
+- [StoreModule](../interfaces/Store.StoreModule.md)
 
 ### Type Aliases
 
+- [Signature](Store.md#signature)
 - [Type](Store.md#type)
 
 ### Functions
@@ -18,6 +19,12 @@
 - [toObservable](Store.md#toobservable)
 
 ## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`StoreModule`](../interfaces/Store.StoreModule.md)
+
+___
 
 ### Type
 
