@@ -108,7 +108,7 @@ export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
   ? DeferredObservableLike<TOut>
   : TObservableIn extends SharedObservableLike<TIn>
   ? SharedObservableLike<TOut>
-  : never;
+  : ObservableLike<TOut>;
 
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
@@ -120,7 +120,7 @@ export type RunnableUpperBoundObservableOperator<TIn, TOut> = <
   ? DeferredObservableLike<TOut>
   : TObservableIn extends SharedObservableLike<TIn>
   ? SharedObservableLike<TOut>
-  : never;
+  : ObservableLike<TOut>;
 
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
@@ -130,7 +130,7 @@ export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   ? DeferredObservableLike<TOut>
   : TObservableIn extends SharedObservableLike<TIn>
   ? SharedObservableLike<TOut>
-  : never;
+  : ObservableLike<TOut>;
 
 export type Type = ObservableContainer;
 
@@ -673,14 +673,7 @@ export interface ObservableModule {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): Function1<DeferredObservableLike<T>, DeferredObservableLike<T>>;
-  subscribeOn<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<SharedObservableLike<T>, SharedObservableLike<T>>;
+  ): DeferredObservableUpperBoundObservableOperator<T, T>;
 
   takeFirst<T>(options?: {
     readonly count?: number;

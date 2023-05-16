@@ -1,12 +1,17 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
+import DeferredObservable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import EventSource_lazyInitPublisherMixin from "../../EventSource/__internal__/EventSource.lazyInitPublisherMixin.js";
-import Observable_backpressureStrategy from "../../Observable/__internal__/Observable.backpressureStrategy.js";
+import type * as Observable from "../../Observable.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
+import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
+import Scheduler_createPausableScheduler from "../../Scheduler/__internal__/Scheduler.createPausableScheduler.js";
 import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import {
@@ -20,9 +25,10 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Updater, compose, none, pipe } from "../../functions.js";
+import { invoke, none, pipe } from "../../functions.js";
 import {
   ContainerOperator,
+  DeferredObservableLike,
   DisposableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
@@ -43,7 +49,7 @@ import {
 } from "../../types.js";
 
 const PauseableObservable_create: <T>(
-  op: ContainerOperator<DeferredObservable.Type, boolean, T>,
+  op: ContainerOperator<Observable.Type, boolean, T>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -63,29 +69,58 @@ const PauseableObservable_create: <T>(
       ),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: ContainerOperator<DeferredObservable.Type, boolean, T>,
+        op: ContainerOperator<Observable.Type, boolean, T>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): PauseableObservableLike<T> & DisposableLike {
-        const liftedOp: ContainerOperator<DeferredObservable.Type, boolean, T> =
-          compose(
-            Observable_backpressureStrategy<boolean | Updater<boolean>>(
-              1,
-              "drop-oldest",
-            ),
-            Observable_mergeWith<boolean>(
-              // Initialize to paused state
-              pipe(true, Optional_toObservable()),
-            ),
-            Observable_distinctUntilChanged<boolean>(),
-            Observable_forEach((isPaused: boolean) => {
-              instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
-            }),
-            op,
-          );
+        const liftedOp = (mode: DeferredObservableLike<boolean>) =>
+          Observable_create(observer => {
+            const pauseableScheduler = pipe(
+              observer,
+              Scheduler_createPausableScheduler,
+              Disposable_addTo(observer),
+            );
+
+            const multicastedMode = pipe(
+              mode,
+              Observable_mergeWith<boolean>(
+                // Initialize to paused state
+                pipe(true, Optional_toObservable()),
+              ),
+              Observable_distinctUntilChanged<boolean>(),
+              DeferredObservable_multicast(observer, {
+                replay: 1,
+                capacity: 1,
+                backpressureStrategy: "drop-oldest",
+              }),
+              Disposable_addTo(observer),
+            );
+
+            pipe(
+              multicastedMode,
+              Observable_forEach((isPaused: boolean) => {
+                instance[PauseableLike_isPaused][StoreLike_value] = isPaused;
+
+                if (isPaused) {
+                  pauseableScheduler[PauseableLike_pause]();
+                } else {
+                  pauseableScheduler[PauseableLike_resume]();
+                }
+              }),
+              Observable_subscribe(observer),
+              Disposable_addTo(observer),
+            );
+
+            pipe(
+              multicastedMode,
+              op,
+              Observable_subscribeOn(pauseableScheduler),
+              invoke(ObservableLike_observe, observer),
+            );
+          });
 
         const stream = Stream_create(liftedOp, scheduler, multicastOptions);
         init(Disposable_delegatingMixin, instance, stream);

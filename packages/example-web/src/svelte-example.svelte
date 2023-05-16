@@ -28,7 +28,7 @@ import * as Store from "@reactive-js/core/Store";
   const isPaused = pipe(
     counter[PauseableLike_isPaused],
     // FIXME: Maybe we should add a function to avoid the need for scheduling?
-    Store.toSharedObservable(),
+    Store.toObservable(),
     subscribe(scheduler),
   );
 

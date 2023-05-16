@@ -80,7 +80,7 @@ const Measure = () => {
         Observable.forkMerge<DeferredObservableLike<number>, number, number>(
           compose(
             Observable.withLatestFrom<number, number, [number, number]>(
-              pipeSome(animation, EventSource.toSharedObservable()) ??
+              pipeSome(animation, EventSource.toObservable()) ??
                 Observable.never<number>(),
               (boxWidth, currentWidth) => [boxWidth, currentWidth],
             ),
@@ -101,7 +101,7 @@ const Measure = () => {
     useObserve(
       pipeSomeLazy(
         animation,
-        EventSource.toSharedObservable(),
+        EventSource.toObservable(),
         Observable.throttle(50),
         Observable.map(Math.floor),
       ),
