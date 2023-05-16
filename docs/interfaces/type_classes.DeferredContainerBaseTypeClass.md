@@ -32,7 +32,9 @@
 ### Operator Methods
 
 - [endWith](type_classes.DeferredContainerBaseTypeClass.md#endwith)
+- [flatMapIterable](type_classes.DeferredContainerBaseTypeClass.md#flatmapiterable)
 - [startWith](type_classes.DeferredContainerBaseTypeClass.md#startwith)
+- [takeLast](type_classes.DeferredContainerBaseTypeClass.md#takelast)
 - [zipWith](type_classes.DeferredContainerBaseTypeClass.md#zipwith)
 
 ## Operator Properties
@@ -388,6 +390,29 @@ ___
 
 ___
 
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
 ### startWith
 
 ▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
@@ -404,6 +429,31 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 
