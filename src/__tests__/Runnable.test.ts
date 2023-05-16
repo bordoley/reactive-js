@@ -21,11 +21,11 @@ testModule(
       "when the initial observable never disposes",
       pipeLazy(
         [
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([4, 5, 6], Observable.fromReadonlyArray()),
-          pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 2 })),
+          pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 3 })),
+          pipe([4, 5, 6], Runnable.fromReadonlyArray()),
+          pipe([7, 8, 9], Runnable.fromReadonlyArray({ delay: 2 })),
         ],
-        Observable.fromReadonlyArray({ delay: 5 }),
+        Runnable.fromReadonlyArray({ delay: 5 }),
         Runnable.exhaust(),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 7, 8, 9]),
@@ -40,11 +40,11 @@ testModule(
         Observable.merge(
           pipe(
             [0, 2, 3, 5, 6],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+            Runnable.fromReadonlyArray({ delay: 1, delayStart: true }),
           ),
           pipe(
             [1, 4, 7],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+            Runnable.fromReadonlyArray({ delay: 2, delayStart: true }),
           ),
         ),
         Runnable.toReadonlyArray(),
@@ -56,7 +56,7 @@ testModule(
       pipeLazy(
         pipeLazy(
           Observable.merge(
-            pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })),
+            pipe([1, 4, 7], Runnable.fromReadonlyArray({ delay: 2 })),
             Observable.throws({ delay: 5 }),
           ),
           Runnable.toReadonlyArray(),
@@ -92,9 +92,9 @@ testModule(
       "concating arrays",
       pipeLazy(
         [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 1 }),
+        Runnable.fromReadonlyArray({ delay: 1 }),
         Runnable.switchMap(_ =>
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 0 })),
+          pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 0 })),
         ),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
@@ -104,9 +104,9 @@ testModule(
       "overlapping notification",
       pipeLazy(
         [none, none, none],
-        Observable.fromReadonlyArray({ delay: 4 }),
+        Runnable.fromReadonlyArray({ delay: 4 }),
         Runnable.switchMap(_ =>
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+          pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 2 })),
         ),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),

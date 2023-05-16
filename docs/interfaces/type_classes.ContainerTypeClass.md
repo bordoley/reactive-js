@@ -20,7 +20,7 @@
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
-  ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
+  ↳ [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)
 
 ## Table of contents
 

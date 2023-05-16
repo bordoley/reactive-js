@@ -18,7 +18,7 @@
 
   ↳ [`IterableModule`](Iterable.IterableModule.md)
 
-  ↳ [`DeferredContainerTypeClass`](type_classes.DeferredContainerTypeClass.md)
+  ↳ [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)
 
   ↳ [`EnumerableContainerTypeClass`](type_classes.EnumerableContainerTypeClass.md)
 

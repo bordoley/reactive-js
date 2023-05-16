@@ -15,6 +15,7 @@ import Observable_forEach from "./Observable/__internal__/Observable.forEach.js"
 import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -27,6 +28,7 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -38,7 +40,7 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { Factory, identityLazy } from "./functions.js";
+import { Factory, Updater, identityLazy } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
@@ -65,6 +67,13 @@ export interface EnumerableModule
       mode?: "batched" | "combine-latest";
     },
   ): EnumerableLike<T>;
+
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): EnumerableLike<T>;
+
+  throws<T>(): EnumerableLike<T>;
 }
 
 export type Signature = EnumerableModule;
@@ -94,6 +103,7 @@ export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
+export const generate: Signature["generate"] = Observable_generate;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];
@@ -111,6 +121,7 @@ export const startWith: Signature["startWith"] = Observable_startWith;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const throws: Signature["throws"] = Observable_throws;
 export const toIterable: Signature["toIterable"] = Enumerable_toIterable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Enumerable_toReadonlyArray;

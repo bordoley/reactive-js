@@ -1,4 +1,4 @@
-import { Factory } from "./functions.js";
+import { Factory, Updater } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
 import { Container, Container_T, Container_type, DisposableLike, EnumerableContainer, EnumerableLike, EnumeratorLike } from "./types.js";
 export type Type = EnumerableContainer;
@@ -9,6 +9,8 @@ export interface EnumerableModule extends EnumerableContainerTypeClass<Type, Dis
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
+    generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
+    throws<T>(): EnumerableLike<T>;
 }
 export type Signature = EnumerableModule;
 export declare const compute: Signature["compute"];
@@ -32,6 +34,7 @@ export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
+export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const last: Signature["last"];
@@ -48,6 +51,7 @@ export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const throws: Signature["throws"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const zip: Signature["zip"];
