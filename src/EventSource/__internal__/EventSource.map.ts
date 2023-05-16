@@ -43,6 +43,6 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
 
   return <TA, TB>(selector: Function1<TA, TB>) =>
     pipe(createMapEventListener, partial(selector), EventSource_lift);
-})() as EventSource.Signature["map"];
+})();
 
 export default EventSource_map;

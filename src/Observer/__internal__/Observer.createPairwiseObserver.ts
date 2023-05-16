@@ -1,77 +1,33 @@
-import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_delegatingMixin from "../../Observer/__internal__/Observer.delegatingMixin.js";
+import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  __PairwiseObserver_hasPrev,
-  __PairwiseObserver_prev,
-} from "../../__internal__/symbols.js";
-import {
-  DelegatingLike,
-  DelegatingLike_delegate,
-} from "../../__internal__/types.js";
-import { none } from "../../functions.js";
-import { ObserverLike, SinkLike_notify } from "../../types.js";
+import { ObserverLike } from "../../types.js";
+import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 
 const Observer_createPairwiseObserver: <T>(
   delegate: ObserverLike<readonly [T, T]>,
-) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    [__PairwiseObserver_prev]: T;
-    [__PairwiseObserver_hasPrev]: boolean;
-  };
-
-  return createInstanceFactory(
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
     mix(
-      include(
-        Observer_delegatingMixin<T>(),
-        Disposable_delegatingMixin,
-        Delegating_mixin(),
-      ),
+      include(Observer_delegatingMixin<T>(), Sink_pairwiseMixin()),
       function PairwiseObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
+        instance: unknown,
         delegate: ObserverLike<readonly [T, T]>,
       ): ObserverLike<T> {
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Sink_pairwiseMixin<T>(), instance, delegate);
         init(Observer_delegatingMixin(), instance, delegate, delegate);
-        init(Delegating_mixin(), instance, delegate);
 
         return instance;
       },
-      props<TProperties>({
-        [__PairwiseObserver_prev]: none,
-        [__PairwiseObserver_hasPrev]: false,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties &
-            DelegatingLike<ObserverLike<readonly [T, T]>> &
-            ObserverLike<T>,
-          next: T,
-        ) {
-          Observer_assertState(this);
-
-          const prev = this[__PairwiseObserver_prev];
-
-          if (this[__PairwiseObserver_hasPrev]) {
-            this[DelegatingLike_delegate][SinkLike_notify]([prev, next]);
-          }
-
-          this[__PairwiseObserver_hasPrev] = true;
-          this[__PairwiseObserver_prev] = next;
-        },
-      },
+      props({}),
+      Observer_decorateNotifyWithStateAssert(Sink_pairwiseMixin<T>()),
     ),
-  );
-})();
+  ))();
 
 export default Observer_createPairwiseObserver;

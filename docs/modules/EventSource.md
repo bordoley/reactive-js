@@ -28,7 +28,12 @@
 - [keepType](EventSource.md#keeptype)
 - [map](EventSource.md#map)
 - [mapTo](EventSource.md#mapto)
+- [pairwise](EventSource.md#pairwise)
 - [pick](EventSource.md#pick)
+- [scan](EventSource.md#scan)
+- [skipFirst](EventSource.md#skipfirst)
+- [takeFirst](EventSource.md#takefirst)
+- [takeWhile](EventSource.md#takewhile)
 
 ### Other Functions
 
@@ -277,6 +282,22 @@ ___
 
 ___
 
+### pairwise
+
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, readonly [`T`, `T`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, readonly [`T`, `T`]\>
+
+___
+
 ### pick
 
 ▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKey`]\>
@@ -341,6 +362,111 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### scan
+
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `TAcc`\>
+
+Returns a Container that applies an accumulator function over the source,
+and emits each intermediate result.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `TAcc`\>
+
+___
+
+### skipFirst
+
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+Returns a Container that skips the first count items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+___
+
+### takeFirst
+
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+___
+
+### takeWhile
+
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
+
+Returns a Container which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, `T`\>
 
 ___
 

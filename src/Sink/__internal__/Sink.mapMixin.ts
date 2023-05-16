@@ -26,7 +26,7 @@ const Sink_mapMixin: <TA, TB>() => Mixin2<
   returns(
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
-      function MapEventListener(
+      function MapSinkMixin(
         instance: Pick<SinkLike<TA>, typeof SinkLike_notify> &
           MappingLike<TA, TB>,
         delegate: SinkLike<TB>,

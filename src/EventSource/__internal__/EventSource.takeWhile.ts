@@ -1,5 +1,5 @@
 import type * as EventSource from "../../EventSource.js";
-import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
+import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -7,35 +7,38 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { Equality, partial, pipe, strictEquality } from "../../functions.js";
+import { Predicate, partial, pipe } from "../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
 } from "../../types.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChanged"] =
+const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
   /*@__PURE__*/ (() => {
-    const createDistinctUntilChangedEventListener: <T>(
+    const createTakeWhileEventListener: <T>(
       delegate: EventListenerLike<T>,
-      equality: Equality<T>,
+      predicate: Predicate<T>,
+      inclusive: boolean,
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_distinctUntilChangedMixin()),
-          function distinctUntilChangedEventListener(
+          include(Sink_takeWhileMixin()),
+          function TakeWhileEventListener(
             instance: Pick<
               EventListenerLike<T>,
               typeof EventListenerLike_isErrorSafe
             >,
             delegate: EventListenerLike<T>,
-            equality: Equality<T>,
+            predicate: Predicate<T>,
+            inclusive: boolean,
           ): EventListenerLike<T> {
             init(
-              Sink_distinctUntilChangedMixin<T>(),
+              Sink_takeWhileMixin<T>(),
               instance,
               delegate,
-              equality,
+              predicate,
+              inclusive,
             );
 
             return instance;
@@ -47,15 +50,17 @@ const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChan
         ),
       ))();
 
-    return <T>(options: { equality?: Equality<T> } = {}) => {
-      const { equality = strictEquality } = options ?? {};
-
+    return <T>(
+      predicate: Predicate<T>,
+      options: { readonly inclusive?: boolean } = {},
+    ) => {
+      const { inclusive = false } = options;
       return pipe(
-        createDistinctUntilChangedEventListener<T>,
-        partial(equality),
+        createTakeWhileEventListener<T>,
+        partial(predicate, inclusive),
         EventSource_lift,
       );
     };
   })();
 
-export default EventSource_distinctUntilChanged;
+export default EventSource_takeWhile;
