@@ -36,8 +36,6 @@
 
 ### Event Interfaces
 
-- [ErrorSafeEventListenerLike](../interfaces/types.ErrorSafeEventListenerLike.md)
-- [EventListenerLike](../interfaces/types.EventListenerLike.md)
 - [EventPublisherLike](../interfaces/types.EventPublisherLike.md)
 - [EventSourceLike](../interfaces/types.EventSourceLike.md)
 - [StoreLike](../interfaces/types.StoreLike.md)
@@ -54,9 +52,15 @@
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
-### Other Interfaces
+### Obsevable Interfaces
 
-- [SinkLike](../interfaces/types.SinkLike.md)
+- [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
+- [MulticastObservableLike](../interfaces/types.MulticastObservableLike.md)
+- [ObservableLike](../interfaces/types.ObservableLike.md)
+- [PauseableObservableLike](../interfaces/types.PauseableObservableLike.md)
+- [PublisherLike](../interfaces/types.PublisherLike.md)
+- [RunnableLike](../interfaces/types.RunnableLike.md)
+- [SharedObservableLike](../interfaces/types.SharedObservableLike.md)
 
 ### Queueing Interfaces
 
@@ -67,14 +71,10 @@
 
 ### Reactive Interfaces
 
-- [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
-- [MulticastObservableLike](../interfaces/types.MulticastObservableLike.md)
-- [ObservableLike](../interfaces/types.ObservableLike.md)
+- [ErrorSafeEventListenerLike](../interfaces/types.ErrorSafeEventListenerLike.md)
+- [EventListenerLike](../interfaces/types.EventListenerLike.md)
 - [ObserverLike](../interfaces/types.ObserverLike.md)
-- [PauseableObservableLike](../interfaces/types.PauseableObservableLike.md)
-- [PublisherLike](../interfaces/types.PublisherLike.md)
-- [RunnableLike](../interfaces/types.RunnableLike.md)
-- [SharedObservableLike](../interfaces/types.SharedObservableLike.md)
+- [SinkLike](../interfaces/types.SinkLike.md)
 
 ### Resource Management Interfaces
 
