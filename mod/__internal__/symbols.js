@@ -44,8 +44,6 @@ export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLi
 /** @type {unique symbol} */
 export const __KeyedContainer_TKey = /*@__PURE__*/ symbol("KeyedContainer_TKey");
 /** @type {unique symbol} */
-export const __MulticastObservableLike_buffer = /*@__PURE__*/ symbol("MulticastObservableLike_buffer");
-/** @type {unique symbol} */
 export const __ObservableLike_observe = /*@__PURE__*/ symbol("ObservableLike_observe");
 /** @type {unique symbol} */
 export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol("ObservableLike_isDeferred");
@@ -65,6 +63,8 @@ export const __PublisherLike_observerCount = /*@__PURE__*/ symbol("PublisherLike
 export const __QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
 /** @type {unique symbol} */
 export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol("QueueableLike_backpressureStrategy");
+/** @type {unique symbol} */
+export const __ReplayObservableLike_buffer = /*@__PURE__*/ symbol("ReplayObservableLike_buffer");
 /** @type {unique symbol} */
 export const __SchedulerLike_inContinuation = /*@__PURE__*/ symbol("SchedulerLike_inContinuation");
 /** @type {unique symbol} */
@@ -138,8 +138,7 @@ export const __DelegatingDispatcherMixin_delegate = /*@__PURE__*/ symbol("Delega
 /** @type {unique symbol} */
 export const __DelegatingDisposableMixin_delegate = /*@__PURE__*/ symbol("DelegatingDisposableMixin_delegate");
 /** @type {unique symbol} */
-export const __DelegatingMulticastObservableMixin_delegate = 
-/*@__PURE__*/ symbol("DelegatingMulticastObservableMixin_delegate");
+export const __DelegatingReplayObservableMixin_delegate = /*@__PURE__*/ symbol("DelegatingReplayObservableMixin_delegate");
 /** @type {unique symbol} */
 export const __DelegatingPauseableMixin_delegate = /*@__PURE__*/ symbol("DelegatingPauseableMixin_delegate");
 /** @type {unique symbol} */

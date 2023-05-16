@@ -16,7 +16,7 @@ An `EventListener` that can be used to publish notifications to one or more obse
 
 - [`ErrorSafeEventListenerLike`](types.ErrorSafeEventListenerLike.md)<`T`\>
 
-- [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>
+- [`ReplayObservableLike`](types.ReplayObservableLike.md)<`T`\>
 
   ↳ **`PublisherLike`**
 

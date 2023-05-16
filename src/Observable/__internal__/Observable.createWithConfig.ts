@@ -10,6 +10,7 @@ import {
   DeferredObservableLike,
   DisposableLike_dispose,
   EnumerableLike,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
@@ -17,7 +18,6 @@ import {
   ObservableLike_observe,
   ObserverLike,
   RunnableLike,
-  SharedObservableLike,
 } from "../../types.js";
 
 interface ObservableCreateWithConfig {
@@ -55,7 +55,7 @@ interface ObservableCreateWithConfig {
       readonly [ObservableLike_isEnumerable]: false;
       readonly [ObservableLike_isRunnable]: false;
     },
-  ): SharedObservableLike<T>;
+  ): MulticastObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,

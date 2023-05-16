@@ -10,7 +10,7 @@ import * as Streamable from "../../Streamable.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
-import { MulticastObservableLike_buffer, ObservableLike_observe, QueueableLike_enqueue, StreamableLike_stream, } from "../../types.js";
+import { ObservableLike_observe, QueueableLike_enqueue, ReplayObservableLike_buffer, StreamableLike_stream, } from "../../types.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
 const { history, location } = window;
@@ -50,11 +50,11 @@ export const subscribe = /*@__PURE__*/ (() => {
     const createWindowLocationObservable = createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[MulticastObservableLike_buffer] = pipe(delegate[MulticastObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
+        instance[ReplayObservableLike_buffer] = pipe(delegate[ReplayObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
         instance[WindowLocationLike_canGoBack] = pipe(delegate, Observable.map(({ counter }) => counter > 0));
         return instance;
     }, props({
-        [MulticastObservableLike_buffer]: none,
+        [ReplayObservableLike_buffer]: none,
         [WindowLocationLike_canGoBack]: none,
     }), {
         [WindowLocationLike_push](stateOrUpdater) {

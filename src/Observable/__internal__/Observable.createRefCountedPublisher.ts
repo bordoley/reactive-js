@@ -1,8 +1,8 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
 import type * as Observable from "../../Observable.js";
+import ReplayObservable_delegatingMixin from "../../ReplayObservable/__internal__/ReplayObservable.delegatingMixin.js";
 import {
   createInstanceFactory,
   include,
@@ -32,7 +32,7 @@ const Observable_createRefCountedPublisher: Observable.Signature["createRefCount
       mix(
         include(
           Disposable_delegatingMixin,
-          MulticastObservable_delegatingMixin(),
+          ReplayObservable_delegatingMixin(),
           Delegating_mixin(),
         ),
         function RefCountedPublisher(
@@ -46,7 +46,7 @@ const Observable_createRefCountedPublisher: Observable.Signature["createRefCount
           delegate: PublisherLike<T>,
         ): PublisherLike<T> {
           init(Disposable_delegatingMixin, instance, delegate);
-          init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
+          init(ReplayObservable_delegatingMixin<T>(), instance, delegate);
           init(Delegating_mixin(), instance, delegate);
 
           return instance;

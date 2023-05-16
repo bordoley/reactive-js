@@ -11,9 +11,9 @@ import * as Disposable from "../Disposable.js";
 import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
 import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import MulticastObservable_isMulticastObservable from "../MulticastObservable/__internal__/MulticastObservable.isMulticastObservable.js";
+import type * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
-import type * as SharedObservable from "../SharedObservable.js";
+import Observable_isReplayObservable from "../Observable/__internal__/Observable.isReplayObservable.js";
 import {
   Factory,
   Function1,
@@ -40,7 +40,6 @@ import {
   EnumeratorLike_move,
   EventSourceLike,
   KeyedCollectionLike_get,
-  MulticastObservableLike_buffer,
   ObservableLike,
   PauseableLike,
   PauseableLike_isPaused,
@@ -49,6 +48,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  ReplayObservableLike_buffer,
   SinkLike_notify,
   StoreLike_value,
   StreamOf,
@@ -157,8 +157,8 @@ export const useObserve: UseObserve["useObserve"] = <T>(
     ],
   );
 
-  const buffer = MulticastObservable_isMulticastObservable<T>(observable)
-    ? observable[MulticastObservableLike_buffer]
+  const buffer = Observable_isReplayObservable<T>(observable)
+    ? observable[ReplayObservableLike_buffer]
     : IndexedBufferCollection_empty<T>();
   const defaultValue =
     buffer[CollectionLike_count] > 0
@@ -429,7 +429,7 @@ export const usePauseable = (
 };
 
 export const createComponent = <TProps>(
-  fn: ContainerOperator<SharedObservable.Type, TProps, ReactElement>,
+  fn: ContainerOperator<MulticastObservable.Type, TProps, ReactElement>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

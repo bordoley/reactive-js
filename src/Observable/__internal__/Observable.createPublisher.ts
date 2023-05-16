@@ -31,7 +31,6 @@ import {
   EnumeratorLike_move,
   EventListenerLike_isErrorSafe,
   KeyedCollectionLike_get,
-  MulticastObservableLike_buffer,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -40,6 +39,7 @@ import {
   PublisherLike,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  ReplayObservableLike_buffer,
   SinkLike_notify,
 } from "../../types.js";
 
@@ -47,7 +47,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       readonly [__Publisher_observers]: Set<ObserverLike<T>>;
-      readonly [MulticastObservableLike_buffer]: IndexedQueueLike<T>;
+      readonly [ReplayObservableLike_buffer]: IndexedQueueLike<T>;
     };
 
     const createPublisherInstance = createInstanceFactory(
@@ -61,7 +61,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             | typeof ObservableLike_isEnumerable
             | typeof ObservableLike_isRunnable
             | typeof PublisherLike_observerCount
-            | typeof MulticastObservableLike_buffer
+            | typeof ReplayObservableLike_buffer
             | typeof EventListenerLike_isErrorSafe
             | typeof SinkLike_notify
           > &
@@ -71,7 +71,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
           init(Disposable_mixin, instance);
 
           instance[__Publisher_observers] = newInstance<Set<ObserverLike>>(Set);
-          instance[MulticastObservableLike_buffer] = Queue_createIndexedQueue(
+          instance[ReplayObservableLike_buffer] = Queue_createIndexedQueue(
             replay,
             "drop-oldest",
           );
@@ -100,7 +100,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
         },
         props<TProperties>({
           [__Publisher_observers]: none,
-          [MulticastObservableLike_buffer]: none,
+          [ReplayObservableLike_buffer]: none,
         }),
         {
           [EventListenerLike_isErrorSafe]: true as const,
@@ -118,7 +118,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
               return;
             }
 
-            this[MulticastObservableLike_buffer][QueueableLike_enqueue](next);
+            this[ReplayObservableLike_buffer][QueueableLike_enqueue](next);
 
             for (const observer of this[__Publisher_observers]) {
               try {
@@ -148,7 +148,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
-            const buffer = this[MulticastObservableLike_buffer];
+            const buffer = this[ReplayObservableLike_buffer];
             const count = buffer[CollectionLike_count];
 
             try {

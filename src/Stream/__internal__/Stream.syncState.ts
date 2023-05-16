@@ -1,18 +1,18 @@
+import MulticastObservable_concatMap from "../../MulticastObservable/__internal__/MulticastObservable.concatMap.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../Observable/__internal__/Observable.pairwise.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../Observable/__internal__/Observable.throttle.js";
-import SharedObservable_concatMap from "../../SharedObservable/__internal__/SharedObservable.concatMap.js";
 import type * as Stream from "../../Stream.js";
 import { Updater, compose, identity, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
+  MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
-  SharedObservableLike,
   StreamLike,
   StreamLike_scheduler,
 } from "../../types.js";
@@ -34,14 +34,14 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
 
     return pipe(
       stateStore,
-      Observable_forkMerge<SharedObservableLike<T>, T, Updater<T>>(
-        compose(Observable_takeFirst(), SharedObservable_concatMap(onInit)),
+      Observable_forkMerge<MulticastObservableLike<T>, T, Updater<T>>(
+        compose(Observable_takeFirst(), MulticastObservable_concatMap(onInit)),
         compose(
           throttleDuration > 0
             ? Observable_throttle(throttleDuration)
             : identity,
           Observable_pairwise(),
-          SharedObservable_concatMap<readonly [T, T], Updater<T>>(
+          MulticastObservable_concatMap<readonly [T, T], Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
           ),
         ),

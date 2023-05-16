@@ -1,8 +1,8 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { ContainerOf, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EnumeratorLike, EventSourceLike, ObservableContainer, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike, SharedObservableContainer, SharedObservableLike } from "./types.js";
-export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : ObservableLike<TOut>;
-export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : ObservableLike<TOut>;
-export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends SharedObservableLike<TIn> ? SharedObservableLike<TOut> : ObservableLike<TOut>;
+import { ContainerOf, DeferredObservableLike, DispatcherLike, DisposableLike, DisposableOrTeardown, EnumerableLike, EnumeratorLike, EventSourceLike, MulticastObservableContainer, MulticastObservableLike, ObservableContainer, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
+export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
+export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type Type = ObservableContainer;
 export declare namespace Animation {
     /**
@@ -54,22 +54,22 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 } : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
     readonly selector: Function1<number, T>;
 });
-export type MaybeSharedObservableLike<T> = SharedObservableLike<T> | ObservableLike<T>;
-export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | SharedObservableLike<T> | ObservableLike<T>;
+export type MaybeMulticastObservableLike<T> = MulticastObservableLike<T> | ObservableLike<T>;
+export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T> | ObservableLike<T>;
 export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
-    concat<T>(fst: SharedObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): SharedObservableLike<T>;
+    concat<T>(fst: MulticastObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): MulticastObservableLike<T>;
     concatMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
     concatMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
     concatMany<T>(observables: readonly [
-        SharedObservableLike<T>,
+        MulticastObservableLike<T>,
         ...DeferredObservableLike<T>[]
-    ]): SharedObservableLike<T>;
+    ]): MulticastObservableLike<T>;
     concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableUpperBoundObservableOperator<T, T>;
     concatWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableUpperBoundObservableOperator<T, T>;
     concatWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableUpperBoundObservableOperator<T, T>;
@@ -87,7 +87,7 @@ export interface ObservableModule {
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): EnumerableUpperBoundObservableOperator<ArrayBuffer, string>;
-    defer<T>(f: Factory<SharedObservableLike<T> & DisposableLike>): DeferredObservableLike<T>;
+    defer<T>(f: Factory<MulticastObservableLike<T> & DisposableLike>): DeferredObservableLike<T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
@@ -113,12 +113,12 @@ export interface ObservableModule {
     forkConcat<TObservableIn extends EnumerableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, EnumerableLike<TOut>>, snd: Function1<TObservableIn, EnumerableLike<TOut>>, ...tail: readonly Function1<TObservableIn, EnumerableLike<TOut>>[]): Function1<TObservableIn, EnumerableLike<TOut>>;
     forkConcat<TObservableIn extends RunnableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, RunnableLike<TOut>>, snd: Function1<TObservableIn, RunnableLike<TOut>>, ...tail: readonly Function1<TObservableIn, RunnableLike<TOut>>[]): Function1<TObservableIn, RunnableLike<TOut>>;
     forkConcat<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, DeferredObservableLike<TOut>>, snd: Function1<TObservableIn, DeferredObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]): Function1<TObservableIn, DeferredObservableLike<TOut>>;
-    forkConcat<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, SharedObservableLike<TOut>>, snd: Function1<TObservableIn, DeferredObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]): Function1<TObservableIn, SharedObservableLike<TOut>>;
+    forkConcat<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, MulticastObservableLike<TOut>>, snd: Function1<TObservableIn, DeferredObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]): Function1<TObservableIn, MulticastObservableLike<TOut>>;
     forkMerge<TObservableIn extends EnumerableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, EnumerableLike<TOut>>, snd: Function1<TObservableIn, EnumerableLike<TOut>>, ...tail: readonly Function1<TObservableIn, EnumerableLike<TOut>>[]): Function1<TObservableIn, EnumerableLike<TOut>>;
     forkMerge<TObservableIn extends RunnableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, RunnableLike<TOut>>, snd: Function1<TObservableIn, RunnableLike<TOut>>, ...tail: readonly Function1<TObservableIn, RunnableLike<TOut>>[]): Function1<TObservableIn, RunnableLike<TOut>>;
     forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, DeferredObservableLike<TOut>>, snd: Function1<TObservableIn, DeferredObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, DeferredObservableLike<TOut>>[]): Function1<TObservableIn, DeferredObservableLike<TOut>>;
-    forkMerge<TObservableIn extends SharedObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, SharedObservableLike<TOut>>, snd: Function1<TObservableIn, SharedObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, SharedObservableLike<TOut>>[]): Function1<TObservableIn, SharedObservableLike<TOut>>;
-    forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>, snd: Function1<TObservableIn, MaybeSharedObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, MaybeSharedObservableLike<TOut>>[]): Function1<TObservableIn, SharedObservableLike<TOut>>;
+    forkMerge<TObservableIn extends MulticastObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, MulticastObservableLike<TOut>>, snd: Function1<TObservableIn, MulticastObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, MulticastObservableLike<TOut>>[]): Function1<TObservableIn, MulticastObservableLike<TOut>>;
+    forkMerge<TObservableIn extends DeferredObservableLike<TIn>, TIn, TOut>(fst: Function1<TObservableIn, MaybeMulticastObservableLike<TOut>>, snd: Function1<TObservableIn, MaybeMulticastObservableLike<TOut>>, ...tail: readonly Function1<TObservableIn, MaybeMulticastObservableLike<TOut>>[]): Function1<TObservableIn, MulticastObservableLike<TOut>>;
     forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, EnumerableLike<TA>>, b: Function1<TObservableIn, EnumerableLike<TB>>): Function1<TObservableIn, EnumerableLike<[TA, TB]>>;
     forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, EnumerableLike<TA>>, b: Function1<TObservableIn, EnumerableLike<TB>>, c: Function1<TObservableIn, EnumerableLike<TC>>): Function1<TObservableIn, EnumerableLike<[TA, TB, TC]>>;
     forkZip<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, EnumerableLike<TA>>, b: Function1<TObservableIn, EnumerableLike<TB>>, c: Function1<TObservableIn, EnumerableLike<TC>>, d: Function1<TObservableIn, EnumerableLike<TD>>): Function1<TObservableIn, EnumerableLike<[TA, TB, TC, TD]>>;
@@ -128,12 +128,12 @@ export interface ObservableModule {
     forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, DeferredObservableLike<TA>>, b: Function1<TObservableIn, DeferredObservableLike<TB>>): Function1<TObservableIn, DeferredObservableLike<[TA, TB]>>;
     forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, DeferredObservableLike<TA>>, b: Function1<TObservableIn, DeferredObservableLike<TB>>, c: Function1<TObservableIn, DeferredObservableLike<TC>>): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC]>>;
     forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, DeferredObservableLike<TA>>, b: Function1<TObservableIn, DeferredObservableLike<TB>>, c: Function1<TObservableIn, DeferredObservableLike<TC>>, d: Function1<TObservableIn, DeferredObservableLike<TD>>): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC, TD]>>;
-    forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, SharedObservableLike<TA>>, b: Function1<TObservableIn, SharedObservableLike<TB>>): Function1<TObservableIn, SharedObservableLike<[TA, TB]>>;
-    forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, SharedObservableLike<TA>>, b: Function1<TObservableIn, SharedObservableLike<TB>>, c: Function1<TObservableIn, SharedObservableLike<TC>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC]>>;
-    forkZip<TObservableIn extends SharedObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, SharedObservableLike<TA>>, b: Function1<TObservableIn, SharedObservableLike<TB>>, c: Function1<TObservableIn, SharedObservableLike<TC>>, d: Function1<TObservableIn, SharedObservableLike<TD>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC, TD]>>;
-    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>, b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>): Function1<TObservableIn, SharedObservableLike<[TA, TB]>>;
-    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>, b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>, c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC]>>;
-    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, MaybeSharedObservableLike<TA>>, b: Function1<TObservableIn, MaybeSharedObservableLike<TB>>, c: Function1<TObservableIn, MaybeSharedObservableLike<TC>>, d: Function1<TObservableIn, MaybeSharedObservableLike<TD>>): Function1<TObservableIn, SharedObservableLike<[TA, TB, TC, TD]>>;
+    forkZip<TObservableIn extends MulticastObservableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, MulticastObservableLike<TA>>, b: Function1<TObservableIn, MulticastObservableLike<TB>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB]>>;
+    forkZip<TObservableIn extends MulticastObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, MulticastObservableLike<TA>>, b: Function1<TObservableIn, MulticastObservableLike<TB>>, c: Function1<TObservableIn, MulticastObservableLike<TC>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC]>>;
+    forkZip<TObservableIn extends MulticastObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, MulticastObservableLike<TA>>, b: Function1<TObservableIn, MulticastObservableLike<TB>>, c: Function1<TObservableIn, MulticastObservableLike<TC>>, d: Function1<TObservableIn, MulticastObservableLike<TD>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC, TD]>>;
+    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>, b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB]>>;
+    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC>(a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>, b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>, c: Function1<TObservableIn, MaybeMulticastObservableLike<TC>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC]>>;
+    forkZip<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB, TC, TD>(a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>, b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>, c: Function1<TObservableIn, MaybeMulticastObservableLike<TC>>, d: Function1<TObservableIn, MaybeMulticastObservableLike<TD>>): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC, TD]>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
     fromEnumeratorFactory<T>(): Function1<Factory<EnumeratorLike<T>>, EnumerableLike<T>>;
     fromEnumeratorFactory<T>(options: {
@@ -187,7 +187,7 @@ export interface ObservableModule {
     isDeferredObservable<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
     isEnumerable<T>(obs: ObservableLike<T>): obs is EnumerableLike<T>;
     isRunnable<T>(obs: ObservableLike<T>): obs is RunnableLike<T>;
-    isSharedObservable<T>(obs: ObservableLike<T>): obs is SharedObservableLike<T>;
+    isMulticastObservable<T>(obs: ObservableLike<T>): obs is MulticastObservableLike<T>;
     keep<T>(predicate: Predicate<T>): EnumerableUpperBoundObservableOperator<T, T>;
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
@@ -199,17 +199,17 @@ export interface ObservableModule {
     merge<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     merge<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
-    merge<T>(fst: MaybeSharedObservableLike<T>, snd: MaybeSharedObservableLike<T>, ...tail: readonly MaybeSharedObservableLike<T>[]): SharedObservableLike<T>;
+    merge<T>(fst: MaybeMulticastObservableLike<T>, snd: MaybeMulticastObservableLike<T>, ...tail: readonly MaybeMulticastObservableLike<T>[]): MulticastObservableLike<T>;
     mergeWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableUpperBoundObservableOperator<T, T>;
     mergeWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableUpperBoundObservableOperator<T, T>;
-    mergeWith<T>(snd: MaybeSharedObservableLike<T>, ...tail: readonly MaybeSharedObservableLike<T>[]): Function1<ObservableLike<T>, SharedObservableLike<T>>;
+    mergeWith<T>(snd: MaybeMulticastObservableLike<T>, ...tail: readonly MaybeMulticastObservableLike<T>[]): Function1<ObservableLike<T>, MulticastObservableLike<T>>;
     mergeMany<T>(observables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
     mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
-    mergeMany<T>(observables: readonly MaybeSharedObservableLike<T>[]): SharedObservableLike<T>;
+    mergeMany<T>(observables: readonly MaybeMulticastObservableLike<T>[]): MulticastObservableLike<T>;
     mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
-    never<T>(): SharedObservableLike<T>;
+    never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableOrTeardown | void>): EnumerableUpperBoundObservableOperator<T, T>;
     pairwise<T>(): EnumerableUpperBoundObservableOperator<T, readonly [T, T]>;
     pick<T, TKey extends keyof T>(key: TKey): EnumerableUpperBoundObservableOperator<T, T[TKey]>;
@@ -257,7 +257,7 @@ export interface ObservableModule {
     withLatestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
-    withLatestFrom<TA, TB, T>(other: SharedObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, SharedObservableLike<T>>;
+    withLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, MulticastObservableLike<T>>;
     zip<TA, TB>(a: EnumerableLike<TA>, b: EnumerableLike<TB>): EnumerableLike<readonly [TA, TB]>;
     zip<TA, TB, TC>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>): EnumerableLike<readonly [TA, TB, TC]>;
     zip<TA, TB, TC, TD>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): EnumerableLike<readonly [TA, TB, TC, TD]>;
@@ -282,14 +282,14 @@ export interface ObservableModule {
     zip<TA, TB, TC, TD, TE, TF, TG>(a: DeferredObservableLike<TA>, b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
     zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: DeferredObservableLike<TA>, b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>, h: DeferredObservableLike<TH>): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: DeferredObservableLike<TA>, b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>, h: DeferredObservableLike<TH>, i: DeferredObservableLike<TI>): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-    zip<TA, TB>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>): SharedObservableLike<readonly [TA, TB]>;
-    zip<TA, TB, TC>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC]>;
-    zip<TA, TB, TC, TD>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD]>;
-    zip<TA, TB, TC, TD, TE>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE]>;
-    zip<TA, TB, TC, TD, TE, TF>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE, TF]>;
-    zip<TA, TB, TC, TD, TE, TF, TG>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG]>;
-    zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
-    zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: MaybeSharedObservableLike<TA>, b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>, i: MaybeSharedObservableLike<TI>): ContainerOf<SharedObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+    zip<TA, TB>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>): MulticastObservableLike<readonly [TA, TB]>;
+    zip<TA, TB, TC>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC]>;
+    zip<TA, TB, TC, TD>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD]>;
+    zip<TA, TB, TC, TD, TE>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE]>;
+    zip<TA, TB, TC, TD, TE, TF>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE, TF]>;
+    zip<TA, TB, TC, TD, TE, TF, TG>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+    zip<TA, TB, TC, TD, TE, TF, TG, TH>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+    zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>, i: MaybeMulticastObservableLike<TI>): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
     zipWith<TA, TB>(b: EnumerableLike<TB>): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB]>;
     zipWith<TA, TB, TC>(b: EnumerableLike<TB>, c: EnumerableLike<TC>): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB, TC]>;
     zipWith<TA, TB, TC, TD>(b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD]>;
@@ -314,14 +314,14 @@ export interface ObservableModule {
     zipWith<TA, TB, TC, TD, TE, TF, TG>(b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>): DeferredObservableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>, h: DeferredObservableLike<TH>): DeferredObservableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: DeferredObservableLike<TB>, c: DeferredObservableLike<TC>, d: DeferredObservableLike<TD>, e: DeferredObservableLike<TE>, f: DeferredObservableLike<TF>, g: DeferredObservableLike<TG>, h: DeferredObservableLike<TH>, i: DeferredObservableLike<TI>): DeferredObservableUpperBoundObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-    zipWith<TA, TB>(b: SharedObservableLike<TB>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB]>>;
-    zipWith<TA, TB, TC>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC]>>;
-    zipWith<TA, TB, TC, TD>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD]>>;
-    zipWith<TA, TB, TC, TD, TE>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE]>>;
-    zipWith<TA, TB, TC, TD, TE, TF>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF]>>;
-    zipWith<TA, TB, TC, TD, TE, TF, TG>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>>;
-    zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>>;
-    zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: MaybeSharedObservableLike<TB>, c: MaybeSharedObservableLike<TC>, d: MaybeSharedObservableLike<TD>, e: MaybeSharedObservableLike<TE>, f: MaybeSharedObservableLike<TF>, g: MaybeSharedObservableLike<TG>, h: MaybeSharedObservableLike<TH>, i: MaybeSharedObservableLike<TI>): Function1<AnyObservableLike<TA>, SharedObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>>;
+    zipWith<TA, TB>(b: MulticastObservableLike<TB>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB]>>;
+    zipWith<TA, TB, TC>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC]>>;
+    zipWith<TA, TB, TC, TD>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD]>>;
+    zipWith<TA, TB, TC, TD, TE>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>>;
+    zipWith<TA, TB, TC, TD, TE, TF>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>>;
+    zipWith<TA, TB, TC, TD, TE, TF, TG>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>>;
+    zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>>;
+    zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>, i: MaybeMulticastObservableLike<TI>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>>;
 }
 export type Signature = ObservableModule;
 export declare const animate: Signature["animate"];
@@ -360,7 +360,7 @@ export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferredObservable: Signature["isDeferredObservable"];
 export declare const isEnumerable: Signature["isEnumerable"];
 export declare const isRunnable: Signature["isRunnable"];
-export declare const isSharedObservable: Signature["isSharedObservable"];
+export declare const isMulticastObservable: Signature["isMulticastObservable"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const lastAsync: Signature["lastAsync"];

@@ -40,8 +40,6 @@ export declare const __KeyedCollectionLike_get: unique symbol;
 
 export declare const __KeyedContainer_TKey: unique symbol;
 
-export declare const __MulticastObservableLike_buffer: unique symbol;
-
 export declare const __ObservableLike_observe: unique symbol;
 
 export declare const __ObservableLike_isDeferred: unique symbol;
@@ -61,6 +59,8 @@ export declare const __PublisherLike_observerCount: unique symbol;
 export declare const __QueueableLike_enqueue: unique symbol;
 
 export declare const __QueueableLike_backpressureStrategy: unique symbol;
+
+export declare const __ReplayObservableLike_buffer: unique symbol;
 
 export declare const __SchedulerLike_inContinuation: unique symbol;
 
@@ -132,7 +132,7 @@ export declare const __DelegatingDispatcherMixin_delegate: unique symbol;
 
 export declare const __DelegatingDisposableMixin_delegate: unique symbol;
 
-export declare const __DelegatingMulticastObservableMixin_delegate: unique symbol;
+export declare const __DelegatingReplayObservableMixin_delegate: unique symbol;
 
 export declare const __DelegatingPauseableMixin_delegate: unique symbol;
 

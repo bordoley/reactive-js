@@ -33,8 +33,8 @@ import Observable_generate from "./Observable/__internal__/Observable.generate.j
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
+import Observable_isMulticastObservable from "./Observable/__internal__/Observable.isMulticastObservable.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
-import Observable_isSharedObservable from "./Observable/__internal__/Observable.isSharedObservable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
@@ -101,7 +101,7 @@ export const ignoreElements = Observable_ignoreElements;
 export const isDeferredObservable = Observable_isDeferredObservable;
 export const isEnumerable = Observable_isEnumerable;
 export const isRunnable = Observable_isRunnable;
-export const isSharedObservable = Observable_isSharedObservable;
+export const isMulticastObservable = Observable_isMulticastObservable;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const lastAsync = Observable_lastAsync;

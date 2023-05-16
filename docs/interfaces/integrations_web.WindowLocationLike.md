@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
+- [`ReplayObservableLike`](types.ReplayObservableLike.md)<[`WindowLocationURI`](integrations_web.WindowLocationURI.md)\>
 
   ↳ **`WindowLocationLike`**
 
@@ -26,7 +26,7 @@
 
 ### [\_\_\_WindowLocationLike\_canGoBack]
 
-• `Readonly` **[\_\_\_WindowLocationLike\_canGoBack]**: [`SharedObservableLike`](types.SharedObservableLike.md)<`boolean`\>
+• `Readonly` **[\_\_\_WindowLocationLike\_canGoBack]**: [`MulticastObservableLike`](types.MulticastObservableLike.md)<`boolean`\>
 
 ## Methods
 

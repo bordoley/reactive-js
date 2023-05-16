@@ -21,9 +21,9 @@ import {
   MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReplayObservableLike,
   RunnableLike,
   SchedulerLike,
-  SharedObservableLike,
 } from "./types.js";
 
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
@@ -58,7 +58,7 @@ export interface DeferredObservableModule
     },
   ): Function1<
     DeferredObservableLike<T>,
-    MulticastObservableLike<T> & DisposableLike
+    ReplayObservableLike<T> & DisposableLike
   >;
 
   repeat<T>(
@@ -78,7 +78,7 @@ export interface DeferredObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): Function1<DeferredObservableLike<T>, SharedObservableLike<T>>;
+  ): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = DeferredObservableModule;

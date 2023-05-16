@@ -1,6 +1,6 @@
 import Dispatcher_delegatingMixin from "../../Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import ReplayObservable_delegatingMixin from "../../ReplayObservable/__internal__/ReplayObservable.delegatingMixin.js";
 import {
   Mixin1,
   include,
@@ -27,7 +27,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
     mix(
       include(
         Dispatcher_delegatingMixin(),
-        MulticastObservable_delegatingMixin<StreamLike<TReq, T>>(),
+        ReplayObservable_delegatingMixin<StreamLike<TReq, T>>(),
         Disposable_delegatingMixin,
       ),
       function DelegatingStreamMixin(
@@ -36,7 +36,7 @@ const Stream_delegatingMixin: <TReq, T>() => Mixin1<
         delegate: StreamLike<TReq, T> & DisposableLike,
       ): StreamLike<TReq, T> & DisposableLike {
         init(Disposable_delegatingMixin, instance, delegate);
-        init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
+        init(ReplayObservable_delegatingMixin<T>(), instance, delegate);
         init(Dispatcher_delegatingMixin(), instance, delegate);
 
         instance[StreamLike_scheduler] = delegate[StreamLike_scheduler];

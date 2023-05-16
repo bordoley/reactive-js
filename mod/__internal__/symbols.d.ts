@@ -41,8 +41,6 @@ export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedContainer_TKey: unique symbol;
 /** @type {unique symbol} */
-export const __MulticastObservableLike_buffer: unique symbol;
-/** @type {unique symbol} */
 export const __ObservableLike_observe: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_isDeferred: unique symbol;
@@ -62,6 +60,8 @@ export const __PublisherLike_observerCount: unique symbol;
 export const __QueueableLike_enqueue: unique symbol;
 /** @type {unique symbol} */
 export const __QueueableLike_backpressureStrategy: unique symbol;
+/** @type {unique symbol} */
+export const __ReplayObservableLike_buffer: unique symbol;
 /** @type {unique symbol} */
 export const __SchedulerLike_inContinuation: unique symbol;
 /** @type {unique symbol} */
@@ -133,7 +133,7 @@ export const __DelegatingDispatcherMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingDisposableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
-export const __DelegatingMulticastObservableMixin_delegate: unique symbol;
+export const __DelegatingReplayObservableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingPauseableMixin_delegate: unique symbol;
 /** @type {unique symbol} */

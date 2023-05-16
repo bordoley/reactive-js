@@ -2,7 +2,7 @@ import type * as DeferredObservable from "../../DeferredObservable.js";
 import Observable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import Dispatcher_delegatingMixin from "../../Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import MulticastObservable_delegatingMixin from "../../MulticastObservable/__internal__/MulticastObservable.delegatingMixin.js";
+import ReplayObservable_delegatingMixin from "../../ReplayObservable/__internal__/ReplayObservable.delegatingMixin.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import {
   Mixin3,
@@ -210,7 +210,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
     mix(
       include(
         Dispatcher_delegatingMixin(),
-        MulticastObservable_delegatingMixin<T>(),
+        ReplayObservable_delegatingMixin<T>(),
         Disposable_delegatingMixin,
       ),
       function StreamMixin(
@@ -239,7 +239,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
           instance,
           dispatchedObservable,
         );
-        init(MulticastObservable_delegatingMixin<T>(), instance, delegate);
+        init(ReplayObservable_delegatingMixin<T>(), instance, delegate);
 
         return instance;
       },

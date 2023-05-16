@@ -1,9 +1,9 @@
 import { Function1 } from "./functions.js";
-import { SharedObservableLike, StoreContainer, StoreLike, WritableStoreLike } from "./types.js";
+import { MulticastObservableLike, StoreContainer, StoreLike, WritableStoreLike } from "./types.js";
 export type Type = StoreContainer;
 export interface StoreModule {
     create<T>(initialValue: T): WritableStoreLike<T>;
-    toObservable<T>(): Function1<StoreLike<T>, SharedObservableLike<T>>;
+    toObservable<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = StoreModule;
 export declare const create: Signature["create"];

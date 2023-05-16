@@ -25,7 +25,7 @@ import {
   EventPublisherLike,
   EventSourceContainer,
   EventSourceLike,
-  SharedObservableLike,
+  MulticastObservableLike,
 } from "./types.js";
 
 export type Type = EventSourceContainer;
@@ -55,7 +55,7 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
    */
   ignoreElements<T>(): ContainerOperator<Type, unknown, T>;
 
-  toObservable<T>(): Function1<EventSourceLike<T>, SharedObservableLike<T>>;
+  toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = EventSourceModule;

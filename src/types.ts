@@ -20,7 +20,6 @@ import {
   __EventSourceLike_addEventListener,
   __KeyedCollectionLike_get,
   __KeyedContainer_TKey,
-  __MulticastObservableLike_buffer,
   __ObservableLike_isDeferred,
   __ObservableLike_isEnumerable,
   __ObservableLike_isRunnable,
@@ -31,6 +30,7 @@ import {
   __PublisherLike_observerCount,
   __QueueableLike_backpressureStrategy,
   __QueueableLike_enqueue,
+  __ReplayObservableLike_buffer,
   __SchedulerLike_inContinuation,
   __SchedulerLike_maxYieldInterval,
   __SchedulerLike_now,
@@ -63,8 +63,8 @@ export const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get =
   __KeyedCollectionLike_get;
 export const KeyedContainer_TKey: typeof __KeyedContainer_TKey =
   __KeyedContainer_TKey;
-export const MulticastObservableLike_buffer: typeof __MulticastObservableLike_buffer =
-  __MulticastObservableLike_buffer;
+export const ReplayObservableLike_buffer: typeof __ReplayObservableLike_buffer =
+  __ReplayObservableLike_buffer;
 export const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred =
   __ObservableLike_isDeferred;
 export const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable =
@@ -538,7 +538,8 @@ export interface ObservableLike<T = unknown> {
  * @noInheritDoc
  * @category Obsevable
  */
-export interface SharedObservableLike<T = unknown> extends ObservableLike<T> {
+export interface MulticastObservableLike<T = unknown>
+  extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
@@ -580,13 +581,13 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * @noInheritDoc
  * @category Obsevable
  */
-export interface MulticastObservableLike<T = unknown>
-  extends SharedObservableLike<T> {
+export interface ReplayObservableLike<T = unknown>
+  extends MulticastObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 
-  readonly [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<T>;
+  readonly [ReplayObservableLike_buffer]: IndexedBufferCollectionLike<T>;
 }
 
 /**
@@ -597,7 +598,7 @@ export interface MulticastObservableLike<T = unknown>
  */
 export interface PublisherLike<T = unknown>
   extends ErrorSafeEventListenerLike<T>,
-    MulticastObservableLike<T> {
+    ReplayObservableLike<T> {
   /**
    * The number of observers currently observing the `Publisher`.
    */
@@ -627,7 +628,7 @@ export interface PauseableObservableLike<T = unknown>
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
-    MulticastObservableLike<T> {
+    ReplayObservableLike<T> {
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
 
@@ -895,8 +896,8 @@ export interface RunnableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface SharedObservableContainer extends Container {
-  readonly [Container_type]?: SharedObservableLike<this[typeof Container_T]>;
+export interface MulticastObservableContainer extends Container {
+  readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 
 /**

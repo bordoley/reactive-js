@@ -1,3 +1,3 @@
-import * as SharedObservable from "../SharedObservable.js";
+import * as MulticastObservable from "../MulticastObservable.js";
 
-((_: SharedObservable.Signature) => {})(SharedObservable);
+((_: MulticastObservable.Signature) => {})(MulticastObservable);

@@ -34,14 +34,14 @@ import {
 import {
   DisposableLike,
   IndexedBufferCollectionLike,
-  MulticastObservableLike_buffer,
+  MulticastObservableLike,
   ObservableLike_observe,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  ReplayObservableLike_buffer,
   SchedulerLike,
-  SharedObservableLike,
   StreamLike,
   StreamableLike_stream,
 } from "../../types.js";
@@ -146,8 +146,8 @@ export const subscribe: (
           | typeof WindowLocationLike_replace
           | typeof ObservableLike_observe
         > & {
-          [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
-          [WindowLocationLike_canGoBack]: SharedObservableLike<boolean>;
+          [ReplayObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+          [WindowLocationLike_canGoBack]: MulticastObservableLike<boolean>;
         },
         delegate: StreamLike<Updater<TState>, TState> & DisposableLike,
       ): WindowLocationLike & DisposableLike {
@@ -158,8 +158,8 @@ export const subscribe: (
           delegate,
         );
 
-        instance[MulticastObservableLike_buffer] = pipe(
-          delegate[MulticastObservableLike_buffer],
+        instance[ReplayObservableLike_buffer] = pipe(
+          delegate[ReplayObservableLike_buffer],
           IndexedBufferCollection_map(location => location.uri),
         );
 
@@ -171,10 +171,10 @@ export const subscribe: (
         return instance;
       },
       props<{
-        [MulticastObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
-        [WindowLocationLike_canGoBack]: SharedObservableLike<boolean>;
+        [ReplayObservableLike_buffer]: IndexedBufferCollectionLike<WindowLocationURI>;
+        [WindowLocationLike_canGoBack]: MulticastObservableLike<boolean>;
       }>({
-        [MulticastObservableLike_buffer]: none,
+        [ReplayObservableLike_buffer]: none,
         [WindowLocationLike_canGoBack]: none,
       }),
       {

@@ -17,9 +17,9 @@
 
   ↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
 
-  ↳ [`RunnableModule`](Runnable.RunnableModule.md)
+  ↳ [`MulticastObservableModule`](MulticastObservable.MulticastObservableModule.md)
 
-  ↳ [`SharedObservableModule`](SharedObservable.SharedObservableModule.md)
+  ↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
 ## Table of contents
 

@@ -1,7 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import type * as EventSource from "../../EventSource.js";
-import SharedObservable_create from "../../SharedObservable/__internal__/SharedObservable.create.js";
+import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import { bindMethod, pipe } from "../../functions.js";
 import {
   DispatcherLike_complete,
@@ -13,7 +13,7 @@ import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 const EventSource_toObservable: EventSource.Signature["toObservable"] =
   <T>() =>
   (eventSource: EventSourceLike<T>) =>
-    SharedObservable_create<T>(observer => {
+    MulticastObservable_create<T>(observer => {
       pipe(
         eventSource,
         EventSource_addEventHandler(
