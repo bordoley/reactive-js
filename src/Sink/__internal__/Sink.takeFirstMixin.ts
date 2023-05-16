@@ -9,8 +9,8 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  __TakeFirstObserver_count,
-  __TakeFirstObserver_takeCount,
+  __TakeFirstSinkMixin_count,
+  __TakeFirstSinkMixin_takeCount,
 } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
@@ -31,8 +31,8 @@ const Sink_takeFirstMixin: <T>() => Mixin2<
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    readonly [__TakeFirstObserver_takeCount]: number;
-    [__TakeFirstObserver_count]: number;
+    readonly [__TakeFirstSinkMixin_takeCount]: number;
+    [__TakeFirstSinkMixin_count]: number;
   };
   return returns(
     mix(
@@ -45,7 +45,7 @@ const Sink_takeFirstMixin: <T>() => Mixin2<
       ): SinkLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[__TakeFirstObserver_takeCount] = takeCount;
+        instance[__TakeFirstSinkMixin_takeCount] = takeCount;
 
         if (takeCount === 0) {
           instance[DisposableLike_dispose]();
@@ -54,19 +54,19 @@ const Sink_takeFirstMixin: <T>() => Mixin2<
         return instance;
       },
       props<TProperties>({
-        [__TakeFirstObserver_count]: 0,
-        [__TakeFirstObserver_takeCount]: 0,
+        [__TakeFirstSinkMixin_count]: 0,
+        [__TakeFirstSinkMixin_takeCount]: 0,
       }),
       {
         [SinkLike_notify](
           this: TProperties & DelegatingLike<SinkLike<T>> & SinkLike<T>,
           next: T,
         ) {
-          this[__TakeFirstObserver_count]++;
+          this[__TakeFirstSinkMixin_count]++;
           this[DelegatingLike_delegate][SinkLike_notify](next);
           if (
-            this[__TakeFirstObserver_count] >=
-            this[__TakeFirstObserver_takeCount]
+            this[__TakeFirstSinkMixin_count] >=
+            this[__TakeFirstSinkMixin_takeCount]
           ) {
             this[DisposableLike_dispose]();
           }

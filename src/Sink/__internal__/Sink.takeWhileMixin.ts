@@ -8,7 +8,7 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { __TakeWhileObserver_inclusive } from "../../__internal__/symbols.js";
+import { __TakeWhileSinkMixin_inclusive } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
@@ -31,7 +31,7 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = PredicatedLike<T> & {
-    readonly [__TakeWhileObserver_inclusive]: boolean;
+    readonly [__TakeWhileSinkMixin_inclusive]: boolean;
   };
 
   return returns(
@@ -47,13 +47,13 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         init(Disposable_delegatingMixin, instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[PredicatedLike_predicate] = predicate;
-        instance[__TakeWhileObserver_inclusive] = inclusive;
+        instance[__TakeWhileSinkMixin_inclusive] = inclusive;
 
         return instance;
       },
       props<TProperties>({
         [PredicatedLike_predicate]: none,
-        [__TakeWhileObserver_inclusive]: none,
+        [__TakeWhileSinkMixin_inclusive]: none,
       }),
       {
         [SinkLike_notify](
@@ -62,7 +62,7 @@ const Sink_takeWhileMixin: <T>() => Mixin3<
         ) {
           const satisfiesPredicate = this[PredicatedLike_predicate](next);
 
-          if (satisfiesPredicate || this[__TakeWhileObserver_inclusive]) {
+          if (satisfiesPredicate || this[__TakeWhileSinkMixin_inclusive]) {
             this[DelegatingLike_delegate][SinkLike_notify](next);
           }
 
