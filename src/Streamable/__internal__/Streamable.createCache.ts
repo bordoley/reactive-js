@@ -320,7 +320,7 @@ const createCacheStream: <T>(
           return this.store.size;
         },
 
-        get [AssociativeCollectionLike_keys](): EnumeratorLike<string> {
+        [AssociativeCollectionLike_keys](): EnumeratorLike<string> {
           unsafeCast<TProperties<T>>(this);
           return pipe(this.store, ReadonlyMap_keys());
         },

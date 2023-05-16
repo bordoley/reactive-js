@@ -8,6 +8,6 @@ import {
 const Dictionary_keys: Dictionary.Signature["keys"] =
   <TKey extends Dictionary.TKeyBase = Dictionary.TKeyBase>() =>
   (dict: DictionaryLike<TKey, unknown>): EnumeratorLike<TKey> =>
-    dict[AssociativeCollectionLike_keys];
+    dict[AssociativeCollectionLike_keys]();
 
 export default Dictionary_keys;
