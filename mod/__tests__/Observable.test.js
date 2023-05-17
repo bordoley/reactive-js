@@ -5,7 +5,7 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, expectToThrow, expectToThrowError, test, testAsync, testModule, } from "../__internal__/testing.js";
-import { arrayEquality, bindMethod, newInstance, pipe, pipeLazy, returns, } from "../functions.js";
+import { arrayEquality, bindMethod, increment, newInstance, pipe, pipeLazy, returns, } from "../functions.js";
 import { DisposableLike_dispose, PublisherLike_observerCount, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("createPublisher", test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -48,7 +48,16 @@ testModule("Observable", describe("createPublisher", test("with replay", () => {
 }), testAsync("it returns the last value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectEquals(3));
-})), describe("throwIfEmpty", test("when source is empty", () => {
+})), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+    delay: 1,
+    delayStart: true,
+}), Observable.takeFirst({ count: 100 }), Observable.throttle(50, { mode: "first" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {
+    delay: 1,
+    delayStart: true,
+}), Observable.takeFirst({ count: 200 }), Observable.throttle(50, { mode: "last" }), Runnable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Observable.generate(increment, returns(-1), {
+    delay: 1,
+    delayStart: true,
+}), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("throwIfEmpty", test("when source is empty", () => {
     const error = new Error();
     pipe(pipeLazy([], Observable.fromReadonlyArray(), Observable.throwIfEmpty(() => error), Runnable.toReadonlyArray()), expectToThrowError(error));
 }), test("when factory throw", () => {
