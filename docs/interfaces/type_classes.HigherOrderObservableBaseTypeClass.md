@@ -31,6 +31,8 @@
 - [exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 - [mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
 - [mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+- [scanLast](type_classes.HigherOrderObservableBaseTypeClass.md#scanlast)
+- [scanMany](type_classes.HigherOrderObservableBaseTypeClass.md#scanmany)
 - [switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
 - [switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
 
@@ -170,6 +172,54 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
+### scanLast
+
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `TAcc`\>
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `TAcc`\>
 
 ___
 

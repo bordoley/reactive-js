@@ -112,6 +112,8 @@ export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const scanLast: Signature["scanLast"];
+export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];
 export declare const startWith: Signature["startWith"];

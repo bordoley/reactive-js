@@ -535,6 +535,22 @@ export interface HigherOrderObservableBaseTypeClass<
   ): ContainerOperator<C, TA, TB>;
 
   /**
+   * @category Operator
+   */
+  scanLast<T, TAcc>(
+    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<C, T, TAcc>;
+
+  /**
+   * @category Operator
+   */
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
+    initialValue: Factory<TAcc>,
+  ): ContainerOperator<C, T, TAcc>;
+
+  /**
    *
    * @category Operator
    */

@@ -16,5 +16,7 @@ export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
 export declare const mergeAll: Signature["mergeAll"];
 export declare const mergeMap: Signature["mergeMap"];
+export declare const scanLast: Signature["scanLast"];
+export declare const scanMany: Signature["scanMany"];
 export declare const switchAll: Signature["switchAll"];
 export declare const switchMap: Signature["switchMap"];
