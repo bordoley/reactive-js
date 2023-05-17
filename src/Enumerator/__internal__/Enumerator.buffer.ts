@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import type * as Enumerator from "../../Enumerator.js";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   Mutable,
@@ -81,8 +82,11 @@ const Enumerator_buffer: Enumerator.Signature["buffer"] = /*@__PURE__*/ (<
     ),
   );
 
-  return (count: number) => (delegate: EnumeratorLike<T>) =>
-    createBufferEnumerator(delegate, clampPositiveInteger(count));
+  return (options?: { count?: number }) => (delegate: EnumeratorLike<T>) =>
+    createBufferEnumerator(
+      delegate,
+      clampPositiveInteger(options?.count ?? MAX_SAFE_INTEGER),
+    );
 })();
 
 export default Enumerator_buffer;

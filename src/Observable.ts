@@ -215,9 +215,9 @@ export interface ObservableModule {
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ): EnumerableUpperBoundObservableOperator<T, T>;
 
-  buffer<T>(
-    count: number,
-  ): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
+  buffer<T>(options?: {
+    count?: number;
+  }): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
 
   concat<T>(
     fst: EnumerableLike<T>,

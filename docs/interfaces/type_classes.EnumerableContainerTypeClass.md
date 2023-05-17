@@ -1445,7 +1445,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -1457,7 +1457,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 

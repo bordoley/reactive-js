@@ -152,7 +152,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -164,7 +164,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 

@@ -1,6 +1,7 @@
 /// <reference types="./EventSource.buffer.d.ts" />
 
 import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { error, none, partial, pipe } from "../../functions.js";
@@ -24,6 +25,6 @@ const EventSource_buffer =
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
-    return (count) => pipe(createBufferEventListener, partial(clampPositiveNonZeroInteger(count)), EventSource_lift);
+    return (options) => pipe(createBufferEventListener, partial(clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER)), EventSource_lift);
 })();
 export default EventSource_buffer;

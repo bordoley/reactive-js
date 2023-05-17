@@ -1,6 +1,7 @@
 /// <reference types="./Enumerator.buffer.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { BufferingLike_buffer, BufferingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -35,6 +36,6 @@ const Enumerator_buffer = /*@__PURE__*/ (() => {
             return this[EnumeratorLike_hasCurrent];
         },
     }));
-    return (count) => (delegate) => createBufferEnumerator(delegate, clampPositiveInteger(count));
+    return (options) => (delegate) => createBufferEnumerator(delegate, clampPositiveInteger(options?.count ?? MAX_SAFE_INTEGER));
 })();
 export default Enumerator_buffer;

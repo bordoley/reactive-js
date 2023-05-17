@@ -59,7 +59,9 @@ export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | Deferre
 export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;
-    buffer<T>(count: number): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
+    buffer<T>(options?: {
+        count?: number;
+    }): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;

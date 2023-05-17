@@ -2,7 +2,9 @@ import type * as Enumerator from "./Enumerator.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapContainer, ReadonlyObjectMapLike } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
-    buffer<T>(count: number): ContainerOperator<C, T, readonly T[]>;
+    buffer<T>(options?: {
+        count?: number;
+    }): ContainerOperator<C, T, readonly T[]>;
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
      * are distinct by comparison from the previous item.
