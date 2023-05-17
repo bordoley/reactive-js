@@ -18,6 +18,7 @@ import {
   arrayEquality,
   bindMethod,
   increment,
+  incrementBy,
   newInstance,
   pipe,
   pipeLazy,
@@ -32,6 +33,29 @@ import {
 
 testModule(
   "Observable",
+  describe(
+    "combineLatest",
+    test(
+      "combineLatest",
+      pipeLazy(
+        Observable.combineLatest(
+          pipe(
+            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          pipe(
+            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
+            Observable.takeFirst({ count: 2 }),
+          ),
+        ),
+        Runnable.toReadonlyArray<readonly [number, number]>(),
+        expectArrayEquals(
+          [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
+          arrayEquality(),
+        ),
+      ),
+    ),
+  ),
   describe(
     "createPublisher",
     test("with replay", () => {
@@ -324,6 +348,27 @@ testModule(
           Runnable.toReadonlyArray(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+  describe(
+    "zipLatest",
+    test(
+      "zip two delayed observable",
+      pipeLazy(
+        Observable.zipLatest(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+          ),
+          pipe(
+            [1, 2, 3, 4],
+            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+          ),
+        ),
+        Observable.map<readonly [number, number], number>(([a, b]) => a + b),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([2, 5, 8, 11]),
       ),
     ),
   ),

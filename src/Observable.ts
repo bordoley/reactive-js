@@ -3,6 +3,7 @@ import Observable_animate from "./Observable/__internal__/Observable.animate.js"
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
+import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -62,6 +63,7 @@ import Observable_toEventSource from "./Observable/__internal__/Observable.toEve
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
+import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
@@ -223,6 +225,189 @@ export interface ObservableModule {
   catchError<T>(
     onError: SideEffect1<Error>,
   ): EnumerableUpperBoundObservableOperator<T, T>;
+
+  combineLatest<TA, TB>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+  ): RunnableLike<readonly [TA, TB]>;
+  combineLatest<TA, TB, TC>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+  ): RunnableLike<readonly [TA, TB, TC]>;
+  combineLatest<TA, TB, TC, TD>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  combineLatest<TA, TB, TC, TD, TE>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  combineLatest<TA, TB, TC, TD, TE, TF>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+    i: RunnableLike<TI>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  combineLatest<TA, TB>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+  ): DeferredObservableLike<readonly [TA, TB]>;
+  combineLatest<TA, TB, TC>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  combineLatest<TA, TB, TC, TD>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  combineLatest<TA, TB, TC, TD, TE>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  combineLatest<TA, TB, TC, TD, TE, TF>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+    i: DeferredObservableLike<TI>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  combineLatest<TA, TB>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+  ): MulticastObservableLike<readonly [TA, TB]>;
+  combineLatest<TA, TB, TC>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): MulticastObservableLike<readonly [TA, TB, TC]>;
+  combineLatest<TA, TB, TC, TD>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD]>;
+  combineLatest<TA, TB, TC, TD, TE>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  combineLatest<TA, TB, TC, TD, TE, TF>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+    h: MaybeMulticastObservableLike<TH>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+    h: MaybeMulticastObservableLike<TH>,
+    i: MaybeMulticastObservableLike<TI>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
   concat<T>(
     fst: EnumerableLike<T>,
@@ -1013,6 +1198,189 @@ export interface ObservableModule {
     readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
   >;
 
+  zipLatest<TA, TB>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+  ): RunnableLike<readonly [TA, TB]>;
+  zipLatest<TA, TB, TC>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+  ): RunnableLike<readonly [TA, TB, TC]>;
+  zipLatest<TA, TB, TC, TD>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  zipLatest<TA, TB, TC, TD, TE>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  zipLatest<TA, TB, TC, TD, TE, TF>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: RunnableLike<TA>,
+    b: RunnableLike<TB>,
+    c: RunnableLike<TC>,
+    d: RunnableLike<TD>,
+    e: RunnableLike<TE>,
+    f: RunnableLike<TF>,
+    g: RunnableLike<TG>,
+    h: RunnableLike<TH>,
+    i: RunnableLike<TI>,
+  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  zipLatest<TA, TB>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+  ): DeferredObservableLike<readonly [TA, TB]>;
+  zipLatest<TA, TB, TC>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  zipLatest<TA, TB, TC, TD>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  zipLatest<TA, TB, TC, TD, TE>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  zipLatest<TA, TB, TC, TD, TE, TF>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: DeferredObservableLike<TA>,
+    b: DeferredObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+    d: DeferredObservableLike<TD>,
+    e: DeferredObservableLike<TE>,
+    f: DeferredObservableLike<TF>,
+    g: DeferredObservableLike<TG>,
+    h: DeferredObservableLike<TH>,
+    i: DeferredObservableLike<TI>,
+  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  zipLatest<TA, TB>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+  ): MulticastObservableLike<readonly [TA, TB]>;
+  zipLatest<TA, TB, TC>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: DeferredObservableLike<TC>,
+  ): MulticastObservableLike<readonly [TA, TB, TC]>;
+  zipLatest<TA, TB, TC, TD>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD]>;
+  zipLatest<TA, TB, TC, TD, TE>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  zipLatest<TA, TB, TC, TD, TE, TF>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+    h: MaybeMulticastObservableLike<TH>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
+    a: MaybeMulticastObservableLike<TA>,
+    b: MaybeMulticastObservableLike<TB>,
+    c: MaybeMulticastObservableLike<TC>,
+    d: MaybeMulticastObservableLike<TD>,
+    e: MaybeMulticastObservableLike<TE>,
+    f: MaybeMulticastObservableLike<TF>,
+    g: MaybeMulticastObservableLike<TG>,
+    h: MaybeMulticastObservableLike<TH>,
+    i: MaybeMulticastObservableLike<TI>,
+  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
   zipWith<TA, TB>(
     b: EnumerableLike<TB>,
   ): EnumerableUpperBoundObservableOperator<TA, readonly [TA, TB]>;
@@ -1299,6 +1667,8 @@ export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
+export const combineLatest: Signature["combineLatest"] =
+  Observable_combineLatest;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
@@ -1375,4 +1745,6 @@ export const withCurrentTime: Signature["withCurrentTime"] =
 export const withLatestFrom: Signature["withLatestFrom"] =
   Observable_withLatestFrom;
 export const zip: Signature["zip"] = Observable_zip;
+export const zipLatest: Signature["zipLatest"] =
+  Observable_zipLatest;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;
