@@ -5,6 +5,8 @@ import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
 import Dictionary_reduceWithKey from "./Dictionary/__internal__/Dictionary.reduceWithKey.js";
+import Dictionary_toReadonlyMap from "./Dictionary/__internal__/Dictionary.toReadonlyMap.js";
+import Dictionary_toReadonlyObjectMap from "./Dictionary/__internal__/Dictionary.toReadonlyObjectMap.js";
 import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
@@ -40,6 +42,8 @@ export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<
     reduce: Dictionary_reduce,
     reduceWithKey: Dictionary_reduceWithKey,
     toDictionary: identityLazy,
+    toReadonlyMap: Dictionary_toReadonlyMap,
+    toReadonlyObjectMap: Dictionary_toReadonlyObjectMap,
     values: Dictionary_values,
   } as DictionaryModule<Type<TKey>, TKey>);
 
@@ -57,4 +61,8 @@ export const reduce: Signature["reduce"] = Dictionary_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =
   Dictionary_reduceWithKey;
 export const toDictionary: Signature["toDictionary"] = identityLazy;
+export const toReadonlyMap: Signature["toReadonlyMap"] =
+  Dictionary_toReadonlyMap;
+export const toReadonlyObjectMap: Signature["toReadonlyObjectMap"] =
+  Dictionary_toReadonlyObjectMap;
 export const values: Signature["values"] = Dictionary_values;

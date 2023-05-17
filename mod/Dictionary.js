@@ -7,6 +7,8 @@ import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
 import Dictionary_reduceWithKey from "./Dictionary/__internal__/Dictionary.reduceWithKey.js";
+import Dictionary_toReadonlyMap from "./Dictionary/__internal__/Dictionary.toReadonlyMap.js";
+import Dictionary_toReadonlyObjectMap from "./Dictionary/__internal__/Dictionary.toReadonlyObjectMap.js";
 import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
@@ -25,6 +27,8 @@ export const CreateModule = () => ({
     reduce: Dictionary_reduce,
     reduceWithKey: Dictionary_reduceWithKey,
     toDictionary: identityLazy,
+    toReadonlyMap: Dictionary_toReadonlyMap,
+    toReadonlyObjectMap: Dictionary_toReadonlyObjectMap,
     values: Dictionary_values,
 });
 export const entries = Dictionary_entries;
@@ -37,4 +41,6 @@ export const keySet = Dictionary_keySet;
 export const reduce = Dictionary_reduce;
 export const reduceWithKey = Dictionary_reduceWithKey;
 export const toDictionary = identityLazy;
+export const toReadonlyMap = Dictionary_toReadonlyMap;
+export const toReadonlyObjectMap = Dictionary_toReadonlyObjectMap;
 export const values = Dictionary_values;
