@@ -1,4 +1,5 @@
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
+import type * as MulticastObservable from "./MulticastObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -84,7 +85,10 @@ import {
   Updater,
 } from "./functions.js";
 import {
+  Container,
   ContainerOf,
+  Container_T,
+  Container_type,
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
@@ -92,9 +96,7 @@ import {
   EnumerableLike,
   EnumeratorLike,
   EventSourceLike,
-  MulticastObservableContainer,
   MulticastObservableLike,
-  ObservableContainer,
   ObservableLike,
   ObserverLike,
   PublisherLike,
@@ -139,6 +141,14 @@ export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   : TObservableIn extends MulticastObservableLike<TIn>
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ObservableContainer extends Container {
+  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+}
 
 export type Type = ObservableContainer;
 
@@ -1422,20 +1432,20 @@ export interface ObservableModule {
     a: MaybeMulticastObservableLike<TA>,
     b: MaybeMulticastObservableLike<TB>,
     c: MaybeMulticastObservableLike<TC>,
-  ): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC]>;
+  ): ContainerOf<MulticastObservable.Type, readonly [TA, TB, TC]>;
   zip<TA, TB, TC, TD>(
     a: MaybeMulticastObservableLike<TA>,
     b: MaybeMulticastObservableLike<TB>,
     c: MaybeMulticastObservableLike<TC>,
     d: MaybeMulticastObservableLike<TD>,
-  ): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD]>;
+  ): ContainerOf<MulticastObservable.Type, readonly [TA, TB, TC, TD]>;
   zip<TA, TB, TC, TD, TE>(
     a: MaybeMulticastObservableLike<TA>,
     b: MaybeMulticastObservableLike<TB>,
     c: MaybeMulticastObservableLike<TC>,
     d: MaybeMulticastObservableLike<TD>,
     e: MaybeMulticastObservableLike<TE>,
-  ): ContainerOf<MulticastObservableContainer, readonly [TA, TB, TC, TD, TE]>;
+  ): ContainerOf<MulticastObservable.Type, readonly [TA, TB, TC, TD, TE]>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: MaybeMulticastObservableLike<TA>,
     b: MaybeMulticastObservableLike<TB>,
@@ -1443,10 +1453,7 @@ export interface ObservableModule {
     d: MaybeMulticastObservableLike<TD>,
     e: MaybeMulticastObservableLike<TE>,
     f: MaybeMulticastObservableLike<TF>,
-  ): ContainerOf<
-    MulticastObservableContainer,
-    readonly [TA, TB, TC, TD, TE, TF]
-  >;
+  ): ContainerOf<MulticastObservable.Type, readonly [TA, TB, TC, TD, TE, TF]>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: MaybeMulticastObservableLike<TA>,
     b: MaybeMulticastObservableLike<TB>,
@@ -1456,7 +1463,7 @@ export interface ObservableModule {
     f: MaybeMulticastObservableLike<TF>,
     g: MaybeMulticastObservableLike<TG>,
   ): ContainerOf<
-    MulticastObservableContainer,
+    MulticastObservable.Type,
     readonly [TA, TB, TC, TD, TE, TF, TG]
   >;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
@@ -1469,7 +1476,7 @@ export interface ObservableModule {
     g: MaybeMulticastObservableLike<TG>,
     h: MaybeMulticastObservableLike<TH>,
   ): ContainerOf<
-    MulticastObservableContainer,
+    MulticastObservable.Type,
     readonly [TA, TB, TC, TD, TE, TF, TG, TH]
   >;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
@@ -1483,7 +1490,7 @@ export interface ObservableModule {
     h: MaybeMulticastObservableLike<TH>,
     i: MaybeMulticastObservableLike<TI>,
   ): ContainerOf<
-    MulticastObservableContainer,
+    MulticastObservable.Type,
     readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
   >;
 

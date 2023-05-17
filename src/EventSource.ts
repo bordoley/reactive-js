@@ -20,13 +20,23 @@ import EventSource_toObservable from "./EventSource/__internal__/EventSource.toO
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
+  Container,
+  Container_T,
+  Container_type,
   DisposableLike,
   EventListenerLike,
   EventPublisherLike,
-  EventSourceContainer,
   EventSourceLike,
   MulticastObservableLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EventSourceContainer extends Container {
+  readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+}
 
 export type Type = EventSourceContainer;
 

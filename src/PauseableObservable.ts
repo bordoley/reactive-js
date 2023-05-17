@@ -20,13 +20,23 @@ import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/Pa
 import { Function1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
+  Container,
   ContainerOperator,
+  Container_T,
+  Container_type,
   DeferredObservableLike,
   DispatcherLike,
-  PauseableObservableContainer,
   PauseableObservableLike,
   QueueableLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface PauseableObservableContainer extends Container {
+  readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
+}
 
 export type Type = PauseableObservableContainer;
 

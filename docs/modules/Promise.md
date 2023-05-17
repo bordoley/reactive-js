@@ -4,7 +4,11 @@
 
 ## Table of contents
 
-### Interfaces
+### Container Interfaces
+
+- [PromiseContainer](../interfaces/Promise.PromiseContainer.md)
+
+### Other Interfaces
 
 - [PromiseModule](../interfaces/Promise.PromiseModule.md)
 
@@ -27,7 +31,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`PromiseContainer`](../interfaces/types.PromiseContainer.md)
+Ƭ **Type**: [`PromiseContainer`](../interfaces/Promise.PromiseContainer.md)
 
 ## Functions
 

@@ -17,7 +17,9 @@ import { DeferredObservable_compute } from "./Observable/__internal__/Observable
 import { Factory, Function1, Predicate } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
-  DeferredObservableContainer,
+  Container,
+  Container_T,
+  Container_type,
   DeferredObservableLike,
   DisposableLike,
   EnumerableLike,
@@ -40,6 +42,14 @@ export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
   : TObservableIn extends DeferredObservableLike<TIn>
   ? DeferredObservableLike<TOut>
   : never;
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableContainer extends Container {
+  readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
+}
 
 export type Type = DeferredObservableContainer;
 

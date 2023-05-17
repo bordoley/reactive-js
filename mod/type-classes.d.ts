@@ -1,6 +1,9 @@
+import type * as DeferredObservable from "./DeferredObservable.js";
 import type * as Enumerator from "./Enumerator.js";
+import type * as Observable from "./Observable.js";
+import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, DeferredObservableContainer, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, ObservableContainer, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapContainer, ReadonlyObjectMapLike } from "./types.js";
+import { Container, ContainerOf, ContainerOperator, DictionaryLike, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOf, KeyedContainerOperator, KeyedContainer_TKey, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike } from "./types.js";
 export interface ContainerTypeClass<C extends Container> {
     buffer<T>(options?: {
         count?: number;
@@ -261,7 +264,7 @@ export interface EnumerableContainerTypeClass<C extends Container, CEnumerator e
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
-export interface HigherOrderObservableBaseTypeClass<C extends ObservableContainer, CInner extends DeferredObservableContainer> {
+export interface HigherOrderObservableBaseTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
     /**
      * Converts a higher-order Container into a first-order
@@ -394,7 +397,7 @@ export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyB
 }
 export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<ReadonlyMap<TKey, T>, KeyedContainerOf<C, TKey, T>>;
-    fromReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>> : never;
+    fromReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>> : never;
     /**
      *
      * @category Transform
@@ -407,7 +410,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
     keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
     toDictionary<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, DictionaryLike<TKey, T>>;
     toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
-    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
+    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
 }
 export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
     /**

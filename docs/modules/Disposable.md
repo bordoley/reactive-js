@@ -4,7 +4,11 @@
 
 ## Table of contents
 
-### Interfaces
+### Container Interfaces
+
+- [DisposableContainer](../interfaces/Disposable.DisposableContainer.md)
+
+### Other Interfaces
 
 - [DisposableModule](../interfaces/Disposable.DisposableModule.md)
 
@@ -41,7 +45,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`DisposableContainer`](../interfaces/types.DisposableContainer.md)
+Ƭ **Type**: [`DisposableContainer`](../interfaces/Disposable.DisposableContainer.md)
 
 ## Variables
 

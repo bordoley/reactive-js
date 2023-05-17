@@ -1,5 +1,8 @@
 import { Function1 } from "./functions.js";
-import { MulticastObservableLike, StoreContainer, StoreLike, WritableStoreLike } from "./types.js";
+import { Container, Container_T, Container_type, MulticastObservableLike, StoreLike, WritableStoreLike } from "./types.js";
+export interface StoreContainer extends Container {
+    readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
+}
 export type Type = StoreContainer;
 export interface StoreModule {
     create<T>(initialValue: T): WritableStoreLike<T>;

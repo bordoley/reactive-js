@@ -1,3 +1,4 @@
+import type * as DeferredObservable from "../../DeferredObservable.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onError from "../../Disposable/__internal__/Disposable.onError.js";
 import type * as Observable from "../../Observable.js";
@@ -12,7 +13,6 @@ import {
 import {
   ContainerOf,
   ContainerOperator,
-  DeferredObservableContainer,
   DisposableLike_dispose,
   ObservableLike_observe,
   ObserverLike,
@@ -20,7 +20,7 @@ import {
 
 const Observable_catchErrorWithFallback = <
   C extends Observable.Type,
-  CInner extends DeferredObservableContainer,
+  CInner extends DeferredObservable.Type,
 >(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<T>>,

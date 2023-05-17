@@ -12,6 +12,7 @@ import MulticastObservable_scanMany from "./MulticastObservable/__internal__/Mul
 import MulticastObservable_switchAll from "./MulticastObservable/__internal__/MulticastObservable.switchAll.js";
 import MulticastObservable_switchMap from "./MulticastObservable/__internal__/MulticastObservable.switchMap.js";
 import { MulticastObservable_compute } from "./Observable/__internal__/Observable.compute.js";
+import { Container_type, } from "./types.js";
 export const catchError = MulticastObservable_catchError;
 export const compute = MulticastObservable_compute;
 export const concatAll = MulticastObservable_concatAll;

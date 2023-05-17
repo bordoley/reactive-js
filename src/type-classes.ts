@@ -1,4 +1,7 @@
+import type * as DeferredObservable from "./DeferredObservable.js";
 import type * as Enumerator from "./Enumerator.js";
+import type * as Observable from "./Observable.js";
+import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import {
   Equality,
   Factory,
@@ -16,7 +19,6 @@ import {
   Container,
   ContainerOf,
   ContainerOperator,
-  DeferredObservableContainer,
   DictionaryLike,
   EnumerableLike,
   EnumeratorLike,
@@ -25,10 +27,8 @@ import {
   KeyedContainerOf,
   KeyedContainerOperator,
   KeyedContainer_TKey,
-  ObservableContainer,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  ReadonlyObjectMapContainer,
   ReadonlyObjectMapLike,
 } from "./types.js";
 
@@ -479,8 +479,8 @@ export interface EnumerableContainerTypeClass<
 }
 
 export interface HigherOrderObservableBaseTypeClass<
-  C extends ObservableContainer,
-  CInner extends DeferredObservableContainer,
+  C extends Observable.Type,
+  CInner extends DeferredObservable.Type,
 > {
   catchError<T>(
     onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>,
@@ -692,7 +692,7 @@ export interface AssociativeKeyedContainerTypeClass<
   fromReadonlyObjectMap<
     T,
     TKey extends TKeyBase,
-  >(): TKey extends KeyOf<ReadonlyObjectMapContainer>
+  >(): TKey extends KeyOf<ReadonlyObjectMap.Type>
     ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>>
     : never;
 
@@ -727,7 +727,7 @@ export interface AssociativeKeyedContainerTypeClass<
   toReadonlyObjectMap<
     T,
     TKey extends TKeyBase,
-  >(): TKey extends KeyOf<ReadonlyObjectMapContainer>
+  >(): TKey extends KeyOf<ReadonlyObjectMap.Type>
     ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>>
     : never;
 }

@@ -1,5 +1,12 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
-import { DisposableContainer, DisposableLike, MulticastObservableLike } from "./types.js";
+import { Container, Container_type, DisposableLike, MulticastObservableLike } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DisposableContainer extends Container {
+    readonly [Container_type]?: DisposableLike;
+}
 export type Type = DisposableContainer;
 export interface DisposableModule {
     readonly disposed: DisposableLike;

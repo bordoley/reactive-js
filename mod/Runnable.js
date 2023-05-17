@@ -54,6 +54,7 @@ import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { identityLazy, } from "./functions.js";
+import { Container_type, } from "./types.js";
 export const buffer = Observable_buffer;
 export const catchError = Runnable_catchError;
 export const compute = Runnable_compute;

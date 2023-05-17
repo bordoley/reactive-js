@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [StoreContainer](../interfaces/Store.StoreContainer.md)
 - [StoreModule](../interfaces/Store.StoreModule.md)
 
 ### Type Aliases
@@ -28,7 +29,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`StoreContainer`](../interfaces/types.StoreContainer.md)
+Ƭ **Type**: [`StoreContainer`](../interfaces/Store.StoreContainer.md)
 
 ## Functions
 

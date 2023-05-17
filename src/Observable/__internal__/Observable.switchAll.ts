@@ -1,3 +1,4 @@
+import type * as DeferredObservable from "../../DeferredObservable.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
@@ -28,7 +29,6 @@ import { HigherOrderObservableBaseTypeClass } from "../../type-classes.js";
 import {
   ContainerOf,
   ContainerOperator,
-  DeferredObservableContainer,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -40,7 +40,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 const Observable_switchAll = <
   C extends Observable.Type,
-  CInner extends DeferredObservableContainer,
+  CInner extends DeferredObservable.Type,
 >(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<CInner, T>>>,

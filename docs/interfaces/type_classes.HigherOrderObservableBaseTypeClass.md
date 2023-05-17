@@ -8,8 +8,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`ObservableContainer`](types.ObservableContainer.md) |
-| `CInner` | extends [`DeferredObservableContainer`](types.DeferredObservableContainer.md) |
+| `C` | extends [`Type`](../modules/Observable.md#type) |
+| `CInner` | extends [`Type`](../modules/DeferredObservable.md#type) |
 
 ## Hierarchy
 

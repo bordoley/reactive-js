@@ -18,7 +18,29 @@ import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/Re
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import { identityLazy } from "./functions.js";
 import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
-import { KeyOf, ReadonlyObjectMapContainer } from "./types.js";
+import {
+  Container_T,
+  Container_type,
+  KeyOf,
+  KeyedContainer,
+  KeyedContainer_TKey,
+  ReadonlyObjectMapLike,
+} from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlyObjectMapContainer<
+  TKey extends symbol | number | string = symbol | number | string,
+> extends KeyedContainer {
+  readonly [Container_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedContainer_TKey]>,
+    this[typeof Container_T]
+  >;
+
+  readonly [KeyedContainer_TKey]?: TKey;
+}
 
 export type Type<
   TKey extends symbol | number | string = symbol | number | string,

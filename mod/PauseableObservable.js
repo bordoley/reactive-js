@@ -19,6 +19,7 @@ import PauseableObservable_skipFirst from "./PauseableObservable/__internal__/Pa
 import PauseableObservable_takeFirst from "./PauseableObservable/__internal__/PauseableObservable.takeFirst.js";
 import PauseableObservable_takeLast from "./PauseableObservable/__internal__/PauseableObservable.takeLast.js";
 import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/PauseableObservable.takeWhile.js";
+import { Container_type, } from "./types.js";
 export const buffer = PauseableObservable_buffer;
 export const dispatchTo = PauseableObservable_dispatchTo;
 export const distinctUntilChanged = PauseableObservable_distinctUntilChanged;

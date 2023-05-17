@@ -21,10 +21,19 @@ import {
   Updater,
 } from "./functions.js";
 import {
-  DisposableContainer,
+  Container,
+  Container_type,
   DisposableLike,
   MulticastObservableLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DisposableContainer extends Container {
+  readonly [Container_type]?: DisposableLike;
+}
 
 export type Type = DisposableContainer;
 

@@ -1,6 +1,13 @@
 import { Function1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
-import { EnumerableLike, EnumeratorContainer, EnumeratorLike, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableLike, EnumeratorLike, RunnableLike } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumeratorContainer extends Container {
+    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
 export type Type = EnumeratorContainer;
 export interface EnumeratorModule extends RunnableContainerTypeClass<Type> {
     toObservable<T>(): Function1<EnumeratorLike<T>, EnumerableLike<T>>;

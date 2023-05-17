@@ -1,3 +1,4 @@
+import type * as DeferredObservable from "../../DeferredObservable.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
@@ -48,7 +49,6 @@ import {
   CollectionLike_count,
   ContainerOf,
   ContainerOperator,
-  DeferredObservableContainer,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableLike,
@@ -63,7 +63,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 const Observable_mergeAll = <
   C extends Observable.Type,
-  CInner extends DeferredObservableContainer,
+  CInner extends DeferredObservable.Type,
 >(
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<CInner, T>>>,

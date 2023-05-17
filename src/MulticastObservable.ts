@@ -1,3 +1,4 @@
+import type * as DeferredObservable from "./DeferredObservable.js";
 import MulticastObservable_catchError from "./MulticastObservable/__internal__/Multicast.catchError.js";
 import MulticastObservable_concatAll from "./MulticastObservable/__internal__/MulticastObservable.concatAll.js";
 import MulticastObservable_concatMap from "./MulticastObservable/__internal__/MulticastObservable.concatMap.js";
@@ -13,18 +14,24 @@ import { MulticastObservable_compute } from "./Observable/__internal__/Observabl
 import { Factory } from "./functions.js";
 import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
-  DeferredObservableContainer,
-  MulticastObservableContainer,
+  Container,
+  Container_T,
+  Container_type,
   MulticastObservableLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface MulticastObservableContainer extends Container {
+  readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
+}
 
 export type Type = MulticastObservableContainer;
 
 export interface MulticastObservableModule
-  extends HigherOrderObservableBaseTypeClass<
-    Type,
-    DeferredObservableContainer
-  > {
+  extends HigherOrderObservableBaseTypeClass<Type, DeferredObservable.Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
