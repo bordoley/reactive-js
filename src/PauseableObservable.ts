@@ -18,10 +18,10 @@ import PauseableObservable_takeFirst from "./PauseableObservable/__internal__/Pa
 import PauseableObservable_takeLast from "./PauseableObservable/__internal__/PauseableObservable.takeLast.js";
 import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/PauseableObservable.takeWhile.js";
 import { Function1 } from "./functions.js";
-import { ContainerTypeClass } from "./type-classes.js";
 import {
   Container,
   ContainerOperator,
+  ContainerTypeClass,
   Container_T,
   Container_type,
   DeferredObservableLike,

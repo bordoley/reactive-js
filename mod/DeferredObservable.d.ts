@@ -1,6 +1,5 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableBaseTypeClass, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc

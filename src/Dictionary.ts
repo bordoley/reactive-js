@@ -11,8 +11,8 @@ import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
 import { identityLazy } from "./functions.js";
-import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import {
+  AssociativeKeyedContainerTypeClass,
   Container_T,
   Container_type,
   DictionaryLike,

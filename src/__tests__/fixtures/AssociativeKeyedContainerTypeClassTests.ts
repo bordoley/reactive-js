@@ -13,8 +13,10 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import { AssociativeKeyedContainerTypeClass } from "../../type-classes.js";
-import { KeyedContainer } from "../../types.js";
+import {
+  AssociativeKeyedContainerTypeClass,
+  KeyedContainer,
+} from "../../types.js";
 
 const AssociativeKeyedContainerTypeClassTests = <
   C extends KeyedContainer<string>,

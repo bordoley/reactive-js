@@ -1,6 +1,5 @@
 import { Function1 } from "./functions.js";
-import { ContainerTypeClass } from "./type-classes.js";
-import { Container, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike, QueueableLike } from "./types.js";
+import { Container, ContainerOperator, ContainerTypeClass, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike, QueueableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

@@ -18,9 +18,9 @@ import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFi
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
 import { Function1, SideEffect1 } from "./functions.js";
-import { ContainerTypeClass } from "./type-classes.js";
 import {
   Container,
+  ContainerTypeClass,
   Container_T,
   Container_type,
   DisposableLike,

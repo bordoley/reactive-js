@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`HigherOrderObservableBaseTypeClass`](type_classes.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/MulticastObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
+- [`HigherOrderObservableBaseTypeClass`](types.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/MulticastObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
 
   ↳ **`MulticastObservableModule`**
 
@@ -51,7 +51,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatAll](type_classes.HigherOrderObservableBaseTypeClass.md#concatall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[concatAll](types.HigherOrderObservableBaseTypeClass.md#concatall)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[concatMap](types.HigherOrderObservableBaseTypeClass.md#concatmap)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[exhaust](types.HigherOrderObservableBaseTypeClass.md#exhaust)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[exhaustMap](types.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[mergeAll](types.HigherOrderObservableBaseTypeClass.md#mergeall)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[mergeMap](types.HigherOrderObservableBaseTypeClass.md#mergemap)
 
 ___
 
@@ -213,7 +213,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanLast](type_classes.HigherOrderObservableBaseTypeClass.md#scanlast)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[scanLast](types.HigherOrderObservableBaseTypeClass.md#scanlast)
 
 ___
 
@@ -241,7 +241,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanMany](type_classes.HigherOrderObservableBaseTypeClass.md#scanmany)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[scanMany](types.HigherOrderObservableBaseTypeClass.md#scanmany)
 
 ___
 
@@ -261,7 +261,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[switchAll](types.HigherOrderObservableBaseTypeClass.md#switchall)
 
 ___
 
@@ -288,7 +288,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[switchMap](types.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 
@@ -316,7 +316,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[catchError](type_classes.HigherOrderObservableBaseTypeClass.md#catcherror)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
 
 ___
 

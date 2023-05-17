@@ -1,6 +1,5 @@
 import { Function1, SideEffect1 } from "./functions.js";
-import { ContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DisposableLike, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastObservableLike } from "./types.js";
+import { Container, ContainerTypeClass, Container_T, Container_type, DisposableLike, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastObservableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

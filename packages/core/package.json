@@ -81,8 +81,7 @@
     "./Store": "./Store.js",
     "./Stream": "./Stream.js",
     "./Streamable": "./Streamable.js",
-    "./types": "./types.js",
-    "./type-classes": "./type-classes.js"
+    "./types": "./types.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

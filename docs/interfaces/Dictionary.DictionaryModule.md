@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- [`AssociativeKeyedContainerTypeClass`](type_classes.AssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
+- [`AssociativeKeyedContainerTypeClass`](types.AssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
 
   ↳ **`DictionaryModule`**
 
@@ -69,7 +69,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEach](type_classes.AssociativeKeyedContainerTypeClass.md#foreach)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[forEach](types.AssociativeKeyedContainerTypeClass.md#foreach)
 
 ___
 
@@ -99,7 +99,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[forEachWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#foreachwithkey)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[forEachWithKey](types.AssociativeKeyedContainerTypeClass.md#foreachwithkey)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#fromreadonlymap)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[fromReadonlyMap](types.AssociativeKeyedContainerTypeClass.md#fromreadonlymap)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[fromReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#fromreadonlyobjectmap)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[fromReadonlyObjectMap](types.AssociativeKeyedContainerTypeClass.md#fromreadonlyobjectmap)
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toDictionary](type_classes.AssociativeKeyedContainerTypeClass.md#todictionary)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[toDictionary](types.AssociativeKeyedContainerTypeClass.md#todictionary)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlymap)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[toReadonlyMap](types.AssociativeKeyedContainerTypeClass.md#toreadonlymap)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[toReadonlyObjectMap](types.AssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[entries](type_classes.AssociativeKeyedContainerTypeClass.md#entries)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[entries](types.AssociativeKeyedContainerTypeClass.md#entries)
 
 ___
 
@@ -249,7 +249,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keySet](type_classes.AssociativeKeyedContainerTypeClass.md#keyset)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[keySet](types.AssociativeKeyedContainerTypeClass.md#keyset)
 
 ___
 
@@ -269,7 +269,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[keys](type_classes.AssociativeKeyedContainerTypeClass.md#keys)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[keys](types.AssociativeKeyedContainerTypeClass.md#keys)
 
 ___
 
@@ -298,7 +298,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduce](type_classes.AssociativeKeyedContainerTypeClass.md#reduce)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[reduce](types.AssociativeKeyedContainerTypeClass.md#reduce)
 
 ___
 
@@ -327,7 +327,7 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[reduceWithKey](type_classes.AssociativeKeyedContainerTypeClass.md#reducewithkey)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[reduceWithKey](types.AssociativeKeyedContainerTypeClass.md#reducewithkey)
 
 ___
 
@@ -347,4 +347,4 @@ ___
 
 #### Inherited from
 
-[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[values](type_classes.AssociativeKeyedContainerTypeClass.md#values)
+[AssociativeKeyedContainerTypeClass](types.AssociativeKeyedContainerTypeClass.md).[values](types.AssociativeKeyedContainerTypeClass.md#values)

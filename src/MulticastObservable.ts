@@ -12,11 +12,11 @@ import MulticastObservable_switchAll from "./MulticastObservable/__internal__/Mu
 import MulticastObservable_switchMap from "./MulticastObservable/__internal__/MulticastObservable.switchMap.js";
 import { MulticastObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory } from "./functions.js";
-import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
   Container_type,
+  HigherOrderObservableBaseTypeClass,
   MulticastObservableLike,
 } from "./types.js";
 

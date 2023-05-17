@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
+- [`ContainerTypeClass`](types.ContainerTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
 
   ↳ **`EventSourceModule`**
 
@@ -124,7 +124,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
+[ContainerTypeClass](types.ContainerTypeClass.md).[distinctUntilChanged](types.ContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -153,7 +153,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+[ContainerTypeClass](types.ContainerTypeClass.md).[forEach](types.ContainerTypeClass.md#foreach)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
+[ContainerTypeClass](types.ContainerTypeClass.md).[ignoreElements](types.ContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -202,7 +202,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keep](type_classes.ContainerTypeClass.md#keep)
+[ContainerTypeClass](types.ContainerTypeClass.md).[keep](types.ContainerTypeClass.md#keep)
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keepType](type_classes.ContainerTypeClass.md#keeptype)
+[ContainerTypeClass](types.ContainerTypeClass.md).[keepType](types.ContainerTypeClass.md#keeptype)
 
 ___
 
@@ -267,7 +267,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[map](type_classes.ContainerTypeClass.md#map)
+[ContainerTypeClass](types.ContainerTypeClass.md).[map](types.ContainerTypeClass.md#map)
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[mapTo](type_classes.ContainerTypeClass.md#mapto)
+[ContainerTypeClass](types.ContainerTypeClass.md).[mapTo](types.ContainerTypeClass.md#mapto)
 
 ___
 
@@ -314,7 +314,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pairwise](type_classes.ContainerTypeClass.md#pairwise)
+[ContainerTypeClass](types.ContainerTypeClass.md).[pairwise](types.ContainerTypeClass.md#pairwise)
 
 ___
 
@@ -341,7 +341,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -366,7 +366,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -393,7 +393,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
 
 ___
 
@@ -424,7 +424,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[scan](type_classes.ContainerTypeClass.md#scan)
+[ContainerTypeClass](types.ContainerTypeClass.md).[scan](types.ContainerTypeClass.md#scan)
 
 ___
 
@@ -453,7 +453,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[skipFirst](type_classes.ContainerTypeClass.md#skipfirst)
+[ContainerTypeClass](types.ContainerTypeClass.md).[skipFirst](types.ContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -482,7 +482,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeFirst](type_classes.ContainerTypeClass.md#takefirst)
+[ContainerTypeClass](types.ContainerTypeClass.md).[takeFirst](types.ContainerTypeClass.md#takefirst)
 
 ___
 
@@ -514,7 +514,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeWhile](type_classes.ContainerTypeClass.md#takewhile)
+[ContainerTypeClass](types.ContainerTypeClass.md).[takeWhile](types.ContainerTypeClass.md#takewhile)
 
 ___
 
@@ -565,7 +565,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
+[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
 
 ___
 

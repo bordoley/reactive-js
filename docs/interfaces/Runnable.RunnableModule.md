@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
+- [`RunnableContainerTypeClass`](types.RunnableContainerTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
 
-- [`HigherOrderObservableBaseTypeClass`](type_classes.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
+- [`HigherOrderObservableBaseTypeClass`](types.HigherOrderObservableBaseTypeClass.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
 
   ↳ **`RunnableModule`**
 
@@ -111,7 +111,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatAll](type_classes.HigherOrderObservableBaseTypeClass.md#concatall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[concatAll](types.HigherOrderObservableBaseTypeClass.md#concatall)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[concatMap](type_classes.HigherOrderObservableBaseTypeClass.md#concatmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[concatMap](types.HigherOrderObservableBaseTypeClass.md#concatmap)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatWith](type_classes.RunnableContainerTypeClass.md#concatwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[concatWith](types.RunnableContainerTypeClass.md#concatwith)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[contains](type_classes.RunnableContainerTypeClass.md#contains)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[contains](types.RunnableContainerTypeClass.md#contains)
 
 ## Constructor Methods
 
@@ -237,7 +237,7 @@ Returns a Container which emits all values from each source sequentially.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concat](type_classes.RunnableContainerTypeClass.md#concat)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[concat](types.RunnableContainerTypeClass.md#concat)
 
 ___
 
@@ -259,7 +259,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[empty](type_classes.RunnableContainerTypeClass.md#empty)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[empty](types.RunnableContainerTypeClass.md#empty)
 
 ___
 
@@ -279,7 +279,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromEnumerable](types.RunnableContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -310,7 +310,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
@@ -336,7 +336,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -364,7 +364,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -394,7 +394,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -426,7 +426,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -460,7 +460,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -496,7 +496,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -534,7 +534,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zip](types.RunnableContainerTypeClass.md#zip)
 
 ___
 
@@ -566,7 +566,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[distinctUntilChanged](type_classes.RunnableContainerTypeClass.md#distinctuntilchanged)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[distinctUntilChanged](types.RunnableContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -593,7 +593,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[endWith](type_classes.RunnableContainerTypeClass.md#endwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[endWith](types.RunnableContainerTypeClass.md#endwith)
 
 ___
 
@@ -613,7 +613,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaust](type_classes.HigherOrderObservableBaseTypeClass.md#exhaust)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[exhaust](types.HigherOrderObservableBaseTypeClass.md#exhaust)
 
 ___
 
@@ -640,7 +640,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[exhaustMap](type_classes.HigherOrderObservableBaseTypeClass.md#exhaustmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[exhaustMap](types.HigherOrderObservableBaseTypeClass.md#exhaustmap)
 
 ___
 
@@ -667,7 +667,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[flatMapIterable](types.RunnableContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -696,7 +696,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[forEach](type_classes.RunnableContainerTypeClass.md#foreach)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[forEach](types.RunnableContainerTypeClass.md#foreach)
 
 ___
 
@@ -716,7 +716,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[ignoreElements](type_classes.RunnableContainerTypeClass.md#ignoreelements)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[ignoreElements](types.RunnableContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -745,7 +745,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[keep](type_classes.RunnableContainerTypeClass.md#keep)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[keep](types.RunnableContainerTypeClass.md#keep)
 
 ___
 
@@ -772,7 +772,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[keepType](type_classes.RunnableContainerTypeClass.md#keeptype)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[keepType](types.RunnableContainerTypeClass.md#keeptype)
 
 ___
 
@@ -810,7 +810,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[map](type_classes.RunnableContainerTypeClass.md#map)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[map](types.RunnableContainerTypeClass.md#map)
 
 ___
 
@@ -837,7 +837,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[mapTo](type_classes.RunnableContainerTypeClass.md#mapto)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[mapTo](types.RunnableContainerTypeClass.md#mapto)
 
 ___
 
@@ -866,7 +866,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeAll](type_classes.HigherOrderObservableBaseTypeClass.md#mergeall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[mergeAll](types.HigherOrderObservableBaseTypeClass.md#mergeall)
 
 ___
 
@@ -897,7 +897,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[mergeMap](types.HigherOrderObservableBaseTypeClass.md#mergemap)
 
 ___
 
@@ -917,7 +917,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pairwise](type_classes.RunnableContainerTypeClass.md#pairwise)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[pairwise](types.RunnableContainerTypeClass.md#pairwise)
 
 ___
 
@@ -944,7 +944,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[pick](types.RunnableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -969,7 +969,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[pick](types.RunnableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -996,7 +996,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[pick](types.RunnableContainerTypeClass.md#pick)
 
 ___
 
@@ -1027,7 +1027,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[scan](type_classes.RunnableContainerTypeClass.md#scan)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[scan](types.RunnableContainerTypeClass.md#scan)
 
 ___
 
@@ -1055,7 +1055,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanLast](type_classes.HigherOrderObservableBaseTypeClass.md#scanlast)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[scanLast](types.HigherOrderObservableBaseTypeClass.md#scanlast)
 
 ___
 
@@ -1083,7 +1083,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanMany](type_classes.HigherOrderObservableBaseTypeClass.md#scanmany)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[scanMany](types.HigherOrderObservableBaseTypeClass.md#scanmany)
 
 ___
 
@@ -1112,7 +1112,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[skipFirst](type_classes.RunnableContainerTypeClass.md#skipfirst)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[skipFirst](types.RunnableContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -1139,7 +1139,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[startWith](type_classes.RunnableContainerTypeClass.md#startwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[startWith](types.RunnableContainerTypeClass.md#startwith)
 
 ___
 
@@ -1159,7 +1159,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchAll](type_classes.HigherOrderObservableBaseTypeClass.md#switchall)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[switchAll](types.HigherOrderObservableBaseTypeClass.md#switchall)
 
 ___
 
@@ -1186,7 +1186,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[switchMap](type_classes.HigherOrderObservableBaseTypeClass.md#switchmap)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[switchMap](types.HigherOrderObservableBaseTypeClass.md#switchmap)
 
 ___
 
@@ -1215,7 +1215,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeFirst](type_classes.RunnableContainerTypeClass.md#takefirst)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[takeFirst](types.RunnableContainerTypeClass.md#takefirst)
 
 ___
 
@@ -1244,7 +1244,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeLast](type_classes.RunnableContainerTypeClass.md#takelast)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[takeLast](types.RunnableContainerTypeClass.md#takelast)
 
 ___
 
@@ -1276,7 +1276,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeWhile](type_classes.RunnableContainerTypeClass.md#takewhile)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[takeWhile](types.RunnableContainerTypeClass.md#takewhile)
 
 ___
 
@@ -1303,7 +1303,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1328,7 +1328,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1355,7 +1355,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1384,7 +1384,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1415,7 +1415,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1448,7 +1448,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1483,7 +1483,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1520,7 +1520,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
 ___
 
@@ -1549,7 +1549,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[buffer](type_classes.RunnableContainerTypeClass.md#buffer)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[buffer](types.RunnableContainerTypeClass.md#buffer)
 
 ___
 
@@ -1575,7 +1575,7 @@ ___
 
 #### Inherited from
 
-[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[catchError](type_classes.HigherOrderObservableBaseTypeClass.md#catcherror)
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
 
 ___
 
@@ -1644,7 +1644,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromEnumeratorFactory](types.RunnableContainerTypeClass.md#fromenumeratorfactory)
 
 ▸ **fromEnumeratorFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -1688,7 +1688,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromFactory](types.RunnableContainerTypeClass.md#fromfactory)
 
 ▸ **fromFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -1731,7 +1731,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromIterable](types.RunnableContainerTypeClass.md#fromiterable)
 
 ▸ **fromIterable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -1775,7 +1775,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromOptional](types.RunnableContainerTypeClass.md#fromoptional)
 
 ▸ **fromOptional**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -1818,7 +1818,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromReadonlyArray](types.RunnableContainerTypeClass.md#fromreadonlyarray)
 
 ▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
@@ -1934,7 +1934,7 @@ ___
 
 #### Overrides
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[fromValue](types.RunnableContainerTypeClass.md#fromvalue)
 
 ▸ **fromValue**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -2135,7 +2135,7 @@ it returns false, or until the end of the Container.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[everySatisfy](type_classes.RunnableContainerTypeClass.md#everysatisfy)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[everySatisfy](types.RunnableContainerTypeClass.md#everysatisfy)
 
 ___
 
@@ -2155,7 +2155,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[first](type_classes.RunnableContainerTypeClass.md#first)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[first](types.RunnableContainerTypeClass.md#first)
 
 ___
 
@@ -2175,7 +2175,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[last](type_classes.RunnableContainerTypeClass.md#last)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[last](types.RunnableContainerTypeClass.md#last)
 
 ___
 
@@ -2201,7 +2201,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[noneSatisfy](type_classes.RunnableContainerTypeClass.md#nonesatisfy)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[noneSatisfy](types.RunnableContainerTypeClass.md#nonesatisfy)
 
 ___
 
@@ -2229,7 +2229,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[reduce](type_classes.RunnableContainerTypeClass.md#reduce)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[reduce](types.RunnableContainerTypeClass.md#reduce)
 
 ___
 
@@ -2255,7 +2255,7 @@ ___
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[someSatisfy](type_classes.RunnableContainerTypeClass.md#somesatisfy)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[someSatisfy](types.RunnableContainerTypeClass.md#somesatisfy)
 
 ___
 
@@ -2277,4 +2277,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[toReadonlyArray](type_classes.RunnableContainerTypeClass.md#toreadonlyarray)
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[toReadonlyArray](types.RunnableContainerTypeClass.md#toreadonlyarray)

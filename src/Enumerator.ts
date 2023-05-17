@@ -40,13 +40,13 @@ import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Optional_enumerate from "./Optional/__internal__/Optional.enumerate.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import { Function1 } from "./functions.js";
-import { RunnableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
   Container_type,
   EnumerableLike,
   EnumeratorLike,
+  RunnableContainerTypeClass,
   RunnableLike,
 } from "./types.js";
 

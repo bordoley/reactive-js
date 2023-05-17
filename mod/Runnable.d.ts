@@ -1,6 +1,5 @@
 import { Factory, Function1, Optional, SideEffect1, Updater } from "./functions.js";
-import { HigherOrderObservableBaseTypeClass, RunnableContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike, HigherOrderObservableBaseTypeClass, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerTypeClass, RunnableLike, SchedulerLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

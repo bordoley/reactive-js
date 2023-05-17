@@ -45,6 +45,10 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
+### Other Interfaces
+
+- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
+
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)
@@ -69,6 +73,16 @@
 - [PauseableSchedulerLike](../interfaces/types.PauseableSchedulerLike.md)
 - [SchedulerLike](../interfaces/types.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/types.VirtualTimeSchedulerLike.md)
+
+### TypeClass Interfaces
+
+- [AssociativeKeyedContainerTypeClass](../interfaces/types.AssociativeKeyedContainerTypeClass.md)
+- [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/types.ConcreteAssociativeKeyedContainerTypeClass.md)
+- [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
+- [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
+- [EnumerableContainerTypeClass](../interfaces/types.EnumerableContainerTypeClass.md)
+- [HigherOrderObservableBaseTypeClass](../interfaces/types.HigherOrderObservableBaseTypeClass.md)
+- [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
 
 ### Container Type Aliases
 
