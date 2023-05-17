@@ -31,6 +31,7 @@
 
 - [distinctUntilChanged](Enumerator.EnumeratorModule.md#distinctuntilchanged)
 - [forEach](Enumerator.EnumeratorModule.md#foreach)
+- [ignoreElements](Enumerator.EnumeratorModule.md#ignoreelements)
 - [keep](Enumerator.EnumeratorModule.md#keep)
 - [keepType](Enumerator.EnumeratorModule.md#keeptype)
 - [map](Enumerator.EnumeratorModule.md#map)
@@ -281,6 +282,26 @@ value emitted by the source.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 
 ___
 

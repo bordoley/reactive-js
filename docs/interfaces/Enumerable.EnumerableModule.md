@@ -41,6 +41,7 @@
 - [endWith](Enumerable.EnumerableModule.md#endwith)
 - [flatMapIterable](Enumerable.EnumerableModule.md#flatmapiterable)
 - [forEach](Enumerable.EnumerableModule.md#foreach)
+- [ignoreElements](Enumerable.EnumerableModule.md#ignoreelements)
 - [keep](Enumerable.EnumerableModule.md#keep)
 - [keepType](Enumerable.EnumerableModule.md#keeptype)
 - [map](Enumerable.EnumerableModule.md#map)
@@ -766,6 +767,26 @@ value emitted by the source.
 #### Inherited from
 
 [EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[forEach](type_classes.EnumerableContainerTypeClass.md#foreach)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[ignoreElements](type_classes.EnumerableContainerTypeClass.md#ignoreelements)
 
 ___
 

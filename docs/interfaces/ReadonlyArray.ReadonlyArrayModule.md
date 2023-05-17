@@ -44,6 +44,7 @@
 - [flatMapIterable](ReadonlyArray.ReadonlyArrayModule.md#flatmapiterable)
 - [forEach](ReadonlyArray.ReadonlyArrayModule.md#foreach)
 - [forEachWithKey](ReadonlyArray.ReadonlyArrayModule.md#foreachwithkey)
+- [ignoreElements](ReadonlyArray.ReadonlyArrayModule.md#ignoreelements)
 - [keep](ReadonlyArray.ReadonlyArrayModule.md#keep)
 - [keepType](ReadonlyArray.ReadonlyArrayModule.md#keeptype)
 - [keepWithKey](ReadonlyArray.ReadonlyArrayModule.md#keepwithkey)
@@ -804,6 +805,26 @@ value emitted by the source.
 #### Inherited from
 
 [ConcreteKeyedContainerTypeClass](type_classes.ConcreteKeyedContainerTypeClass.md).[forEachWithKey](type_classes.ConcreteKeyedContainerTypeClass.md#foreachwithkey)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md), `unknown`, `T`\>
+
+#### Inherited from
+
+Omit.ignoreElements
 
 ___
 

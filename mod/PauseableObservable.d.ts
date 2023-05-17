@@ -21,6 +21,7 @@ export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const enqueue: Signature["enqueue"];
 export declare const forEach: Signature["forEach"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
+export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];

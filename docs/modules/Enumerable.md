@@ -36,6 +36,7 @@
 - [endWith](Enumerable.md#endwith)
 - [flatMapIterable](Enumerable.md#flatmapiterable)
 - [forEach](Enumerable.md#foreach)
+- [ignoreElements](Enumerable.md#ignoreelements)
 - [keep](Enumerable.md#keep)
 - [keepType](Enumerable.md#keeptype)
 - [map](Enumerable.md#map)
@@ -632,6 +633,22 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `unknown`, `T`\>
 
 ___
 
