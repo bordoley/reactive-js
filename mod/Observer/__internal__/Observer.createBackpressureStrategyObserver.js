@@ -5,10 +5,10 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, SinkLike_notify, } from "../../types.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
-const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, Delegating_mixin()), function EnqueueObserver(instance, delegate, config) {
+import Observer_mixin from "./Observer.mixin.js";
+const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_mixin(), Disposable_delegatingMixin, Delegating_mixin()), function EnqueueObserver(instance, delegate, config) {
     init(Disposable_delegatingMixin, instance, delegate);
-    init(Observer_delegatingMixin(), instance, delegate, config);
+    init(Observer_mixin(), instance, delegate, config);
     init(Delegating_mixin(), instance, delegate);
     return instance;
 }, props({}), {

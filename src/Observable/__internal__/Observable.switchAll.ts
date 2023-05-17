@@ -1,6 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../Disposable/__internal__/SerialDisposable.create.js";
 import type * as Observable from "../../Observable.js";
@@ -66,7 +67,11 @@ const Observable_switchAll = <
 
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<ContainerOf<CInner, T>>(), Delegating_mixin()),
+        include(
+          Disposable_mixin,
+          Observer_mixin<ContainerOf<CInner, T>>(),
+          Delegating_mixin(),
+        ),
         function SwitchAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<CInner, T>>,
@@ -75,6 +80,7 @@ const Observable_switchAll = <
             Mutable<TProperties>,
           delegate: ObserverLike<T>,
         ): ObserverLike<ContainerOf<CInner, T>> {
+          init(Disposable_mixin, instance);
           Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin(), instance, delegate);
 

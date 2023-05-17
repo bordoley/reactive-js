@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
@@ -32,13 +33,18 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(Delegating_mixin(), Observer_mixin<ArrayBuffer>()),
+      include(
+        Disposable_mixin,
+        Delegating_mixin(),
+        Observer_mixin<ArrayBuffer>(),
+      ),
       function DecodeWithCharsetObserver(
         instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<string>,
         charset: string,
       ): ObserverLike<ArrayBuffer> {
+        init(Disposable_mixin, instance);
         init(Delegating_mixin(), instance, delegate);
         Observer_mixin_initFromDelegate<ArrayBuffer>(instance, delegate);
 

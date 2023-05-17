@@ -3,6 +3,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../Disposable/__internal__/SerialDisposable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -22,7 +23,8 @@ const Observable_switchAll = (lift) => {
                 this[DelegatingLike_delegate][DisposableLike_dispose]();
             }
         }
-        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function SwitchAllObserver(instance, delegate) {
+        return createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin(), Delegating_mixin()), function SwitchAllObserver(instance, delegate) {
+            init(Disposable_mixin, instance);
             Observer_mixin_initFromDelegate(instance, delegate);
             init(Delegating_mixin(), instance, delegate);
             instance[__HigherOrderObservable_currentRef] = pipe(SerialDisposable_create(Disposable_disposed), Disposable_addTo(delegate));

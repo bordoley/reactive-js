@@ -22,7 +22,7 @@ import {
   SinkLike_notify,
 } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createEnqueueObserver: <T>(
   delegate: ObserverLike<T>,
@@ -34,11 +34,7 @@ const Observer_createEnqueueObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(
-        Observer_delegatingMixin(),
-        Disposable_delegatingMixin,
-        Delegating_mixin(),
-      ),
+      include(Observer_mixin(), Disposable_delegatingMixin, Delegating_mixin()),
       function EnqueueObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -46,7 +42,7 @@ const Observer_createEnqueueObserver: <T>(
         queue: QueueableLike<T>,
       ): ObserverLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__EnqueueObserver_queue] = queue;
 

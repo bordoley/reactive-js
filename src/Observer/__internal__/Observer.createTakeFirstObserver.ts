@@ -9,7 +9,7 @@ import {
 
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createTakeFirstObserver: <T>(
   delegate: ObserverLike<T>,
@@ -17,14 +17,14 @@ const Observer_createTakeFirstObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), Sink_takeFirstMixin()),
+      include(Observer_mixin(), Sink_takeFirstMixin()),
       function TakeFirstObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
         takeCount: number,
       ): ObserverLike<T> {
         init(Sink_takeFirstMixin<T>(), instance, delegate, takeCount);
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
 
         return instance;
       },

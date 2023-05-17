@@ -8,11 +8,11 @@ import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
 import { SchedulerLike_now, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 const Observer_createWithCurrentTimeObserver = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, Delegating_mixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
+    return createInstanceFactory(mix(include(Observer_mixin(), Disposable_delegatingMixin, Delegating_mixin()), function WithCurrentTimeObserver(instance, delegate, selector) {
         init(Disposable_delegatingMixin, instance, delegate);
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__WithCurrentTimeObserver_selector] = selector;
         return instance;

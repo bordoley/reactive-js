@@ -1,12 +1,14 @@
 /// <reference types="./Observer.createWithDelegate.d.ts" />
 
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { bindMethod, none } from "../../functions.js";
 import { SinkLike_notify } from "../../types.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_createWithDelegate = 
 /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Observer_mixin()), function DelegatingObserver(instance, delegate) {
+    return createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function DelegatingObserver(instance, delegate) {
+        init(Disposable_mixin, instance);
         init(Observer_mixin(), instance, delegate, delegate);
         instance[SinkLike_notify] = bindMethod(delegate, SinkLike_notify);
         return instance;

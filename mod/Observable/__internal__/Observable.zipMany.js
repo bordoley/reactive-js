@@ -59,7 +59,8 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
     const Enumerator_move = () => (enumerator) => enumerator[EnumeratorLike_move]();
     const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_someSatisfy(x => x[DisposableLike_isDisposed])))();
-    const createZipObserver = createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
+    const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin(), Delegating_mixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
+        init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;

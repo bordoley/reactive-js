@@ -9,7 +9,7 @@ import {
 import { Factory, Reducer } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createScanObserver: <T, TAcc>(
   delegate: ObserverLike<TAcc>,
@@ -18,7 +18,7 @@ const Observer_createScanObserver: <T, TAcc>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), Sink_scanMixin()),
+      include(Observer_mixin(), Sink_scanMixin()),
       function ScanObserver(
         instance: unknown,
         delegate: ObserverLike<TAcc>,
@@ -32,7 +32,7 @@ const Observer_createScanObserver: <T, TAcc>(
           reducer,
           initialValue,
         );
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
 
         return instance;
       },

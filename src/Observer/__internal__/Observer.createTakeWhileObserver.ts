@@ -9,7 +9,7 @@ import {
 import { Predicate } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createTakeWhileObserver: <T>(
   delegate: ObserverLike<T>,
@@ -18,7 +18,7 @@ const Observer_createTakeWhileObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Sink_takeWhileMixin(), Observer_delegatingMixin()),
+      include(Sink_takeWhileMixin(), Observer_mixin()),
       function TakeWhileObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -32,7 +32,7 @@ const Observer_createTakeWhileObserver: <T>(
           predicate,
           inclusive,
         );
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
 
         return instance;
       },

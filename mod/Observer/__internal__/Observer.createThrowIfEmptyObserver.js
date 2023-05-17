@@ -1,6 +1,7 @@
 /// <reference types="./Observer.createThrowIfEmptyObserver.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ThrowIfEmptyObserver_isEmpty } from "../../__internal__/symbols.js";
@@ -11,7 +12,8 @@ import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Delegating_mixin(), Observer_mixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
+    return createInstanceFactory(mix(include(Disposable_mixin, Delegating_mixin(), Observer_mixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
+        init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         pipe(instance, Disposable_onComplete(() => {

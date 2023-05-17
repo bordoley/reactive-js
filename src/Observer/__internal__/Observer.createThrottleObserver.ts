@@ -1,13 +1,13 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
-import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Mutable,
@@ -47,6 +47,7 @@ import {
   ObserverLike,
   SinkLike_notify,
 } from "../../types.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
@@ -84,7 +85,7 @@ const Observer_createThrottleObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Observer_mixin(), Delegating_mixin()),
+      include(Disposable_mixin, Observer_mixin(), Delegating_mixin()),
       function ThrottleObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -92,6 +93,7 @@ const Observer_createThrottleObserver: <T>(
         durationFunction: Function1<T, ObservableLike>,
         mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
+        init(Disposable_mixin, instance);
         init(Delegating_mixin<ObserverLike>(), instance, delegate);
         Observer_mixin_initFromDelegate(instance, delegate);
 

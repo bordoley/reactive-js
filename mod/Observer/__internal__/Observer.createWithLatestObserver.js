@@ -11,10 +11,10 @@ import { DelegatingLike_delegate, WithLatestLike_hasLatest, WithLatestLike_other
 import { none, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../types.js";
 import Observer_assertState from "./Observer.assertState.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
-const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_delegatingMixin(), Disposable_delegatingMixin, Delegating_mixin()), function WithLatestLike(instance, delegate, other, selector) {
+import Observer_mixin from "./Observer.mixin.js";
+const Observer_createWithLatestObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Observer_mixin(), Disposable_delegatingMixin, Delegating_mixin()), function WithLatestLike(instance, delegate, other, selector) {
     init(Disposable_delegatingMixin, instance, delegate);
-    init(Observer_delegatingMixin(), instance, delegate, delegate);
+    init(Observer_mixin(), instance, delegate, delegate);
     init(Delegating_mixin(), instance, delegate);
     instance[WithLatestLike_selector] = selector;
     pipe(other, Observable_forEach((next) => {

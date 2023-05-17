@@ -18,7 +18,7 @@ import {
   QueueableLike_backpressureStrategy,
   SinkLike_notify,
 } from "../../types.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
@@ -30,7 +30,7 @@ const Observer_createBackpressureObserver: <T>(
   createInstanceFactory(
     mix(
       include(
-        Observer_delegatingMixin<T>(),
+        Observer_mixin<T>(),
         Disposable_delegatingMixin,
         Delegating_mixin(),
       ),
@@ -43,7 +43,7 @@ const Observer_createBackpressureObserver: <T>(
         },
       ): ObserverLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);
-        init(Observer_delegatingMixin<T>(), instance, delegate, config);
+        init(Observer_mixin<T>(), instance, delegate, config);
         init(Delegating_mixin(), instance, delegate);
 
         return instance;
