@@ -7,8 +7,12 @@ import {
   expectArrayEquals,
   expectEquals,
   expectIsNone,
+  expectIsSome,
+  expectPromiseToThrow,
+  expectToHaveBeenCalledTimes,
   expectToThrow,
   expectToThrowError,
+  mockFn,
   test,
   testAsync,
   testModule,
@@ -22,10 +26,12 @@ import {
   newInstance,
   pipe,
   pipeLazy,
+  raise,
   returns,
 } from "../functions.js";
 import {
   DisposableLike_dispose,
+  DisposableLike_error,
   PublisherLike_observerCount,
   SinkLike_notify,
   VirtualTimeSchedulerLike_run,
@@ -144,6 +150,44 @@ testModule(
       pipe(result, expectEquals<Optional<number>>(1));
     }),
   ),
+
+  describe(
+    "fromAsyncFactory",
+    testAsync("when promise resolves", async () => {
+      const result = await pipe(
+        async () => {
+          await Promise.resolve(1);
+          return 2;
+        },
+        Observable.fromAsyncFactory(),
+        Observable.lastAsync(),
+      );
+      pipe(result, expectEquals(2 as Optional<number>));
+    }),
+
+    testAsync("when promise fails with an exception", async () => {
+      await pipe(
+        async () => {
+          await Promise.resolve(1);
+          raise();
+        },
+        Observable.fromAsyncFactory(),
+        Observable.lastAsync(),
+        expectPromiseToThrow,
+      );
+    }),
+    testAsync("when factory throws an exception", async () => {
+      await pipe(
+        async () => {
+          raise();
+        },
+        Observable.fromAsyncFactory(),
+        Observable.lastAsync(),
+        expectPromiseToThrow,
+      );
+    }),
+  ),
+
   describe(
     "lastAsync",
     testAsync("empty source", async () => {
@@ -178,6 +222,43 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
+  ),
+
+  describe(
+    "onSubscribe",
+    test("when subscribe function returns a teardown function", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const disp = mockFn();
+      const f = mockFn(disp);
+
+      pipe(
+        [1],
+        ReadonlyArray.toObservable(),
+        Observable.onSubscribe(f),
+        Observable.subscribe(scheduler),
+      );
+
+      pipe(disp, expectToHaveBeenCalledTimes(0));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(disp, expectToHaveBeenCalledTimes(1));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+
+    test("when callback function throws", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+      const subscription = pipe(
+        [1],
+        ReadonlyArray.toObservable(),
+        Observable.onSubscribe(raise),
+        Observable.subscribe(scheduler),
+      );
+
+      pipe(subscription[DisposableLike_error], expectIsSome);
+    }),
   ),
 
   describe(

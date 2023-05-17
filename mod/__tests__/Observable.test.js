@@ -4,9 +4,9 @@ import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
-import { describe, expectArrayEquals, expectEquals, expectIsNone, expectToThrow, expectToThrowError, test, testAsync, testModule, } from "../__internal__/testing.js";
-import { arrayEquality, bindMethod, increment, incrementBy, newInstance, pipe, pipeLazy, returns, } from "../functions.js";
-import { DisposableLike_dispose, PublisherLike_observerCount, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { describe, expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
+import { arrayEquality, bindMethod, increment, incrementBy, newInstance, pipe, pipeLazy, raise, returns, } from "../functions.js";
+import { DisposableLike_dispose, DisposableLike_error, PublisherLike_observerCount, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality())))), describe("createPublisher", test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const publisher = Observable.createPublisher({ replay: 2 });
@@ -42,13 +42,42 @@ testModule("Observable", describe("combineLatest", test("combineLatest", pipeLaz
 }), testAsync("it returns the first value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectEquals(1));
+})), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+    const result = await pipe(async () => {
+        await Promise.resolve(1);
+        return 2;
+    }, Observable.fromAsyncFactory(), Observable.lastAsync());
+    pipe(result, expectEquals(2));
+}), testAsync("when promise fails with an exception", async () => {
+    await pipe(async () => {
+        await Promise.resolve(1);
+        raise();
+    }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
+}), testAsync("when factory throws an exception", async () => {
+    await pipe(async () => {
+        raise();
+    }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
 })), describe("lastAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectIsNone);
 }), testAsync("it returns the last value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectEquals(3));
-})), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable({ delay: 1 }), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
+})), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable({ delay: 1 }), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const disp = mockFn();
+    const f = mockFn(disp);
+    pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(f), Observable.subscribe(scheduler));
+    pipe(disp, expectToHaveBeenCalledTimes(0));
+    pipe(f, expectToHaveBeenCalledTimes(1));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(disp, expectToHaveBeenCalledTimes(1));
+    pipe(f, expectToHaveBeenCalledTimes(1));
+}), test("when callback function throws", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const subscription = pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
+    pipe(subscription[DisposableLike_error], expectIsSome);
+})), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,
 }), Observable.takeFirst({ count: 100 }), Observable.throttle(50, { mode: "first" }), Runnable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Observable.generate(increment, returns(-1), {

@@ -27,6 +27,7 @@ import Observable_forkCombineLatest from "./Observable/__internal__/Observable.f
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
+import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
@@ -811,6 +812,130 @@ export interface ObservableModule {
     c: Function1<TObservableIn, MaybeMulticastObservableLike<TC>>,
   ): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC]>>;
   forkZip<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+    TD,
+  >(
+    a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>,
+    c: Function1<TObservableIn, MaybeMulticastObservableLike<TC>>,
+    d: Function1<TObservableIn, MaybeMulticastObservableLike<TD>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC, TD]>>;
+
+  forkZipLatest<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB]>>;
+  forkZipLatest<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+    c: Function1<TObservableIn, EnumerableLike<TC>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB, TC]>>;
+  forkZipLatest<TObservableIn extends EnumerableLike<TIn>, TIn, TA, TB, TC, TD>(
+    a: Function1<TObservableIn, EnumerableLike<TA>>,
+    b: Function1<TObservableIn, EnumerableLike<TB>>,
+    c: Function1<TObservableIn, EnumerableLike<TC>>,
+    d: Function1<TObservableIn, EnumerableLike<TD>>,
+  ): Function1<TObservableIn, EnumerableLike<[TA, TB, TC, TD]>>;
+
+  forkZipLatest<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB]>>;
+  forkZipLatest<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB, TC>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+    c: Function1<TObservableIn, RunnableLike<TC>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB, TC]>>;
+  forkZipLatest<TObservableIn extends RunnableLike<TIn>, TIn, TA, TB, TC, TD>(
+    a: Function1<TObservableIn, RunnableLike<TA>>,
+    b: Function1<TObservableIn, RunnableLike<TB>>,
+    c: Function1<TObservableIn, RunnableLike<TC>>,
+    d: Function1<TObservableIn, RunnableLike<TD>>,
+  ): Function1<TObservableIn, RunnableLike<[TA, TB, TC, TD]>>;
+
+  forkZipLatest<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB]>>;
+  forkZipLatest<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+  >(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+    c: Function1<TObservableIn, DeferredObservableLike<TC>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC]>>;
+  forkZipLatest<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+    TD,
+  >(
+    a: Function1<TObservableIn, DeferredObservableLike<TA>>,
+    b: Function1<TObservableIn, DeferredObservableLike<TB>>,
+    c: Function1<TObservableIn, DeferredObservableLike<TC>>,
+    d: Function1<TObservableIn, DeferredObservableLike<TD>>,
+  ): Function1<TObservableIn, DeferredObservableLike<[TA, TB, TC, TD]>>;
+
+  forkZipLatest<
+    TObservableIn extends MulticastObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+  >(
+    a: Function1<TObservableIn, MulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MulticastObservableLike<TB>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB]>>;
+  forkZipLatest<
+    TObservableIn extends MulticastObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+  >(
+    a: Function1<TObservableIn, MulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MulticastObservableLike<TB>>,
+    c: Function1<TObservableIn, MulticastObservableLike<TC>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC]>>;
+  forkZipLatest<
+    TObservableIn extends MulticastObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+    TD,
+  >(
+    a: Function1<TObservableIn, MulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MulticastObservableLike<TB>>,
+    c: Function1<TObservableIn, MulticastObservableLike<TC>>,
+    d: Function1<TObservableIn, MulticastObservableLike<TD>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC, TD]>>;
+
+  forkZipLatest<TObservableIn extends DeferredObservableLike<TIn>, TIn, TA, TB>(
+    a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB]>>;
+  forkZipLatest<
+    TObservableIn extends DeferredObservableLike<TIn>,
+    TIn,
+    TA,
+    TB,
+    TC,
+  >(
+    a: Function1<TObservableIn, MaybeMulticastObservableLike<TA>>,
+    b: Function1<TObservableIn, MaybeMulticastObservableLike<TB>>,
+    c: Function1<TObservableIn, MaybeMulticastObservableLike<TC>>,
+  ): Function1<TObservableIn, MulticastObservableLike<[TA, TB, TC]>>;
+  forkZipLatest<
     TObservableIn extends DeferredObservableLike<TIn>,
     TIn,
     TA,
@@ -1879,6 +2004,8 @@ export const forkCombineLatest: Signature["forkCombineLatest"] =
 export const forkConcat: Signature["forkConcat"] = Observable_forkConcat;
 export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const forkZip: Signature["forkZip"] = Observable_forkZip;
+export const forkZipLatest: Signature["forkZipLatest"] =
+  Observable_forkZipLatest;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
