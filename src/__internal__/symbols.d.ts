@@ -360,8 +360,6 @@ export declare const __ThrottleObserver_onNotify: unique symbol;
 
 export declare const __ThrowIfEmptyObserver_isEmpty: unique symbol;
 
-export declare const __timeoutError: unique symbol;
-
 export declare const __TimeoutObserver_duration: unique symbol;
 
 export declare const __VirtualTimeScheduler_maxMicroTaskTicks: unique symbol;

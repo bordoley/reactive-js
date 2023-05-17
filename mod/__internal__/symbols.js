@@ -370,8 +370,6 @@ export const __ThrottleObserver_onNotify = /*@__PURE__*/ symbol("ThrottleObserve
 /** @type {unique symbol} */
 export const __ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol("ThrowIfEmptyObserver_isEmpty");
 /** @type {unique symbol} */
-export const __timeoutError = /*@__PURE__*/ symbol("timeoutError");
-/** @type {unique symbol} */
 export const __TimeoutObserver_duration = /*@__PURE__*/ symbol("TimeoutObserver_duration");
 /** @type {unique symbol} */
 export const __VirtualTimeScheduler_maxMicroTaskTicks = /*@__PURE__*/ symbol("VirtualTimeScheduler_maxMicroTaskTicks");

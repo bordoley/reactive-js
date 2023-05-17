@@ -361,8 +361,6 @@ export const __ThrottleObserver_onNotify: unique symbol;
 /** @type {unique symbol} */
 export const __ThrowIfEmptyObserver_isEmpty: unique symbol;
 /** @type {unique symbol} */
-export const __timeoutError: unique symbol;
-/** @type {unique symbol} */
 export const __TimeoutObserver_duration: unique symbol;
 /** @type {unique symbol} */
 export const __VirtualTimeScheduler_maxMicroTaskTicks: unique symbol;

@@ -860,9 +860,6 @@ export const __ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __timeoutError = /*@__PURE__*/ symbol("timeoutError");
-
-/** @type {unique symbol} */
 export const __TimeoutObserver_duration = /*@__PURE__*/ symbol(
   "TimeoutObserver_duration",
 );
