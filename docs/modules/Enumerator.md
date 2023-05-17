@@ -15,6 +15,7 @@
 
 ### Constructor Functions
 
+- [concat](Enumerator.md#concat)
 - [empty](Enumerator.md#empty)
 - [fromEnumerable](Enumerator.md#fromenumerable)
 - [fromEnumeratorFactory](Enumerator.md#fromenumeratorfactory)
@@ -23,10 +24,16 @@
 - [fromOptional](Enumerator.md#fromoptional)
 - [fromReadonlyArray](Enumerator.md#fromreadonlyarray)
 - [fromValue](Enumerator.md#fromvalue)
+- [zip](Enumerator.md#zip)
 
 ### Operator Functions
 
+- [concatAll](Enumerator.md#concatall)
+- [concatMap](Enumerator.md#concatmap)
+- [concatWith](Enumerator.md#concatwith)
 - [distinctUntilChanged](Enumerator.md#distinctuntilchanged)
+- [endWith](Enumerator.md#endwith)
+- [flatMapIterable](Enumerator.md#flatmapiterable)
 - [forEach](Enumerator.md#foreach)
 - [ignoreElements](Enumerator.md#ignoreelements)
 - [keep](Enumerator.md#keep)
@@ -37,8 +44,11 @@
 - [pick](Enumerator.md#pick)
 - [scan](Enumerator.md#scan)
 - [skipFirst](Enumerator.md#skipfirst)
+- [startWith](Enumerator.md#startwith)
 - [takeFirst](Enumerator.md#takefirst)
+- [takeLast](Enumerator.md#takelast)
 - [takeWhile](Enumerator.md#takewhile)
+- [zipWith](Enumerator.md#zipwith)
 
 ### Other Functions
 
@@ -47,6 +57,13 @@
 
 ### Transform Functions
 
+- [contains](Enumerator.md#contains)
+- [everySatisfy](Enumerator.md#everysatisfy)
+- [first](Enumerator.md#first)
+- [last](Enumerator.md#last)
+- [noneSatisfy](Enumerator.md#nonesatisfy)
+- [reduce](Enumerator.md#reduce)
+- [someSatisfy](Enumerator.md#somesatisfy)
 - [toReadonlyArray](Enumerator.md#toreadonlyarray)
 
 ## Type Aliases
@@ -62,6 +79,32 @@ ___
 Ƭ **Type**: [`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md)
 
 ## Constructor Functions
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>
+
+Returns a Container which emits all values from each source sequentially.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> |
+| `snd` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> |
+| `...tail` | readonly [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>
+
+___
 
 ### empty
 
@@ -201,7 +244,295 @@ ___
 
 ___
 
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create a Container whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TH`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TH`\> |
+| `i` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TI`\> |
+
+#### Returns
+
+[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
 ## Operator Functions
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `T`\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> |
+| `...tail` | readonly [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
 
 ### distinctUntilChanged
 
@@ -226,6 +557,52 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, `TB`\>
 
 ___
 
@@ -510,11 +887,59 @@ Returns a Container that skips the first count items emitted by the source.
 
 ___
 
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
 ### takeFirst
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
 
 #### Type parameters
 
@@ -560,6 +985,218 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TH`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TH`\> |
+| `i` | [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`TI`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -625,6 +1262,156 @@ ___
 ___
 
 ## Transform Functions
+
+### contains
+
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+___
+
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+Determines whether all the members of an Container satisfy the predicate.
+The predicate function is invoked for each element in the Container until the
+it returns false, or until the end of the Container.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+___
+
+### first
+
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### last
+
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+
+___
+
+### noneSatisfy
+
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `TAcc`\>
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+___
 
 ### toReadonlyArray
 

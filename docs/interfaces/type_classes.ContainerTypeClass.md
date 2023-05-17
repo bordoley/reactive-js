@@ -14,8 +14,6 @@
 
 - **`ContainerTypeClass`**
 
-  ↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
-
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)

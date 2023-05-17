@@ -7,9 +7,7 @@
 ### Interfaces
 
 - [AssociativeKeyedContainerTypeClass](../interfaces/type_classes.AssociativeKeyedContainerTypeClass.md)
-- [BlockingContainerBaseTypeClass](../interfaces/type_classes.BlockingContainerBaseTypeClass.md)
 - [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/type_classes.ConcreteAssociativeKeyedContainerTypeClass.md)
-- [ConcreteAsyncContainerBaseTypeClass](../interfaces/type_classes.ConcreteAsyncContainerBaseTypeClass.md)
 - [ConcreteContainerBaseTypeClass](../interfaces/type_classes.ConcreteContainerBaseTypeClass.md)
 - [ConcreteKeyedContainerTypeClass](../interfaces/type_classes.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/type_classes.ContainerTypeClass.md)

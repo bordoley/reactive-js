@@ -8,8 +8,6 @@
 
 - [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
 
-- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
-
 - [`EnumerableContainerBaseTypeClass`](type_classes.EnumerableContainerBaseTypeClass.md)<[`Type`](../modules/Iterable.md#type)\>
 
   ↳ **`IterableModule`**
@@ -309,4 +307,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[BlockingContainerBaseTypeClass](type_classes.BlockingContainerBaseTypeClass.md).[toReadonlyArray](type_classes.BlockingContainerBaseTypeClass.md#toreadonlyarray)
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[toReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#toreadonlyarray)

@@ -19,8 +19,8 @@ import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.ma
 import ReadonlyArray_someSatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { __ZipObserver_enumerators, __ZipObserver_queuedEnumerator, } from "../../__internal__/symbols.js";
-import { DelegatingLike_delegate, QueueLike_dequeue, } from "../../__internal__/types.js";
+import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
+import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
@@ -64,7 +64,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
         instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
-        instance[__ZipObserver_enumerators] = enumerators;
+        instance[ZipLike_enumerators] = enumerators;
         pipe(instance, Disposable_onComplete(() => {
             if (queuedEnumerator[DisposableLike_isDisposed] ||
                 (!queuedEnumerator[EnumeratorLike_hasCurrent] &&
@@ -74,13 +74,13 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         }));
         return instance;
     }, props({
-        [__ZipObserver_enumerators]: none,
+        [ZipLike_enumerators]: none,
         [__ZipObserver_queuedEnumerator]: none,
     }), {
         [SinkLike_notify](next) {
             Observer_assertState(this);
             this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
-            const enumerators = this[__ZipObserver_enumerators];
+            const enumerators = this[ZipLike_enumerators];
             if (!shouldEmit(enumerators)) {
                 return;
             }

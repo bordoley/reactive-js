@@ -6,18 +6,25 @@
 
 ## Hierarchy
 
-- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<[`Type`](../modules/Enumerator.md#type)\>
-
-- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<[`Type`](../modules/Enumerator.md#type)\>
-
-- [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<[`Type`](../modules/Enumerator.md#type)\>
+- [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<[`Type`](../modules/Enumerator.md#type)\>
 
   ↳ **`EnumeratorModule`**
 
 ## Table of contents
 
+### Operator Properties
+
+- [concatAll](Enumerator.EnumeratorModule.md#concatall)
+- [concatMap](Enumerator.EnumeratorModule.md#concatmap)
+- [concatWith](Enumerator.EnumeratorModule.md#concatwith)
+
+### Transform Properties
+
+- [contains](Enumerator.EnumeratorModule.md#contains)
+
 ### Constructor Methods
 
+- [concat](Enumerator.EnumeratorModule.md#concat)
 - [empty](Enumerator.EnumeratorModule.md#empty)
 - [fromEnumerable](Enumerator.EnumeratorModule.md#fromenumerable)
 - [fromEnumeratorFactory](Enumerator.EnumeratorModule.md#fromenumeratorfactory)
@@ -26,10 +33,13 @@
 - [fromOptional](Enumerator.EnumeratorModule.md#fromoptional)
 - [fromReadonlyArray](Enumerator.EnumeratorModule.md#fromreadonlyarray)
 - [fromValue](Enumerator.EnumeratorModule.md#fromvalue)
+- [zip](Enumerator.EnumeratorModule.md#zip)
 
 ### Operator Methods
 
 - [distinctUntilChanged](Enumerator.EnumeratorModule.md#distinctuntilchanged)
+- [endWith](Enumerator.EnumeratorModule.md#endwith)
+- [flatMapIterable](Enumerator.EnumeratorModule.md#flatmapiterable)
 - [forEach](Enumerator.EnumeratorModule.md#foreach)
 - [ignoreElements](Enumerator.EnumeratorModule.md#ignoreelements)
 - [keep](Enumerator.EnumeratorModule.md#keep)
@@ -40,8 +50,11 @@
 - [pick](Enumerator.EnumeratorModule.md#pick)
 - [scan](Enumerator.EnumeratorModule.md#scan)
 - [skipFirst](Enumerator.EnumeratorModule.md#skipfirst)
+- [startWith](Enumerator.EnumeratorModule.md#startwith)
 - [takeFirst](Enumerator.EnumeratorModule.md#takefirst)
+- [takeLast](Enumerator.EnumeratorModule.md#takelast)
 - [takeWhile](Enumerator.EnumeratorModule.md#takewhile)
+- [zipWith](Enumerator.EnumeratorModule.md#zipwith)
 
 ### Other Methods
 
@@ -50,9 +63,168 @@
 
 ### Transform Methods
 
+- [everySatisfy](Enumerator.EnumeratorModule.md#everysatisfy)
+- [first](Enumerator.EnumeratorModule.md#first)
+- [last](Enumerator.EnumeratorModule.md#last)
+- [noneSatisfy](Enumerator.EnumeratorModule.md#nonesatisfy)
+- [reduce](Enumerator.EnumeratorModule.md#reduce)
+- [someSatisfy](Enumerator.EnumeratorModule.md#somesatisfy)
 - [toReadonlyArray](Enumerator.EnumeratorModule.md#toreadonlyarray)
 
+## Operator Properties
+
+### concatAll
+
+• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `T`\>
+
+#### Type declaration
+
+▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatAll](type_classes.RunnableContainerTypeClass.md#concatall)
+
+___
+
+### concatMap
+
+• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type declaration
+
+▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\>\> |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatMap](type_classes.RunnableContainerTypeClass.md#concatmap)
+
+___
+
+### concatWith
+
+• **concatWith**: <T\>(`snd`: [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, ...`tail`: readonly [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>[]) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type declaration
+
+▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\> |
+| `...tail` | readonly [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>[] |
+
+##### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concatWith](type_classes.RunnableContainerTypeClass.md#concatwith)
+
+___
+
+## Transform Properties
+
+### contains
+
+• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type declaration
+
+▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
+
+##### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[contains](type_classes.RunnableContainerTypeClass.md#contains)
+
 ## Constructor Methods
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>
+
+Returns a Container which emits all values from each source sequentially.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\> |
+| `snd` | [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\> |
+| `...tail` | readonly [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[concat](type_classes.RunnableContainerTypeClass.md#concat)
+
+___
 
 ### empty
 
@@ -72,7 +244,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[empty](type_classes.RunnableContainerTypeClass.md#empty)
 
 ___
 
@@ -92,7 +264,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -112,7 +284,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromenumeratorfactory)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -132,7 +304,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromfactory)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -152,7 +324,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromIterable](type_classes.ConcreteContainerBaseTypeClass.md#fromiterable)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -172,7 +344,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromOptional](type_classes.ConcreteContainerBaseTypeClass.md#fromoptional)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -200,7 +372,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#fromreadonlyarray)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -220,7 +392,262 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`]\>
+
+Combines multiple sources to create a Container whose values are calculated from the values,
+in order, of each of its input sources.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TH`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TA`\> |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TH`\> |
+| `i` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TI`\> |
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zip](type_classes.RunnableContainerTypeClass.md#zip)
 
 ___
 
@@ -252,7 +679,61 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[distinctUntilChanged](type_classes.ContainerTypeClass.md#distinctuntilchanged)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[distinctUntilChanged](type_classes.RunnableContainerTypeClass.md#distinctuntilchanged)
+
+___
+
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[endWith](type_classes.RunnableContainerTypeClass.md#endwith)
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
 
 ___
 
@@ -281,7 +762,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[forEach](type_classes.RunnableContainerTypeClass.md#foreach)
 
 ___
 
@@ -301,7 +782,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[ignoreElements](type_classes.RunnableContainerTypeClass.md#ignoreelements)
 
 ___
 
@@ -330,7 +811,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keep](type_classes.ContainerTypeClass.md#keep)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[keep](type_classes.RunnableContainerTypeClass.md#keep)
 
 ___
 
@@ -357,7 +838,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[keepType](type_classes.ContainerTypeClass.md#keeptype)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[keepType](type_classes.RunnableContainerTypeClass.md#keeptype)
 
 ___
 
@@ -395,7 +876,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[map](type_classes.ContainerTypeClass.md#map)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[map](type_classes.RunnableContainerTypeClass.md#map)
 
 ___
 
@@ -422,7 +903,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[mapTo](type_classes.ContainerTypeClass.md#mapto)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[mapTo](type_classes.RunnableContainerTypeClass.md#mapto)
 
 ___
 
@@ -442,7 +923,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pairwise](type_classes.ContainerTypeClass.md#pairwise)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pairwise](type_classes.RunnableContainerTypeClass.md#pairwise)
 
 ___
 
@@ -469,7 +950,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -494,7 +975,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -521,7 +1002,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[pick](type_classes.ContainerTypeClass.md#pick)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[pick](type_classes.RunnableContainerTypeClass.md#pick)
 
 ___
 
@@ -552,7 +1033,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[scan](type_classes.ContainerTypeClass.md#scan)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[scan](type_classes.RunnableContainerTypeClass.md#scan)
 
 ___
 
@@ -581,7 +1062,34 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[skipFirst](type_classes.ContainerTypeClass.md#skipfirst)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[skipFirst](type_classes.RunnableContainerTypeClass.md#skipfirst)
+
+___
+
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[startWith](type_classes.RunnableContainerTypeClass.md#startwith)
 
 ___
 
@@ -610,7 +1118,36 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeFirst](type_classes.ContainerTypeClass.md#takefirst)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeFirst](type_classes.RunnableContainerTypeClass.md#takefirst)
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeLast](type_classes.RunnableContainerTypeClass.md#takelast)
 
 ___
 
@@ -642,7 +1179,251 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[takeWhile](type_classes.ContainerTypeClass.md#takewhile)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[takeWhile](type_classes.RunnableContainerTypeClass.md#takewhile)
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TH`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TB`\> |
+| `c` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TC`\> |
+| `d` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TD`\> |
+| `e` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TE`\> |
+| `f` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TF`\> |
+| `g` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TG`\> |
+| `h` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TH`\> |
+| `i` | [`EnumeratorLike`](types.EnumeratorLike.md)<`TI`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
 ___
 
@@ -671,7 +1452,7 @@ ___
 
 #### Inherited from
 
-[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[buffer](type_classes.RunnableContainerTypeClass.md#buffer)
 
 ___
 
@@ -713,6 +1494,156 @@ ___
 
 ## Transform Methods
 
+### everySatisfy
+
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+Determines whether all the members of an Container satisfy the predicate.
+The predicate function is invoked for each element in the Container until the
+it returns false, or until the end of the Container.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[everySatisfy](type_classes.RunnableContainerTypeClass.md#everysatisfy)
+
+___
+
+### first
+
+▸ **first**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[first](type_classes.RunnableContainerTypeClass.md#first)
+
+___
+
+### last
+
+▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[last](type_classes.RunnableContainerTypeClass.md#last)
+
+___
+
+### noneSatisfy
+
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[noneSatisfy](type_classes.RunnableContainerTypeClass.md#nonesatisfy)
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `TAcc`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[reduce](type_classes.RunnableContainerTypeClass.md#reduce)
+
+___
+
+### someSatisfy
+
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, `boolean`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[someSatisfy](type_classes.RunnableContainerTypeClass.md#somesatisfy)
+
+___
+
 ### toReadonlyArray
 
 ▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>, readonly `T`[]\>
@@ -731,4 +1662,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[BlockingContainerBaseTypeClass](type_classes.BlockingContainerBaseTypeClass.md).[toReadonlyArray](type_classes.BlockingContainerBaseTypeClass.md#toreadonlyarray)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[toReadonlyArray](type_classes.RunnableContainerTypeClass.md#toreadonlyarray)

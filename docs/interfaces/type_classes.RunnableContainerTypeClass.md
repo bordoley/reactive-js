@@ -16,9 +16,9 @@
 
 - [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<`C`\>
 
-- [`BlockingContainerBaseTypeClass`](type_classes.BlockingContainerBaseTypeClass.md)<`C`\>
-
   ↳ **`RunnableContainerTypeClass`**
+
+  ↳↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
 
   ↳↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
@@ -1515,4 +1515,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[BlockingContainerBaseTypeClass](type_classes.BlockingContainerBaseTypeClass.md).[toReadonlyArray](type_classes.BlockingContainerBaseTypeClass.md#toreadonlyarray)
+[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[toReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#toreadonlyarray)

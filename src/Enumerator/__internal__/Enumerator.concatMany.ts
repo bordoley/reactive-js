@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import { pipe } from "../../functions.js";
 import { EnumeratorLike } from "../../types.js";

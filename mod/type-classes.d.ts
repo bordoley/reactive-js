@@ -138,11 +138,6 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
      * @category Constructor
      */
     fromValue<T>(): Function1<T, ContainerOf<C, T>>;
-}
-export interface ConcreteAsyncContainerBaseTypeClass<C extends Container> {
-    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, ContainerOf<C, T>>;
-}
-export interface BlockingContainerBaseTypeClass<C extends Container> {
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
@@ -163,7 +158,7 @@ export interface EnumerableContainerBaseTypeClass<C extends Container, CEnumerat
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
-export interface RunnableContainerTypeClass<C extends Container> extends ConcreteContainerBaseTypeClass<C>, ContainerTypeClass<C>, BlockingContainerBaseTypeClass<C> {
+export interface RunnableContainerTypeClass<C extends Container> extends ConcreteContainerBaseTypeClass<C>, ContainerTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
