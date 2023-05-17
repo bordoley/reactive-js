@@ -83,6 +83,19 @@ export const expectToThrow = (f: SideEffect) => {
   }
 };
 
+export const expectToThrowAsync = async (f: Factory<Promise<unknown>>) => {
+  let didThrow = false;
+  try {
+    await f();
+  } catch (_e) {
+    didThrow = true;
+  }
+
+  if (!didThrow) {
+    raise("expected function to throw");
+  }
+};
+
 export const expectToThrowError = (error: unknown) => (f: SideEffect) => {
   let didThrow = false;
   let errorThrown: Optional = none;

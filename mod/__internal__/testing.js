@@ -41,6 +41,18 @@ export const expectToThrow = (f) => {
         raise("expected function to throw");
     }
 };
+export const expectToThrowAsync = async (f) => {
+    let didThrow = false;
+    try {
+        await f();
+    }
+    catch (_e) {
+        didThrow = true;
+    }
+    if (!didThrow) {
+        raise("expected function to throw");
+    }
+};
 export const expectToThrowError = (error) => (f) => {
     let didThrow = false;
     let errorThrown = none;
