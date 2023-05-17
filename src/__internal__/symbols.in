@@ -183,7 +183,6 @@ ThrottleObserver_durationFunction
 ThrottleObserver_mode
 ThrottleObserver_onNotify
 ThrowIfEmptyObserver_isEmpty
-timeoutError
 TimeoutObserver_duration
 VirtualTimeScheduler_maxMicroTaskTicks
 VirtualTimeScheduler_microTaskTicks

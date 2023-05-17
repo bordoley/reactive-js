@@ -69,6 +69,7 @@ import Observable_withLatestFrom from "./Observable/__internal__/Observable.with
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
+import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 export const animate = Observable_animate;
@@ -142,3 +143,4 @@ export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;
 export const zipLatest = Observable_zipLatest;
 export const zipWith = Observable_zipWith;
+export const zipWithLatestFrom = Observable_zipWithLatestFrom;

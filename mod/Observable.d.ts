@@ -393,6 +393,10 @@ export interface ObservableModule {
     zipWith<TA, TB, TC, TD, TE, TF, TG>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>, i: MaybeMulticastObservableLike<TI>): Function1<AnyObservableLike<TA>, MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>>;
+    zipWithLatestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
+    zipWithLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
+    zipWithLatestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableUpperBoundObservableOperator<TA, T>;
+    zipWithLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<AnyObservableLike<TA>, MulticastObservableLike<T>>;
 }
 export type Signature = ObservableModule;
 export declare const animate: Signature["animate"];
@@ -466,3 +470,4 @@ export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zip: Signature["zip"];
 export declare const zipLatest: Signature["zipLatest"];
 export declare const zipWith: Signature["zipWith"];
+export declare const zipWithLatestFrom: Signature["zipWithLatestFrom"];

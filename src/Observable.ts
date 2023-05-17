@@ -67,6 +67,7 @@ import Observable_withLatestFrom from "./Observable/__internal__/Observable.with
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
+import Observable_zipWithLatestFrom from "./Observable/__internal__/Observable.zipWithLatestFrom.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
@@ -1821,6 +1822,23 @@ export interface ObservableModule {
     AnyObservableLike<TA>,
     MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>
   >;
+
+  zipWithLatestFrom<TA, TB, T>(
+    other: EnumerableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ): EnumerableUpperBoundObservableOperator<TA, T>;
+  zipWithLatestFrom<TA, TB, T>(
+    other: RunnableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ): RunnableUpperBoundObservableOperator<TA, T>;
+  zipWithLatestFrom<TA, TB, T>(
+    other: DeferredObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ): DeferredObservableUpperBoundObservableOperator<TA, T>;
+  zipWithLatestFrom<TA, TB, T>(
+    other: MulticastObservableLike<TB>,
+    selector: Function2<TA, TB, T>,
+  ): Function1<AnyObservableLike<TA>, MulticastObservableLike<T>>;
 }
 
 export type Signature = ObservableModule;
@@ -1913,3 +1931,5 @@ export const withLatestFrom: Signature["withLatestFrom"] =
 export const zip: Signature["zip"] = Observable_zip;
 export const zipLatest: Signature["zipLatest"] = Observable_zipLatest;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;
+export const zipWithLatestFrom: Signature["zipWithLatestFrom"] =
+  Observable_zipWithLatestFrom;

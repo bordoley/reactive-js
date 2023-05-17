@@ -82,6 +82,7 @@
 - [zip](Observable.ObservableModule.md#zip)
 - [zipLatest](Observable.ObservableModule.md#ziplatest)
 - [zipWith](Observable.ObservableModule.md#zipwith)
+- [zipWithLatestFrom](Observable.ObservableModule.md#zipwithlatestfrom)
 
 ## Operator Methods
 
@@ -6155,3 +6156,91 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`AnyObservableLike`](../modules/Observable.md#anyobservablelike)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+
+___
+
+### zipWithLatestFrom
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`EnumerableLike`](types.EnumerableLike.md)<`TB`\> |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`RunnableLike`](types.RunnableLike.md)<`TB`\> |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TB`\> |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `T`\>
+
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](../modules/functions.md#function1)<[`AnyObservableLike`](../modules/Observable.md#anyobservablelike)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TB`\> |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`AnyObservableLike`](../modules/Observable.md#anyobservablelike)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>

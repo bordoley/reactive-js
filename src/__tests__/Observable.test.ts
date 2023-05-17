@@ -388,6 +388,64 @@ testModule(
       ),
     ),
   ),
+  describe(
+    "zipWithLatestFrom",
+    test(
+      "when source throws",
+      pipeLazy(
+        pipeLazy(
+          Observable.throws(),
+          Observable.zipWithLatestFrom(
+            pipe([1], ReadonlyArray.toObservable()),
+            (_, b) => b,
+          ),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrow,
+      ),
+    ),
+
+    test(
+      "when other throws",
+      pipeLazy(
+        pipeLazy(
+          [1, 2, 3],
+          ReadonlyArray.toObservable({ delay: 1 }),
+          Observable.zipWithLatestFrom(Runnable.throws(), (_, b) => b),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrow,
+      ),
+    ),
+
+    test(
+      "when other completes first",
+      pipeLazy(
+        [1, 2, 3],
+        ReadonlyArray.toObservable({ delay: 2 }),
+        Observable.zipWithLatestFrom(
+          pipe([2, 4], ReadonlyArray.toObservable({ delay: 1 })),
+          (a: number, b) => a + b,
+        ),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([3, 6]),
+      ),
+    ),
+
+    test(
+      "when this completes first",
+      pipeLazy(
+        [1, 2, 3],
+        ReadonlyArray.toObservable({ delay: 2 }),
+        Observable.zipWithLatestFrom(
+          pipe([2, 4, 6, 8], ReadonlyArray.toObservable({ delay: 1 })),
+          (a: number, b) => a + b,
+        ),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([3, 6, 11]),
+      ),
+    ),
+  ),
 );
 
 ((_: Observable.Signature) => {})(Observable);
