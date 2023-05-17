@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import {
   Mutable,
@@ -31,13 +32,14 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
 
   return createInstanceFactory(
     mix(
-      include(Delegating_mixin(), Observer_mixin<T>()),
+      include(Disposable_mixin, Delegating_mixin(), Observer_mixin<T>()),
       function ThrowIfEmptyObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         factory: Factory<unknown>,
       ): ObserverLike<T> {
+        init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 

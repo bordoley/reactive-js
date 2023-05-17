@@ -2,6 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
@@ -22,7 +23,8 @@ const Observable_mergeAll = (lift) => {
             observer[__MergeAllObserver_activeCount]++;
             pipe(nextObs, Observable_forEach(bindMethod(observer[DelegatingLike_delegate], SinkLike_notify)), Observable_subscribeWithConfig(observer[DelegatingLike_delegate], observer), Disposable_addTo(observer[DelegatingLike_delegate]), Disposable_onComplete(observer[__MergeAllObserver_onDispose]));
         };
-        return createInstanceFactory(mix(include(Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+        return createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin(), Delegating_mixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+            init(Disposable_mixin, instance);
             Observer_mixin_initFromDelegate(instance, delegate);
             init(Delegating_mixin(), instance, delegate);
             instance[__MergeAllObserver_observablesQueue] =

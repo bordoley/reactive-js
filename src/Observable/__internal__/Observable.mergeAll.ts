@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -107,7 +108,11 @@ const Observable_mergeAll = <
 
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<ContainerOf<C, T>>(), Delegating_mixin()),
+        include(
+          Disposable_mixin,
+          Observer_mixin<ContainerOf<C, T>>(),
+          Delegating_mixin(),
+        ),
         function MergeAllObserver(
           instance: Pick<
             ObserverLike<ContainerOf<CInner, T>>,
@@ -119,6 +124,7 @@ const Observable_mergeAll = <
           backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
           concurrency: number,
         ): ObserverLike<ContainerOf<CInner, T>> {
+          init(Disposable_mixin, instance);
           Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
 

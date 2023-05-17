@@ -1,3 +1,4 @@
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
@@ -6,6 +7,7 @@ import {
   Mutable,
   createInstanceFactory,
   include,
+  init,
   mix,
   props,
 } from "../../__internal__/mixins.js";
@@ -29,13 +31,14 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
 
   return createInstanceFactory(
     mix(
-      include(Observer_mixin()),
+      include(Disposable_mixin, Observer_mixin()),
       function TakeLastObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
         takeLastCount: number,
       ): ObserverLike<T> {
+        init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
 
         instance[__TakeLastObserver_takeLastQueue] = Queue_createIndexedQueue(

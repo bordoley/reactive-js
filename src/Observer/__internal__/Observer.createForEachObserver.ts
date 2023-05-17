@@ -9,7 +9,7 @@ import {
 import { SideEffect1 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
-import Observer_delegatingMixin from "./Observer.delegatingMixin.js";
+import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createForEachObserver: <T>(
   delegate: ObserverLike<T>,
@@ -17,13 +17,13 @@ const Observer_createForEachObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Observer_delegatingMixin(), Sink_forEachMixin()),
+      include(Observer_mixin(), Sink_forEachMixin()),
       function ForEachObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
         effect: SideEffect1<T>,
       ): ObserverLike<T> {
-        init(Observer_delegatingMixin(), instance, delegate, delegate);
+        init(Observer_mixin(), instance, delegate, delegate);
         init(Sink_forEachMixin(), instance, delegate, effect);
 
         return instance;

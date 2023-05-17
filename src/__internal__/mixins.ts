@@ -146,25 +146,25 @@ function initUnsafe<TReturn>(
 }
 
 interface Init {
-  init<TReturn extends TInstance, TInstance = unknown>(
+  init<TReturn extends TInstance, TInstance>(
     mixin: Mixin<TReturn, TInstance>,
     instance: TInstance,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TInstance>(
     mixin: Mixin1<TReturn, TA, TInstance>,
     instance: TInstance,
     a: TA,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TB, TInstance>(
     mixin: Mixin2<TReturn, TA, TB, TInstance>,
     instance: TInstance,
     a: TA,
     b: TB,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TB, TC, TInstance>(
     mixin: Mixin3<TReturn, TA, TB, TC, TInstance>,
     instance: TInstance,
     a: TA,
@@ -172,7 +172,7 @@ interface Init {
     c: TC,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TB, TC, TD, TInstance>(
     mixin: Mixin4<TReturn, TA, TB, TC, TD, TInstance>,
     instance: TInstance,
     a: TA,
@@ -181,7 +181,7 @@ interface Init {
     d: TD,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TInstance>(
     mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance>,
     instance: TInstance,
     a: TA,
@@ -191,7 +191,7 @@ interface Init {
     e: TE,
   ): asserts instance is TReturn;
 
-  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInstance = unknown>(
+  init<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInstance>(
     mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF, TInstance>,
     instance: TInstance,
     a: TA,

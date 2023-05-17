@@ -42,13 +42,13 @@ export interface Mixin6<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInst
     [__Object_prototype]: TPrototype;
 }
 interface Init {
-    init<TReturn extends TInstance, TInstance = unknown>(mixin: Mixin<TReturn, TInstance>, instance: TInstance): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TInstance = unknown>(mixin: Mixin1<TReturn, TA, TInstance>, instance: TInstance, a: TA): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TB, TInstance = unknown>(mixin: Mixin2<TReturn, TA, TB, TInstance>, instance: TInstance, a: TA, b: TB): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TB, TC, TInstance = unknown>(mixin: Mixin3<TReturn, TA, TB, TC, TInstance>, instance: TInstance, a: TA, b: TB, c: TC): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TB, TC, TD, TInstance = unknown>(mixin: Mixin4<TReturn, TA, TB, TC, TD, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TB, TC, TD, TE, TInstance = unknown>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): asserts instance is TReturn;
-    init<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInstance = unknown>(mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): asserts instance is TReturn;
+    init<TReturn extends TInstance, TInstance>(mixin: Mixin<TReturn, TInstance>, instance: TInstance): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TInstance>(mixin: Mixin1<TReturn, TA, TInstance>, instance: TInstance, a: TA): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TB, TInstance>(mixin: Mixin2<TReturn, TA, TB, TInstance>, instance: TInstance, a: TA, b: TB): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TB, TC, TInstance>(mixin: Mixin3<TReturn, TA, TB, TC, TInstance>, instance: TInstance, a: TA, b: TB, c: TC): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TB, TC, TD, TInstance>(mixin: Mixin4<TReturn, TA, TB, TC, TD, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TB, TC, TD, TE, TInstance>(mixin: Mixin5<TReturn, TA, TB, TC, TD, TE, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE): asserts instance is TReturn;
+    init<TReturn extends TInstance, TA, TB, TC, TD, TE, TF, TInstance>(mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF, TInstance>, instance: TInstance, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): asserts instance is TReturn;
 }
 export declare const init: Init["init"];
 export declare const include: (m0: PartialMixin, ...tail: readonly PartialMixin[]) => PartialMixin;

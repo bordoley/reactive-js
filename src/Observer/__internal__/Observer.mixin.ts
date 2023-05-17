@@ -1,4 +1,3 @@
-import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Scheduler_delegatingMixin from "../../Scheduler/__internal__/Scheduler.delegatingMixin.js";
 import {
   Mixin2,
@@ -7,9 +6,10 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { returns } from "../../functions.js";
+import { Function3, returns } from "../../functions.js";
 import {
   BufferLike_capacity,
+  DisposableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -25,24 +25,34 @@ const Observer_mixin: <T>() => Mixin2<
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly [BufferLike_capacity]: number;
-  }
+  },
+  DisposableLike
 > = /*@__PURE__*/ (<T>() =>
   returns(
-    mix(
-      include(
-        Observer_baseMixin(),
-        Scheduler_delegatingMixin,
-        Disposable_mixin,
-      ),
+    mix<
+      Function3<
+        DisposableLike & Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        ObserverLike,
+        {
+          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          readonly [BufferLike_capacity]: number;
+        },
+        ObserverLike<T>
+      >,
+      object,
+      Pick<ObserverLike<T>, typeof SinkLike_notify>,
+      DisposableLike
+    >(
+      include(Observer_baseMixin(), Scheduler_delegatingMixin),
       function ObserverMixin(
-        instance: Pick<ObserverLike, typeof SinkLike_notify>,
+        instance: DisposableLike &
+          Pick<ObserverLike<T>, typeof SinkLike_notify>,
         scheduler: SchedulerLike,
         config: {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
           readonly [BufferLike_capacity]: number;
         },
       ): ObserverLike<T> {
-        init(Disposable_mixin, instance);
         init(Scheduler_delegatingMixin, instance, scheduler);
         init(Observer_baseMixin<T>(), instance, config);
 

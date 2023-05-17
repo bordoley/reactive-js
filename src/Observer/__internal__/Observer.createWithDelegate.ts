@@ -1,3 +1,4 @@
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
   createInstanceFactory,
   include,
@@ -16,11 +17,12 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
     };
     return createInstanceFactory(
       mix(
-        include(Observer_mixin<T>()),
+        include(Disposable_mixin, Observer_mixin<T>()),
         function DelegatingObserver(
           instance: TProperties,
           delegate: ObserverLike<T>,
         ): ObserverLike<T> {
+          init(Disposable_mixin, instance);
           init(Observer_mixin(), instance, delegate, delegate);
           instance[SinkLike_notify] = bindMethod(delegate, SinkLike_notify);
 

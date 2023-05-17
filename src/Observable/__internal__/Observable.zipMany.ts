@@ -154,7 +154,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
 
   const createZipObserver = createInstanceFactory(
     mix(
-      include(Observer_mixin(), Delegating_mixin()),
+      include(Disposable_mixin, Observer_mixin(), Delegating_mixin()),
       function ZipObserver(
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -162,6 +162,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         enumerators: readonly (EnumeratorLike<any> & DisposableLike)[],
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
+        init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
 

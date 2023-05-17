@@ -1,6 +1,7 @@
 /// <reference types="./Observer.createDecodeWithCharsetObserver.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
@@ -12,7 +13,8 @@ import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Delegating_mixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
+    return createInstanceFactory(mix(include(Disposable_mixin, Delegating_mixin(), Observer_mixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
+        init(Disposable_mixin, instance);
         init(Delegating_mixin(), instance, delegate);
         Observer_mixin_initFromDelegate(instance, delegate);
         const textDecoder = newInstance(TextDecoder, charset, {
