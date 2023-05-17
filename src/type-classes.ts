@@ -163,84 +163,8 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
-export interface ConcreteContainerBaseTypeClass<C extends Container> {
-  /**
-   * Return an Container that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(): ContainerOf<C, T>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumeratorFactory<T>(): Function1<
-    Factory<EnumeratorLike<T>>,
-    ContainerOf<C, T>
-  >;
-
-  /**
-   * @category Constructor
-   */
-  fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<T>(options?: {
-    readonly start?: number;
-    readonly count?: number;
-  }): Function1<readonly T[], ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
-
-  /**
-   * Converts the Container to a `ReadonlyArrayContainer`.
-   *
-   * @category Transform
-   */
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
-}
-
-export interface EnumerableContainerBaseTypeClass<
-  C extends Container,
-  CEnumerator extends Enumerator.Type = Enumerator.Type,
-> {
-  /**
-   *
-   * @category Transform
-   */
-  enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
-
-  /**
-   * Converts the Container to a `IterableLike`.
-   *
-   * @category Transform
-   */
-  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-}
-
 export interface RunnableContainerTypeClass<C extends Container>
-  extends ConcreteContainerBaseTypeClass<C>,
-    ContainerTypeClass<C> {
+  extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -286,6 +210,13 @@ export interface RunnableContainerTypeClass<C extends Container>
   ) => Function1<ContainerOf<C, T>, boolean>;
 
   /**
+   * Return an Container that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(): ContainerOf<C, T>;
+
+  /**
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
@@ -314,6 +245,47 @@ export interface RunnableContainerTypeClass<C extends Container>
   flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
   ): ContainerOperator<C, TA, TB>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumeratorFactory<T>(): Function1<
+    Factory<EnumeratorLike<T>>,
+    ContainerOf<C, T>
+  >;
+
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
 
   /**
    *
@@ -356,6 +328,13 @@ export interface RunnableContainerTypeClass<C extends Container>
   takeLast<T>(options?: {
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
+
+  /**
+   * Converts the Container to a `ReadonlyArrayContainer`.
+   *
+   * @category Transform
+   */
+  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 
   /**
    * Combines multiple sources to create a Container whose values are calculated from the values,
@@ -484,9 +463,20 @@ export interface RunnableContainerTypeClass<C extends Container>
 export interface EnumerableContainerTypeClass<
   C extends Container,
   CEnumerator extends Enumerator.Type = Enumerator.Type,
-> extends RunnableContainerTypeClass<C>,
-    EnumerableContainerBaseTypeClass<C, CEnumerator>,
-    ConcreteContainerBaseTypeClass<C> {}
+> extends RunnableContainerTypeClass<C> {
+  /**
+   *
+   * @category Transform
+   */
+  enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+
+  /**
+   * Converts the Container to a `IterableLike`.
+   *
+   * @category Transform
+   */
+  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+}
 
 export interface HigherOrderObservableBaseTypeClass<
   C extends ObservableContainer,

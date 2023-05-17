@@ -1,3 +1,3 @@
-import type * as Iterable from "../../Iterable.js";
-declare const Iterable_toReadonlyArray: Iterable.Signature["toReadonlyArray"];
+import { Function1 } from "../../functions.js";
+declare const Iterable_toReadonlyArray: <T>() => Function1<Iterable<T>, readonly T[]>;
 export default Iterable_toReadonlyArray;

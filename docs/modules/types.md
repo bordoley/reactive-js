@@ -22,7 +22,6 @@
 - [EnumerableContainer](../interfaces/types.EnumerableContainer.md)
 - [EnumeratorContainer](../interfaces/types.EnumeratorContainer.md)
 - [EventSourceContainer](../interfaces/types.EventSourceContainer.md)
-- [IterableContainer](../interfaces/types.IterableContainer.md)
 - [KeyedContainer](../interfaces/types.KeyedContainer.md)
 - [MulticastObservableContainer](../interfaces/types.MulticastObservableContainer.md)
 - [ObservableContainer](../interfaces/types.ObservableContainer.md)

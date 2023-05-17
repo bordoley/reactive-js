@@ -15,10 +15,6 @@
 
 - [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)<`C`\>
 
-- [`EnumerableContainerBaseTypeClass`](type_classes.EnumerableContainerBaseTypeClass.md)<`C`, `CEnumerator`\>
-
-- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<`C`\>
-
   ↳ **`EnumerableContainerTypeClass`**
 
   ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
@@ -258,7 +254,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[empty](type_classes.RunnableContainerTypeClass.md#empty)
 
 ___
 
@@ -278,7 +274,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumerable](type_classes.RunnableContainerTypeClass.md#fromenumerable)
 
 ___
 
@@ -298,7 +294,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromenumeratorfactory)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromEnumeratorFactory](type_classes.RunnableContainerTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -318,7 +314,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromfactory)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromFactory](type_classes.RunnableContainerTypeClass.md#fromfactory)
 
 ___
 
@@ -338,7 +334,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromIterable](type_classes.ConcreteContainerBaseTypeClass.md#fromiterable)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromIterable](type_classes.RunnableContainerTypeClass.md#fromiterable)
 
 ___
 
@@ -358,7 +354,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromOptional](type_classes.ConcreteContainerBaseTypeClass.md#fromoptional)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromOptional](type_classes.RunnableContainerTypeClass.md#fromoptional)
 
 ___
 
@@ -386,7 +382,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#fromreadonlyarray)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromReadonlyArray](type_classes.RunnableContainerTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -406,7 +402,7 @@ ___
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[fromValue](type_classes.RunnableContainerTypeClass.md#fromvalue)
 
 ___
 
@@ -1486,10 +1482,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CEnumerator`, `T`\>\>
 
-#### Inherited from
-
-[EnumerableContainerBaseTypeClass](type_classes.EnumerableContainerBaseTypeClass.md).[enumerate](type_classes.EnumerableContainerBaseTypeClass.md#enumerate)
-
 ___
 
 ### everySatisfy
@@ -1658,10 +1650,6 @@ Converts the Container to a `IterableLike`.
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
 
-#### Inherited from
-
-[EnumerableContainerBaseTypeClass](type_classes.EnumerableContainerBaseTypeClass.md).[toIterable](type_classes.EnumerableContainerBaseTypeClass.md#toiterable)
-
 ___
 
 ### toReadonlyArray
@@ -1682,4 +1670,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[toReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#toreadonlyarray)
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[toReadonlyArray](type_classes.RunnableContainerTypeClass.md#toreadonlyarray)
