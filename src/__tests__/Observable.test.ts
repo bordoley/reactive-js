@@ -17,6 +17,7 @@ import {
   Optional,
   arrayEquality,
   bindMethod,
+  increment,
   newInstance,
   pipe,
   pipeLazy,
@@ -137,6 +138,51 @@ testModule(
       );
       pipe(result, expectEquals<Optional<number>>(3));
     }),
+  ),
+
+  describe(
+    "throttle",
+    test(
+      "first",
+      pipeLazy(
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.takeFirst({ count: 100 }),
+        Observable.throttle<number>(50, { mode: "first" }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([0, 49, 99]),
+      ),
+    ),
+
+    test(
+      "last",
+      pipeLazy(
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(50, { mode: "last" }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([49, 99, 149, 199]),
+      ),
+    ),
+
+    test(
+      "interval",
+      pipeLazy(
+        Observable.generate(increment, returns<number>(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(75, { mode: "interval" }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([0, 74, 149, 199]),
+      ),
+    ),
   ),
 
   describe(
