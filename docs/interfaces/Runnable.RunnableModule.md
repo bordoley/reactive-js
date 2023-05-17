@@ -61,6 +61,7 @@
 ### Other Methods
 
 - [buffer](Runnable.RunnableModule.md#buffer)
+- [catchError](Runnable.RunnableModule.md#catcherror)
 - [compute](Runnable.RunnableModule.md#compute)
 - [flow](Runnable.RunnableModule.md#flow)
 - [fromEnumeratorFactory](Runnable.RunnableModule.md#fromenumeratorfactory)
@@ -1491,6 +1492,32 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[buffer](type_classes.RunnableContainerTypeClass.md#buffer)
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`RunnableLike`](types.RunnableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[catchError](type_classes.HigherOrderObservableBaseTypeClass.md#catcherror)
 
 ___
 

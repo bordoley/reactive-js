@@ -1,7 +1,7 @@
 import * as AsyncIterable from "../AsyncIterable.js";
 import * as DeferredObservable from "../DeferredObservable.js";
-import * as MulticastObservable from "../MulticastObservable.js";
 import * as Disposable from "../Disposable.js";
+import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import * as Scheduler from "../Scheduler.js";
 import {

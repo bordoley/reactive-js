@@ -25,6 +25,7 @@
 
 ### Other Methods
 
+- [catchError](MulticastObservable.MulticastObservableModule.md#catcherror)
 - [compute](MulticastObservable.MulticastObservableModule.md#compute)
 
 ## Operator Methods
@@ -234,6 +235,32 @@ ___
 ___
 
 ## Other Methods
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[catchError](type_classes.HigherOrderObservableBaseTypeClass.md#catcherror)
+
+___
 
 ### compute
 

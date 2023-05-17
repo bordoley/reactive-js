@@ -25,6 +25,7 @@
 
 ### Other Methods
 
+- [catchError](DeferredObservable.DeferredObservableModule.md#catcherror)
 - [compute](DeferredObservable.DeferredObservableModule.md#compute)
 - [multicast](DeferredObservable.DeferredObservableModule.md#multicast)
 - [repeat](DeferredObservable.DeferredObservableModule.md#repeat)
@@ -238,6 +239,32 @@ ___
 ___
 
 ## Other Methods
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[catchError](type_classes.HigherOrderObservableBaseTypeClass.md#catcherror)
+
+___
 
 ### compute
 

@@ -73,6 +73,7 @@ export interface RunnableModule extends RunnableContainerTypeClass<Type>, Higher
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
+export declare const catchError: Signature["catchError"];
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];

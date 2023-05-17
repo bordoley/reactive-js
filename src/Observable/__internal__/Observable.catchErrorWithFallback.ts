@@ -4,6 +4,7 @@ import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import {
   Function1,
+  Function2,
   bindMethod,
   error,
   pipe,
@@ -26,14 +27,17 @@ const Observable_catchErrorWithFallback = <
   ) => ContainerOperator<C, T, T>,
 ) => {
   const createCatchErrorObserver =
-    <T>(errorHandler: Function1<Error, ContainerOf<CInner, T>>) =>
+    <T>(
+      errorHandler: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>,
+      causedBy: ContainerOf<C, T>,
+    ) =>
     (delegate: ObserverLike<T>) =>
       pipe(
         Observer_createWithDelegate<T>(delegate),
         Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)),
         Disposable_onError((err: Error) => {
           try {
-            const next = errorHandler(err);
+            const next = errorHandler(err, causedBy);
             next[ObservableLike_observe](delegate);
           } catch (e) {
             delegate[DisposableLike_dispose](error([e, err]));
@@ -41,8 +45,14 @@ const Observable_catchErrorWithFallback = <
         }),
       );
 
-  return <T>(errorHandler: Function1<Error, ContainerOf<CInner, T>>) =>
-    pipe(errorHandler, createCatchErrorObserver, lift);
+  return <T>(
+      errorHandler: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>,
+    ): ContainerOperator<C, T, T> =>
+    (observable: ContainerOf<C, T>) =>
+      pipe(
+        createCatchErrorObserver(errorHandler, observable),
+        lift,
+      )(observable);
 };
 
 export default Observable_catchErrorWithFallback;

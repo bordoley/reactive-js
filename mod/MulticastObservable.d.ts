@@ -8,6 +8,7 @@ export interface MulticastObservableModule extends HigherOrderObservableBaseType
     }): MulticastObservableLike<T>;
 }
 export type Signature = MulticastObservableModule;
+export declare const catchError: Signature["catchError"];
 export declare const compute: Signature["compute"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

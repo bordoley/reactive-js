@@ -26,6 +26,7 @@
 
 ### Other Functions
 
+- [catchError](MulticastObservable.md#catcherror)
 - [compute](MulticastObservable.md#compute)
 
 ## Type Aliases
@@ -215,6 +216,28 @@ ___
 ___
 
 ## Other Functions
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](functions.md#function2)<`Error`, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `T`\>
+
+___
 
 ### compute
 
