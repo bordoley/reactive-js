@@ -499,6 +499,8 @@ export interface HigherOrderObservableBaseTypeClass<
   C extends ObservableContainer,
   CInner extends DeferredObservableContainer,
 > {
+  catchError<T>(onError: Function1<Error, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
+
   /**
    * Converts a higher-order Container into a first-order
    * Container by concatenating the inner sources in order.

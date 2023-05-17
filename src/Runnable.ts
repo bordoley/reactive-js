@@ -30,6 +30,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
@@ -172,6 +173,7 @@ export interface RunnableModule
 export type Signature = RunnableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
+export const catchError: Signature["catchError"] = Runnable_catchError;
 export const compute: Signature["compute"] = Runnable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Runnable_concatAll;

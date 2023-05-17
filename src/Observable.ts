@@ -2,6 +2,7 @@ import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
+import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -218,6 +219,10 @@ export interface ObservableModule {
   buffer<T>(options?: {
     count?: number;
   }): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
+
+  catchError<T>(
+    onError: SideEffect1<Error>,
+  ): EnumerableUpperBoundObservableOperator<T, T>;
 
   concat<T>(
     fst: EnumerableLike<T>,
@@ -1293,6 +1298,7 @@ export const animate: Signature["animate"] = Observable_animate;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
 export const buffer: Signature["buffer"] = Observable_buffer;
+export const catchError: Signature["catchError"] = Observable_catchError;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;

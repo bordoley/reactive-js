@@ -1,3 +1,4 @@
+import DeferredObservable_catchError from "./DeferredObservable/__internal__/DeferredObservable.catchError.js";
 import DeferredObservable_concatAll from "./DeferredObservable/__internal__/DeferredObservable.concatAll.js";
 import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
@@ -83,6 +84,7 @@ export interface DeferredObservableModule
 
 export type Signature = DeferredObservableModule;
 
+export const catchError: Signature["catchError"] = DeferredObservable_catchError;
 export const compute: Signature["compute"] = DeferredObservable_compute;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
 export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
