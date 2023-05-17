@@ -33,6 +33,8 @@ import {
 } from "./types.js";
 
 export interface ContainerTypeClass<C extends Container> {
+  buffer<T>(count: number): ContainerOperator<C, T, readonly T[]>;
+
   /**
    * Returns a ContainerOperator that emits all items emitted by the source that
    * are distinct by comparison from the previous item.

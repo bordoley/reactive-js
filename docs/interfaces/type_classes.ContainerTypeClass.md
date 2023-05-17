@@ -39,6 +39,10 @@
 - [takeFirst](type_classes.ContainerTypeClass.md#takefirst)
 - [takeWhile](type_classes.ContainerTypeClass.md#takewhile)
 
+### Other Methods
+
+- [buffer](type_classes.ContainerTypeClass.md#buffer)
+
 ## Operator Methods
 
 ### distinctUntilChanged
@@ -382,3 +386,27 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>

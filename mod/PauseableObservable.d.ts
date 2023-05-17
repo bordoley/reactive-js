@@ -15,6 +15,7 @@ export interface PauseableObservableModule extends ContainerTypeClass<Type> {
     }): ContainerOperator<Type, T, T>;
 }
 export type Signature = PauseableObservableModule;
+export declare const buffer: Signature["buffer"];
 export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const enqueue: Signature["enqueue"];

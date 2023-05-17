@@ -62,6 +62,7 @@
 
 ### Other Methods
 
+- [buffer](ReadonlyArray.ReadonlyArrayModule.md#buffer)
 - [flow](ReadonlyArray.ReadonlyArrayModule.md#flow)
 
 ### Transform Methods
@@ -1543,6 +1544,32 @@ Omit.zipWith
 ___
 
 ## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+Omit.buffer
+
+___
 
 ### flow
 

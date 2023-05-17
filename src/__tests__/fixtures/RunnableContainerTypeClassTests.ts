@@ -30,6 +30,44 @@ const RunnableContainerTypeClassTests = <C extends Container>(
   describe(
     "RunnableContainerTypeClass",
     describe(
+      "buffer",
+      test(
+        "with multiple sub buffers",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray(),
+          m.buffer(3),
+          m.toReadonlyArray(),
+          expectArrayEquals<readonly number[]>(
+            [
+              [1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9],
+            ],
+            arrayEquality(),
+          ),
+        ),
+      ),
+
+      test(
+        "last buffer is short",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8],
+          m.fromReadonlyArray(),
+          m.buffer(3),
+          m.toReadonlyArray(),
+          expectArrayEquals<readonly number[]>(
+            [
+              [1, 2, 3],
+              [4, 5, 6],
+              [7, 8],
+            ],
+            arrayEquality(),
+          ),
+        ),
+      ),
+    ),
+    describe(
       "concat",
       test(
         "concats the input containers in order",

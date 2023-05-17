@@ -1,4 +1,5 @@
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -169,6 +170,7 @@ export interface RunnableModule
 
 export type Signature = RunnableModule;
 
+export const buffer: Signature["buffer"] = Observable_buffer;
 export const compute: Signature["compute"] = Runnable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;

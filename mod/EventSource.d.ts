@@ -24,6 +24,7 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
 }
 export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
+export declare const buffer: Signature["buffer"];
 export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];

@@ -57,6 +57,7 @@
 
 ### Other Methods
 
+- [buffer](Enumerable.EnumerableModule.md#buffer)
 - [compute](Enumerable.EnumerableModule.md#compute)
 - [generate](Enumerable.EnumerableModule.md#generate)
 - [throws](Enumerable.EnumerableModule.md#throws)
@@ -1410,6 +1411,32 @@ ___
 ___
 
 ## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](types.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](type_classes.EnumerableContainerTypeClass.md).[buffer](type_classes.EnumerableContainerTypeClass.md#buffer)
+
+___
 
 ### compute
 

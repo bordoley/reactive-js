@@ -86,12 +86,9 @@ SchedulerImplementationMixin_currentContinuation
 SchedulerImplementationMixin_startTime
 SchedulerImplementationMixin_yieldRequested
 SerialDisposableMixin_current
-SkipFirstLike_skipCount
-SkipFirstLike_count
-TakeFirstLike_takeCount
-TakeFirstLike_count
-TakeWhileLike_inclusive
 
+BufferingLike_buffer
+BufferingLike_count
 LiftedLike_source
 LiftedLike_operators
 ForEachLike_effect
@@ -104,6 +101,11 @@ ReducerAccumulatorLike_reducer
 SchedulerTaskLike_continuation
 SchedulerTaskLike_dueTime
 SchedulerTaskLike_id
+SkipFirstLike_skipCount
+SkipFirstLike_count
+TakeFirstLike_takeCount
+TakeFirstLike_count
+TakeWhileLike_inclusive
 WithLatestLike_hasLatest
 WithLatestLike_otherLatest
 WithLatestLike_selector
@@ -112,10 +114,8 @@ AwaitOrObserveEffect_observable
 AwaitOrObserveEffect_subscription
 AwaitOrObserveEffect_value
 AwaitOrObserveEffect_hasValue
-BufferObserver_buffer
 BufferObserver_durationFunction
 BufferObserver_durationSubscription
-BufferObserver_count
 ComputeContext_index
 ComputeContext_cleanup
 ComputeContext_observableConfig

@@ -179,15 +179,9 @@ export const __SchedulerImplementationMixin_yieldRequested =
 /** @type {unique symbol} */
 export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol("SerialDisposableMixin_current");
 /** @type {unique symbol} */
-export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol("SkipFirstLike_skipCount");
+export const __BufferingLike_buffer = /*@__PURE__*/ symbol("BufferingLike_buffer");
 /** @type {unique symbol} */
-export const __SkipFirstLike_count = /*@__PURE__*/ symbol("SkipFirstLike_count");
-/** @type {unique symbol} */
-export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol("TakeFirstLike_takeCount");
-/** @type {unique symbol} */
-export const __TakeFirstLike_count = /*@__PURE__*/ symbol("TakeFirstLike_count");
-/** @type {unique symbol} */
-export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol("TakeWhileLike_inclusive");
+export const __BufferingLike_count = /*@__PURE__*/ symbol("BufferingLike_count");
 /** @type {unique symbol} */
 export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
 /** @type {unique symbol} */
@@ -213,6 +207,16 @@ export const __SchedulerTaskLike_dueTime = /*@__PURE__*/ symbol("SchedulerTaskLi
 /** @type {unique symbol} */
 export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol("SchedulerTaskLike_id");
 /** @type {unique symbol} */
+export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol("SkipFirstLike_skipCount");
+/** @type {unique symbol} */
+export const __SkipFirstLike_count = /*@__PURE__*/ symbol("SkipFirstLike_count");
+/** @type {unique symbol} */
+export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol("TakeFirstLike_takeCount");
+/** @type {unique symbol} */
+export const __TakeFirstLike_count = /*@__PURE__*/ symbol("TakeFirstLike_count");
+/** @type {unique symbol} */
+export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol("TakeWhileLike_inclusive");
+/** @type {unique symbol} */
 export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol("WithLatestLike_hasLatest");
 /** @type {unique symbol} */
 export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike_otherLatest");
@@ -227,13 +231,9 @@ export const __AwaitOrObserveEffect_value = /*@__PURE__*/ symbol("AwaitOrObserve
 /** @type {unique symbol} */
 export const __AwaitOrObserveEffect_hasValue = /*@__PURE__*/ symbol("AwaitOrObserveEffect_hasValue");
 /** @type {unique symbol} */
-export const __BufferObserver_buffer = /*@__PURE__*/ symbol("BufferObserver_buffer");
-/** @type {unique symbol} */
 export const __BufferObserver_durationFunction = /*@__PURE__*/ symbol("BufferObserver_durationFunction");
 /** @type {unique symbol} */
 export const __BufferObserver_durationSubscription = /*@__PURE__*/ symbol("BufferObserver_durationSubscription");
-/** @type {unique symbol} */
-export const __BufferObserver_count = /*@__PURE__*/ symbol("BufferObserver_count");
 /** @type {unique symbol} */
 export const __ComputeContext_index = /*@__PURE__*/ symbol("ComputeContext_index");
 /** @type {unique symbol} */

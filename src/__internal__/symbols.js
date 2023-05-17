@@ -406,28 +406,13 @@ export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol(
-  "SkipFirstLike_skipCount",
+export const __BufferingLike_buffer = /*@__PURE__*/ symbol(
+  "BufferingLike_buffer",
 );
 
 /** @type {unique symbol} */
-export const __SkipFirstLike_count = /*@__PURE__*/ symbol(
-  "SkipFirstLike_count",
-);
-
-/** @type {unique symbol} */
-export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol(
-  "TakeFirstLike_takeCount",
-);
-
-/** @type {unique symbol} */
-export const __TakeFirstLike_count = /*@__PURE__*/ symbol(
-  "TakeFirstLike_count",
-);
-
-/** @type {unique symbol} */
-export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol(
-  "TakeWhileLike_inclusive",
+export const __BufferingLike_count = /*@__PURE__*/ symbol(
+  "BufferingLike_count",
 );
 
 /** @type {unique symbol} */
@@ -485,6 +470,31 @@ export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol(
+  "SkipFirstLike_skipCount",
+);
+
+/** @type {unique symbol} */
+export const __SkipFirstLike_count = /*@__PURE__*/ symbol(
+  "SkipFirstLike_count",
+);
+
+/** @type {unique symbol} */
+export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol(
+  "TakeFirstLike_takeCount",
+);
+
+/** @type {unique symbol} */
+export const __TakeFirstLike_count = /*@__PURE__*/ symbol(
+  "TakeFirstLike_count",
+);
+
+/** @type {unique symbol} */
+export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol(
+  "TakeWhileLike_inclusive",
+);
+
+/** @type {unique symbol} */
 export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol(
   "WithLatestLike_hasLatest",
 );
@@ -520,11 +530,6 @@ export const __AwaitOrObserveEffect_hasValue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __BufferObserver_buffer = /*@__PURE__*/ symbol(
-  "BufferObserver_buffer",
-);
-
-/** @type {unique symbol} */
 export const __BufferObserver_durationFunction = /*@__PURE__*/ symbol(
   "BufferObserver_durationFunction",
 );
@@ -532,11 +537,6 @@ export const __BufferObserver_durationFunction = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __BufferObserver_durationSubscription = /*@__PURE__*/ symbol(
   "BufferObserver_durationSubscription",
-);
-
-/** @type {unique symbol} */
-export const __BufferObserver_count = /*@__PURE__*/ symbol(
-  "BufferObserver_count",
 );
 
 /** @type {unique symbol} */

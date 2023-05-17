@@ -51,6 +51,7 @@
 
 ### Other Functions
 
+- [buffer](Runnable.md#buffer)
 - [compute](Runnable.md#compute)
 - [flow](Runnable.md#flow)
 - [fromEnumeratorFactory](Runnable.md#fromenumeratorfactory)
@@ -1219,6 +1220,28 @@ ___
 ___
 
 ## Other Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### compute
 

@@ -30,6 +30,7 @@
 
 ### Other Methods
 
+- [buffer](PauseableObservable.PauseableObservableModule.md#buffer)
 - [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
 - [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
@@ -461,6 +462,32 @@ this predicate is not satisfied.
 ___
 
 ## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
+
+___
 
 ### dispatchTo
 

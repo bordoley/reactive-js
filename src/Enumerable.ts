@@ -4,6 +4,7 @@ import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -78,6 +79,7 @@ export interface EnumerableModule
 
 export type Signature = EnumerableModule;
 
+export const buffer: Signature["buffer"] = Observable_buffer;
 export const compute: Signature["compute"] = Enumerable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;

@@ -55,6 +55,7 @@
 
 ### Other Functions
 
+- [buffer](ReadonlyArray.md#buffer)
 - [flow](ReadonlyArray.md#flow)
 
 ### Transform Functions
@@ -1309,6 +1310,28 @@ ___
 ___
 
 ## Other Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### flow
 

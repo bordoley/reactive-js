@@ -31,6 +31,7 @@
 
 - [animate](Observable.md#animate)
 - [backpressureStrategy](Observable.md#backpressurestrategy)
+- [buffer](Observable.md#buffer)
 - [concat](Observable.md#concat)
 - [concatMany](Observable.md#concatmany)
 - [concatWith](Observable.md#concatwith)
@@ -310,6 +311,28 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
 
 ___
 

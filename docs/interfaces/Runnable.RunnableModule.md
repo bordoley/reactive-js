@@ -59,6 +59,7 @@
 
 ### Other Methods
 
+- [buffer](Runnable.RunnableModule.md#buffer)
 - [compute](Runnable.RunnableModule.md#compute)
 - [flow](Runnable.RunnableModule.md#flow)
 - [fromEnumeratorFactory](Runnable.RunnableModule.md#fromenumeratorfactory)
@@ -1444,6 +1445,32 @@ ___
 ___
 
 ## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[buffer](type_classes.RunnableContainerTypeClass.md#buffer)
+
+___
 
 ### compute
 

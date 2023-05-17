@@ -1,6 +1,7 @@
 /// <reference types="./Runnable.d.ts" />
 
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -49,6 +50,7 @@ import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { identityLazy, } from "./functions.js";
+export const buffer = Observable_buffer;
 export const compute = Runnable_compute;
 export const concat = Observable_concat;
 export const concatWith = Observable_concatWith;

@@ -68,6 +68,10 @@
 - [takeWhile](type_classes.EnumerableContainerTypeClass.md#takewhile)
 - [zipWith](type_classes.EnumerableContainerTypeClass.md#zipwith)
 
+### Other Methods
+
+- [buffer](type_classes.EnumerableContainerTypeClass.md#buffer)
+
 ### Transform Methods
 
 - [enumerate](type_classes.EnumerableContainerTypeClass.md#enumerate)
@@ -1413,6 +1417,34 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[buffer](type_classes.RunnableContainerTypeClass.md#buffer)
 
 ___
 

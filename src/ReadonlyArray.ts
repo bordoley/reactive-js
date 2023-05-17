@@ -1,4 +1,5 @@
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
 import ReadonlyArray_concatMap from "./ReadonlyArray/__internal__/ReadonlyArray.concatMap.js";
@@ -131,6 +132,7 @@ export interface ReadonlyArrayModule
 
 export type Signature = ReadonlyArrayModule;
 
+export const buffer: Signature["buffer"] = ReadonlyArray_buffer;
 export const concat: Signature["concat"] = ReadonlyArray_concat;
 export const concatAll: Signature["concatAll"] = ReadonlyArray_concatAll;
 export const concatMap: Signature["concatMap"] = ReadonlyArray_concatMap;

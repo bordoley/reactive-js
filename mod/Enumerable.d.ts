@@ -13,6 +13,7 @@ export interface EnumerableModule extends EnumerableContainerTypeClass<Type, Dis
     throws<T>(): EnumerableLike<T>;
 }
 export type Signature = EnumerableModule;
+export declare const buffer: Signature["buffer"];
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatWith: Signature["concatWith"];

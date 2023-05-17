@@ -69,6 +69,10 @@
 - [takeWhile](type_classes.RunnableContainerTypeClass.md#takewhile)
 - [zipWith](type_classes.RunnableContainerTypeClass.md#zipwith)
 
+### Other Methods
+
+- [buffer](type_classes.RunnableContainerTypeClass.md#buffer)
+
 ### Transform Methods
 
 - [everySatisfy](type_classes.RunnableContainerTypeClass.md#everysatisfy)
@@ -1312,6 +1316,34 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
 
 ___
 

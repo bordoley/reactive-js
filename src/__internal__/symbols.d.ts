@@ -170,15 +170,9 @@ export declare const __SchedulerImplementationMixin_yieldRequested: unique symbo
 
 export declare const __SerialDisposableMixin_current: unique symbol;
 
-export declare const __SkipFirstLike_skipCount: unique symbol;
+export declare const __BufferingLike_buffer: unique symbol;
 
-export declare const __SkipFirstLike_count: unique symbol;
-
-export declare const __TakeFirstLike_takeCount: unique symbol;
-
-export declare const __TakeFirstLike_count: unique symbol;
-
-export declare const __TakeWhileLike_inclusive: unique symbol;
+export declare const __BufferingLike_count: unique symbol;
 
 export declare const __LiftedLike_source: unique symbol;
 
@@ -204,6 +198,16 @@ export declare const __SchedulerTaskLike_dueTime: unique symbol;
 
 export declare const __SchedulerTaskLike_id: unique symbol;
 
+export declare const __SkipFirstLike_skipCount: unique symbol;
+
+export declare const __SkipFirstLike_count: unique symbol;
+
+export declare const __TakeFirstLike_takeCount: unique symbol;
+
+export declare const __TakeFirstLike_count: unique symbol;
+
+export declare const __TakeWhileLike_inclusive: unique symbol;
+
 export declare const __WithLatestLike_hasLatest: unique symbol;
 
 export declare const __WithLatestLike_otherLatest: unique symbol;
@@ -218,13 +222,9 @@ export declare const __AwaitOrObserveEffect_value: unique symbol;
 
 export declare const __AwaitOrObserveEffect_hasValue: unique symbol;
 
-export declare const __BufferObserver_buffer: unique symbol;
-
 export declare const __BufferObserver_durationFunction: unique symbol;
 
 export declare const __BufferObserver_durationSubscription: unique symbol;
-
-export declare const __BufferObserver_count: unique symbol;
 
 export declare const __ComputeContext_index: unique symbol;
 
