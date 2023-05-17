@@ -1,3 +1,4 @@
+import MulticastObservable_catchError from "./MulticastObservable/__internal__/Multicast.catchError.js";
 import MulticastObservable_concatAll from "./MulticastObservable/__internal__/MulticastObservable.concatAll.js";
 import MulticastObservable_concatMap from "./MulticastObservable/__internal__/MulticastObservable.concatMap.js";
 import MulticastObservable_exhaust from "./MulticastObservable/__internal__/MulticastObservable.exhaust.js";
@@ -32,6 +33,7 @@ export interface MulticastObservableModule
 
 export type Signature = MulticastObservableModule;
 
+export const catchError: Signature["catchError"] = MulticastObservable_catchError;
 export const compute: Signature["compute"] = MulticastObservable_compute;
 export const concatAll: Signature["concatAll"] = MulticastObservable_concatAll;
 export const concatMap: Signature["concatMap"] = MulticastObservable_concatMap;
