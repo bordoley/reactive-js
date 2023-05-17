@@ -14,16 +14,6 @@
 
 ## Table of contents
 
-### Operator Properties
-
-- [concatAll](ReadonlyArray.ReadonlyArrayModule.md#concatall)
-- [concatMap](ReadonlyArray.ReadonlyArrayModule.md#concatmap)
-- [concatWith](ReadonlyArray.ReadonlyArrayModule.md#concatwith)
-
-### Transform Properties
-
-- [contains](ReadonlyArray.ReadonlyArrayModule.md#contains)
-
 ### Constructor Methods
 
 - [concat](ReadonlyArray.ReadonlyArrayModule.md#concat)
@@ -39,6 +29,10 @@
 
 ### Operator Methods
 
+- [buffer](ReadonlyArray.ReadonlyArrayModule.md#buffer)
+- [concatAll](ReadonlyArray.ReadonlyArrayModule.md#concatall)
+- [concatMap](ReadonlyArray.ReadonlyArrayModule.md#concatmap)
+- [concatWith](ReadonlyArray.ReadonlyArrayModule.md#concatwith)
 - [distinctUntilChanged](ReadonlyArray.ReadonlyArrayModule.md#distinctuntilchanged)
 - [endWith](ReadonlyArray.ReadonlyArrayModule.md#endwith)
 - [flatMapIterable](ReadonlyArray.ReadonlyArrayModule.md#flatmapiterable)
@@ -63,11 +57,11 @@
 
 ### Other Methods
 
-- [buffer](ReadonlyArray.ReadonlyArrayModule.md#buffer)
 - [flow](ReadonlyArray.ReadonlyArrayModule.md#flow)
 
 ### Transform Methods
 
+- [contains](ReadonlyArray.ReadonlyArrayModule.md#contains)
 - [entries](ReadonlyArray.ReadonlyArrayModule.md#entries)
 - [enumerate](ReadonlyArray.ReadonlyArrayModule.md#enumerate)
 - [everySatisfy](ReadonlyArray.ReadonlyArrayModule.md#everysatisfy)
@@ -81,129 +75,6 @@
 - [toObservable](ReadonlyArray.ReadonlyArrayModule.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
 - [values](ReadonlyArray.ReadonlyArrayModule.md#values)
-
-## Operator Properties
-
-### concatAll
-
-• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
-
-Converts a higher-order Container into a first-order
-Container by concatenating the inner sources in order.
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
-
-#### Inherited from
-
-Omit.concatAll
-
-___
-
-### concatMap
-
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, readonly `TB`[]\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, readonly `TB`[]\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-Omit.concatMap
-
-___
-
-### concatWith
-
-• **concatWith**: <T\>(`snd`: readonly `T`[], ...`tail`: readonly readonly T[][]) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | readonly `T`[] |
-| `...tail` | readonly readonly T[][] |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-Omit.concatWith
-
-___
-
-## Transform Properties
-
-### contains
-
-• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<readonly `T`[], `boolean`\>
-
-#### Type declaration
-
-▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `boolean`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], `boolean`\>
-
-#### Inherited from
-
-Omit.contains
 
 ## Constructor Methods
 
@@ -663,6 +534,110 @@ Omit.zip
 ___
 
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+Omit.buffer
+
+___
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), readonly `T`[], `T`\>
+
+#### Inherited from
+
+Omit.concatAll
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, readonly `TB`[]\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+Omit.concatMap
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | readonly `T`[] |
+| `...tail` | readonly readonly T[][] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.concatWith
+
+___
 
 ### distinctUntilChanged
 
@@ -1566,33 +1541,6 @@ ___
 
 ## Other Methods
 
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
-
-#### Inherited from
-
-Omit.buffer
-
-___
-
 ### flow
 
 ▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
@@ -1619,6 +1567,34 @@ ___
 ___
 
 ## Transform Methods
+
+### contains
+
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], `boolean`\>
+
+#### Inherited from
+
+Omit.contains
+
+___
 
 ### entries
 

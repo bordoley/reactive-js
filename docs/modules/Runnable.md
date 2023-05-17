@@ -26,6 +26,8 @@
 
 ### Operator Functions
 
+- [buffer](Runnable.md#buffer)
+- [catchError](Runnable.md#catcherror)
 - [concatAll](Runnable.md#concatall)
 - [concatMap](Runnable.md#concatmap)
 - [concatWith](Runnable.md#concatwith)
@@ -58,8 +60,6 @@
 
 ### Other Functions
 
-- [buffer](Runnable.md#buffer)
-- [catchError](Runnable.md#catcherror)
 - [compute](Runnable.md#compute)
 - [flow](Runnable.md#flow)
 - [fromEnumeratorFactory](Runnable.md#fromenumeratorfactory)
@@ -381,6 +381,51 @@ in order, of each of its input sources.
 ___
 
 ## Operator Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](functions.md#function2)<`Error`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+___
 
 ### concatAll
 
@@ -1292,51 +1337,6 @@ ___
 ___
 
 ## Other Functions
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, readonly `T`[]\>
-
-___
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function2`](functions.md#function2)<`Error`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-___
 
 ### compute
 

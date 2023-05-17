@@ -35,7 +35,7 @@
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
-### Obsevable Interfaces
+### Observable Interfaces
 
 - [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
 - [MulticastObservableLike](../interfaces/types.MulticastObservableLike.md)
@@ -44,10 +44,6 @@
 - [PublisherLike](../interfaces/types.PublisherLike.md)
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
-
-### Other Interfaces
-
-- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
 
 ### Queueing Interfaces
 
@@ -83,6 +79,11 @@
 - [EnumerableContainerTypeClass](../interfaces/types.EnumerableContainerTypeClass.md)
 - [HigherOrderObservableBaseTypeClass](../interfaces/types.HigherOrderObservableBaseTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
+- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
+
+### Collection Type Aliases
+
+- [ReadonlyObjectMapLike](types.md#readonlyobjectmaplike)
 
 ### Container Type Aliases
 
@@ -90,13 +91,15 @@
 - [ContainerOperator](types.md#containeroperator)
 - [KeyOf](types.md#keyof)
 - [KeyedContainerOf](types.md#keyedcontainerof)
+- [KeyedContainerOperator](types.md#keyedcontaineroperator)
 
-### Other Type Aliases
+### Interactive Type Aliases
+
+- [StreamOf](types.md#streamof)
+
+### Resource Management Type Aliases
 
 - [DisposableOrTeardown](types.md#disposableorteardown)
-- [KeyedContainerOperator](types.md#keyedcontaineroperator)
-- [ReadonlyObjectMapLike](types.md#readonlyobjectmaplike)
-- [StreamOf](types.md#streamof)
 
 ### Variables
 
@@ -145,6 +148,23 @@
 - [StreamableLike\_TStream](types.md#streamablelike_tstream)
 - [StreamableLike\_stream](types.md#streamablelike_stream)
 - [VirtualTimeSchedulerLike\_run](types.md#virtualtimeschedulerlike_run)
+
+## Collection Type Aliases
+
+### ReadonlyObjectMapLike
+
+Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
+
+**`No Inherit Doc`**
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
+| `T` | `unknown` |
+
+___
 
 ## Container Type Aliases
 
@@ -201,14 +221,6 @@ ___
 
 ___
 
-## Other Type Aliases
-
-### DisposableOrTeardown
-
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
-
-___
-
 ### KeyedContainerOperator
 
 Ƭ **KeyedContainerOperator**<`C`, `TKey`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`KeyedContainerOf`](types.md#keyedcontainerof)<`C`, `TKey`, `TA`\>, [`KeyedContainerOf`](types.md#keyedcontainerof)<`C`, `TKey`, `TB`\>\>
@@ -226,20 +238,7 @@ Utility type for a generic operator function that transforms a Container's inner
 
 ___
 
-### ReadonlyObjectMapLike
-
-Ƭ **ReadonlyObjectMapLike**<`TKey`, `T`\>: { readonly [P in TKey]?: T }
-
-**`No Inherit Doc`**
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
-| `T` | `unknown` |
-
-___
+## Interactive Type Aliases
 
 ### StreamOf
 
@@ -250,6 +249,14 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/types.StreamableLike.md) |
+
+___
+
+## Resource Management Type Aliases
+
+### DisposableOrTeardown
+
+Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
 
 ## Variables
 

@@ -19,6 +19,7 @@
 
 ### Operator Functions
 
+- [buffer](PauseableObservable.md#buffer)
 - [distinctUntilChanged](PauseableObservable.md#distinctuntilchanged)
 - [flatMapIterable](PauseableObservable.md#flatmapiterable)
 - [forEach](PauseableObservable.md#foreach)
@@ -36,7 +37,6 @@
 
 ### Other Functions
 
-- [buffer](PauseableObservable.md#buffer)
 - [dispatchTo](PauseableObservable.md#dispatchto)
 - [enqueue](PauseableObservable.md#enqueue)
 - [sinkInto](PauseableObservable.md#sinkinto)
@@ -55,6 +55,29 @@ ___
 Ƭ **Type**: [`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md)
 
 ## Operator Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### distinctUntilChanged
 
@@ -440,29 +463,6 @@ this predicate is not satisfied.
 ___
 
 ## Other Functions
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
-
-___
 
 ### dispatchTo
 

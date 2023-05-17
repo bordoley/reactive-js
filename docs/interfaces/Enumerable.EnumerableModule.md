@@ -12,16 +12,6 @@
 
 ## Table of contents
 
-### Operator Properties
-
-- [concatAll](Enumerable.EnumerableModule.md#concatall)
-- [concatMap](Enumerable.EnumerableModule.md#concatmap)
-- [concatWith](Enumerable.EnumerableModule.md#concatwith)
-
-### Transform Properties
-
-- [contains](Enumerable.EnumerableModule.md#contains)
-
 ### Constructor Methods
 
 - [concat](Enumerable.EnumerableModule.md#concat)
@@ -37,6 +27,10 @@
 
 ### Operator Methods
 
+- [buffer](Enumerable.EnumerableModule.md#buffer)
+- [concatAll](Enumerable.EnumerableModule.md#concatall)
+- [concatMap](Enumerable.EnumerableModule.md#concatmap)
+- [concatWith](Enumerable.EnumerableModule.md#concatwith)
 - [distinctUntilChanged](Enumerable.EnumerableModule.md#distinctuntilchanged)
 - [endWith](Enumerable.EnumerableModule.md#endwith)
 - [flatMapIterable](Enumerable.EnumerableModule.md#flatmapiterable)
@@ -58,13 +52,13 @@
 
 ### Other Methods
 
-- [buffer](Enumerable.EnumerableModule.md#buffer)
 - [compute](Enumerable.EnumerableModule.md#compute)
 - [generate](Enumerable.EnumerableModule.md#generate)
 - [throws](Enumerable.EnumerableModule.md#throws)
 
 ### Transform Methods
 
+- [contains](Enumerable.EnumerableModule.md#contains)
 - [enumerate](Enumerable.EnumerableModule.md#enumerate)
 - [everySatisfy](Enumerable.EnumerableModule.md#everysatisfy)
 - [first](Enumerable.EnumerableModule.md#first)
@@ -74,129 +68,6 @@
 - [someSatisfy](Enumerable.EnumerableModule.md#somesatisfy)
 - [toIterable](Enumerable.EnumerableModule.md#toiterable)
 - [toReadonlyArray](Enumerable.EnumerableModule.md#toreadonlyarray)
-
-## Operator Properties
-
-### concatAll
-
-• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-Converts a higher-order Container into a first-order
-Container by concatenating the inner sources in order.
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatAll](types.EnumerableContainerTypeClass.md#concatall)
-
-___
-
-### concatMap
-
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](types.EnumerableLike.md)<`TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](types.EnumerableLike.md)<`TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatMap](types.EnumerableContainerTypeClass.md#concatmap)
-
-___
-
-### concatWith
-
-• **concatWith**: <T\>(`snd`: [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, ...`tail`: readonly [`EnumerableLike`](types.EnumerableLike.md)<`T`\>[]) => [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`EnumerableLike`](types.EnumerableLike.md)<`T`\> |
-| `...tail` | readonly [`EnumerableLike`](types.EnumerableLike.md)<`T`\>[] |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatWith](types.EnumerableContainerTypeClass.md#concatwith)
-
-___
-
-## Transform Properties
-
-### contains
-
-• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `boolean`\>
-
-#### Type declaration
-
-▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `boolean`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `boolean`\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[contains](types.EnumerableContainerTypeClass.md#contains)
 
 ## Constructor Methods
 
@@ -656,6 +527,110 @@ in order, of each of its input sources.
 ___
 
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[buffer](types.EnumerableContainerTypeClass.md#buffer)
+
+___
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), [`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `T`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatAll](types.EnumerableContainerTypeClass.md#concatall)
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](types.EnumerableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatMap](types.EnumerableContainerTypeClass.md#concatmap)
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumerableLike`](types.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](types.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatWith](types.EnumerableContainerTypeClass.md#concatwith)
+
+___
 
 ### distinctUntilChanged
 
@@ -1433,33 +1408,6 @@ ___
 
 ## Other Methods
 
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
-
-#### Inherited from
-
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[buffer](types.EnumerableContainerTypeClass.md#buffer)
-
-___
-
 ### compute
 
 ▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
@@ -1524,6 +1472,34 @@ ___
 ___
 
 ## Transform Methods
+
+### contains
+
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `boolean`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, `boolean`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[contains](types.EnumerableContainerTypeClass.md#contains)
+
+___
 
 ### enumerate
 

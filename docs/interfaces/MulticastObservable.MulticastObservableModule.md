@@ -14,6 +14,7 @@
 
 ### Operator Methods
 
+- [catchError](MulticastObservable.MulticastObservableModule.md#catcherror)
 - [concatAll](MulticastObservable.MulticastObservableModule.md#concatall)
 - [concatMap](MulticastObservable.MulticastObservableModule.md#concatmap)
 - [exhaust](MulticastObservable.MulticastObservableModule.md#exhaust)
@@ -27,10 +28,35 @@
 
 ### Other Methods
 
-- [catchError](MulticastObservable.MulticastObservableModule.md#catcherror)
 - [compute](MulticastObservable.MulticastObservableModule.md#compute)
 
 ## Operator Methods
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
+
+___
 
 ### concatAll
 
@@ -293,32 +319,6 @@ ___
 ___
 
 ## Other Methods
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
-
-___
 
 ### compute
 

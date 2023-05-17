@@ -14,6 +14,7 @@
 
 ### Operator Methods
 
+- [catchError](DeferredObservable.DeferredObservableModule.md#catcherror)
 - [concatAll](DeferredObservable.DeferredObservableModule.md#concatall)
 - [concatMap](DeferredObservable.DeferredObservableModule.md#concatmap)
 - [exhaust](DeferredObservable.DeferredObservableModule.md#exhaust)
@@ -27,7 +28,6 @@
 
 ### Other Methods
 
-- [catchError](DeferredObservable.DeferredObservableModule.md#catcherror)
 - [compute](DeferredObservable.DeferredObservableModule.md#compute)
 - [multicast](DeferredObservable.DeferredObservableModule.md#multicast)
 - [repeat](DeferredObservable.DeferredObservableModule.md#repeat)
@@ -35,6 +35,32 @@
 - [share](DeferredObservable.DeferredObservableModule.md#share)
 
 ## Operator Methods
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
+
+___
 
 ### concatAll
 
@@ -297,32 +323,6 @@ ___
 ___
 
 ## Other Methods
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Inherited from
-
-[HigherOrderObservableBaseTypeClass](types.HigherOrderObservableBaseTypeClass.md).[catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
-
-___
 
 ### compute
 
