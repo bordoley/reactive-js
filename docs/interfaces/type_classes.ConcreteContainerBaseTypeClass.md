@@ -14,8 +14,6 @@
 
 - **`ConcreteContainerBaseTypeClass`**
 
-  ↳ [`EnumeratorModule`](Enumerator.EnumeratorModule.md)
-
   ↳ [`IterableModule`](Iterable.IterableModule.md)
 
   ↳ [`RunnableContainerTypeClass`](type_classes.RunnableContainerTypeClass.md)
@@ -34,6 +32,10 @@
 - [fromOptional](type_classes.ConcreteContainerBaseTypeClass.md#fromoptional)
 - [fromReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#fromreadonlyarray)
 - [fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
+
+### Transform Methods
+
+- [toReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#toreadonlyarray)
 
 ## Constructor Methods
 
@@ -172,3 +174,23 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+
+___
+
+## Transform Methods
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, readonly `T`[]\>
+
+Converts the Container to a `ReadonlyArrayContainer`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, readonly `T`[]\>

@@ -318,23 +318,23 @@ export declare const __Object_prototype: unique symbol;
 
 export declare const __Object_private_initializedProperties: unique symbol;
 
-export declare const __PauseableScheduler_delayed : unique symbol;
+export declare const __PauseableScheduler_delayed: unique symbol;
 
-export declare const __PauseableScheduler_dueTime : unique symbol;
+export declare const __PauseableScheduler_dueTime: unique symbol;
 
-export declare const __PauseableScheduler_hostContinuation : unique symbol;
+export declare const __PauseableScheduler_hostContinuation: unique symbol;
 
 export declare const __PauseableScheduler_hostScheduler: unique symbol;
 
-export declare const __PauseableScheduler_queue : unique symbol;
+export declare const __PauseableScheduler_queue: unique symbol;
 
-export declare const __PauseableScheduler_initialTime : unique symbol;
+export declare const __PauseableScheduler_initialTime: unique symbol;
 
-export declare const __PauseableScheduler_resumedTime : unique symbol;
+export declare const __PauseableScheduler_resumedTime: unique symbol;
 
-export declare const __PauseableScheduler_taskIDCounter : unique symbol;
+export declare const __PauseableScheduler_taskIDCounter: unique symbol;
 
-export declare const __PriorityQueueImpl_comparator : unique symbol;
+export declare const __PriorityQueueImpl_comparator: unique symbol;
 
 export declare const __Publisher_observers: unique symbol;
 

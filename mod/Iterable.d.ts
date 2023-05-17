@@ -1,8 +1,8 @@
 import { Function1 } from "./functions.js";
-import { BlockingContainerBaseTypeClass, ConcreteContainerBaseTypeClass, EnumerableContainerBaseTypeClass } from "./type-classes.js";
+import { ConcreteContainerBaseTypeClass, EnumerableContainerBaseTypeClass } from "./type-classes.js";
 import { EnumerableLike, IterableContainer, RunnableLike } from "./types.js";
 export type Type = IterableContainer;
-export interface IterableModule extends ConcreteContainerBaseTypeClass<Type>, BlockingContainerBaseTypeClass<Type>, EnumerableContainerBaseTypeClass<Type> {
+export interface IterableModule extends ConcreteContainerBaseTypeClass<Type>, EnumerableContainerBaseTypeClass<Type> {
     toObservable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
     toObservable<T>(options: {
         readonly delay: number;

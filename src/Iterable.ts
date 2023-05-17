@@ -10,7 +10,6 @@ import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable
 import Iterable_toReadonlyArray from "./Iterable/__internal__/Iterable.toReadonlyArray.js";
 import { Function1, identityLazy } from "./functions.js";
 import {
-  BlockingContainerBaseTypeClass,
   ConcreteContainerBaseTypeClass,
   EnumerableContainerBaseTypeClass,
 } from "./type-classes.js";
@@ -20,7 +19,6 @@ export type Type = IterableContainer;
 
 export interface IterableModule
   extends ConcreteContainerBaseTypeClass<Type>,
-    BlockingContainerBaseTypeClass<Type>,
     EnumerableContainerBaseTypeClass<Type> {
   toObservable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
