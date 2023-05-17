@@ -44,13 +44,13 @@ import {
   partial,
   pipe,
 } from "../../functions.js";
-import { HigherOrderObservableBaseTypeClass } from "../../type-classes.js";
 import {
   CollectionLike_count,
   ContainerOf,
   ContainerOperator,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  HigherOrderObservableBaseTypeClass,
   ObservableLike,
   ObserverLike,
   QueueableLike,

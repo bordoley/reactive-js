@@ -43,12 +43,12 @@ import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.j
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import { Factory, Updater, identityLazy } from "./functions.js";
-import { EnumerableContainerTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
   Container_type,
   DisposableLike,
+  EnumerableContainerTypeClass,
   EnumerableLike,
   EnumeratorLike,
 } from "./types.js";

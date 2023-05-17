@@ -14,8 +14,11 @@ import {
   pipeLazyAsync,
   returns,
 } from "../../functions.js";
-import { HigherOrderObservableBaseTypeClass } from "../../type-classes.js";
-import { ContainerOf, RunnableLike } from "../../types.js";
+import {
+  ContainerOf,
+  HigherOrderObservableBaseTypeClass,
+  RunnableLike,
+} from "../../types.js";
 
 const HigherOrderObservableBaseTypeClassTests = <C extends Observable.Type>(
   m: HigherOrderObservableBaseTypeClass<C, Runnable.Type>,

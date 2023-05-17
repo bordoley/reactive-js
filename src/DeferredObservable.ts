@@ -15,7 +15,6 @@ import DeferredObservable_switchAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import { Factory, Function1, Predicate } from "./functions.js";
-import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
 import {
   Container,
   Container_T,
@@ -23,6 +22,7 @@ import {
   DeferredObservableLike,
   DisposableLike,
   EnumerableLike,
+  HigherOrderObservableBaseTypeClass,
   MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,

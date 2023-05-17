@@ -15,8 +15,10 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import { ConcreteAssociativeKeyedContainerTypeClass } from "../../type-classes.js";
-import { KeyedContainer } from "../../types.js";
+import {
+  ConcreteAssociativeKeyedContainerTypeClass,
+  KeyedContainer,
+} from "../../types.js";
 import AssociativeKeyedContainerTypeClassTests from "./AssociativeKeyedContainerTypeClassTests.js";
 
 const ConcreteAssociativeKeyedContainerTypeClassTests = <

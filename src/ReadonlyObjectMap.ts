@@ -17,8 +17,8 @@ import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/Rea
 import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import { identityLazy } from "./functions.js";
-import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
 import {
+  ConcreteAssociativeKeyedContainerTypeClass,
   Container_T,
   Container_type,
   KeyOf,

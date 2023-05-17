@@ -5,8 +5,11 @@ import {
   test,
 } from "../../__internal__/testing.js";
 import { pipe, returns } from "../../functions.js";
-import { EnumerableContainerTypeClass } from "../../type-classes.js";
-import { Container, ContainerOf } from "../../types.js";
+import {
+  Container,
+  ContainerOf,
+  EnumerableContainerTypeClass,
+} from "../../types.js";
 import RunnableContainerTypeClassTests from "./RunnableContainerTypeClassTests.js";
 
 const EnumerableContainerTypeClassTests = <C extends Container>(

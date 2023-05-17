@@ -1,5 +1,8 @@
-import { ContainerTypeClass } from "../../type-classes.js";
-import { Container, ContainerOperator } from "../../types.js";
+import {
+  Container,
+  ContainerOperator,
+  ContainerTypeClass,
+} from "../../types.js";
 
 const Container_pick =
   <C extends Container>(

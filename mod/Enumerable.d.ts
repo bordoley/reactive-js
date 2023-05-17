@@ -1,6 +1,5 @@
 import { Factory, Updater } from "./functions.js";
-import { EnumerableContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, EnumerableContainerTypeClass, EnumerableLike, EnumeratorLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

@@ -1,6 +1,9 @@
 import { TypePredicate } from "../../functions.js";
-import { ContainerTypeClass } from "../../type-classes.js";
-import { Container, ContainerOperator } from "../../types.js";
+import {
+  Container,
+  ContainerOperator,
+  ContainerTypeClass,
+} from "../../types.js";
 
 const Container_keepType =
   <C extends Container>(keep: ContainerTypeClass<C>["keep"]) =>

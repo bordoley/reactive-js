@@ -38,5 +38,4 @@ Reactive-JS
 - [integrations/web/Scheduler](modules/integrations_web_Scheduler.md)
 - [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
 - [integrations/web/effects](modules/integrations_web_effects.md)
-- [type-classes](modules/type_classes.md)
 - [types](modules/types.md)

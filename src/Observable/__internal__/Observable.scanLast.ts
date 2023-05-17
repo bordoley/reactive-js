@@ -11,10 +11,10 @@ import {
   invoke,
   pipe,
 } from "../../functions.js";
-import { HigherOrderObservableBaseTypeClass } from "../../type-classes.js";
 import {
   ContainerOf,
   ContainerOperator,
+  HigherOrderObservableBaseTypeClass,
   ObservableLike_observe,
   ObserverLike,
   SinkLike_notify,

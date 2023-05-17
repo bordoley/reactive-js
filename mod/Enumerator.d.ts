@@ -1,6 +1,5 @@
 import { Function1 } from "./functions.js";
-import { RunnableContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, EnumerableLike, EnumeratorLike, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableLike, EnumeratorLike, RunnableContainerTypeClass, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

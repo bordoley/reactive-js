@@ -1,5 +1,4 @@
-import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
-import { Container_T, Container_type, DictionaryLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { AssociativeKeyedContainerTypeClass, Container_T, Container_type, DictionaryLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container

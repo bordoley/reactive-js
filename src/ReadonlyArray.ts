@@ -49,13 +49,11 @@ import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zi
 import { Function1, TypePredicate } from "./functions.js";
 import {
   ConcreteKeyedContainerTypeClass,
-  EnumerableContainerTypeClass,
-} from "./type-classes.js";
-import {
   ContainerOperator,
   Container_T,
   Container_type,
   DisposableLike,
+  EnumerableContainerTypeClass,
   EnumerableLike,
   EnumeratorLike,
   KeyOf,

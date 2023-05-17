@@ -25,13 +25,13 @@ import {
   SerialDisposableLike_current,
 } from "../../__internal__/types.js";
 import { Function1, bind, bindMethod, none, pipe } from "../../functions.js";
-import { HigherOrderObservableBaseTypeClass } from "../../type-classes.js";
 import {
   ContainerOf,
   ContainerOperator,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  HigherOrderObservableBaseTypeClass,
   ObserverLike,
   SinkLike_notify,
 } from "../../types.js";

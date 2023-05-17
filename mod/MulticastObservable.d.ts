@@ -1,7 +1,6 @@
 import type * as DeferredObservable from "./DeferredObservable.js";
 import { Factory } from "./functions.js";
-import { HigherOrderObservableBaseTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, MulticastObservableLike } from "./types.js";
+import { Container, Container_T, Container_type, HigherOrderObservableBaseTypeClass, MulticastObservableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
