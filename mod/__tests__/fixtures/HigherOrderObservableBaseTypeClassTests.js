@@ -1,0 +1,12 @@
+/// <reference types="./HigherOrderObservableBaseTypeClassTests.d.ts" />
+
+import * as Observable from "../../Observable.js";
+import * as Runnable from "../../Runnable.js";
+import { describe, expectArrayEquals, test, } from "../../__internal__/testing.js";
+import { identity, pipe, pipeLazyAsync, returns, } from "../../functions.js";
+const HigherOrderObservableBaseTypeClassTests = (m, fromRunnable) => describe("HigherOrderObservableBaseTypeClass", describe("scanLast", test("fast src, slow acc", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), fromRunnable(), m.scanLast((acc, x) => pipe([x + acc], Runnable.fromReadonlyArray({ delay: 4 })), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 3, 6]))), test("slow src, fast acc", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 4 }), fromRunnable(), m.scanLast((acc, x) => pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 3, 6]))), test("slow src, slow acc", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 4 }), fromRunnable(), m.scanLast((acc, x) => pipe([x + acc], Runnable.fromReadonlyArray({ delay: 4 })), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 3, 6]))), test("fast src, fast acc", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), fromRunnable(), m.scanLast((acc, x) => pipe([x + acc], Runnable.fromReadonlyArray()), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 3, 6])))), describe("scanMany", test("slow src, fast acc", pipeLazyAsync([1, 1, 1], Observable.fromReadonlyArray({ delay: 10 }), fromRunnable(), m.scanMany((acc, next) => pipe(Observable.generate(identity, returns(next + acc), {
+    delay: 1,
+}), Observable.takeFirst({ count: 3 })), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), test("fast src, slow acc", pipeLazyAsync([1, 1, 1], Observable.fromReadonlyArray({ delay: 1 }), fromRunnable(), m.scanMany((acc, next) => pipe(Observable.generate(identity, returns(next + acc), {
+    delay: 10,
+}), Observable.takeFirst({ count: 3 })), returns(0)), Observable.buffer(), Observable.lastAsync(), x => x ?? [], expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))));
+export default HigherOrderObservableBaseTypeClassTests;

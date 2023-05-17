@@ -81,6 +81,7 @@
 - [partial](functions.md#partial)
 - [pipe](functions.md#pipe)
 - [pipeLazy](functions.md#pipelazy)
+- [pipeLazyAsync](functions.md#pipelazyasync)
 - [pipeSome](functions.md#pipesome)
 - [pipeSomeLazy](functions.md#pipesomelazy)
 - [pipeUnsafe](functions.md#pipeunsafe)
@@ -2972,6 +2973,382 @@ Returns a `Factory` function that pipes the `source` through the provided operat
 #### Returns
 
 [`Factory`](functions.md#factory)<`L`\>
+
+___
+
+### pipeLazyAsync
+
+▸ **pipeLazyAsync**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`Promise`<`A`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`A`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`Promise`<`B`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`B`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`Promise`<`C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`C`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`Promise`<`D`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`D`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`Promise`<`E`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`E`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`Promise`<`F`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`F`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`Promise`<`G`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`G`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`Promise`<`H`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`H`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`Promise`<`I`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`I`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`Promise`<`J`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`J`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`Promise`<`K`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`K`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`Promise`<`L`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op12` | [`Function1`](functions.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+
+#### Returns
+
+[`Factory`](functions.md#factory)<`Promise`<`L`\>\>
 
 ___
 

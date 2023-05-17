@@ -8,11 +8,16 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { pipe } from "../functions.js";
+import { identityLazy, pipe } from "../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../types.js";
+import HigherOrderObservableBaseTypeClassTests from "./fixtures/HigherOrderObservableBaseTypeClassTests.js";
 
 testModule(
   "DeferredObservable",
+  HigherOrderObservableBaseTypeClassTests<DeferredObservable.Type>(
+    DeferredObservable,
+    identityLazy,
+  ),
   describe(
     "share",
     test("shared observable zipped with itself", () => {

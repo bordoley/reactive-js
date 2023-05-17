@@ -232,6 +232,21 @@ interface PipeLazy {
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 export declare const pipeLazy: PipeLazy["pipeLazy"];
+interface PipeLazyAsync {
+    pipeLazyAsync<T, A>(src: T, op1: Function1<T, A | Promise<A>>): Factory<Promise<A>>;
+    pipeLazyAsync<T, A, B>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>): Factory<Promise<B>>;
+    pipeLazyAsync<T, A, B, C>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>): Factory<Promise<C>>;
+    pipeLazyAsync<T, A, B, C, D>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>): Factory<Promise<D>>;
+    pipeLazyAsync<T, A, B, C, D, E>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>): Factory<Promise<E>>;
+    pipeLazyAsync<T, A, B, C, D, E, F>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>): Factory<Promise<F>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>): Factory<Promise<G>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G, H>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>): Factory<Promise<H>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G, H, I>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>): Factory<Promise<I>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>): Factory<Promise<J>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>, op11: Function1<J, K | Promise<K>>): Factory<Promise<K>>;
+    pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>, op11: Function1<J, K | Promise<K>>, op12: Function1<K, L | Promise<L>>): Factory<Promise<L>>;
+}
+export declare const pipeLazyAsync: PipeLazyAsync["pipeLazyAsync"];
 interface PipeSome {
     pipeSome<T, A>(src: Optional<T>, op1: Function1<T, A>): Optional<A>;
     pipeSome<T, A, B>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>): Optional<B>;

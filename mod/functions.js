@@ -106,6 +106,7 @@ export const isOdd = (x) => x % 2 !== 0;
  * Returns true if `option` is `none`.
  */
 export const isNone = (option) => option === none;
+const isPromise = (v) => v instanceof Promise || Promise.resolve(v) === v;
 /**
  * Returns true if `option` is not `none`.
  */
@@ -142,6 +143,20 @@ export const pipe = pipeUnsafe;
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
+export const pipeLazyAsync = (source, ...operators) => async () => {
+    let acc = source;
+    const length = ReadonlyArray_getLength(operators);
+    for (let i = 0; i < length; i++) {
+        const result = operators[i](acc);
+        if (isPromise(result)) {
+            acc = await result;
+        }
+        else {
+            acc = result;
+        }
+    }
+    return acc;
+};
 /**
  * Pipes `source` through a series of unary functions if it is not undefined.
  */

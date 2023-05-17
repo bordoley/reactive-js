@@ -7,14 +7,18 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { none, pipe, pipeLazy } from "../functions.js";
+import { identityLazy, none, pipe, pipeLazy } from "../functions.js";
+import HigherOrderObservableBaseTypeClassTests from "./fixtures/HigherOrderObservableBaseTypeClassTests.js";
 
 import RunnableContainerTypeClassTests from "./fixtures/RunnableContainerTypeClassTests.js";
 
 testModule(
   "Runnable",
   RunnableContainerTypeClassTests(Runnable),
-
+  HigherOrderObservableBaseTypeClassTests<Runnable.Type>(
+    Runnable,
+    identityLazy,
+  ),
   describe(
     "exhaust",
     test(

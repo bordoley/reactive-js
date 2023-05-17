@@ -37,7 +37,7 @@ import Enumerator_toReadonlyArray from "./Enumerator/__internal__/Enumerator.toR
 import Enumerator_zip from "./Enumerator/__internal__/Enumerator.zip.js";
 import Enumerator_zipWith from "./Enumerator/__internal__/Enumerator.zipWith.js";
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
-import Optional_enumerate from "./Optional/__internal__/Optional.enumerator.js";
+import Optional_enumerate from "./Optional/__internal__/Optional.enumerate.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import { Function1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
