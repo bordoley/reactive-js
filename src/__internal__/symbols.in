@@ -109,6 +109,7 @@ TakeWhileLike_inclusive
 WithLatestLike_hasLatest
 WithLatestLike_otherLatest
 WithLatestLike_selector
+ZipLike_enumerators
 
 AwaitOrObserveEffect_observable
 AwaitOrObserveEffect_subscription
@@ -128,6 +129,7 @@ ComputeContext_awaitOrObserve
 ComputeContext_constant
 ComputeContext_memoOrUse
 ComputeEffect_type
+ConcatEnumerator_inner
 ConstantEffect_args
 ConstantEffect_value
 Continuation_effect
@@ -188,6 +190,5 @@ VirtualTimeScheduler_microTaskTicks
 VirtualTimeScheduler_taskIDCount
 WindowLocationStream_historyCounter
 WithCurrentTimeObserver_selector
-ZipObserver_enumerators
 ZipObserver_queuedEnumerator
 ZipWithLatestFromObserver_TAQueue

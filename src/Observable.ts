@@ -1745,6 +1745,5 @@ export const withCurrentTime: Signature["withCurrentTime"] =
 export const withLatestFrom: Signature["withLatestFrom"] =
   Observable_withLatestFrom;
 export const zip: Signature["zip"] = Observable_zip;
-export const zipLatest: Signature["zipLatest"] =
-  Observable_zipLatest;
+export const zipLatest: Signature["zipLatest"] = Observable_zipLatest;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;

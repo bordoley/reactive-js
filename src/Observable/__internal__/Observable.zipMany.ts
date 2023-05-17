@@ -24,15 +24,13 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  __ZipObserver_enumerators,
-  __ZipObserver_queuedEnumerator,
-} from "../../__internal__/symbols.js";
+import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
   IndexedQueueLike,
   QueueLike_dequeue,
+  ZipLike_enumerators,
 } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
 import {
@@ -147,7 +145,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     ))();
 
   type TProperties = {
-    readonly [__ZipObserver_enumerators]: readonly (EnumeratorLike<any> &
+    readonly [ZipLike_enumerators]: readonly (EnumeratorLike<any> &
       DisposableLike)[];
     readonly [__ZipObserver_queuedEnumerator]: QueuedEnumeratorLike;
   };
@@ -167,7 +165,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         init(Delegating_mixin(), instance, delegate);
 
         instance[__ZipObserver_queuedEnumerator] = queuedEnumerator;
-        instance[__ZipObserver_enumerators] = enumerators;
+        instance[ZipLike_enumerators] = enumerators;
 
         pipe(
           instance,
@@ -185,7 +183,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         return instance;
       },
       props<TProperties>({
-        [__ZipObserver_enumerators]: none,
+        [ZipLike_enumerators]: none,
         [__ZipObserver_queuedEnumerator]: none,
       }),
       {
@@ -198,7 +196,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
           Observer_assertState(this);
           this[__ZipObserver_queuedEnumerator][QueueableLike_enqueue](next);
 
-          const enumerators = this[__ZipObserver_enumerators];
+          const enumerators = this[ZipLike_enumerators];
 
           if (!shouldEmit(enumerators)) {
             return;

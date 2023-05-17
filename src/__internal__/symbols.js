@@ -1,19 +1,13 @@
 import symbol from "./symbol.js";
 
 /** @type {unique symbol} */
-export const __AssociativeCollectionLike_keys = /*@__PURE__*/ symbol(
-  "AssociativeCollectionLike_keys",
-);
+export const __AssociativeCollectionLike_keys = /*@__PURE__*/ symbol("AssociativeCollectionLike_keys");
 
 /** @type {unique symbol} */
-export const __BufferLike_capacity = /*@__PURE__*/ symbol(
-  "BufferLike_capacity",
-);
+export const __BufferLike_capacity = /*@__PURE__*/ symbol("BufferLike_capacity");
 
 /** @type {unique symbol} */
-export const __CollectionLike_count = /*@__PURE__*/ symbol(
-  "CollectionLike_count",
-);
+export const __CollectionLike_count = /*@__PURE__*/ symbol("CollectionLike_count");
 
 /** @type {unique symbol} */
 export const __Container_T = /*@__PURE__*/ symbol("Container_T");
@@ -22,170 +16,106 @@ export const __Container_T = /*@__PURE__*/ symbol("Container_T");
 export const __Container_type = /*@__PURE__*/ symbol("Container_type");
 
 /** @type {unique symbol} */
-export const __DispatcherLike_complete = /*@__PURE__*/ symbol(
-  "DispatcherLike_complete",
-);
+export const __DispatcherLike_complete = /*@__PURE__*/ symbol("DispatcherLike_complete");
 
 /** @type {unique symbol} */
-export const __DispatcherLikeEvent_capacityExceeded = /*@__PURE__*/ symbol(
-  "DispatcherLikeEvent_capacityExceeded",
-);
+export const __DispatcherLikeEvent_capacityExceeded = /*@__PURE__*/ symbol("DispatcherLikeEvent_capacityExceeded");
 
 /** @type {unique symbol} */
-export const __DispatcherLikeEvent_completed = /*@__PURE__*/ symbol(
-  "DispatcherLikeEvent_completed",
-);
+export const __DispatcherLikeEvent_completed = /*@__PURE__*/ symbol("DispatcherLikeEvent_completed");
 
 /** @type {unique symbol} */
-export const __DispatcherLikeEvent_ready = /*@__PURE__*/ symbol(
-  "DispatcherLikeEvent_ready",
-);
+export const __DispatcherLikeEvent_ready = /*@__PURE__*/ symbol("DispatcherLikeEvent_ready");
 
 /** @type {unique symbol} */
 export const __DisposableLike_add = /*@__PURE__*/ symbol("DisposableLike_add");
 
 /** @type {unique symbol} */
-export const __DisposableLike_dispose = /*@__PURE__*/ symbol(
-  "DisposableLike_dispose",
-);
+export const __DisposableLike_dispose = /*@__PURE__*/ symbol("DisposableLike_dispose");
 
 /** @type {unique symbol} */
-export const __DisposableLike_error = /*@__PURE__*/ symbol(
-  "DisposableLike_error",
-);
+export const __DisposableLike_error = /*@__PURE__*/ symbol("DisposableLike_error");
 
 /** @type {unique symbol} */
-export const __DisposableLike_isDisposed = /*@__PURE__*/ symbol(
-  "DisposableLike_isDisposed",
-);
+export const __DisposableLike_isDisposed = /*@__PURE__*/ symbol("DisposableLike_isDisposed");
 
 /** @type {unique symbol} */
-export const __EnumeratorLike_move = /*@__PURE__*/ symbol(
-  "EnumeratorLike_move",
-);
+export const __EnumeratorLike_move = /*@__PURE__*/ symbol("EnumeratorLike_move");
 
 /** @type {unique symbol} */
-export const __EnumeratorLike_current = /*@__PURE__*/ symbol(
-  "EnumeratorLike_current",
-);
+export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_current");
 
 /** @type {unique symbol} */
-export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol(
-  "EnumeratorLike_hasCurrent",
-);
+export const __EnumeratorLike_hasCurrent = /*@__PURE__*/ symbol("EnumeratorLike_hasCurrent");
 
 /** @type {unique symbol} */
-export const __EventSourceLike_addEventListener = /*@__PURE__*/ symbol(
-  "EventSourceLike_addEventListener",
-);
+export const __EventSourceLike_addEventListener = /*@__PURE__*/ symbol("EventSourceLike_addEventListener");
 
 /** @type {unique symbol} */
-export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol(
-  "EventListenerLike_isErrorSafe",
-);
+export const __EventListenerLike_isErrorSafe = /*@__PURE__*/ symbol("EventListenerLike_isErrorSafe");
 
 /** @type {unique symbol} */
-export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol(
-  "EventPublisherLike_listenerCount",
-);
+export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol("EventPublisherLike_listenerCount");
 
 /** @type {unique symbol} */
-export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol(
-  "KeyedCollectionLike_get",
-);
+export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 
 /** @type {unique symbol} */
-export const __KeyedContainer_TKey = /*@__PURE__*/ symbol(
-  "KeyedContainer_TKey",
-);
+export const __KeyedContainer_TKey = /*@__PURE__*/ symbol("KeyedContainer_TKey");
 
 /** @type {unique symbol} */
-export const __ObservableLike_observe = /*@__PURE__*/ symbol(
-  "ObservableLike_observe",
-);
+export const __ObservableLike_observe = /*@__PURE__*/ symbol("ObservableLike_observe");
 
 /** @type {unique symbol} */
-export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol(
-  "ObservableLike_isDeferred",
-);
+export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol("ObservableLike_isDeferred");
 
 /** @type {unique symbol} */
-export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol(
-  "ObservableLike_isEnumerable",
-);
+export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol("ObservableLike_isEnumerable");
 
 /** @type {unique symbol} */
-export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol(
-  "ObservableLike_isRunnable",
-);
+export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol("ObservableLike_isRunnable");
 
 /** @type {unique symbol} */
-export const __PauseableLike_isPaused = /*@__PURE__*/ symbol(
-  "PauseableLike_isPaused",
-);
+export const __PauseableLike_isPaused = /*@__PURE__*/ symbol("PauseableLike_isPaused");
 
 /** @type {unique symbol} */
-export const __PauseableLike_pause = /*@__PURE__*/ symbol(
-  "PauseableLike_pause",
-);
+export const __PauseableLike_pause = /*@__PURE__*/ symbol("PauseableLike_pause");
 
 /** @type {unique symbol} */
-export const __PauseableLike_resume = /*@__PURE__*/ symbol(
-  "PauseableLike_resume",
-);
+export const __PauseableLike_resume = /*@__PURE__*/ symbol("PauseableLike_resume");
 
 /** @type {unique symbol} */
-export const __PublisherLike_observerCount = /*@__PURE__*/ symbol(
-  "PublisherLike_observerCount",
-);
+export const __PublisherLike_observerCount = /*@__PURE__*/ symbol("PublisherLike_observerCount");
 
 /** @type {unique symbol} */
-export const __QueueableLike_enqueue = /*@__PURE__*/ symbol(
-  "QueueableLike_enqueue",
-);
+export const __QueueableLike_enqueue = /*@__PURE__*/ symbol("QueueableLike_enqueue");
 
 /** @type {unique symbol} */
-export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol(
-  "QueueableLike_backpressureStrategy",
-);
+export const __QueueableLike_backpressureStrategy = /*@__PURE__*/ symbol("QueueableLike_backpressureStrategy");
 
 /** @type {unique symbol} */
-export const __ReplayObservableLike_buffer = /*@__PURE__*/ symbol(
-  "ReplayObservableLike_buffer",
-);
+export const __ReplayObservableLike_buffer = /*@__PURE__*/ symbol("ReplayObservableLike_buffer");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_inContinuation = /*@__PURE__*/ symbol(
-  "SchedulerLike_inContinuation",
-);
+export const __SchedulerLike_inContinuation = /*@__PURE__*/ symbol("SchedulerLike_inContinuation");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_maxYieldInterval = /*@__PURE__*/ symbol(
-  "SchedulerLike_maxYieldInterval",
-);
+export const __SchedulerLike_maxYieldInterval = /*@__PURE__*/ symbol("SchedulerLike_maxYieldInterval");
 
 /** @type {unique symbol} */
 export const __SchedulerLike_now = /*@__PURE__*/ symbol("SchedulerLike_now");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_requestYield = /*@__PURE__*/ symbol(
-  "SchedulerLike_requestYield",
-);
+export const __SchedulerLike_requestYield = /*@__PURE__*/ symbol("SchedulerLike_requestYield");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_schedule = /*@__PURE__*/ symbol(
-  "SchedulerLike_schedule",
-);
+export const __SchedulerLike_schedule = /*@__PURE__*/ symbol("SchedulerLike_schedule");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_shouldYield = /*@__PURE__*/ symbol(
-  "SchedulerLike_shouldYield",
-);
+export const __SchedulerLike_shouldYield = /*@__PURE__*/ symbol("SchedulerLike_shouldYield");
 
 /** @type {unique symbol} */
-export const __SchedulerLike_yield = /*@__PURE__*/ symbol(
-  "SchedulerLike_yield",
-);
+export const __SchedulerLike_yield = /*@__PURE__*/ symbol("SchedulerLike_yield");
 
 /** @type {unique symbol} */
 export const __SinkLike_notify = /*@__PURE__*/ symbol("SinkLike_notify");
@@ -194,84 +124,52 @@ export const __SinkLike_notify = /*@__PURE__*/ symbol("SinkLike_notify");
 export const __StoreLike_value = /*@__PURE__*/ symbol("StoreLike_value");
 
 /** @type {unique symbol} */
-export const __StreamLike_scheduler = /*@__PURE__*/ symbol(
-  "StreamLike_scheduler",
-);
+export const __StreamLike_scheduler = /*@__PURE__*/ symbol("StreamLike_scheduler");
 
 /** @type {unique symbol} */
-export const __StreamableLike_stream = /*@__PURE__*/ symbol(
-  "StreamableLike_stream",
-);
+export const __StreamableLike_stream = /*@__PURE__*/ symbol("StreamableLike_stream");
 
 /** @type {unique symbol} */
-export const __StreamableLike_TStream = /*@__PURE__*/ symbol(
-  "StreamableLike_TStream",
-);
+export const __StreamableLike_TStream = /*@__PURE__*/ symbol("StreamableLike_TStream");
 
 /** @type {unique symbol} */
-export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol(
-  "VirtualTimeSchedulerLike_run",
-);
+export const __VirtualTimeSchedulerLike_run = /*@__PURE__*/ symbol("VirtualTimeSchedulerLike_run");
 
 /** @type {unique symbol} */
-export const __WindowLocationLike_push = /*@__PURE__*/ symbol(
-  "WindowLocationLike_push",
-);
+export const __WindowLocationLike_push = /*@__PURE__*/ symbol("WindowLocationLike_push");
 
 /** @type {unique symbol} */
-export const __WindowLocationLike_goBack = /*@__PURE__*/ symbol(
-  "WindowLocationLike_goBack",
-);
+export const __WindowLocationLike_goBack = /*@__PURE__*/ symbol("WindowLocationLike_goBack");
 
 /** @type {unique symbol} */
-export const __WindowLocationLike_canGoBack = /*@__PURE__*/ symbol(
-  "WindowLocationLike_canGoBack",
-);
+export const __WindowLocationLike_canGoBack = /*@__PURE__*/ symbol("WindowLocationLike_canGoBack");
 
 /** @type {unique symbol} */
-export const __WindowLocationLike_replace = /*@__PURE__*/ symbol(
-  "WindowLocationLike_replace",
-);
+export const __WindowLocationLike_replace = /*@__PURE__*/ symbol("WindowLocationLike_replace");
 
 /** @type {unique symbol} */
-export const __ContinuationLike_activeChild = /*@__PURE__*/ symbol(
-  "ContinuationLike_activeChild",
-);
+export const __ContinuationLike_activeChild = /*@__PURE__*/ symbol("ContinuationLike_activeChild");
 
 /** @type {unique symbol} */
-export const __ContinuationLike_run = /*@__PURE__*/ symbol(
-  "ContinuationLike_run",
-);
+export const __ContinuationLike_run = /*@__PURE__*/ symbol("ContinuationLike_run");
 
 /** @type {unique symbol} */
-export const __ContinuationLike_parent = /*@__PURE__*/ symbol(
-  "ContinuationLike_parent",
-);
+export const __ContinuationLike_parent = /*@__PURE__*/ symbol("ContinuationLike_parent");
 
 /** @type {unique symbol} */
-export const __ContinuationLike_scheduler = /*@__PURE__*/ symbol(
-  "ContinuationLike_scheduler",
-);
+export const __ContinuationLike_scheduler = /*@__PURE__*/ symbol("ContinuationLike_scheduler");
 
 /** @type {unique symbol} */
-export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol(
-  "ContinuationSchedulerLike_schedule",
-);
+export const __ContinuationSchedulerLike_schedule = /*@__PURE__*/ symbol("ContinuationSchedulerLike_schedule");
 
 /** @type {unique symbol} */
-export const __DelegatingLike_delegate = /*@__PURE__*/ symbol(
-  "DelegatingLike_delegate",
-);
+export const __DelegatingLike_delegate = /*@__PURE__*/ symbol("DelegatingLike_delegate");
 
 /** @type {unique symbol} */
-export const __MutableEnumeratorLike_reset = /*@__PURE__*/ symbol(
-  "MutableEnumeratorLike_reset",
-);
+export const __MutableEnumeratorLike_reset = /*@__PURE__*/ symbol("MutableEnumeratorLike_reset");
 
 /** @type {unique symbol} */
-export const __MutableKeyedCollectionLike_set = /*@__PURE__*/ symbol(
-  "MutableKeyedCollectionLike_set",
-);
+export const __MutableKeyedCollectionLike_set = /*@__PURE__*/ symbol("MutableKeyedCollectionLike_set");
 
 /** @type {unique symbol} */
 export const __QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
@@ -280,22 +178,16 @@ export const __QueueLike_head = /*@__PURE__*/ symbol("QueueLike_head");
 export const __QueueLike_dequeue = /*@__PURE__*/ symbol("QueueLike_dequeue");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationLike_runContinuation =
-  /*@__PURE__*/ symbol("SchedulerImplementationLike_runContinuation");
+export const __SchedulerImplementationLike_runContinuation = /*@__PURE__*/ symbol("SchedulerImplementationLike_runContinuation");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationLike_scheduleContinuation =
-  /*@__PURE__*/ symbol("SchedulerImplementationLike_scheduleContinuation");
+export const __SchedulerImplementationLike_scheduleContinuation = /*@__PURE__*/ symbol("SchedulerImplementationLike_scheduleContinuation");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationLike_shouldYield = /*@__PURE__*/ symbol(
-  "SchedulerImplementationLike_shouldYield",
-);
+export const __SchedulerImplementationLike_shouldYield = /*@__PURE__*/ symbol("SchedulerImplementationLike_shouldYield");
 
 /** @type {unique symbol} */
-export const __SerialDisposableLike_current = /*@__PURE__*/ symbol(
-  "SerialDisposableLike_current",
-);
+export const __SerialDisposableLike_current = /*@__PURE__*/ symbol("SerialDisposableLike_current");
 
 /** @type {unique symbol} */
 export const __StackLike_pop = /*@__PURE__*/ symbol("StackLike_pop");
@@ -304,362 +196,232 @@ export const __StackLike_pop = /*@__PURE__*/ symbol("StackLike_pop");
 export const __StackLike_head = /*@__PURE__*/ symbol("StackLike_head");
 
 /** @type {unique symbol} */
-export const __DelegatingDispatcherMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingDispatcherMixin_delegate",
-);
+export const __DelegatingDispatcherMixin_delegate = /*@__PURE__*/ symbol("DelegatingDispatcherMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DelegatingDisposableMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingDisposableMixin_delegate",
-);
+export const __DelegatingDisposableMixin_delegate = /*@__PURE__*/ symbol("DelegatingDisposableMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DelegatingReplayObservableMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingReplayObservableMixin_delegate",
-);
+export const __DelegatingReplayObservableMixin_delegate = /*@__PURE__*/ symbol("DelegatingReplayObservableMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DelegatingPauseableMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingPauseableMixin_delegate",
-);
+export const __DelegatingPauseableMixin_delegate = /*@__PURE__*/ symbol("DelegatingPauseableMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DelegatingQueueableMixin_delegate = /*@__PURE__*/ symbol(
-  "DelegatingQueueableMixin_delegate",
-);
+export const __DelegatingQueueableMixin_delegate = /*@__PURE__*/ symbol("DelegatingQueueableMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DelegatingSchedulerImplementationMixin_delegate =
-  /*@__PURE__*/ symbol("DelegatingSchedulerImplementationMixin_delegate");
+export const __DelegatingSchedulerImplementationMixin_delegate = /*@__PURE__*/ symbol("DelegatingSchedulerImplementationMixin_delegate");
 
 /** @type {unique symbol} */
-export const __DisposableMixin_disposables = /*@__PURE__*/ symbol(
-  "DisposableMixin_disposables",
-);
+export const __DisposableMixin_disposables = /*@__PURE__*/ symbol("DisposableMixin_disposables");
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedLike_equality = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedLike_equality",
-);
+export const __DistinctUntilChangedLike_equality = /*@__PURE__*/ symbol("DistinctUntilChangedLike_equality");
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedLike_prev = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedLike_prev",
-);
+export const __DistinctUntilChangedLike_prev = /*@__PURE__*/ symbol("DistinctUntilChangedLike_prev");
 
 /** @type {unique symbol} */
-export const __DistinctUntilChangedLike_hasValue = /*@__PURE__*/ symbol(
-  "DistinctUntilChangedLike_hasValue",
-);
+export const __DistinctUntilChangedLike_hasValue = /*@__PURE__*/ symbol("DistinctUntilChangedLike_hasValue");
 
 /** @type {unique symbol} */
-export const __IndexedQueueMixin_head = /*@__PURE__*/ symbol(
-  "IndexedQueueMixin_head",
-);
+export const __IndexedQueueMixin_head = /*@__PURE__*/ symbol("IndexedQueueMixin_head");
 
 /** @type {unique symbol} */
-export const __IndexedQueueMixin_tail = /*@__PURE__*/ symbol(
-  "IndexedQueueMixin_tail",
-);
+export const __IndexedQueueMixin_tail = /*@__PURE__*/ symbol("IndexedQueueMixin_tail");
 
 /** @type {unique symbol} */
-export const __IndexedQueueMixin_capacityMask = /*@__PURE__*/ symbol(
-  "IndexedQueueMixin_capacityMask",
-);
+export const __IndexedQueueMixin_capacityMask = /*@__PURE__*/ symbol("IndexedQueueMixin_capacityMask");
 
 /** @type {unique symbol} */
-export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol(
-  "IndexedQueueMixin_values",
-);
+export const __IndexedQueueMixin_values = /*@__PURE__*/ symbol("IndexedQueueMixin_values");
 
 /** @type {unique symbol} */
-export const __LazyInitEventMixin_eventPublisher = /*@__PURE__*/ symbol(
-  "LazyInitEventMixin_eventPublisher",
-);
+export const __LazyInitEventMixin_eventPublisher = /*@__PURE__*/ symbol("LazyInitEventMixin_eventPublisher");
 
 /** @type {unique symbol} */
-export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol(
-  "ObserverMixin_dispatchSubscription",
-);
+export const __ObserverMixin_dispatchSubscription = /*@__PURE__*/ symbol("ObserverMixin_dispatchSubscription");
 
 /** @type {unique symbol} */
-export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol(
-  "ObserverMixin_isCompleted",
-);
+export const __ObserverMixin_isCompleted = /*@__PURE__*/ symbol("ObserverMixin_isCompleted");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationMixin_currentContinuation =
-  /*@__PURE__*/ symbol("SchedulerImplementationMixin_currentContinuation");
+export const __SchedulerImplementationMixin_currentContinuation = /*@__PURE__*/ symbol("SchedulerImplementationMixin_currentContinuation");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationMixin_startTime = /*@__PURE__*/ symbol(
-  "SchedulerImplementationMixin_startTime",
-);
+export const __SchedulerImplementationMixin_startTime = /*@__PURE__*/ symbol("SchedulerImplementationMixin_startTime");
 
 /** @type {unique symbol} */
-export const __SchedulerImplementationMixin_yieldRequested =
-  /*@__PURE__*/ symbol("SchedulerImplementationMixin_yieldRequested");
+export const __SchedulerImplementationMixin_yieldRequested = /*@__PURE__*/ symbol("SchedulerImplementationMixin_yieldRequested");
 
 /** @type {unique symbol} */
-export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol(
-  "SerialDisposableMixin_current",
-);
+export const __SerialDisposableMixin_current = /*@__PURE__*/ symbol("SerialDisposableMixin_current");
 
 /** @type {unique symbol} */
-export const __BufferingLike_buffer = /*@__PURE__*/ symbol(
-  "BufferingLike_buffer",
-);
+export const __BufferingLike_buffer = /*@__PURE__*/ symbol("BufferingLike_buffer");
 
 /** @type {unique symbol} */
-export const __BufferingLike_count = /*@__PURE__*/ symbol(
-  "BufferingLike_count",
-);
+export const __BufferingLike_count = /*@__PURE__*/ symbol("BufferingLike_count");
 
 /** @type {unique symbol} */
 export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
 
 /** @type {unique symbol} */
-export const __LiftedLike_operators = /*@__PURE__*/ symbol(
-  "LiftedLike_operators",
-);
+export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
 
 /** @type {unique symbol} */
 export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 
 /** @type {unique symbol} */
-export const __MappingLike_selector = /*@__PURE__*/ symbol(
-  "MappingLike_selector",
-);
+export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 
 /** @type {unique symbol} */
 export const __PairwiseLike_prev = /*@__PURE__*/ symbol("PairwiseLike_prev");
 
 /** @type {unique symbol} */
-export const __PairwiseLike_hasPrev = /*@__PURE__*/ symbol(
-  "PairwiseLike_hasPrev",
-);
+export const __PairwiseLike_hasPrev = /*@__PURE__*/ symbol("PairwiseLike_hasPrev");
 
 /** @type {unique symbol} */
-export const __PredicatedLike_predicate = /*@__PURE__*/ symbol(
-  "PredicatedLike_predicate",
-);
+export const __PredicatedLike_predicate = /*@__PURE__*/ symbol("PredicatedLike_predicate");
 
 /** @type {unique symbol} */
-export const __ReducerAccumulatorLike_acc = /*@__PURE__*/ symbol(
-  "ReducerAccumulatorLike_acc",
-);
+export const __ReducerAccumulatorLike_acc = /*@__PURE__*/ symbol("ReducerAccumulatorLike_acc");
 
 /** @type {unique symbol} */
-export const __ReducerAccumulatorLike_reducer = /*@__PURE__*/ symbol(
-  "ReducerAccumulatorLike_reducer",
-);
+export const __ReducerAccumulatorLike_reducer = /*@__PURE__*/ symbol("ReducerAccumulatorLike_reducer");
 
 /** @type {unique symbol} */
-export const __SchedulerTaskLike_continuation = /*@__PURE__*/ symbol(
-  "SchedulerTaskLike_continuation",
-);
+export const __SchedulerTaskLike_continuation = /*@__PURE__*/ symbol("SchedulerTaskLike_continuation");
 
 /** @type {unique symbol} */
-export const __SchedulerTaskLike_dueTime = /*@__PURE__*/ symbol(
-  "SchedulerTaskLike_dueTime",
-);
+export const __SchedulerTaskLike_dueTime = /*@__PURE__*/ symbol("SchedulerTaskLike_dueTime");
 
 /** @type {unique symbol} */
-export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol(
-  "SchedulerTaskLike_id",
-);
+export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol("SchedulerTaskLike_id");
 
 /** @type {unique symbol} */
-export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol(
-  "SkipFirstLike_skipCount",
-);
+export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol("SkipFirstLike_skipCount");
 
 /** @type {unique symbol} */
-export const __SkipFirstLike_count = /*@__PURE__*/ symbol(
-  "SkipFirstLike_count",
-);
+export const __SkipFirstLike_count = /*@__PURE__*/ symbol("SkipFirstLike_count");
 
 /** @type {unique symbol} */
-export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol(
-  "TakeFirstLike_takeCount",
-);
+export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol("TakeFirstLike_takeCount");
 
 /** @type {unique symbol} */
-export const __TakeFirstLike_count = /*@__PURE__*/ symbol(
-  "TakeFirstLike_count",
-);
+export const __TakeFirstLike_count = /*@__PURE__*/ symbol("TakeFirstLike_count");
 
 /** @type {unique symbol} */
-export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol(
-  "TakeWhileLike_inclusive",
-);
+export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol("TakeWhileLike_inclusive");
 
 /** @type {unique symbol} */
-export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol(
-  "WithLatestLike_hasLatest",
-);
+export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol("WithLatestLike_hasLatest");
 
 /** @type {unique symbol} */
-export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol(
-  "WithLatestLike_otherLatest",
-);
+export const __WithLatestLike_otherLatest = /*@__PURE__*/ symbol("WithLatestLike_otherLatest");
 
 /** @type {unique symbol} */
-export const __WithLatestLike_selector = /*@__PURE__*/ symbol(
-  "WithLatestLike_selector",
-);
+export const __WithLatestLike_selector = /*@__PURE__*/ symbol("WithLatestLike_selector");
 
 /** @type {unique symbol} */
-export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol(
-  "AwaitOrObserveEffect_observable",
-);
+export const __ZipLike_enumerators = /*@__PURE__*/ symbol("ZipLike_enumerators");
 
 /** @type {unique symbol} */
-export const __AwaitOrObserveEffect_subscription = /*@__PURE__*/ symbol(
-  "AwaitOrObserveEffect_subscription",
-);
+export const __AwaitOrObserveEffect_observable = /*@__PURE__*/ symbol("AwaitOrObserveEffect_observable");
 
 /** @type {unique symbol} */
-export const __AwaitOrObserveEffect_value = /*@__PURE__*/ symbol(
-  "AwaitOrObserveEffect_value",
-);
+export const __AwaitOrObserveEffect_subscription = /*@__PURE__*/ symbol("AwaitOrObserveEffect_subscription");
 
 /** @type {unique symbol} */
-export const __AwaitOrObserveEffect_hasValue = /*@__PURE__*/ symbol(
-  "AwaitOrObserveEffect_hasValue",
-);
+export const __AwaitOrObserveEffect_value = /*@__PURE__*/ symbol("AwaitOrObserveEffect_value");
 
 /** @type {unique symbol} */
-export const __BufferObserver_durationFunction = /*@__PURE__*/ symbol(
-  "BufferObserver_durationFunction",
-);
+export const __AwaitOrObserveEffect_hasValue = /*@__PURE__*/ symbol("AwaitOrObserveEffect_hasValue");
 
 /** @type {unique symbol} */
-export const __BufferObserver_durationSubscription = /*@__PURE__*/ symbol(
-  "BufferObserver_durationSubscription",
-);
+export const __BufferObserver_durationFunction = /*@__PURE__*/ symbol("BufferObserver_durationFunction");
 
 /** @type {unique symbol} */
-export const __ComputeContext_index = /*@__PURE__*/ symbol(
-  "ComputeContext_index",
-);
+export const __BufferObserver_durationSubscription = /*@__PURE__*/ symbol("BufferObserver_durationSubscription");
 
 /** @type {unique symbol} */
-export const __ComputeContext_cleanup = /*@__PURE__*/ symbol(
-  "ComputeContext_cleanup",
-);
+export const __ComputeContext_index = /*@__PURE__*/ symbol("ComputeContext_index");
 
 /** @type {unique symbol} */
-export const __ComputeContext_observableConfig = /*@__PURE__*/ symbol(
-  "ComputeContext_observableConfig",
-);
+export const __ComputeContext_cleanup = /*@__PURE__*/ symbol("ComputeContext_cleanup");
 
 /** @type {unique symbol} */
-export const __ComputeContext_effects = /*@__PURE__*/ symbol(
-  "ComputeContext_effects",
-);
+export const __ComputeContext_observableConfig = /*@__PURE__*/ symbol("ComputeContext_observableConfig");
 
 /** @type {unique symbol} */
-export const __ComputeContext_mode = /*@__PURE__*/ symbol(
-  "ComputeContext_mode",
-);
+export const __ComputeContext_effects = /*@__PURE__*/ symbol("ComputeContext_effects");
 
 /** @type {unique symbol} */
-export const __ComputeContext_observer = /*@__PURE__*/ symbol(
-  "ComputeContext_observer",
-);
+export const __ComputeContext_mode = /*@__PURE__*/ symbol("ComputeContext_mode");
 
 /** @type {unique symbol} */
-export const __ComputeContext_runComputation = /*@__PURE__*/ symbol(
-  "ComputeContext_runComputation",
-);
+export const __ComputeContext_observer = /*@__PURE__*/ symbol("ComputeContext_observer");
 
 /** @type {unique symbol} */
-export const __ComputeContext_scheduledComputationSubscription =
-  /*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
+export const __ComputeContext_runComputation = /*@__PURE__*/ symbol("ComputeContext_runComputation");
 
 /** @type {unique symbol} */
-export const __ComputeContext_awaitOrObserve = /*@__PURE__*/ symbol(
-  "ComputeContext_awaitOrObserve",
-);
+export const __ComputeContext_scheduledComputationSubscription = /*@__PURE__*/ symbol("ComputeContext_scheduledComputationSubscription");
 
 /** @type {unique symbol} */
-export const __ComputeContext_constant = /*@__PURE__*/ symbol(
-  "ComputeContext_constant",
-);
+export const __ComputeContext_awaitOrObserve = /*@__PURE__*/ symbol("ComputeContext_awaitOrObserve");
 
 /** @type {unique symbol} */
-export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol(
-  "ComputeContext_memoOrUse",
-);
+export const __ComputeContext_constant = /*@__PURE__*/ symbol("ComputeContext_constant");
+
+/** @type {unique symbol} */
+export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol("ComputeContext_memoOrUse");
 
 /** @type {unique symbol} */
 export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
 
 /** @type {unique symbol} */
-export const __ConstantEffect_args = /*@__PURE__*/ symbol(
-  "ConstantEffect_args",
-);
+export const __ConcatEnumerator_inner = /*@__PURE__*/ symbol("ConcatEnumerator_inner");
 
 /** @type {unique symbol} */
-export const __ConstantEffect_value = /*@__PURE__*/ symbol(
-  "ConstantEffect_value",
-);
+export const __ConstantEffect_args = /*@__PURE__*/ symbol("ConstantEffect_args");
 
 /** @type {unique symbol} */
-export const __Continuation_effect = /*@__PURE__*/ symbol(
-  "Continuation_effect",
-);
+export const __ConstantEffect_value = /*@__PURE__*/ symbol("ConstantEffect_value");
 
 /** @type {unique symbol} */
-export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol(
-  "CreateEventSource_createDelegate",
-);
+export const __Continuation_effect = /*@__PURE__*/ symbol("Continuation_effect");
 
 /** @type {unique symbol} */
-export const __CreateObservable_effect = /*@__PURE__*/ symbol(
-  "CreateObservable_effect",
-);
+export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol("CreateEventSource_createDelegate");
 
 /** @type {unique symbol} */
-export const __DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol(
-  "DecodeWithCharsetObserver_textDecoder",
-);
+export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 
 /** @type {unique symbol} */
-export const __DispatchedObservable_observer = /*@__PURE__*/ symbol(
-  "DispatchedObservable_observer",
-);
+export const __DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetObserver_textDecoder");
 
 /** @type {unique symbol} */
-export const __EnqueueObserver_queue = /*@__PURE__*/ symbol(
-  "EnqueueObserver_queue",
-);
+export const __DispatchedObservable_observer = /*@__PURE__*/ symbol("DispatchedObservable_observer");
 
 /** @type {unique symbol} */
-export const __Enumerator_private_current = /*@__PURE__*/ symbol(
-  "Enumerator_private_current",
-);
+export const __EnqueueObserver_queue = /*@__PURE__*/ symbol("EnqueueObserver_queue");
 
 /** @type {unique symbol} */
-export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol(
-  "EnumerableEnumerator_continuationQueue",
-);
+export const __Enumerator_private_current = /*@__PURE__*/ symbol("Enumerator_private_current");
 
 /** @type {unique symbol} */
-export const __EventPublisher_listeners = /*@__PURE__*/ symbol(
-  "EventPublisher_listeners",
-);
+export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol("EnumerableEnumerator_continuationQueue");
 
 /** @type {unique symbol} */
-export const __HigherOrderObservable_currentRef = /*@__PURE__*/ symbol(
-  "HigherOrderObservable_currentRef",
-);
+export const __EventPublisher_listeners = /*@__PURE__*/ symbol("EventPublisher_listeners");
 
 /** @type {unique symbol} */
-export const __IteratorEnumerator_iterator = /*@__PURE__*/ symbol(
-  "IteratorEnumerator_iterator",
-);
+export const __HigherOrderObservable_currentRef = /*@__PURE__*/ symbol("HigherOrderObservable_currentRef");
+
+/** @type {unique symbol} */
+export const __IteratorEnumerator_iterator = /*@__PURE__*/ symbol("IteratorEnumerator_iterator");
 
 /** @type {unique symbol} */
 export const __LatestCtx_delegate = /*@__PURE__*/ symbol("LatestCtx_delegate");
@@ -668,67 +430,43 @@ export const __LatestCtx_delegate = /*@__PURE__*/ symbol("LatestCtx_delegate");
 export const __LatestCtx_mode = /*@__PURE__*/ symbol("LatestCtx_mode");
 
 /** @type {unique symbol} */
-export const __LatestCtx_completedCount = /*@__PURE__*/ symbol(
-  "LatestCtx_completedCount",
-);
+export const __LatestCtx_completedCount = /*@__PURE__*/ symbol("LatestCtx_completedCount");
 
 /** @type {unique symbol} */
-export const __LatestCtx_observers = /*@__PURE__*/ symbol(
-  "LatestCtx_observers",
-);
+export const __LatestCtx_observers = /*@__PURE__*/ symbol("LatestCtx_observers");
 
 /** @type {unique symbol} */
-export const __LatestObserver_ready = /*@__PURE__*/ symbol(
-  "LatestObserver_ready",
-);
+export const __LatestObserver_ready = /*@__PURE__*/ symbol("LatestObserver_ready");
 
 /** @type {unique symbol} */
-export const __LatestObserver_latest = /*@__PURE__*/ symbol(
-  "LatestObserver_latest",
-);
+export const __LatestObserver_latest = /*@__PURE__*/ symbol("LatestObserver_latest");
 
 /** @type {unique symbol} */
 export const __LatestObserver_ctx = /*@__PURE__*/ symbol("LatestObserver_ctx");
 
 /** @type {unique symbol} */
-export const __MemoOrUsingEffect_func = /*@__PURE__*/ symbol(
-  "MemoOrUsingEffect_func",
-);
+export const __MemoOrUsingEffect_func = /*@__PURE__*/ symbol("MemoOrUsingEffect_func");
 
 /** @type {unique symbol} */
-export const __MemoOrUsingEffect_args = /*@__PURE__*/ symbol(
-  "MemoOrUsingEffect_args",
-);
+export const __MemoOrUsingEffect_args = /*@__PURE__*/ symbol("MemoOrUsingEffect_args");
 
 /** @type {unique symbol} */
-export const __MemoOrUsingEffect_value = /*@__PURE__*/ symbol(
-  "MemoOrUsingEffect_value",
-);
+export const __MemoOrUsingEffect_value = /*@__PURE__*/ symbol("MemoOrUsingEffect_value");
 
 /** @type {unique symbol} */
-export const __MergeAllObserver_activeCount = /*@__PURE__*/ symbol(
-  "MergeAllObserver_activeCount",
-);
+export const __MergeAllObserver_activeCount = /*@__PURE__*/ symbol("MergeAllObserver_activeCount");
 
 /** @type {unique symbol} */
-export const __MergeAllObserver_concurrency = /*@__PURE__*/ symbol(
-  "MergeAllObserver_concurrency",
-);
+export const __MergeAllObserver_concurrency = /*@__PURE__*/ symbol("MergeAllObserver_concurrency");
 
 /** @type {unique symbol} */
-export const __MergeAllObserver_onDispose = /*@__PURE__*/ symbol(
-  "MergeAllObserver_onDispose",
-);
+export const __MergeAllObserver_onDispose = /*@__PURE__*/ symbol("MergeAllObserver_onDispose");
 
 /** @type {unique symbol} */
-export const __MergeAllObserver_observablesQueue = /*@__PURE__*/ symbol(
-  "MergeAllObserver_observablesQueue",
-);
+export const __MergeAllObserver_observablesQueue = /*@__PURE__*/ symbol("MergeAllObserver_observablesQueue");
 
 /** @type {unique symbol} */
-export const __MergeObserverCtx_completedCount = /*@__PURE__*/ symbol(
-  "MergeObserverCtx_completedCount",
-);
+export const __MergeObserverCtx_completedCount = /*@__PURE__*/ symbol("MergeObserverCtx_completedCount");
 
 /** @type {unique symbol} */
 export const __Object_init = /*@__PURE__*/ symbol("Object_init");
@@ -740,159 +478,94 @@ export const __Object_properties = /*@__PURE__*/ symbol("Object_properties");
 export const __Object_prototype = /*@__PURE__*/ symbol("Object_prototype");
 
 /** @type {unique symbol} */
-export const __Object_private_initializedProperties = /*@__PURE__*/ symbol(
-  "Object_private_initializedProperties",
-);
+export const __Object_private_initializedProperties = /*@__PURE__*/ symbol("Object_private_initializedProperties");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_delayed = /*@__PURE__*/ symbol(
-  "PauseableScheduler_delayed ",
-);
+export const __PauseableScheduler_delayed  = /*@__PURE__*/ symbol("PauseableScheduler_delayed ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_dueTime = /*@__PURE__*/ symbol(
-  "PauseableScheduler_dueTime ",
-);
+export const __PauseableScheduler_dueTime  = /*@__PURE__*/ symbol("PauseableScheduler_dueTime ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_hostContinuation = /*@__PURE__*/ symbol(
-  "PauseableScheduler_hostContinuation ",
-);
+export const __PauseableScheduler_hostContinuation  = /*@__PURE__*/ symbol("PauseableScheduler_hostContinuation ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_hostScheduler = /*@__PURE__*/ symbol(
-  "PauseableScheduler_hostScheduler",
-);
+export const __PauseableScheduler_hostScheduler = /*@__PURE__*/ symbol("PauseableScheduler_hostScheduler");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_queue = /*@__PURE__*/ symbol(
-  "PauseableScheduler_queue ",
-);
+export const __PauseableScheduler_queue  = /*@__PURE__*/ symbol("PauseableScheduler_queue ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_initialTime = /*@__PURE__*/ symbol(
-  "PauseableScheduler_initialTime ",
-);
+export const __PauseableScheduler_initialTime  = /*@__PURE__*/ symbol("PauseableScheduler_initialTime ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_resumedTime = /*@__PURE__*/ symbol(
-  "PauseableScheduler_resumedTime ",
-);
+export const __PauseableScheduler_resumedTime  = /*@__PURE__*/ symbol("PauseableScheduler_resumedTime ");
 
 /** @type {unique symbol} */
-export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol(
-  "PauseableScheduler_taskIDCounter ",
-);
+export const __PauseableScheduler_taskIDCounter  = /*@__PURE__*/ symbol("PauseableScheduler_taskIDCounter ");
 
 /** @type {unique symbol} */
-export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol(
-  "PriorityQueueImpl_comparator ",
-);
+export const __PriorityQueueImpl_comparator  = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");
 
 /** @type {unique symbol} */
-export const __Publisher_observers = /*@__PURE__*/ symbol(
-  "Publisher_observers",
-);
+export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
 
 /** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol(
-  "ReadonlyArrayEnumerator_values",
-);
+export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_values");
 
 /** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol(
-  "ReadonlyArrayEnumerator_index",
-);
+export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_index");
 
 /** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol(
-  "ReadonlyArrayEnumerator_count",
-);
+export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_count");
 
 /** @type {unique symbol} */
-export const __TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol(
-  "TakeLastObserver_takeLastQueue",
-);
+export const __TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol("TakeLastObserver_takeLastQueue");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_value = /*@__PURE__*/ symbol(
-  "ThrottleObserver_value",
-);
+export const __ThrottleObserver_value = /*@__PURE__*/ symbol("ThrottleObserver_value");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_hasValue = /*@__PURE__*/ symbol(
-  "ThrottleObserver_hasValue",
-);
+export const __ThrottleObserver_hasValue = /*@__PURE__*/ symbol("ThrottleObserver_hasValue");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_durationSubscription = /*@__PURE__*/ symbol(
-  "ThrottleObserver_durationSubscription",
-);
+export const __ThrottleObserver_durationSubscription = /*@__PURE__*/ symbol("ThrottleObserver_durationSubscription");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_durationFunction = /*@__PURE__*/ symbol(
-  "ThrottleObserver_durationFunction",
-);
+export const __ThrottleObserver_durationFunction = /*@__PURE__*/ symbol("ThrottleObserver_durationFunction");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_mode = /*@__PURE__*/ symbol(
-  "ThrottleObserver_mode",
-);
+export const __ThrottleObserver_mode = /*@__PURE__*/ symbol("ThrottleObserver_mode");
 
 /** @type {unique symbol} */
-export const __ThrottleObserver_onNotify = /*@__PURE__*/ symbol(
-  "ThrottleObserver_onNotify",
-);
+export const __ThrottleObserver_onNotify = /*@__PURE__*/ symbol("ThrottleObserver_onNotify");
 
 /** @type {unique symbol} */
-export const __ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol(
-  "ThrowIfEmptyObserver_isEmpty",
-);
+export const __ThrowIfEmptyObserver_isEmpty = /*@__PURE__*/ symbol("ThrowIfEmptyObserver_isEmpty");
 
 /** @type {unique symbol} */
 export const __timeoutError = /*@__PURE__*/ symbol("timeoutError");
 
 /** @type {unique symbol} */
-export const __TimeoutObserver_duration = /*@__PURE__*/ symbol(
-  "TimeoutObserver_duration",
-);
+export const __TimeoutObserver_duration = /*@__PURE__*/ symbol("TimeoutObserver_duration");
 
 /** @type {unique symbol} */
-export const __VirtualTimeScheduler_maxMicroTaskTicks = /*@__PURE__*/ symbol(
-  "VirtualTimeScheduler_maxMicroTaskTicks",
-);
+export const __VirtualTimeScheduler_maxMicroTaskTicks = /*@__PURE__*/ symbol("VirtualTimeScheduler_maxMicroTaskTicks");
 
 /** @type {unique symbol} */
-export const __VirtualTimeScheduler_microTaskTicks = /*@__PURE__*/ symbol(
-  "VirtualTimeScheduler_microTaskTicks",
-);
+export const __VirtualTimeScheduler_microTaskTicks = /*@__PURE__*/ symbol("VirtualTimeScheduler_microTaskTicks");
 
 /** @type {unique symbol} */
-export const __VirtualTimeScheduler_taskIDCount = /*@__PURE__*/ symbol(
-  "VirtualTimeScheduler_taskIDCount",
-);
+export const __VirtualTimeScheduler_taskIDCount = /*@__PURE__*/ symbol("VirtualTimeScheduler_taskIDCount");
 
 /** @type {unique symbol} */
-export const __WindowLocationStream_historyCounter = /*@__PURE__*/ symbol(
-  "WindowLocationStream_historyCounter",
-);
+export const __WindowLocationStream_historyCounter = /*@__PURE__*/ symbol("WindowLocationStream_historyCounter");
 
 /** @type {unique symbol} */
-export const __WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol(
-  "WithCurrentTimeObserver_selector",
-);
+export const __WithCurrentTimeObserver_selector = /*@__PURE__*/ symbol("WithCurrentTimeObserver_selector");
 
 /** @type {unique symbol} */
-export const __ZipObserver_enumerators = /*@__PURE__*/ symbol(
-  "ZipObserver_enumerators",
-);
+export const __ZipObserver_queuedEnumerator = /*@__PURE__*/ symbol("ZipObserver_queuedEnumerator");
 
 /** @type {unique symbol} */
-export const __ZipObserver_queuedEnumerator = /*@__PURE__*/ symbol(
-  "ZipObserver_queuedEnumerator",
-);
-
-/** @type {unique symbol} */
-export const __ZipWithLatestFromObserver_TAQueue = /*@__PURE__*/ symbol(
-  "ZipWithLatestFromObserver_TAQueue",
-);
+export const __ZipWithLatestFromObserver_TAQueue = /*@__PURE__*/ symbol("ZipWithLatestFromObserver_TAQueue");
