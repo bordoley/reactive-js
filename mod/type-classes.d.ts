@@ -271,6 +271,7 @@ export interface RunnableContainerTypeClass<C extends Container> extends Concret
 export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C, CEnumerator>, ConcreteContainerBaseTypeClass<C> {
 }
 export interface HigherOrderObservableBaseTypeClass<C extends ObservableContainer, CInner extends DeferredObservableContainer> {
+    catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
     /**
      * Converts a higher-order Container into a first-order
      * Container by concatenating the inner sources in order.

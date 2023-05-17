@@ -27,6 +27,7 @@
 
 ### Other Functions
 
+- [catchError](DeferredObservable.md#catcherror)
 - [compute](DeferredObservable.md#compute)
 - [multicast](DeferredObservable.md#multicast)
 - [repeat](DeferredObservable.md#repeat)
@@ -253,6 +254,28 @@ ___
 ___
 
 ## Other Functions
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](functions.md#function2)<`Error`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/types.DeferredObservableContainer.md), `T`, `T`\>
+
+___
 
 ### compute
 

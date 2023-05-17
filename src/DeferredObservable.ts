@@ -84,7 +84,8 @@ export interface DeferredObservableModule
 
 export type Signature = DeferredObservableModule;
 
-export const catchError: Signature["catchError"] = DeferredObservable_catchError;
+export const catchError: Signature["catchError"] =
+  DeferredObservable_catchError;
 export const compute: Signature["compute"] = DeferredObservable_compute;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
 export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;

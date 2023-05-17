@@ -62,6 +62,7 @@ export interface ObservableModule {
     buffer<T>(options?: {
         count?: number;
     }): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
+    catchError<T>(onError: SideEffect1<Error>): EnumerableUpperBoundObservableOperator<T, T>;
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
@@ -330,6 +331,7 @@ export type Signature = ObservableModule;
 export declare const animate: Signature["animate"];
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const buffer: Signature["buffer"];
+export declare const catchError: Signature["catchError"];
 export declare const concat: Signature["concat"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];

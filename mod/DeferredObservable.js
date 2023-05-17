@@ -1,5 +1,6 @@
 /// <reference types="./DeferredObservable.d.ts" />
 
+import DeferredObservable_catchError from "./DeferredObservable/__internal__/DeferredObservable.catchError.js";
 import DeferredObservable_concatAll from "./DeferredObservable/__internal__/DeferredObservable.concatAll.js";
 import DeferredObservable_concatMap from "./DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import DeferredObservable_exhaust from "./DeferredObservable/__internal__/DeferredObservable.exhaust.js";
@@ -13,6 +14,7 @@ import DeferredObservable_share from "./DeferredObservable/__internal__/Deferred
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
+export const catchError = DeferredObservable_catchError;
 export const compute = DeferredObservable_compute;
 export const concatAll = DeferredObservable_concatAll;
 export const concatMap = DeferredObservable_concatMap;

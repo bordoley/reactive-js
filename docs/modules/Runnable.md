@@ -53,6 +53,7 @@
 ### Other Functions
 
 - [buffer](Runnable.md#buffer)
+- [catchError](Runnable.md#catcherror)
 - [compute](Runnable.md#compute)
 - [flow](Runnable.md#flow)
 - [fromEnumeratorFactory](Runnable.md#fromenumeratorfactory)
@@ -1258,6 +1259,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](functions.md#function2)<`Error`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
 
 ___
 

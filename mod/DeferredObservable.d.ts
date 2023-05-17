@@ -23,6 +23,7 @@ export interface DeferredObservableModule extends HigherOrderObservableBaseTypeC
     }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = DeferredObservableModule;
+export declare const catchError: Signature["catchError"];
 export declare const compute: Signature["compute"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

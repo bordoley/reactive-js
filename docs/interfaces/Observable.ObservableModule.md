@@ -15,6 +15,7 @@
 - [animate](Observable.ObservableModule.md#animate)
 - [backpressureStrategy](Observable.ObservableModule.md#backpressurestrategy)
 - [buffer](Observable.ObservableModule.md#buffer)
+- [catchError](Observable.ObservableModule.md#catcherror)
 - [concat](Observable.ObservableModule.md#concat)
 - [concatMany](Observable.ObservableModule.md#concatmany)
 - [concatWith](Observable.ObservableModule.md#concatwith)
@@ -170,6 +171,28 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`Error`\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
