@@ -12,6 +12,7 @@ import {
   Container,
   ContainerOperator,
   DisposableLike,
+  EnumeratorLike,
   IndexedCollectionLike,
   KeyedCollectionLike,
   ObserverLike,
@@ -56,6 +57,7 @@ import {
   __WithLatestLike_hasLatest as WithLatestLike_hasLatest,
   __WithLatestLike_otherLatest as WithLatestLike_otherLatest,
   __WithLatestLike_selector as WithLatestLike_selector,
+  __ZipLike_enumerators as ZipLike_enumerators,
 } from "./symbols.js";
 
 export {
@@ -96,6 +98,7 @@ export {
   WithLatestLike_hasLatest,
   WithLatestLike_otherLatest,
   WithLatestLike_selector,
+  ZipLike_enumerators,
 };
 
 export interface DelegatingLike<T> {
@@ -225,4 +228,8 @@ export interface WithLatestLike<TA, TB, T> {
   [WithLatestLike_hasLatest]: boolean;
   [WithLatestLike_otherLatest]: Optional<TB>;
   [WithLatestLike_selector]: Function2<TA, TB, T>;
+}
+
+export interface ZipLike {
+  [ZipLike_enumerators]: readonly EnumeratorLike<unknown>[];
 }
