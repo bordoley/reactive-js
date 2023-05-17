@@ -36,7 +36,7 @@ const RunnableContainerTypeClassTests = <C extends Container>(
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
           m.fromReadonlyArray(),
-          m.buffer(3),
+          m.buffer({ count: 3 }),
           m.toReadonlyArray(),
           expectArrayEquals<readonly number[]>(
             [
@@ -54,7 +54,7 @@ const RunnableContainerTypeClassTests = <C extends Container>(
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8],
           m.fromReadonlyArray(),
-          m.buffer(3),
+          m.buffer({ count: 3 }),
           m.toReadonlyArray(),
           expectArrayEquals<readonly number[]>(
             [

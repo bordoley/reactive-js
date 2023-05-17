@@ -1,5 +1,6 @@
 import type * as EventSource from "../../EventSource.js";
 import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
@@ -54,10 +55,12 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
         ),
       ))();
 
-    return (count: number) =>
+    return (options?: { count?: number }) =>
       pipe(
         createBufferEventListener,
-        partial(clampPositiveNonZeroInteger(count)),
+        partial(
+          clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
+        ),
         EventSource_lift,
       );
   })();

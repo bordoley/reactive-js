@@ -1,8 +1,9 @@
 /// <reference types="./ReadonlyArray.buffer.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
-const ReadonlyArray_buffer = (count) => {
-    count = clampPositiveNonZeroInteger(count);
+const ReadonlyArray_buffer = (options) => {
+    const count = clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER);
     return (array) => {
         const result = [];
         const length = array.length;

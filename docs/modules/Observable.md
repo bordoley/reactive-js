@@ -316,7 +316,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -328,7 +328,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 

@@ -1330,7 +1330,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -1342,7 +1342,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `count` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
 
 #### Returns
 

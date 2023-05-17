@@ -2,11 +2,11 @@
 
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowError, expectTrue, test, } from "../../__internal__/testing.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
-const RunnableContainerTypeClassTests = (m) => describe("RunnableContainerTypeClass", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer(3), m.toReadonlyArray(), expectArrayEquals([
+const RunnableContainerTypeClassTests = (m) => describe("RunnableContainerTypeClass", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
-], arrayEquality()))), test("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer(3), m.toReadonlyArray(), expectArrayEquals([
+], arrayEquality()))), test("last buffer is short", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],

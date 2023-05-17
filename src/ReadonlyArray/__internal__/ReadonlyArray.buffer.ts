@@ -1,10 +1,11 @@
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
-const ReadonlyArray_buffer: ReadonlyArray.Signature["buffer"] = <T>(
-  count: number,
-) => {
-  count = clampPositiveNonZeroInteger(count);
+const ReadonlyArray_buffer: ReadonlyArray.Signature["buffer"] = <T>(options?: {
+  count?: number;
+}) => {
+  const count = clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER);
 
   return (array: ReadonlyArray<T>) => {
     const result: T[][] = [];
