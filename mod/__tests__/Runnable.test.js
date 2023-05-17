@@ -4,9 +4,9 @@ import * as Observable from "../Observable.js";
 import * as Runnable from "../Runnable.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
 import { identityLazy, none, pipe, pipeLazy } from "../functions.js";
-import HigherOrderObservableBaseTypeClassTests from "./fixtures/HigherOrderObservableBaseTypeClassTests.js";
+import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 import RunnableContainerTypeClassTests from "./fixtures/RunnableContainerTypeClassTests.js";
-testModule("Runnable", RunnableContainerTypeClassTests(Runnable), HigherOrderObservableBaseTypeClassTests(Runnable, identityLazy), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+testModule("Runnable", RunnableContainerTypeClassTests(Runnable), HigherOrderObservableTypeClassTests(Runnable, identityLazy), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 2 })),

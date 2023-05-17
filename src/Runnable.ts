@@ -66,7 +66,7 @@ import {
   DisposableLike,
   EnumerableLike,
   EnumeratorLike,
-  HigherOrderObservableBaseTypeClass,
+  HigherOrderObservableTypeClass,
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -87,7 +87,7 @@ export type Type = RunnableContainer;
 
 export interface RunnableModule
   extends RunnableContainerTypeClass<Type>,
-    HigherOrderObservableBaseTypeClass<Type, Type> {
+    HigherOrderObservableTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

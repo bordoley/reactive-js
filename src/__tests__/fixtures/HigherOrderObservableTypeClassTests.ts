@@ -16,16 +16,16 @@ import {
 } from "../../functions.js";
 import {
   ContainerOf,
-  HigherOrderObservableBaseTypeClass,
+  HigherOrderObservableTypeClass,
   RunnableLike,
 } from "../../types.js";
 
-const HigherOrderObservableBaseTypeClassTests = <C extends Observable.Type>(
-  m: HigherOrderObservableBaseTypeClass<C, Runnable.Type>,
+const HigherOrderObservableTypeClassTests = <C extends Observable.Type>(
+  m: HigherOrderObservableTypeClass<C, Runnable.Type>,
   fromRunnable: <T>() => Function1<RunnableLike<T>, ContainerOf<C, T>>,
 ) =>
   describe(
-    "HigherOrderObservableBaseTypeClass",
+    "HigherOrderObservableTypeClass",
 
     describe(
       "switchAll",
@@ -179,4 +179,4 @@ const HigherOrderObservableBaseTypeClassTests = <C extends Observable.Type>(
     ),
   );
 
-export default HigherOrderObservableBaseTypeClassTests;
+export default HigherOrderObservableTypeClassTests;

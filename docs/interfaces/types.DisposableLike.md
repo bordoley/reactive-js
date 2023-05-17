@@ -48,13 +48,25 @@ ___
 
 ▸ **[___DisposableLike_add]**(`disposable`): `void`
 
-Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `disposable` | [`DisposableOrTeardown`](../modules/types.md#disposableorteardown) | The disposable to add. |
+| `disposable` | [`DisposableLike`](types.DisposableLike.md) | The disposable to add. |
+
+#### Returns
+
+`void`
+
+▸ **[___DisposableLike_add]**(`teardown`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `teardown` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`Optional`](../modules/functions.md#optional)<`Error`\>\> |
 
 #### Returns
 

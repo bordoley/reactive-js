@@ -1,13 +1,18 @@
 import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import { __DelegatingDisposableMixin_delegate } from "../../__internal__/symbols.js";
-import { Optional, none, pipe, unsafeCast } from "../../functions.js";
+import {
+  Optional,
+  SideEffect1,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  DisposableOrTeardown,
 } from "../../types.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 
@@ -53,10 +58,12 @@ const Disposable_delegatingMixin: Mixin1<DisposableLike, DisposableLike> =
         },
         [DisposableLike_add](
           this: TProperties,
-          disposable: DisposableOrTeardown,
+          disposable: DisposableLike | SideEffect1<Optional<Error>>,
         ) {
-          this[__DelegatingDisposableMixin_delegate][DisposableLike_add](
-            disposable,
+          const delegate = this[__DelegatingDisposableMixin_delegate];
+          delegate[DisposableLike_add](
+            // Cast to make the typechecker happy even though its a lie.
+            disposable as DisposableLike,
           );
         },
         [DisposableLike_dispose](this: TProperties, error?: Error) {

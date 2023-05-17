@@ -1,18 +1,23 @@
 import { Mixin, Mutable, mix, props } from "../../__internal__/mixins.js";
 import { __DisposableMixin_disposables } from "../../__internal__/symbols.js";
-import { Optional, isFunction, newInstance, none } from "../../functions.js";
+import {
+  Optional,
+  SideEffect1,
+  isFunction,
+  newInstance,
+  none,
+} from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  DisposableOrTeardown,
 } from "../../types.js";
 
 const doDispose = (
   instance: DisposableLike,
-  disposable: DisposableOrTeardown,
+  disposable: DisposableLike | SideEffect1<Optional<Error>>,
 ) => {
   const error = instance[DisposableLike_error];
   if (isFunction(disposable)) {
@@ -31,7 +36,9 @@ const doDispose = (
 type TProperties = {
   [DisposableLike_error]: Optional<Error>;
   [DisposableLike_isDisposed]: boolean;
-  readonly [__DisposableMixin_disposables]: Set<DisposableOrTeardown>;
+  readonly [__DisposableMixin_disposables]: Set<
+    DisposableLike | SideEffect1<Optional<Error>>
+  >;
 };
 
 const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
@@ -43,7 +50,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
       Mutable<TProperties>,
   ): DisposableLike {
     instance[__DisposableMixin_disposables] =
-      newInstance<Set<DisposableOrTeardown>>(Set);
+      newInstance<Set<DisposableLike | SideEffect1<Optional<Error>>>>(Set);
 
     return instance;
   },
@@ -71,7 +78,7 @@ const Disposable_mixin: Mixin<DisposableLike> = /*@__PURE__*/ mix(
     },
     [DisposableLike_add](
       this: TProperties & DisposableLike,
-      disposable: DisposableOrTeardown,
+      disposable: DisposableLike | SideEffect1<Optional<Error>>,
     ) {
       const disposables = this[__DisposableMixin_disposables];
 

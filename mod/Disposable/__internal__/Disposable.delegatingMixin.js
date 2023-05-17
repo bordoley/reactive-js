@@ -2,7 +2,7 @@
 
 import { mix, props } from "../../__internal__/mixins.js";
 import { __DelegatingDisposableMixin_delegate } from "../../__internal__/symbols.js";
-import { none, pipe, unsafeCast } from "../../functions.js";
+import { none, pipe, unsafeCast, } from "../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../types.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 const Disposable_delegatingMixin = 
@@ -22,7 +22,10 @@ const Disposable_delegatingMixin =
             return this[__DelegatingDisposableMixin_delegate][DisposableLike_error];
         },
         [DisposableLike_add](disposable) {
-            this[__DelegatingDisposableMixin_delegate][DisposableLike_add](disposable);
+            const delegate = this[__DelegatingDisposableMixin_delegate];
+            delegate[DisposableLike_add](
+            // Cast to make the typechecker happy even though its a lie.
+            disposable);
         },
         [DisposableLike_dispose](error) {
             this[__DelegatingDisposableMixin_delegate][DisposableLike_dispose](error);

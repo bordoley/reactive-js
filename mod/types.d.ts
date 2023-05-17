@@ -111,8 +111,6 @@ export interface DictionaryLike<TKey = unknown, T = unknown> extends Associative
  */
 export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
 }
-/** @category Resource Management */
-export type DisposableOrTeardown = DisposableLike | SideEffect1<Optional<Error>>;
 /**
  * Represents an unmanaged resource that can be disposed.
  *
@@ -129,12 +127,13 @@ export interface DisposableLike {
      */
     readonly [DisposableLike_isDisposed]: boolean;
     /**
-     * Adds the given `DisposableOrTeardown` to this container or disposes it if the container has been disposed.
+     * Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
      *
      * @param disposable - The disposable to add.
      * @param ignoreChildErrors - Indicates that the parent should not auto dispose if the child disposed with an error.
      */
-    [DisposableLike_add](disposable: DisposableOrTeardown): void;
+    [DisposableLike_add](disposable: DisposableLike): void;
+    [DisposableLike_add](teardown: SideEffect1<Optional<Error>>): void;
     /**
      * Dispose the resource.
      *
@@ -806,7 +805,7 @@ export interface EnumerableContainerTypeClass<C extends Container, CEnumerator e
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
 /** @category TypeClass */
-export interface HigherOrderObservableBaseTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {
+export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     /** @category Operator */
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
     /**

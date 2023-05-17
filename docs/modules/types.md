@@ -77,7 +77,7 @@
 - [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
 - [EnumerableContainerTypeClass](../interfaces/types.EnumerableContainerTypeClass.md)
-- [HigherOrderObservableBaseTypeClass](../interfaces/types.HigherOrderObservableBaseTypeClass.md)
+- [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
 - [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
 
@@ -96,10 +96,6 @@
 ### Interactive Type Aliases
 
 - [StreamOf](types.md#streamof)
-
-### Resource Management Type Aliases
-
-- [DisposableOrTeardown](types.md#disposableorteardown)
 
 ### Variables
 
@@ -249,14 +245,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/types.StreamableLike.md) |
-
-___
-
-## Resource Management Type Aliases
-
-### DisposableOrTeardown
-
-Ƭ **DisposableOrTeardown**: [`DisposableLike`](../interfaces/types.DisposableLike.md) \| [`SideEffect1`](functions.md#sideeffect1)<[`Optional`](functions.md#optional)<`Error`\>\>
 
 ## Variables
 
