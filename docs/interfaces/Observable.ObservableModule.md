@@ -71,6 +71,7 @@
 - [subscribeOn](Observable.ObservableModule.md#subscribeon)
 - [takeFirst](Observable.ObservableModule.md#takefirst)
 - [takeLast](Observable.ObservableModule.md#takelast)
+- [takeUntil](Observable.ObservableModule.md#takeuntil)
 - [takeWhile](Observable.ObservableModule.md#takewhile)
 - [throttle](Observable.ObservableModule.md#throttle)
 - [throwIfEmpty](Observable.ObservableModule.md#throwifempty)
@@ -3460,6 +3461,82 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`EnumerableLike`](types.EnumerableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableLike`](types.RunnableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](../modules/Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`MulticastObservableLike`](types.MulticastObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

@@ -277,6 +277,10 @@ export interface ObservableModule {
     takeLast<T>(options?: {
         readonly count?: number;
     }): EnumerableUpperBoundObservableOperator<T, T>;
+    takeUntil<T>(notifier: EnumerableLike): EnumerableUpperBoundObservableOperator<T, T>;
+    takeUntil<T>(notifier: RunnableLike): RunnableUpperBoundObservableOperator<T, T>;
+    takeUntil<T>(notifier: DeferredObservableLike): DeferredObservableUpperBoundObservableOperator<T, T>;
+    takeUntil<T>(notifier: MulticastObservableLike): Function1<ObservableLike<T>, MulticastObservableLike<T>>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
     }): EnumerableUpperBoundObservableOperator<T, T>;
@@ -451,6 +455,7 @@ export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
+export declare const takeUntil: Signature["takeUntil"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];

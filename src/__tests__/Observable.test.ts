@@ -165,6 +165,22 @@ testModule(
   ),
 
   describe(
+    "takeUntil",
+    test(
+      "takes until the notifier notifies its first notification",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        ReadonlyArray.toObservable({ delay: 1 }),
+        Observable.takeUntil(
+          pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true })),
+        ),
+        Runnable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+  ),
+
+  describe(
     "throttle",
     test(
       "first",

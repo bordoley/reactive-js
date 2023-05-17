@@ -88,6 +88,7 @@
 - [subscribeOn](Observable.md#subscribeon)
 - [takeFirst](Observable.md#takefirst)
 - [takeLast](Observable.md#takelast)
+- [takeUntil](Observable.md#takeuntil)
 - [takeWhile](Observable.md#takewhile)
 - [throttle](Observable.md#throttle)
 - [throwIfEmpty](Observable.md#throwifempty)
@@ -3624,6 +3625,82 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 
