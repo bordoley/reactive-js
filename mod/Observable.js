@@ -58,6 +58,7 @@ import Observable_subscribe from "./Observable/__internal__/Observable.subscribe
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
+import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
@@ -130,6 +131,7 @@ export const subscribe = Observable_subscribe;
 export const subscribeOn = Observable_subscribeOn;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
+export const takeUntil = Observable_takeUntil;
 export const takeWhile = Observable_takeWhile;
 export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;

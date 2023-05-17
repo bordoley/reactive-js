@@ -56,6 +56,7 @@ import Observable_subscribe from "./Observable/__internal__/Observable.subscribe
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
+import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
 import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
@@ -1038,6 +1039,19 @@ export interface ObservableModule {
     readonly count?: number;
   }): EnumerableUpperBoundObservableOperator<T, T>;
 
+  takeUntil<T>(
+    notifier: EnumerableLike,
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+  takeUntil<T>(
+    notifier: RunnableLike,
+  ): RunnableUpperBoundObservableOperator<T, T>;
+  takeUntil<T>(
+    notifier: DeferredObservableLike,
+  ): DeferredObservableUpperBoundObservableOperator<T, T>;
+  takeUntil<T>(
+    notifier: MulticastObservableLike,
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T>>;
+
   takeWhile<T>(
     predicate: Predicate<T>,
     options?: {
@@ -1885,6 +1899,7 @@ export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
+export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
