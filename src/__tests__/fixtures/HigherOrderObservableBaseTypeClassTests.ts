@@ -3,7 +3,9 @@ import * as Runnable from "../../Runnable.js";
 import {
   describe,
   expectArrayEquals,
+  expectToThrowAsync,
   test,
+  testAsync,
 } from "../../__internal__/testing.js";
 import {
   Function1,
@@ -21,6 +23,35 @@ const HigherOrderObservableBaseTypeClassTests = <C extends Observable.Type>(
 ) =>
   describe(
     "HigherOrderObservableBaseTypeClass",
+
+    describe(
+      "switchAll",
+      testAsync(
+        "with empty source",
+        pipeLazyAsync(
+          Observable.empty<RunnableLike>({ delay: 1 }),
+          fromRunnable<RunnableLike>(),
+          m.switchAll<number>(),
+          Observable.buffer<number>(),
+          Observable.lastAsync(),
+          x => x ?? [],
+          expectArrayEquals([] as readonly number[]),
+        ),
+      ),
+      test(
+        "when source throw",
+        pipeLazyAsync(
+          pipeLazyAsync(
+            Observable.throws<RunnableLike<number>>(),
+            fromRunnable<RunnableLike<number>>(),
+            m.switchAll<number>(),
+            Observable.buffer(),
+            Observable.lastAsync(),
+          ),
+          expectToThrowAsync,
+        ),
+      ),
+    ),
 
     describe(
       "scanLast",

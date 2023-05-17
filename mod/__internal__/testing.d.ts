@@ -24,6 +24,7 @@ declare const createTest: (name: string, f: SideEffect) => Test;
 export { createTest as test };
 export declare const testAsync: (name: string, f: Factory<PromiseLike<void>>) => TestAsync;
 export declare const expectToThrow: (f: SideEffect) => void;
+export declare const expectToThrowAsync: (f: Factory<Promise<unknown>>) => Promise<void>;
 export declare const expectToThrowError: (error: unknown) => (f: SideEffect) => void;
 export declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => boolean) => (a: T) => void;
 export declare const expectArrayEquals: <T>(b: readonly T[], valueEquality?: Equality<T>) => (a: readonly T[]) => void;
