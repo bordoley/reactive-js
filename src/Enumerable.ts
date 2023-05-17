@@ -17,6 +17,7 @@ import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observab
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
+import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -82,6 +83,8 @@ export type Signature = EnumerableModule;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const compute: Signature["compute"] = Enumerable_compute;
 export const concat: Signature["concat"] = Observable_concat;
+export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
+export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const contains: Signature["contains"] = Runnable_contains;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
@@ -90,8 +93,6 @@ export const empty: Signature["empty"] = Observable_empty;
 export const endWith: Signature["endWith"] = Observable_endWith;
 export const enumerate: Signature["enumerate"] = Enumerable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
-export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
-export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
 export const first: Signature["first"] = Runnable_first;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
@@ -106,6 +107,8 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const generate: Signature["generate"] = Observable_generate;
+export const ignoreElements: Signature["ignoreElements"] =
+  Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];

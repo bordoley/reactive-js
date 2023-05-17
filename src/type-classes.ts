@@ -54,6 +54,11 @@ export interface ContainerTypeClass<C extends Container> {
   forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
 
   /**
+   * @category Operator
+   */
+  ignoreElements<T>(): ContainerOperator<C, unknown, T>;
+
+  /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
    *

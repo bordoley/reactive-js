@@ -20,7 +20,6 @@ import EventSource_toObservable from "./EventSource/__internal__/EventSource.toO
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
 import {
-  ContainerOperator,
   DisposableLike,
   EventListenerLike,
   EventPublisherLike,
@@ -50,11 +49,6 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
    * @category Constructor
    */
   createRefCountedPublisher<T>(): EventPublisherLike<T>;
-
-  /**
-   * @category Operator
-   */
-  ignoreElements<T>(): ContainerOperator<Type, unknown, T>;
 
   toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }

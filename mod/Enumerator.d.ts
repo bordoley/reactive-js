@@ -21,6 +21,7 @@ export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
+export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];

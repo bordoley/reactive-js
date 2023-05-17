@@ -55,6 +55,7 @@
 - [endWith](type_classes.RunnableContainerTypeClass.md#endwith)
 - [flatMapIterable](type_classes.RunnableContainerTypeClass.md#flatmapiterable)
 - [forEach](type_classes.RunnableContainerTypeClass.md#foreach)
+- [ignoreElements](type_classes.RunnableContainerTypeClass.md#ignoreelements)
 - [keep](type_classes.RunnableContainerTypeClass.md#keep)
 - [keepType](type_classes.RunnableContainerTypeClass.md#keeptype)
 - [map](type_classes.RunnableContainerTypeClass.md#map)
@@ -715,6 +716,26 @@ value emitted by the source.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `unknown`, `T`\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 
 ___
 

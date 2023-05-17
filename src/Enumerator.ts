@@ -6,6 +6,7 @@ import Enumerator_forEach from "./Enumerator/__internal__/Enumerator.forEach.js"
 import Enumerator_fromEnumeratorFactory from "./Enumerator/__internal__/Enumerator.fromEnumeratorFactory.js";
 import Enumerator_fromFactory from "./Enumerator/__internal__/Enumerator.fromFactory.js";
 import Enumerator_fromValue from "./Enumerator/__internal__/Enumerator.fromValue.js";
+import Enumerator_ignoreElements from "./Enumerator/__internal__/Enumerator.ignoreElements.js";
 import Enumerator_keep from "./Enumerator/__internal__/Enumerator.keep.js";
 import Enumerator_keepType from "./Enumerator/__internal__/Enumerator.keepType.js";
 import Enumerator_map from "./Enumerator/__internal__/Enumerator.map.js";
@@ -63,6 +64,8 @@ export const fromOptional: Signature["fromOptional"] = Optional_enumerate;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_enumerate;
 export const fromValue: Signature["fromValue"] = Enumerator_fromValue;
+export const ignoreElements: Signature["ignoreElements"] =
+  Enumerator_ignoreElements;
 export const keep: Signature["keep"] = Enumerator_keep;
 export const keepType: Signature["keepType"] = Enumerator_keepType;
 export const map: Signature["map"] = Enumerator_map;

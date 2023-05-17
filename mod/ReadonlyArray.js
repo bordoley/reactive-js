@@ -23,6 +23,7 @@ import ReadonlyArray_fromFactory from "./ReadonlyArray/__internal__/ReadonlyArra
 import ReadonlyArray_fromIterable from "./ReadonlyArray/__internal__/ReadonlyArray.fromIterable.js";
 import ReadonlyArray_fromOptional from "./ReadonlyArray/__internal__/ReadonlyArray.fromOptional.js";
 import ReadonlyArray_fromValue from "./ReadonlyArray/__internal__/ReadonlyArray.fromValue.js";
+import ReadonlyArray_ignoreElements from "./ReadonlyArray/__internal__/ReadonlyArray.ignoreElements.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
@@ -71,6 +72,7 @@ export const fromIterable = ReadonlyArray_fromIterable;
 export const fromOptional = ReadonlyArray_fromOptional;
 export const fromReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const fromValue = ReadonlyArray_fromValue;
+export const ignoreElements = ReadonlyArray_ignoreElements;
 export const keep = ReadonlyArray_keep;
 export const keepType = ReadonlyArray_keepType;
 export const keepWithKey = ReadonlyArray_keepWithKey;

@@ -37,6 +37,7 @@
 - [flatMapIterable](ReadonlyArray.md#flatmapiterable)
 - [forEach](ReadonlyArray.md#foreach)
 - [forEachWithKey](ReadonlyArray.md#foreachwithkey)
+- [ignoreElements](ReadonlyArray.md#ignoreelements)
 - [keep](ReadonlyArray.md#keep)
 - [keepType](ReadonlyArray.md#keeptype)
 - [keepWithKey](ReadonlyArray.md#keepwithkey)
@@ -670,6 +671,22 @@ value emitted by the source.
 #### Returns
 
 [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `TKey`, `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/types.ReadonlyArrayContainer.md), `unknown`, `T`\>
 
 ___
 

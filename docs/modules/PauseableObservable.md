@@ -18,6 +18,7 @@
 - [distinctUntilChanged](PauseableObservable.md#distinctuntilchanged)
 - [flatMapIterable](PauseableObservable.md#flatmapiterable)
 - [forEach](PauseableObservable.md#foreach)
+- [ignoreElements](PauseableObservable.md#ignoreelements)
 - [keep](PauseableObservable.md#keep)
 - [keepType](PauseableObservable.md#keeptype)
 - [map](PauseableObservable.md#map)
@@ -122,6 +123,22 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `unknown`, `T`\>
 
 ___
 

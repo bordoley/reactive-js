@@ -31,6 +31,7 @@
 - [exhaustMap](Runnable.md#exhaustmap)
 - [flatMapIterable](Runnable.md#flatmapiterable)
 - [forEach](Runnable.md#foreach)
+- [ignoreElements](Runnable.md#ignoreelements)
 - [keep](Runnable.md#keep)
 - [keepType](Runnable.md#keeptype)
 - [map](Runnable.md#map)
@@ -572,6 +573,22 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `unknown`, `T`\>
 
 ___
 

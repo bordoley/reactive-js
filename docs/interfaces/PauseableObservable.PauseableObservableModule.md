@@ -17,6 +17,7 @@
 - [distinctUntilChanged](PauseableObservable.PauseableObservableModule.md#distinctuntilchanged)
 - [flatMapIterable](PauseableObservable.PauseableObservableModule.md#flatmapiterable)
 - [forEach](PauseableObservable.PauseableObservableModule.md#foreach)
+- [ignoreElements](PauseableObservable.PauseableObservableModule.md#ignoreelements)
 - [keep](PauseableObservable.PauseableObservableModule.md#keep)
 - [keepType](PauseableObservable.PauseableObservableModule.md#keeptype)
 - [map](PauseableObservable.PauseableObservableModule.md#map)
@@ -117,6 +118,26 @@ value emitted by the source.
 #### Inherited from
 
 [ContainerTypeClass](type_classes.ContainerTypeClass.md).[forEach](type_classes.ContainerTypeClass.md#foreach)
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](types.PauseableObservableContainer.md), `unknown`, `T`\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
 
 ___
 

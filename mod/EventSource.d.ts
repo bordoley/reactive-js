@@ -1,6 +1,6 @@
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
-import { ContainerOperator, DisposableLike, EventListenerLike, EventPublisherLike, EventSourceContainer, EventSourceLike, MulticastObservableLike } from "./types.js";
+import { DisposableLike, EventListenerLike, EventPublisherLike, EventSourceContainer, EventSourceLike, MulticastObservableLike } from "./types.js";
 export type Type = EventSourceContainer;
 export interface EventSourceModule extends ContainerTypeClass<Type> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;
@@ -16,10 +16,6 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
      * @category Constructor
      */
     createRefCountedPublisher<T>(): EventPublisherLike<T>;
-    /**
-     * @category Operator
-     */
-    ignoreElements<T>(): ContainerOperator<Type, unknown, T>;
     toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = EventSourceModule;

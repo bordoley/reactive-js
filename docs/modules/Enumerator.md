@@ -28,6 +28,7 @@
 
 - [distinctUntilChanged](Enumerator.md#distinctuntilchanged)
 - [forEach](Enumerator.md#foreach)
+- [ignoreElements](Enumerator.md#ignoreelements)
 - [keep](Enumerator.md#keep)
 - [keepType](Enumerator.md#keeptype)
 - [map](Enumerator.md#map)
@@ -250,6 +251,22 @@ value emitted by the source.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, `T`\>
+
+___
+
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `unknown`, `T`\>
 
 ___
 

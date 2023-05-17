@@ -393,6 +393,20 @@ const RunnableContainerTypeClassTests = <C extends Container>(
       }),
     ),
     describe(
+      "ignoreElements",
+      test(
+        "ignores all elements",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.ignoreElements<number>(),
+          m.toReadonlyArray(),
+          expectArrayEquals([] as number[]),
+        ),
+      ),
+    ),
+
+    describe(
       "keep",
       test(
         "keeps only values greater than 5",

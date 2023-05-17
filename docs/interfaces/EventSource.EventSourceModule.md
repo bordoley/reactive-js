@@ -171,6 +171,10 @@ ___
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](types.EventSourceContainer.md), `unknown`, `T`\>
 
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[ignoreElements](type_classes.ContainerTypeClass.md#ignoreelements)
+
 ___
 
 ### keep
