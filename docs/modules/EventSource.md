@@ -25,6 +25,7 @@
 
 ### Operator Functions
 
+- [buffer](EventSource.md#buffer)
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
 - [forEach](EventSource.md#foreach)
 - [ignoreElements](EventSource.md#ignoreelements)
@@ -42,7 +43,6 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
-- [buffer](EventSource.md#buffer)
 - [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
@@ -114,6 +114,29 @@ ___
 ___
 
 ## Operator Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### distinctUntilChanged
 
@@ -496,29 +519,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-___
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
 
 ___
 

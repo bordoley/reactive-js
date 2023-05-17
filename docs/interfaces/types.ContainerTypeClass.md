@@ -24,6 +24,7 @@
 
 ### Operator Methods
 
+- [buffer](types.ContainerTypeClass.md#buffer)
 - [distinctUntilChanged](types.ContainerTypeClass.md#distinctuntilchanged)
 - [forEach](types.ContainerTypeClass.md#foreach)
 - [ignoreElements](types.ContainerTypeClass.md#ignoreelements)
@@ -38,11 +39,30 @@
 - [takeFirst](types.ContainerTypeClass.md#takefirst)
 - [takeWhile](types.ContainerTypeClass.md#takewhile)
 
-### Other Methods
-
-- [buffer](types.ContainerTypeClass.md#buffer)
-
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+___
 
 ### distinctUntilChanged
 
@@ -401,28 +421,3 @@ this predicate is not satisfied.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-## Other Methods
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>

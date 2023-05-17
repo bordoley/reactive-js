@@ -14,6 +14,7 @@
 
 ### Operator Methods
 
+- [buffer](PauseableObservable.PauseableObservableModule.md#buffer)
 - [distinctUntilChanged](PauseableObservable.PauseableObservableModule.md#distinctuntilchanged)
 - [flatMapIterable](PauseableObservable.PauseableObservableModule.md#flatmapiterable)
 - [forEach](PauseableObservable.PauseableObservableModule.md#foreach)
@@ -31,13 +32,39 @@
 
 ### Other Methods
 
-- [buffer](PauseableObservable.PauseableObservableModule.md#buffer)
 - [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
 - [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
 - [takeLast](PauseableObservable.PauseableObservableModule.md#takelast)
 
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
+
+___
 
 ### distinctUntilChanged
 
@@ -483,33 +510,6 @@ this predicate is not satisfied.
 ___
 
 ## Other Methods
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, readonly `T`[]\>
-
-#### Inherited from
-
-[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
-
-___
 
 ### dispatchTo
 

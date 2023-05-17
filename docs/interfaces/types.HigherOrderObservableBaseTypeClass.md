@@ -25,6 +25,7 @@
 
 ### Operator Methods
 
+- [catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
 - [concatAll](types.HigherOrderObservableBaseTypeClass.md#concatall)
 - [concatMap](types.HigherOrderObservableBaseTypeClass.md#concatmap)
 - [exhaust](types.HigherOrderObservableBaseTypeClass.md#exhaust)
@@ -36,11 +37,29 @@
 - [switchAll](types.HigherOrderObservableBaseTypeClass.md#switchall)
 - [switchMap](types.HigherOrderObservableBaseTypeClass.md#switchmap)
 
-### Other Methods
-
-- [catchError](types.HigherOrderObservableBaseTypeClass.md#catcherror)
-
 ## Operator Methods
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
 
 ### concatAll
 
@@ -259,27 +278,3 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-___
-
-## Other Methods
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function2`](../modules/functions.md#function2)<`Error`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CInner`, `T`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>

@@ -20,6 +20,7 @@
 
 ### Operator Functions
 
+- [catchError](DeferredObservable.md#catcherror)
 - [concatAll](DeferredObservable.md#concatall)
 - [concatMap](DeferredObservable.md#concatmap)
 - [exhaust](DeferredObservable.md#exhaust)
@@ -33,7 +34,6 @@
 
 ### Other Functions
 
-- [catchError](DeferredObservable.md#catcherror)
 - [compute](DeferredObservable.md#compute)
 - [multicast](DeferredObservable.md#multicast)
 - [repeat](DeferredObservable.md#repeat)
@@ -86,6 +86,28 @@ ___
 Ƭ **Type**: [`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md)
 
 ## Operator Functions
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`Function2`](functions.md#function2)<`Error`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+___
 
 ### concatAll
 
@@ -308,28 +330,6 @@ ___
 ___
 
 ## Other Functions
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`Function2`](functions.md#function2)<`Error`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-___
 
 ### compute
 

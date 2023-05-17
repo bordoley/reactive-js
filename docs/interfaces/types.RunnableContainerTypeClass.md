@@ -24,16 +24,6 @@
 
 ## Table of contents
 
-### Operator Properties
-
-- [concatAll](types.RunnableContainerTypeClass.md#concatall)
-- [concatMap](types.RunnableContainerTypeClass.md#concatmap)
-- [concatWith](types.RunnableContainerTypeClass.md#concatwith)
-
-### Transform Properties
-
-- [contains](types.RunnableContainerTypeClass.md#contains)
-
 ### Constructor Methods
 
 - [concat](types.RunnableContainerTypeClass.md#concat)
@@ -49,6 +39,10 @@
 
 ### Operator Methods
 
+- [buffer](types.RunnableContainerTypeClass.md#buffer)
+- [concatAll](types.RunnableContainerTypeClass.md#concatall)
+- [concatMap](types.RunnableContainerTypeClass.md#concatmap)
+- [concatWith](types.RunnableContainerTypeClass.md#concatwith)
 - [distinctUntilChanged](types.RunnableContainerTypeClass.md#distinctuntilchanged)
 - [endWith](types.RunnableContainerTypeClass.md#endwith)
 - [flatMapIterable](types.RunnableContainerTypeClass.md#flatmapiterable)
@@ -68,12 +62,9 @@
 - [takeWhile](types.RunnableContainerTypeClass.md#takewhile)
 - [zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
-### Other Methods
-
-- [buffer](types.RunnableContainerTypeClass.md#buffer)
-
 ### Transform Methods
 
+- [contains](types.RunnableContainerTypeClass.md#contains)
 - [everySatisfy](types.RunnableContainerTypeClass.md#everysatisfy)
 - [first](types.RunnableContainerTypeClass.md#first)
 - [last](types.RunnableContainerTypeClass.md#last)
@@ -81,113 +72,6 @@
 - [reduce](types.RunnableContainerTypeClass.md#reduce)
 - [someSatisfy](types.RunnableContainerTypeClass.md#somesatisfy)
 - [toReadonlyArray](types.RunnableContainerTypeClass.md#toreadonlyarray)
-
-## Operator Properties
-
-### concatAll
-
-• **concatAll**: <T\>() => [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
-
-Converts a higher-order Container into a first-order
-Container by concatenating the inner sources in order.
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
-
-___
-
-### concatMap
-
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `TB`\>\>) => [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type declaration
-
-▸ <`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `TB`\>\> |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-___
-
-### concatWith
-
-• **concatWith**: <T\>(`snd`: [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, ...`tail`: readonly [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>[]) => [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Type declaration
-
-▸ <`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `snd` | [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\> |
-| `...tail` | readonly [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>[] |
-
-##### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-## Transform Properties
-
-### contains
-
-• **contains**: <T\>(`value`: `T`, `options?`: { `equality?`: [`Equality`](../modules/functions.md#equality)<`T`\>  }) => [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
-
-#### Type declaration
-
-▸ <`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
-
-##### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
-
-##### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
 
 ## Constructor Methods
 
@@ -579,6 +463,98 @@ in order, of each of its input sources.
 ___
 
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
+
+___
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `T`\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\> |
+| `...tail` | readonly [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>[] |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
 
 ### distinctUntilChanged
 
@@ -1306,11 +1282,11 @@ ___
 
 ___
 
-## Other Methods
+## Transform Methods
 
-### buffer
+### contains
 
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -1322,20 +1298,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `value` | `T` |
 | `options?` | `Object` |
-| `options.count?` | `number` |
+| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, readonly `T`[]\>
-
-#### Inherited from
-
-[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
 
 ___
-
-## Transform Methods
 
 ### everySatisfy
 

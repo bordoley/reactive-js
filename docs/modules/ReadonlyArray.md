@@ -33,6 +33,7 @@
 
 ### Operator Functions
 
+- [buffer](ReadonlyArray.md#buffer)
 - [concatAll](ReadonlyArray.md#concatall)
 - [concatMap](ReadonlyArray.md#concatmap)
 - [concatWith](ReadonlyArray.md#concatwith)
@@ -60,7 +61,6 @@
 
 ### Other Functions
 
-- [buffer](ReadonlyArray.md#buffer)
 - [flow](ReadonlyArray.md#flow)
 
 ### Transform Functions
@@ -488,6 +488,29 @@ readonly readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`][]
 ___
 
 ## Operator Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### concatAll
 
@@ -1331,29 +1354,6 @@ ___
 ___
 
 ## Other Functions
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, readonly `T`[]\>
-
-___
 
 ### flow
 

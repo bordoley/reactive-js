@@ -177,6 +177,7 @@ export interface EnumeratorLike<T = unknown> {
 
 /**
  * @noInheritDoc
+ * @category Collection
  */
 export type ReadonlyObjectMapLike<
   TKey extends symbol | number | string = string,
@@ -223,6 +224,7 @@ export interface DictionaryLike<TKey = unknown, T = unknown>
 export interface IndexedCollectionLike<T = unknown>
   extends KeyedCollectionLike<number, T> {}
 
+/** @category Resource Management */
 export type DisposableOrTeardown =
   | DisposableLike
   | SideEffect1<Optional<Error>>;
@@ -523,7 +525,7 @@ export interface ObserverLike<T = unknown>
  * The source of notifications which can be consumed by an `ObserverLike` instance.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface ObservableLike<T = unknown> {
   /**
@@ -552,7 +554,7 @@ export interface ObservableLike<T = unknown> {
 
 /**
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface MulticastObservableLike<T = unknown>
   extends ObservableLike<T> {
@@ -565,7 +567,7 @@ export interface MulticastObservableLike<T = unknown>
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
@@ -575,7 +577,7 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
  * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
@@ -595,7 +597,7 @@ export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface ReplayObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
@@ -610,7 +612,7 @@ export interface ReplayObservableLike<T = unknown>
  * An `EventListener` that can be used to publish notifications to one or more observers.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface PublisherLike<T = unknown>
   extends ErrorSafeEventListenerLike<T>,
@@ -626,7 +628,7 @@ export interface PublisherLike<T = unknown>
  * via the pause and resume methods.
  *
  * @noInheritDoc
- * @category Obsevable
+ * @category Observable
  */
 export interface PauseableObservableLike<T = unknown>
   extends ObservableLike<T>,
@@ -690,6 +692,7 @@ export interface StreamableLike<
   ): TStream & DisposableLike;
 }
 
+/** @category Interactive */
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
@@ -760,6 +763,7 @@ export type KeyOf<C extends KeyedContainer> = NonNullable<
 
 /**
  * Utility type for a generic operator function that transforms a Container's inner value type.
+ * @category Container
  */
 export type KeyedContainerOperator<
   C extends KeyedContainer,
@@ -770,6 +774,7 @@ export type KeyedContainerOperator<
 
 /** @category TypeClass */
 export interface ContainerTypeClass<C extends Container> {
+  /** @category Operator */
   buffer<T>(options?: {
     count?: number;
   }): ContainerOperator<C, T, readonly T[]>;
@@ -900,6 +905,7 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
+/** @category TypeClass */
 export interface RunnableContainerTypeClass<C extends Container>
   extends ContainerTypeClass<C> {
   /**
@@ -919,32 +925,32 @@ export interface RunnableContainerTypeClass<C extends Container>
    *
    * @category Operator
    */
-  concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
+  concatAll<T>(): ContainerOperator<C, ContainerOf<C, T>, T>;
 
   /**
    * @category Operator
    */
-  concatMap: <TA, TB>(
+  concatMap<TA, TB>(
     selector: Function1<TA, ContainerOf<C, TB>>,
-  ) => ContainerOperator<C, TA, TB>;
+  ): ContainerOperator<C, TA, TB>;
 
   /**
    * @category Operator
    */
-  concatWith: <T>(
+  concatWith<T>(
     snd: ContainerOf<C, T>,
     ...tail: readonly ContainerOf<C, T>[]
-  ) => ContainerOperator<C, T, T>;
+  ): ContainerOperator<C, T, T>;
 
   /**
    * @category Transform
    */
-  contains: <T>(
+  contains<T>(
     value: T,
     options?: {
       readonly equality?: Equality<T>;
     },
-  ) => Function1<ContainerOf<C, T>, boolean>;
+  ): Function1<ContainerOf<C, T>, boolean>;
 
   /**
    * Return an Container that emits no items.
@@ -1221,6 +1227,7 @@ export interface HigherOrderObservableBaseTypeClass<
   C extends Observable.Type,
   CInner extends DeferredObservable.Type,
 > {
+  /** @category Operator */
   catchError<T>(
     onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>,
   ): ContainerOperator<C, T, T>;
@@ -1426,11 +1433,17 @@ export interface AssociativeKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > extends KeyedContainerTypeClass<C, TKeyBase> {
+  /**
+   * @category Constructor
+   */
   fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<
     ReadonlyMap<TKey, T>,
     KeyedContainerOf<C, TKey, T>
   >;
 
+  /**
+   * @category Constructor
+   */
   fromReadonlyObjectMap<
     T,
     TKey extends TKeyBase,
@@ -1456,16 +1469,28 @@ export interface AssociativeKeyedContainerTypeClass<
     ReadonlySet<TKey>
   >;
 
+  /**
+   *
+   * @category Transform
+   */
   toDictionary<T, TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, T>,
     DictionaryLike<TKey, T>
   >;
 
+  /**
+   *
+   * @category Transform
+   */
   toReadonlyMap<T, TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, T>,
     ReadonlyMap<TKey, T>
   >;
 
+  /**
+   *
+   * @category Transform
+   */
   toReadonlyObjectMap<
     T,
     TKey extends TKeyBase,

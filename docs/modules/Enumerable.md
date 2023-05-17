@@ -33,6 +33,7 @@
 
 ### Operator Functions
 
+- [buffer](Enumerable.md#buffer)
 - [concatAll](Enumerable.md#concatall)
 - [concatMap](Enumerable.md#concatmap)
 - [concatWith](Enumerable.md#concatwith)
@@ -57,7 +58,6 @@
 
 ### Other Functions
 
-- [buffer](Enumerable.md#buffer)
 - [compute](Enumerable.md#compute)
 - [generate](Enumerable.md#generate)
 - [throws](Enumerable.md#throws)
@@ -477,6 +477,29 @@ in order, of each of its input sources.
 ___
 
 ## Operator Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### concatAll
 
@@ -1210,29 +1233,6 @@ ___
 ___
 
 ## Other Functions
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, readonly `T`[]\>
-
-___
 
 ### compute
 

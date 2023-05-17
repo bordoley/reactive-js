@@ -20,6 +20,7 @@
 
 ### Operator Methods
 
+- [buffer](EventSource.EventSourceModule.md#buffer)
 - [distinctUntilChanged](EventSource.EventSourceModule.md#distinctuntilchanged)
 - [forEach](EventSource.EventSourceModule.md#foreach)
 - [ignoreElements](EventSource.EventSourceModule.md#ignoreelements)
@@ -37,7 +38,6 @@
 ### Other Methods
 
 - [addEventHandler](EventSource.EventSourceModule.md#addeventhandler)
-- [buffer](EventSource.EventSourceModule.md#buffer)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
 
 ## Constructor Methods
@@ -97,6 +97,33 @@ ___
 ___
 
 ## Operator Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
+
+___
 
 ### distinctUntilChanged
 
@@ -539,33 +566,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
-
-___
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
-
-#### Inherited from
-
-[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
 
 ___
 
