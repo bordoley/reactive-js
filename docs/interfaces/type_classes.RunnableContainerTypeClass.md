@@ -12,8 +12,6 @@
 
 ## Hierarchy
 
-- [`ConcreteContainerBaseTypeClass`](type_classes.ConcreteContainerBaseTypeClass.md)<`C`\>
-
 - [`ContainerTypeClass`](type_classes.ContainerTypeClass.md)<`C`\>
 
   ↳ **`RunnableContainerTypeClass`**
@@ -235,10 +233,6 @@ Return an Container that emits no items.
 
 [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
 
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[empty](type_classes.ConcreteContainerBaseTypeClass.md#empty)
-
 ___
 
 ### fromEnumerable
@@ -254,10 +248,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumerable](type_classes.ConcreteContainerBaseTypeClass.md#fromenumerable)
 
 ___
 
@@ -275,10 +265,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromEnumeratorFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromenumeratorfactory)
-
 ___
 
 ### fromFactory
@@ -294,10 +280,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromFactory](type_classes.ConcreteContainerBaseTypeClass.md#fromfactory)
 
 ___
 
@@ -315,10 +297,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromIterable](type_classes.ConcreteContainerBaseTypeClass.md#fromiterable)
-
 ___
 
 ### fromOptional
@@ -334,10 +312,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromOptional](type_classes.ConcreteContainerBaseTypeClass.md#fromoptional)
 
 ___
 
@@ -363,10 +337,6 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#fromreadonlyarray)
-
 ___
 
 ### fromValue
@@ -382,10 +352,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`T`, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[fromValue](type_classes.ConcreteContainerBaseTypeClass.md#fromvalue)
 
 ___
 
@@ -1512,7 +1478,3 @@ Converts the Container to a `ReadonlyArrayContainer`.
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, readonly `T`[]\>
-
-#### Inherited from
-
-[ConcreteContainerBaseTypeClass](type_classes.ConcreteContainerBaseTypeClass.md).[toReadonlyArray](type_classes.ConcreteContainerBaseTypeClass.md#toreadonlyarray)

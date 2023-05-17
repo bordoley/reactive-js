@@ -1,11 +1,11 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
-import type * as Iterable from "../../Iterable.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-import { none, pipe } from "../../functions.js";
+import { Function1, none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EnumerableLike,
   ObservableLike,
   ObserverLike,
   SchedulerLike,
@@ -14,9 +14,10 @@ import {
   SinkLike_notify,
 } from "../../types.js";
 
-const Iterable_toObservable: Iterable.Signature["toObservable"] = (<
-    T,
-  >(options?: {
+const Iterable_toObservable: <T>() => Function1<
+  Iterable<T>,
+  EnumerableLike<T>
+> = (<T>(options?: {
     readonly delay?: number;
     readonly delayStart?: boolean;
   }) =>
@@ -52,6 +53,6 @@ const Iterable_toObservable: Iterable.Signature["toObservable"] = (<
       delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
 
     return retval;
-  }) as Iterable.Signature["toObservable"];
+  }) as <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
 
 export default Iterable_toObservable;

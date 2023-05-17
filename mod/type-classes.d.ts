@@ -100,13 +100,62 @@ export interface ContainerTypeClass<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
-export interface ConcreteContainerBaseTypeClass<C extends Container> {
+export interface RunnableContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+    /**
+     * Returns a Container which emits all values from each source sequentially.
+     *
+     * @category Constructor
+     */
+    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
+    /**
+     * Converts a higher-order Container into a first-order
+     * Container by concatenating the inner sources in order.
+     *
+     * @category Operator
+     */
+    concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
+    /**
+     * @category Operator
+     */
+    concatMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>) => ContainerOperator<C, TA, TB>;
+    /**
+     * @category Operator
+     */
+    concatWith: <T>(snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]) => ContainerOperator<C, T, T>;
+    /**
+     * @category Transform
+     */
+    contains: <T>(value: T, options?: {
+        readonly equality?: Equality<T>;
+    }) => Function1<ContainerOf<C, T>, boolean>;
     /**
      * Return an Container that emits no items.
      *
      * @category Constructor
      */
     empty<T>(): ContainerOf<C, T>;
+    /**
+     * @category Operator
+     */
+    endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+    /**
+     * Determines whether all the members of an Container satisfy the predicate.
+     * The predicate function is invoked for each element in the Container until the
+     * it returns false, or until the end of the Container.
+     *
+     * @param predicate
+     * @category Transform
+     */
+    everySatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
+    /**
+     *
+     * @category Transform
+     */
+    first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+    /**
+     * @category Operator
+     */
+    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<C, TA, TB>;
     /**
      * @category Constructor
      */
@@ -139,76 +188,6 @@ export interface ConcreteContainerBaseTypeClass<C extends Container> {
      */
     fromValue<T>(): Function1<T, ContainerOf<C, T>>;
     /**
-     * Converts the Container to a `ReadonlyArrayContainer`.
-     *
-     * @category Transform
-     */
-    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
-}
-export interface EnumerableContainerBaseTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> {
-    /**
-     *
-     * @category Transform
-     */
-    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
-    /**
-     * Converts the Container to a `IterableLike`.
-     *
-     * @category Transform
-     */
-    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-}
-export interface RunnableContainerTypeClass<C extends Container> extends ConcreteContainerBaseTypeClass<C>, ContainerTypeClass<C> {
-    /**
-     * Returns a Container which emits all values from each source sequentially.
-     *
-     * @category Constructor
-     */
-    concat<T>(fst: ContainerOf<C, T>, snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]): ContainerOf<C, T>;
-    /**
-     * Converts a higher-order Container into a first-order
-     * Container by concatenating the inner sources in order.
-     *
-     * @category Operator
-     */
-    concatAll: <T>() => ContainerOperator<C, ContainerOf<C, T>, T>;
-    /**
-     * @category Operator
-     */
-    concatMap: <TA, TB>(selector: Function1<TA, ContainerOf<C, TB>>) => ContainerOperator<C, TA, TB>;
-    /**
-     * @category Operator
-     */
-    concatWith: <T>(snd: ContainerOf<C, T>, ...tail: readonly ContainerOf<C, T>[]) => ContainerOperator<C, T, T>;
-    /**
-     * @category Transform
-     */
-    contains: <T>(value: T, options?: {
-        readonly equality?: Equality<T>;
-    }) => Function1<ContainerOf<C, T>, boolean>;
-    /**
-     * @category Operator
-     */
-    endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-    /**
-     * Determines whether all the members of an Container satisfy the predicate.
-     * The predicate function is invoked for each element in the Container until the
-     * it returns false, or until the end of the Container.
-     *
-     * @param predicate
-     * @category Transform
-     */
-    everySatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
-    /**
-     *
-     * @category Transform
-     */
-    first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-    /**
-     * @category Operator
-     */
-    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<C, TA, TB>;
-    /**
      *
      * @category Transform
      */
@@ -238,6 +217,12 @@ export interface RunnableContainerTypeClass<C extends Container> extends Concret
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
     /**
+     * Converts the Container to a `ReadonlyArrayContainer`.
+     *
+     * @category Transform
+     */
+    toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+    /**
      * Combines multiple sources to create a Container whose values are calculated from the values,
      * in order, of each of its input sources.
      *
@@ -263,7 +248,18 @@ export interface RunnableContainerTypeClass<C extends Container> extends Concret
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C>, EnumerableContainerBaseTypeClass<C, CEnumerator>, ConcreteContainerBaseTypeClass<C> {
+export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C> {
+    /**
+     *
+     * @category Transform
+     */
+    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+    /**
+     * Converts the Container to a `IterableLike`.
+     *
+     * @category Transform
+     */
+    toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 }
 export interface HigherOrderObservableBaseTypeClass<C extends ObservableContainer, CInner extends DeferredObservableContainer> {
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;

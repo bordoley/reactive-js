@@ -14,7 +14,6 @@ Reactive-JS
 - [Enumerator](modules/Enumerator.md)
 - [EventListener](modules/EventListener.md)
 - [EventSource](modules/EventSource.md)
-- [Iterable](modules/Iterable.md)
 - [MulticastObservable](modules/MulticastObservable.md)
 - [Observable](modules/Observable.md)
 - [Observable/effects](modules/Observable_effects.md)

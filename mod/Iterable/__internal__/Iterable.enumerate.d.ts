@@ -1,3 +1,4 @@
-import type * as Iterable from "../../Iterable.js";
-declare const Iterable_enumerate: Iterable.Signature["enumerate"];
+import { Function1 } from "../../functions.js";
+import { EnumeratorLike } from "../../types.js";
+declare const Iterable_enumerate: <T>() => Function1<Iterable<T>, EnumeratorLike<T>>;
 export default Iterable_enumerate;

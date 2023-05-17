@@ -24,8 +24,6 @@
 
   ↳ [`EventSourceContainer`](types.EventSourceContainer.md)
 
-  ↳ [`IterableContainer`](types.IterableContainer.md)
-
   ↳ [`ObservableContainer`](types.ObservableContainer.md)
 
   ↳ [`PauseableObservableContainer`](types.PauseableObservableContainer.md)

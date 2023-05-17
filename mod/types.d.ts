@@ -587,13 +587,6 @@ export interface EventSourceContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface IterableContainer extends Container {
-    readonly [Container_type]?: Iterable<this[typeof Container_T]>;
-}
-/**
- * @noInheritDoc
- * @category Container
- */
 export interface ObservableContainer extends Container {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
