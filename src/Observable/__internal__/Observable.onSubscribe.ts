@@ -3,6 +3,8 @@ import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDi
 import type * as Observable from "../../Observable.js";
 import {
   Factory,
+  Optional,
+  SideEffect1,
   identity,
   isFunction,
   isSome,
@@ -10,14 +12,14 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  DisposableOrTeardown,
+  DisposableLike,
   ObservableLike,
   ObservableLike_observe,
 } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
-    f: Factory<DisposableOrTeardown | void>,
+    f: Factory<DisposableLike | SideEffect1<Optional<Error>> | void>,
   ) =>
   (obs: ObservableLike<T>): ObservableLike<T> =>
     Observable_createWithConfig(observer => {

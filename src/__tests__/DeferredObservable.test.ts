@@ -10,11 +10,11 @@ import {
 } from "../__internal__/testing.js";
 import { identityLazy, pipe } from "../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../types.js";
-import HigherOrderObservableBaseTypeClassTests from "./fixtures/HigherOrderObservableBaseTypeClassTests.js";
+import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 
 testModule(
   "DeferredObservable",
-  HigherOrderObservableBaseTypeClassTests<DeferredObservable.Type>(
+  HigherOrderObservableTypeClassTests<DeferredObservable.Type>(
     DeferredObservable,
     identityLazy,
   ),

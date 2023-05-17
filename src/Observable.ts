@@ -80,6 +80,7 @@ import {
   Optional,
   Predicate,
   Reducer,
+  SideEffect,
   SideEffect1,
   TypePredicate,
   Updater,
@@ -92,7 +93,6 @@ import {
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
-  DisposableOrTeardown,
   EnumerableLike,
   EnumeratorLike,
   EventSourceLike,
@@ -1114,8 +1114,12 @@ export interface ObservableModule {
   never<T>(): MulticastObservableLike<T>;
 
   onSubscribe<T>(
-    f: Factory<DisposableOrTeardown | void>,
+    f: Factory<DisposableLike>,
   ): EnumerableUpperBoundObservableOperator<T, T>;
+  onSubscribe<T>(
+    f: Factory<SideEffect1<Optional<Error>>>,
+  ): EnumerableUpperBoundObservableOperator<T, T>;
+  onSubscribe<T>(f: SideEffect): EnumerableUpperBoundObservableOperator<T, T>;
 
   pairwise<T>(): EnumerableUpperBoundObservableOperator<T, readonly [T, T]>;
 

@@ -22,7 +22,7 @@ import {
   DeferredObservableLike,
   DisposableLike,
   EnumerableLike,
-  HigherOrderObservableBaseTypeClass,
+  HigherOrderObservableTypeClass,
   MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -54,7 +54,7 @@ export interface DeferredObservableContainer extends Container {
 export type Type = DeferredObservableContainer;
 
 export interface DeferredObservableModule
-  extends HigherOrderObservableBaseTypeClass<Type, Type> {
+  extends HigherOrderObservableTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

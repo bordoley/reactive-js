@@ -2,7 +2,7 @@
 
 import { mix, props } from "../../__internal__/mixins.js";
 import { __DisposableMixin_disposables } from "../../__internal__/symbols.js";
-import { isFunction, newInstance, none } from "../../functions.js";
+import { isFunction, newInstance, none, } from "../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../types.js";
 const doDispose = (instance, disposable) => {
     const error = instance[DisposableLike_error];

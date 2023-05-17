@@ -16,7 +16,7 @@ import {
   Container,
   Container_T,
   Container_type,
-  HigherOrderObservableBaseTypeClass,
+  HigherOrderObservableTypeClass,
   MulticastObservableLike,
 } from "./types.js";
 
@@ -31,7 +31,7 @@ export interface MulticastObservableContainer extends Container {
 export type Type = MulticastObservableContainer;
 
 export interface MulticastObservableModule
-  extends HigherOrderObservableBaseTypeClass<Type, DeferredObservable.Type> {
+  extends HigherOrderObservableTypeClass<Type, DeferredObservable.Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
