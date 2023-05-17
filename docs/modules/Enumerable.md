@@ -52,6 +52,7 @@
 
 ### Other Functions
 
+- [buffer](Enumerable.md#buffer)
 - [compute](Enumerable.md#compute)
 - [generate](Enumerable.md#generate)
 - [throws](Enumerable.md#throws)
@@ -1188,6 +1189,28 @@ ___
 ___
 
 ## Other Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/types.EnumerableContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### compute
 

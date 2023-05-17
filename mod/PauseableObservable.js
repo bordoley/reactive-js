@@ -1,5 +1,6 @@
 /// <reference types="./PauseableObservable.d.ts" />
 
+import PauseableObservable_buffer from "./PauseableObservable/__internal__/PauseableObservable.buffer.js";
 import PauseableObservable_dispatchTo from "./PauseableObservable/__internal__/PauseableObservable.dispatchTo.js";
 import PauseableObservable_distinctUntilChanged from "./PauseableObservable/__internal__/PauseableObservable.distinctUntilChanged.js";
 import PauseableObservable_enqueue from "./PauseableObservable/__internal__/PauseableObservable.enqueue.js";
@@ -17,6 +18,7 @@ import PauseableObservable_skipFirst from "./PauseableObservable/__internal__/Pa
 import PauseableObservable_takeFirst from "./PauseableObservable/__internal__/PauseableObservable.takeFirst.js";
 import PauseableObservable_takeLast from "./PauseableObservable/__internal__/PauseableObservable.takeLast.js";
 import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/PauseableObservable.takeWhile.js";
+export const buffer = PauseableObservable_buffer;
 export const dispatchTo = PauseableObservable_dispatchTo;
 export const distinctUntilChanged = PauseableObservable_distinctUntilChanged;
 export const enqueue = PauseableObservable_enqueue;

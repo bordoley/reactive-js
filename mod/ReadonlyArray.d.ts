@@ -46,6 +46,7 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Typ
     }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 }
 export type Signature = ReadonlyArrayModule;
+export declare const buffer: Signature["buffer"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

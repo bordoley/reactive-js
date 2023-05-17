@@ -1,3 +1,4 @@
+import PauseableObservable_buffer from "./PauseableObservable/__internal__/PauseableObservable.buffer.js";
 import PauseableObservable_dispatchTo from "./PauseableObservable/__internal__/PauseableObservable.dispatchTo.js";
 import PauseableObservable_distinctUntilChanged from "./PauseableObservable/__internal__/PauseableObservable.distinctUntilChanged.js";
 import PauseableObservable_enqueue from "./PauseableObservable/__internal__/PauseableObservable.enqueue.js";
@@ -51,6 +52,7 @@ export interface PauseableObservableModule extends ContainerTypeClass<Type> {
 
 export type Signature = PauseableObservableModule;
 
+export const buffer: Signature["buffer"] = PauseableObservable_buffer;
 export const dispatchTo: Signature["dispatchTo"] =
   PauseableObservable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =

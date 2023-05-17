@@ -41,6 +41,7 @@
 
 ### Other Functions
 
+- [buffer](Enumerator.md#buffer)
 - [toObservable](Enumerator.md#toobservable)
 
 ### Transform Functions
@@ -546,6 +547,28 @@ this predicate is not satisfied.
 ___
 
 ## Other Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorContainer`](../interfaces/types.EnumeratorContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### toObservable
 

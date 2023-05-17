@@ -1,6 +1,7 @@
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
+import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -213,6 +214,10 @@ export interface ObservableModule {
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ): EnumerableUpperBoundObservableOperator<T, T>;
+
+  buffer<T>(
+    count: number,
+  ): EnumerableUpperBoundObservableOperator<T, readonly T[]>;
 
   concat<T>(
     fst: EnumerableLike<T>,
@@ -1287,6 +1292,7 @@ export type Signature = ObservableModule;
 export const animate: Signature["animate"] = Observable_animate;
 export const backpressureStrategy: Signature["backpressureStrategy"] =
   Observable_backpressureStrategy;
+export const buffer: Signature["buffer"] = Observable_buffer;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;

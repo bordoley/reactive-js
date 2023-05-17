@@ -19,6 +19,8 @@ import {
   SchedulerLike,
 } from "../types.js";
 import {
+  __BufferingLike_buffer as BufferingLike_buffer,
+  __BufferingLike_count as BufferingLike_count,
   __ContinuationLike_activeChild as ContinuationLike_activeChild,
   __ContinuationLike_parent as ContinuationLike_parent,
   __ContinuationLike_run as ContinuationLike_run,
@@ -57,6 +59,8 @@ import {
 } from "./symbols.js";
 
 export {
+  BufferingLike_buffer,
+  BufferingLike_count,
   ContinuationLike_activeChild,
   ContinuationLike_parent,
   ContinuationLike_run,
@@ -162,6 +166,11 @@ export interface SchedulerTaskLike {
 export interface LiftedLike<TSrc, TState> {
   readonly [LiftedLike_source]: TSrc;
   readonly [LiftedLike_operators]: readonly Function1<TState, TState>[];
+}
+
+export interface BufferingLike<T> {
+  [BufferingLike_buffer]: T[];
+  [BufferingLike_count]: number;
 }
 
 export interface ForEachLike<T> {

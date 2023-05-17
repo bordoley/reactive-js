@@ -37,6 +37,7 @@
 ### Other Methods
 
 - [addEventHandler](EventSource.EventSourceModule.md#addeventhandler)
+- [buffer](EventSource.EventSourceModule.md#buffer)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
 
 ## Constructor Methods
@@ -534,6 +535,32 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](types.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EventSourceContainer`](types.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
 
 ___
 

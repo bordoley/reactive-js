@@ -1,6 +1,7 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
+import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
 import ReadonlyArray_concatMap from "./ReadonlyArray/__internal__/ReadonlyArray.concatMap.js";
@@ -46,6 +47,7 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
+export const buffer = ReadonlyArray_buffer;
 export const concat = ReadonlyArray_concat;
 export const concatAll = ReadonlyArray_concatAll;
 export const concatMap = ReadonlyArray_concatMap;

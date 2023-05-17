@@ -1,6 +1,7 @@
 /// <reference types="./EventSource.d.ts" />
 
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
+import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
 import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
@@ -19,6 +20,7 @@ import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFi
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
 export const addEventHandler = EventSource_addEventHandler;
+export const buffer = EventSource_buffer;
 export const create = EventSource_create;
 export const createPublisher = EventSource_createPublisher;
 export const createRefCountedPublisher = EventSource_createRefCountedPublisher;

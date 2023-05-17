@@ -1,4 +1,5 @@
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerator_buffer from "./Enumerator/__internal__/Enumerator.buffer.js";
 import Enumerator_distinctUntilChanged from "./Enumerator/__internal__/Enumerator.distinctUntilChanged.js";
 import Enumerator_empty from "./Enumerator/__internal__/Enumerator.empty.js";
 import Enumerator_forEach from "./Enumerator/__internal__/Enumerator.forEach.js";
@@ -48,6 +49,7 @@ export interface EnumeratorModule
 
 export type Signature = EnumeratorModule;
 
+export const buffer: Signature["buffer"] = Enumerator_buffer;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Enumerator_distinctUntilChanged;
 export const empty: Signature["empty"] = Enumerator_empty;

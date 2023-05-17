@@ -10,6 +10,7 @@ export interface EnumeratorModule extends ConcreteContainerBaseTypeClass<Type>, 
     }): Function1<EnumeratorLike<T>, RunnableLike<T>>;
 }
 export type Signature = EnumeratorModule;
+export declare const buffer: Signature["buffer"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const forEach: Signature["forEach"];

@@ -44,6 +44,7 @@
 
 ### Other Methods
 
+- [buffer](Enumerator.EnumeratorModule.md#buffer)
 - [toObservable](Enumerator.EnumeratorModule.md#toobservable)
 
 ### Transform Methods
@@ -625,6 +626,32 @@ this predicate is not satisfied.
 ___
 
 ## Other Methods
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumeratorContainer`](types.EnumeratorContainer.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[ContainerTypeClass](type_classes.ContainerTypeClass.md).[buffer](type_classes.ContainerTypeClass.md#buffer)
+
+___
 
 ### toObservable
 

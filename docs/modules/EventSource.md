@@ -38,6 +38,7 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
+- [buffer](EventSource.md#buffer)
 - [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
@@ -491,6 +492,28 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/types.EventSourceContainer.md), `T`, readonly `T`[]\>
 
 ___
 

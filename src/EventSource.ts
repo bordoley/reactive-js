@@ -1,4 +1,5 @@
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
+import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
 import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
@@ -62,6 +63,7 @@ export type Signature = EventSourceModule;
 
 export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
+export const buffer: Signature["buffer"] = EventSource_buffer;
 export const create: Signature["create"] = EventSource_create;
 export const createPublisher: Signature["createPublisher"] =
   EventSource_createPublisher;

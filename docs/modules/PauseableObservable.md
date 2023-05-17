@@ -31,6 +31,7 @@
 
 ### Other Functions
 
+- [buffer](PauseableObservable.md#buffer)
 - [dispatchTo](PauseableObservable.md#dispatchto)
 - [enqueue](PauseableObservable.md#enqueue)
 - [sinkInto](PauseableObservable.md#sinkinto)
@@ -418,6 +419,28 @@ this predicate is not satisfied.
 ___
 
 ## Other Functions
+
+### buffer
+
+▸ **buffer**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/types.PauseableObservableContainer.md), `T`, readonly `T`[]\>
+
+___
 
 ### dispatchTo
 
