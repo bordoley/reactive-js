@@ -4,7 +4,11 @@
 
 ## Table of contents
 
-### Interfaces
+### Container Interfaces
+
+- [MulticastObservableContainer](../interfaces/MulticastObservable.MulticastObservableContainer.md)
+
+### Other Interfaces
 
 - [MulticastObservableModule](../interfaces/MulticastObservable.MulticastObservableModule.md)
 
@@ -41,13 +45,13 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md)
+Ƭ **Type**: [`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md)
 
 ## Operator Functions
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -60,13 +64,13 @@ Container by concatenating the inner sources in order.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -83,13 +87,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -99,13 +103,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -122,13 +126,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -147,13 +151,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -174,13 +178,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 ___
 
 ### scanLast
 
-▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -198,13 +202,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `TAcc`\>
 
 ___
 
 ### scanMany
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -222,13 +226,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `TAcc`\>
 
 ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -238,13 +242,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -261,7 +265,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
 
 ___
 
@@ -269,7 +273,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -285,7 +289,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `T`, `T`\>
 
 ___
 

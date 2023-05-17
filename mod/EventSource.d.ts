@@ -1,6 +1,13 @@
 import { Function1, SideEffect1 } from "./functions.js";
 import { ContainerTypeClass } from "./type-classes.js";
-import { DisposableLike, EventListenerLike, EventPublisherLike, EventSourceContainer, EventSourceLike, MulticastObservableLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastObservableLike } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EventSourceContainer extends Container {
+    readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
+}
 export type Type = EventSourceContainer;
 export interface EventSourceModule extends ContainerTypeClass<Type> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<EventSourceLike<T>, DisposableLike>;

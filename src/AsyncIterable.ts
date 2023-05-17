@@ -2,7 +2,9 @@ import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.
 import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterable.toObservable.js";
 import { Function1 } from "./functions.js";
 import {
-  AsyncIterableContainer,
+  Container,
+  Container_T,
+  Container_type,
   DeferredObservableLike,
   DisposableLike,
   PauseableObservableLike,
@@ -10,6 +12,14 @@ import {
   QueueableLike_backpressureStrategy,
   SchedulerLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncIterableContainer extends Container {
+  readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+}
 
 export type Type = AsyncIterableContainer;
 

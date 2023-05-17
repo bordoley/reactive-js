@@ -1,5 +1,13 @@
 import { ConcreteAssociativeKeyedContainerTypeClass } from "./type-classes.js";
-import { KeyOf, ReadonlyMapContainer } from "./types.js";
+import { Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface ReadonlyMapContainer<TKey = unknown> extends KeyedContainer<TKey> {
+    readonly [Container_type]?: ReadonlyMap<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
+    readonly [KeyedContainer_TKey]?: TKey;
+}
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
 export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {

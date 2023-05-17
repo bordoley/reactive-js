@@ -41,6 +41,7 @@ import Enumerator_zipWith from "./Enumerator/__internal__/Enumerator.zipWith.js"
 import Iterable_enumerate from "./Iterable/__internal__/Iterable.enumerate.js";
 import Optional_enumerate from "./Optional/__internal__/Optional.enumerate.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
+import { Container_type, } from "./types.js";
 export const buffer = Enumerator_buffer;
 export const concat = Enumerator_concat;
 export const concatAll = Enumerator_concatAll;

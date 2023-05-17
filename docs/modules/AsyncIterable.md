@@ -4,7 +4,11 @@
 
 ## Table of contents
 
-### Interfaces
+### Container Interfaces
+
+- [AsyncIterableContainer](../interfaces/AsyncIterable.AsyncIterableContainer.md)
+
+### Other Interfaces
 
 - [AsyncIterableModule](../interfaces/AsyncIterable.AsyncIterableModule.md)
 
@@ -28,7 +32,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`AsyncIterableContainer`](../interfaces/types.AsyncIterableContainer.md)
+Ƭ **Type**: [`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md)
 
 ## Functions
 

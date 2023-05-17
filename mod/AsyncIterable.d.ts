@@ -1,5 +1,12 @@
 import { Function1 } from "./functions.js";
-import { AsyncIterableContainer, DeferredObservableLike, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface AsyncIterableContainer extends Container {
+    readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
+}
 export type Type = AsyncIterableContainer;
 export interface AsyncIterableModule {
     flow<T>(scheduler: SchedulerLike, options?: {

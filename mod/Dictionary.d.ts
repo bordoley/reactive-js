@@ -1,5 +1,13 @@
 import { AssociativeKeyedContainerTypeClass } from "./type-classes.js";
-import { DictionaryContainer, KeyedContainer_TKey } from "./types.js";
+import { Container_T, Container_type, DictionaryLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DictionaryContainer<TKey = unknown> extends KeyedContainer {
+    readonly [Container_type]?: DictionaryLike<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
+    readonly [KeyedContainer_TKey]?: TKey;
+}
 export type Type<TKey = unknown> = DictionaryContainer<TKey>;
 export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
 export interface DictionaryModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends AssociativeKeyedContainerTypeClass<TType, TKey> {

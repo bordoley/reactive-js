@@ -1,6 +1,13 @@
 import { Factory, Updater } from "./functions.js";
 import { EnumerableContainerTypeClass } from "./type-classes.js";
-import { Container, Container_T, Container_type, DisposableLike, EnumerableContainer, EnumerableLike, EnumeratorLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableContainer extends Container {
+    readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
 export type Type = EnumerableContainer;
 export interface DisposableEnumeratorType extends Container {
     readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> & DisposableLike;

@@ -38,7 +38,7 @@
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 Converts a higher-order Container into a first-order
 Container by concatenating the inner sources in order.
@@ -51,7 +51,7 @@ Container by concatenating the inner sources in order.
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -61,7 +61,7 @@ ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -78,7 +78,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -88,7 +88,7 @@ ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -98,7 +98,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -108,7 +108,7 @@ ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -125,7 +125,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -135,7 +135,7 @@ ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -154,7 +154,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -164,7 +164,7 @@ ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -185,7 +185,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -195,7 +195,7 @@ ___
 
 ### scanLast
 
-▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `TAcc`\>
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -213,7 +213,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `TAcc`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -223,7 +223,7 @@ ___
 
 ### scanMany
 
-▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `TAcc`\>
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -241,7 +241,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `TAcc`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -251,7 +251,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -261,7 +261,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, `T`\>
 
 #### Inherited from
 
@@ -271,7 +271,7 @@ ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -288,7 +288,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -300,7 +300,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -316,7 +316,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](types.DeferredObservableContainer.md), `T`, `T`\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
 
 #### Inherited from
 

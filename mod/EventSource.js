@@ -19,6 +19,7 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import { Container_type, } from "./types.js";
 export const addEventHandler = EventSource_addEventHandler;
 export const buffer = EventSource_buffer;
 export const create = EventSource_create;

@@ -13,6 +13,7 @@ import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
 import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
 import { identityLazy } from "./functions.js";
+import { Container_type, KeyedContainer_TKey, } from "./types.js";
 /**
  * @category Functor
  */

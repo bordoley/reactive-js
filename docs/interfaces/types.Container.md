@@ -8,33 +8,33 @@
 
 - **`Container`**
 
+  ↳ [`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md)
+
+  ↳ [`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md)
+
+  ↳ [`DisposableContainer`](Disposable.DisposableContainer.md)
+
+  ↳ [`EnumerableContainer`](Enumerable.EnumerableContainer.md)
+
   ↳ [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)
 
+  ↳ [`EnumeratorContainer`](Enumerator.EnumeratorContainer.md)
+
+  ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)
+
+  ↳ [`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md)
+
+  ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
+
+  ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
+
+  ↳ [`PromiseContainer`](Promise.PromiseContainer.md)
+
+  ↳ [`RunnableContainer`](Runnable.RunnableContainer.md)
+
+  ↳ [`StoreContainer`](Store.StoreContainer.md)
+
   ↳ [`KeyedContainer`](types.KeyedContainer.md)
-
-  ↳ [`AsyncIterableContainer`](types.AsyncIterableContainer.md)
-
-  ↳ [`DisposableContainer`](types.DisposableContainer.md)
-
-  ↳ [`DeferredObservableContainer`](types.DeferredObservableContainer.md)
-
-  ↳ [`EnumerableContainer`](types.EnumerableContainer.md)
-
-  ↳ [`EnumeratorContainer`](types.EnumeratorContainer.md)
-
-  ↳ [`EventSourceContainer`](types.EventSourceContainer.md)
-
-  ↳ [`ObservableContainer`](types.ObservableContainer.md)
-
-  ↳ [`PauseableObservableContainer`](types.PauseableObservableContainer.md)
-
-  ↳ [`PromiseContainer`](types.PromiseContainer.md)
-
-  ↳ [`RunnableContainer`](types.RunnableContainer.md)
-
-  ↳ [`MulticastObservableContainer`](types.MulticastObservableContainer.md)
-
-  ↳ [`StoreContainer`](types.StoreContainer.md)
 
 ## Table of contents
 

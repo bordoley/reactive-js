@@ -8,7 +8,11 @@
 
 - [Animation](Observable.Animation.md)
 
-### Interfaces
+### Container Interfaces
+
+- [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
+
+### Other Interfaces
 
 - [ObservableModule](../interfaces/Observable.ObservableModule.md)
 
@@ -247,7 +251,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`ObservableContainer`](../interfaces/types.ObservableContainer.md)
+Ƭ **Type**: [`ObservableContainer`](../interfaces/Observable.ObservableContainer.md)
 
 ## Operator Functions
 

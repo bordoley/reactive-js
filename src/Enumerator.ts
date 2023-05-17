@@ -42,11 +42,21 @@ import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.
 import { Function1 } from "./functions.js";
 import { RunnableContainerTypeClass } from "./type-classes.js";
 import {
+  Container,
+  Container_T,
+  Container_type,
   EnumerableLike,
-  EnumeratorContainer,
   EnumeratorLike,
   RunnableLike,
 } from "./types.js";
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
 
 export type Type = EnumeratorContainer;
 
