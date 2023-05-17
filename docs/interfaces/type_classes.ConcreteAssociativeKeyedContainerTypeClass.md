@@ -403,6 +403,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlymap)
+
 ___
 
 ### toReadonlyObjectMap
@@ -419,6 +423,10 @@ ___
 #### Returns
 
 `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
 
 ___
 

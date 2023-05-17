@@ -33,6 +33,8 @@
 - [fromReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#fromreadonlymap)
 - [fromReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#fromreadonlyobjectmap)
 - [toDictionary](type_classes.AssociativeKeyedContainerTypeClass.md#todictionary)
+- [toReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlymap)
+- [toReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
 
 ### Transform Methods
 
@@ -155,6 +157,40 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+___
+
+### toReadonlyMap
+
+▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### toReadonlyObjectMap
+
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 ___
 

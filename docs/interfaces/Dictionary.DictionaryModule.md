@@ -29,6 +29,8 @@
 - [fromReadonlyMap](Dictionary.DictionaryModule.md#fromreadonlymap)
 - [fromReadonlyObjectMap](Dictionary.DictionaryModule.md#fromreadonlyobjectmap)
 - [toDictionary](Dictionary.DictionaryModule.md#todictionary)
+- [toReadonlyMap](Dictionary.DictionaryModule.md#toreadonlymap)
+- [toReadonlyObjectMap](Dictionary.DictionaryModule.md#toreadonlyobjectmap)
 
 ### Transform Methods
 
@@ -163,6 +165,48 @@ ___
 #### Inherited from
 
 [AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toDictionary](type_classes.AssociativeKeyedContainerTypeClass.md#todictionary)
+
+___
+
+### toReadonlyMap
+
+▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlymap)
+
+___
+
+### toReadonlyObjectMap
+
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`ReadonlyObjectMapContainer`](types.ReadonlyObjectMapContainer.md)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`TType`, `TKey`, `T`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+
+#### Inherited from
+
+[AssociativeKeyedContainerTypeClass](type_classes.AssociativeKeyedContainerTypeClass.md).[toReadonlyObjectMap](type_classes.AssociativeKeyedContainerTypeClass.md#toreadonlyobjectmap)
 
 ___
 

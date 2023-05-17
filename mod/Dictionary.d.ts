@@ -19,4 +19,6 @@ export declare const keySet: Signature["keySet"];
 export declare const reduce: Signature["reduce"];
 export declare const reduceWithKey: Signature["reduceWithKey"];
 export declare const toDictionary: Signature["toDictionary"];
+export declare const toReadonlyMap: Signature["toReadonlyMap"];
+export declare const toReadonlyObjectMap: Signature["toReadonlyObjectMap"];
 export declare const values: Signature["values"];

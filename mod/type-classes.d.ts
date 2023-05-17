@@ -399,6 +399,8 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
      */
     keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
     toDictionary<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, DictionaryLike<TKey, T>>;
+    toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
+    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
 }
 export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
     /**
@@ -411,6 +413,4 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedConta
      * @category Constructor
      */
     fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
-    toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
-    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMapContainer> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
 }
