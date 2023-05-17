@@ -33,6 +33,7 @@
 - [backpressureStrategy](Observable.md#backpressurestrategy)
 - [buffer](Observable.md#buffer)
 - [catchError](Observable.md#catcherror)
+- [combineLatest](Observable.md#combinelatest)
 - [concat](Observable.md#concat)
 - [concatMany](Observable.md#concatmany)
 - [concatWith](Observable.md#concatwith)
@@ -357,6 +358,658 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### combineLatest
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
+| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
+| `i` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+| `e` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TE`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+| `e` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TE`\> |
+| `f` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TF`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+| `e` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TE`\> |
+| `f` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TF`\> |
+| `g` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TG`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+| `e` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TE`\> |
+| `f` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TF`\> |
+| `g` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TG`\> |
+| `h` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TH`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TA`\> |
+| `b` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TB`\> |
+| `c` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TC`\> |
+| `d` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TD`\> |
+| `e` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TE`\> |
+| `f` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TF`\> |
+| `g` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TG`\> |
+| `h` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TH`\> |
+| `i` | [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TI`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
