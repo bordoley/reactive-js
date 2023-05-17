@@ -25,6 +25,7 @@ import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsy
 import Observable_flatMapAsync from "./Observable/__internal__/Observable.flatMapAsync.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkCombineLatest from "./Observable/__internal__/Observable.forkCombineLatest.js";
 import Observable_forkConcat from "./Observable/__internal__/Observable.forkConcat.js";
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
@@ -93,6 +94,7 @@ export const firstAsync = Observable_firstAsync;
 export const flatMapAsync = Observable_flatMapAsync;
 export const flatMapIterable = Observable_flatMapIterable;
 export const forEach = Observable_forEach;
+export const forkCombineLatest = Observable_forkCombineLatest;
 export const forkConcat = Observable_forkConcat;
 export const forkMerge = Observable_forkMerge;
 export const forkZip = Observable_forkZip;
