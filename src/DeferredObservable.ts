@@ -8,6 +8,8 @@ import DeferredObservable_mergeMap from "./DeferredObservable/__internal__/Defer
 import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
+import DeferredObservable_scanLast from "./DeferredObservable/__internal__/DeferredObservable.scanLast.js";
+import DeferredObservable_scanMany from "./DeferredObservable/__internal__/DeferredObservable.scanMany.js";
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
@@ -97,6 +99,8 @@ export const mergeMap: Signature["mergeMap"] = DeferredObservable_mergeMap;
 export const multicast: Signature["multicast"] = DeferredObservable_multicast;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
 export const retry: Signature["retry"] = DeferredObservable_retry;
+export const scanLast: Signature["scanLast"] = DeferredObservable_scanLast;
+export const scanMany: Signature["scanMany"] = DeferredObservable_scanMany;
 export const share: Signature["share"] = DeferredObservable_share;
 export const switchAll: Signature["switchAll"] = DeferredObservable_switchAll;
 export const switchMap: Signature["switchMap"] = DeferredObservable_switchMap;

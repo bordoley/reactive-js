@@ -49,6 +49,8 @@
 - [pairwise](Runnable.RunnableModule.md#pairwise)
 - [pick](Runnable.RunnableModule.md#pick)
 - [scan](Runnable.RunnableModule.md#scan)
+- [scanLast](Runnable.RunnableModule.md#scanlast)
+- [scanMany](Runnable.RunnableModule.md#scanmany)
 - [skipFirst](Runnable.RunnableModule.md#skipfirst)
 - [startWith](Runnable.RunnableModule.md#startwith)
 - [switchAll](Runnable.RunnableModule.md#switchall)
@@ -1026,6 +1028,62 @@ and emits each intermediate result.
 #### Inherited from
 
 [RunnableContainerTypeClass](type_classes.RunnableContainerTypeClass.md).[scan](type_classes.RunnableContainerTypeClass.md#scan)
+
+___
+
+### scanLast
+
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](types.RunnableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanLast](type_classes.HigherOrderObservableBaseTypeClass.md#scanlast)
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](types.RunnableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanMany](type_classes.HigherOrderObservableBaseTypeClass.md#scanmany)
 
 ___
 

@@ -21,6 +21,8 @@
 - [exhaustMap](MulticastObservable.md#exhaustmap)
 - [mergeAll](MulticastObservable.md#mergeall)
 - [mergeMap](MulticastObservable.md#mergemap)
+- [scanLast](MulticastObservable.md#scanlast)
+- [scanMany](MulticastObservable.md#scanmany)
 - [switchAll](MulticastObservable.md#switchall)
 - [switchMap](MulticastObservable.md#switchmap)
 
@@ -173,6 +175,54 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `TA`, `TB`\>
+
+___
+
+### scanLast
+
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/types.MulticastObservableContainer.md), `T`, `TAcc`\>
 
 ___
 

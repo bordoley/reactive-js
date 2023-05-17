@@ -20,6 +20,8 @@
 - [exhaustMap](MulticastObservable.MulticastObservableModule.md#exhaustmap)
 - [mergeAll](MulticastObservable.MulticastObservableModule.md#mergeall)
 - [mergeMap](MulticastObservable.MulticastObservableModule.md#mergemap)
+- [scanLast](MulticastObservable.MulticastObservableModule.md#scanlast)
+- [scanMany](MulticastObservable.MulticastObservableModule.md#scanmany)
 - [switchAll](MulticastObservable.MulticastObservableModule.md#switchall)
 - [switchMap](MulticastObservable.MulticastObservableModule.md#switchmap)
 
@@ -184,6 +186,62 @@ ___
 #### Inherited from
 
 [HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[mergeMap](type_classes.HigherOrderObservableBaseTypeClass.md#mergemap)
+
+___
+
+### scanLast
+
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanLast](type_classes.HigherOrderObservableBaseTypeClass.md#scanlast)
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`MulticastObservableContainer`](types.MulticastObservableContainer.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[HigherOrderObservableBaseTypeClass](type_classes.HigherOrderObservableBaseTypeClass.md).[scanMany](type_classes.HigherOrderObservableBaseTypeClass.md#scanmany)
 
 ___
 

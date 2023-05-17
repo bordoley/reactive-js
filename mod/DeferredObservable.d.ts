@@ -34,6 +34,8 @@ export declare const mergeMap: Signature["mergeMap"];
 export declare const multicast: Signature["multicast"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
+export declare const scanLast: Signature["scanLast"];
+export declare const scanMany: Signature["scanMany"];
 export declare const share: Signature["share"];
 export declare const switchAll: Signature["switchAll"];
 export declare const switchMap: Signature["switchMap"];

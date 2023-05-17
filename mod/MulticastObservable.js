@@ -7,6 +7,8 @@ import MulticastObservable_exhaust from "./MulticastObservable/__internal__/Mult
 import MulticastObservable_exhaustMap from "./MulticastObservable/__internal__/MulticastObservable.exhaustMap.js";
 import MulticastObservable_mergeAll from "./MulticastObservable/__internal__/MulticastObservable.mergeAll.js";
 import MulticastObservable_mergeMap from "./MulticastObservable/__internal__/MulticastObservable.mergeMap.js";
+import MulticastObservable_scanLast from "./MulticastObservable/__internal__/MulticastObservable.scanLast.js";
+import MulticastObservable_scanMany from "./MulticastObservable/__internal__/MulticastObservable.scanMany.js";
 import MulticastObservable_switchAll from "./MulticastObservable/__internal__/MulticastObservable.switchAll.js";
 import MulticastObservable_switchMap from "./MulticastObservable/__internal__/MulticastObservable.switchMap.js";
 import { MulticastObservable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -18,5 +20,7 @@ export const exhaust = MulticastObservable_exhaust;
 export const exhaustMap = MulticastObservable_exhaustMap;
 export const mergeAll = MulticastObservable_mergeAll;
 export const mergeMap = MulticastObservable_mergeMap;
+export const scanLast = MulticastObservable_scanLast;
+export const scanMany = MulticastObservable_scanMany;
 export const switchAll = MulticastObservable_switchAll;
 export const switchMap = MulticastObservable_switchMap;

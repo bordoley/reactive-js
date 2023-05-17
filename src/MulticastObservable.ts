@@ -5,6 +5,8 @@ import MulticastObservable_exhaust from "./MulticastObservable/__internal__/Mult
 import MulticastObservable_exhaustMap from "./MulticastObservable/__internal__/MulticastObservable.exhaustMap.js";
 import MulticastObservable_mergeAll from "./MulticastObservable/__internal__/MulticastObservable.mergeAll.js";
 import MulticastObservable_mergeMap from "./MulticastObservable/__internal__/MulticastObservable.mergeMap.js";
+import MulticastObservable_scanLast from "./MulticastObservable/__internal__/MulticastObservable.scanLast.js";
+import MulticastObservable_scanMany from "./MulticastObservable/__internal__/MulticastObservable.scanMany.js";
 import MulticastObservable_switchAll from "./MulticastObservable/__internal__/MulticastObservable.switchAll.js";
 import MulticastObservable_switchMap from "./MulticastObservable/__internal__/MulticastObservable.switchMap.js";
 import { MulticastObservable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -43,5 +45,7 @@ export const exhaustMap: Signature["exhaustMap"] =
   MulticastObservable_exhaustMap;
 export const mergeAll: Signature["mergeAll"] = MulticastObservable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = MulticastObservable_mergeMap;
+export const scanLast: Signature["scanLast"] = MulticastObservable_scanLast;
+export const scanMany: Signature["scanMany"] = MulticastObservable_scanMany;
 export const switchAll: Signature["switchAll"] = MulticastObservable_switchAll;
 export const switchMap: Signature["switchMap"] = MulticastObservable_switchMap;

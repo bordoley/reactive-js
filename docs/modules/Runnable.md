@@ -41,6 +41,8 @@
 - [pairwise](Runnable.md#pairwise)
 - [pick](Runnable.md#pick)
 - [scan](Runnable.md#scan)
+- [scanLast](Runnable.md#scanlast)
+- [scanMany](Runnable.md#scanmany)
 - [skipFirst](Runnable.md#skipfirst)
 - [startWith](Runnable.md#startwith)
 - [switchAll](Runnable.md#switchall)
@@ -853,6 +855,54 @@ and emits each intermediate result.
 | :------ | :------ | :------ |
 | `scanner` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
 | `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> | The initial accumulation value. |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `TAcc`\>
+
+___
+
+### scanLast
+
+▸ **scanLast**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `TAcc`\>
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/types.RunnableContainer.md), `T`, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
 
 #### Returns
 
