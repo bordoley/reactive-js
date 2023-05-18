@@ -45,8 +45,8 @@ import {
   Container_T,
   Container_type,
   EnumerableLike,
+  EnumeratorContainerTypeClass,
   EnumeratorLike,
-  RunnableContainerTypeClass,
   RunnableLike,
 } from "./types.js";
 
@@ -60,7 +60,7 @@ export interface EnumeratorContainer extends Container {
 
 export type Type = EnumeratorContainer;
 
-export interface EnumeratorModule extends RunnableContainerTypeClass<Type> {
+export interface EnumeratorModule extends EnumeratorContainerTypeClass<Type> {
   toObservable<T>(): Function1<EnumeratorLike<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;

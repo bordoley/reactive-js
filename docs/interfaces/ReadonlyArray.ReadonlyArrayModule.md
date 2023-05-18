@@ -47,6 +47,7 @@
 - [mapWithKey](ReadonlyArray.ReadonlyArrayModule.md#mapwithkey)
 - [pairwise](ReadonlyArray.ReadonlyArrayModule.md#pairwise)
 - [pick](ReadonlyArray.ReadonlyArrayModule.md#pick)
+- [repeat](ReadonlyArray.ReadonlyArrayModule.md#repeat)
 - [scan](ReadonlyArray.ReadonlyArrayModule.md#scan)
 - [skipFirst](ReadonlyArray.ReadonlyArrayModule.md#skipfirst)
 - [startWith](ReadonlyArray.ReadonlyArrayModule.md#startwith)
@@ -1115,6 +1116,32 @@ Omit.pick
 #### Inherited from
 
 Omit.pick
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+Omit.repeat
 
 ___
 

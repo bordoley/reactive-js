@@ -42,6 +42,7 @@
 - [mapTo](Enumerable.EnumerableModule.md#mapto)
 - [pairwise](Enumerable.EnumerableModule.md#pairwise)
 - [pick](Enumerable.EnumerableModule.md#pick)
+- [repeat](Enumerable.EnumerableModule.md#repeat)
 - [scan](Enumerable.EnumerableModule.md#scan)
 - [skipFirst](Enumerable.EnumerableModule.md#skipfirst)
 - [startWith](Enumerable.EnumerableModule.md#startwith)
@@ -982,6 +983,32 @@ ___
 #### Inherited from
 
 [EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[pick](types.EnumerableContainerTypeClass.md#pick)
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[repeat](types.EnumerableContainerTypeClass.md#repeat)
 
 ___
 

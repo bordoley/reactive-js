@@ -48,6 +48,7 @@
 - [mapTo](Enumerable.md#mapto)
 - [pairwise](Enumerable.md#pairwise)
 - [pick](Enumerable.md#pick)
+- [repeat](Enumerable.md#repeat)
 - [scan](Enumerable.md#scan)
 - [skipFirst](Enumerable.md#skipfirst)
 - [startWith](Enumerable.md#startwith)
@@ -864,6 +865,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
 
 ___
 

@@ -642,7 +642,7 @@ export interface ContainerTypeClass<C extends Container> {
     }): ContainerOperator<C, T, T>;
 }
 /** @category TypeClass */
-export interface RunnableContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface EnumeratorContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -789,6 +789,12 @@ export interface RunnableContainerTypeClass<C extends Container> extends Contain
     zipWith<TA, TB, TC, TD, TE, TF, TG>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+export interface RunnableContainerTypeClass<C extends Container> extends EnumeratorContainerTypeClass<C> {
+    /**
+     * @category Operator
+     */
+    repeat<T>(count: number): ContainerOperator<C, T, T>;
 }
 /** @category TypeClass */
 export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C> {

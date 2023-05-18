@@ -51,6 +51,7 @@
 - [mapWithKey](ReadonlyArray.md#mapwithkey)
 - [pairwise](ReadonlyArray.md#pairwise)
 - [pick](ReadonlyArray.md#pick)
+- [repeat](ReadonlyArray.md#repeat)
 - [scan](ReadonlyArray.md#scan)
 - [skipFirst](ReadonlyArray.md#skipfirst)
 - [startWith](ReadonlyArray.md#startwith)
@@ -985,6 +986,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
 
 ___
 

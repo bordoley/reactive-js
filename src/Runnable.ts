@@ -1,3 +1,4 @@
+import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -226,6 +227,7 @@ export const noneSatisfy: Signature["noneSatisfy"] = Runnable_noneSatisfy;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Runnable_reduce;
+export const repeat: Signature["repeat"] = DeferredObservable_repeat;
 export const run: Signature["run"] = Runnable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanLast: Signature["scanLast"] = Runnable_scanLast;

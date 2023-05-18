@@ -52,6 +52,7 @@ export declare const noneSatisfy: Signature["noneSatisfy"];
 export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
+export declare const repeat: Signature["repeat"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];

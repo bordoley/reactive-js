@@ -45,6 +45,10 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
+### Other Interfaces
+
+- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
+
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)
@@ -77,9 +81,9 @@
 - [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
 - [EnumerableContainerTypeClass](../interfaces/types.EnumerableContainerTypeClass.md)
+- [EnumeratorContainerTypeClass](../interfaces/types.EnumeratorContainerTypeClass.md)
 - [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
-- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
 
 ### Collection Type Aliases
 

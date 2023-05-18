@@ -43,6 +43,7 @@
 - [mergeMap](Runnable.RunnableModule.md#mergemap)
 - [pairwise](Runnable.RunnableModule.md#pairwise)
 - [pick](Runnable.RunnableModule.md#pick)
+- [repeat](Runnable.RunnableModule.md#repeat)
 - [scan](Runnable.RunnableModule.md#scan)
 - [scanLast](Runnable.RunnableModule.md#scanlast)
 - [scanMany](Runnable.RunnableModule.md#scanmany)
@@ -998,6 +999,32 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[pick](types.RunnableContainerTypeClass.md#pick)
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`RunnableContainer`](Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[repeat](types.RunnableContainerTypeClass.md#repeat)
 
 ___
 

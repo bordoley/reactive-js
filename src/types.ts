@@ -902,7 +902,7 @@ export interface ContainerTypeClass<C extends Container> {
 }
 
 /** @category TypeClass */
-export interface RunnableContainerTypeClass<C extends Container>
+export interface EnumeratorContainerTypeClass<C extends Container>
   extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
@@ -1197,6 +1197,14 @@ export interface RunnableContainerTypeClass<C extends Container>
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+export interface RunnableContainerTypeClass<C extends Container>
+  extends EnumeratorContainerTypeClass<C> {
+  /**
+   * @category Operator
+   */
+  repeat<T>(count: number): ContainerOperator<C, T, T>;
 }
 
 /** @category TypeClass */

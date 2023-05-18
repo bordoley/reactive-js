@@ -34,6 +34,7 @@ import ReadonlyArray_pairwise from "./ReadonlyArray/__internal__/ReadonlyArray.p
 import ReadonlyArray_pick from "./ReadonlyArray/__internal__/ReadonlyArray.pick.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
 import ReadonlyArray_reduceWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.reduceWithKey.js";
+import ReadonlyArray_repeat from "./ReadonlyArray/__internal__/ReadonlyArray.repeat.js";
 import ReadonlyArray_scan from "./ReadonlyArray/__internal__/ReadonlyArray.scan.js";
 import ReadonlyArray_skipFirst from "./ReadonlyArray/__internal__/ReadonlyArray.skipFirst.js";
 import ReadonlyArray_someSatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
@@ -192,6 +193,7 @@ export const noneSatisfy: Signature["noneSatisfy"] = ReadonlyArray_noneSatisfy;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyArray_reduceWithKey;
+export const repeat: Signature["repeat"] = ReadonlyArray_repeat;
 export const scan: Signature["scan"] = ReadonlyArray_scan;
 export const skipFirst: Signature["skipFirst"] = ReadonlyArray_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] = ReadonlyArray_someSatisfy;

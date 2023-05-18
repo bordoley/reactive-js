@@ -46,6 +46,7 @@
 - [mergeMap](Runnable.md#mergemap)
 - [pairwise](Runnable.md#pairwise)
 - [pick](Runnable.md#pick)
+- [repeat](Runnable.md#repeat)
 - [scan](Runnable.md#scan)
 - [scanLast](Runnable.md#scanlast)
 - [scanMany](Runnable.md#scanmany)
@@ -881,6 +882,28 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
 
 ___
 
