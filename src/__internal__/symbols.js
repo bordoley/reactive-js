@@ -736,11 +736,6 @@ export const __MergeAllObserver_observablesQueue = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __MergeObserverCtx_completedCount = /*@__PURE__*/ symbol(
-  "MergeObserverCtx_completedCount",
-);
-
-/** @type {unique symbol} */
 export const __Object_init = /*@__PURE__*/ symbol("Object_init");
 
 /** @type {unique symbol} */

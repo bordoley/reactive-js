@@ -13,12 +13,13 @@ import {
 } from "../../__internal__/mixins.js";
 import { none, unsafeCast } from "../../functions.js";
 import {
+  DisposableLike,
   SinkLike_notify,
   StoreLike_value,
   WritableStoreLike,
 } from "../../types.js";
 
-const Store_create: Store.Signature["create"] = (<T>() => {
+const Store_create: Store.Signature["create"] = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     v: T;
   };
@@ -30,7 +31,7 @@ const Store_create: Store.Signature["create"] = (<T>() => {
           [StoreLike_value]: T;
         } & TProperties,
         initialValue: T,
-      ): WritableStoreLike<T> {
+      ): WritableStoreLike<T> & DisposableLike {
         init(Disposable_mixin, instance);
         init(EventSource_lazyInitPublisherMixin(), instance);
 
@@ -48,8 +49,11 @@ const Store_create: Store.Signature["create"] = (<T>() => {
         },
         set [StoreLike_value](value: T) {
           unsafeCast<TProperties & LazyInitEventSource<T>>(this);
-          this.v = value;
-          this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](value);
+
+          if (this.v !== value) {
+            this.v = value;
+            this[LazyInitEventMixin_eventPublisher]?.[SinkLike_notify](value);
+          }
         },
       },
     ),

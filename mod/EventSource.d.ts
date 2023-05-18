@@ -22,6 +22,8 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
      * @category Constructor
      */
     createRefCountedPublisher<T>(): EventPublisherLike<T>;
+    merge<T>(fst: EventSourceLike<T>, snd: EventSourceLike<T>, ...tail: readonly EventSourceLike<T>[]): EventSourceLike<T>;
+    mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
     toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = EventSourceModule;
@@ -37,6 +39,8 @@ export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
+export declare const merge: Signature["merge"];
+export declare const mergeMany: Signature["mergeMany"];
 export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const scan: Signature["scan"];

@@ -12,7 +12,6 @@ Reactive-JS
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)
 - [Enumerator](modules/Enumerator.md)
-- [EventListener](modules/EventListener.md)
 - [EventSource](modules/EventSource.md)
 - [MulticastObservable](modules/MulticastObservable.md)
 - [Observable](modules/Observable.md)

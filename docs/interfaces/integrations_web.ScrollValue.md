@@ -8,10 +8,17 @@
 
 ### Properties
 
+- [time](integrations_web.ScrollValue.md#time)
 - [x](integrations_web.ScrollValue.md#x)
 - [y](integrations_web.ScrollValue.md#y)
 
 ## Properties
+
+### time
+
+• `Readonly` **time**: `number`
+
+___
 
 ### x
 

@@ -123,7 +123,7 @@ export interface ObservableModule {
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): EnumerableUpperBoundObservableOperator<ArrayBuffer, string>;
-    defer<T>(f: Factory<MulticastObservableLike<T> & DisposableLike>): DeferredObservableLike<T>;
+    defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredObservableLike<T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): EnumerableUpperBoundObservableOperator<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;

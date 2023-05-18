@@ -2,6 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../Disposable.js";
+import * as EventSource from "../../EventSource.js";
 import IndexedBufferCollection_map from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
 import * as Observable from "../../Observable.js";
 import * as Stream from "../../Stream.js";
@@ -9,7 +10,7 @@ import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingM
 import * as Streamable from "../../Streamable.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
-import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { ObservableLike_observe, QueueableLike_enqueue, ReplayObservableLike_buffer, StreamableLike_stream, } from "../../types.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
 import * as Element from "./Element.js";
@@ -98,20 +99,20 @@ export const subscribe = /*@__PURE__*/ (() => {
             capacity: 1,
             backpressureStrategy: "drop-oldest",
         }));
-        const syncState = pipe(locationStream, Stream.syncState(state => 
+        const syncState = pipe(locationStream, Stream.syncState(state => Observable.defer(
         // Initialize the history state on page load
-        pipe(window, Element.observeEvent("popstate", (e) => {
+        pipeLazy(window, Element.eventSource("popstate"), EventSource.map((e) => {
             const { counter, title } = e.state;
             const uri = createWindowLocationURIWithPrototype({
                 ...getCurrentWindowLocationURI(),
                 title,
             });
             return { counter, replace: true, uri };
-        }), Observable.mergeWith(pipe({
+        }), EventSource.toObservable(), Observable.mergeWith(pipe({
             counter: 0,
             replace: true,
             uri: state.uri,
-        }, Observable.fromOptional())), Observable.map(returns)), (oldState, state) => {
+        }, Observable.fromOptional())), Observable.map(returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;

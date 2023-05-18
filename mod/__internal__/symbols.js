@@ -318,8 +318,6 @@ export const __MergeAllObserver_onDispose = /*@__PURE__*/ symbol("MergeAllObserv
 /** @type {unique symbol} */
 export const __MergeAllObserver_observablesQueue = /*@__PURE__*/ symbol("MergeAllObserver_observablesQueue");
 /** @type {unique symbol} */
-export const __MergeObserverCtx_completedCount = /*@__PURE__*/ symbol("MergeObserverCtx_completedCount");
-/** @type {unique symbol} */
 export const __Object_init = /*@__PURE__*/ symbol("Object_init");
 /** @type {unique symbol} */
 export const __Object_properties = /*@__PURE__*/ symbol("Object_properties");

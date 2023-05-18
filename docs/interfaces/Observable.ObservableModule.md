@@ -1192,7 +1192,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`Factory`](../modules/functions.md#factory)<[`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\> |
+| `f` | [`Factory`](../modules/functions.md#factory)<[`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\> |
 
 #### Returns
 

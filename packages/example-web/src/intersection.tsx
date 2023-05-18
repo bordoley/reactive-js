@@ -19,7 +19,7 @@ const IntersectionApp = () => {
   useDisposable(
     pipeSomeLazy(
       endOfPageRef,
-      WebElement.intersectionWith(document),
+      WebElement.intersectionEventSource(document),
       EventSource.pick("isIntersecting"),
       EventSource.keep(isTrue),
       EventSource.addEventHandler(pipeLazy(incrementBy(10), updateCount)),

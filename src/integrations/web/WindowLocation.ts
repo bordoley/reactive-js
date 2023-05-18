@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../Disposable.js";
+import * as EventSource from "../../EventSource.js";
 import IndexedBufferCollection_map from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
 import * as Observable from "../../Observable.js";
 import * as Stream from "../../Stream.js";
@@ -28,6 +29,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeLazy,
   raiseWithDebugMessage,
   returns,
 } from "../../functions.js";
@@ -273,12 +275,12 @@ export const subscribe: (
       locationStream,
       Stream.syncState(
         state =>
-          // Initialize the history state on page load
-          pipe(
-            window,
-            Element.observeEvent<Window, "popstate", unknown>(
-              "popstate",
-              (e: PopStateEvent) => {
+          Observable.defer(
+            // Initialize the history state on page load
+            pipeLazy(
+              window,
+              Element.eventSource<Window, "popstate">("popstate"),
+              EventSource.map((e: PopStateEvent) => {
                 const { counter, title } = e.state as {
                   counter: number;
                   title: string;
@@ -290,19 +292,20 @@ export const subscribe: (
                 });
 
                 return { counter, replace: true, uri };
-              },
-            ),
-            Observable.mergeWith(
-              pipe(
-                {
-                  counter: 0,
-                  replace: true,
-                  uri: state.uri,
-                },
-                Observable.fromOptional(),
+              }),
+              EventSource.toObservable(),
+              Observable.mergeWith(
+                pipe(
+                  {
+                    counter: 0,
+                    replace: true,
+                    uri: state.uri,
+                  },
+                  Observable.fromOptional(),
+                ),
               ),
+              Observable.map<TState, Updater<TState>>(returns),
             ),
-            Observable.map<TState, Updater<TState>>(returns),
           ),
         (oldState, state) => {
           const locationChanged = !areURIsEqual(state.uri, oldState.uri);

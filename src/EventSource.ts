@@ -10,6 +10,8 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_mapTo from "./EventSource/__internal__/EventSource.mapTo.js";
+import EventSource_merge from "./EventSource/__internal__/EventSource.merge.js";
+import EventSource_mergeMany from "./EventSource/__internal__/EventSource.mergeMany.js";
 import EventSource_pairwise from "./EventSource/__internal__/EventSource.pairwise.js";
 import EventSource_pick from "./EventSource/__internal__/EventSource.pick.js";
 import EventSource_scan from "./EventSource/__internal__/EventSource.scan.js";
@@ -60,6 +62,14 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
    */
   createRefCountedPublisher<T>(): EventPublisherLike<T>;
 
+  merge<T>(
+    fst: EventSourceLike<T>,
+    snd: EventSourceLike<T>,
+    ...tail: readonly EventSourceLike<T>[]
+  ): EventSourceLike<T>;
+
+  mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
+
   toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }
 
@@ -82,6 +92,8 @@ export const keep: Signature["keep"] = EventSource_keep;
 export const keepType: Signature["keepType"] = EventSource_keepType;
 export const map: Signature["map"] = EventSource_map;
 export const mapTo: Signature["mapTo"] = EventSource_mapTo;
+export const merge: Signature["merge"] = EventSource_merge;
+export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
 export const pairwise: Signature["pairwise"] = EventSource_pairwise;
 export const pick: Signature["pick"] = EventSource_pick;
 export const scan: Signature["scan"] = EventSource_scan;
