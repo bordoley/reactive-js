@@ -98,6 +98,7 @@ export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const toEnumeratorFactory: Signature["toEnumeratorFactory"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toObservable: Signature["toObservable"];

@@ -241,6 +241,7 @@ export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throws: Signature["throws"] = Observable_throws;
+export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;
 export const zip: Signature["zip"] = Observable_zip;

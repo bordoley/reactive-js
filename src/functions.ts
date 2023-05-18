@@ -298,6 +298,117 @@ interface Compose {
  */
 export const compose: Compose["compose"] = composeUnsafe;
 
+interface ComposeLazy {
+  composeLazy<T, A>(op1: Function1<T, A>): Function1<T, Factory<A>>;
+  composeLazy<T, A, B>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Function1<T, Factory<B>>;
+  composeLazy<T, A, B, C>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): Function1<T, Factory<C>>;
+  composeLazy<T, A, B, C, D>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): Function1<T, Factory<D>>;
+  composeLazy<T, A, B, C, D, E>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): Function1<T, Factory<E>>;
+  composeLazy<T, A, B, C, D, E, F>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): Function1<T, Factory<F>>;
+  composeLazy<T, A, B, C, D, E, F, G>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): Function1<T, Factory<G>>;
+  composeLazy<T, A, B, C, D, E, F, G, H>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): Function1<T, Factory<H>>;
+  composeLazy<T, A, B, C, D, E, F, G, H, I>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): Function1<T, Factory<I>>;
+  composeLazy<T, A, B, C, D, E, F, G, H, I, J>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): Function1<T, Factory<J>>;
+  composeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): Function1<T, Factory<K>>;
+  composeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): Function1<T, Factory<L>>;
+}
+/**
+ * Composes a series of unary functions.
+ */
+export const composeLazy: ComposeLazy["composeLazy"] =
+  (...operators: Function1<any, unknown>[]) =>
+  (source: unknown) =>
+  () =>
+    pipeUnsafe(source, ...operators);
+
 /**
  * An updater function that returns the result of decrementing `x`.
  */

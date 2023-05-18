@@ -108,6 +108,7 @@ export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const throws = Observable_throws;
+export const toObservable = identityLazy;
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

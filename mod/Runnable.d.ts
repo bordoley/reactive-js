@@ -130,6 +130,7 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throws: Signature["throws"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];

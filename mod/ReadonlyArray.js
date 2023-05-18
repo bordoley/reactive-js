@@ -44,6 +44,7 @@ import ReadonlyArray_startWith from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.takeFirst.js";
 import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
 import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
+import ReadonlyArray_toEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumeratorFactory.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
@@ -95,6 +96,7 @@ export const startWith = ReadonlyArray_startWith;
 export const takeFirst = ReadonlyArray_takeFirst;
 export const takeLast = ReadonlyArray_takeLast;
 export const takeWhile = ReadonlyArray_takeWhile;
+export const toEnumeratorFactory = ReadonlyArray_toEnumeratorFactory;
 export const toIterable = ReadonlyArray_toReadonlyArray;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const toObservable = ReadonlyArray_toObservable;

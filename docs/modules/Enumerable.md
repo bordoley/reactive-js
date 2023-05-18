@@ -61,6 +61,8 @@
 - [compute](Enumerable.md#compute)
 - [generate](Enumerable.md#generate)
 - [throws](Enumerable.md#throws)
+- [toEnumeratorFactory](Enumerable.md#toenumeratorfactory)
+- [toObservable](Enumerable.md#toobservable)
 
 ### Transform Functions
 
@@ -1316,6 +1318,38 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
+
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 ___
 

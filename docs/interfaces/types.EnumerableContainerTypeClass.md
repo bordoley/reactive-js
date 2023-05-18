@@ -18,6 +18,8 @@
 
   ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
+  ↳↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
+
 ## Table of contents
 
 ### Constructor Methods
@@ -58,6 +60,11 @@
 - [takeLast](types.EnumerableContainerTypeClass.md#takelast)
 - [takeWhile](types.EnumerableContainerTypeClass.md#takewhile)
 - [zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+
+### Other Methods
+
+- [toEnumeratorFactory](types.EnumerableContainerTypeClass.md#toenumeratorfactory)
+- [toObservable](types.EnumerableContainerTypeClass.md#toobservable)
 
 ### Transform Methods
 
@@ -1432,6 +1439,44 @@ ___
 #### Inherited from
 
 [RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[zipWith](types.RunnableContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[toObservable](types.RunnableContainerTypeClass.md#toobservable)
 
 ___
 

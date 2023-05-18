@@ -176,6 +176,12 @@ export interface EnumeratorLike<T = unknown> extends DisposableLike {
 
 /**
  * @noInheritDoc
+ * @category Interactive
+ */
+export type EnumeratorFactoryLike<T = unknown> = Factory<EnumeratorLike<T>>;
+
+/**
+ * @noInheritDoc
  * @category Collection
  */
 export type ReadonlyObjectMapLike<
@@ -1204,6 +1210,8 @@ export interface RunnableContainerTypeClass<C extends Container>
    * @category Operator
    */
   repeat<T>(count: number): ContainerOperator<C, T, T>;
+
+  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
 /** @category TypeClass */
@@ -1215,12 +1223,19 @@ export interface EnumerableContainerTypeClass<C extends Container>
    */
   enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
 
+  toEnumeratorFactory<T>(): Function1<
+    ContainerOf<C, T>,
+    EnumeratorFactoryLike<T>
+  >;
+
   /**
    * Converts the Container to a `IterableLike`.
    *
    * @category Transform
    */
   toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+
+  toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
 }
 
 /** @category TypeClass */

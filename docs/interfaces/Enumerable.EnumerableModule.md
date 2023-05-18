@@ -56,6 +56,8 @@
 - [compute](Enumerable.EnumerableModule.md#compute)
 - [generate](Enumerable.EnumerableModule.md#generate)
 - [throws](Enumerable.EnumerableModule.md#throws)
+- [toEnumeratorFactory](Enumerable.EnumerableModule.md#toenumeratorfactory)
+- [toObservable](Enumerable.EnumerableModule.md#toobservable)
 
 ### Transform Methods
 
@@ -1495,6 +1497,46 @@ ___
 #### Returns
 
 [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+___
+
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toEnumeratorFactory](types.EnumerableContainerTypeClass.md#toenumeratorfactory)
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toObservable](types.EnumerableContainerTypeClass.md#toobservable)
 
 ___
 

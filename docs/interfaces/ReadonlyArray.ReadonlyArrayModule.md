@@ -59,6 +59,7 @@
 ### Other Methods
 
 - [flow](ReadonlyArray.ReadonlyArrayModule.md#flow)
+- [toEnumeratorFactory](ReadonlyArray.ReadonlyArrayModule.md#toenumeratorfactory)
 
 ### Transform Methods
 
@@ -1593,6 +1594,26 @@ ___
 
 ___
 
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Inherited from
+
+Omit.toEnumeratorFactory
+
+___
+
 ## Transform Methods
 
 ### contains
@@ -1890,6 +1911,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
+#### Overrides
+
+Omit.toObservable
+
 ▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
@@ -1908,6 +1933,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+Omit.toObservable
 
 ▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
@@ -1929,6 +1958,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
+#### Overrides
+
+Omit.toObservable
+
 ▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
@@ -1947,6 +1980,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+
+#### Overrides
+
+Omit.toObservable
 
 ▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -1969,6 +2006,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+Omit.toObservable
 
 ___
 

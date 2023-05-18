@@ -50,6 +50,7 @@
 - [bindMethod](functions.md#bindmethod)
 - [call](functions.md#call)
 - [compose](functions.md#compose)
+- [composeLazy](functions.md#composelazy)
 - [composeUnsafe](functions.md#composeunsafe)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
@@ -1456,6 +1457,394 @@ Composes a series of unary functions.
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, `L`\>
+
+___
+
+### composeLazy
+
+▸ **composeLazy**<`T`, `A`\>(`op1`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`A`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`A`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`B`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`B`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`C`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`C`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`D`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`D`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`E`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`E`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`F`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`F`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`G`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`G`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`H`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`H`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`I`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`I`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`J`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`J`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`K`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`K`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`L`\>\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](functions.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`L`\>\>
 
 ___
 

@@ -2,6 +2,7 @@ import DeferredObservable_repeat from "./DeferredObservable/__internal__/Deferre
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_toEnumeratorFactory from "./Enumerable/__internal__/Enumerable.toEnumeratorFactory.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
@@ -128,7 +129,10 @@ export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throws: Signature["throws"] = Observable_throws;
+export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
+  Enumerable_toEnumeratorFactory;
 export const toIterable: Signature["toIterable"] = Enumerable_toIterable;
+export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 export const zip: Signature["zip"] = Observable_zip;

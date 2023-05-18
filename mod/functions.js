@@ -26,6 +26,10 @@ export const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...o
  */
 export const compose = composeUnsafe;
 /**
+ * Composes a series of unary functions.
+ */
+export const composeLazy = (...operators) => (source) => () => pipeUnsafe(source, ...operators);
+/**
  * An updater function that returns the result of decrementing `x`.
  */
 export const decrement = (x) => x - 1;

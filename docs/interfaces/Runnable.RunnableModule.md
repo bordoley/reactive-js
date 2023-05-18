@@ -69,6 +69,7 @@
 - [generate](Runnable.RunnableModule.md#generate)
 - [run](Runnable.RunnableModule.md#run)
 - [throws](Runnable.RunnableModule.md#throws)
+- [toObservable](Runnable.RunnableModule.md#toobservable)
 
 ### Transform Methods
 
@@ -2079,6 +2080,26 @@ ___
 #### Returns
 
 [`RunnableLike`](types.RunnableLike.md)<`T`\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[RunnableContainerTypeClass](types.RunnableContainerTypeClass.md).[toObservable](types.RunnableContainerTypeClass.md#toobservable)
 
 ___
 

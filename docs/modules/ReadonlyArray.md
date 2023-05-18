@@ -63,6 +63,7 @@
 ### Other Functions
 
 - [flow](ReadonlyArray.md#flow)
+- [toEnumeratorFactory](ReadonlyArray.md#toenumeratorfactory)
 
 ### Transform Functions
 
@@ -1400,6 +1401,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
 
 ___
 

@@ -61,6 +61,10 @@
 - [takeWhile](types.RunnableContainerTypeClass.md#takewhile)
 - [zipWith](types.RunnableContainerTypeClass.md#zipwith)
 
+### Other Methods
+
+- [toObservable](types.RunnableContainerTypeClass.md#toobservable)
+
 ### Transform Methods
 
 - [contains](types.RunnableContainerTypeClass.md#contains)
@@ -1428,6 +1432,24 @@ ___
 #### Inherited from
 
 [EnumeratorContainerTypeClass](types.EnumeratorContainerTypeClass.md).[zipWith](types.EnumeratorContainerTypeClass.md#zipwith)
+
+___
+
+## Other Methods
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 

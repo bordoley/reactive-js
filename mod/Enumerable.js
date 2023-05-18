@@ -4,6 +4,7 @@ import DeferredObservable_repeat from "./DeferredObservable/__internal__/Deferre
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
+import Enumerable_toEnumeratorFactory from "./Enumerable/__internal__/Enumerable.toEnumeratorFactory.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
@@ -89,7 +90,9 @@ export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const throws = Observable_throws;
+export const toEnumeratorFactory = Enumerable_toEnumeratorFactory;
 export const toIterable = Enumerable_toIterable;
+export const toObservable = identityLazy;
 export const toReadonlyArray = Enumerable_toReadonlyArray;
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

@@ -99,6 +99,7 @@
 
 ### Interactive Type Aliases
 
+- [EnumeratorFactoryLike](types.md#enumeratorfactorylike)
 - [StreamOf](types.md#streamof)
 
 ### Variables
@@ -239,6 +240,20 @@ Utility type for a generic operator function that transforms a Container's inner
 ___
 
 ## Interactive Type Aliases
+
+### EnumeratorFactoryLike
+
+Ƭ **EnumeratorFactoryLike**<`T`\>: [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+
+**`No Inherit Doc`**
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+___
 
 ### StreamOf
 
