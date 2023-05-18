@@ -1360,7 +1360,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`Factory`](functions.md#factory)<[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\> |
+| `f` | [`Factory`](functions.md#factory)<[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\> |
 
 #### Returns
 

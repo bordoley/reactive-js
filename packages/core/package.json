@@ -65,7 +65,6 @@
     "./Disposable": "./Disposable.js",
     "./Enumerable": "./Enumerable.js",
     "./Enumerator": "./Enumerator.js",
-    "./EventListener": "./EventListener.js",
     "./EventSource": "./EventSource.js",
     "./Iterable": "./Iterable.js",
     "./MulticastObservable": "./MulticastObservable.js",

@@ -309,8 +309,6 @@ export const __MergeAllObserver_onDispose: unique symbol;
 /** @type {unique symbol} */
 export const __MergeAllObserver_observablesQueue: unique symbol;
 /** @type {unique symbol} */
-export const __MergeObserverCtx_completedCount: unique symbol;
-/** @type {unique symbol} */
 export const __Object_init: unique symbol;
 /** @type {unique symbol} */
 export const __Object_properties: unique symbol;

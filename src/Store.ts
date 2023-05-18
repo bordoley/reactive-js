@@ -5,6 +5,7 @@ import {
   Container,
   Container_T,
   Container_type,
+  DisposableLike,
   MulticastObservableLike,
   StoreLike,
   WritableStoreLike,
@@ -17,7 +18,7 @@ export interface StoreContainer extends Container {
 export type Type = StoreContainer;
 
 export interface StoreModule {
-  create<T>(initialValue: T): WritableStoreLike<T>;
+  create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
 
   toObservable<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 }

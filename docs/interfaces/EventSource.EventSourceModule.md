@@ -38,6 +38,8 @@
 ### Other Methods
 
 - [addEventHandler](EventSource.EventSourceModule.md#addeventhandler)
+- [merge](EventSource.EventSourceModule.md#merge)
+- [mergeMany](EventSource.EventSourceModule.md#mergemany)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
 
 ## Constructor Methods
@@ -566,6 +568,52 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EventSourceLike`](types.EventSourceLike.md)<`T`\> |
+| `snd` | [`EventSourceLike`](types.EventSourceLike.md)<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+___
+
+### mergeMany
+
+▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventSources` | readonly [`EventSourceLike`](types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ___
 

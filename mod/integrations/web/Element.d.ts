@@ -1,7 +1,7 @@
 import { Function1, SideEffect1 } from "../../functions.js";
-import { DeferredObservableLike, DisposableLike, ErrorSafeEventListenerLike, EventListenerLike, EventSourceLike } from "../../types.js";
-import type { Rect, ScrollValue } from "../web.js";
-interface AddEventHandler {
+import { DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "../../types.js";
+import { Rect, ScrollValue } from "../web.js";
+export interface ElementModule {
     addEventHandler<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, eventHandler: SideEffect1<AbortSignalEventMap[K]>, options?: {
         passive?: boolean;
         capture?: boolean;
@@ -254,461 +254,271 @@ interface AddEventHandler {
         passive?: boolean;
         capture?: boolean;
     }): Function1<TEventTarget, DisposableLike>;
+    addResizeHandler<TElement extends Element>(handler: SideEffect1<ResizeObserverEntry>, options?: ResizeObserverOptions): Function1<TElement, DisposableLike>;
+    addScrollHandler<TElement extends HTMLElement>(handler: SideEffect1<ScrollValue>): Function1<TElement, DisposableLike>;
+    eventSource<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<AbortSignalEventMap[K]>>;
+    eventSource<TEventTarget extends Animation, K extends keyof AnimationEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<AnimationEventMap[K]>>;
+    eventSource<TEventTarget extends AbstractWorker, K extends keyof AbstractWorkerEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<AbstractWorkerEventMap[K]>>;
+    eventSource<TEventTarget extends AudioScheduledSourceNode, K extends keyof AudioScheduledSourceNodeEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<AudioScheduledSourceNodeEventMap[K]>>;
+    eventSource<TEventTarget extends BaseAudioContext, K extends keyof BaseAudioContextEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<BaseAudioContextEventMap[K]>>;
+    eventSource<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<AudioWorkletNodeEventMap[K]>>;
+    eventSource<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<BroadcastChannelEventMap[K]>>;
+    eventSource<TEventTarget extends Document, K extends keyof DocumentEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<DocumentEventMap[K]>>;
+    eventSource<TEventTarget extends Element, K extends keyof ElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ElementEventMap[K]>>;
+    eventSource<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaStreamTrackEventMap[K]>>;
+    eventSource<TEventTarget extends EventSourceLike, K extends keyof EventSourceEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<EventSourceEventMap[K]>>;
+    eventSource<TEventTarget extends FileReader, K extends keyof FileReaderEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<FileReaderEventMap[K]>>;
+    eventSource<TEventTarget extends FontFaceSet, K extends keyof FontFaceSetEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<FontFaceSetEventMap[K]>>;
+    eventSource<TEventTarget extends GlobalEventHandlers, K extends keyof GlobalEventHandlersEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<GlobalEventHandlersEventMap[K]>>;
+    eventSource<TEventTarget extends IDBDatabase, K extends keyof IDBDatabaseEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<IDBDatabaseEventMap[K]>>;
+    eventSource<TEventTarget extends HTMLBodyElement, K extends keyof HTMLBodyElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<HTMLBodyElementEventMap[K]>>;
+    eventSource<TEventTarget extends HTMLElement, K extends keyof HTMLElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<HTMLElementEventMap[K]>>;
+    eventSource<TEventTarget extends HTMLMediaElement, K extends keyof HTMLMediaElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<HTMLMediaElementEventMap[K]>>;
+    eventSource<TEventTarget extends HTMLVideoElement, K extends keyof HTMLVideoElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<HTMLVideoElementEventMap[K]>>;
+    eventSource<TEventTarget extends IDBOpenDBRequest, K extends keyof IDBOpenDBRequestEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<IDBOpenDBRequestEventMap[K]>>;
+    eventSource<TEventTarget extends IDBRequest<TDBObject>, K extends keyof IDBRequestEventMap, TDBObject = any>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<IDBRequestEventMap[K]>>;
+    eventSource<TEventTarget extends IDBTransaction, K extends keyof IDBTransactionEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<IDBTransactionEventMap[K]>>;
+    eventSource<TEventTarget extends MathMLElement, K extends keyof MathMLElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MathMLElementEventMap[K]>>;
+    eventSource<TEventTarget extends MediaDevices, K extends keyof MediaDevicesEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaDevicesEventMap[K]>>;
+    eventSource<TEventTarget extends MediaKeySession, K extends keyof MediaKeySessionEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaKeySessionEventMap[K]>>;
+    eventSource<TEventTarget extends MediaQueryList, K extends keyof MediaQueryListEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaQueryListEventMap[K]>>;
+    eventSource<TEventTarget extends MediaRecorder, K extends keyof MediaRecorderEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaRecorderEventMap[K]>>;
+    eventSource<TEventTarget extends MediaSource | MediaStream, K extends keyof MediaSourceEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaSourceEventMap>>;
+    eventSource<TEventTarget extends MediaStream, K extends keyof MediaStreamEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MediaStreamEventMap[K]>>;
+    eventSource<TEventTarget extends MessagePort, K extends keyof MessagePortEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<MessagePortEventMap[K]>>;
+    eventSource<TEventTarget extends Notification, K extends keyof NotificationEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<NotificationEventMap[K]>>;
+    eventSource<TEventTarget extends OfflineAudioContext, K extends keyof OfflineAudioContextEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<OfflineAudioContextEventMap[K]>>;
+    eventSource<TEventTarget extends OffscreenCanvas, K extends keyof OffscreenCanvasEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<OffscreenCanvasEventMap[K]>>;
+    eventSource<TEventTarget extends PaymentRequest, K extends keyof PaymentRequestEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<PaymentRequestEventMap[K]>>;
+    eventSource<TEventTarget extends Performance, K extends keyof PerformanceEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<PerformanceEventMap[K]>>;
+    eventSource<TEventTarget extends PermissionStatus, K extends keyof PermissionStatusEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<PermissionStatusEventMap[K]>>;
+    eventSource<TEventTarget extends PictureInPictureWindow, K extends keyof PictureInPictureWindowEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<PictureInPictureWindowEventMap[K]>, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<PictureInPictureWindowEventMap[K]>>;
+    eventSource<TEventTarget extends RTCDTMFSender, K extends keyof RTCDTMFSenderEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCDTMFSenderEventMap[K]>>;
+    eventSource<TEventTarget extends RTCDataChannel, K extends keyof RTCDataChannelEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCDataChannelEventMap[K]>>;
+    eventSource<TEventTarget extends RTCDtlsTransport, K extends keyof RTCDtlsTransportEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCDtlsTransportEventMap[K]>>;
+    eventSource<TEventTarget extends RTCIceTransport, K extends keyof RTCIceTransportEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCIceTransportEventMap[K]>>;
+    eventSource<TEventTarget extends RTCPeerConnection, K extends keyof RTCPeerConnectionEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCPeerConnectionEventMap[K]>>;
+    eventSource<TEventTarget extends RTCSctpTransport, K extends keyof RTCSctpTransportEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RTCSctpTransportEventMap[K]>>;
+    eventSource<TEventTarget extends RemotePlayback, K extends keyof RemotePlaybackEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<RemotePlaybackEventMap[K]>>;
+    eventSource<TEventTarget extends SVGSVGElement, K extends keyof SVGSVGElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SVGSVGElementEventMap[K]>>;
+    eventSource<TEventTarget extends ScreenOrientation, K extends keyof ScreenOrientationEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ScreenOrientationEventMap[K]>>;
+    eventSource<TEventTarget extends ServiceWorker, K extends keyof ServiceWorkerEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ServiceWorkerEventMap[K]>>;
+    eventSource<TEventTarget extends ServiceWorkerContainer, K extends keyof ServiceWorkerContainerEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ServiceWorkerContainerEventMap[K]>, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ServiceWorkerContainerEventMap[K]>>;
+    eventSource<TEventTarget extends ServiceWorkerRegistration, K extends keyof ServiceWorkerRegistrationEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ServiceWorkerRegistrationEventMap[K]>, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ServiceWorkerRegistrationEventMap[K]>>;
+    eventSource<TEventTarget extends ShadowRoot, K extends keyof ShadowRootEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<ShadowRootEventMap[K]>>;
+    eventSource<TEventTarget extends SourceBuffer, K extends keyof SourceBufferEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SourceBufferEventMap[K]>>;
+    eventSource<TEventTarget extends SourceBufferList, K extends keyof SourceBufferListEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SourceBufferListEventMap[K]>>;
+    eventSource<TEventTarget extends SpeechSynthesis, K extends keyof SpeechSynthesisEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SpeechSynthesisEventMap[K]>>;
+    eventSource<TEventTarget extends SpeechSynthesisUtterance, K extends keyof SpeechSynthesisUtteranceEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SpeechSynthesisUtteranceEventMap[K]>, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SpeechSynthesisUtteranceEventMap[K]>>;
+    eventSource<TEventTarget extends SVGElement, K extends keyof SVGElementEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<SVGElementEventMap[K]>>;
+    eventSource<TEventTarget extends TextTrack, K extends keyof TextTrackEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<TextTrackEventMap[K]>>;
+    eventSource<TEventTarget extends TextTrackCue, K extends keyof TextTrackCueEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<TextTrackCueEventMap[K]>>;
+    eventSource<TEventTarget extends TextTrackList, K extends keyof TextTrackListEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<TextTrackListEventMap[K]>>;
+    eventSource<TEventTarget extends VisualViewport, K extends keyof VisualViewportEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<VisualViewportEventMap[K]>>;
+    eventSource<TEventTarget extends WebSocket, K extends keyof WebSocketEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<WebSocketEventMap[K]>>;
+    eventSource<TEventTarget extends Window, K extends keyof WindowEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<WindowEventMap[K]>>;
+    eventSource<TEventTarget extends Worker, K extends keyof WorkerEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<WorkerEventMap[K]>>;
+    eventSource<TEventTarget extends XMLHttpRequestEventTarget, K extends keyof XMLHttpRequestEventTargetEventMap>(eventName: K, options?: {
+        passive?: boolean;
+        capture?: boolean;
+    }): Function1<TEventTarget, EventSourceLike<XMLHttpRequestEventTargetEventMap[K]>>;
+    intersectionEventSource(parent?: Document | Element): Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
+    measure<TElement extends HTMLElement | SVGElement>(): Function1<TElement, StoreLike<Rect> & DisposableLike>;
+    resizeEventSource<TElement extends Element>(options?: ResizeObserverOptions): Function1<TElement, EventSourceLike<ResizeObserverEntry>>;
+    scrollEventSource<TElement extends HTMLElement>(): Function1<TElement, EventSourceLike<ScrollValue>>;
 }
-export declare const addEventHandler: AddEventHandler["addEventHandler"];
-interface AddEventListener {
-    addEventListener<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<AbortSignalEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Animation, K extends keyof AnimationEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<AnimationEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends AbstractWorker, K extends keyof AbstractWorkerEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<AbstractWorkerEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends AudioScheduledSourceNode, K extends keyof AudioScheduledSourceNodeEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<AudioScheduledSourceNodeEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends BaseAudioContext, K extends keyof BaseAudioContextEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<BaseAudioContextEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<AudioWorkletNodeEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<BroadcastChannelEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Document, K extends keyof DocumentEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<DocumentEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Element, K extends keyof ElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaStreamTrackEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends EventSource, K extends keyof EventSourceEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<EventSourceEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends FileReader, K extends keyof FileReaderEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<FileReaderEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends FontFaceSet, K extends keyof FontFaceSetEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<FontFaceSetEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends GlobalEventHandlers, K extends keyof GlobalEventHandlersEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<GlobalEventHandlersEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends IDBDatabase, K extends keyof IDBDatabaseEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<IDBDatabaseEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends HTMLBodyElement, K extends keyof HTMLBodyElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<HTMLBodyElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends HTMLElement, K extends keyof HTMLElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<HTMLElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends HTMLMediaElement, K extends keyof HTMLMediaElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<HTMLMediaElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends HTMLVideoElement, K extends keyof HTMLVideoElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<HTMLVideoElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends IDBOpenDBRequest, K extends keyof IDBOpenDBRequestEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<IDBOpenDBRequestEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends IDBRequest<TDBObject>, K extends keyof IDBRequestEventMap, TDBObject = any>(eventName: K, eventListener: ErrorSafeEventListenerLike<IDBRequestEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends IDBTransaction, K extends keyof IDBTransactionEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<IDBTransactionEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MathMLElement, K extends keyof MathMLElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MathMLElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaDevices, K extends keyof MediaDevicesEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaDevicesEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaKeySession, K extends keyof MediaKeySessionEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaKeySessionEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaQueryList, K extends keyof MediaQueryListEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaQueryListEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaRecorder, K extends keyof MediaRecorderEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaRecorderEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaSource | MediaStream, K extends keyof MediaSourceEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaSourceEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MediaStream, K extends keyof MediaStreamEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MediaStreamEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends MessagePort, K extends keyof MessagePortEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<MessagePortEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Notification, K extends keyof NotificationEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<NotificationEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends OfflineAudioContext, K extends keyof OfflineAudioContextEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<OfflineAudioContextEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends OffscreenCanvas, K extends keyof OffscreenCanvasEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<OffscreenCanvasEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends PaymentRequest, K extends keyof PaymentRequestEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<PaymentRequestEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Performance, K extends keyof PerformanceEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<PerformanceEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends PermissionStatus, K extends keyof PermissionStatusEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<PermissionStatusEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends PictureInPictureWindow, K extends keyof PictureInPictureWindowEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<PictureInPictureWindowEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCDTMFSender, K extends keyof RTCDTMFSenderEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCDTMFSenderEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCDataChannel, K extends keyof RTCDataChannelEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCDataChannelEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCDtlsTransport, K extends keyof RTCDtlsTransportEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCDtlsTransportEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCIceTransport, K extends keyof RTCIceTransportEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCIceTransportEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCPeerConnection, K extends keyof RTCPeerConnectionEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCPeerConnectionEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RTCSctpTransport, K extends keyof RTCSctpTransportEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RTCSctpTransportEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends RemotePlayback, K extends keyof RemotePlaybackEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<RemotePlaybackEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SVGSVGElement, K extends keyof SVGSVGElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SVGSVGElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends ScreenOrientation, K extends keyof ScreenOrientationEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ScreenOrientationEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends ServiceWorker, K extends keyof ServiceWorkerEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ServiceWorkerEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends ServiceWorkerContainer, K extends keyof ServiceWorkerContainerEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ServiceWorkerContainerEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends ServiceWorkerRegistration, K extends keyof ServiceWorkerRegistrationEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ServiceWorkerRegistrationEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends ShadowRoot, K extends keyof ShadowRootEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<ShadowRootEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SourceBuffer, K extends keyof SourceBufferEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SourceBufferEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SourceBufferList, K extends keyof SourceBufferListEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SourceBufferListEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SpeechSynthesis, K extends keyof SpeechSynthesisEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SpeechSynthesisEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SpeechSynthesisUtterance, K extends keyof SpeechSynthesisUtteranceEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SpeechSynthesisUtteranceEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends SVGElement, K extends keyof SVGElementEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<SVGElementEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends TextTrack, K extends keyof TextTrackEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<TextTrackEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends TextTrackCue, K extends keyof TextTrackCueEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<TextTrackCueEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends TextTrackList, K extends keyof TextTrackListEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<TextTrackListEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends VisualViewport, K extends keyof VisualViewportEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<VisualViewportEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends WebSocket, K extends keyof WebSocketEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<WebSocketEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Window, K extends keyof WindowEventMap, T>(eventName: K, eventListener: ErrorSafeEventListenerLike<WindowEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(eventName: K, eventListener: ErrorSafeEventListenerLike<WorkerEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-    addEventListener<TEventTarget extends XMLHttpRequestEventTarget, K extends keyof XMLHttpRequestEventTargetEventMap>(eventName: K, eventListener: ErrorSafeEventListenerLike<XMLHttpRequestEventTargetEventMap[K]>, options?: {
-        passive?: boolean;
-        capture?: boolean;
-    }): Function1<TEventTarget, TEventTarget>;
-}
-export declare const addEventListener: AddEventListener["addEventListener"];
-interface ObserveEvent {
-    observeEvent<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap, T>(eventName: K, selector: Function1<AbortSignalEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Animation, K extends keyof AnimationEventMap, T>(eventName: K, selector: Function1<AnimationEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends AbstractWorker, K extends keyof AbstractWorkerEventMap, T>(eventName: K, selector: Function1<AbstractWorkerEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends AudioScheduledSourceNode, K extends keyof AudioScheduledSourceNodeEventMap, T>(eventName: K, selector: Function1<AudioScheduledSourceNodeEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends BaseAudioContext, K extends keyof BaseAudioContextEventMap, T>(eventName: K, selector: Function1<BaseAudioContextEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends AudioWorkletNode, K extends keyof AudioWorkletNodeEventMap, T>(eventName: K, selector: Function1<AudioWorkletNodeEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends BroadcastChannel, K extends keyof BroadcastChannelEventMap, T>(eventName: K, selector: Function1<BroadcastChannelEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Document, K extends keyof DocumentEventMap, T>(eventName: K, selector: Function1<DocumentEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Element, K extends keyof ElementEventMap, T>(eventName: K, selector: Function1<ElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaStreamTrack, K extends keyof MediaStreamTrackEventMap, T>(eventName: K, selector: Function1<MediaStreamTrackEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends EventSource, K extends keyof EventSourceEventMap, T>(eventName: K, selector: Function1<EventSourceEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends FileReader, K extends keyof FileReaderEventMap, T>(eventName: K, selector: Function1<FileReaderEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends FontFaceSet, K extends keyof FontFaceSetEventMap, T>(eventName: K, selector: Function1<FontFaceSetEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends GlobalEventHandlers, K extends keyof GlobalEventHandlersEventMap, T>(eventName: K, selector: Function1<GlobalEventHandlersEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends IDBDatabase, K extends keyof IDBDatabaseEventMap, T>(eventName: K, selector: Function1<IDBDatabaseEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends HTMLBodyElement, K extends keyof HTMLBodyElementEventMap, T>(eventName: K, selector: Function1<HTMLBodyElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends HTMLElement, K extends keyof HTMLElementEventMap, T>(eventName: K, selector: Function1<HTMLElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends HTMLMediaElement, K extends keyof HTMLMediaElementEventMap, T>(eventName: K, selector: Function1<HTMLMediaElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends HTMLVideoElement, K extends keyof HTMLVideoElementEventMap, T>(eventName: K, selector: Function1<HTMLVideoElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends IDBOpenDBRequest, K extends keyof IDBOpenDBRequestEventMap, T>(eventName: K, selector: Function1<IDBOpenDBRequestEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends IDBRequest<TDBObject>, K extends keyof IDBRequestEventMap, T, TDBObject = any>(eventName: K, selector: Function1<IDBRequestEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends IDBTransaction, K extends keyof IDBTransactionEventMap, T>(eventName: K, selector: Function1<IDBTransactionEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MathMLElement, K extends keyof MathMLElementEventMap, T>(eventName: K, selector: Function1<MathMLElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaDevices, K extends keyof MediaDevicesEventMap, T>(eventName: K, selector: Function1<MediaDevicesEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaKeySession, K extends keyof MediaKeySessionEventMap, T>(eventName: K, selector: Function1<MediaKeySessionEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaQueryList, K extends keyof MediaQueryListEventMap, T>(eventName: K, selector: Function1<MediaQueryListEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaRecorder, K extends keyof MediaRecorderEventMap, T>(eventName: K, selector: Function1<MediaRecorderEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaSource | MediaStream, K extends keyof MediaSourceEventMap, T>(eventName: K, selector: Function1<MediaSourceEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MediaStream, K extends keyof MediaStreamEventMap, T>(eventName: K, selector: Function1<MediaStreamEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends MessagePort, K extends keyof MessagePortEventMap, T>(eventName: K, selector: Function1<MessagePortEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Notification, K extends keyof NotificationEventMap, T>(eventName: K, selector: Function1<NotificationEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends OfflineAudioContext, K extends keyof OfflineAudioContextEventMap, T>(eventName: K, selector: Function1<OfflineAudioContextEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends OffscreenCanvas, K extends keyof OffscreenCanvasEventMap, T>(eventName: K, selector: Function1<OffscreenCanvasEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends PaymentRequest, K extends keyof PaymentRequestEventMap, T>(eventName: K, selector: Function1<PaymentRequestEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Performance, K extends keyof PerformanceEventMap, T>(eventName: K, selector: Function1<PerformanceEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends PermissionStatus, K extends keyof PermissionStatusEventMap, T>(eventName: K, selector: Function1<PermissionStatusEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends PictureInPictureWindow, K extends keyof PictureInPictureWindowEventMap, T>(eventName: K, selector: Function1<PictureInPictureWindowEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCDTMFSender, K extends keyof RTCDTMFSenderEventMap, T>(eventName: K, selector: Function1<RTCDTMFSenderEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCDataChannel, K extends keyof RTCDataChannelEventMap, T>(eventName: K, selector: Function1<RTCDataChannelEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCDtlsTransport, K extends keyof RTCDtlsTransportEventMap, T>(eventName: K, selector: Function1<RTCDtlsTransportEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCIceTransport, K extends keyof RTCIceTransportEventMap, T>(eventName: K, selector: Function1<RTCIceTransportEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCPeerConnection, K extends keyof RTCPeerConnectionEventMap, T>(eventName: K, selector: Function1<RTCPeerConnectionEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RTCSctpTransport, K extends keyof RTCSctpTransportEventMap, T>(eventName: K, selector: Function1<RTCSctpTransportEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends RemotePlayback, K extends keyof RemotePlaybackEventMap, T>(eventName: K, selector: Function1<RemotePlaybackEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SVGSVGElement, K extends keyof SVGSVGElementEventMap, T>(eventName: K, selector: Function1<SVGSVGElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends ScreenOrientation, K extends keyof ScreenOrientationEventMap, T>(eventName: K, selector: Function1<ScreenOrientationEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends ServiceWorker, K extends keyof ServiceWorkerEventMap, T>(eventName: K, selector: Function1<ServiceWorkerEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends ServiceWorkerContainer, K extends keyof ServiceWorkerContainerEventMap, T>(eventName: K, selector: Function1<ServiceWorkerContainerEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends ServiceWorkerRegistration, K extends keyof ServiceWorkerRegistrationEventMap, T>(eventName: K, selector: Function1<ServiceWorkerRegistrationEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends ShadowRoot, K extends keyof ShadowRootEventMap, T>(eventName: K, selector: Function1<ShadowRootEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SourceBuffer, K extends keyof SourceBufferEventMap, T>(eventName: K, selector: Function1<SourceBufferEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SourceBufferList, K extends keyof SourceBufferListEventMap, T>(eventName: K, selector: Function1<SourceBufferListEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SpeechSynthesis, K extends keyof SpeechSynthesisEventMap, T>(eventName: K, selector: Function1<SpeechSynthesisEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SpeechSynthesisUtterance, K extends keyof SpeechSynthesisUtteranceEventMap, T>(eventName: K, selector: Function1<SpeechSynthesisUtteranceEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends SVGElement, K extends keyof SVGElementEventMap, T>(eventName: K, selector: Function1<SVGElementEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends TextTrack, K extends keyof TextTrackEventMap, T>(eventName: K, selector: Function1<TextTrackEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends TextTrackCue, K extends keyof TextTrackCueEventMap, T>(eventName: K, selector: Function1<TextTrackCueEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends TextTrackList, K extends keyof TextTrackListEventMap, T>(eventName: K, selector: Function1<TextTrackListEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends VisualViewport, K extends keyof VisualViewportEventMap, T>(eventName: K, selector: Function1<VisualViewportEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends WebSocket, K extends keyof WebSocketEventMap, T>(eventName: K, selector: Function1<WebSocketEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Window, K extends keyof WindowEventMap, T>(eventName: K, selector: Function1<WindowEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends Worker, K extends keyof WorkerEventMap, T>(eventName: K, selector: Function1<WorkerEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-    observeEvent<TEventTarget extends XMLHttpRequestEventTarget, K extends keyof XMLHttpRequestEventTargetEventMap, T>(eventName: K, selector: Function1<XMLHttpRequestEventTargetEventMap[K], T>, options?: {
-        capture?: boolean;
-    }): Function1<TEventTarget, DeferredObservableLike<T>>;
-}
-export declare const observeEvent: ObserveEvent["observeEvent"];
-export declare const addScrollHandler: <TElement extends HTMLElement>(handler: SideEffect1<ScrollValue>) => Function1<TElement, DisposableLike>;
-export declare const addScrollListener: <TElement extends HTMLElement>(listener: EventListenerLike<ScrollValue>) => Function1<TElement, TElement>;
-export declare const addResizeHandler: <TElement extends Element>(handler: SideEffect1<ResizeObserverEntry>) => Function1<TElement, DisposableLike>;
-export declare const addResizeListener: <TElement extends Element>(listener: EventListenerLike<ResizeObserverEntry>, options?: ResizeObserverOptions) => Function1<TElement, TElement>;
-export declare const addMeasureHandler: <TElement extends HTMLElement>(handler: SideEffect1<Rect>) => Function1<TElement, DisposableLike>;
-export declare const addMeasureListener: <TElement extends HTMLElement | SVGElement>(listener: EventListenerLike<Rect>) => Function1<TElement, TElement>;
-export declare const observeMeasure: <TElement extends HTMLElement | SVGElement>() => Function1<TElement, DeferredObservableLike<Rect>>;
-export declare const intersectionWith: (parent?: Document | Element) => Function1<Element, EventSourceLike<IntersectionObserverEntry>>;
-export {};
+export type Signature = ElementModule;
+export declare const addEventHandler: Signature["addEventHandler"];
+export declare const addResizeHandler: Signature["addResizeHandler"];
+export declare const addScrollHandler: Signature["addScrollHandler"];
+export declare const eventSource: Signature["eventSource"];
+export declare const intersectionEventSource: Signature["intersectionEventSource"];
+export declare const measure: Signature["measure"];
+export declare const resizeEventSource: Signature["resizeEventSource"];
+export declare const scrollEventSource: Signature["scrollEventSource"];

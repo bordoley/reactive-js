@@ -35,7 +35,7 @@ ___
 
 ### create
 
-▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\>
+▸ **create**<`T`\>(`initialValue`): [`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 #### Type parameters
 
@@ -51,7 +51,7 @@ ___
 
 #### Returns
 
-[`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\>
+[`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 ___
 

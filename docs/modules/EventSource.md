@@ -43,6 +43,8 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
+- [merge](EventSource.md#merge)
+- [mergeMany](EventSource.md#mergemany)
 - [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
@@ -519,6 +521,52 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
+| `snd` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### mergeMany
+
+▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventSources` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
 
 ___
 

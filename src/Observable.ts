@@ -486,9 +486,7 @@ export interface ObservableModule {
     readonly charset?: string;
   }): EnumerableUpperBoundObservableOperator<ArrayBuffer, string>;
 
-  defer<T>(
-    f: Factory<MulticastObservableLike<T> & DisposableLike>,
-  ): DeferredObservableLike<T>;
+  defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredObservableLike<T>;
 
   dispatchTo<T>(
     dispatcher: DispatcherLike<T>,
