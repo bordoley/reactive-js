@@ -1,3 +1,6 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_takeFirst: Enumerator.Signature["takeFirst"];
+import { Function1 } from "../../functions.js";
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_takeFirst: <T>(options?: {
+    readonly count?: number;
+}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>>;
 export default Enumerator_takeFirst;

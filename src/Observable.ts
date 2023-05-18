@@ -1,3 +1,4 @@
+import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import type * as MulticastObservable from "./MulticastObservable.js";
 import Observable_animate from "./Observable/__internal__/Observable.animate.js";
@@ -30,7 +31,6 @@ import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge
 import Observable_forkZip from "./Observable/__internal__/Observable.forkZip.js";
 import Observable_forkZipLatest from "./Observable/__internal__/Observable.forkZipLatest.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
-import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -2031,7 +2031,7 @@ export const forkZipLatest: Signature["forkZipLatest"] =
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
-  Observable_fromEnumeratorFactory;
+  EnumeratorFactory_toObservable;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
 export const fromOptional: Signature["fromOptional"] = Optional_toObservable;

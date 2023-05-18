@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
@@ -16,6 +16,7 @@ import {
   TakeFirstLike_count,
   TakeFirstLike_takeCount,
 } from "../../__internal__/types.js";
+import { Function1 } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EnumeratorLike,
@@ -28,7 +29,9 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_takeFirst: Enumerator.Signature["takeFirst"] = /*@__PURE__*/ (<
+const Enumerator_takeFirst: <T>(options?: {
+  readonly count?: number;
+}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<
   T,
 >() => {
   const createTakeFirstEnumerator = createInstanceFactory(

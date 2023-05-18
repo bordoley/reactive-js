@@ -2,7 +2,8 @@
 
 import { newInstance } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
-const ReadonlyMap_fromEntries = () => (entries) => {
+const ReadonlyMap_fromEntries = () => (factory) => {
+    const entries = factory();
     const map = newInstance((Map));
     while (entries[EnumeratorLike_move]()) {
         const [key, value] = entries[EnumeratorLike_current];

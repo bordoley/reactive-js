@@ -2,8 +2,9 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
-import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
+import EnumeratorFactory_map from "../../EnumeratorFactory/__internal__/EnumeratorFactory.map.js";
+import EnumeratorFactory_toReadonlyArray from "../../EnumeratorFactory/__internal__/EnumeratorFactory.toReadonlyArray.js";
 import EventSource_createPublisher from "../../EventSource/__internal__/EventSource.createPublisher.js";
 import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -30,7 +31,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
                     publisher[SinkLike_notify](value);
                 }
             }), Observable_ignoreElements())));
-            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), Enumerator_map(Observable_subscribeOn(animationScheduler)), Enumerator_toReadonlyArray());
+            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), EnumeratorFactory_map(Observable_subscribeOn(animationScheduler)), EnumeratorFactory_toReadonlyArray());
             return Observable_mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
@@ -44,7 +45,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
     }), {
         [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
+            return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys(), EnumeratorFactory_enumerate());
         },
         [KeyedCollectionLike_get](index) {
             return this[DelegatingLike_delegate][index];

@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_empty: Enumerator.Signature["empty"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_empty: <T>() => EnumeratorLike<T>;
 export default Enumerator_empty;

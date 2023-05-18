@@ -16,8 +16,6 @@
 
   ↳ [`EnumerableContainer`](Enumerable.EnumerableContainer.md)
 
-  ↳ [`EnumeratorContainer`](Enumerator.EnumeratorContainer.md)
-
   ↳ [`EnumeratorFactoryContainer`](EnumeratorFactory.EnumeratorFactoryContainer.md)
 
   ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)

@@ -2,7 +2,7 @@
 
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../functions.js";
-const ReadonlyArray_entries = () => (arr) => {
+const ReadonlyArray_entries = () => (arr) => () => {
     const count = arr.length;
     function* ReadonlyArrayEntries() {
         for (let i = 0; i < count; i++) {

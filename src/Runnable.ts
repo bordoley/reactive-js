@@ -1,4 +1,5 @@
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -9,7 +10,6 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
-import Observable_fromEnumeratorFactory from "./Observable/__internal__/Observable.fromEnumeratorFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
@@ -205,7 +205,7 @@ export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
-  Observable_fromEnumeratorFactory;
+  EnumeratorFactory_toObservable;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
 export const fromOptional: Signature["fromOptional"] = Optional_toObservable;

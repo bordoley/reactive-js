@@ -164,7 +164,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -174,7 +174,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>, readonly `T`[]\>
+[`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, readonly `T`[]\>
 
 ___
 
@@ -1448,7 +1448,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -1459,7 +1459,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
 
 ___
 
@@ -1779,7 +1779,7 @@ ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
 
 #### Type parameters
 
@@ -1789,4 +1789,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>

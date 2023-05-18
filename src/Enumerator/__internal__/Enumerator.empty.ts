@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import { Optional, SideEffect1, isFunction, none } from "../../functions.js";
 import {
   DisposableLike,
@@ -38,7 +37,6 @@ const empty: EnumeratorLike = {
   [DisposableLike_dispose](_error?: Error): void {},
 };
 
-const Enumerator_empty: Enumerator.Signature["empty"] = <T>() =>
-  empty as EnumeratorLike<T>;
+const Enumerator_empty = <T>(): EnumeratorLike<T> => empty as EnumeratorLike<T>;
 
 export default Enumerator_empty;

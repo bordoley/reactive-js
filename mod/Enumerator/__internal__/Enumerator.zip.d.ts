@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_zip: Enumerator.Signature["zip"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_zip: (...enumerators: readonly EnumeratorLike<unknown>[]) => EnumeratorLike<readonly unknown[]>;
 export default Enumerator_zip;

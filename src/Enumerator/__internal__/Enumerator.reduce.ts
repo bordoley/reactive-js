@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import { Factory, Reducer } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -6,7 +5,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_reduce: Enumerator.Signature["reduce"] =
+const Enumerator_reduce =
   <T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>) =>
   (enumerator: EnumeratorLike<T>) => {
     let acc = initialValue();

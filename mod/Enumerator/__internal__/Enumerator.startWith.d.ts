@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_startWith: Enumerator.Signature["startWith"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_startWith: <T>(...values: readonly T[]) => (enumerator: EnumeratorLike<T>) => EnumeratorLike<T>;
 export default Enumerator_startWith;

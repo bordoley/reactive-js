@@ -2,11 +2,12 @@ import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.j
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import * as Obj from "../../__internal__/Object.js";
 import { pipe } from "../../functions.js";
-import { EnumeratorLike, ReadonlyObjectMapLike } from "../../types.js";
+import { ReadonlyObjectMapLike } from "../../types.js";
 
 const ReadonlyObjectMap_keys: ReadonlyObjectMap.Signature["keys"] =
   <TKey extends ReadonlyObjectMap.TKeyBase = ReadonlyObjectMap.TKeyBase>() =>
-  (obj: ReadonlyObjectMapLike<TKey, unknown>): EnumeratorLike<TKey> => {
+  (obj: ReadonlyObjectMapLike<TKey, unknown>) =>
+  () => {
     function* ReadonlyObjectMapKeys(): Iterator<TKey> {
       for (const key in obj) {
         if (Obj.hasOwn(obj, key)) {

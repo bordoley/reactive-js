@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_endWith: Enumerator.Signature["endWith"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_endWith: <T>(...values: readonly T[]) => (observable: EnumeratorLike<T>) => EnumeratorLike<T>;
 export default Enumerator_endWith;

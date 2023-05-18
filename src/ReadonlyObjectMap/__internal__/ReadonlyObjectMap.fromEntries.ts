@@ -1,6 +1,6 @@
 import * as Obj from "../../__internal__/Object.js";
 import {
-  EnumeratorLike,
+  EnumeratorFactoryLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
 } from "../../types.js";
@@ -9,7 +9,8 @@ import type * as ReadonlyObjectMap from "./../../ReadonlyObjectMap.js";
 const ReadonlyObjectMap_fromEntries: ReadonlyObjectMap.Signature["fromEntries"] =
 
     <T, TKey extends ReadonlyObjectMap.TKeyBase>() =>
-    (entries: EnumeratorLike<readonly [TKey, T]>) => {
+    (factory: EnumeratorFactoryLike<readonly [TKey, T]>) => {
+      const entries = factory();
       const obj = Obj.create(null);
 
       while (entries[EnumeratorLike_move]()) {

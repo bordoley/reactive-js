@@ -1,5 +1,4 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import type * as Enumerator from "../../Enumerator.js";
 import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
@@ -19,6 +18,9 @@ import {
 } from "../../__internal__/symbols.js";
 import { none } from "../../functions.js";
 import {
+  Container,
+  Container_T,
+  Container_type,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike,
@@ -28,6 +30,10 @@ import {
 } from "../../types.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
+
+interface EnumeratorContainer extends Container {
+  readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]>;
+}
 
 const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
   /*@__PURE__*/ (<T>() => {
@@ -110,7 +116,7 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
       o?: unknown,
     ) => EnumeratorLike<T>;
 
-    return ReadonlyArray_toContainer<Enumerator.Type>(createEnumerator);
+    return ReadonlyArray_toContainer<EnumeratorContainer>(createEnumerator);
   })();
 
 export default ReadonlyArray_enumerate;

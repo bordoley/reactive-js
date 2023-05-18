@@ -1,3 +1,6 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_skipFirst: Enumerator.Signature["skipFirst"];
+import { Function1 } from "../../functions.js";
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_skipFirst: <T>(options?: {
+    readonly count?: number;
+}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>>;
 export default Enumerator_skipFirst;

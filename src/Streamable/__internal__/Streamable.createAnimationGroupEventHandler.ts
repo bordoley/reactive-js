@@ -1,7 +1,8 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerator_map from "../../Enumerator/__internal__/Enumerator.map.js";
-import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
+import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
+import EnumeratorFactory_map from "../../EnumeratorFactory/__internal__/EnumeratorFactory.map.js";
+import EnumeratorFactory_toReadonlyArray from "../../EnumeratorFactory/__internal__/EnumeratorFactory.toReadonlyArray.js";
 import EventSource_createPublisher from "../../EventSource/__internal__/EventSource.createPublisher.js";
 import type { Animation } from "../../Observable.js";
 import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
@@ -163,8 +164,8 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
             const deferredAnimatedObservables = pipe(
               observables,
               ReadonlyObjectMap_values(),
-              Enumerator_map(Observable_subscribeOn(animationScheduler)),
-              Enumerator_toReadonlyArray(),
+              EnumeratorFactory_map(Observable_subscribeOn(animationScheduler)),
+              EnumeratorFactory_toReadonlyArray(),
             );
 
             return Observable_mergeMany(deferredAnimatedObservables);
@@ -208,7 +209,11 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
           unsafeCast<DelegatingLike<ReadonlyObjectMapLike<TKey, unknown>>>(
             this,
           );
-          return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
+          return pipe(
+            this[DelegatingLike_delegate],
+            ReadonlyObjectMap_keys(),
+            EnumeratorFactory_enumerate(),
+          );
         },
 
         [KeyedCollectionLike_get](

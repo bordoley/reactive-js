@@ -1,4 +1,4 @@
-import * as Enumerator from "../../Enumerator.js";
+import * as EnumeratorFactory from "../../EnumeratorFactory.js";
 import {
   describe,
   expectArrayEquals,
@@ -33,7 +33,7 @@ const AssociativeKeyedContainerTypeClassTests = <
           { a: "b", c: "d" },
           m.fromReadonlyObjectMap<string, string>(),
           m.entries(),
-          Enumerator.toReadonlyArray(),
+          EnumeratorFactory.toReadonlyArray(),
           expectArrayEquals(
             [
               ["a", "b"],

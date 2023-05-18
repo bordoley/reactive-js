@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import {
   createInstanceFactory,
   include,
@@ -15,7 +15,7 @@ import {
   PairwiseLike_hasPrev,
   PairwiseLike_prev,
 } from "../../__internal__/types.js";
-import { none, returns } from "../../functions.js";
+import { Function1, none, returns } from "../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -26,9 +26,10 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_pairwise: Enumerator.Signature["pairwise"] = /*@__PURE__*/ (<
-  T,
->() =>
+const Enumerator_pairwise: <T>() => Function1<
+  EnumeratorLike<T>,
+  EnumeratorLike<readonly [T, T]>
+> = /*@__PURE__*/ (<T>() =>
   returns(
     createInstanceFactory(
       mix(

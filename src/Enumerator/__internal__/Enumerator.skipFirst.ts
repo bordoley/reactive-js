@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
@@ -16,7 +16,7 @@ import {
   SkipFirstLike_count,
   SkipFirstLike_skipCount,
 } from "../../__internal__/types.js";
-import { unsafeCast } from "../../functions.js";
+import { Function1, unsafeCast } from "../../functions.js";
 import {
   DisposableLike,
   EnumeratorLike,
@@ -25,7 +25,9 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_skipFirst: Enumerator.Signature["skipFirst"] = /*@__PURE__*/ (<
+const Enumerator_skipFirst: <T>(options?: {
+  readonly count?: number;
+}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<
   T,
 >() => {
   const createSkipFirstEnumerator = createInstanceFactory(

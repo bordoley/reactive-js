@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
@@ -12,9 +11,7 @@ import {
 } from "../../types.js";
 import Enumerator_empty from "./Enumerator.empty.js";
 
-const Enumerator_takeLast: Enumerator.Signature["takeLast"] = <T>(options?: {
-  readonly count?: number;
-}) => {
+const Enumerator_takeLast = <T>(options?: { readonly count?: number }) => {
   const count = clampPositiveInteger(options?.count ?? 1);
 
   return (enumerator: EnumeratorLike<T>) => {

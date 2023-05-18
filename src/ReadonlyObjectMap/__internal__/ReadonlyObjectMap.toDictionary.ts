@@ -1,3 +1,4 @@
+import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import * as Obj from "../../__internal__/Object.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
@@ -27,7 +28,11 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   }
 
   [AssociativeCollectionLike_keys](): EnumeratorLike<TKey> {
-    return pipe(this.obj, ReadonlyObjectMap_keys());
+    return pipe(
+      this.obj,
+      ReadonlyObjectMap_keys(),
+      EnumeratorFactory_enumerate(),
+    );
   }
   [KeyedCollectionLike_get](index: TKey): Optional<T> {
     return this.obj[index];

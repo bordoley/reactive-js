@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_toReadonlyArray: Enumerator.Signature["toReadonlyArray"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_toReadonlyArray: <T>() => (enumerator: EnumeratorLike<T>) => T[];
 export default Enumerator_toReadonlyArray;

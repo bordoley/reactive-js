@@ -1,7 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import {
   createInstanceFactory,
   include,
@@ -14,7 +14,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { none, pipe, unsafeCast } from "../../functions.js";
+import { Function1, none, pipe, unsafeCast } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -25,9 +25,10 @@ import {
 } from "../../types.js";
 import Enumerator_empty from "./Enumerator.empty.js";
 
-const Enumerator_concatAll: Enumerator.Signature["concatAll"] = /*@__PURE__*/ (<
-  T,
->() => {
+const Enumerator_concatAll: <T>() => Function1<
+  EnumeratorLike<EnumeratorLike<T>>,
+  EnumeratorLike<T>
+> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [__ConcatEnumerator_inner]: EnumeratorLike<T>;
   };

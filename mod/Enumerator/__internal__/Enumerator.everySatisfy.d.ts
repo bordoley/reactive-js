@@ -1,3 +1,4 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_everySatisfy: Enumerator.Signature["everySatisfy"];
+import { Predicate } from "../../functions.js";
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_everySatisfy: <T>(predicate: Predicate<T>) => (enumerator: EnumeratorLike<T>) => boolean;
 export default Enumerator_everySatisfy;

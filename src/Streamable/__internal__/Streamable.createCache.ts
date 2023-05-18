@@ -3,6 +3,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
 import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
@@ -322,7 +323,11 @@ const createCacheStream: <T>(
 
         [AssociativeCollectionLike_keys](): EnumeratorLike<string> {
           unsafeCast<TProperties<T>>(this);
-          return pipe(this.store, ReadonlyMap_keys());
+          return pipe(
+            this.store,
+            ReadonlyMap_keys(),
+            EnumeratorFactory_enumerate(),
+          );
         },
 
         [KeyedCollectionLike_get](

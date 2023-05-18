@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import { Optional, none } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -6,7 +5,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_last: Enumerator.Signature["last"] =
+const Enumerator_last =
   <T>() =>
   (enumerator: EnumeratorLike<T>) => {
     let last: Optional<T> = none;

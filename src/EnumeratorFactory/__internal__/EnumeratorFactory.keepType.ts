@@ -1,17 +1,10 @@
-import Enumerator_keepType from "../../Enumerator/__internal__/Enumerator.keepType.js";
+import Container_keepType from "../../Container/__internal__/Container.keepType.js";
 import type * as EnumeratorFactory from "../../EnumeratorFactory.js";
-import { TypePredicate, composeLazy } from "../../functions.js";
-import EnumeratorFactory_enumerate from "./EnumeratorFactory.enumerate.js";
+import EnumeratorFactory_keep from "./EnumeratorFactory.keep.js";
 
-const EnumeratorFactory_keepType: EnumeratorFactory.Signature["keepType"] = (<
-  TA,
-  TB extends TA,
->(
-  predicate: TypePredicate<TA, TB>,
-) =>
-  composeLazy(
-    EnumeratorFactory_enumerate<TA>(),
-    Enumerator_keepType<TA, TB>(predicate),
-  )) as EnumeratorFactory.Signature["keepType"];
+const Enumerator_keepType =
+  /*@__PURE__*/ Container_keepType<EnumeratorFactory.Type>(
+    EnumeratorFactory_keep,
+  );
 
-export default EnumeratorFactory_keepType;
+export default Enumerator_keepType;

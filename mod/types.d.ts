@@ -646,7 +646,7 @@ export interface ContainerTypeClass<C extends Container> {
     }): ContainerOperator<C, T, T>;
 }
 /** @category TypeClass */
-export interface EnumeratorContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface RunnableContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -709,7 +709,7 @@ export interface EnumeratorContainerTypeClass<C extends Container> extends Conta
     /**
      * @category Constructor
      */
-    fromEnumeratorFactory<T>(): Function1<Factory<EnumeratorLike<T>>, ContainerOf<C, T>>;
+    fromEnumeratorFactory<T>(): Function1<EnumeratorFactoryLike<T>, ContainerOf<C, T>>;
     /**
      * @category Constructor
      */
@@ -747,6 +747,10 @@ export interface EnumeratorContainerTypeClass<C extends Container> extends Conta
      */
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
     /**
+     * @category Operator
+     */
+    repeat<T>(count: number): ContainerOperator<C, T, T>;
+    /**
      * @category Transform
      */
     someSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
@@ -762,6 +766,8 @@ export interface EnumeratorContainerTypeClass<C extends Container> extends Conta
     takeLast<T>(options?: {
         readonly count?: number;
     }): ContainerOperator<C, T, T>;
+    /** @category Transform */
+    toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
@@ -793,13 +799,6 @@ export interface EnumeratorContainerTypeClass<C extends Container> extends Conta
     zipWith<TA, TB, TC, TD, TE, TF, TG>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-}
-export interface RunnableContainerTypeClass<C extends Container> extends EnumeratorContainerTypeClass<C> {
-    /**
-     * @category Operator
-     */
-    repeat<T>(count: number): ContainerOperator<C, T, T>;
-    toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 /** @category TypeClass */
 export interface EnumerableContainerTypeClass<C extends Container> extends RunnableContainerTypeClass<C> {
@@ -879,7 +878,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
     /**
      * @category Transform
      */
-    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorLike<[TKey, T]>>;
+    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorFactoryLike<[TKey, T]>>;
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
@@ -906,7 +905,7 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
      *
      * @category Transform
      */
-    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorLike<T>>;
+    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorFactoryLike<T>>;
 }
 /** @category TypeClass */
 export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
@@ -966,7 +965,7 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
      *
      * @category Transform
      */
-    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorLike<TKey>>;
+    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorFactoryLike<TKey>>;
     /**
      *
      * @category Transform
@@ -999,5 +998,5 @@ export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedConta
     /**
      * @category Constructor
      */
-    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
+    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorFactoryLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
 }

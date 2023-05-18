@@ -4,10 +4,9 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, DistinctUntilChangedLike_equality, DistinctUntilChangedLike_hasValue, DistinctUntilChangedLike_prev, } from "../../__internal__/types.js";
-import { none, strictEquality, unsafeCast } from "../../functions.js";
+import { none, strictEquality, unsafeCast, } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
-const Enumerator_distinctUntilChanged = 
-/*@__PURE__*/ (() => {
+const Enumerator_distinctUntilChanged = /*@__PURE__*/ (() => {
     const createDistinctUntilChangedEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_delegatingMixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);

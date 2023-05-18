@@ -1,9 +1,9 @@
 /// <reference types="./AssociativeKeyedContainerTypeClassTests.d.ts" />
 
-import * as Enumerator from "../../Enumerator.js";
+import * as EnumeratorFactory from "../../EnumeratorFactory.js";
 import { describe, expectArrayEquals, expectEquals, test, } from "../../__internal__/testing.js";
 import { arrayEquality, none, pipe, pipeLazy, returns, } from "../../functions.js";
-const AssociativeKeyedContainerTypeClassTests = (m) => describe("AssociativeKeyedContainerTypeClassTests", describe("entries", test("enumerates all entries", pipeLazy({ a: "b", c: "d" }, m.fromReadonlyObjectMap(), m.entries(), Enumerator.toReadonlyArray(), expectArrayEquals([
+const AssociativeKeyedContainerTypeClassTests = (m) => describe("AssociativeKeyedContainerTypeClassTests", describe("entries", test("enumerates all entries", pipeLazy({ a: "b", c: "d" }, m.fromReadonlyObjectMap(), m.entries(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals([
     ["a", "b"],
     ["c", "d"],
 ], arrayEquality()))), describe("forEach", test("iterate and imperatively sum the keys", () => {

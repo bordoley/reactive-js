@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import { none } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -7,7 +6,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_first: Enumerator.Signature["first"] =
+const Enumerator_first =
   <T>() =>
   (enumerator: EnumeratorLike<T>) => {
     enumerator[EnumeratorLike_move]();

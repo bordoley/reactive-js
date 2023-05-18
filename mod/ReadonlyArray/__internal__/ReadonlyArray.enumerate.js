@@ -5,7 +5,7 @@ import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../Enu
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ReadonlyArrayEnumerator_count, __ReadonlyArrayEnumerator_index, __ReadonlyArrayEnumerator_values, } from "../../__internal__/symbols.js";
 import { none } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { Container_type, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_enumerate = 
 /*@__PURE__*/ (() => {

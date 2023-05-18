@@ -1,13 +1,9 @@
-import Enumerator_noneSatisfy from "../../Enumerator/__internal__/Enumerator.noneSatisfy.js";
 import type * as EnumeratorFactory from "../../EnumeratorFactory.js";
-import { Predicate, compose } from "../../functions.js";
-import EnumeratorFactory_enumerate from "./EnumeratorFactory.enumerate.js";
+import { Predicate, compose, negate } from "../../functions.js";
+import EnumeratorFactory_everySatisfy from "./EnumeratorFactory.everySatisfy.js";
 
 const EnumeratorFactory_noneSatisfy: EnumeratorFactory.Signature["noneSatisfy"] =
   <T>(predicate: Predicate<T>) =>
-    compose(
-      EnumeratorFactory_enumerate<T>(),
-      Enumerator_noneSatisfy(predicate),
-    );
+    EnumeratorFactory_everySatisfy(compose(predicate, negate));
 
 export default EnumeratorFactory_noneSatisfy;

@@ -8,7 +8,8 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { BufferingLike_buffer, BufferingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { none, unsafeCast } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
-const Enumerator_buffer = /*@__PURE__*/ (() => {
+const Enumerator_buffer = 
+/*@__PURE__*/ (() => {
     const createBufferEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_delegatingMixin), function BufferEnumerator(instance, delegate, count) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);

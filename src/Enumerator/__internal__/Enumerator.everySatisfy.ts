@@ -1,4 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
 import { Predicate } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -6,7 +5,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_everySatisfy: Enumerator.Signature["everySatisfy"] =
+const Enumerator_everySatisfy =
   <T>(predicate: Predicate<T>) =>
   (enumerator: EnumeratorLike<T>) => {
     let result = true;

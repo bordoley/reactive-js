@@ -1,3 +1,3 @@
-import type * as Enumerator from "../../Enumerator.js";
-declare const Enumerator_first: Enumerator.Signature["first"];
+import { EnumeratorLike } from "../../types.js";
+declare const Enumerator_first: <T>() => (enumerator: EnumeratorLike<T>) => T | undefined;
 export default Enumerator_first;

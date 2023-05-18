@@ -1,7 +1,6 @@
 /// <reference types="./EnumeratorFactory.noneSatisfy.d.ts" />
 
-import Enumerator_noneSatisfy from "../../Enumerator/__internal__/Enumerator.noneSatisfy.js";
-import { compose } from "../../functions.js";
-import EnumeratorFactory_enumerate from "./EnumeratorFactory.enumerate.js";
-const EnumeratorFactory_noneSatisfy = (predicate) => compose(EnumeratorFactory_enumerate(), Enumerator_noneSatisfy(predicate));
+import { compose, negate } from "../../functions.js";
+import EnumeratorFactory_everySatisfy from "./EnumeratorFactory.everySatisfy.js";
+const EnumeratorFactory_noneSatisfy = (predicate) => EnumeratorFactory_everySatisfy(compose(predicate, negate));
 export default EnumeratorFactory_noneSatisfy;

@@ -155,7 +155,7 @@ ___
 
 ### fromEnumeratorFactory
 
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Type parameters
 
@@ -165,7 +165,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 #### Inherited from
 

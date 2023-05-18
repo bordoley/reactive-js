@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import {
   createInstanceFactory,
   include,
@@ -25,7 +25,9 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_map: Enumerator.Signature["map"] = /*@__PURE__*/ (<
+const Enumerator_map: <TA, TB>(
+  selector: Function1<TA, TB>,
+) => (delegate: EnumeratorLike<TA>) => EnumeratorLike<TB> = /*@__PURE__*/ (<
   TA,
   TB,
 >() => {

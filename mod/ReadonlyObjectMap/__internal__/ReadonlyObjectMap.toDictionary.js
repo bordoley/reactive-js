@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyObjectMap.toDictionary.d.ts" />
 
+import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
 import * as Obj from "../../__internal__/Object.js";
 import { newInstance, pipe } from "../../functions.js";
 import { AssociativeCollectionLike_keys, CollectionLike_count, KeyedCollectionLike_get, } from "../../types.js";
@@ -19,7 +20,7 @@ class ReadonlyObjectMapDictionary {
         return cnt;
     }
     [AssociativeCollectionLike_keys]() {
-        return pipe(this.obj, ReadonlyObjectMap_keys());
+        return pipe(this.obj, ReadonlyObjectMap_keys(), EnumeratorFactory_enumerate());
     }
     [KeyedCollectionLike_get](index) {
         return this.obj[index];

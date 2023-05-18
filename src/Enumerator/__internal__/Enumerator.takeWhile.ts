@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Enumerator from "../../Enumerator.js";
+
 import {
   createInstanceFactory,
   include,
@@ -15,7 +15,7 @@ import {
   TakeWhileLike,
   TakeWhileLike_inclusive,
 } from "../../__internal__/types.js";
-import { Predicate, none } from "../../functions.js";
+import { Function1, Predicate, none } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EnumeratorLike,
@@ -28,9 +28,12 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_takeWhile: Enumerator.Signature["takeWhile"] = /*@__PURE__*/ (<
-  T,
->() => {
+const Enumerator_takeWhile: <T>(
+  predicate: Predicate<T>,
+  options?: {
+    readonly inclusive?: boolean | undefined;
+  },
+) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createTakeWhileEnumerator = createInstanceFactory(
     mix(
       include(MutableEnumerator_mixin(), Disposable_delegatingMixin),

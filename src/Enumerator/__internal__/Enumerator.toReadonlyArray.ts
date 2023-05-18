@@ -1,11 +1,10 @@
-import type * as Enumerator from "../../Enumerator.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_toReadonlyArray: Enumerator.Signature["toReadonlyArray"] =
+const Enumerator_toReadonlyArray =
   <T>() =>
   (enumerator: EnumeratorLike<T>) => {
     const result: T[] = [];

@@ -1,4 +1,4 @@
-import * as Enumerator from "../Enumerator.js";
+import * as EnumeratorFactory from "../EnumeratorFactory.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import {
   describe,
@@ -20,7 +20,7 @@ testModule(
       pipeLazy(
         ["b", "d"],
         ReadonlyArray.entries(),
-        Enumerator.toReadonlyArray(),
+        EnumeratorFactory.toReadonlyArray(),
         expectArrayEquals(
           [
             [0, "b"],
