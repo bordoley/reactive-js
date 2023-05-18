@@ -214,6 +214,21 @@ interface Pipe {
  * Pipes `source` through a series of unary functions.
  */
 export declare const pipe: Pipe["pipe"];
+interface PipeAsync {
+    pipeAsync<T, A>(src: T, op1: Function1<T, A | Promise<A>>): Promise<A>;
+    pipeAsync<T, A, B>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>): Promise<B>;
+    pipeAsync<T, A, B, C>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>): Promise<C>;
+    pipeAsync<T, A, B, C, D>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>): Promise<D>;
+    pipeAsync<T, A, B, C, D, E>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>): Promise<E>;
+    pipeAsync<T, A, B, C, D, E, F>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>): Promise<F>;
+    pipeAsync<T, A, B, C, D, E, F, G>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>): Promise<G>;
+    pipeAsync<T, A, B, C, D, E, F, G, H>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>): Promise<H>;
+    pipeAsync<T, A, B, C, D, E, F, G, H, I>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>): Promise<I>;
+    pipeAsync<T, A, B, C, D, E, F, G, H, I, J>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>): Promise<J>;
+    pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>, op11: Function1<J, K | Promise<K>>): Promise<K>;
+    pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: T, op1: Function1<T, A | Promise<A>>, op2: Function1<A, B | Promise<B>>, op3: Function1<B, C | Promise<C>>, op4: Function1<C, D | Promise<D>>, op5: Function1<D, E | Promise<E>>, op6: Function1<E, F | Promise<F>>, op7: Function1<F, G | Promise<G>>, op8: Function1<G, H | Promise<H>>, op9: Function1<H, I | Promise<I>>, op10: Function1<I, J | Promise<J>>, op11: Function1<J, K | Promise<K>>, op12: Function1<K, L | Promise<L>>): Promise<L>;
+}
+export declare const pipeAsync: PipeAsync["pipeAsync"];
 interface PipeLazy {
     pipeLazy<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
     pipeLazy<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): Factory<B>;

@@ -80,6 +80,7 @@
 - [newInstance](functions.md#newinstance)
 - [partial](functions.md#partial)
 - [pipe](functions.md#pipe)
+- [pipeAsync](functions.md#pipeasync)
 - [pipeLazy](functions.md#pipelazy)
 - [pipeLazyAsync](functions.md#pipelazyasync)
 - [pipeSome](functions.md#pipesome)
@@ -2573,6 +2574,382 @@ Pipes `source` through a series of unary functions.
 #### Returns
 
 `L`
+
+___
+
+### pipeAsync
+
+▸ **pipeAsync**<`T`, `A`\>(`src`, `op1`): `Promise`<`A`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+
+#### Returns
+
+`Promise`<`A`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `Promise`<`B`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+
+#### Returns
+
+`Promise`<`B`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `Promise`<`C`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+
+#### Returns
+
+`Promise`<`C`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `Promise`<`D`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+
+#### Returns
+
+`Promise`<`D`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `Promise`<`E`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+
+#### Returns
+
+`Promise`<`E`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `Promise`<`F`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+
+#### Returns
+
+`Promise`<`F`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `Promise`<`G`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+
+#### Returns
+
+`Promise`<`G`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `Promise`<`H`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+
+#### Returns
+
+`Promise`<`H`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `Promise`<`I`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+
+#### Returns
+
+`Promise`<`I`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `Promise`<`J`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+
+#### Returns
+
+`Promise`<`J`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `Promise`<`K`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+
+#### Returns
+
+`Promise`<`K`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `Promise`<`L`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](functions.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](functions.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](functions.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](functions.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](functions.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](functions.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](functions.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](functions.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](functions.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op12` | [`Function1`](functions.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+
+#### Returns
+
+`Promise`<`L`\>
 
 ___
 

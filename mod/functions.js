@@ -139,6 +139,20 @@ export const pipeUnsafe = (source, ...operators) => {
  * Pipes `source` through a series of unary functions.
  */
 export const pipe = pipeUnsafe;
+export const pipeAsync = async (source, ...operators) => {
+    let acc = source;
+    const length = ReadonlyArray_getLength(operators);
+    for (let i = 0; i < length; i++) {
+        const result = operators[i](acc);
+        if (isPromise(result)) {
+            acc = await result;
+        }
+        else {
+            acc = result;
+        }
+    }
+    return acc;
+};
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */

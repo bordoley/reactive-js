@@ -11,6 +11,7 @@ import {
   Function1,
   identity,
   pipe,
+  pipeAsync,
   pipeLazyAsync,
   returns,
 } from "../../functions.js";
@@ -26,6 +27,39 @@ const HigherOrderObservableTypeClassTests = <C extends Observable.Type>(
 ) =>
   describe(
     "HigherOrderObservableTypeClass",
+
+    describe(
+      "catchError",
+      testAsync("when source throws", async () => {
+        const e = {};
+        await pipeAsync(
+          Observable.throws<number>({ raise: returns(e) }),
+          fromRunnable<number>(),
+          m.catchError<number>(_ =>
+            pipe([1, 2, 3], Observable.fromReadonlyArray()),
+          ),
+          Observable.buffer<number>(),
+          Observable.lastAsync(),
+          x => x ?? [],
+          expectArrayEquals([1, 2, 3]),
+        );
+      }),
+      testAsync(
+        "when source does not throw",
+        pipeLazyAsync(
+          [4, 5, 6],
+          Observable.fromReadonlyArray(),
+          fromRunnable<number>(),
+          m.catchError<number>(_ =>
+            pipe([1, 2, 3], Observable.fromReadonlyArray()),
+          ),
+          Observable.buffer<number>(),
+          Observable.lastAsync(),
+          x => x ?? [],
+          expectArrayEquals([4, 5, 6]),
+        ),
+      ),
+    ),
 
     describe(
       "switchAll",
