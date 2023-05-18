@@ -65,6 +65,7 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle.j
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
+import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -141,6 +142,7 @@ export const throttle = Observable_throttle;
 export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const toEventSource = Observable_toEventSource;
+export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
 export const withCurrentTime = Observable_withCurrentTime;
 export const withLatestFrom = Observable_withLatestFrom;
 export const zip = Observable_zip;

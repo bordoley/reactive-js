@@ -64,6 +64,7 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle.j
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
+import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -1222,6 +1223,18 @@ export interface ObservableModule {
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T>>;
 
+  toReadonlyArrayAsync<T>(): Function1<
+    ObservableLike<T>,
+    Promise<ReadonlyArray<T>>
+  >;
+  toReadonlyArrayAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
   ): EnumerableUpperBoundObservableOperator<TA, TB>;
@@ -2060,6 +2073,8 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  Observable_toReadonlyArrayAsync;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =

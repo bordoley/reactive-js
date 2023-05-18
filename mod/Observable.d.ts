@@ -325,6 +325,11 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
+    toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+    toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): EnumerableUpperBoundObservableOperator<TA, TB>;
     withLatestFrom<TA, TB, T>(other: EnumerableLike<TB>, selector: Function2<TA, TB, T>): EnumerableUpperBoundObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableUpperBoundObservableOperator<TA, T>;
@@ -491,6 +496,7 @@ export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zip: Signature["zip"];

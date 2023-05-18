@@ -99,6 +99,7 @@
 - [throwIfEmpty](Observable.md#throwifempty)
 - [throws](Observable.md#throws)
 - [toEventSource](Observable.md#toeventsource)
+- [toReadonlyArrayAsync](Observable.md#toreadonlyarrayasync)
 - [withCurrentTime](Observable.md#withcurrenttime)
 - [withLatestFrom](Observable.md#withlatestfrom)
 - [zip](Observable.md#zip)
@@ -4258,6 +4259,43 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+▸ **toReadonlyArrayAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 ___
 

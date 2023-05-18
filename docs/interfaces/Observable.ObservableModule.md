@@ -78,6 +78,7 @@
 - [throwIfEmpty](Observable.ObservableModule.md#throwifempty)
 - [throws](Observable.ObservableModule.md#throws)
 - [toEventSource](Observable.ObservableModule.md#toeventsource)
+- [toReadonlyArrayAsync](Observable.ObservableModule.md#toreadonlyarrayasync)
 - [withCurrentTime](Observable.ObservableModule.md#withcurrenttime)
 - [withLatestFrom](Observable.ObservableModule.md#withlatestfrom)
 - [zip](Observable.ObservableModule.md#zip)
@@ -4090,6 +4091,43 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+▸ **toReadonlyArrayAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 ___
 
