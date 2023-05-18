@@ -64,7 +64,7 @@
     "./Dictionary": "./Dictionary.js",
     "./Disposable": "./Disposable.js",
     "./Enumerable": "./Enumerable.js",
-    "./Enumerator": "./Enumerator.js",
+    "./EnumeratorFactory": "./EnumeratorFactory.js",
     "./EventSource": "./EventSource.js",
     "./Iterable": "./Iterable.js",
     "./MulticastObservable": "./MulticastObservable.js",
