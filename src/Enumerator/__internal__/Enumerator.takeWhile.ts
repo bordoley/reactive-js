@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
@@ -16,6 +17,7 @@ import {
 } from "../../__internal__/types.js";
 import { Predicate, none } from "../../functions.js";
 import {
+  DisposableLike_dispose,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -31,39 +33,38 @@ const Enumerator_takeWhile: Enumerator.Signature["takeWhile"] = /*@__PURE__*/ (<
 >() => {
   const createTakeWhileEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin()),
+      include(MutableEnumerator_mixin(), Disposable_delegatingMixin),
       function TakeWhileEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          TakeWhileLike<T> & { completed: boolean },
+          TakeWhileLike<T>,
         delegate: EnumeratorLike<T>,
         predicate: Predicate<T>,
         inclusive: boolean,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
         init(MutableEnumerator_mixin<T>(), instance);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[PredicatedLike_predicate] = predicate;
         instance[TakeWhileLike_inclusive] = inclusive;
 
         return instance;
       },
-      props<TakeWhileLike<T> & { completed: boolean }>({
+      props<TakeWhileLike<T>>({
         [PredicatedLike_predicate]: none,
         [TakeWhileLike_inclusive]: none,
-        // FIXME: Should use a symbol
-        completed: false,
       }),
       {
         [EnumeratorLike_move](
           this: TakeWhileLike<T> &
             MutableEnumeratorLike<T> &
-            DelegatingLike<EnumeratorLike<T>> & { completed: boolean },
+            DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
           this[MutableEnumeratorLike_reset]();
 
           const delegate = this[DelegatingLike_delegate];
 
-          if (!this.completed && delegate[EnumeratorLike_move]()) {
+          if (delegate[EnumeratorLike_move]()) {
             const next = delegate[EnumeratorLike_current];
 
             const satisfiesPredicate = this[PredicatedLike_predicate](next);
@@ -73,7 +74,7 @@ const Enumerator_takeWhile: Enumerator.Signature["takeWhile"] = /*@__PURE__*/ (<
             }
 
             if (!satisfiesPredicate) {
-              this.completed = true;
+              this[DisposableLike_dispose]();
             }
           }
 

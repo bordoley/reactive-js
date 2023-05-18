@@ -1,5 +1,5 @@
 import { Factory, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, DisposableLike, EnumerableContainerTypeClass, EnumerableLike, EnumeratorLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableContainerTypeClass, EnumerableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -8,10 +8,7 @@ export interface EnumerableContainer extends Container {
     readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 export type Type = EnumerableContainer;
-export interface DisposableEnumeratorType extends Container {
-    readonly [Container_type]?: EnumeratorLike<this[typeof Container_T]> & DisposableLike;
-}
-export interface EnumerableModule extends EnumerableContainerTypeClass<Type, DisposableEnumeratorType> {
+export interface EnumerableModule extends EnumerableContainerTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;

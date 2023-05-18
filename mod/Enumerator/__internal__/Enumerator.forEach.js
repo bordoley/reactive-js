@@ -1,13 +1,15 @@
 /// <reference types="./Enumerator.forEach.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, ForEachLike_effect, } from "../../__internal__/types.js";
 import { none, unsafeCast } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
 const Enumerator_forEach = /*@__PURE__*/ (() => {
-    const createForEachEnumerator = createInstanceFactory(mix(include(Delegating_mixin()), function ForEachEnumerator(instance, delegate, effect) {
+    const createForEachEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_delegatingMixin), function ForEachEnumerator(instance, delegate, effect) {
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
         instance[ForEachLike_effect] = effect;
         return instance;
     }, props({

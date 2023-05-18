@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
@@ -19,6 +20,7 @@ import {
 } from "../../__internal__/types.js";
 import { none, unsafeCast } from "../../functions.js";
 import {
+  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -30,13 +32,15 @@ const Enumerator_buffer: Enumerator.Signature["buffer"] = /*@__PURE__*/ (<
 >() => {
   const createBufferEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin()),
+      include(Delegating_mixin(), Disposable_delegatingMixin),
       function BufferEnumerator(
-        instance: BufferingLike<T> & EnumeratorLike<readonly T[]>,
+        instance: BufferingLike<T> &
+          Omit<EnumeratorLike<readonly T[]>, keyof DisposableLike>,
         delegate: EnumeratorLike<T>,
         count: number,
       ): EnumeratorLike<readonly T[]> {
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[BufferingLike_count] = count;
 

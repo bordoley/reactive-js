@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
@@ -17,6 +18,7 @@ import {
 } from "../../__internal__/types.js";
 import { Equality, none, strictEquality, unsafeCast } from "../../functions.js";
 import {
+  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -27,13 +29,15 @@ const Enumerator_distinctUntilChanged: Enumerator.Signature["distinctUntilChange
   /*@__PURE__*/ (<T>() => {
     const createDistinctUntilChangedEnumerator = createInstanceFactory(
       mix(
-        include(Delegating_mixin()),
+        include(Delegating_mixin(), Disposable_delegatingMixin),
         function DistinctUntilChangedEnumerator(
-          instance: EnumeratorLike<T> & DistinctUntilChangedLike<T>,
+          instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
+            DistinctUntilChangedLike<T>,
           delegate: EnumeratorLike<T>,
           equality: Equality<T>,
         ): EnumeratorLike<T> {
           init(Delegating_mixin(), instance, delegate);
+          init(Disposable_delegatingMixin, instance, delegate);
 
           instance[DistinctUntilChangedLike_equality] = equality;
 

@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
@@ -31,7 +32,11 @@ const Enumerator_scan: Enumerator.Signature["scan"] = /*@__PURE__*/ (<
 >() => {
   const createScanEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin(), Delegating_mixin()),
+      include(
+        MutableEnumerator_mixin(),
+        Delegating_mixin(),
+        Disposable_delegatingMixin,
+      ),
       function ScanEnumerator(
         instance: Pick<EnumeratorLike<TAcc>, typeof EnumeratorLike_move> &
           ReducerAccumulatorLike<T, TAcc>,
@@ -41,6 +46,7 @@ const Enumerator_scan: Enumerator.Signature["scan"] = /*@__PURE__*/ (<
       ): EnumeratorLike<TAcc> {
         init(MutableEnumerator_mixin<TAcc>(), instance);
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[ReducerAccumulatorLike_reducer] = reducer;
         instance[ReducerAccumulatorLike_acc] = initialValue();

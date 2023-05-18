@@ -1,15 +1,17 @@
 /// <reference types="./Enumerator.map.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, MappingLike_selector, } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_map = /*@__PURE__*/ (() => {
-    const createMapEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Delegating_mixin()), function MapEnumerator(instance, delegate, mapper) {
+    const createMapEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_delegatingMixin), function MapEnumerator(instance, delegate, mapper) {
         init(MutableEnumerator_mixin(), instance);
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
         instance[MappingLike_selector] = mapper;
         return instance;
     }, props({

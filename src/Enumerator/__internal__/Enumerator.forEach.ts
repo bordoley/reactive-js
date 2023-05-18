@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
@@ -15,6 +16,7 @@ import {
 } from "../../__internal__/types.js";
 import { SideEffect1, none, unsafeCast } from "../../functions.js";
 import {
+  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -26,13 +28,15 @@ const Enumerator_forEach: Enumerator.Signature["forEach"] = /*@__PURE__*/ (<
 >() => {
   const createForEachEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin()),
+      include(Delegating_mixin(), Disposable_delegatingMixin),
       function ForEachEnumerator(
-        instance: EnumeratorLike<T> & ForEachLike<T>,
+        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
+          ForEachLike<T>,
         delegate: EnumeratorLike<T>,
         effect: SideEffect1<T>,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[ForEachLike_effect] = effect;
 

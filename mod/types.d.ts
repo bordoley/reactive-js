@@ -1,5 +1,4 @@
 import type * as DeferredObservable from "./DeferredObservable.js";
-import type * as Enumerator from "./Enumerator.js";
 import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
@@ -55,7 +54,7 @@ export declare const VirtualTimeSchedulerLike_run: typeof __VirtualTimeScheduler
  *
  * @category Interactive
  */
-export interface EnumeratorLike<T = unknown> {
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
     /**
      * Returns the element if present.
      */
@@ -797,12 +796,12 @@ export interface RunnableContainerTypeClass<C extends Container> extends Enumera
     repeat<T>(count: number): ContainerOperator<C, T, T>;
 }
 /** @category TypeClass */
-export interface EnumerableContainerTypeClass<C extends Container, CEnumerator extends Enumerator.Type = Enumerator.Type> extends RunnableContainerTypeClass<C> {
+export interface EnumerableContainerTypeClass<C extends Container> extends RunnableContainerTypeClass<C> {
     /**
      *
      * @category Transform
      */
-    enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+    enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
     /**
      * Converts the Container to a `IterableLike`.
      *

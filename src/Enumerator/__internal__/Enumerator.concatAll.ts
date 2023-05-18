@@ -1,4 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import {
   createInstanceFactory,
@@ -12,8 +14,10 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { none, unsafeCast } from "../../functions.js";
+import { none, pipe, unsafeCast } from "../../functions.js";
 import {
+  DisposableLike,
+  DisposableLike_dispose,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -29,12 +33,15 @@ const Enumerator_concatAll: Enumerator.Signature["concatAll"] = /*@__PURE__*/ (<
   };
   const createConcatAllEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin()),
+      include(Delegating_mixin(), Disposable_mixin),
       function ConcatAllEnumerator(
-        instance: EnumeratorLike<T> & TProperties,
+        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & TProperties,
         delegate: EnumeratorLike<EnumeratorLike<T>>,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
+        init(Disposable_mixin, instance);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[__ConcatEnumerator_inner] = Enumerator_empty();
 
@@ -65,8 +72,10 @@ const Enumerator_concatAll: Enumerator.Signature["concatAll"] = /*@__PURE__*/ (<
           while (!inner[EnumeratorLike_move]()) {
             if (delegate[EnumeratorLike_move]()) {
               inner = delegate[EnumeratorLike_current];
+              pipe(this, Disposable_add(inner));
               this[__ConcatEnumerator_inner] = inner;
             } else {
+              this[DisposableLike_dispose]();
               inner = Enumerator_empty();
               this[__ConcatEnumerator_inner] = inner;
               break;

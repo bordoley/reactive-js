@@ -11,6 +11,7 @@ import {
   unsafeCast,
 } from "../../functions.js";
 import {
+  DisposableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -25,7 +26,7 @@ export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
 
 type TEnumeratorMixinReturn<T> = Omit<
   MutableEnumeratorLike<T>,
-  typeof EnumeratorLike_move
+  typeof EnumeratorLike_move | keyof DisposableLike
 >;
 
 const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =

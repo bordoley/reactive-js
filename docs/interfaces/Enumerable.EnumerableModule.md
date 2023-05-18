@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`EnumerableContainerTypeClass`](types.EnumerableContainerTypeClass.md)<[`Type`](../modules/Enumerable.md#type), [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)\>
+- [`EnumerableContainerTypeClass`](types.EnumerableContainerTypeClass.md)<[`Type`](../modules/Enumerable.md#type)\>
 
   ↳ **`EnumerableModule`**
 
@@ -1530,7 +1530,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1540,7 +1540,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 #### Inherited from
 

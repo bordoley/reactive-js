@@ -1,4 +1,7 @@
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
+import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   createInstanceFactory,
@@ -10,6 +13,7 @@ import {
 import { ZipLike, ZipLike_enumerators } from "../../__internal__/types.js";
 import { none, pipe } from "../../functions.js";
 import {
+  DisposableLike_dispose,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -40,14 +44,18 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin()),
+      include(MutableEnumerator_mixin(), Disposable_mixin),
       function ZipEnumerator(
         instance: ZipLike &
           Pick<EnumeratorLike<readonly unknown[]>, typeof EnumeratorLike_move>,
         enumerators: readonly EnumeratorLike<unknown>[],
       ): EnumeratorLike<readonly unknown[]> {
+        init(Disposable_mixin, instance);
         init(MutableEnumerator_mixin<readonly unknown[]>(), instance);
-        instance[ZipLike_enumerators] = enumerators;
+        instance[ZipLike_enumerators] = pipe(
+          enumerators,
+          ReadonlyArray_forEach(Disposable_addTo(instance)),
+        );
 
         return instance;
       },
@@ -68,6 +76,8 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
             );
 
             this[EnumeratorLike_current] = next;
+          } else {
+            this[DisposableLike_dispose]();
           }
 
           return this[EnumeratorLike_hasCurrent];

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [types](../modules/types.md) / EnumerableContainerTypeClass
 
-# Interface: EnumerableContainerTypeClass<C, CEnumerator\>
+# Interface: EnumerableContainerTypeClass<C\>
 
 [types](../modules/types.md).EnumerableContainerTypeClass
 
@@ -9,7 +9,6 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](types.Container.md) |
-| `CEnumerator` | extends [`Type`](../modules/Enumerator.md#type) = [`Type`](../modules/Enumerator.md#type) |
 
 ## Hierarchy
 
@@ -1468,7 +1467,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CEnumerator`, `T`\>\>
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1478,7 +1477,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CEnumerator`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 ___
 

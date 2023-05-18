@@ -10,6 +10,8 @@ Represents an unmanaged resource that can be disposed.
 
 - **`DisposableLike`**
 
+  ↳ [`EnumeratorLike`](types.EnumeratorLike.md)
+
   ↳ [`SinkLike`](types.SinkLike.md)
 
   ↳ [`VirtualTimeSchedulerLike`](types.VirtualTimeSchedulerLike.md)

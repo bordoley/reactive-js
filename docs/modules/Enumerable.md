@@ -10,7 +10,6 @@
 
 ### Other Interfaces
 
-- [DisposableEnumeratorType](../interfaces/Enumerable.DisposableEnumeratorType.md)
 - [EnumerableModule](../interfaces/Enumerable.EnumerableModule.md)
 
 ### Type Aliases
@@ -1348,7 +1347,7 @@ ___
 
 ### enumerate
 
-▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+▸ **enumerate**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1358,7 +1357,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
 
 ___
 

@@ -1,5 +1,4 @@
 import type * as DeferredObservable from "./DeferredObservable.js";
-import type * as Enumerator from "./Enumerator.js";
 import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import {
@@ -156,7 +155,7 @@ export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run
  *
  * @category Interactive
  */
-export interface EnumeratorLike<T = unknown> {
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
   /**
    * Returns the element if present.
    */
@@ -1208,15 +1207,13 @@ export interface RunnableContainerTypeClass<C extends Container>
 }
 
 /** @category TypeClass */
-export interface EnumerableContainerTypeClass<
-  C extends Container,
-  CEnumerator extends Enumerator.Type = Enumerator.Type,
-> extends RunnableContainerTypeClass<C> {
+export interface EnumerableContainerTypeClass<C extends Container>
+  extends RunnableContainerTypeClass<C> {
   /**
    *
    * @category Transform
    */
-  enumerate<T>(): Function1<ContainerOf<C, T>, ContainerOf<CEnumerator, T>>;
+  enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
 
   /**
    * Converts the Container to a `IterableLike`.

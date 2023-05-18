@@ -16,8 +16,6 @@
 
   ↳ [`EnumerableContainer`](Enumerable.EnumerableContainer.md)
 
-  ↳ [`DisposableEnumeratorType`](Enumerable.DisposableEnumeratorType.md)
-
   ↳ [`EnumeratorContainer`](Enumerator.EnumeratorContainer.md)
 
   ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)

@@ -1,3 +1,4 @@
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
@@ -13,6 +14,8 @@ import {
 import { __IteratorEnumerator_iterator } from "../../__internal__/symbols.js";
 import { Function1, none, returns } from "../../functions.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -27,13 +30,14 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
 
     const createEnumerator = createInstanceFactory(
       mix(
-        include(MutableEnumerator_mixin<T>()),
+        include(Disposable_mixin, MutableEnumerator_mixin<T>()),
         function IteratorEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
             Mutable<TIteratorEnumeratorProperties>,
           iterator: Iterator<T>,
         ): EnumeratorLike<T> {
           init(MutableEnumerator_mixin<T>(), instance);
+          init(Disposable_mixin, instance);
           instance[__IteratorEnumerator_iterator] = iterator;
 
           return instance;
@@ -46,9 +50,16 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
             this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
           ) {
             this[MutableEnumeratorLike_reset]();
+
+            if (this[DisposableLike_isDisposed]) {
+              return false;
+            }
+
             const next = this[__IteratorEnumerator_iterator].next();
             if (!next.done) {
               this[EnumeratorLike_current] = next.value;
+            } else {
+              this[DisposableLike_dispose]();
             }
 
             return this[EnumeratorLike_hasCurrent];

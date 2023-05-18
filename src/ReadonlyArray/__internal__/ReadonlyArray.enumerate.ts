@@ -1,3 +1,4 @@
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import MutableEnumerator_mixin, {
   MutableEnumeratorLike,
@@ -18,6 +19,8 @@ import {
 } from "../../__internal__/symbols.js";
 import { none } from "../../functions.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -41,7 +44,7 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
       o?: unknown,
     ) => EnumeratorLike<T> = createInstanceFactory(
       mix(
-        include(MutableEnumerator_mixin<T>()),
+        include(MutableEnumerator_mixin<T>(), Disposable_mixin),
         function ReadonlyArrayEnumerator(
           instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
             Mutable<TReadonlyArrayEnumeratorProperties>,
@@ -51,6 +54,8 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
           _: unknown,
         ): EnumeratorLike<T> {
           init(MutableEnumerator_mixin<T>(), instance);
+          init(Disposable_mixin, instance);
+
           instance[__ReadonlyArrayEnumerator_values] = values;
           instance[__ReadonlyArrayEnumerator_index] = start;
           instance[__ReadonlyArrayEnumerator_count] = count;
@@ -68,6 +73,10 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
           ) {
             this[MutableEnumeratorLike_reset]();
 
+            if (this[DisposableLike_isDisposed]) {
+              return false;
+            }
+
             const count = this[__ReadonlyArrayEnumerator_count];
 
             if (count != 0) {
@@ -84,6 +93,10 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
             } else if (count < 0) {
               this[__ReadonlyArrayEnumerator_count]++;
               this[__ReadonlyArrayEnumerator_index]--;
+            }
+
+            if (this[__ReadonlyArrayEnumerator_count] === 0) {
+              this[DisposableLike_dispose]();
             }
 
             return this[EnumeratorLike_hasCurrent];

@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import type * as Enumerator from "../../Enumerator.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
@@ -16,6 +17,7 @@ import {
   TakeFirstLike_takeCount,
 } from "../../__internal__/types.js";
 import {
+  DisposableLike_dispose,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -31,7 +33,7 @@ const Enumerator_takeFirst: Enumerator.Signature["takeFirst"] = /*@__PURE__*/ (<
 >() => {
   const createTakeFirstEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin()),
+      include(MutableEnumerator_mixin(), Disposable_delegatingMixin),
       function TakeFirstEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           TakeFirstLike,
@@ -40,6 +42,7 @@ const Enumerator_takeFirst: Enumerator.Signature["takeFirst"] = /*@__PURE__*/ (<
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
         init(MutableEnumerator_mixin<T>(), instance);
+        init(Disposable_delegatingMixin, instance, delegate);
 
         instance[TakeFirstLike_takeCount] = takeCount;
         instance[TakeFirstLike_count] = 0;
@@ -66,6 +69,8 @@ const Enumerator_takeFirst: Enumerator.Signature["takeFirst"] = /*@__PURE__*/ (<
             delegate[EnumeratorLike_move]()
           ) {
             this[EnumeratorLike_current] = delegate[EnumeratorLike_current];
+          } else {
+            this[DisposableLike_dispose]();
           }
 
           return this[EnumeratorLike_hasCurrent];
