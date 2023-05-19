@@ -36,7 +36,7 @@ export const createArray = (n: number): ReadonlyArray<number> => {
 
 const createMapPerfTest = <C extends Container>(
   name: string,
-  m: Types.RunnableContainerTypeClass<C>,
+  m: Types.RunnableTypeClass<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
@@ -56,7 +56,7 @@ export const map = (n: number) =>
 
 const createFilterMapFusionPerfTest = <C extends Container>(
   name: string,
-  m: Types.RunnableContainerTypeClass<C>,
+  m: Types.RunnableTypeClass<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -92,7 +92,7 @@ export const filterMapFusion = (n: number) =>
 
 const createFilterMapReducePerfTest = <C extends Container>(
   name: string,
-  m: Types.RunnableContainerTypeClass<C>,
+  m: Types.RunnableTypeClass<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
@@ -126,7 +126,7 @@ export const filterMapReduce = (n: number) =>
 
 const createScanReducePerfTest = <C extends Container>(
   name: string,
-  m: Types.RunnableContainerTypeClass<C>,
+  m: Types.RunnableTypeClass<C>,
 ) =>
   benchmarkTest(name, async (src: readonly number[]) =>
     pipeLazy(
