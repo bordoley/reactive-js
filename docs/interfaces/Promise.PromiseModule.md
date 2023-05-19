@@ -4,6 +4,12 @@
 
 [Promise](../modules/Promise.md).PromiseModule
 
+## Hierarchy
+
+- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Promise.md#type)\>
+
+  ↳ **`PromiseModule`**
+
 ## Table of contents
 
 ### Methods
@@ -25,3 +31,7 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)

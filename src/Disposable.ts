@@ -24,7 +24,7 @@ import {
   Container,
   Container_type,
   DisposableLike,
-  MulticastObservableLike,
+  MulticastableTypeClass,
 } from "./types.js";
 
 /**
@@ -37,7 +37,7 @@ export interface DisposableContainer extends Container {
 
 export type Type = DisposableContainer;
 
-export interface DisposableModule {
+export interface DisposableModule extends MulticastableTypeClass<Type> {
   readonly disposed: DisposableLike;
 
   add<TDisposable extends DisposableLike>(
@@ -78,8 +78,6 @@ export interface DisposableModule {
    * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
    */
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
-
-  toObservable<T>(): Function1<DisposableLike, MulticastObservableLike<T>>;
 
   usingAsync<TDisposable extends DisposableLike, TResult = unknown>(
     factoryOrDisposable: TDisposable | Factory<TDisposable>,

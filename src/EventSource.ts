@@ -29,7 +29,7 @@ import {
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
-  MulticastObservableLike,
+  MulticastableTypeClass,
 } from "./types.js";
 
 /**
@@ -42,7 +42,9 @@ export interface EventSourceContainer extends Container {
 
 export type Type = EventSourceContainer;
 
-export interface EventSourceModule extends ContainerTypeClass<Type> {
+export interface EventSourceModule
+  extends ContainerTypeClass<Type>,
+    MulticastableTypeClass<Type> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
@@ -69,8 +71,6 @@ export interface EventSourceModule extends ContainerTypeClass<Type> {
   ): EventSourceLike<T>;
 
   mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
-
-  toObservable<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = EventSourceModule;

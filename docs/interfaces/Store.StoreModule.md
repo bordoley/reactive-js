@@ -4,6 +4,12 @@
 
 [Store](../modules/Store.md).StoreModule
 
+## Hierarchy
+
+- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Store.md#type)\>
+
+  ↳ **`StoreModule`**
+
 ## Table of contents
 
 ### Methods
@@ -48,3 +54,7 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`StoreLike`](types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)

@@ -1,12 +1,10 @@
-import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, DisposableLike, MulticastObservableLike, StoreLike, WritableStoreLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, MulticastableTypeClass, StoreLike, WritableStoreLike } from "./types.js";
 export interface StoreContainer extends Container {
     readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
 }
 export type Type = StoreContainer;
-export interface StoreModule {
+export interface StoreModule extends MulticastableTypeClass<Type> {
     create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
-    toObservable<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = StoreModule;
 export declare const create: Signature["create"];

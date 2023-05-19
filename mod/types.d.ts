@@ -645,8 +645,17 @@ export interface ContainerTypeClass<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
+export interface FlowableTypeClass<C extends Container> {
+    flow<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
+}
+export interface MulticastableTypeClass<C extends Container> {
+    toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
+}
 /** @category TypeClass */
-export interface RunnableTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface RunnableTypeClass<C extends Container> extends ContainerTypeClass<C>, FlowableTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -702,10 +711,6 @@ export interface RunnableTypeClass<C extends Container> extends ContainerTypeCla
      * @category Operator
      */
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<C, TA, TB>;
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
     /**
      * @category Constructor
      */

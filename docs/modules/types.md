@@ -45,6 +45,11 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
+### Other Interfaces
+
+- [FlowableTypeClass](../interfaces/types.FlowableTypeClass.md)
+- [MulticastableTypeClass](../interfaces/types.MulticastableTypeClass.md)
+
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)

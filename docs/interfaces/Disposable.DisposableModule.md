@@ -4,6 +4,12 @@
 
 [Disposable](../modules/Disposable.md).DisposableModule
 
+## Hierarchy
+
+- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Disposable.md#type)\>
+
+  ↳ **`DisposableModule`**
+
 ## Table of contents
 
 ### Properties
@@ -225,6 +231,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
 
 ___
 

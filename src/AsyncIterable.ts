@@ -6,11 +6,7 @@ import {
   Container_T,
   Container_type,
   DeferredObservableLike,
-  DisposableLike,
-  PauseableObservableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  SchedulerLike,
+  FlowableTypeClass,
 } from "./types.js";
 
 /**
@@ -23,16 +19,7 @@ export interface AsyncIterableContainer extends Container {
 
 export type Type = AsyncIterableContainer;
 
-export interface AsyncIterableModule {
-  // FIXME: should be defined on a typeclass
-  flow<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<AsyncIterable<T>, PauseableObservableLike<T> & DisposableLike>;
-
+export interface AsyncIterableModule extends FlowableTypeClass<Type> {
   toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
 }
 

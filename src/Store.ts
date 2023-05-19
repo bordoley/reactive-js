@@ -1,12 +1,11 @@
 import Store_create from "./Store/__internal__/Store.create.js";
 import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
-import { Function1 } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
   DisposableLike,
-  MulticastObservableLike,
+  MulticastableTypeClass,
   StoreLike,
   WritableStoreLike,
 } from "./types.js";
@@ -17,10 +16,8 @@ export interface StoreContainer extends Container {
 
 export type Type = StoreContainer;
 
-export interface StoreModule {
+export interface StoreModule extends MulticastableTypeClass<Type> {
   create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
-
-  toObservable<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = StoreModule;

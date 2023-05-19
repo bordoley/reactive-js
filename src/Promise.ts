@@ -1,10 +1,9 @@
 import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
-import { Function1 } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
-  MulticastObservableLike,
+  MulticastableTypeClass,
 } from "./types.js";
 
 /**
@@ -17,9 +16,7 @@ export interface PromiseContainer extends Container {
 
 export type Type = PromiseContainer;
 
-export interface PromiseModule {
-  toObservable<T>(): Function1<PromiseLike<T>, MulticastObservableLike<T>>;
-}
+export interface PromiseModule extends MulticastableTypeClass<Type> {}
 
 export type Signature = PromiseModule;
 

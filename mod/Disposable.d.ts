@@ -1,5 +1,5 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
-import { Container, Container_type, DisposableLike, MulticastObservableLike } from "./types.js";
+import { Container, Container_type, DisposableLike, MulticastableTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -8,7 +8,7 @@ export interface DisposableContainer extends Container {
     readonly [Container_type]?: DisposableLike;
 }
 export type Type = DisposableContainer;
-export interface DisposableModule {
+export interface DisposableModule extends MulticastableTypeClass<Type> {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {
         readonly ignoreChildErrors?: boolean;
@@ -26,7 +26,6 @@ export interface DisposableModule {
      * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
      */
     toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
-    toObservable<T>(): Function1<DisposableLike, MulticastObservableLike<T>>;
     usingAsync<TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | Factory<TDisposable>): Function1<Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>, Promise<TResult>>;

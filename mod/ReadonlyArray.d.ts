@@ -1,5 +1,5 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerTypeClass, ContainerOperator, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
+import { ConcreteKeyedContainerTypeClass, ContainerOperator, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, EnumeratorFactoryLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -25,6 +25,11 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Typ
      */
     keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<Type, TKey, TA, TB>;
     /** @category Transform */
+    toEnumeratorFactory<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<ReadonlyArray<T>, EnumeratorFactoryLike<T>>;
+    /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
@@ -47,6 +52,11 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Typ
         readonly count?: number;
         readonly start?: number;
     }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+    /** @category Transform */
+    toReadonlyArray<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<ReadonlyArray<T>, ReadonlyArray<T>>;
 }
 export type Signature = ReadonlyArrayModule;
 export declare const buffer: Signature["buffer"];
@@ -96,8 +106,8 @@ export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const toEnumeratorFactory: Signature["toEnumeratorFactory"];
 export declare const toIterable: Signature["toIterable"];
-export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toObservable: Signature["toObservable"];
+export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const values: Signature["values"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];

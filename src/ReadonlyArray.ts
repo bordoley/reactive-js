@@ -56,6 +56,7 @@ import {
   Container_type,
   EnumerableLike,
   EnumerableTypeClass,
+  EnumeratorFactoryLike,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
@@ -105,6 +106,12 @@ export interface ReadonlyArrayModule
   ): KeyedContainerOperator<Type, TKey, TA, TB>;
 
   /** @category Transform */
+  toEnumeratorFactory<T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<ReadonlyArray<T>, EnumeratorFactoryLike<T>>;
+
+  /** @category Transform */
   toIterable<T>(options?: {
     readonly count?: number;
     readonly start?: number;
@@ -128,6 +135,12 @@ export interface ReadonlyArrayModule
     readonly count?: number;
     readonly start?: number;
   }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+
+  /** @category Transform */
+  toReadonlyArray<T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+  }): Function1<ReadonlyArray<T>, ReadonlyArray<T>>;
 }
 
 export type Signature = ReadonlyArrayModule;
@@ -192,10 +205,10 @@ export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
   ReadonlyArray_toEnumeratorFactory;
 export const toIterable: Signature["toIterable"] =
   ReadonlyArray_toReadonlyArray;
-export const toReadonlyArray: Signature["toReadonlyArray"] =
-  ReadonlyArray_toReadonlyArray;
 export const toObservable: Signature["toObservable"] =
   ReadonlyArray_toObservable;
+export const toReadonlyArray: Signature["toReadonlyArray"] =
+  ReadonlyArray_toReadonlyArray;
 export const values: Signature["values"] = ReadonlyArray_values;
 export const zip: Signature["zip"] = ReadonlyArray_zip;
 export const zipWith: Signature["zipWith"] = ReadonlyArray_zipWith;

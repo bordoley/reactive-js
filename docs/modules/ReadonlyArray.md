@@ -63,7 +63,6 @@
 ### Other Functions
 
 - [flow](ReadonlyArray.md#flow)
-- [toEnumeratorFactory](ReadonlyArray.md#toenumeratorfactory)
 
 ### Transform Functions
 
@@ -77,6 +76,7 @@
 - [reduce](ReadonlyArray.md#reduce)
 - [reduceWithKey](ReadonlyArray.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.md#somesatisfy)
+- [toEnumeratorFactory](ReadonlyArray.md#toenumeratorfactory)
 - [toIterable](ReadonlyArray.md#toiterable)
 - [toObservable](ReadonlyArray.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.md#toreadonlyarray)
@@ -1404,22 +1404,6 @@ ___
 
 ___
 
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-___
-
 ## Transform Functions
 
 ### contains
@@ -1639,6 +1623,30 @@ ___
 
 ___
 
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
@@ -1761,15 +1769,21 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
+▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

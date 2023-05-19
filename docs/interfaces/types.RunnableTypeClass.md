@@ -14,6 +14,8 @@
 
 - [`ContainerTypeClass`](types.ContainerTypeClass.md)<`C`\>
 
+- [`FlowableTypeClass`](types.FlowableTypeClass.md)<`C`\>
+
   ↳ **`RunnableTypeClass`**
 
   ↳↳ [`RunnableModule`](Runnable.RunnableModule.md)
@@ -1332,6 +1334,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+[FlowableTypeClass](types.FlowableTypeClass.md).[flow](types.FlowableTypeClass.md#flow)
 
 ___
 

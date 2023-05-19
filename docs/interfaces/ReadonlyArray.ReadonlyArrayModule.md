@@ -59,7 +59,6 @@
 ### Other Methods
 
 - [flow](ReadonlyArray.ReadonlyArrayModule.md#flow)
-- [toEnumeratorFactory](ReadonlyArray.ReadonlyArrayModule.md#toenumeratorfactory)
 
 ### Transform Methods
 
@@ -73,6 +72,7 @@
 - [reduce](ReadonlyArray.ReadonlyArrayModule.md#reduce)
 - [reduceWithKey](ReadonlyArray.ReadonlyArrayModule.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.ReadonlyArrayModule.md#somesatisfy)
+- [toEnumeratorFactory](ReadonlyArray.ReadonlyArrayModule.md#toenumeratorfactory)
 - [toIterable](ReadonlyArray.ReadonlyArrayModule.md#toiterable)
 - [toObservable](ReadonlyArray.ReadonlyArrayModule.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
@@ -1598,26 +1598,6 @@ Omit.flow
 
 ___
 
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Inherited from
-
-Omit.toEnumeratorFactory
-
-___
-
 ## Transform Methods
 
 ### contains
@@ -1873,6 +1853,34 @@ Omit.someSatisfy
 
 ___
 
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Overrides
+
+Omit.toEnumeratorFactory
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
@@ -2019,9 +2027,7 @@ ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
-
-Converts the Container to a `ReadonlyArrayContainer`.
+▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
 #### Type parameters
 
@@ -2029,11 +2035,19 @@ Converts the Container to a `ReadonlyArrayContainer`.
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], readonly `T`[]\>
 
-#### Inherited from
+#### Overrides
 
 Omit.toReadonlyArray
 

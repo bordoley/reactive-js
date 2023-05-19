@@ -4,6 +4,12 @@
 
 [AsyncIterable](../modules/AsyncIterable.md).AsyncIterableModule
 
+## Hierarchy
+
+- [`FlowableTypeClass`](types.FlowableTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>
+
+  ↳ **`AsyncIterableModule`**
+
 ## Table of contents
 
 ### Methods
@@ -35,6 +41,10 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+[FlowableTypeClass](types.FlowableTypeClass.md).[flow](types.FlowableTypeClass.md#flow)
 
 ___
 
