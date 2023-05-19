@@ -42,6 +42,9 @@
 - [addEventHandler](EventSource.EventSourceModule.md#addeventhandler)
 - [merge](EventSource.EventSourceModule.md#merge)
 - [mergeMany](EventSource.EventSourceModule.md#mergemany)
+
+### Transform Methods
+
 - [toEventSource](EventSource.EventSourceModule.md#toeventsource)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
 
@@ -572,6 +575,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
 
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[addEventHandler](types.MulticastableTypeClass.md#addeventhandler)
+
 ___
 
 ### merge
@@ -619,6 +626,8 @@ ___
 [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
 
 ___
+
+## Transform Methods
 
 ### toEventSource
 

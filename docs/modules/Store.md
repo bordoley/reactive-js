@@ -14,9 +14,13 @@
 - [Signature](Store.md#signature)
 - [Type](Store.md#type)
 
-### Functions
+### Other Functions
 
+- [addEventHandler](Store.md#addeventhandler)
 - [create](Store.md#create)
+
+### Transform Functions
+
 - [toEventSource](Store.md#toeventsource)
 - [toObservable](Store.md#toobservable)
 
@@ -32,7 +36,29 @@ ___
 
 Ƭ **Type**: [`StoreContainer`](../interfaces/Store.StoreContainer.md)
 
-## Functions
+## Other Functions
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
 
 ### create
 
@@ -55,6 +81,8 @@ ___
 [`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 ___
+
+## Transform Functions
 
 ### toEventSource
 

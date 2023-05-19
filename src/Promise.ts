@@ -22,6 +22,7 @@ export interface PromiseModule extends MulticastableTypeClass<Type> {}
 
 export type Signature = PromiseModule;
 
-export const addEventHandler: Signature["addEventHandler"] = Promise_addEventHandler;
+export const addEventHandler: Signature["addEventHandler"] =
+  Promise_addEventHandler;
 export const toEventSource: Signature["toEventSource"] = Promise_toEventSource;
 export const toObservable: Signature["toObservable"] = Promise_toObservable;

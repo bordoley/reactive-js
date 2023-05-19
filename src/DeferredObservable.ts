@@ -14,12 +14,13 @@ import DeferredObservable_share from "./DeferredObservable/__internal__/Deferred
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
-import { Factory, Function1, Predicate } from "./functions.js";
+import { Factory, Function1, Predicate, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
   DeferredObservableLike,
+  DeferredTypeClass,
   DisposableLike,
   EnumerableLike,
   HigherOrderObservableTypeClass,
@@ -54,7 +55,8 @@ export interface DeferredObservableContainer extends Container {
 export type Type = DeferredObservableContainer;
 
 export interface DeferredObservableModule
-  extends HigherOrderObservableTypeClass<Type, Type> {
+  extends DeferredTypeClass<Type>,
+    HigherOrderObservableTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -114,3 +116,4 @@ export const scanMany: Signature["scanMany"] = DeferredObservable_scanMany;
 export const share: Signature["share"] = DeferredObservable_share;
 export const switchAll: Signature["switchAll"] = DeferredObservable_switchAll;
 export const switchMap: Signature["switchMap"] = DeferredObservable_switchMap;
+export const toObservable: Signature["toObservable"] = identityLazy;

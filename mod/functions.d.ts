@@ -84,6 +84,7 @@ export declare const call: Call["call"];
 export declare const composeUnsafe: (...operators: Function1<any, unknown>[]) => Function1<any, unknown>;
 interface Compose {
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
+    compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
     compose<T, A, B, C, D>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>): Function1<T, D>;
     compose<T, A, B, C, D, E>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>): Function1<T, E>;

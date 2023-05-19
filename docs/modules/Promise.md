@@ -17,7 +17,11 @@
 - [Signature](Promise.md#signature)
 - [Type](Promise.md#type)
 
-### Functions
+### Other Functions
+
+- [addEventHandler](Promise.md#addeventhandler)
+
+### Transform Functions
 
 - [toEventSource](Promise.md#toeventsource)
 - [toObservable](Promise.md#toobservable)
@@ -34,7 +38,31 @@ ___
 
 Ƭ **Type**: [`PromiseContainer`](../interfaces/Promise.PromiseContainer.md)
 
-## Functions
+## Other Functions
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+## Transform Functions
 
 ### toEventSource
 

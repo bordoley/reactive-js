@@ -113,7 +113,8 @@ export interface DisposableModule extends MulticastableTypeClass<Type> {
 export type Signature = DisposableModule;
 
 export const add: Signature["add"] = Disposable_add;
-export const addEventHandler: Signature["addEventHandler"]  = Disposable_addEventHandler;
+export const addEventHandler: Signature["addEventHandler"] =
+  Disposable_addEventHandler;
 export const addTo: Signature["addTo"] = Disposable_addTo;
 export const bindTo: Signature["bindTo"] = Disposable_bindTo;
 export const create: Signature["create"] = Disposable_create;

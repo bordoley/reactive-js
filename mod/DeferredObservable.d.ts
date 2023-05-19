@@ -1,5 +1,5 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableTypeClass, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableLike, DeferredTypeClass, DisposableLike, EnumerableLike, HigherOrderObservableTypeClass, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
@@ -9,7 +9,7 @@ export interface DeferredObservableContainer extends Container {
     readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
 export type Type = DeferredObservableContainer;
-export interface DeferredObservableModule extends HigherOrderObservableTypeClass<Type, Type> {
+export interface DeferredObservableModule extends DeferredTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;
@@ -45,3 +45,4 @@ export declare const scanMany: Signature["scanMany"];
 export declare const share: Signature["share"];
 export declare const switchAll: Signature["switchAll"];
 export declare const switchMap: Signature["switchMap"];
+export declare const toObservable: Signature["toObservable"];

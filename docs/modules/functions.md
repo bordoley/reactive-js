@@ -1118,6 +1118,29 @@ Composes a series of unary functions.
 
 [`Function1`](functions.md#function1)<`T`, `B`\>
 
+▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, `B`\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](functions.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](functions.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `B`\>
+
 ▸ **compose**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, `C`\>
 
 Composes a series of unary functions.

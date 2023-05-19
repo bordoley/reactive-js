@@ -32,6 +32,7 @@ export interface DisposableModule extends MulticastableTypeClass<Type> {
 }
 export type Signature = DisposableModule;
 export declare const add: Signature["add"];
+export declare const addEventHandler: Signature["addEventHandler"];
 export declare const addTo: Signature["addTo"];
 export declare const bindTo: Signature["bindTo"];
 export declare const create: Signature["create"];

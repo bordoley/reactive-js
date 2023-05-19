@@ -21,9 +21,10 @@
 
 - [disposed](Disposable.md#disposed)
 
-### Functions
+### Other Functions
 
 - [add](Disposable.md#add)
+- [addEventHandler](Disposable.md#addeventhandler)
 - [addTo](Disposable.md#addto)
 - [bindTo](Disposable.md#bindto)
 - [create](Disposable.md#create)
@@ -32,9 +33,12 @@
 - [onError](Disposable.md#onerror)
 - [toAbortSignal](Disposable.md#toabortsignal)
 - [toErrorHandler](Disposable.md#toerrorhandler)
+- [usingAsync](Disposable.md#usingasync)
+
+### Transform Functions
+
 - [toEventSource](Disposable.md#toeventsource)
 - [toObservable](Disposable.md#toobservable)
-- [usingAsync](Disposable.md#usingasync)
 
 ## Type Aliases
 
@@ -54,7 +58,7 @@ ___
 
 • `Const` **disposed**: [`Signature`](Disposable.md#signature)[``"disposed"``]
 
-## Functions
+## Other Functions
 
 ### add
 
@@ -77,6 +81,28 @@ ___
 #### Returns
 
 [`Updater`](functions.md#updater)<`TDisposable`\>
+
+___
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 
@@ -236,38 +262,6 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 
 ___
 
-### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-___
-
 ### usingAsync
 
 ▸ **usingAsync**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
@@ -332,3 +326,37 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
+
+___
+
+## Transform Functions
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>

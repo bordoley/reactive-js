@@ -12,13 +12,43 @@
 
 ## Table of contents
 
-### Methods
+### Other Methods
 
+- [addEventHandler](Store.StoreModule.md#addeventhandler)
 - [create](Store.StoreModule.md#create)
+
+### Transform Methods
+
 - [toEventSource](Store.StoreModule.md#toeventsource)
 - [toObservable](Store.StoreModule.md#toobservable)
 
-## Methods
+## Other Methods
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`StoreLike`](types.StoreLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`StoreLike`](types.StoreLike.md)<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[addEventHandler](types.MulticastableTypeClass.md#addeventhandler)
+
+___
 
 ### create
 
@@ -41,6 +71,8 @@
 [`WritableStoreLike`](types.WritableStoreLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)
 
 ___
+
+## Transform Methods
 
 ### toEventSource
 

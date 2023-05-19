@@ -12,12 +12,44 @@
 
 ## Table of contents
 
-### Methods
+### Other Methods
+
+- [addEventHandler](Promise.PromiseModule.md#addeventhandler)
+
+### Transform Methods
 
 - [toEventSource](Promise.PromiseModule.md#toeventsource)
 - [toObservable](Promise.PromiseModule.md#toobservable)
 
-## Methods
+## Other Methods
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[addEventHandler](types.MulticastableTypeClass.md#addeventhandler)
+
+___
+
+## Transform Methods
 
 ### toEventSource
 

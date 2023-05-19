@@ -6,6 +6,8 @@
 
 ## Hierarchy
 
+- [`DeferredTypeClass`](types.DeferredTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type)\>
+
 - [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
 
   ↳ **`DeferredObservableModule`**
@@ -33,6 +35,7 @@
 - [repeat](DeferredObservable.DeferredObservableModule.md#repeat)
 - [retry](DeferredObservable.DeferredObservableModule.md#retry)
 - [share](DeferredObservable.DeferredObservableModule.md#share)
+- [toObservable](DeferredObservable.DeferredObservableModule.md#toobservable)
 
 ## Operator Methods
 
@@ -394,6 +397,10 @@ ___
 
 [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+
 ▸ **repeat**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
@@ -412,6 +419,10 @@ ___
 
 [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+
 ▸ **repeat**<`T`\>(): [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
@@ -423,6 +434,10 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
 
 ___
 
@@ -445,6 +460,10 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[retry](types.DeferredTypeClass.md#retry)
 
 ___
 
@@ -471,3 +490,23 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[toObservable](types.DeferredTypeClass.md#toobservable)

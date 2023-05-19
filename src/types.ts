@@ -907,6 +907,7 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
+/** @category TypeClass */
 export interface FlowableTypeClass<C extends Container> {
   flow<T>(
     scheduler: SchedulerLike,
@@ -917,13 +918,40 @@ export interface FlowableTypeClass<C extends Container> {
   ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 }
 
+/** @category TypeClass */
 export interface MulticastableTypeClass<C extends Container> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<ContainerOf<C, T>, DisposableLike>;
 
+  /**
+   * @category Transform
+   */
   toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
+
+  /**
+   * @category Transform
+   */
   toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
+}
+
+/** @category TypeClass */
+export interface DeferredTypeClass<C extends Container> {
+  /**
+   * @category Operator
+   */
+  repeat<T>(): ContainerOperator<C, T, T>;
+  repeat<T>(count: number): ContainerOperator<C, T, T>;
+  repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
+
+  /**
+   * @category Operator
+   */
+  retry<T>(
+    shouldRetry: (count: number, error: Error) => boolean,
+  ): ContainerOperator<C, T, T>;
+
+  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 }
 
 /** @category TypeClass */

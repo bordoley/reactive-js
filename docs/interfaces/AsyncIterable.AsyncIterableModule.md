@@ -6,18 +6,117 @@
 
 ## Hierarchy
 
+- [`DeferredTypeClass`](types.DeferredTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>
+
 - [`FlowableTypeClass`](types.FlowableTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>
 
   ↳ **`AsyncIterableModule`**
 
 ## Table of contents
 
-### Methods
+### Operator Methods
+
+- [repeat](AsyncIterable.AsyncIterableModule.md#repeat)
+- [retry](AsyncIterable.AsyncIterableModule.md#retry)
+
+### Other Methods
 
 - [flow](AsyncIterable.AsyncIterableModule.md#flow)
 - [toObservable](AsyncIterable.AsyncIterableModule.md#toobservable)
 
-## Methods
+## Operator Methods
+
+### repeat
+
+▸ **repeat**<`T`\>(): [`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+
+▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[retry](types.DeferredTypeClass.md#retry)
+
+___
+
+## Other Methods
 
 ### flow
 
@@ -61,3 +160,7 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[DeferredTypeClass](types.DeferredTypeClass.md).[toObservable](types.DeferredTypeClass.md#toobservable)

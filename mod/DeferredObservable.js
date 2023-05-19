@@ -16,6 +16,7 @@ import DeferredObservable_share from "./DeferredObservable/__internal__/Deferred
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
+import { identityLazy } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const catchError = DeferredObservable_catchError;
 export const compute = DeferredObservable_compute;
@@ -33,3 +34,4 @@ export const scanMany = DeferredObservable_scanMany;
 export const share = DeferredObservable_share;
 export const switchAll = DeferredObservable_switchAll;
 export const switchMap = DeferredObservable_switchMap;
+export const toObservable = identityLazy;

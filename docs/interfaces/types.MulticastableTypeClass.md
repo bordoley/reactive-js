@@ -24,12 +24,40 @@
 
 ## Table of contents
 
-### Methods
+### Other Methods
+
+- [addEventHandler](types.MulticastableTypeClass.md#addeventhandler)
+
+### Transform Methods
 
 - [toEventSource](types.MulticastableTypeClass.md#toeventsource)
 - [toObservable](types.MulticastableTypeClass.md#toobservable)
 
-## Methods
+## Other Methods
+
+### addEventHandler
+
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+## Transform Methods
 
 ### toEventSource
 

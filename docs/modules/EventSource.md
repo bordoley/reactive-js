@@ -45,6 +45,9 @@
 - [addEventHandler](EventSource.md#addeventhandler)
 - [merge](EventSource.md#merge)
 - [mergeMany](EventSource.md#mergemany)
+
+### Transform Functions
+
 - [toEventSource](EventSource.md#toeventsource)
 - [toObservable](EventSource.md#toobservable)
 
@@ -570,6 +573,8 @@ ___
 [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
 
 ___
+
+## Transform Functions
 
 ### toEventSource
 

@@ -45,11 +45,6 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
-### Other Interfaces
-
-- [FlowableTypeClass](../interfaces/types.FlowableTypeClass.md)
-- [MulticastableTypeClass](../interfaces/types.MulticastableTypeClass.md)
-
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)
@@ -81,10 +76,13 @@
 - [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/types.ConcreteAssociativeKeyedContainerTypeClass.md)
 - [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
+- [DeferredTypeClass](../interfaces/types.DeferredTypeClass.md)
 - [EnumerableTypeClass](../interfaces/types.EnumerableTypeClass.md)
+- [FlowableTypeClass](../interfaces/types.FlowableTypeClass.md)
 - [GeneratorTypeClass](../interfaces/types.GeneratorTypeClass.md)
 - [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
+- [MulticastableTypeClass](../interfaces/types.MulticastableTypeClass.md)
 - [RunnableTypeClass](../interfaces/types.RunnableTypeClass.md)
 
 ### Collection Type Aliases
