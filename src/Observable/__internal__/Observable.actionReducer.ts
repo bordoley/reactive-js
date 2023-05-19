@@ -1,4 +1,4 @@
-import { EnumerableUpperBoundObservableOperator } from "../../Observable.js";
+import { ObservableOperator } from "../../Observable.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Equality,
@@ -23,7 +23,7 @@ const Observable_actionReducer = <TAction, T>(
   reducer: Reducer<TAction, T>,
   initialState: Factory<T>,
   options?: { readonly equality?: Equality<T> },
-): EnumerableUpperBoundObservableOperator<TAction, T> =>
+): ObservableOperator<TAction, T> =>
   (obs =>
     Observable_createWithConfig((observer: ObserverLike<T>) => {
       const acc = initialState();
@@ -37,6 +37,6 @@ const Observable_actionReducer = <TAction, T>(
         >,
         invoke(ObservableLike_observe, observer),
       );
-    }, obs)) as EnumerableUpperBoundObservableOperator<TAction, T>;
+    }, obs)) as ObservableOperator<TAction, T>;
 
 export default Observable_actionReducer;

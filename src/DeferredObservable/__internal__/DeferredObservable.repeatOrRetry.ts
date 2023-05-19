@@ -16,7 +16,7 @@ import {
 
 type DeferredObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => DeferredObservable.EnumerableUpperBoundObservableOperator<T, T>;
+) => DeferredObservable.DeferredObservableOperator<T, T>;
 
 const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
   /*@__PURE__*/ (<C extends DeferredObservable.Type, T>() => {

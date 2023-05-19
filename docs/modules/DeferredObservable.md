@@ -14,7 +14,7 @@
 
 ### Type Aliases
 
-- [EnumerableUpperBoundObservableOperator](DeferredObservable.md#enumerableupperboundobservableoperator)
+- [DeferredObservableOperator](DeferredObservable.md#deferredobservableoperator)
 - [Signature](DeferredObservable.md#signature)
 - [Type](DeferredObservable.md#type)
 
@@ -43,9 +43,9 @@
 
 ## Type Aliases
 
-### EnumerableUpperBoundObservableOperator
+### DeferredObservableOperator
 
-Ƭ **EnumerableUpperBoundObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+Ƭ **DeferredObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 #### Type parameters
 
@@ -384,7 +384,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -400,9 +400,9 @@ ___
 
 #### Returns
 
-[`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -418,9 +418,9 @@ ___
 
 #### Returns
 
-[`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -430,13 +430,13 @@ ___
 
 #### Returns
 
-[`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(`shouldRetry`): [`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+▸ **retry**<`T`\>(`shouldRetry`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -452,7 +452,7 @@ ___
 
 #### Returns
 
-[`EnumerableUpperBoundObservableOperator`](DeferredObservable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 

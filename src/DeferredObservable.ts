@@ -32,7 +32,7 @@ import {
   SchedulerLike,
 } from "./types.js";
 
-export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <
+export type DeferredObservableOperator<TIn, TOut> = <
   TObservableIn extends DeferredObservableLike<TIn>,
 >(
   observable: TObservableIn,
@@ -79,15 +79,13 @@ export interface DeferredObservableModule
     ReplayObservableLike<T> & DisposableLike
   >;
 
-  repeat<T>(
-    predicate: Predicate<number>,
-  ): EnumerableUpperBoundObservableOperator<T, T>;
-  repeat<T>(count: number): EnumerableUpperBoundObservableOperator<T, T>;
-  repeat<T>(): EnumerableUpperBoundObservableOperator<T, T>;
+  repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
+  repeat<T>(count: number): DeferredObservableOperator<T, T>;
+  repeat<T>(): DeferredObservableOperator<T, T>;
 
   retry<T>(
     shouldRetry: (count: number, error: Error) => boolean,
-  ): EnumerableUpperBoundObservableOperator<T, T>;
+  ): DeferredObservableOperator<T, T>;
 
   share<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,

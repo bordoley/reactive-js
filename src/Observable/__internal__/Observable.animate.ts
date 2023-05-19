@@ -31,10 +31,7 @@ const parseAnimationConfig = <T = number>(
         Optional_toObservable(),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as Observable.EnumerableUpperBoundObservableOperator<
-              number,
-              T
-            >),
+          : (identity as Observable.ObservableOperator<number, T>),
       )
     : pipe(
         config.type === "keyframe"
@@ -43,10 +40,7 @@ const parseAnimationConfig = <T = number>(
         Observable_map(scale(config.from, config.to)),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as Observable.EnumerableUpperBoundObservableOperator<
-              number,
-              T
-            >),
+          : (identity as Observable.ObservableOperator<number, T>),
       );
 
 const Observable_animate: Observable.Signature["animate"] = <T = number>(

@@ -1,4 +1,4 @@
-import type { EnumerableUpperBoundObservableOperator } from "../../Observable.js";
+import type { ObservableOperator } from "../../Observable.js";
 import {
   LiftedLike_operators,
   LiftedLike_source,
@@ -10,12 +10,12 @@ import Observable_createLifted from "./Observable.createLifted.js";
 interface ObservableLiftEnumerableUpperBounded {
   liftEnumerableUpperBounded<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): EnumerableUpperBoundObservableOperator<TA, TB>;
+  ): ObservableOperator<TA, TB>;
 }
 const Observable_liftEnumerableUpperBounded: ObservableLiftEnumerableUpperBounded["liftEnumerableUpperBounded"] =
   <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ): EnumerableUpperBoundObservableOperator<TA, TB> =>
+  ): ObservableOperator<TA, TB> =>
     (source => {
       const sourceSource = (source as any)[LiftedLike_source] ?? source;
       const allFunctions = [
@@ -24,6 +24,6 @@ const Observable_liftEnumerableUpperBounded: ObservableLiftEnumerableUpperBounde
       ];
 
       return Observable_createLifted(sourceSource, allFunctions, sourceSource);
-    }) as EnumerableUpperBoundObservableOperator<TA, TB>;
+    }) as ObservableOperator<TA, TB>;
 
 export default Observable_liftEnumerableUpperBounded;

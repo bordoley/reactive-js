@@ -1,6 +1,6 @@
 import { Factory, Function1, Predicate } from "./functions.js";
 import { Container, Container_T, Container_type, DeferredObservableLike, DeferredTypeClass, DisposableLike, EnumerableLike, HigherOrderObservableTypeClass, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
-export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
+export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
  * @category Container
@@ -21,10 +21,10 @@ export interface DeferredObservableModule extends DeferredTypeClass<Type>, Highe
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
-    repeat<T>(predicate: Predicate<number>): EnumerableUpperBoundObservableOperator<T, T>;
-    repeat<T>(count: number): EnumerableUpperBoundObservableOperator<T, T>;
-    repeat<T>(): EnumerableUpperBoundObservableOperator<T, T>;
-    retry<T>(shouldRetry: (count: number, error: Error) => boolean): EnumerableUpperBoundObservableOperator<T, T>;
+    repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
+    repeat<T>(count: number): DeferredObservableOperator<T, T>;
+    repeat<T>(): DeferredObservableOperator<T, T>;
+    retry<T>(shouldRetry: (count: number, error: Error) => boolean): DeferredObservableOperator<T, T>;
     share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
