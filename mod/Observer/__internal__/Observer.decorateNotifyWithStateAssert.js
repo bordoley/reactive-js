@@ -12,5 +12,5 @@ const Observer_decorateNotifyWithStateAssert = (mixin) => __DEV__
             call(getPrototype(mixin)[SinkLike_notify], this, next);
         },
     }
-    : {};
+    : getPrototype(mixin);
 export default Observer_decorateNotifyWithStateAssert;
