@@ -54,6 +54,7 @@
 ### Other Methods
 
 - [flow](EnumeratorFactory.EnumeratorFactoryModule.md#flow)
+- [generate](EnumeratorFactory.EnumeratorFactoryModule.md#generate)
 - [throws](EnumeratorFactory.EnumeratorFactoryModule.md#throws)
 - [toEnumeratorFactory](EnumeratorFactory.EnumeratorFactoryModule.md#toenumeratorfactory)
 - [toObservable](EnumeratorFactory.EnumeratorFactoryModule.md#toobservable)
@@ -1462,6 +1463,33 @@ ___
 #### Inherited from
 
 [GeneratorTypeClass](types.GeneratorTypeClass.md).[flow](types.GeneratorTypeClass.md#flow)
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>
+
+#### Inherited from
+
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[generate](types.GeneratorTypeClass.md#generate)
 
 ___
 

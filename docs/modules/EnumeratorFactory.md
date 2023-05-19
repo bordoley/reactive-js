@@ -59,6 +59,7 @@
 ### Other Functions
 
 - [flow](EnumeratorFactory.md#flow)
+- [generate](EnumeratorFactory.md#generate)
 - [throws](EnumeratorFactory.md#throws)
 - [toEnumeratorFactory](EnumeratorFactory.md#toenumeratorfactory)
 - [toObservable](EnumeratorFactory.md#toobservable)
@@ -1279,6 +1280,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>
 
 ___
 

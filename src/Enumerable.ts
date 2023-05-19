@@ -45,7 +45,7 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { Factory, Updater, identityLazy } from "./functions.js";
+import { Factory, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -70,11 +70,6 @@ export interface EnumerableModule extends GeneratorTypeClass<Type> {
     options?: {
       mode?: "batched" | "combine-latest";
     },
-  ): EnumerableLike<T>;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
   ): EnumerableLike<T>;
 }
 

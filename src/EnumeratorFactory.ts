@@ -16,6 +16,7 @@ import EnumeratorFactory_flow from "./EnumeratorFactory/__internal__/EnumeratorF
 import EnumeratorFactory_forEach from "./EnumeratorFactory/__internal__/EnumeratorFactory.forEach.js";
 import EnumeratorFactory_fromFactory from "./EnumeratorFactory/__internal__/EnumeratorFactory.fromFactory.js";
 import EnumeratorFactory_fromValue from "./EnumeratorFactory/__internal__/EnumeratorFactory.fromValue.js";
+import EnumeratorFactory_generate from "./EnumeratorFactory/__internal__/EnumeratorFactory.generate.js";
 import EnumeratorFactory_ignoreElements from "./EnumeratorFactory/__internal__/EnumeratorFactory.ignoreElements.js";
 import EnumeratorFactory_keep from "./EnumeratorFactory/__internal__/EnumeratorFactory.keep.js";
 import EnumeratorFactory_keepType from "./EnumeratorFactory/__internal__/EnumeratorFactory.keepType.js";
@@ -97,6 +98,7 @@ export const fromOptional: Signature["fromOptional"] =
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toEnumeratorFactory;
 export const fromValue: Signature["fromValue"] = EnumeratorFactory_fromValue;
+export const generate: Signature["generate"] = EnumeratorFactory_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   EnumeratorFactory_ignoreElements;
 export const keep: Signature["keep"] = EnumeratorFactory_keep;

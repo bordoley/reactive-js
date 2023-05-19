@@ -1,4 +1,4 @@
-import { Factory, Updater } from "./functions.js";
+import { Factory } from "./functions.js";
 import { Container, Container_T, Container_type, EnumerableLike, GeneratorTypeClass } from "./types.js";
 /**
  * @noInheritDoc
@@ -12,7 +12,6 @@ export interface EnumerableModule extends GeneratorTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];

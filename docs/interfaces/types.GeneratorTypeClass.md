@@ -64,6 +64,7 @@
 ### Other Methods
 
 - [flow](types.GeneratorTypeClass.md#flow)
+- [generate](types.GeneratorTypeClass.md#generate)
 - [throws](types.GeneratorTypeClass.md#throws)
 - [toEnumeratorFactory](types.GeneratorTypeClass.md#toenumeratorfactory)
 - [toObservable](types.GeneratorTypeClass.md#toobservable)
@@ -1472,6 +1473,29 @@ ___
 #### Inherited from
 
 [EnumerableTypeClass](types.EnumerableTypeClass.md).[flow](types.EnumerableTypeClass.md#flow)
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
 
 ___
 

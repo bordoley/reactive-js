@@ -1512,6 +1512,10 @@ ___
 
 [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
 
+#### Inherited from
+
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[generate](types.GeneratorTypeClass.md#generate)
+
 ___
 
 ### throws

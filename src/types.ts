@@ -60,6 +60,7 @@ import {
   SideEffect1,
   SideEffect2,
   TypePredicate,
+  Updater,
 } from "./functions.js";
 
 export const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys =
@@ -1251,6 +1252,11 @@ export interface EnumerableTypeClass<C extends Container>
 /** @category TypeClass */
 export interface GeneratorTypeClass<C extends Container>
   extends EnumerableTypeClass<C> {
+  generate<T>(
+    generator: Updater<T>,
+    initialValue: Factory<T>,
+  ): ContainerOf<C, T>;
+
   throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 
