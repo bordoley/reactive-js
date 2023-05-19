@@ -321,6 +321,7 @@ export interface ObservableModule {
         readonly delay: number;
         readonly raise?: Factory<unknown>;
     }): RunnableLike<T>;
+    toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;

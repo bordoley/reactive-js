@@ -21,6 +21,7 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import EventSource_toReadonlyArrayAsync from "./EventSource/__internal__/EventSource.toReadonlyArray.js";
 import { identityLazy } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const addEventHandler = EventSource_addEventHandler;
@@ -45,3 +46,4 @@ export const takeFirst = EventSource_takeFirst;
 export const takeWhile = EventSource_takeWhile;
 export const toEventSource = identityLazy;
 export const toObservable = EventSource_toObservable;
+export const toReadonlyArrayAsync = EventSource_toReadonlyArrayAsync;

@@ -39,6 +39,7 @@
 
 - [toEventSource](Disposable.md#toeventsource)
 - [toObservable](Disposable.md#toobservable)
+- [toReadonlyArrayAsync](Disposable.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -360,3 +361,19 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), `Promise`<readonly `T`[]\>\>

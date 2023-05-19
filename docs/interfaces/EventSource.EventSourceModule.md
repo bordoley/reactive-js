@@ -47,6 +47,7 @@
 
 - [toEventSource](EventSource.EventSourceModule.md#toeventsource)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
+- [toReadonlyArrayAsync](EventSource.EventSourceModule.md#toreadonlyarrayasync)
 
 ## Constructor Methods
 
@@ -666,3 +667,23 @@ ___
 #### Inherited from
 
 [MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)

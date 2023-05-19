@@ -34,6 +34,7 @@
 
 - [toEventSource](Disposable.DisposableModule.md#toeventsource)
 - [toObservable](Disposable.DisposableModule.md#toobservable)
+- [toReadonlyArrayAsync](Disposable.DisposableModule.md#toreadonlyarrayasync)
 
 ## Properties
 
@@ -355,3 +356,23 @@ ___
 #### Inherited from
 
 [MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)

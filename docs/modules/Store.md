@@ -23,6 +23,7 @@
 
 - [toEventSource](Store.md#toeventsource)
 - [toObservable](Store.md#toobservable)
+- [toReadonlyArrayAsync](Store.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -113,3 +114,19 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>

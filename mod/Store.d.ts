@@ -11,3 +11,4 @@ export declare const addEventHandler: Signature["addEventHandler"];
 export declare const create: Signature["create"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

@@ -20,9 +20,6 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Typ
      * @category Operator
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<Type, TA, TB>;
-    /**
-     * @category Operator
-     */
     keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<Type, TKey, TA, TB>;
     /** @category Transform */
     toEnumeratorFactory<T>(options?: {

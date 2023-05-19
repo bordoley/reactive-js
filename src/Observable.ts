@@ -1215,6 +1215,7 @@ export interface ObservableModule {
     readonly raise?: Factory<unknown>;
   }): RunnableLike<T>;
 
+  toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {

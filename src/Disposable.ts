@@ -11,6 +11,7 @@ import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbo
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
 import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
+import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import {
   Factory,
@@ -129,4 +130,6 @@ export const toErrorHandler: Signature["toErrorHandler"] =
 export const toEventSource: Signature["toEventSource"] =
   Disposable_toEventSource;
 export const toObservable: Signature["toObservable"] = Disposable_toObservable;
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  Disposable_toReadonlyArrayAsync;
 export const usingAsync: Signature["usingAsync"] = Disposable_usingAsync;

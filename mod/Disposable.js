@@ -13,6 +13,7 @@ import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbo
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
 import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
+import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import { Container_type, } from "./types.js";
 export const add = Disposable_add;
@@ -28,4 +29,5 @@ export const toAbortSignal = Disposable_toAbortSignal;
 export const toErrorHandler = Disposable_toErrorHandler;
 export const toEventSource = Disposable_toEventSource;
 export const toObservable = Disposable_toObservable;
+export const toReadonlyArrayAsync = Disposable_toReadonlyArrayAsync;
 export const usingAsync = Disposable_usingAsync;

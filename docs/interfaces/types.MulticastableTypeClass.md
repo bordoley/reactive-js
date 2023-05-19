@@ -32,6 +32,7 @@
 
 - [toEventSource](types.MulticastableTypeClass.md#toeventsource)
 - [toObservable](types.MulticastableTypeClass.md#toobservable)
+- [toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)
 
 ## Other Methods
 
@@ -88,3 +89,19 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Promise`<readonly `T`[]\>\>

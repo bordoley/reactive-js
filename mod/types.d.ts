@@ -663,6 +663,10 @@ export interface MulticastableTypeClass<C extends Container> {
      * @category Transform
      */
     toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
+    /**
+     * @category Transform
+     */
+    toReadonlyArrayAsync<T>(): Function1<ContainerOf<C, T>, Promise<ReadonlyArray<T>>>;
 }
 /** @category TypeClass */
 export interface DeferredTypeClass<C extends Container> {

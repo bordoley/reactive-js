@@ -47,3 +47,4 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];

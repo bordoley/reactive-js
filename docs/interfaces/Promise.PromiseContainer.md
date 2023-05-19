@@ -20,7 +20,7 @@
 
 ### [\_\_\_Container\_type]
 
-• `Optional` `Readonly` **[\_\_\_Container\_type]**: `PromiseLike`<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_Container\_type]**: `Promise`<`unknown`\>
 
 #### Overrides
 

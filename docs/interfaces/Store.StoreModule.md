@@ -21,6 +21,7 @@
 
 - [toEventSource](Store.StoreModule.md#toeventsource)
 - [toObservable](Store.StoreModule.md#toobservable)
+- [toReadonlyArrayAsync](Store.StoreModule.md#toreadonlyarrayasync)
 
 ## Other Methods
 
@@ -111,3 +112,23 @@ ___
 #### Inherited from
 
 [MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`StoreLike`](types.StoreLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`StoreLike`](types.StoreLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)

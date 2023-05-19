@@ -25,6 +25,7 @@
 
 - [toEventSource](Promise.md#toeventsource)
 - [toObservable](Promise.md#toobservable)
+- [toReadonlyArrayAsync](Promise.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -42,7 +43,7 @@ ___
 
 ### addEventHandler
 
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -58,7 +59,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 
@@ -66,7 +67,7 @@ ___
 
 ### toEventSource
 
-▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -76,13 +77,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -92,4 +93,20 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, `Promise`<readonly `T`[]\>\>

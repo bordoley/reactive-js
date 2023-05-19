@@ -44,4 +44,5 @@ export declare const toAbortSignal: Signature["toAbortSignal"];
 export declare const toErrorHandler: Signature["toErrorHandler"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const usingAsync: Signature["usingAsync"];

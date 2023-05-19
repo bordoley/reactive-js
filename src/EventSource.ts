@@ -19,6 +19,7 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import EventSource_toReadonlyArrayAsync from "./EventSource/__internal__/EventSource.toReadonlyArray.js";
 import { SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
@@ -97,3 +98,5 @@ export const takeFirst: Signature["takeFirst"] = EventSource_takeFirst;
 export const takeWhile: Signature["takeWhile"] = EventSource_takeWhile;
 export const toEventSource: Signature["toEventSource"] = identityLazy;
 export const toObservable: Signature["toObservable"] = EventSource_toObservable;
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  EventSource_toReadonlyArrayAsync;

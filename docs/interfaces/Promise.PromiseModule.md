@@ -20,12 +20,13 @@
 
 - [toEventSource](Promise.PromiseModule.md#toeventsource)
 - [toObservable](Promise.PromiseModule.md#toobservable)
+- [toReadonlyArrayAsync](Promise.PromiseModule.md#toreadonlyarrayasync)
 
 ## Other Methods
 
 ### addEventHandler
 
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -41,7 +42,7 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`DisposableLike`](types.DisposableLike.md)\>
 
 #### Inherited from
 
@@ -53,7 +54,7 @@ ___
 
 ### toEventSource
 
-▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -63,7 +64,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 #### Inherited from
 
@@ -73,7 +74,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -83,8 +84,28 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<`PromiseLike`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 #### Inherited from
 
 [MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)
