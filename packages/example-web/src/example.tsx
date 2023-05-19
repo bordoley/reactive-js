@@ -330,9 +330,14 @@ const RxComponent = createComponent(
         scheduler,
       );
 
+      const createScheduler = __constant(() =>{
+        const scheduler = Scheduler.createPausableScheduler(animationScheduler);
+        scheduler[PauseableLike_resume]()
+        return scheduler;
+      }, scheduler);
+
       const pauseableScheduler = __using(
-        Scheduler.createPausableScheduler,
-        animationScheduler,
+        createScheduler
       );
 
       const streamableAnimation = __memo(
