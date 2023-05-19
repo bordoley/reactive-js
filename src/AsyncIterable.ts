@@ -20,6 +20,9 @@ export interface AsyncIterableContainer extends Container {
 
 export type Type = AsyncIterableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface AsyncIterableModule
   extends DeferredTypeClass<Type>,
     FlowableTypeClass<Type> {}

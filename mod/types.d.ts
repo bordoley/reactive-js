@@ -52,6 +52,7 @@ export declare const VirtualTimeSchedulerLike_run: typeof __VirtualTimeScheduler
  * An interactive mutable enumerator that can be used to iterate
  * over an underlying source of data.
  *
+ * @noInheritDoc
  * @category Interactive
  */
 export interface EnumeratorLike<T = unknown> extends DisposableLike {
@@ -181,6 +182,7 @@ export interface QueueableLike<T = unknown> extends BufferLike {
 export interface IndexedBufferCollectionLike<T = unknown> extends BufferLike, IndexedCollectionLike<T> {
 }
 /**
+ * @noInheritDoc
  * @category Reactive
  */
 export interface SinkLike<T = unknown> extends DisposableLike {
@@ -229,6 +231,7 @@ export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
     [StoreLike_value]: T;
 }
 /**
+ * @noInheritDoc
  * @category EventMap
  */
 export interface DispatcherLikeEventMap {
@@ -495,6 +498,7 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
 /** @category Interactive */
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface Container {
@@ -517,6 +521,7 @@ export type ContainerOf<C extends Container, T> = C extends {
  */
 export type ContainerOperator<C extends Container, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface KeyedContainer<TKey = unknown> extends Container {
@@ -544,7 +549,10 @@ export type KeyOf<C extends KeyedContainer> = NonNullable<C[typeof KeyedContaine
  * @category Container
  */
 export type KeyedContainerOperator<C extends KeyedContainer, TKey, TA, TB> = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ContainerTypeClass<C extends Container> {
     /** @category Operator */
     buffer<T>(options?: {
@@ -645,14 +653,20 @@ export interface ContainerTypeClass<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ *  @category TypeClass
+ */
 export interface FlowableTypeClass<C extends Container> {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface MulticastableTypeClass<C extends Container> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
     /**
@@ -668,7 +682,10 @@ export interface MulticastableTypeClass<C extends Container> {
      */
     toReadonlyArrayAsync<T>(): Function1<ContainerOf<C, T>, Promise<ReadonlyArray<T>>>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface DeferredTypeClass<C extends Container> {
     /**
      * @category Operator
@@ -682,7 +699,10 @@ export interface DeferredTypeClass<C extends Container> {
     retry<T>(shouldRetry: (count: number, error: Error) => boolean): ContainerOperator<C, T, T>;
     toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface RunnableTypeClass<C extends Container> extends ContainerTypeClass<C>, FlowableTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
@@ -837,7 +857,10 @@ export interface RunnableTypeClass<C extends Container> extends ContainerTypeCla
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EnumerableTypeClass<C extends Container> extends RunnableTypeClass<C> {
     /**
      *
@@ -857,14 +880,20 @@ export interface EnumerableTypeClass<C extends Container> extends RunnableTypeCl
         readonly delayStart?: boolean;
     }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface GeneratorTypeClass<C extends Container> extends EnumerableTypeClass<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
     throws<T>(options?: {
         readonly raise?: Factory<unknown>;
     }): ContainerOf<C, T>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     /** @category Operator */
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
@@ -921,7 +950,10 @@ export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInne
      */
     switchMap<TA, TB>(selector: Function1<TA, ContainerOf<CInner, TB>>): ContainerOperator<C, TA, TB>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**
      * @category Transform
@@ -955,7 +987,10 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
      */
     values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorFactoryLike<T>>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     /**
      * Returns a ContainerOperator that only emits items produced by the
@@ -999,7 +1034,10 @@ export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyB
      */
     mapWithKey<TA, TB, TKey extends TKeyBase>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
     /**
      * @category Constructor
@@ -1035,7 +1073,10 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
      */
     toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
 }
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
     /**
      * Return an Container that emits no items.

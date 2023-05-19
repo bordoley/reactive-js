@@ -9,6 +9,9 @@ export interface DeferredObservableContainer extends Container {
     readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
 export type Type = DeferredObservableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface DeferredObservableModule extends DeferredTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

@@ -8,6 +8,9 @@ export interface RunnableContainer extends Container {
     readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 export type Type = RunnableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

@@ -223,6 +223,9 @@ export type AnyObservableLike<T> =
   | MulticastObservableLike<T>
   | ObservableLike<T>;
 
+/**
+ * @noInheritDoc
+ */
 export interface ObservableModule {
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],

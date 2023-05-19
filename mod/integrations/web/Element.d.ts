@@ -1,6 +1,9 @@
 import { Function1, SideEffect1 } from "../../functions.js";
 import { DisposableLike, ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "../../types.js";
 import { Rect, ScrollValue } from "../web.js";
+/**
+ * @noInheritDoc
+ */
 export interface ElementModule {
     addEventHandler<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, eventHandler: SideEffect1<AbortSignalEventMap[K]>, options?: {
         passive?: boolean;

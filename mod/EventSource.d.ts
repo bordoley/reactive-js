@@ -8,6 +8,9 @@ export interface EventSourceContainer extends Container {
     readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 export type Type = EventSourceContainer;
+/**
+ * @noInheritDoc
+ */
 export interface EventSourceModule extends ContainerTypeClass<Type>, MulticastableTypeClass<Type> {
     /**
      * @category Constructor

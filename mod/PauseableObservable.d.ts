@@ -8,6 +8,9 @@ export interface PauseableObservableContainer extends Container {
     readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
 }
 export type Type = PauseableObservableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface PauseableObservableModule extends ContainerTypeClass<Type> {
     enqueue<T>(queue: QueueableLike<T>): ContainerOperator<Type, T, T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<Type, T, T>;

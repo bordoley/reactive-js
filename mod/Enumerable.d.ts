@@ -8,6 +8,9 @@ export interface EnumerableContainer extends Container {
     readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 export type Type = EnumerableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableModule extends GeneratorTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

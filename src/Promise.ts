@@ -19,6 +19,9 @@ export interface PromiseContainer extends Container {
 
 export type Type = PromiseContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface PromiseModule extends MulticastableTypeClass<Type> {}
 
 export type Signature = PromiseModule;

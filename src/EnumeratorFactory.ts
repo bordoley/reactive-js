@@ -63,6 +63,9 @@ export interface EnumeratorFactoryContainer extends Container {
 
 export type Type = EnumeratorFactoryContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {}
 
 export type Signature = EnumeratorFactoryModule;

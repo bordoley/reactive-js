@@ -64,6 +64,9 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 });
 export type MaybeMulticastObservableLike<T> = MulticastObservableLike<T> | ObservableLike<T>;
 export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T> | ObservableLike<T>;
+/**
+ * @noInheritDoc
+ */
 export interface ObservableModule {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): EnumerableUpperBoundObservableOperator<T, T>;

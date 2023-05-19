@@ -9,6 +9,9 @@ import {
   StreamLike,
 } from "./types.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface StreamModule {
   syncState<T>(
     onInit: Function1<T, DeferredObservableLike<Updater<T>>>,

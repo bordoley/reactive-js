@@ -8,6 +8,9 @@ export interface DisposableContainer extends Container {
     readonly [Container_type]?: DisposableLike;
 }
 export type Type = DisposableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface DisposableModule extends MulticastableTypeClass<Type> {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {

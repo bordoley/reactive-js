@@ -42,6 +42,9 @@ export interface EventSourceContainer extends Container {
 
 export type Type = EventSourceContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface EventSourceModule
   extends ContainerTypeClass<Type>,
     MulticastableTypeClass<Type> {

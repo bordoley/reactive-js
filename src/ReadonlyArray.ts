@@ -79,6 +79,9 @@ export type Type = ReadonlyArrayContainer;
 
 export type TKeyBase = KeyOf<Type>;
 
+/**
+ * @noInheritDoc
+ */
 export interface ReadonlyArrayModule
   extends ConcreteKeyedContainerTypeClass<Type>,
     Omit<

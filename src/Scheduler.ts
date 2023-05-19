@@ -8,6 +8,9 @@ import {
   VirtualTimeSchedulerLike,
 } from "./types.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface SchedulerModule {
   createHostScheduler(options?: {
     readonly maxYieldInterval?: number;

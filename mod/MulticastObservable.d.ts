@@ -9,6 +9,9 @@ export interface MulticastObservableContainer extends Container {
     readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 export type Type = MulticastObservableContainer;
+/**
+ * @noInheritDoc
+ */
 export interface MulticastObservableModule extends HigherOrderObservableTypeClass<Type, DeferredObservable.Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";

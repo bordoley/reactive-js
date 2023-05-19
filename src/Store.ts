@@ -13,12 +13,18 @@ import {
   WritableStoreLike,
 } from "./types.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface StoreContainer extends Container {
   readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
 }
 
 export type Type = StoreContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface StoreModule extends MulticastableTypeClass<Type> {
   create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
 }

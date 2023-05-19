@@ -40,6 +40,9 @@ export interface DisposableContainer extends Container {
 
 export type Type = DisposableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface DisposableModule extends MulticastableTypeClass<Type> {
   readonly disposed: DisposableLike;
 

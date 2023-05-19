@@ -48,6 +48,9 @@ export type Type<
 
 export type TKeyBase = KeyOf<Type>;
 
+/**
+ * @noInheritDoc
+ */
 export interface ReadonlyObjectMapModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,

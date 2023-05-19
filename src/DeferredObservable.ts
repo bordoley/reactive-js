@@ -54,6 +54,9 @@ export interface DeferredObservableContainer extends Container {
 
 export type Type = DeferredObservableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface DeferredObservableModule
   extends DeferredTypeClass<Type>,
     HigherOrderObservableTypeClass<Type, Type> {

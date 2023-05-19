@@ -9,6 +9,9 @@ export interface ReadonlyMapContainer<TKey = unknown> extends KeyedContainer<TKe
 }
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
+/**
+ * @noInheritDoc
+ */
 export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {
 }
 export type Signature = ReadonlyMapModule;

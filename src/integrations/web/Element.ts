@@ -15,6 +15,9 @@ import Element_measure from "./Element/__internal__/Element.measure.js";
 import Element_resizeEventSource from "./Element/__internal__/Element.resizeEventSource.js";
 import Element_scrollEventSource from "./Element/__internal__/Element.scrollEventSource.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface ElementModule {
   addEventHandler<
     TEventTarget extends AbortSignal,

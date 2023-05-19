@@ -9,6 +9,9 @@ export interface ReadonlyObjectMapContainer<TKey extends symbol | number | strin
 }
 export type Type<TKey extends symbol | number | string = symbol | number | string> = ReadonlyObjectMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
+/**
+ * @noInheritDoc
+ */
 export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {
 }
 export type Signature = ReadonlyObjectMapModule;

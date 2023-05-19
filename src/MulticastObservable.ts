@@ -30,6 +30,9 @@ export interface MulticastObservableContainer extends Container {
 
 export type Type = MulticastObservableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface MulticastObservableModule
   extends HigherOrderObservableTypeClass<Type, DeferredObservable.Type> {
   compute<T>(

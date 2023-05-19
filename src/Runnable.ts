@@ -72,6 +72,9 @@ export interface RunnableContainer extends Container {
 
 export type Type = RunnableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface RunnableModule
   extends RunnableTypeClass<Type>,
     HigherOrderObservableTypeClass<Type, Type> {

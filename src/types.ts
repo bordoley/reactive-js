@@ -154,6 +154,7 @@ export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run
  * An interactive mutable enumerator that can be used to iterate
  * over an underlying source of data.
  *
+ * @noInheritDoc
  * @category Interactive
  */
 export interface EnumeratorLike<T = unknown> extends DisposableLike {
@@ -309,6 +310,7 @@ export interface IndexedBufferCollectionLike<T = unknown>
     IndexedCollectionLike<T> {}
 
 /**
+ * @noInheritDoc
  * @category Reactive
  */
 export interface SinkLike<T = unknown> extends DisposableLike {
@@ -367,6 +369,7 @@ export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
 }
 
 /**
+ * @noInheritDoc
  * @category EventMap
  */
 export interface DispatcherLikeEventMap {
@@ -700,6 +703,7 @@ export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
 >;
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface Container {
@@ -732,6 +736,7 @@ export type ContainerOperator<C extends Container, TA, TB> = Function1<
 >;
 
 /**
+ * @noInheritDoc
  * @category Container
  */
 export interface KeyedContainer<TKey = unknown> extends Container {
@@ -774,7 +779,10 @@ export type KeyedContainerOperator<
   TB,
 > = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ContainerTypeClass<C extends Container> {
   /** @category Operator */
   buffer<T>(options?: {
@@ -907,7 +915,10 @@ export interface ContainerTypeClass<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ *  @category TypeClass
+ */
 export interface FlowableTypeClass<C extends Container> {
   flow<T>(
     scheduler: SchedulerLike,
@@ -918,7 +929,10 @@ export interface FlowableTypeClass<C extends Container> {
   ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface MulticastableTypeClass<C extends Container> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
@@ -943,7 +957,10 @@ export interface MulticastableTypeClass<C extends Container> {
   >;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface DeferredTypeClass<C extends Container> {
   /**
    * @category Operator
@@ -962,7 +979,10 @@ export interface DeferredTypeClass<C extends Container> {
   toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface RunnableTypeClass<C extends Container>
   extends ContainerTypeClass<C>,
     FlowableTypeClass<C> {
@@ -1269,7 +1289,10 @@ export interface RunnableTypeClass<C extends Container>
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EnumerableTypeClass<C extends Container>
   extends RunnableTypeClass<C> {
   /**
@@ -1297,7 +1320,10 @@ export interface EnumerableTypeClass<C extends Container>
   }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface GeneratorTypeClass<C extends Container>
   extends EnumerableTypeClass<C> {
   generate<T>(
@@ -1308,7 +1334,10 @@ export interface GeneratorTypeClass<C extends Container>
   throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface HigherOrderObservableTypeClass<
   C extends Observable.Type,
   CInner extends DeferredObservable.Type,
@@ -1396,7 +1425,10 @@ export interface HigherOrderObservableTypeClass<
   ): ContainerOperator<C, TA, TB>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface KeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
@@ -1452,7 +1484,10 @@ export interface KeyedContainerTypeClass<
   values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorFactoryLike<T>>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ConcreteKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
@@ -1514,7 +1549,10 @@ export interface ConcreteKeyedContainerTypeClass<
   ): KeyedContainerOperator<C, TKey, TA, TB>;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface AssociativeKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
@@ -1585,7 +1623,10 @@ export interface AssociativeKeyedContainerTypeClass<
     : never;
 }
 
-/** @category TypeClass */
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface ConcreteAssociativeKeyedContainerTypeClass<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,

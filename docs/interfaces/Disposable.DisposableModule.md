@@ -16,10 +16,9 @@
 
 - [disposed](Disposable.DisposableModule.md#disposed)
 
-### Other Methods
+### Methods
 
 - [add](Disposable.DisposableModule.md#add)
-- [addEventHandler](Disposable.DisposableModule.md#addeventhandler)
 - [addTo](Disposable.DisposableModule.md#addto)
 - [bindTo](Disposable.DisposableModule.md#bindto)
 - [create](Disposable.DisposableModule.md#create)
@@ -30,19 +29,13 @@
 - [toErrorHandler](Disposable.DisposableModule.md#toerrorhandler)
 - [usingAsync](Disposable.DisposableModule.md#usingasync)
 
-### Transform Methods
-
-- [toEventSource](Disposable.DisposableModule.md#toeventsource)
-- [toObservable](Disposable.DisposableModule.md#toobservable)
-- [toReadonlyArrayAsync](Disposable.DisposableModule.md#toreadonlyarrayasync)
-
 ## Properties
 
 ### disposed
 
 • `Readonly` **disposed**: [`DisposableLike`](types.DisposableLike.md)
 
-## Other Methods
+## Methods
 
 ### add
 
@@ -65,32 +58,6 @@
 #### Returns
 
 [`Updater`](../modules/functions.md#updater)<`TDisposable`\>
-
-___
-
-### addEventHandler
-
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `handler` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Inherited from
-
-[MulticastableTypeClass](types.MulticastableTypeClass.md).[addEventHandler](types.MulticastableTypeClass.md#addeventhandler)
 
 ___
 
@@ -314,65 +281,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Function3`](../modules/functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
-
-___
-
-## Transform Methods
-
-### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Inherited from
-
-[MulticastableTypeClass](types.MulticastableTypeClass.md).[toEventSource](types.MulticastableTypeClass.md#toeventsource)
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[MulticastableTypeClass](types.MulticastableTypeClass.md).[toObservable](types.MulticastableTypeClass.md#toobservable)
-
-___
-
-### toReadonlyArrayAsync
-
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
-
-#### Inherited from
-
-[MulticastableTypeClass](types.MulticastableTypeClass.md).[toReadonlyArrayAsync](types.MulticastableTypeClass.md#toreadonlyarrayasync)

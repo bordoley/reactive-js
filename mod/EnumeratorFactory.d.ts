@@ -7,6 +7,9 @@ export interface EnumeratorFactoryContainer extends Container {
     readonly [Container_type]?: EnumeratorFactoryLike<this[typeof Container_T]>;
 }
 export type Type = EnumeratorFactoryContainer;
+/**
+ * @noInheritDoc
+ */
 export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
 }
 export type Signature = EnumeratorFactoryModule;

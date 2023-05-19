@@ -7,6 +7,9 @@ export interface PromiseContainer extends Container {
     readonly [Container_type]?: Promise<this[typeof Container_T]>;
 }
 export type Type = PromiseContainer;
+/**
+ * @noInheritDoc
+ */
 export interface PromiseModule extends MulticastableTypeClass<Type> {
 }
 export type Signature = PromiseModule;

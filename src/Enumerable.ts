@@ -64,6 +64,9 @@ export interface EnumerableContainer extends Container {
 
 export type Type = EnumerableContainer;
 
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableModule extends GeneratorTypeClass<Type> {
   compute<T>(
     computation: Factory<T>,

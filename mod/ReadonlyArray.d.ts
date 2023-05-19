@@ -10,6 +10,9 @@ export interface ReadonlyArrayContainer extends KeyedContainer {
 }
 export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
+/**
+ * @noInheritDoc
+ */
 export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Type>, Omit<EnumerableTypeClass<Type>, keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
     /** @category Transform */
     enumerate<T>(options?: {

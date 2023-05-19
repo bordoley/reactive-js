@@ -36,6 +36,9 @@ export interface DictionaryContainer<TKey = unknown> extends KeyedContainer {
 export type Type<TKey = unknown> = DictionaryContainer<TKey>;
 export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
 
+/**
+ * @noInheritDoc
+ */
 export interface DictionaryModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,

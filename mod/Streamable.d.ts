@@ -4,6 +4,9 @@ import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/
 import type Streamable_createCache from "./Streamable/__internal__/Streamable.createCache.js";
 import { Equality, Factory, Function1, Optional, Updater } from "./functions.js";
 import { ContainerOperator, DeferredObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
+/**
+ * @noInheritDoc
+ */
 export interface StreamableModule {
     /**
      * @category Constructor

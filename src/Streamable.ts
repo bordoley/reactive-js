@@ -28,6 +28,9 @@ import {
   StreamableLike,
 } from "./types.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface StreamableModule {
   /**
    * @category Constructor
