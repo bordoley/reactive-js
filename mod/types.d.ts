@@ -646,7 +646,7 @@ export interface ContainerTypeClass<C extends Container> {
     }): ContainerOperator<C, T, T>;
 }
 /** @category TypeClass */
-export interface RunnableContainerTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface RunnableTypeClass<C extends Container> extends ContainerTypeClass<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -702,6 +702,10 @@ export interface RunnableContainerTypeClass<C extends Container> extends Contain
      * @category Operator
      */
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<C, TA, TB>;
+    flow<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
     /**
      * @category Constructor
      */
@@ -801,7 +805,7 @@ export interface RunnableContainerTypeClass<C extends Container> extends Contain
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 /** @category TypeClass */
-export interface EnumerableContainerTypeClass<C extends Container> extends RunnableContainerTypeClass<C> {
+export interface EnumerableTypeClass<C extends Container> extends RunnableTypeClass<C> {
     /**
      *
      * @category Transform
@@ -815,6 +819,12 @@ export interface EnumerableContainerTypeClass<C extends Container> extends Runna
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
     toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+}
+/** @category TypeClass */
+export interface GeneratorTypeClass<C extends Container> extends EnumerableTypeClass<C> {
+    throws<T>(options?: {
+        readonly raise?: Factory<unknown>;
+    }): ContainerOf<C, T>;
 }
 /** @category TypeClass */
 export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {

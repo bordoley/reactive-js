@@ -1,5 +1,5 @@
 import { Factory, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableContainerTypeClass, EnumerableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableLike, GeneratorTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -8,12 +8,11 @@ export interface EnumerableContainer extends Container {
     readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 export type Type = EnumerableContainer;
-export interface EnumerableModule extends EnumerableContainerTypeClass<Type> {
+export interface EnumerableModule extends GeneratorTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
-    throws<T>(): EnumerableLike<T>;
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];
@@ -30,6 +29,7 @@ export declare const enumerate: Signature["enumerate"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
+export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];

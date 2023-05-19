@@ -93,7 +93,7 @@ const HigherOrderObservableTypeClassTests = <C extends Observable.Type>(
           fromRunnable<number>(),
           m.scanLast<number, number>(
             (acc, x) =>
-              pipe([x + acc], Runnable.fromReadonlyArray({ delay: 4 })),
+              pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })),
             returns(0),
           ),
           Observable.toReadonlyArrayAsync(),
@@ -125,7 +125,7 @@ const HigherOrderObservableTypeClassTests = <C extends Observable.Type>(
           fromRunnable<number>(),
           m.scanLast<number, number>(
             (acc, x) =>
-              pipe([x + acc], Runnable.fromReadonlyArray({ delay: 4 })),
+              pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })),
             returns(0),
           ),
           Observable.toReadonlyArrayAsync(),

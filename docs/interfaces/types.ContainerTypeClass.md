@@ -18,7 +18,7 @@
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
-  ↳ [`RunnableContainerTypeClass`](types.RunnableContainerTypeClass.md)
+  ↳ [`RunnableTypeClass`](types.RunnableTypeClass.md)
 
 ## Table of contents
 

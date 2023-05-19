@@ -14,7 +14,6 @@ import Observable_flatMapIterable from "./Observable/__internal__/Observable.fla
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
-import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
@@ -54,7 +53,7 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { identityLazy, } from "./functions.js";
+import { identityLazy } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const buffer = Observable_buffer;
 export const catchError = Runnable_catchError;
@@ -81,7 +80,6 @@ export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromValue = Observable_fromValue;
-export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;

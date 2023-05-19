@@ -1,8 +1,8 @@
 import * as Enumerable from "../Enumerable.js";
 import { testModule } from "../__internal__/testing.js";
 
-import EnumerableContainerTypeClassTests from "./fixtures/EnumerableContainerTypeClassTests.js";
+import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
 
-testModule("Enumerable", EnumerableContainerTypeClassTests(Enumerable));
+testModule("Enumerable", EnumerableTypeClassTests(Enumerable));
 
 ((_: Enumerable.Signature) => {})(Enumerable);

@@ -4,8 +4,8 @@ import * as EnumeratorFactory from "../EnumeratorFactory.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, pipe, pipeLazy, returns } from "../functions.js";
-import EnumerableContainerTypeClassTests from "./fixtures/EnumerableContainerTypeClassTests.js";
-testModule("ReadonlyArray", EnumerableContainerTypeClassTests(ReadonlyArray), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], ReadonlyArray.entries(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals([
+import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
+testModule("ReadonlyArray", EnumerableTypeClassTests(ReadonlyArray), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], ReadonlyArray.entries(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals([
     [0, "b"],
     [1, "d"],
 ], arrayEquality())))), describe("forEachWithKey", test("iterate and imperatively sum the keys", () => {

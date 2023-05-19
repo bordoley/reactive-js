@@ -8,11 +8,11 @@ import {
   testModule,
 } from "../__internal__/testing.js";
 import { arrayEquality, pipe, pipeLazy, returns } from "../functions.js";
-import EnumerableContainerTypeClassTests from "./fixtures/EnumerableContainerTypeClassTests.js";
+import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
 
 testModule(
   "ReadonlyArray",
-  EnumerableContainerTypeClassTests(ReadonlyArray),
+  EnumerableTypeClassTests(ReadonlyArray),
   describe(
     "entries",
     test(

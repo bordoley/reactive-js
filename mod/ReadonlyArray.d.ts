@@ -1,5 +1,5 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerTypeClass, ContainerOperator, Container_T, Container_type, DisposableLike, EnumerableContainerTypeClass, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { ConcreteKeyedContainerTypeClass, ContainerOperator, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -10,16 +10,12 @@ export interface ReadonlyArrayContainer extends KeyedContainer {
 }
 export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Type>, Omit<EnumerableContainerTypeClass<Type>, keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
+export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Type>, Omit<EnumerableTypeClass<Type>, keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
     /** @category Transform */
     enumerate<T>(options?: {
         readonly start?: number;
         readonly count?: number;
     }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
     /**
      * @category Operator
      */

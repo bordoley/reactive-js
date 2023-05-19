@@ -8,7 +8,7 @@
 
 - [`ConcreteKeyedContainerTypeClass`](types.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
-- `Omit`<[`EnumerableContainerTypeClass`](types.EnumerableContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerTypeClass`](types.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
+- `Omit`<[`EnumerableTypeClass`](types.EnumerableTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerTypeClass`](types.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -1591,6 +1591,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+Omit.flow
 
 ___
 

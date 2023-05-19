@@ -5,19 +5,15 @@ import {
   test,
 } from "../../__internal__/testing.js";
 import { pipe, returns } from "../../functions.js";
-import {
-  Container,
-  ContainerOf,
-  EnumerableContainerTypeClass,
-} from "../../types.js";
-import RunnableContainerTypeClassTests from "./RunnableContainerTypeClassTests.js";
+import { Container, ContainerOf, EnumerableTypeClass } from "../../types.js";
+import RunnableTypeClassTests from "./RunnableTypeClassTests.js";
 
-const EnumerableContainerTypeClassTests = <C extends Container>(
-  m: EnumerableContainerTypeClass<C>,
+const EnumerableTypeClassTests = <C extends Container>(
+  m: EnumerableTypeClass<C>,
 ) =>
   describe(
-    "EnumerableContainerTypeClass",
-    ...RunnableContainerTypeClassTests(m).tests,
+    "EnumerableTypeClass",
+    ...RunnableTypeClassTests(m).tests,
     describe(
       "enumerate",
       test("with higher order observable and no delay", () => {
@@ -37,4 +33,4 @@ const EnumerableContainerTypeClassTests = <C extends Container>(
     ),
   );
 
-export default EnumerableContainerTypeClassTests;
+export default EnumerableTypeClassTests;

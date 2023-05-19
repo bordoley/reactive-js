@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`EnumerableContainerTypeClass`](types.EnumerableContainerTypeClass.md)<[`Type`](../modules/Enumerable.md#type)\>
+- [`GeneratorTypeClass`](types.GeneratorTypeClass.md)<[`Type`](../modules/Enumerable.md#type)\>
 
   ↳ **`EnumerableModule`**
 
@@ -54,6 +54,7 @@
 ### Other Methods
 
 - [compute](Enumerable.EnumerableModule.md#compute)
+- [flow](Enumerable.EnumerableModule.md#flow)
 - [generate](Enumerable.EnumerableModule.md#generate)
 - [throws](Enumerable.EnumerableModule.md#throws)
 - [toEnumeratorFactory](Enumerable.EnumerableModule.md#toenumeratorfactory)
@@ -100,7 +101,7 @@ Returns a Container which emits all values from each source sequentially.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concat](types.EnumerableContainerTypeClass.md#concat)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[concat](types.GeneratorTypeClass.md#concat)
 
 ___
 
@@ -122,7 +123,7 @@ Return an Container that emits no items.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[empty](types.EnumerableContainerTypeClass.md#empty)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[empty](types.GeneratorTypeClass.md#empty)
 
 ___
 
@@ -142,7 +143,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromEnumerable](types.EnumerableContainerTypeClass.md#fromenumerable)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromEnumerable](types.GeneratorTypeClass.md#fromenumerable)
 
 ___
 
@@ -162,7 +163,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromEnumeratorFactory](types.EnumerableContainerTypeClass.md#fromenumeratorfactory)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromEnumeratorFactory](types.GeneratorTypeClass.md#fromenumeratorfactory)
 
 ___
 
@@ -182,7 +183,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromFactory](types.EnumerableContainerTypeClass.md#fromfactory)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromFactory](types.GeneratorTypeClass.md#fromfactory)
 
 ___
 
@@ -202,7 +203,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromIterable](types.EnumerableContainerTypeClass.md#fromiterable)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromIterable](types.GeneratorTypeClass.md#fromiterable)
 
 ___
 
@@ -222,7 +223,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromOptional](types.EnumerableContainerTypeClass.md#fromoptional)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromOptional](types.GeneratorTypeClass.md#fromoptional)
 
 ___
 
@@ -250,7 +251,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromReadonlyArray](types.EnumerableContainerTypeClass.md#fromreadonlyarray)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromReadonlyArray](types.GeneratorTypeClass.md#fromreadonlyarray)
 
 ___
 
@@ -270,7 +271,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[fromValue](types.EnumerableContainerTypeClass.md#fromvalue)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[fromValue](types.GeneratorTypeClass.md#fromvalue)
 
 ___
 
@@ -301,7 +302,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
@@ -327,7 +328,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -355,7 +356,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -385,7 +386,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -417,7 +418,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -451,7 +452,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -487,7 +488,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -525,7 +526,7 @@ in order, of each of its input sources.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zip](types.EnumerableContainerTypeClass.md#zip)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zip](types.GeneratorTypeClass.md#zip)
 
 ___
 
@@ -554,7 +555,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[buffer](types.EnumerableContainerTypeClass.md#buffer)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[buffer](types.GeneratorTypeClass.md#buffer)
 
 ___
 
@@ -577,7 +578,7 @@ Container by concatenating the inner sources in order.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatAll](types.EnumerableContainerTypeClass.md#concatall)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[concatAll](types.GeneratorTypeClass.md#concatall)
 
 ___
 
@@ -604,7 +605,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatMap](types.EnumerableContainerTypeClass.md#concatmap)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[concatMap](types.GeneratorTypeClass.md#concatmap)
 
 ___
 
@@ -631,7 +632,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[concatWith](types.EnumerableContainerTypeClass.md#concatwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[concatWith](types.GeneratorTypeClass.md#concatwith)
 
 ___
 
@@ -661,7 +662,7 @@ are distinct by comparison from the previous item.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[distinctUntilChanged](types.EnumerableContainerTypeClass.md#distinctuntilchanged)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[distinctUntilChanged](types.GeneratorTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -688,7 +689,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[endWith](types.EnumerableContainerTypeClass.md#endwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[endWith](types.GeneratorTypeClass.md#endwith)
 
 ___
 
@@ -715,7 +716,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[flatMapIterable](types.EnumerableContainerTypeClass.md#flatmapiterable)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[flatMapIterable](types.GeneratorTypeClass.md#flatmapiterable)
 
 ___
 
@@ -744,7 +745,7 @@ value emitted by the source.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[forEach](types.EnumerableContainerTypeClass.md#foreach)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[forEach](types.GeneratorTypeClass.md#foreach)
 
 ___
 
@@ -764,7 +765,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[ignoreElements](types.EnumerableContainerTypeClass.md#ignoreelements)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[ignoreElements](types.GeneratorTypeClass.md#ignoreelements)
 
 ___
 
@@ -793,7 +794,7 @@ source that satisfy the specified predicate.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[keep](types.EnumerableContainerTypeClass.md#keep)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[keep](types.GeneratorTypeClass.md#keep)
 
 ___
 
@@ -820,7 +821,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[keepType](types.EnumerableContainerTypeClass.md#keeptype)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[keepType](types.GeneratorTypeClass.md#keeptype)
 
 ___
 
@@ -858,7 +859,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[map](types.EnumerableContainerTypeClass.md#map)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[map](types.GeneratorTypeClass.md#map)
 
 ___
 
@@ -885,7 +886,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[mapTo](types.EnumerableContainerTypeClass.md#mapto)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[mapTo](types.GeneratorTypeClass.md#mapto)
 
 ___
 
@@ -905,7 +906,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[pairwise](types.EnumerableContainerTypeClass.md#pairwise)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[pairwise](types.GeneratorTypeClass.md#pairwise)
 
 ___
 
@@ -932,7 +933,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[pick](types.EnumerableContainerTypeClass.md#pick)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[pick](types.GeneratorTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -957,7 +958,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[pick](types.EnumerableContainerTypeClass.md#pick)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[pick](types.GeneratorTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -984,7 +985,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[pick](types.EnumerableContainerTypeClass.md#pick)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[pick](types.GeneratorTypeClass.md#pick)
 
 ___
 
@@ -1010,7 +1011,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[repeat](types.EnumerableContainerTypeClass.md#repeat)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[repeat](types.GeneratorTypeClass.md#repeat)
 
 ___
 
@@ -1041,7 +1042,7 @@ and emits each intermediate result.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[scan](types.EnumerableContainerTypeClass.md#scan)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[scan](types.GeneratorTypeClass.md#scan)
 
 ___
 
@@ -1070,7 +1071,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[skipFirst](types.EnumerableContainerTypeClass.md#skipfirst)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[skipFirst](types.GeneratorTypeClass.md#skipfirst)
 
 ___
 
@@ -1097,7 +1098,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[startWith](types.EnumerableContainerTypeClass.md#startwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[startWith](types.GeneratorTypeClass.md#startwith)
 
 ___
 
@@ -1126,7 +1127,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[takeFirst](types.EnumerableContainerTypeClass.md#takefirst)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[takeFirst](types.GeneratorTypeClass.md#takefirst)
 
 ___
 
@@ -1155,7 +1156,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[takeLast](types.EnumerableContainerTypeClass.md#takelast)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[takeLast](types.GeneratorTypeClass.md#takelast)
 
 ___
 
@@ -1187,7 +1188,7 @@ this predicate is not satisfied.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[takeWhile](types.EnumerableContainerTypeClass.md#takewhile)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[takeWhile](types.GeneratorTypeClass.md#takewhile)
 
 ___
 
@@ -1214,7 +1215,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`]\>
 
@@ -1239,7 +1240,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
@@ -1266,7 +1267,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
@@ -1295,7 +1296,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
@@ -1326,7 +1327,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
@@ -1359,7 +1360,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
@@ -1394,7 +1395,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`EnumerableContainer`](Enumerable.EnumerableContainer.md), `TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
@@ -1431,7 +1432,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[zipWith](types.EnumerableContainerTypeClass.md#zipwith)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[zipWith](types.GeneratorTypeClass.md#zipwith)
 
 ___
 
@@ -1461,6 +1462,35 @@ ___
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](types.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Inherited from
+
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[flow](types.GeneratorTypeClass.md#flow)
+
+___
+
 ### generate
 
 ▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
@@ -1486,7 +1516,7 @@ ___
 
 ### throws
 
-▸ **throws**<`T`\>(): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+▸ **throws**<`T`\>(`options?`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -1494,9 +1524,20 @@ ___
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
+
 #### Returns
 
 [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
+
+#### Inherited from
+
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[throws](types.GeneratorTypeClass.md#throws)
 
 ___
 
@@ -1516,7 +1557,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toEnumeratorFactory](types.EnumerableContainerTypeClass.md#toenumeratorfactory)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toEnumeratorFactory](types.GeneratorTypeClass.md#toenumeratorfactory)
 
 ___
 
@@ -1536,7 +1577,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toObservable](types.EnumerableContainerTypeClass.md#toobservable)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toObservable](types.GeneratorTypeClass.md#toobservable)
 
 ___
 
@@ -1566,7 +1607,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[contains](types.EnumerableContainerTypeClass.md#contains)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[contains](types.GeneratorTypeClass.md#contains)
 
 ___
 
@@ -1586,7 +1627,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[enumerate](types.EnumerableContainerTypeClass.md#enumerate)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[enumerate](types.GeneratorTypeClass.md#enumerate)
 
 ___
 
@@ -1616,7 +1657,7 @@ it returns false, or until the end of the Container.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[everySatisfy](types.EnumerableContainerTypeClass.md#everysatisfy)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[everySatisfy](types.GeneratorTypeClass.md#everysatisfy)
 
 ___
 
@@ -1636,7 +1677,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[first](types.EnumerableContainerTypeClass.md#first)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[first](types.GeneratorTypeClass.md#first)
 
 ___
 
@@ -1656,7 +1697,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[last](types.EnumerableContainerTypeClass.md#last)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[last](types.GeneratorTypeClass.md#last)
 
 ___
 
@@ -1682,7 +1723,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[noneSatisfy](types.EnumerableContainerTypeClass.md#nonesatisfy)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[noneSatisfy](types.GeneratorTypeClass.md#nonesatisfy)
 
 ___
 
@@ -1710,7 +1751,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[reduce](types.EnumerableContainerTypeClass.md#reduce)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[reduce](types.GeneratorTypeClass.md#reduce)
 
 ___
 
@@ -1736,7 +1777,7 @@ ___
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[someSatisfy](types.EnumerableContainerTypeClass.md#somesatisfy)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[someSatisfy](types.GeneratorTypeClass.md#somesatisfy)
 
 ___
 
@@ -1758,7 +1799,7 @@ Converts the Container to a `IterableLike`.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toIterable](types.EnumerableContainerTypeClass.md#toiterable)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toIterable](types.GeneratorTypeClass.md#toiterable)
 
 ___
 
@@ -1780,4 +1821,4 @@ Converts the Container to a `ReadonlyArrayContainer`.
 
 #### Inherited from
 
-[EnumerableContainerTypeClass](types.EnumerableContainerTypeClass.md).[toReadonlyArray](types.EnumerableContainerTypeClass.md#toreadonlyarray)
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toReadonlyArray](types.GeneratorTypeClass.md#toreadonlyarray)

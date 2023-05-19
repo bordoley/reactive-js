@@ -19,11 +19,11 @@ import {
 import { RunnableLike } from "../types.js";
 import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 
-import RunnableContainerTypeClassTests from "./fixtures/RunnableContainerTypeClassTests.js";
+import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
 
 testModule(
   "Runnable",
-  RunnableContainerTypeClassTests(Runnable),
+  RunnableTypeClassTests(Runnable),
   HigherOrderObservableTypeClassTests<Runnable.Type>(Runnable, identityLazy),
 
   describe(
@@ -34,7 +34,7 @@ testModule(
         Runnable.compute(() => {
           const fromValueWithDelay = __constant(
             (delay: number, value: number): RunnableLike<number> =>
-              pipe([value], Runnable.fromReadonlyArray({ delay })),
+              pipe([value], Observable.fromReadonlyArray({ delay })),
           );
           const obs1 = __memo(fromValueWithDelay, 10, 5);
           const result1 = __await(obs1);
@@ -56,7 +56,7 @@ testModule(
         Runnable.compute(
           () => {
             const oneTwoThreeDelayed = __constant(
-              pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 1 })),
+              pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
             );
             const createOneTwoThree = __constant((_: unknown) =>
               pipe([1, 2, 3], Runnable.fromReadonlyArray()),
@@ -78,10 +78,13 @@ testModule(
       pipeLazy(
         Runnable.compute(() => {
           const src = __constant(
-            pipe([0, 1, 2, 3, 4, 5], Runnable.fromReadonlyArray({ delay: 5 })),
+            pipe(
+              [0, 1, 2, 3, 4, 5],
+              Observable.fromReadonlyArray({ delay: 5 }),
+            ),
           );
           const src2 = __constant(
-            Runnable.generate(increment, returns(100), {
+            Observable.generate(increment, returns(100), {
               delay: 2,
               delayStart: false,
             }),
@@ -129,7 +132,7 @@ testModule(
         [none, none, none],
         Observable.fromReadonlyArray({ delay: 4 }),
         Runnable.switchMap<void, number>(_ =>
-          pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 2 })),
+          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
         ),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
@@ -139,10 +142,10 @@ testModule(
       "concating arrays",
       pipeLazy(
         [1, 2, 3],
-        Runnable.fromReadonlyArray({ delay: 1 }),
+        Observable.fromReadonlyArray({ delay: 1 }),
 
         Runnable.switchMap<number, number>(_ =>
-          pipe([1, 2, 3], Runnable.fromReadonlyArray({ delay: 0 })),
+          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 0 })),
         ),
         Runnable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),

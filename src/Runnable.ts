@@ -12,7 +12,6 @@ import Observable_flatMapIterable from "./Observable/__internal__/Observable.fla
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
-import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
@@ -52,28 +51,17 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import {
-  Factory,
-  Function1,
-  Optional,
-  SideEffect1,
-  Updater,
-  identityLazy,
-} from "./functions.js";
+import { Factory, SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
-  DisposableLike,
   EnumerableLike,
-  EnumeratorLike,
   HigherOrderObservableTypeClass,
-  PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  RunnableContainerTypeClass,
   RunnableLike,
-  SchedulerLike,
+  RunnableTypeClass,
 } from "./types.js";
 
 /**
@@ -87,85 +75,13 @@ export interface RunnableContainer extends Container {
 export type Type = RunnableContainer;
 
 export interface RunnableModule
-  extends RunnableContainerTypeClass<Type>,
+  extends RunnableTypeClass<Type>,
     HigherOrderObservableTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
       mode?: "batched" | "combine-latest";
     },
-  ): RunnableLike<T>;
-
-  // FIXME: should be defined on a typeclass
-  flow<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
-
-  fromEnumeratorFactory<T>(): Function1<
-    Factory<EnumeratorLike<T>>,
-    EnumerableLike<T>
-  >;
-  fromEnumeratorFactory<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<Factory<EnumeratorLike<T>>, RunnableLike<T>>;
-
-  fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
-  fromFactory<T>(options: {
-    readonly delay: number;
-  }): Function1<Factory<T>, RunnableLike<T>>;
-
-  fromIterable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
-  fromIterable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<Iterable<T>, RunnableLike<T>>;
-
-  fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-  fromOptional<T>(options: {
-    readonly delay: number;
-  }): Function1<Optional<T>, RunnableLike<T>>;
-
-  fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  fromReadonlyArray<T>(options: {
-    readonly count: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  fromReadonlyArray<T>(options: {
-    readonly count: number;
-    readonly start: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  fromReadonlyArray<T>(options: {
-    readonly start: number;
-  }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  fromReadonlyArray<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
-
-  fromValue<T>(): Function1<T, EnumerableLike<T>>;
-  fromValue<T>(options: {
-    readonly delay: number;
-  }): Function1<T, RunnableLike<T>>;
-
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): EnumerableLike<T>;
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options: { readonly delay: number; readonly delayStart?: boolean },
-  ): RunnableLike<T>;
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: { readonly delay?: number; readonly delayStart?: boolean },
   ): RunnableLike<T>;
 
   run<T>(options?: {
@@ -212,7 +128,6 @@ export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
-export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;

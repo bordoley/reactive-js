@@ -76,10 +76,11 @@
 - [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/types.ConcreteAssociativeKeyedContainerTypeClass.md)
 - [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
 - [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
-- [EnumerableContainerTypeClass](../interfaces/types.EnumerableContainerTypeClass.md)
+- [EnumerableTypeClass](../interfaces/types.EnumerableTypeClass.md)
+- [GeneratorTypeClass](../interfaces/types.GeneratorTypeClass.md)
 - [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
-- [RunnableContainerTypeClass](../interfaces/types.RunnableContainerTypeClass.md)
+- [RunnableTypeClass](../interfaces/types.RunnableTypeClass.md)
 
 ### Collection Type Aliases
 

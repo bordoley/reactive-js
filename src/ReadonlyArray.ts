@@ -54,19 +54,14 @@ import {
   ContainerOperator,
   Container_T,
   Container_type,
-  DisposableLike,
-  EnumerableContainerTypeClass,
   EnumerableLike,
+  EnumerableTypeClass,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
   KeyedContainerOperator,
   KeyedContainer_TKey,
-  PauseableObservableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   RunnableLike,
-  SchedulerLike,
 } from "./types.js";
 
 /**
@@ -86,7 +81,7 @@ export type TKeyBase = KeyOf<Type>;
 export interface ReadonlyArrayModule
   extends ConcreteKeyedContainerTypeClass<Type>,
     Omit<
-      EnumerableContainerTypeClass<Type>,
+      EnumerableTypeClass<Type>,
       keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"
     > {
   /** @category Transform */
@@ -94,15 +89,6 @@ export interface ReadonlyArrayModule
     readonly start?: number;
     readonly count?: number;
   }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-
-  // FIXME: should be defined on a typeclass
-  flow<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<ReadonlyArray<T>, PauseableObservableLike<T> & DisposableLike>;
 
   /**
    * @category Operator

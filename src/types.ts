@@ -907,7 +907,7 @@ export interface ContainerTypeClass<C extends Container> {
 }
 
 /** @category TypeClass */
-export interface RunnableContainerTypeClass<C extends Container>
+export interface RunnableTypeClass<C extends Container>
   extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
@@ -989,6 +989,14 @@ export interface RunnableContainerTypeClass<C extends Container>
   flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
   ): ContainerOperator<C, TA, TB>;
+
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 
   /**
    * @category Constructor
@@ -1213,8 +1221,8 @@ export interface RunnableContainerTypeClass<C extends Container>
 }
 
 /** @category TypeClass */
-export interface EnumerableContainerTypeClass<C extends Container>
-  extends RunnableContainerTypeClass<C> {
+export interface EnumerableTypeClass<C extends Container>
+  extends RunnableTypeClass<C> {
   /**
    *
    * @category Transform
@@ -1234,6 +1242,12 @@ export interface EnumerableContainerTypeClass<C extends Container>
   toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 
   toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+}
+
+/** @category TypeClass */
+export interface GeneratorTypeClass<C extends Container>
+  extends EnumerableTypeClass<C> {
+  throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 
 /** @category TypeClass */

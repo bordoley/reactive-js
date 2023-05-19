@@ -2,6 +2,6 @@
 
 import * as EnumeratorFactory from "../EnumeratorFactory.js";
 import { testModule } from "../__internal__/testing.js";
-import EnumerableContainerTypeClassTests from "./fixtures/EnumerableContainerTypeClassTests.js";
-testModule("EnumeratorFactory", EnumerableContainerTypeClassTests(EnumeratorFactory));
+import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
+testModule("EnumeratorFactory", EnumerableTypeClassTests(EnumeratorFactory));
 ((_) => { })(EnumeratorFactory);

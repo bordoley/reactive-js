@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableContainerTypeClass, EnumerableLike, EnumeratorFactoryLike, EnumeratorLike, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableLike, EnumeratorFactoryLike, GeneratorTypeClass, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -8,12 +8,12 @@ export interface EnumeratorFactoryContainer extends Container {
     readonly [Container_type]?: EnumeratorFactoryLike<this[typeof Container_T]>;
 }
 export type Type = EnumeratorFactoryContainer;
-export interface EnumeratorFactoryModule extends EnumerableContainerTypeClass<Type> {
+export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
     toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
     toObservable<T>(options: {
         readonly delay: number;
         readonly delayStart?: boolean;
-    }): Function1<EnumeratorLike<T>, RunnableLike<T>>;
+    }): Function1<EnumeratorFactoryLike<T>, RunnableLike<T>>;
 }
 export type Signature = EnumeratorFactoryModule;
 export declare const buffer: Signature["buffer"];
@@ -29,6 +29,7 @@ export declare const enumerate: Signature["enumerate"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
+export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
@@ -55,6 +56,7 @@ export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const throws: Signature["throws"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toEnumeratorFactory: Signature["toEnumeratorFactory"];
 export declare const toObservable: Signature["toObservable"];

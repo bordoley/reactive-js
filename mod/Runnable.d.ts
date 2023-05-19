@@ -1,5 +1,5 @@
-import { Factory, Function1, Optional, SideEffect1, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, DisposableLike, EnumerableLike, EnumeratorLike, HigherOrderObservableTypeClass, PauseableObservableLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerTypeClass, RunnableLike, SchedulerLike } from "./types.js";
+import { Factory, SideEffect1 } from "./functions.js";
+import { Container, Container_T, Container_type, EnumerableLike, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -8,61 +8,9 @@ export interface RunnableContainer extends Container {
     readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 export type Type = RunnableContainer;
-export interface RunnableModule extends RunnableContainerTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
+export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
-    }): RunnableLike<T>;
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
-    fromEnumeratorFactory<T>(): Function1<Factory<EnumeratorLike<T>>, EnumerableLike<T>>;
-    fromEnumeratorFactory<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<Factory<EnumeratorLike<T>>, RunnableLike<T>>;
-    fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
-    fromFactory<T>(options: {
-        readonly delay: number;
-    }): Function1<Factory<T>, RunnableLike<T>>;
-    fromIterable<T>(): Function1<Iterable<T>, EnumerableLike<T>>;
-    fromIterable<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<Iterable<T>, RunnableLike<T>>;
-    fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-    fromOptional<T>(options: {
-        readonly delay: number;
-    }): Function1<Optional<T>, RunnableLike<T>>;
-    fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    fromReadonlyArray<T>(options: {
-        readonly count: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    fromReadonlyArray<T>(options: {
-        readonly count: number;
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    fromReadonlyArray<T>(options: {
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    fromReadonlyArray<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
-    fromValue<T>(): Function1<T, EnumerableLike<T>>;
-    fromValue<T>(options: {
-        readonly delay: number;
-    }): Function1<T, RunnableLike<T>>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): RunnableLike<T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
     }): RunnableLike<T>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -103,7 +51,6 @@ export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
-export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];

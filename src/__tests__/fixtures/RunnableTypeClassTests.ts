@@ -21,13 +21,11 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import { Container, RunnableContainerTypeClass } from "../../types.js";
+import { Container, RunnableTypeClass } from "../../types.js";
 
-const RunnableContainerTypeClassTests = <C extends Container>(
-  m: RunnableContainerTypeClass<C>,
-) =>
+const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
   describe(
-    "RunnableContainerTypeClass",
+    "RunnableTypeClass",
     describe(
       "buffer",
       test(
@@ -920,4 +918,4 @@ const RunnableContainerTypeClassTests = <C extends Container>(
     ),
   );
 
-export default RunnableContainerTypeClassTests;
+export default RunnableTypeClassTests;

@@ -12,6 +12,7 @@ import EnumeratorFactory_enumerate from "./EnumeratorFactory/__internal__/Enumer
 import EnumeratorFactory_everySatisfy from "./EnumeratorFactory/__internal__/EnumeratorFactory.everySatisfy.js";
 import EnumeratorFactory_first from "./EnumeratorFactory/__internal__/EnumeratorFactory.first.js";
 import EnumeratorFactory_flatMapIterable from "./EnumeratorFactory/__internal__/EnumeratorFactory.flatMapIterable.js";
+import EnumeratorFactory_flow from "./EnumeratorFactory/__internal__/EnumeratorFactory.flow.js";
 import EnumeratorFactory_forEach from "./EnumeratorFactory/__internal__/EnumeratorFactory.forEach.js";
 import EnumeratorFactory_fromFactory from "./EnumeratorFactory/__internal__/EnumeratorFactory.fromFactory.js";
 import EnumeratorFactory_fromValue from "./EnumeratorFactory/__internal__/EnumeratorFactory.fromValue.js";
@@ -33,6 +34,7 @@ import EnumeratorFactory_startWith from "./EnumeratorFactory/__internal__/Enumer
 import EnumeratorFactory_takeFirst from "./EnumeratorFactory/__internal__/EnumeratorFactory.takeFirst.js";
 import EnumeratorFactory_takeLast from "./EnumeratorFactory/__internal__/EnumeratorFactory.takeLast.js";
 import EnumeratorFactory_takeWhile from "./EnumeratorFactory/__internal__/EnumeratorFactory.takeWhile.js";
+import EnumeratorFactory_throws from "./EnumeratorFactory/__internal__/EnumeratorFactory.throws.js";
 import EnumeratorFactory_toIterable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toIterable.js";
 import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import EnumeratorFactory_toReadonlyArray from "./EnumeratorFactory/__internal__/EnumeratorFactory.toReadonlyArray.js";
@@ -46,10 +48,9 @@ import {
   Container,
   Container_T,
   Container_type,
-  EnumerableContainerTypeClass,
   EnumerableLike,
   EnumeratorFactoryLike,
-  EnumeratorLike,
+  GeneratorTypeClass,
   RunnableLike,
 } from "./types.js";
 
@@ -63,13 +64,12 @@ export interface EnumeratorFactoryContainer extends Container {
 
 export type Type = EnumeratorFactoryContainer;
 
-export interface EnumeratorFactoryModule
-  extends EnumerableContainerTypeClass<Type> {
+export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
   toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): Function1<EnumeratorLike<T>, RunnableLike<T>>;
+  }): Function1<EnumeratorFactoryLike<T>, RunnableLike<T>>;
 }
 
 export type Signature = EnumeratorFactoryModule;
@@ -90,6 +90,7 @@ export const everySatisfy: Signature["everySatisfy"] =
 export const first: Signature["first"] = EnumeratorFactory_first;
 export const flatMapIterable: Signature["flatMapIterable"] =
   EnumeratorFactory_flatMapIterable;
+export const flow: Signature["flow"] = EnumeratorFactory_flow;
 export const forEach: Signature["forEach"] = EnumeratorFactory_forEach;
 export const fromEnumerable: Signature["fromEnumerable"] =
   Enumerable_toEnumeratorFactory;
@@ -126,6 +127,7 @@ export const startWith: Signature["startWith"] = EnumeratorFactory_startWith;
 export const takeFirst: Signature["takeFirst"] = EnumeratorFactory_takeFirst;
 export const takeLast: Signature["takeLast"] = EnumeratorFactory_takeLast;
 export const takeWhile: Signature["takeWhile"] = EnumeratorFactory_takeWhile;
+export const throws: Signature["throws"] = EnumeratorFactory_throws;
 export const toIterable: Signature["toIterable"] = EnumeratorFactory_toIterable;
 export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
   identityLazy;

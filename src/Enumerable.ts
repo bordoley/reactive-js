@@ -40,6 +40,7 @@ import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArr
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
 import Runnable_everySatisfy from "./Runnable/__internal__/Runnable.everySatisfy.js";
 import Runnable_first from "./Runnable/__internal__/Runnable.first.js";
+import Runnable_flow from "./Runnable/__internal__/Runnable.flow.js";
 import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
@@ -49,8 +50,8 @@ import {
   Container,
   Container_T,
   Container_type,
-  EnumerableContainerTypeClass,
   EnumerableLike,
+  GeneratorTypeClass,
 } from "./types.js";
 
 /**
@@ -63,7 +64,7 @@ export interface EnumerableContainer extends Container {
 
 export type Type = EnumerableContainer;
 
-export interface EnumerableModule extends EnumerableContainerTypeClass<Type> {
+export interface EnumerableModule extends GeneratorTypeClass<Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -75,8 +76,6 @@ export interface EnumerableModule extends EnumerableContainerTypeClass<Type> {
     generator: Updater<T>,
     initialValue: Factory<T>,
   ): EnumerableLike<T>;
-
-  throws<T>(): EnumerableLike<T>;
 }
 
 export type Signature = EnumerableModule;
@@ -97,6 +96,7 @@ export const everySatisfy: Signature["everySatisfy"] = Runnable_everySatisfy;
 export const first: Signature["first"] = Runnable_first;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
+export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
