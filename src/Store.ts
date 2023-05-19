@@ -1,3 +1,4 @@
+import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
 import Store_create from "./Store/__internal__/Store.create.js";
 import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
 import { identityLazy } from "./functions.js";
@@ -23,6 +24,8 @@ export interface StoreModule extends MulticastableTypeClass<Type> {
 
 export type Signature = StoreModule;
 
+export const addEventHandler: Signature["addEventHandler"] =
+  EventSource_addEventHandler;
 export const create: Signature["create"] = Store_create;
 export const toEventSource: Signature["toEventSource"] = identityLazy;
 export const toObservable: Signature["toObservable"] = Store_toObservable;

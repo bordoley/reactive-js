@@ -19,13 +19,12 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
-import { Function1, SideEffect1, identityLazy } from "./functions.js";
+import { SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
   ContainerTypeClass,
   Container_T,
   Container_type,
-  DisposableLike,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -45,10 +44,6 @@ export type Type = EventSourceContainer;
 export interface EventSourceModule
   extends ContainerTypeClass<Type>,
     MulticastableTypeClass<Type> {
-  addEventHandler<T>(
-    handler: SideEffect1<T>,
-  ): Function1<EventSourceLike<T>, DisposableLike>;
-
   /**
    * @category Constructor
    */

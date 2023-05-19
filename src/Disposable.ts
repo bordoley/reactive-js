@@ -1,4 +1,5 @@
 import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
+import Disposable_addEventHandler from "./Disposable/__internal__/Disposable.addEventHandler.js";
 import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
@@ -112,6 +113,7 @@ export interface DisposableModule extends MulticastableTypeClass<Type> {
 export type Signature = DisposableModule;
 
 export const add: Signature["add"] = Disposable_add;
+export const addEventHandler: Signature["addEventHandler"]  = Disposable_addEventHandler;
 export const addTo: Signature["addTo"] = Disposable_addTo;
 export const bindTo: Signature["bindTo"] = Disposable_bindTo;
 export const create: Signature["create"] = Disposable_create;

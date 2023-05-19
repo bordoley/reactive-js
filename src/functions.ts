@@ -197,6 +197,7 @@ export const composeUnsafe =
 
 interface Compose {
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
+  compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
     op1: Function1<T, A>,
     op2: Function1<A, B>,
