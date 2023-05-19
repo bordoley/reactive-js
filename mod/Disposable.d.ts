@@ -29,6 +29,12 @@ export interface DisposableModule extends MulticastableTypeClass<Type> {
      * Returns a function that disposes `disposable` with an error wrapping the provided `cause`.
      */
     toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
+    using<TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | Factory<TDisposable>): Function1<Function1<TDisposable, TResult>, TResult>;
+    using<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, TResult>, TResult>;
+    using<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, TResult>, TResult>;
+    usingLazy<TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | Factory<TDisposable>): Function1<Function1<TDisposable, TResult>, Factory<TResult>>;
+    usingLazy<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, TResult>, Factory<TResult>>;
+    usingLazy<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, TResult>, Factory<TResult>>;
     usingAsync<TDisposable extends DisposableLike, TResult = unknown>(factoryOrDisposable: TDisposable | Factory<TDisposable>): Function1<Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>): Function1<Function2<TDisposableA, TDisposableB, Promise<TResult>>, Promise<TResult>>;
     usingAsync<TDisposableA extends DisposableLike, TDisposableB extends DisposableLike, TDisposableC extends DisposableLike, TResult = unknown>(factoryOrDisposableA: TDisposableA | Factory<TDisposableA>, factoryOrDisposableB: TDisposableB | Factory<TDisposableB>, factoryOrDisposableC: TDisposableC | Factory<TDisposableC>): Function1<Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>, Promise<TResult>>;
@@ -48,4 +54,6 @@ export declare const toErrorHandler: Signature["toErrorHandler"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
+export declare const using: Signature["using"];
 export declare const usingAsync: Signature["usingAsync"];
+export declare const usingLazy: Signature["usingLazy"];

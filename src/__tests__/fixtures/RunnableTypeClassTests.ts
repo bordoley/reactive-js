@@ -25,6 +25,7 @@ import {
 } from "../../functions.js";
 import {
   Container,
+  ContainerOf,
   DisposableLike_isDisposed,
   PauseableLike_resume,
   RunnableTypeClass,
@@ -36,7 +37,16 @@ import ContainerTypeClassTests from "./ContainerTypeClassTests.js";
 const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
   describe(
     "RunnableTypeClass",
-    ...ContainerTypeClassTests(m, m.fromReadonlyArray, m.toReadonlyArray).tests,
+    ...ContainerTypeClassTests(
+      m,
+      () => Disposable.disposed,
+      <T>() =>
+        (arr: ReadonlyArray<T>) =>
+          m.fromReadonlyArray<T>()(arr),
+      <T>() =>
+        (c: ContainerOf<C, T>) =>
+          m.toReadonlyArray<T>()(c),
+    ).tests,
     describe(
       "concat",
       test(

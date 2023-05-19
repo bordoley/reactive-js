@@ -33,7 +33,9 @@
 - [onError](Disposable.md#onerror)
 - [toAbortSignal](Disposable.md#toabortsignal)
 - [toErrorHandler](Disposable.md#toerrorhandler)
+- [using](Disposable.md#using)
 - [usingAsync](Disposable.md#usingasync)
+- [usingLazy](Disposable.md#usinglazy)
 
 ### Transform Functions
 
@@ -263,6 +265,73 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 
 ___
 
+### using
+
+▸ **using**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, `TResult`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, `TResult`\>
+
+▸ **using**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, `TResult`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, `TResult`\>
+
+▸ **using**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, `TResult`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, `TResult`\>
+
+___
+
 ### usingAsync
 
 ▸ **usingAsync**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
@@ -327,6 +396,73 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
+
+___
+
+### usingLazy
+
+▸ **usingLazy**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+
+▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+
+▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
 ___
 

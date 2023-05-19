@@ -1,5 +1,6 @@
 /// <reference types="./EventSource.test.d.ts" />
 
+import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
 import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe } from "../functions.js";
@@ -21,5 +22,5 @@ const toReadonlyArray = () => (eventSource) => {
     }
     return result;
 };
-testModule("EventSource", ContainerTypeClassTests(EventSource, fromReadonlyArray, toReadonlyArray));
+testModule("EventSource", ContainerTypeClassTests(EventSource, () => Disposable.disposed, fromReadonlyArray, toReadonlyArray));
 ((_) => { })(EventSource);

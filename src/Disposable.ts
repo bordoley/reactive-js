@@ -12,7 +12,9 @@ import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toEr
 import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
 import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
 import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
+import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
+import Disposable_usingLazy from "./Disposable/__internal__/Disposable.usingLazy.js";
 import {
   Factory,
   Function1,
@@ -85,6 +87,59 @@ export interface DisposableModule extends MulticastableTypeClass<Type> {
    */
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
 
+  using<TDisposable extends DisposableLike, TResult = unknown>(
+    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+  ): Function1<Function1<TDisposable, TResult>, TResult>;
+  using<
+    TDisposableA extends DisposableLike,
+    TDisposableB extends DisposableLike,
+    TResult = unknown,
+  >(
+    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
+    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+  ): Function1<Function2<TDisposableA, TDisposableB, TResult>, TResult>;
+  using<
+    TDisposableA extends DisposableLike,
+    TDisposableB extends DisposableLike,
+    TDisposableC extends DisposableLike,
+    TResult = unknown,
+  >(
+    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
+    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+  ): Function1<
+    Function3<TDisposableA, TDisposableB, TDisposableC, TResult>,
+    TResult
+  >;
+
+  usingLazy<TDisposable extends DisposableLike, TResult = unknown>(
+    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+  ): Function1<Function1<TDisposable, TResult>, Factory<TResult>>;
+  usingLazy<
+    TDisposableA extends DisposableLike,
+    TDisposableB extends DisposableLike,
+    TResult = unknown,
+  >(
+    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
+    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+  ): Function1<
+    Function2<TDisposableA, TDisposableB, TResult>,
+    Factory<TResult>
+  >;
+  usingLazy<
+    TDisposableA extends DisposableLike,
+    TDisposableB extends DisposableLike,
+    TDisposableC extends DisposableLike,
+    TResult = unknown,
+  >(
+    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
+    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+  ): Function1<
+    Function3<TDisposableA, TDisposableB, TDisposableC, TResult>,
+    Factory<TResult>
+  >;
+
   usingAsync<TDisposable extends DisposableLike, TResult = unknown>(
     factoryOrDisposable: TDisposable | Factory<TDisposable>,
   ): Function1<Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
@@ -135,4 +190,6 @@ export const toEventSource: Signature["toEventSource"] =
 export const toObservable: Signature["toObservable"] = Disposable_toObservable;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Disposable_toReadonlyArrayAsync;
+export const using: Signature["using"] = Disposable_using;
 export const usingAsync: Signature["usingAsync"] = Disposable_usingAsync;
+export const usingLazy: Signature["usingLazy"] = Disposable_usingLazy;
