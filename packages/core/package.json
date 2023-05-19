@@ -47,7 +47,6 @@
     "access": "public"
   },
   "exports": {
-    "./containers": "./containers.js",
     "./functions": "./functions.js",
     "./integrations/node/Stream": "./integrations/node/Stream.js",
     "./integrations/react": "./integrations/react.js",
@@ -59,6 +58,7 @@
     "./integrations/web/Element": "./integrations/web/Element.js",
     "./integrations/web/Scheduler": "./integrations/web/Scheduler.js",
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
+    "./types": "./types.js",
     "./AsyncIterable": "./AsyncIterable.js",
     "./DeferredObservable": "./DeferredObservable.js",
     "./Dictionary": "./Dictionary.js",
@@ -66,7 +66,6 @@
     "./Enumerable": "./Enumerable.js",
     "./EnumeratorFactory": "./EnumeratorFactory.js",
     "./EventSource": "./EventSource.js",
-    "./Iterable": "./Iterable.js",
     "./MulticastObservable": "./MulticastObservable.js",
     "./Observable": "./Observable.js",
     "./Observable/effects": "./Observable/effects.js",
@@ -79,8 +78,7 @@
     "./Scheduler": "./Scheduler.js",
     "./Store": "./Store.js",
     "./Stream": "./Stream.js",
-    "./Streamable": "./Streamable.js",
-    "./types": "./types.js"
+    "./Streamable": "./Streamable.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

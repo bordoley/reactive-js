@@ -1,10 +1,10 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Disposable_bindTo from "../../Disposable/__internal__/Disposable.bindTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import type * as EnumeratorFactory from "../../EnumeratorFactory.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
 import {
+  DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorFactoryLike,
   EnumeratorLike_current,
@@ -22,7 +22,7 @@ const EnumeratorFactory_toObservable: EnumeratorFactory.Signature["toObservable"
       const { delay = 0, delayStart = false } = options ?? {};
 
       const onSubscribe = (observer: ObserverLike<T>) => {
-        const enumerator = pipe(factory(), Disposable_bindTo(observer));
+        const enumerator = pipe(factory(), Disposable_addTo(observer));
 
         const continuation = (scheduler: SchedulerLike) => {
           while (
@@ -33,6 +33,7 @@ const EnumeratorFactory_toObservable: EnumeratorFactory.Signature["toObservable"
             observer[SinkLike_notify](next);
             scheduler[SchedulerLike_yield](delay);
           }
+          observer[DisposableLike_dispose]();
         };
 
         pipe(

@@ -1,13 +1,18 @@
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
+import * as Scheduler from "../Scheduler.js";
 import {
   describe,
   expectArrayEquals,
+  expectToHaveBeenCalledTimes,
+  expectTrue,
+  mockFn,
   test,
   testModule,
 } from "../__internal__/testing.js";
 import {
+  arrayEquality,
   identityLazy,
   increment,
   isSome,
@@ -16,9 +21,17 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import { RunnableLike } from "../types.js";
+import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  PauseableLike_pause,
+  PauseableLike_resume,
+  RunnableLike,
+  SchedulerLike_now,
+  SchedulerLike_schedule,
+  VirtualTimeSchedulerLike_run,
+} from "../types.js";
 import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-
 import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
 
 testModule(
@@ -122,6 +135,69 @@ testModule(
         expectArrayEquals([1, 2, 3, 7, 8, 9]),
       ),
     ),
+  ),
+
+  describe(
+    "flow",
+    test("a source with delay", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const generateObservable = pipe(
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Runnable.flow(scheduler),
+      );
+
+      generateObservable[PauseableLike_resume](),
+        scheduler[SchedulerLike_schedule](
+          () => generateObservable[PauseableLike_pause](),
+          {
+            delay: 2,
+          },
+        );
+
+      scheduler[SchedulerLike_schedule](
+        () => generateObservable[PauseableLike_resume](),
+        {
+          delay: 4,
+        },
+      );
+
+      scheduler[SchedulerLike_schedule](
+        () => generateObservable[DisposableLike_dispose](),
+        {
+          delay: 6,
+        },
+      );
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateObservable,
+        Observable.forEach((x: number) => {
+          f(scheduler[SchedulerLike_now], x);
+        }),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(
+        f.calls as [][],
+        expectArrayEquals(
+          [
+            [1, 0],
+            [2, 1],
+            [5, 2],
+          ],
+          arrayEquality(),
+        ),
+      );
+
+      pipe(subscription[DisposableLike_isDisposed], expectTrue);
+    }),
   ),
 
   describe(

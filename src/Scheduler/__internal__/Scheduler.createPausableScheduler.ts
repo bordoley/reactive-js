@@ -255,7 +255,7 @@ const Scheduler_createPauseableScheduler: Scheduler.Signature["createPausableSch
           instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
 
-          instance[PauseableLike_isPaused] = Store_create(false);
+          instance[PauseableLike_isPaused] = Store_create(true);
 
           return instance;
         },

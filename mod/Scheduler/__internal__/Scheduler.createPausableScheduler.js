@@ -99,7 +99,7 @@ const Scheduler_createPauseableScheduler =
         instance[__PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[__PauseableScheduler_resumedTime] =
             instance[__PauseableScheduler_initialTime];
-        instance[PauseableLike_isPaused] = Store_create(false);
+        instance[PauseableLike_isPaused] = Store_create(true);
         return instance;
     }, props({
         [__PauseableScheduler_delayed]: none,

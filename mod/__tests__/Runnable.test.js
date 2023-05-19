@@ -3,8 +3,10 @@
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
-import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
-import { identityLazy, increment, isSome, none, pipe, pipeLazy, returns, } from "../functions.js";
+import * as Scheduler from "../Scheduler.js";
+import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../__internal__/testing.js";
+import { arrayEquality, identityLazy, increment, isSome, none, pipe, pipeLazy, returns, } from "../functions.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../types.js";
 import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
 testModule("Runnable", RunnableTypeClassTests(Runnable), HigherOrderObservableTypeClassTests(Runnable, identityLazy), describe("compute", test("batch mode", pipeLazy(Runnable.compute(() => {
@@ -40,5 +42,33 @@ testModule("Runnable", RunnableTypeClassTests(Runnable), HigherOrderObservableTy
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 2 })),
-], Observable.fromReadonlyArray({ delay: 5 }), Runnable.exhaust(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 7, 8, 9])))), describe("switchMap", test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Runnable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Runnable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 0 }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3])))));
+], Observable.fromReadonlyArray({ delay: 5 }), Runnable.exhaust(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 7, 8, 9])))), describe("flow", test("a source with delay", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const generateObservable = pipe(Observable.generate(increment, returns(-1), {
+        delay: 1,
+        delayStart: true,
+    }), Runnable.flow(scheduler));
+    generateObservable[PauseableLike_resume](),
+        scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
+            delay: 2,
+        });
+    scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_resume](), {
+        delay: 4,
+    });
+    scheduler[SchedulerLike_schedule](() => generateObservable[DisposableLike_dispose](), {
+        delay: 6,
+    });
+    const f = mockFn();
+    const subscription = pipe(generateObservable, Observable.forEach((x) => {
+        f(scheduler[SchedulerLike_now], x);
+    }), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls, expectArrayEquals([
+        [1, 0],
+        [2, 1],
+        [5, 2],
+    ], arrayEquality()));
+    pipe(subscription[DisposableLike_isDisposed], expectTrue);
+})), describe("switchMap", test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Runnable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Runnable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 0 }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3])))));
 ((_) => { })(Runnable);

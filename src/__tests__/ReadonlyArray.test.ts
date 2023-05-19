@@ -1,5 +1,7 @@
 import * as EnumeratorFactory from "../EnumeratorFactory.js";
+import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
+import * as Runnable from "../Runnable.js";
 import {
   describe,
   expectArrayEquals,
@@ -79,6 +81,19 @@ testModule(
           returns(0),
         ),
         expectEquals(3),
+      ),
+    ),
+  ),
+  describe(
+    "toObservable",
+    test(
+      "with delay",
+      pipeLazy(
+        [9, 9, 9, 9],
+        ReadonlyArray.toObservable({ delay: 2 }),
+        Observable.withCurrentTime(t => t),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([0, 2, 4, 6]),
       ),
     ),
   ),

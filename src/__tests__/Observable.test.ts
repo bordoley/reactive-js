@@ -150,7 +150,6 @@ testModule(
       pipe(result, expectEquals<Optional<number>>(1));
     }),
   ),
-
   describe(
     "fromAsyncFactory",
     testAsync("when promise resolves", async () => {
@@ -187,7 +186,19 @@ testModule(
       );
     }),
   ),
-
+  describe(
+    "fromIterable",
+    test(
+      "fromIterable with delay",
+      pipeLazy(
+        [9, 9, 9, 9],
+        Observable.fromIterable({ delay: 2 }),
+        Observable.withCurrentTime(t => t),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([0, 2, 4, 6]),
+      ),
+    ),
+  ),
   describe(
     "lastAsync",
     testAsync("empty source", async () => {

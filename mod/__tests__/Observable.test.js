@@ -57,7 +57,7 @@ testModule("Observable", describe("combineLatest", test("combineLatest", pipeLaz
     await pipe(async () => {
         raise();
     }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
-})), describe("lastAsync", testAsync("empty source", async () => {
+})), describe("fromIterable", test("fromIterable with delay", pipeLazy([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Runnable.toReadonlyArray(), expectArrayEquals([0, 2, 4, 6])))), describe("lastAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectIsNone);
 }), testAsync("it returns the last value", async () => {

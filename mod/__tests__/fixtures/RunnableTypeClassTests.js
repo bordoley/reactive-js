@@ -1,7 +1,11 @@
 /// <reference types="./RunnableTypeClassTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToThrowError, expectTrue, test, } from "../../__internal__/testing.js";
+import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
+import * as Scheduler from "../../Scheduler.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectToThrowError, expectTrue, mockFn, test, } from "../../__internal__/testing.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { DisposableLike_isDisposed, PauseableLike_resume, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../types.js";
 const RunnableTypeClassTests = (m) => describe("RunnableTypeClass", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -23,7 +27,23 @@ const RunnableTypeClassTests = (m) => describe("RunnableTypeClass", describe("bu
     yield 1;
     yield 2;
     yield 3;
-}), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("forEach", test("invokes the effect for each notified value", () => {
+}), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flow", test("flow a generating source", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const flowed = pipe([0, 1, 2], m.fromReadonlyArray(), m.flow(scheduler), Disposable.addTo(scheduler));
+    scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), { delay: 2 });
+    const f = mockFn();
+    const subscription = pipe(flowed, Observable.withCurrentTime((time, v) => [time, v]), Observable.forEach(([time, v]) => {
+        f(time, v);
+    }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(f, expectToHaveBeenCalledTimes(3));
+    pipe(f.calls, expectArrayEquals([
+        [2, 0],
+        [2, 1],
+        [2, 2],
+    ], arrayEquality()));
+    pipe(subscription[DisposableLike_isDisposed], expectTrue);
+})), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     pipe([1, 2, 3], m.fromReadonlyArray(), m.forEach(x => {
         result.push(x + 10);

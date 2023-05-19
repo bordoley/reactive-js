@@ -1,11 +1,16 @@
+import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
+import * as Scheduler from "../../Scheduler.js";
 import {
   describe,
   expectArrayEquals,
   expectEquals,
   expectFalse,
   expectIsNone,
+  expectToHaveBeenCalledTimes,
   expectToThrowError,
   expectTrue,
+  mockFn,
   test,
 } from "../../__internal__/testing.js";
 import {
@@ -21,7 +26,14 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
-import { Container, RunnableTypeClass } from "../../types.js";
+import {
+  Container,
+  DisposableLike_isDisposed,
+  PauseableLike_resume,
+  RunnableTypeClass,
+  SchedulerLike_schedule,
+  VirtualTimeSchedulerLike_run,
+} from "../../types.js";
 
 const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
   describe(
@@ -282,6 +294,54 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
         ),
       ),
     ),
+
+    describe(
+      "flow",
+      test("flow a generating source", () => {
+        const scheduler = Scheduler.createVirtualTimeScheduler();
+
+        const flowed = pipe(
+          [0, 1, 2],
+          m.fromReadonlyArray(),
+          m.flow(scheduler),
+          Disposable.addTo(scheduler),
+        );
+
+        scheduler[SchedulerLike_schedule](
+          () => flowed[PauseableLike_resume](),
+          { delay: 2 },
+        );
+
+        const f = mockFn();
+        const subscription = pipe(
+          flowed,
+          Observable.withCurrentTime((time, v) => [time, v]),
+          Observable.forEach(([time, v]: [number, any]) => {
+            f(time, v);
+          }),
+          Observable.subscribe(scheduler),
+          Disposable.addTo(scheduler),
+        );
+
+        scheduler[VirtualTimeSchedulerLike_run]();
+
+        pipe(f, expectToHaveBeenCalledTimes(3));
+        pipe(
+          f.calls as [][],
+          expectArrayEquals(
+            [
+              [2, 0],
+              [2, 1],
+              [2, 2],
+            ],
+            arrayEquality(),
+          ),
+        );
+
+        pipe(subscription[DisposableLike_isDisposed], expectTrue);
+      }),
+    ),
+
     describe(
       "forEach",
       test("invokes the effect for each notified value", () => {
