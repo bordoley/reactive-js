@@ -1,3 +1,4 @@
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import type * as EventSource from "../../EventSource.js";
@@ -97,17 +98,25 @@ const EventSource_createPublisher: EventSource.Signature["createPublisher"] =
             this: TProperties & EventPublisherLike<T>,
             listener: EventListenerLike<T>,
           ) {
-            if (!this[DisposableLike_isDisposed]) {
-              const listeners = this[__EventPublisher_listeners];
-              listeners.add(listener);
+            pipe(this, Disposable_add(listener, { ignoreChildErrors: true }));
 
-              pipe(
-                listener,
-                Disposable_onDisposed(_ => {
-                  listeners.delete(listener);
-                }),
-              );
+            if (this[DisposableLike_isDisposed]) {
+              return;
             }
+
+            const listeners = this[__EventPublisher_listeners];
+
+            if (listeners.has(listener)) {
+              return;
+            }
+
+            listeners.add(listener);
+            pipe(
+              listener,
+              Disposable_onDisposed(_ => {
+                listeners.delete(listener);
+              }),
+            );
           },
         },
       ),

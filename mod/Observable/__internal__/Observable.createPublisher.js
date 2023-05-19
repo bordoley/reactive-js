@@ -8,7 +8,7 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __Publisher_observers } from "../../__internal__/symbols.js";
 import { error, isSome, newInstance, none, pipe, unsafeCast, } from "../../functions.js";
-import { CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, KeyedCollectionLike_get, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SinkLike_notify, } from "../../types.js";
+import { CollectionLike_count, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_move, EventListenerLike_isErrorSafe, KeyedCollectionLike_get, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SinkLike_notify, } from "../../types.js";
 const Observable_createPublisher = 
 /*@__PURE__*/ (() => {
     const createPublisherInstance = createInstanceFactory(mix(include(Disposable_mixin), function Publisher(instance, replay) {
@@ -55,26 +55,28 @@ const Observable_createPublisher =
             }
         },
         [ObservableLike_observe](observer) {
-            if (!this[DisposableLike_isDisposed]) {
-                const { [__Publisher_observers]: observers } = this;
-                observers.add(observer);
-                pipe(observer, Disposable_onDisposed(_ => {
-                    observers.delete(observer);
-                }));
+            const { [__Publisher_observers]: observers } = this;
+            if (isSome(this[DisposableLike_error])) {
+                observer[DisposableLike_dispose](this[DisposableLike_error]);
             }
+            if (observers.has(observer)) {
+                return;
+            }
+            observers.add(observer);
+            pipe(observer, Disposable_onDisposed(_ => {
+                observers.delete(observer);
+            }));
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
             // So we marshall those events back to the scheduler.
             const buffer = this[ReplayObservableLike_buffer];
             const count = buffer[CollectionLike_count];
-            try {
-                for (let i = 0; i < count; i++) {
-                    const next = buffer[KeyedCollectionLike_get](i);
-                    observer[QueueableLike_enqueue](next);
-                }
+            for (let i = 0; i < count; i++) {
+                const next = buffer[KeyedCollectionLike_get](i);
+                observer[QueueableLike_enqueue](next);
             }
-            catch (e) {
-                observer[DisposableLike_dispose](error(e));
+            if (this[DisposableLike_isDisposed]) {
+                observer[DispatcherLike_complete]();
             }
         },
     }));

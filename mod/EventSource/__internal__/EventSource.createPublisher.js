@@ -1,5 +1,6 @@
 /// <reference types="./EventSource.createPublisher.d.ts" />
 
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
@@ -43,13 +44,18 @@ const EventSource_createPublisher =
             }
         },
         [EventSourceLike_addEventListener](listener) {
-            if (!this[DisposableLike_isDisposed]) {
-                const listeners = this[__EventPublisher_listeners];
-                listeners.add(listener);
-                pipe(listener, Disposable_onDisposed(_ => {
-                    listeners.delete(listener);
-                }));
+            pipe(this, Disposable_add(listener, { ignoreChildErrors: true }));
+            if (this[DisposableLike_isDisposed]) {
+                return;
             }
+            const listeners = this[__EventPublisher_listeners];
+            if (listeners.has(listener)) {
+                return;
+            }
+            listeners.add(listener);
+            pipe(listener, Disposable_onDisposed(_ => {
+                listeners.delete(listener);
+            }));
         },
     }));
 })();

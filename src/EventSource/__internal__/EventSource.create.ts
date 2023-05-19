@@ -16,7 +16,7 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import {
-  Factory,
+  Function1,
   Optional,
   SideEffect1,
   error,
@@ -35,7 +35,10 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
   T,
 >() => {
   type TProperties = {
-    [__CreateEventSource_createDelegate]: Factory<EventPublisherLike<T>>;
+    [__CreateEventSource_createDelegate]: Function1<
+      EventListenerLike<T>,
+      EventPublisherLike<T>
+    >;
   };
 
   return createInstanceFactory(
@@ -51,7 +54,13 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
       ): EventSourceLike<T> {
         init(Delegating_mixin(), instance, none);
 
-        instance[__CreateEventSource_createDelegate] = () => {
+        // Pass in the initial listener to the setup function
+        // so that we can connect it to the publisher before
+        // the setup function is run, in case the setup function
+        // publishes notifications. useful for testing.
+        instance[__CreateEventSource_createDelegate] = (
+          listener: EventListenerLike<T>,
+        ) => {
           const delegate = pipe(
             EventSource_createRefCountedPublisher<T>(),
             Disposable_onDisposed(() => {
@@ -62,6 +71,8 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
               )[DelegatingLike_delegate] = none;
             }),
           );
+
+          delegate[EventSourceLike_addEventListener](listener);
 
           (
             instance as Mutable<DelegatingLike<Optional<EventPublisherLike<T>>>>
@@ -88,7 +99,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
         ) {
           const delegate =
             this[DelegatingLike_delegate] ??
-            this[__CreateEventSource_createDelegate]();
+            this[__CreateEventSource_createDelegate](listener);
 
           delegate[EventSourceLike_addEventListener](listener);
         },

@@ -11,10 +11,15 @@ import { DisposableLike_dispose, EventSourceLike_addEventListener, } from "../..
 const EventSource_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Delegating_mixin()), function CreateEventSource(instance, setup) {
         init(Delegating_mixin(), instance, none);
-        instance[__CreateEventSource_createDelegate] = () => {
+        // Pass in the initial listener to the setup function
+        // so that we can connect it to the publisher before
+        // the setup function is run, in case the setup function
+        // publishes notifications. useful for testing.
+        instance[__CreateEventSource_createDelegate] = (listener) => {
             const delegate = pipe(EventSource_createRefCountedPublisher(), Disposable_onDisposed(() => {
                 instance[DelegatingLike_delegate] = none;
             }));
+            delegate[EventSourceLike_addEventListener](listener);
             instance[DelegatingLike_delegate] = delegate;
             try {
                 setup(delegate);
@@ -30,7 +35,7 @@ const EventSource_create = /*@__PURE__*/ (() => {
     }), {
         [EventSourceLike_addEventListener](listener) {
             const delegate = this[DelegatingLike_delegate] ??
-                this[__CreateEventSource_createDelegate]();
+                this[__CreateEventSource_createDelegate](listener);
             delegate[EventSourceLike_addEventListener](listener);
         },
     }));

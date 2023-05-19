@@ -8,7 +8,6 @@ import {
   expectFalse,
   expectIsNone,
   expectToHaveBeenCalledTimes,
-  expectToThrowError,
   expectTrue,
   mockFn,
   test,
@@ -19,8 +18,6 @@ import {
   alwaysTrue,
   arrayEquality,
   greaterThan,
-  increment,
-  lessThan,
   none,
   pipe,
   pipeLazy,
@@ -34,48 +31,12 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../types.js";
+import ContainerTypeClassTests from "./ContainerTypeClassTests.js";
 
 const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
   describe(
     "RunnableTypeClass",
-    describe(
-      "buffer",
-      test(
-        "with multiple sub buffers",
-        pipeLazy(
-          [1, 2, 3, 4, 5, 6, 7, 8, 9],
-          m.fromReadonlyArray(),
-          m.buffer({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly number[]>(
-            [
-              [1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 9],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-
-      test(
-        "last buffer is short",
-        pipeLazy(
-          [1, 2, 3, 4, 5, 6, 7, 8],
-          m.fromReadonlyArray(),
-          m.buffer({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly number[]>(
-            [
-              [1, 2, 3],
-              [4, 5, 6],
-              [7, 8],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-    ),
+    ...ContainerTypeClassTests(m, m.fromReadonlyArray, m.toReadonlyArray).tests,
     describe(
       "concat",
       test(
@@ -196,45 +157,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "distinctUntilChanged",
-      test(
-        "when source has duplicates in order",
-        pipeLazy(
-          [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          m.fromReadonlyArray(),
-          m.distinctUntilChanged(),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4]),
-        ),
-      ),
-      test(
-        "when source is empty",
-        pipeLazy(
-          [],
-          m.fromReadonlyArray(),
-          m.distinctUntilChanged(),
-          m.toReadonlyArray(),
-          expectArrayEquals([]),
-        ),
-      ),
-      test("when equality operator throws", () => {
-        const err = new Error();
-        const equality = <T>(_a: T, _b: T): boolean => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.distinctUntilChanged({ equality }),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-    ),
-    describe(
       "endWith",
       test(
         "appends the additional values to the end of the container",
@@ -247,6 +169,7 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
         ),
       ),
     ),
+
     describe(
       "everySatisfy",
       test(
@@ -343,38 +266,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
     ),
 
     describe(
-      "forEach",
-      test("invokes the effect for each notified value", () => {
-        const result: number[] = [];
-        pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.forEach(x => {
-            result.push(x + 10);
-          }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        );
-
-        pipe(result, expectArrayEquals([11, 12, 13]));
-      }),
-
-      test("when the effect function throws", () => {
-        const err = new Error();
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.forEach(_ => {
-              throw err;
-            }),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-    ),
-    describe(
       "fromFactory",
       test(
         "it produces the factory result",
@@ -399,7 +290,7 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "fromReadonlyArray",
+      "m.fromReadonlyArray",
       test("negative count with start index", () => {
         pipe(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -450,49 +341,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       }),
     ),
     describe(
-      "ignoreElements",
-      test(
-        "ignores all elements",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.ignoreElements<number>(),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
-        ),
-      ),
-    ),
-
-    describe(
-      "keep",
-      test(
-        "keeps only values greater than 5",
-        pipeLazy(
-          [4, 8, 10, 7],
-          m.fromReadonlyArray(),
-          m.keep(greaterThan(5)),
-          m.toReadonlyArray(),
-          expectArrayEquals([8, 10, 7]),
-        ),
-      ),
-      test("when predicate throws", () => {
-        const err = new Error();
-        const predicate = <T>(_a: T): boolean => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.keep(predicate),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-    ),
-    describe(
       "last",
       test("empty source", () => {
         const result = pipe([], m.fromReadonlyArray(), m.last());
@@ -502,48 +350,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
         const result = pipe([1, 2, 3], m.fromReadonlyArray(), m.last());
         pipe(result, expectEquals<Optional<number>>(3));
       }),
-    ),
-    describe(
-      "map",
-      test(
-        "maps every value",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.map(increment),
-          m.toReadonlyArray(),
-          expectArrayEquals([2, 3, 4]),
-        ),
-      ),
-      test("when selector throws", () => {
-        const err = new Error();
-        const selector = <T>(_a: T): boolean => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.map(selector),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-    ),
-    describe(
-      "mapTo",
-      test(
-        "maps every value in the source to v",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.mapTo(2),
-          m.toReadonlyArray(),
-          expectArrayEquals([2, 2, 2]),
-        ),
-      ),
     ),
     describe(
       "noneSatisfy",
@@ -576,89 +382,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "pairwise",
-      test(
-        "when there are more than one input value",
-        pipeLazy(
-          [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-          m.fromReadonlyArray(),
-          m.pairwise<number>(),
-          m.toReadonlyArray<readonly [number, number]>(),
-          expectArrayEquals<readonly [number, number]>(
-            [
-              [0, 1],
-              [1, 2],
-              [2, 3],
-              [3, 4],
-              [4, 5],
-              [5, 6],
-              [6, 7],
-              [7, 8],
-              [8, 9],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-      test(
-        "when the input only provides 1 value",
-        pipeLazy(
-          [0],
-          m.fromReadonlyArray(),
-          m.pairwise<number>(),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly [number, number]>([], arrayEquality()),
-        ),
-      ),
-    ),
-    describe(
-      "pick",
-      test("with object and symbol keys", () => {
-        const keyA = Symbol();
-        const keyB = Symbol();
-
-        const obj = {
-          [keyA]: {
-            [keyB]: "value",
-          },
-        };
-
-        pipe(
-          obj,
-          m.fromOptional(),
-          m.pick(keyA, keyB),
-          m.first(),
-          expectEquals<Optional<string>>("value"),
-        );
-      }),
-      test("with object and string keys", () => {
-        const obj = {
-          keyA: {
-            keyB: "value",
-          },
-        };
-
-        pipe(
-          obj,
-          m.fromOptional(),
-          m.pick("keyA", "keyB"),
-          m.first(),
-          expectEquals<Optional<string>>("value"),
-        );
-      }),
-      test("with array", () => {
-        const obj = [1, 2, 3, 4, 5, 6];
-
-        pipe(
-          obj,
-          m.fromOptional(),
-          m.pick(3),
-          m.first(),
-          expectEquals<Optional<number>>(4),
-        );
-      }),
-    ),
-    describe(
       "reduce",
       test(
         "summing all values",
@@ -684,74 +407,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "scan",
-      test(
-        "sums all the values in the array emitting intermediate values.",
-        pipeLazy(
-          [1, 1, 1],
-          m.fromReadonlyArray(),
-          m.scan<number, number>((a, b) => a + b, returns(0)),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        ),
-      ),
-      test("throws when the scan function throws", () => {
-        const err = new Error();
-        const scanner = <T>(_acc: T, _next: T): T => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.scan(scanner, returns(0)),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-      test("throws when the initial value function throws", () => {
-        const err = new Error();
-        const initialValue = (): number => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.scan((a, b) => a + b, initialValue),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
-    ),
-    describe(
-      "skipFirst",
-      test(
-        "when skipped source has additional elements",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.skipFirst({ count: 2 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([3]),
-        ),
-      ),
-      test(
-        "when all elements are skipped",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.skipFirst({ count: 4 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
-        ),
-      ),
-    ),
-    describe(
       "someSatisfy",
       test(
         "some satisfies predicate",
@@ -773,59 +428,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
           m.startWith(2, 3, 4),
           m.toReadonlyArray(),
           expectArrayEquals([2, 3, 4, 0, 1]),
-        ),
-      ),
-    ),
-    describe(
-      "takeFirst",
-      test(
-        "when taking fewer than the total number of elements in the source",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeFirst({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        ),
-      ),
-      test(
-        "when taking more than all the items produced by the source",
-        pipeLazy(
-          [1, 2],
-          m.fromReadonlyArray(),
-          m.takeFirst({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2]),
-        ),
-      ),
-      test(
-        "when source is empty",
-        pipeLazy(
-          [],
-          m.fromReadonlyArray(),
-          m.takeFirst({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([]),
-        ),
-      ),
-      test(
-        "with default count",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.takeFirst(),
-          m.toReadonlyArray(),
-          expectArrayEquals([1]),
-        ),
-      ),
-      test(
-        "when count is 0",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.takeFirst({ count: 0 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
         ),
       ),
     ),
@@ -861,58 +463,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
           expectArrayEquals([5]),
         ),
       ),
-    ),
-    describe(
-      "takeWhile",
-      test("exclusive", () => {
-        pipe(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeWhile(lessThan(4)),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.takeWhile<number>(alwaysTrue),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3]),
-        );
-        pipe(
-          [],
-          m.fromReadonlyArray(),
-          m.takeWhile<number>(alwaysTrue),
-          m.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
-        );
-      }),
-      test(
-        "inclusive",
-        pipeLazy(
-          [1, 2, 3, 4, 5, 6],
-          m.fromReadonlyArray(),
-          m.takeWhile(lessThan(4), { inclusive: true }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4]),
-        ),
-      ),
-      test("when predicate throws", () => {
-        const err = new Error();
-        const predicate = (_: unknown): boolean => {
-          throw err;
-        };
-
-        pipe(
-          pipeLazy(
-            [1, 1],
-            m.fromReadonlyArray(),
-            m.takeWhile(predicate),
-            m.toReadonlyArray(),
-          ),
-          expectToThrowError(err),
-        );
-      }),
     ),
     describe(
       "zip",

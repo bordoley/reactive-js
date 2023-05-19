@@ -26,6 +26,7 @@ import {
   CollectionLike_count,
   DispatcherLike_complete,
   DisposableLike_dispose,
+  DisposableLike_error,
   DisposableLike_isDisposed,
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -133,17 +134,24 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             this: TProperties & PublisherLike<T>,
             observer: ObserverLike<T>,
           ) {
-            if (!this[DisposableLike_isDisposed]) {
-              const { [__Publisher_observers]: observers } = this;
-              observers.add(observer);
+            const { [__Publisher_observers]: observers } = this;
 
-              pipe(
-                observer,
-                Disposable_onDisposed(_ => {
-                  observers.delete(observer);
-                }),
-              );
+            if (isSome(this[DisposableLike_error])) {
+              observer[DisposableLike_dispose](this[DisposableLike_error]);
             }
+
+            if (observers.has(observer)) {
+              return;
+            }
+
+            observers.add(observer);
+
+            pipe(
+              observer,
+              Disposable_onDisposed(_ => {
+                observers.delete(observer);
+              }),
+            );
 
             // The idea here is that an onSubscribe function may
             // call next from unscheduled sources such as event handlers.
@@ -151,13 +159,13 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             const buffer = this[ReplayObservableLike_buffer];
             const count = buffer[CollectionLike_count];
 
-            try {
-              for (let i = 0; i < count; i++) {
-                const next = buffer[KeyedCollectionLike_get](i);
-                observer[QueueableLike_enqueue](next);
-              }
-            } catch (e) {
-              observer[DisposableLike_dispose](error(e));
+            for (let i = 0; i < count; i++) {
+              const next = buffer[KeyedCollectionLike_get](i);
+              observer[QueueableLike_enqueue](next);
+            }
+
+            if (this[DisposableLike_isDisposed]) {
+              observer[DispatcherLike_complete]();
             }
           },
         },
