@@ -1526,7 +1526,7 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
-#### Overrides
+#### Inherited from
 
 [GeneratorTypeClass](types.GeneratorTypeClass.md).[toObservable](types.GeneratorTypeClass.md#toobservable)
 
@@ -1550,9 +1550,9 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
-#### Overrides
+#### Inherited from
 
-GeneratorTypeClass.toObservable
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toObservable](types.GeneratorTypeClass.md#toobservable)
 
 ___
 

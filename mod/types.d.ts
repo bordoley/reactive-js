@@ -819,6 +819,10 @@ export interface EnumerableTypeClass<C extends Container> extends RunnableTypeCl
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
     toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 /** @category TypeClass */
 export interface GeneratorTypeClass<C extends Container> extends EnumerableTypeClass<C> {

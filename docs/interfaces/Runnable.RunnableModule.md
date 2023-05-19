@@ -67,7 +67,6 @@
 - [compute](Runnable.RunnableModule.md#compute)
 - [flow](Runnable.RunnableModule.md#flow)
 - [run](Runnable.RunnableModule.md#run)
-- [throws](Runnable.RunnableModule.md#throws)
 
 ### Transform Methods
 
@@ -1756,61 +1755,6 @@ ___
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-▸ **throws**<`T`\>(`options`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.raise` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-▸ **throws**<`T`\>(`options`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.raise?` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`RunnableLike`](types.RunnableLike.md)<`T`\>
 
 ___
 

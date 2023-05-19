@@ -1,5 +1,4 @@
-import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableLike, EnumeratorFactoryLike, GeneratorTypeClass, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumeratorFactoryLike, GeneratorTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -9,11 +8,6 @@ export interface EnumeratorFactoryContainer extends Container {
 }
 export type Type = EnumeratorFactoryContainer;
 export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
-    toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<EnumeratorFactoryLike<T>, RunnableLike<T>>;
 }
 export type Signature = EnumeratorFactoryModule;
 export declare const buffer: Signature["buffer"];

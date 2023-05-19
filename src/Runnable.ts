@@ -25,7 +25,6 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
-import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -56,7 +55,6 @@ import {
   Container,
   Container_T,
   Container_type,
-  EnumerableLike,
   HigherOrderObservableTypeClass,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -88,13 +86,6 @@ export interface RunnableModule
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }): SideEffect1<RunnableLike<T>>;
-
-  throws<T>(): EnumerableLike<T>;
-  throws<T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
-  throws<T>(options: {
-    readonly delay: number;
-    readonly raise?: Factory<unknown>;
-  }): RunnableLike<T>;
 }
 
 export type Signature = RunnableModule;
@@ -155,7 +146,6 @@ export const switchMap: Signature["switchMap"] = Runnable_switchMap;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
-export const throws: Signature["throws"] = Observable_throws;
 export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;

@@ -526,7 +526,7 @@ testModule(
         pipeLazy(
           [1, 2, 3],
           ReadonlyArray.toObservable({ delay: 1 }),
-          Observable.zipWithLatestFrom(Runnable.throws(), (_, b) => b),
+          Observable.zipWithLatestFrom(Observable.throws(), (_, b) => b),
           Runnable.toReadonlyArray(),
         ),
         expectToThrow,

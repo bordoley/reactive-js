@@ -27,7 +27,6 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
-import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -105,7 +104,6 @@ export const switchMap = Runnable_switchMap;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
-export const throws = Observable_throws;
 export const toObservable = identityLazy;
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const zip = Observable_zip;

@@ -1579,6 +1579,30 @@ ___
 
 [GeneratorTypeClass](types.GeneratorTypeClass.md).[toObservable](types.GeneratorTypeClass.md#toobservable)
 
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[GeneratorTypeClass](types.GeneratorTypeClass.md).[toObservable](types.GeneratorTypeClass.md#toobservable)
+
 ___
 
 ## Transform Methods

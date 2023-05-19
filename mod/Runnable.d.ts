@@ -1,5 +1,5 @@
 import { Factory, SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableLike, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -16,14 +16,6 @@ export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObse
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
-    throws<T>(): EnumerableLike<T>;
-    throws<T>(options: {
-        readonly raise: Factory<unknown>;
-    }): EnumerableLike<T>;
-    throws<T>(options: {
-        readonly delay: number;
-        readonly raise?: Factory<unknown>;
-    }): RunnableLike<T>;
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
@@ -76,7 +68,6 @@ export declare const switchMap: Signature["switchMap"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
-export declare const throws: Signature["throws"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const zip: Signature["zip"];

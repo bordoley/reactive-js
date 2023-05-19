@@ -43,15 +43,13 @@ import EnumeratorFactory_zipWith from "./EnumeratorFactory/__internal__/Enumerat
 import Iterable_toEnumeratorFactory from "./Iterable/__internal__/Iterable.toEnumeratorFactory.js";
 import Optional_toEnumeratorFactory from "./Optional/__internal__/Optional.toEnumeratorFactory.js";
 import ReadonlyArray_toEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumeratorFactory.js";
-import { Function1, identityLazy } from "./functions.js";
+import { identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
-  EnumerableLike,
   EnumeratorFactoryLike,
   GeneratorTypeClass,
-  RunnableLike,
 } from "./types.js";
 
 /**
@@ -64,13 +62,7 @@ export interface EnumeratorFactoryContainer extends Container {
 
 export type Type = EnumeratorFactoryContainer;
 
-export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
-  toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
-  toObservable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<EnumeratorFactoryLike<T>, RunnableLike<T>>;
-}
+export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {}
 
 export type Signature = EnumeratorFactoryModule;
 

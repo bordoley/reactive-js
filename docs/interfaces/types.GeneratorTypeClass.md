@@ -1536,6 +1536,30 @@ ___
 
 [EnumerableTypeClass](types.EnumerableTypeClass.md).[toObservable](types.EnumerableTypeClass.md#toobservable)
 
+▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[EnumerableTypeClass](types.EnumerableTypeClass.md).[toObservable](types.EnumerableTypeClass.md#toobservable)
+
 ___
 
 ## Transform Methods
