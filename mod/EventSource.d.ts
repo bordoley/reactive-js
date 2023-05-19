@@ -46,4 +46,5 @@ export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];

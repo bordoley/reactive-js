@@ -27,6 +27,7 @@
 - [onError](Disposable.DisposableModule.md#onerror)
 - [toAbortSignal](Disposable.DisposableModule.md#toabortsignal)
 - [toErrorHandler](Disposable.DisposableModule.md#toerrorhandler)
+- [toEventSource](Disposable.DisposableModule.md#toeventsource)
 - [toObservable](Disposable.DisposableModule.md#toobservable)
 - [usingAsync](Disposable.DisposableModule.md#usingasync)
 
@@ -215,6 +216,26 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<`unknown`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DisposableLike`](types.DisposableLike.md), [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toEventSource](types.MulticastableTypeClass.md#toeventsource)
 
 ___
 

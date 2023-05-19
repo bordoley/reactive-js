@@ -8,4 +8,5 @@ export interface StoreModule extends MulticastableTypeClass<Type> {
 }
 export type Signature = StoreModule;
 export declare const create: Signature["create"];
+export declare const toEventSource: Signature["toEventSource"];
 export declare const toObservable: Signature["toObservable"];

@@ -1,5 +1,6 @@
 import Store_create from "./Store/__internal__/Store.create.js";
 import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
+import { identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -23,4 +24,5 @@ export interface StoreModule extends MulticastableTypeClass<Type> {
 export type Signature = StoreModule;
 
 export const create: Signature["create"] = Store_create;
+export const toEventSource: Signature["toEventSource"] = identityLazy;
 export const toObservable: Signature["toObservable"] = Store_toObservable;

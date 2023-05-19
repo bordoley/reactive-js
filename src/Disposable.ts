@@ -8,6 +8,7 @@ import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDispos
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
+import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
 import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import {
@@ -122,5 +123,7 @@ export const toAbortSignal: Signature["toAbortSignal"] =
   Disposable_toAbortSignal;
 export const toErrorHandler: Signature["toErrorHandler"] =
   Disposable_toErrorHandler;
+export const toEventSource: Signature["toEventSource"] =
+  Disposable_toEventSource;
 export const toObservable: Signature["toObservable"] = Disposable_toObservable;
 export const usingAsync: Signature["usingAsync"] = Disposable_usingAsync;

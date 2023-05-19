@@ -26,9 +26,26 @@
 
 ### Methods
 
+- [toEventSource](types.MulticastableTypeClass.md#toeventsource)
 - [toObservable](types.MulticastableTypeClass.md#toobservable)
 
 ## Methods
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+___
 
 ### toObservable
 

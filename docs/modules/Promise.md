@@ -19,6 +19,7 @@
 
 ### Functions
 
+- [toEventSource](Promise.md#toeventsource)
 - [toObservable](Promise.md#toobservable)
 
 ## Type Aliases
@@ -34,6 +35,22 @@ ___
 Ƭ **Type**: [`PromiseContainer`](../interfaces/Promise.PromiseContainer.md)
 
 ## Functions
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`PromiseLike`<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
 
 ### toObservable
 

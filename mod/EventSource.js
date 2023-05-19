@@ -21,6 +21,7 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
+import { identityLazy } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const addEventHandler = EventSource_addEventHandler;
 export const buffer = EventSource_buffer;
@@ -42,4 +43,5 @@ export const scan = EventSource_scan;
 export const skipFirst = EventSource_skipFirst;
 export const takeFirst = EventSource_takeFirst;
 export const takeWhile = EventSource_takeWhile;
+export const toEventSource = identityLazy;
 export const toObservable = EventSource_toObservable;

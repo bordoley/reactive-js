@@ -42,6 +42,7 @@
 - [addEventHandler](EventSource.EventSourceModule.md#addeventhandler)
 - [merge](EventSource.EventSourceModule.md#merge)
 - [mergeMany](EventSource.EventSourceModule.md#mergemany)
+- [toEventSource](EventSource.EventSourceModule.md#toeventsource)
 - [toObservable](EventSource.EventSourceModule.md#toobservable)
 
 ## Constructor Methods
@@ -616,6 +617,26 @@ ___
 #### Returns
 
 [`EventSourceLike`](types.EventSourceLike.md)<`T`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](types.EventSourceLike.md)<`T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Inherited from
+
+[MulticastableTypeClass](types.MulticastableTypeClass.md).[toEventSource](types.MulticastableTypeClass.md#toeventsource)
 
 ___
 

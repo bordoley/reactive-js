@@ -19,7 +19,7 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
-import { Function1, SideEffect1 } from "./functions.js";
+import { Function1, SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
   ContainerTypeClass,
@@ -100,4 +100,5 @@ export const scan: Signature["scan"] = EventSource_scan;
 export const skipFirst: Signature["skipFirst"] = EventSource_skipFirst;
 export const takeFirst: Signature["takeFirst"] = EventSource_takeFirst;
 export const takeWhile: Signature["takeWhile"] = EventSource_takeWhile;
+export const toEventSource: Signature["toEventSource"] = identityLazy;
 export const toObservable: Signature["toObservable"] = EventSource_toObservable;

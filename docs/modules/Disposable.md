@@ -32,6 +32,7 @@
 - [onError](Disposable.md#onerror)
 - [toAbortSignal](Disposable.md#toabortsignal)
 - [toErrorHandler](Disposable.md#toerrorhandler)
+- [toEventSource](Disposable.md#toeventsource)
 - [toObservable](Disposable.md#toobservable)
 - [usingAsync](Disposable.md#usingasync)
 
@@ -232,6 +233,22 @@ Returns a function that disposes `disposable` with an error wrapping the provide
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<`unknown`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 

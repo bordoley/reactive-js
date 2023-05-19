@@ -652,6 +652,7 @@ export interface FlowableTypeClass<C extends Container> {
     }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 }
 export interface MulticastableTypeClass<C extends Container> {
+    toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
     toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
 }
 /** @category TypeClass */

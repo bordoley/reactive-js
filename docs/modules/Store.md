@@ -17,6 +17,7 @@
 ### Functions
 
 - [create](Store.md#create)
+- [toEventSource](Store.md#toeventsource)
 - [toObservable](Store.md#toobservable)
 
 ## Type Aliases
@@ -52,6 +53,22 @@ ___
 #### Returns
 
 [`WritableStoreLike`](../interfaces/types.WritableStoreLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 

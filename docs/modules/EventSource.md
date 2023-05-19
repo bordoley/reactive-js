@@ -45,6 +45,7 @@
 - [addEventHandler](EventSource.md#addeventhandler)
 - [merge](EventSource.md#merge)
 - [mergeMany](EventSource.md#mergemany)
+- [toEventSource](EventSource.md#toeventsource)
 - [toObservable](EventSource.md#toobservable)
 
 ## Type Aliases
@@ -567,6 +568,22 @@ ___
 #### Returns
 
 [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 
