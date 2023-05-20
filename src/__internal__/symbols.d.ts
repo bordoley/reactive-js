@@ -174,13 +174,15 @@ export declare const __BufferingLike_buffer: unique symbol;
 
 export declare const __BufferingLike_count: unique symbol;
 
-export declare const __LiftedLike_source: unique symbol;
-
-export declare const __LiftedLike_operators: unique symbol;
+export declare const __CountingLike_count: unique symbol;
 
 export declare const __ForEachLike_effect: unique symbol;
 
 export declare const __HigherOrderEnumerator_inner: unique symbol;
+
+export declare const __LiftedLike_source: unique symbol;
+
+export declare const __LiftedLike_operators: unique symbol;
 
 export declare const __MappingLike_selector: unique symbol;
 
@@ -199,14 +201,6 @@ export declare const __SchedulerTaskLike_continuation: unique symbol;
 export declare const __SchedulerTaskLike_dueTime: unique symbol;
 
 export declare const __SchedulerTaskLike_id: unique symbol;
-
-export declare const __SkipFirstLike_skipCount: unique symbol;
-
-export declare const __SkipFirstLike_count: unique symbol;
-
-export declare const __TakeFirstLike_takeCount: unique symbol;
-
-export declare const __TakeFirstLike_count: unique symbol;
 
 export declare const __TakeLastLike_queue: unique symbol;
 
@@ -341,8 +335,6 @@ export declare const __Publisher_observers: unique symbol;
 export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_index: unique symbol;
-
-export declare const __ReadonlyArrayEnumerator_count: unique symbol;
 
 export declare const __ThrottleObserver_value: unique symbol;
 

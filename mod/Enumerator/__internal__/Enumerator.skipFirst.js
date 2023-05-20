@@ -2,21 +2,19 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import { clampPositiveInteger } from "../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { DelegatingLike_delegate, SkipFirstLike_count, SkipFirstLike_skipCount, } from "../../__internal__/types.js";
+import { CountingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { unsafeCast } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
 const Enumerator_skipFirst = /*@__PURE__*/ (() => {
     const createSkipFirstEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_delegatingMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);
-        instance[SkipFirstLike_skipCount] = skipCount;
-        instance[SkipFirstLike_count] = 0;
+        instance[CountingLike_count] = skipCount;
         return instance;
     }, props({
-        [SkipFirstLike_skipCount]: 0,
-        [SkipFirstLike_count]: 0,
+        [CountingLike_count]: 0,
     }), {
         get [EnumeratorLike_current]() {
             unsafeCast(this);
@@ -29,12 +27,12 @@ const Enumerator_skipFirst = /*@__PURE__*/ (() => {
         [EnumeratorLike_move]() {
             const delegate = this[DelegatingLike_delegate];
             while (delegate[EnumeratorLike_move]()) {
-                this[SkipFirstLike_count]++;
-                if (this[SkipFirstLike_count] > this[SkipFirstLike_skipCount]) {
+                this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
+                if (this[CountingLike_count] < 0) {
                     break;
                 }
             }
-            return delegate[EnumeratorLike_hasCurrent];
+            return this[EnumeratorLike_hasCurrent];
         },
     }));
     return (options = {}) => {

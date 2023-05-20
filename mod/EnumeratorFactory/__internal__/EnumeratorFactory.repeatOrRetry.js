@@ -5,7 +5,7 @@ import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { DelegatingLike_delegate, HigherOrderEnumerator_inner, } from "../../__internal__/types.js";
+import { CountingLike_count, DelegatingLike_delegate, HigherOrderEnumerator_inner, } from "../../__internal__/types.js";
 import { alwaysFalse, error, isSome, none, pipe, unsafeCast, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
 const EnumeratorFactory_repeatOrRetry = 
@@ -19,7 +19,7 @@ const EnumeratorFactory_repeatOrRetry =
     }, props({
         [HigherOrderEnumerator_inner]: none,
         p: alwaysFalse,
-        cnt: 0,
+        [CountingLike_count]: 0,
     }), {
         get [EnumeratorLike_current]() {
             unsafeCast(this);
@@ -33,7 +33,7 @@ const EnumeratorFactory_repeatOrRetry =
             let inner = this[HigherOrderEnumerator_inner];
             while (!this[DisposableLike_isDisposed] &&
                 !inner[EnumeratorLike_move]()) {
-                const { cnt } = this;
+                const cnt = this[CountingLike_count];
                 let shouldComplete = false;
                 let err = inner[DisposableLike_error];
                 try {
@@ -47,7 +47,7 @@ const EnumeratorFactory_repeatOrRetry =
                     this[DisposableLike_dispose](err);
                 }
                 else {
-                    this.cnt++;
+                    this[CountingLike_count]++;
                     inner = this[DelegatingLike_delegate]();
                     pipe(this, Disposable_add(inner, { ignoreChildErrors: true }));
                     this[HigherOrderEnumerator_inner] = inner;

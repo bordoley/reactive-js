@@ -183,13 +183,15 @@ export const __BufferingLike_buffer = /*@__PURE__*/ symbol("BufferingLike_buffer
 /** @type {unique symbol} */
 export const __BufferingLike_count = /*@__PURE__*/ symbol("BufferingLike_count");
 /** @type {unique symbol} */
-export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
-/** @type {unique symbol} */
-export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
+export const __CountingLike_count = /*@__PURE__*/ symbol("CountingLike_count");
 /** @type {unique symbol} */
 export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 /** @type {unique symbol} */
 export const __HigherOrderEnumerator_inner = /*@__PURE__*/ symbol("HigherOrderEnumerator_inner");
+/** @type {unique symbol} */
+export const __LiftedLike_source = /*@__PURE__*/ symbol("LiftedLike_source");
+/** @type {unique symbol} */
+export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators");
 /** @type {unique symbol} */
 export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 /** @type {unique symbol} */
@@ -208,14 +210,6 @@ export const __SchedulerTaskLike_continuation = /*@__PURE__*/ symbol("SchedulerT
 export const __SchedulerTaskLike_dueTime = /*@__PURE__*/ symbol("SchedulerTaskLike_dueTime");
 /** @type {unique symbol} */
 export const __SchedulerTaskLike_id = /*@__PURE__*/ symbol("SchedulerTaskLike_id");
-/** @type {unique symbol} */
-export const __SkipFirstLike_skipCount = /*@__PURE__*/ symbol("SkipFirstLike_skipCount");
-/** @type {unique symbol} */
-export const __SkipFirstLike_count = /*@__PURE__*/ symbol("SkipFirstLike_count");
-/** @type {unique symbol} */
-export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol("TakeFirstLike_takeCount");
-/** @type {unique symbol} */
-export const __TakeFirstLike_count = /*@__PURE__*/ symbol("TakeFirstLike_count");
 /** @type {unique symbol} */
 export const __TakeLastLike_queue = /*@__PURE__*/ symbol("TakeLastLike_queue");
 /** @type {unique symbol} */
@@ -351,8 +345,6 @@ export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers")
 export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_values");
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_index");
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_count");
 /** @type {unique symbol} */
 export const __ThrottleObserver_value = /*@__PURE__*/ symbol("ThrottleObserver_value");
 /** @type {unique symbol} */

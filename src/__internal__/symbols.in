@@ -89,10 +89,11 @@ SerialDisposableMixin_current
 
 BufferingLike_buffer
 BufferingLike_count
-LiftedLike_source
-LiftedLike_operators
+CountingLike_count
 ForEachLike_effect
 HigherOrderEnumerator_inner
+LiftedLike_source
+LiftedLike_operators
 MappingLike_selector
 PairwiseLike_prev
 PairwiseLike_hasPrev
@@ -102,10 +103,6 @@ ReducerAccumulatorLike_reducer
 SchedulerTaskLike_continuation
 SchedulerTaskLike_dueTime
 SchedulerTaskLike_id
-SkipFirstLike_skipCount
-SkipFirstLike_count
-TakeFirstLike_takeCount
-TakeFirstLike_count
 TakeLastLike_queue
 TakeWhileLike_inclusive
 WithLatestLike_hasLatest
@@ -174,7 +171,6 @@ PriorityQueueImpl_comparator
 Publisher_observers
 ReadonlyArrayEnumerator_values
 ReadonlyArrayEnumerator_index
-ReadonlyArrayEnumerator_count
 ThrottleObserver_value
 ThrottleObserver_hasValue
 ThrottleObserver_durationSubscription

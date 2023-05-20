@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
+import { max } from "../../__internal__/math.js";
 import {
   Mixin2,
   include,
@@ -8,11 +9,10 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  CountingLike,
+  CountingLike_count,
   DelegatingLike,
   DelegatingLike_delegate,
-  SkipFirstLike,
-  SkipFirstLike_count,
-  SkipFirstLike_skipCount,
 } from "../../__internal__/types.js";
 import { returns } from "../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../types.js";
@@ -28,27 +28,26 @@ const Sink_skipFirstMixin: <T>() => Mixin2<
     mix(
       include(Disposable_delegatingMixin, Delegating_mixin()),
       function SkipFirstSinkMixin(
-        instance: Pick<SinkLike<T>, typeof SinkLike_notify> & SkipFirstLike,
+        instance: Pick<SinkLike<T>, typeof SinkLike_notify> & CountingLike,
         delegate: SinkLike<T>,
         skipCount: number,
       ): SinkLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[SkipFirstLike_skipCount] = skipCount;
+        instance[CountingLike_count] = skipCount;
 
         return instance;
       },
-      props<SkipFirstLike>({
-        [SkipFirstLike_skipCount]: 0,
-        [SkipFirstLike_count]: 0,
+      props<CountingLike>({
+        [CountingLike_count]: 0,
       }),
       {
         [SinkLike_notify](
-          this: SkipFirstLike & DelegatingLike<SinkLike<T>> & SinkLike<T>,
+          this: CountingLike & DelegatingLike<SinkLike<T>> & SinkLike<T>,
           next: T,
         ) {
-          this[SkipFirstLike_count]++;
-          if (this[SkipFirstLike_count] > this[SkipFirstLike_skipCount]) {
+          this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
+          if (this[CountingLike_count] < 0) {
             this[DelegatingLike_delegate][SinkLike_notify](next);
           }
         },

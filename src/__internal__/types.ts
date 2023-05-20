@@ -27,6 +27,7 @@ import {
   __ContinuationLike_run as ContinuationLike_run,
   __ContinuationLike_scheduler as ContinuationLike_scheduler,
   __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule,
+  __CountingLike_count as CountingLike_count,
   __DelegatingLike_delegate as DelegatingLike_delegate,
   __DistinctUntilChangedLike_equality as DistinctUntilChangedLike_equality,
   __DistinctUntilChangedLike_hasValue as DistinctUntilChangedLike_hasValue,
@@ -48,12 +49,8 @@ import {
   __SchedulerTaskLike_dueTime as SchedulerTaskLike_dueTime,
   __SchedulerTaskLike_id as SchedulerTaskLike_id,
   __SerialDisposableLike_current as SerialDisposableLike_current,
-  __SkipFirstLike_count as SkipFirstLike_count,
-  __SkipFirstLike_skipCount as SkipFirstLike_skipCount,
   __StackLike_head as StackLike_head,
   __StackLike_pop as StackLike_pop,
-  __TakeFirstLike_count as TakeFirstLike_count,
-  __TakeFirstLike_takeCount as TakeFirstLike_takeCount,
   __TakeLastLike_queue as TakeLastLike_queue,
   __TakeWhileLike_inclusive as TakeWhileLike_inclusive,
   __WithLatestLike_hasLatest as WithLatestLike_hasLatest,
@@ -70,6 +67,7 @@ export {
   ContinuationLike_run,
   ContinuationLike_scheduler,
   ContinuationSchedulerLike_schedule,
+  CountingLike_count,
   DelegatingLike_delegate,
   DistinctUntilChangedLike_equality,
   DistinctUntilChangedLike_hasValue,
@@ -91,12 +89,8 @@ export {
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
   SerialDisposableLike_current,
-  SkipFirstLike_count,
-  SkipFirstLike_skipCount,
   StackLike_pop,
   StackLike_head,
-  TakeFirstLike_count,
-  TakeFirstLike_takeCount,
   TakeLastLike_queue,
   TakeWhileLike_inclusive,
   WithLatestLike_hasLatest,
@@ -180,6 +174,10 @@ export interface BufferingLike<T> {
   [BufferingLike_count]: number;
 }
 
+export interface CountingLike {
+  [CountingLike_count]: number;
+}
+
 export interface ForEachLike<T> {
   [ForEachLike_effect]: SideEffect1<T>;
 }
@@ -212,16 +210,6 @@ export interface Lift<C extends Container> {
   lift<TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ): ContainerOperator<C, TA, TB>;
-}
-
-export interface SkipFirstLike {
-  [SkipFirstLike_skipCount]: number;
-  [SkipFirstLike_count]: number;
-}
-
-export interface TakeFirstLike {
-  [TakeFirstLike_count]: number;
-  [TakeFirstLike_takeCount]: number;
 }
 
 export interface TakeLastLike<T> {

@@ -1,7 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
-import { clampPositiveInteger } from "../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -10,11 +9,10 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  CountingLike,
+  CountingLike_count,
   DelegatingLike,
   DelegatingLike_delegate,
-  TakeFirstLike,
-  TakeFirstLike_count,
-  TakeFirstLike_takeCount,
 } from "../../__internal__/types.js";
 import { Function1 } from "../../functions.js";
 import {
@@ -39,7 +37,7 @@ const Enumerator_takeFirst: <T>(options?: {
       include(MutableEnumerator_mixin(), Disposable_delegatingMixin),
       function TakeFirstEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
-          TakeFirstLike,
+          CountingLike,
         delegate: EnumeratorLike<T>,
         takeCount: number,
       ): EnumeratorLike<T> {
@@ -47,28 +45,30 @@ const Enumerator_takeFirst: <T>(options?: {
         init(MutableEnumerator_mixin<T>(), instance);
         init(Disposable_delegatingMixin, instance, delegate);
 
-        instance[TakeFirstLike_takeCount] = takeCount;
-        instance[TakeFirstLike_count] = 0;
+        instance[CountingLike_count] = takeCount;
+
+        if (takeCount === 0) {
+          instance[DisposableLike_dispose]();
+        }
 
         return instance;
       },
-      props<TakeFirstLike>({
-        [TakeFirstLike_takeCount]: 0,
-        [TakeFirstLike_count]: 0,
+      props<CountingLike>({
+        [CountingLike_count]: 0,
       }),
       {
         [EnumeratorLike_move](
-          this: TakeFirstLike &
+          this: CountingLike &
             MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
           this[MutableEnumeratorLike_reset]();
+          this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
 
           const delegate = this[DelegatingLike_delegate];
-          this[TakeFirstLike_count]++;
 
           if (
-            this[TakeFirstLike_count] <= this[TakeFirstLike_takeCount] &&
+            this[CountingLike_count] >= 0 &&
             delegate[EnumeratorLike_move]()
           ) {
             this[EnumeratorLike_current] = delegate[EnumeratorLike_current];

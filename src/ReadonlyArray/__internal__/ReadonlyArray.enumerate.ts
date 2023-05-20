@@ -12,10 +12,10 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  __ReadonlyArrayEnumerator_count,
   __ReadonlyArrayEnumerator_index,
   __ReadonlyArrayEnumerator_values,
 } from "../../__internal__/symbols.js";
+import { CountingLike, CountingLike_count } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
 import {
   Container,
@@ -37,10 +37,9 @@ interface EnumeratorContainer extends Container {
 
 const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
   /*@__PURE__*/ (<T>() => {
-    type TReadonlyArrayEnumeratorProperties = {
+    type TReadonlyArrayEnumeratorProperties = CountingLike & {
       [__ReadonlyArrayEnumerator_values]: ReadonlyArray<T>;
       [__ReadonlyArrayEnumerator_index]: number;
-      [__ReadonlyArrayEnumerator_count]: number;
     };
 
     const createEnumerator: <T>(
@@ -64,14 +63,14 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
 
           instance[__ReadonlyArrayEnumerator_values] = values;
           instance[__ReadonlyArrayEnumerator_index] = start;
-          instance[__ReadonlyArrayEnumerator_count] = count;
+          instance[CountingLike_count] = count;
 
           return instance;
         },
         props<TReadonlyArrayEnumeratorProperties>({
           [__ReadonlyArrayEnumerator_values]: none,
           [__ReadonlyArrayEnumerator_index]: -1,
-          [__ReadonlyArrayEnumerator_count]: 0,
+          [CountingLike_count]: 0,
         }),
         {
           [EnumeratorLike_move](
@@ -83,7 +82,7 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
               return false;
             }
 
-            const count = this[__ReadonlyArrayEnumerator_count];
+            const count = this[CountingLike_count];
 
             if (count != 0) {
               const values = this[__ReadonlyArrayEnumerator_values];
@@ -94,14 +93,14 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
             }
 
             if (count > 0) {
-              this[__ReadonlyArrayEnumerator_count]--;
+              this[CountingLike_count]--;
               this[__ReadonlyArrayEnumerator_index]++;
             } else if (count < 0) {
-              this[__ReadonlyArrayEnumerator_count]++;
+              this[CountingLike_count]++;
               this[__ReadonlyArrayEnumerator_index]--;
             }
 
-            if (this[__ReadonlyArrayEnumerator_count] === 0) {
+            if (this[CountingLike_count] === 0) {
               this[DisposableLike_dispose]();
             }
 

@@ -11,6 +11,8 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  CountingLike,
+  CountingLike_count,
   DelegatingLike,
   DelegatingLike_delegate,
   HigherOrderEnumeratorLike,
@@ -43,10 +45,11 @@ const EnumeratorFactory_repeatOrRetry: <T>(
   predicate: Function2<number, Optional<Error>, boolean>,
 ) => Function1<EnumeratorFactoryLike<T>, EnumeratorFactoryLike<T>> =
   /*@__PURE__*/ (<T>() => {
-    type TProperties = HigherOrderEnumeratorLike<T> & {
-      p: (count: number, error?: Error) => boolean;
-      cnt: number;
-    };
+    type TProperties = HigherOrderEnumeratorLike<T> &
+      CountingLike & {
+        p: (count: number, error?: Error) => boolean;
+        [CountingLike_count]: number;
+      };
 
     const createRepeatOrRetryEnumerator = createInstanceFactory(
       mix(
@@ -67,7 +70,7 @@ const EnumeratorFactory_repeatOrRetry: <T>(
         props<TProperties>({
           [HigherOrderEnumerator_inner]: none,
           p: alwaysFalse,
-          cnt: 0,
+          [CountingLike_count]: 0,
         }),
         {
           get [EnumeratorLike_current]() {
@@ -91,7 +94,7 @@ const EnumeratorFactory_repeatOrRetry: <T>(
               !this[DisposableLike_isDisposed] &&
               !inner[EnumeratorLike_move]()
             ) {
-              const { cnt } = this;
+              const cnt = this[CountingLike_count];
 
               let shouldComplete = false;
               let err = inner[DisposableLike_error];
@@ -105,7 +108,7 @@ const EnumeratorFactory_repeatOrRetry: <T>(
               if (shouldComplete) {
                 this[DisposableLike_dispose](err);
               } else {
-                this.cnt++;
+                this[CountingLike_count]++;
                 inner = this[DelegatingLike_delegate]();
                 pipe(this, Disposable_add(inner, { ignoreChildErrors: true }));
                 this[HigherOrderEnumerator_inner] = inner;

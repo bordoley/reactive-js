@@ -1,7 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 
-import { clampPositiveInteger } from "../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -10,11 +10,10 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
+  CountingLike,
+  CountingLike_count,
   DelegatingLike,
   DelegatingLike_delegate,
-  SkipFirstLike,
-  SkipFirstLike_count,
-  SkipFirstLike_skipCount,
 } from "../../__internal__/types.js";
 import { Function1, unsafeCast } from "../../functions.js";
 import {
@@ -34,21 +33,19 @@ const Enumerator_skipFirst: <T>(options?: {
     mix(
       include(Delegating_mixin(), Disposable_delegatingMixin),
       function SkipFirstEnumerator(
-        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & SkipFirstLike,
+        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & CountingLike,
         delegate: EnumeratorLike<T>,
         skipCount: number,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_delegatingMixin, instance, delegate);
 
-        instance[SkipFirstLike_skipCount] = skipCount;
-        instance[SkipFirstLike_count] = 0;
+        instance[CountingLike_count] = skipCount;
 
         return instance;
       },
-      props<SkipFirstLike>({
-        [SkipFirstLike_skipCount]: 0,
-        [SkipFirstLike_count]: 0,
+      props<CountingLike>({
+        [CountingLike_count]: 0,
       }),
       {
         get [EnumeratorLike_current]() {
@@ -62,21 +59,21 @@ const Enumerator_skipFirst: <T>(options?: {
         },
 
         [EnumeratorLike_move](
-          this: SkipFirstLike &
+          this: CountingLike &
             EnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
           const delegate = this[DelegatingLike_delegate];
 
           while (delegate[EnumeratorLike_move]()) {
-            this[SkipFirstLike_count]++;
+            this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
 
-            if (this[SkipFirstLike_count] > this[SkipFirstLike_skipCount]) {
+            if (this[CountingLike_count] < 0) {
               break;
             }
           }
 
-          return delegate[EnumeratorLike_hasCurrent];
+          return this[EnumeratorLike_hasCurrent];
         },
       },
     ),
