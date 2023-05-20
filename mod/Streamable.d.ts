@@ -6,6 +6,7 @@ import { Equality, Factory, Function1, Optional, Updater } from "./functions.js"
 import { ContainerOperator, DeferredObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface StreamableModule {
     /**

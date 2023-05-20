@@ -10,6 +10,7 @@ export interface EnumeratorFactoryContainer extends Container {
 export type Type = EnumeratorFactoryContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface EnumeratorFactoryModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type> {
     toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;

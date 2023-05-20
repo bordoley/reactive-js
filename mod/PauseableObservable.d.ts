@@ -10,6 +10,7 @@ export interface PauseableObservableContainer extends Container {
 export type Type = PauseableObservableContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface PauseableObservableModule extends ContainerModule<Type> {
     sinkInto<T>(sink: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;

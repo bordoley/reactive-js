@@ -12,7 +12,7 @@
 
 - [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [ObservableModule](../interfaces/Observable.ObservableModule.md)
 

@@ -8,7 +8,7 @@
 
 - [EnumerableContainer](../interfaces/Enumerable.EnumerableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [EnumerableModule](../interfaces/Enumerable.EnumerableModule.md)
 

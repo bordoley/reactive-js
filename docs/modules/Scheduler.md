@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Interfaces
+### Module Interfaces
 
 - [SchedulerModule](../interfaces/Scheduler.SchedulerModule.md)
 

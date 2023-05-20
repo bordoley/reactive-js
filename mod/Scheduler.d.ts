@@ -1,6 +1,7 @@
 import { DisposableLike, PauseableSchedulerLike, SchedulerLike, VirtualTimeSchedulerLike } from "./types.js";
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface SchedulerModule {
     createHostScheduler(options?: {

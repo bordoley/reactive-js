@@ -66,6 +66,7 @@ export type MaybeMulticastObservableLike<T> = MulticastObservableLike<T> | Obser
 export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T> | ObservableLike<T>;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ObservableModule extends ContainerModule<Type> {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;

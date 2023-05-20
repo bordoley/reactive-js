@@ -80,6 +80,7 @@ export type Type = RunnableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface RunnableModule
   extends RunnableContainerModule<Type>,

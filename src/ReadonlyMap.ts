@@ -46,6 +46,7 @@ export type TKeyBase = KeyOf<Type>;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ReadonlyMapModule<
   TType extends Type = Type,

@@ -8,7 +8,7 @@
 
 - [PromiseContainer](../interfaces/Promise.PromiseContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [PromiseModule](../interfaces/Promise.PromiseModule.md)
 

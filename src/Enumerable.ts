@@ -72,6 +72,7 @@ export type Type = EnumerableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface EnumerableModule
   extends EnumerableContainerModule<Type>,

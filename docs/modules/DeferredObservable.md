@@ -8,7 +8,7 @@
 
 - [DeferredObservableContainer](../interfaces/DeferredObservable.DeferredObservableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [DeferredObservableModule](../interfaces/DeferredObservable.DeferredObservableModule.md)
 

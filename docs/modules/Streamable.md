@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Interfaces
+### Module Interfaces
 
 - [StreamableModule](../interfaces/Streamable.StreamableModule.md)
 

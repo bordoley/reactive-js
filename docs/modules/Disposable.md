@@ -8,7 +8,7 @@
 
 - [DisposableContainer](../interfaces/Disposable.DisposableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [DisposableModule](../interfaces/Disposable.DisposableModule.md)
 

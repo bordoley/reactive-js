@@ -10,6 +10,7 @@ export interface EnumerableContainer extends Container {
 export type Type = EnumerableContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface EnumerableModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type> {
     compute<T>(computation: Factory<T>, options?: {

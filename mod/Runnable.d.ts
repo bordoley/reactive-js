@@ -10,6 +10,7 @@ export interface RunnableContainer extends Container {
 export type Type = RunnableContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrderObservableModule<Type, Type>, StatefulContainerModule<Type> {
     compute<T>(computation: Factory<T>, options?: {

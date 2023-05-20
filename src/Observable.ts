@@ -227,6 +227,7 @@ export type AnyObservableLike<T> =
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ObservableModule extends ContainerModule<Type> {
   animate<T = number>(

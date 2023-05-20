@@ -12,6 +12,7 @@ export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>, Omit<EnumerableContainerModule<Type>, keyof ConcreteKeyedContainerModule<Type> | "enumerate" | "keepType"> {
     /** @category Transform */

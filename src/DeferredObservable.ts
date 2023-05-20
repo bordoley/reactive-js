@@ -89,6 +89,7 @@ export type Type = DeferredObservableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface DeferredObservableModule
   extends StatefulContainerModule<Type>,

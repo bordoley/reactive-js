@@ -10,6 +10,7 @@ import {
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface SchedulerModule {
   createHostScheduler(options?: {

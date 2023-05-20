@@ -48,6 +48,7 @@ export type Type = EventSourceContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface EventSourceModule
   extends ContainerModule<Type>,

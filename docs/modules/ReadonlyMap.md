@@ -8,7 +8,7 @@
 
 - [ReadonlyMapContainer](../interfaces/ReadonlyMap.ReadonlyMapContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [ReadonlyMapModule](../interfaces/ReadonlyMap.ReadonlyMapModule.md)
 

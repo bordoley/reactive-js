@@ -30,6 +30,7 @@ import {
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface StreamableModule {
   /**

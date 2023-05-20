@@ -9,6 +9,7 @@ export interface AsyncIterableContainer extends Container {
 export type Type = AsyncIterableContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface AsyncIterableModule extends Pick<DeferredContainerModule<Type>, "toObservable">, FlowableContainerModule<Type> {
 }

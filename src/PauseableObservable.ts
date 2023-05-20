@@ -40,6 +40,7 @@ export type Type = PauseableObservableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface PauseableObservableModule extends ContainerModule<Type> {
   sinkInto<T>(

@@ -8,7 +8,7 @@
 
 - [RunnableContainer](../interfaces/Runnable.RunnableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [RunnableModule](../interfaces/Runnable.RunnableModule.md)
 

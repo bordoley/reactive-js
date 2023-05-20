@@ -10,6 +10,7 @@ export interface EventSourceContainer extends Container {
 export type Type = EventSourceContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface EventSourceModule extends ContainerModule<Type>, MulticastingContainerModule<Type> {
     /**

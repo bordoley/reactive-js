@@ -20,6 +20,7 @@ export type Type = AsyncIterableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface AsyncIterableModule
   // FIXME: Should actually extend StatefulContainerModule but

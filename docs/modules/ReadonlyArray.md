@@ -8,7 +8,7 @@
 
 - [ReadonlyArrayContainer](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [ReadonlyArrayModule](../interfaces/ReadonlyArray.ReadonlyArrayModule.md)
 

@@ -8,6 +8,7 @@ export interface StoreContainer extends Container {
 export type Type = StoreContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface StoreModule extends MulticastingContainerModule<Type> {
     create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;

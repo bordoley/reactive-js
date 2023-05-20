@@ -21,6 +21,7 @@ export type Type = PromiseContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface PromiseModule extends MulticastingContainerModule<Type> {}
 

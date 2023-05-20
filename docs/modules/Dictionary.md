@@ -8,7 +8,7 @@
 
 - [DictionaryContainer](../interfaces/Dictionary.DictionaryContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [DictionaryModule](../interfaces/Dictionary.DictionaryModule.md)
 

@@ -32,6 +32,7 @@ export type Type = MulticastObservableContainer;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface MulticastObservableModule
   extends HigherOrderObservableModule<Type, DeferredObservable.Type> {

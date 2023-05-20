@@ -11,6 +11,7 @@ import {
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface StreamModule {
   syncState<T>(

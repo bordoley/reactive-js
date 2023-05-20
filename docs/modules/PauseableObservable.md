@@ -8,7 +8,7 @@
 
 - [PauseableObservableContainer](../interfaces/PauseableObservable.PauseableObservableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [PauseableObservableModule](../interfaces/PauseableObservable.PauseableObservableModule.md)
 

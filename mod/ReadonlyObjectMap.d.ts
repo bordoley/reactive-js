@@ -11,6 +11,7 @@ export type Type<TKey extends symbol | number | string = symbol | number | strin
 export type TKeyBase = KeyOf<Type>;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerModule<TType, TKey> {
 }

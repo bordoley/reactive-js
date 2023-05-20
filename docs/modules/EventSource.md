@@ -8,7 +8,7 @@
 
 - [EventSourceContainer](../interfaces/EventSource.EventSourceContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [EventSourceModule](../interfaces/EventSource.EventSourceModule.md)
 

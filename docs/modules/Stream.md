@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Interfaces
+### Module Interfaces
 
 - [StreamModule](../interfaces/Stream.StreamModule.md)
 

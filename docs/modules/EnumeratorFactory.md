@@ -8,7 +8,7 @@
 
 - [EnumeratorFactoryContainer](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [EnumeratorFactoryModule](../interfaces/EnumeratorFactory.EnumeratorFactoryModule.md)
 

@@ -11,6 +11,7 @@ export interface DeferredObservableContainer extends Container {
 export type Type = DeferredObservableContainer;
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {

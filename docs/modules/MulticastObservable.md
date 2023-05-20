@@ -8,7 +8,7 @@
 
 - [MulticastObservableContainer](../interfaces/MulticastObservable.MulticastObservableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [MulticastObservableModule](../interfaces/MulticastObservable.MulticastObservableModule.md)
 

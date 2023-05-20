@@ -83,6 +83,7 @@ export type TKeyBase = KeyOf<Type>;
 
 /**
  * @noInheritDoc
+ * @category Module
  */
 export interface ReadonlyArrayModule
   extends ConcreteKeyedContainerModule<Type>,

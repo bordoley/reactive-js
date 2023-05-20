@@ -4,10 +4,13 @@
 
 ## Table of contents
 
-### Interfaces
+### Module Interfaces
+
+- [StoreModule](../interfaces/Store.StoreModule.md)
+
+### Other Interfaces
 
 - [StoreContainer](../interfaces/Store.StoreContainer.md)
-- [StoreModule](../interfaces/Store.StoreModule.md)
 
 ### Type Aliases
 

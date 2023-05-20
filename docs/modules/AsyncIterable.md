@@ -8,7 +8,7 @@
 
 - [AsyncIterableContainer](../interfaces/AsyncIterable.AsyncIterableContainer.md)
 
-### Other Interfaces
+### Module Interfaces
 
 - [AsyncIterableModule](../interfaces/AsyncIterable.AsyncIterableModule.md)
 
