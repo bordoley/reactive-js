@@ -14,7 +14,7 @@ import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
 
 testModule(
   "ReadonlyArray",
-  EnumerableTypeClassTests(ReadonlyArray),
+  ...EnumerableTypeClassTests(ReadonlyArray),
   describe(
     "entries",
     test(

@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
   createInstanceFactory,
   include,
@@ -15,9 +15,10 @@ import {
   TakeWhileLike,
   TakeWhileLike_inclusive,
 } from "../../__internal__/types.js";
-import { Function1, Predicate, none } from "../../functions.js";
+import { Function1, Predicate, error, none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -36,7 +37,7 @@ const Enumerator_takeWhile: <T>(
 ) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createTakeWhileEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin(), Disposable_delegatingMixin),
+      include(MutableEnumerator_mixin(), Disposable_mixin),
       function TakeWhileEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           TakeWhileLike<T>,
@@ -46,7 +47,9 @@ const Enumerator_takeWhile: <T>(
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
         init(MutableEnumerator_mixin<T>(), instance);
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_mixin, instance, delegate);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[PredicatedLike_predicate] = predicate;
         instance[TakeWhileLike_inclusive] = inclusive;
@@ -67,18 +70,27 @@ const Enumerator_takeWhile: <T>(
 
           const delegate = this[DelegatingLike_delegate];
 
-          if (delegate[EnumeratorLike_move]()) {
-            const next = delegate[EnumeratorLike_current];
+          try {
+            if (delegate[EnumeratorLike_move]()) {
+              const next = delegate[EnumeratorLike_current];
 
-            const satisfiesPredicate = this[PredicatedLike_predicate](next);
+              const satisfiesPredicate = this[PredicatedLike_predicate](next);
 
-            if (satisfiesPredicate || this[TakeWhileLike_inclusive]) {
-              this[EnumeratorLike_current] = next;
+              if (satisfiesPredicate || this[TakeWhileLike_inclusive]) {
+                this[EnumeratorLike_current] = next;
+              }
+
+              if (!satisfiesPredicate) {
+                this[DisposableLike_dispose]();
+              }
             }
+          } catch (e) {
+            // catch errors thrown by the predicate
+            this[DisposableLike_dispose](error(e));
+          }
 
-            if (!satisfiesPredicate) {
-              this[DisposableLike_dispose]();
-            }
+          if (delegate[DisposableLike_isDisposed]) {
+            this[DisposableLike_dispose]();
           }
 
           return this[EnumeratorLike_hasCurrent];

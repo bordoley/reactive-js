@@ -5,5 +5,5 @@ import * as Observable from "../Observable.js";
 import { testModule } from "../__internal__/testing.js";
 import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
 import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
-testModule("Enumerable", EnumerableTypeClassTests(Enumerable), StatefulTypeClassTests(Enumerable, Observable.toReadonlyArrayAsync));
+testModule("Enumerable", ...EnumerableTypeClassTests(Enumerable), StatefulTypeClassTests(Enumerable, Observable.toReadonlyArrayAsync));
 ((_) => { })(Enumerable);

@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
   createInstanceFactory,
   include,
@@ -14,9 +14,18 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
-import { Function1, Predicate, none, unsafeCast } from "../../functions.js";
+import {
+  Function1,
+  Predicate,
+  error,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../functions.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -28,7 +37,7 @@ const Enumerator_keep: <T>(
 ) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createKeepEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin(), Disposable_delegatingMixin),
+      include(Delegating_mixin(), Disposable_mixin),
       function KeepEnumerator(
         instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
           PredicatedLike<T>,
@@ -36,7 +45,9 @@ const Enumerator_keep: <T>(
         predicate: Predicate<T>,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_mixin, instance);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[PredicatedLike_predicate] = predicate;
 
@@ -64,12 +75,21 @@ const Enumerator_keep: <T>(
           const delegate = this[DelegatingLike_delegate];
           const predicate = this[PredicatedLike_predicate];
 
-          while (
-            delegate[EnumeratorLike_move]() &&
-            !predicate(this[EnumeratorLike_current])
-          ) {}
+          try {
+            while (
+              delegate[EnumeratorLike_move]() &&
+              !predicate(this[EnumeratorLike_current])
+            ) {}
+          } catch (e) {
+            // Catch errors thrown by the predicate
+            this[DisposableLike_dispose](error(e));
+          }
 
-          return delegate[EnumeratorLike_hasCurrent];
+          if (delegate[DisposableLike_isDisposed]) {
+            this[DisposableLike_dispose]();
+          }
+
+          return this[EnumeratorLike_hasCurrent];
         },
       },
     ),

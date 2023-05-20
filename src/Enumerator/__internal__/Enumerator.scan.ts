@@ -1,5 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 
 import {
   createInstanceFactory,
@@ -15,10 +16,13 @@ import {
   ReducerAccumulatorLike_acc,
   ReducerAccumulatorLike_reducer,
 } from "../../__internal__/types.js";
-import { Factory, Reducer, none } from "../../functions.js";
+import { Factory, Reducer, error, none, pipe } from "../../functions.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../types.js";
 import MutableEnumerator_mixin, {
@@ -35,11 +39,7 @@ const Enumerator_scan: <T, TAcc>(
 >() => {
   const createScanEnumerator = createInstanceFactory(
     mix(
-      include(
-        MutableEnumerator_mixin(),
-        Delegating_mixin(),
-        Disposable_delegatingMixin,
-      ),
+      include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_mixin),
       function ScanEnumerator(
         instance: Pick<EnumeratorLike<TAcc>, typeof EnumeratorLike_move> &
           ReducerAccumulatorLike<T, TAcc>,
@@ -49,7 +49,9 @@ const Enumerator_scan: <T, TAcc>(
       ): EnumeratorLike<TAcc> {
         init(MutableEnumerator_mixin<TAcc>(), instance);
         init(Delegating_mixin(), instance, delegate);
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_mixin, instance);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[ReducerAccumulatorLike_reducer] = reducer;
         instance[ReducerAccumulatorLike_acc] = initialValue();
@@ -71,18 +73,28 @@ const Enumerator_scan: <T, TAcc>(
           const delegate = this[DelegatingLike_delegate];
           const delegateHasCurrent = delegate[EnumeratorLike_move]();
 
-          if (delegateHasCurrent) {
-            this[ReducerAccumulatorLike_acc] = this[
-              ReducerAccumulatorLike_reducer
-            ](
-              this[ReducerAccumulatorLike_acc],
-              delegate[EnumeratorLike_current],
-            );
+          try {
+            if (delegateHasCurrent) {
+              this[ReducerAccumulatorLike_acc] = this[
+                ReducerAccumulatorLike_reducer
+              ](
+                this[ReducerAccumulatorLike_acc],
+                delegate[EnumeratorLike_current],
+              );
 
-            this[EnumeratorLike_current] = this[ReducerAccumulatorLike_acc];
+              this[EnumeratorLike_current] = this[ReducerAccumulatorLike_acc];
+            }
+          } catch (e) {
+            // catch errors thrown by the reducer
+            this[DisposableLike_dispose](error(e));
+            this[MutableEnumeratorLike_reset]();
           }
 
-          return delegateHasCurrent;
+          if (delegate[DisposableLike_isDisposed]) {
+            this[DisposableLike_dispose]();
+          }
+
+          return this[EnumeratorLike_hasCurrent];
         },
       },
     ),

@@ -39,7 +39,7 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_repeatOrRetry: <T>(
+const EnumeratorFactory_repeatOrRetry: <T>(
   predicate: Function2<number, Optional<Error>, boolean>,
 ) => Function1<EnumeratorFactoryLike<T>, EnumeratorFactoryLike<T>> =
   /*@__PURE__*/ (<T>() => {
@@ -96,7 +96,7 @@ const Enumerator_repeatOrRetry: <T>(
               let shouldComplete = false;
               let err = inner[DisposableLike_error];
               try {
-                shouldComplete = !this.p(cnt, err);
+                shouldComplete = cnt !== 0 && !this.p(cnt, err);
               } catch (e) {
                 shouldComplete = true;
                 err = isSome(err) ? error([e, err]) : error(e);
@@ -124,4 +124,4 @@ const Enumerator_repeatOrRetry: <T>(
         createRepeatOrRetryEnumerator(delegate, predicate);
   })();
 
-export default Enumerator_repeatOrRetry;
+export default EnumeratorFactory_repeatOrRetry;

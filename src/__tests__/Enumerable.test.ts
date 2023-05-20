@@ -6,7 +6,7 @@ import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
 
 testModule(
   "Enumerable",
-  EnumerableTypeClassTests(Enumerable),
+  ...EnumerableTypeClassTests(Enumerable),
   StatefulTypeClassTests<Enumerable.Type>(
     Enumerable,
     Observable.toReadonlyArrayAsync,

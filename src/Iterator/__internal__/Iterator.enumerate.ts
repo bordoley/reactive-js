@@ -12,7 +12,7 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { __IteratorEnumerator_iterator } from "../../__internal__/symbols.js";
-import { Function1, none, returns } from "../../functions.js";
+import { Function1, error, none, returns } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -55,11 +55,16 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
               return false;
             }
 
-            const next = this[__IteratorEnumerator_iterator].next();
-            if (!next.done) {
-              this[EnumeratorLike_current] = next.value;
-            } else {
-              this[DisposableLike_dispose]();
+            try {
+              const next = this[__IteratorEnumerator_iterator].next();
+              if (!next.done) {
+                this[EnumeratorLike_current] = next.value;
+              } else {
+                this[DisposableLike_dispose]();
+              }
+            } catch (e) {
+              // Catch any errors thrown by the iterator
+              this[DisposableLike_dispose](error(e));
             }
 
             return this[EnumeratorLike_hasCurrent];

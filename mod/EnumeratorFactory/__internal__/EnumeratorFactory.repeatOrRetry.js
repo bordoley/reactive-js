@@ -8,7 +8,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { DelegatingLike_delegate, HigherOrderEnumerator_inner, } from "../../__internal__/types.js";
 import { alwaysFalse, error, isSome, none, pipe, unsafeCast, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
-const Enumerator_repeatOrRetry = 
+const EnumeratorFactory_repeatOrRetry = 
 /*@__PURE__*/ (() => {
     const createRepeatOrRetryEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_mixin), function RepeatOrRetryEnumerator(instance, delegate, shouldRepeat) {
         init(Delegating_mixin(), instance, delegate);
@@ -37,7 +37,7 @@ const Enumerator_repeatOrRetry =
                 let shouldComplete = false;
                 let err = inner[DisposableLike_error];
                 try {
-                    shouldComplete = !this.p(cnt, err);
+                    shouldComplete = cnt !== 0 && !this.p(cnt, err);
                 }
                 catch (e) {
                     shouldComplete = true;
@@ -58,4 +58,4 @@ const Enumerator_repeatOrRetry =
     }));
     return (predicate) => (delegate) => () => createRepeatOrRetryEnumerator(delegate, predicate);
 })();
-export default Enumerator_repeatOrRetry;
+export default EnumeratorFactory_repeatOrRetry;

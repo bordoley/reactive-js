@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
   createInstanceFactory,
   include,
@@ -14,9 +14,18 @@ import {
   ForEachLike,
   ForEachLike_effect,
 } from "../../__internal__/types.js";
-import { Function1, SideEffect1, none, unsafeCast } from "../../functions.js";
+import {
+  Function1,
+  SideEffect1,
+  error,
+  none,
+  pipe,
+  unsafeCast,
+} from "../../functions.js";
 import {
   DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -28,7 +37,7 @@ const Enumerator_forEach: <T>(
 ) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createForEachEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin(), Disposable_delegatingMixin),
+      include(Delegating_mixin(), Disposable_mixin),
       function ForEachEnumerator(
         instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
           ForEachLike<T>,
@@ -36,7 +45,9 @@ const Enumerator_forEach: <T>(
         effect: SideEffect1<T>,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_mixin, instance);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[ForEachLike_effect] = effect;
 
@@ -64,11 +75,20 @@ const Enumerator_forEach: <T>(
           const delegate = this[DelegatingLike_delegate];
           const delegateHasCurrent = delegate[EnumeratorLike_move]();
 
-          if (delegateHasCurrent) {
-            this[ForEachLike_effect](delegate[EnumeratorLike_current]);
+          try {
+            if (delegateHasCurrent) {
+              this[ForEachLike_effect](delegate[EnumeratorLike_current]);
+            }
+          } catch (e) {
+            // catch exceptions thrown by the effect function
+            this[DisposableLike_dispose](error(e));
           }
 
-          return delegateHasCurrent;
+          if (delegate[DisposableLike_isDisposed]) {
+            this[DisposableLike_dispose]();
+          }
+
+          return this[EnumeratorLike_hasCurrent];
         },
       },
     ),

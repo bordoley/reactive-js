@@ -10,10 +10,11 @@ import RunnableTypeClassTests from "./RunnableTypeClassTests.js";
 
 const EnumerableTypeClassTests = <C extends Container>(
   m: EnumerableTypeClass<C>,
-) =>
+) => [
+  ...RunnableTypeClassTests(m),
   describe(
     "EnumerableTypeClass",
-    ...RunnableTypeClassTests(m),
+
     describe(
       "enumerate",
       test("with higher order observable and no delay", () => {
@@ -31,6 +32,7 @@ const EnumerableTypeClassTests = <C extends Container>(
         );
       }),
     ),
-  );
+  ),
+];
 
 export default EnumerableTypeClassTests;

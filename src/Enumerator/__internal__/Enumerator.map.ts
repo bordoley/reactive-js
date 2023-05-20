@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
-import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
+import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
+import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
   createInstanceFactory,
   include,
@@ -14,10 +14,13 @@ import {
   MappingLike,
   MappingLike_selector,
 } from "../../__internal__/types.js";
-import { Function1, none } from "../../functions.js";
+import { Function1, error, none, pipe } from "../../functions.js";
 import {
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../types.js";
 import MutableEnumerator_mixin, {
@@ -33,11 +36,7 @@ const Enumerator_map: <TA, TB>(
 >() => {
   const createMapEnumerator = createInstanceFactory(
     mix(
-      include(
-        MutableEnumerator_mixin(),
-        Delegating_mixin(),
-        Disposable_delegatingMixin,
-      ),
+      include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_mixin),
       function MapEnumerator(
         instance: Pick<EnumeratorLike<TB>, typeof EnumeratorLike_move> &
           MappingLike<TA, TB>,
@@ -46,7 +45,9 @@ const Enumerator_map: <TA, TB>(
       ): EnumeratorLike<TB> {
         init(MutableEnumerator_mixin<TB>(), instance);
         init(Delegating_mixin(), instance, delegate);
-        init(Disposable_delegatingMixin, instance, delegate);
+        init(Disposable_mixin, instance);
+
+        pipe(instance, Disposable_add(delegate));
 
         instance[MappingLike_selector] = mapper;
 
@@ -66,13 +67,23 @@ const Enumerator_map: <TA, TB>(
           const delegate = this[DelegatingLike_delegate];
           const delegateHasCurrent = delegate[EnumeratorLike_move]();
 
-          if (delegateHasCurrent) {
-            this[EnumeratorLike_current] = this[MappingLike_selector](
-              delegate[EnumeratorLike_current],
-            );
+          try {
+            if (delegateHasCurrent) {
+              this[EnumeratorLike_current] = this[MappingLike_selector](
+                delegate[EnumeratorLike_current],
+              );
+            }
+          } catch (e) {
+            // Catch errors thrown by the selector
+            this[DisposableLike_dispose](error(e));
+            this[MutableEnumeratorLike_reset]();
           }
 
-          return delegateHasCurrent;
+          if (delegate[DisposableLike_isDisposed]) {
+            this[DisposableLike_dispose]();
+          }
+
+          return this[EnumeratorLike_hasCurrent];
         },
       },
     ),

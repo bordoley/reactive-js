@@ -22,6 +22,8 @@ export type Type = AsyncIterableContainer;
  * @noInheritDoc
  */
 export interface AsyncIterableModule
+  // FIXME: Should actually extend StatefulTypeClass but
+  // not really interested in implementing all the operators
   extends Pick<DeferredTypeClass<Type>, "toObservable">,
     FlowableTypeClass<Type> {}
 

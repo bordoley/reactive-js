@@ -1,7 +1,7 @@
 /// <reference types="./EnumeratorFactory.fromFactory.d.ts" />
 
-import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import ReadonlyArray_fromFactory from "../../ReadonlyArray/__internal__/ReadonlyArray.fromFactory.js";
-import { composeLazy } from "../../functions.js";
-const EnumeratorFactory_fromFactory = () => composeLazy(ReadonlyArray_fromFactory(), ReadonlyArray_enumerate());
+import { compose } from "../../functions.js";
+import EnumeratorFactory_fromValue from "./EnumeratorFactory.fromValue.js";
+import EnumeratorFactory_map from "./EnumeratorFactory.map.js";
+const EnumeratorFactory_fromFactory = () => compose(EnumeratorFactory_fromValue(), EnumeratorFactory_map((f) => f()));
 export default EnumeratorFactory_fromFactory;
