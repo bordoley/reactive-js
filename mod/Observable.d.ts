@@ -69,12 +69,27 @@ export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | Deferre
  * @category Module
  */
 export interface ObservableModule extends ContainerModule<Type> {
+    /**
+     * @category Constructor
+     */
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
+    /**
+     * @category Operator
+     */
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): ObservableOperator<T, T>;
+    /**
+     * @category Operator
+     */
     buffer<T>(options?: {
         count?: number;
     }): ObservableOperator<T, readonly T[]>;
+    /**
+     * @category Operator
+     */
     catchError<T>(onError: SideEffect1<Error>): ObservableOperator<T, T>;
+    /**
+     * @category Constructor
+     */
     combineLatest<TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableLike<readonly [TA, TB]>;
     combineLatest<TA, TB, TC>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>): RunnableLike<readonly [TA, TB, TC]>;
     combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>): RunnableLike<readonly [TA, TB, TC, TD]>;
@@ -99,6 +114,9 @@ export interface ObservableModule extends ContainerModule<Type> {
     combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: MaybeMulticastObservableLike<TA>, b: MaybeMulticastObservableLike<TB>, c: MaybeMulticastObservableLike<TC>, d: MaybeMulticastObservableLike<TD>, e: MaybeMulticastObservableLike<TE>, f: MaybeMulticastObservableLike<TF>, g: MaybeMulticastObservableLike<TG>, h: MaybeMulticastObservableLike<TH>, i: MaybeMulticastObservableLike<TI>): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+    /**
+     * @category Constructor
+     */
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;

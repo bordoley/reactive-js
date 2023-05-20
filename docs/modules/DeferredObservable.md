@@ -20,6 +20,7 @@
 
 ### Constructor Functions
 
+- [compute](DeferredObservable.md#compute)
 - [concat](DeferredObservable.md#concat)
 - [empty](DeferredObservable.md#empty)
 - [fromEnumerable](DeferredObservable.md#fromenumerable)
@@ -29,6 +30,8 @@
 - [fromOptional](DeferredObservable.md#fromoptional)
 - [fromReadonlyArray](DeferredObservable.md#fromreadonlyarray)
 - [fromValue](DeferredObservable.md#fromvalue)
+- [generate](DeferredObservable.md#generate)
+- [throws](DeferredObservable.md#throws)
 - [zip](DeferredObservable.md#zip)
 
 ### Operator Functions
@@ -38,8 +41,10 @@
 - [concatAll](DeferredObservable.md#concatall)
 - [concatMap](DeferredObservable.md#concatmap)
 - [concatWith](DeferredObservable.md#concatwith)
+- [dispatchTo](DeferredObservable.md#dispatchto)
 - [distinctUntilChanged](DeferredObservable.md#distinctuntilchanged)
 - [endWith](DeferredObservable.md#endwith)
+- [enqueue](DeferredObservable.md#enqueue)
 - [exhaust](DeferredObservable.md#exhaust)
 - [exhaustMap](DeferredObservable.md#exhaustmap)
 - [flatMapIterable](DeferredObservable.md#flatmapiterable)
@@ -53,6 +58,8 @@
 - [mergeMap](DeferredObservable.md#mergemap)
 - [pairwise](DeferredObservable.md#pairwise)
 - [pick](DeferredObservable.md#pick)
+- [repeat](DeferredObservable.md#repeat)
+- [retry](DeferredObservable.md#retry)
 - [scan](DeferredObservable.md#scan)
 - [scanLast](DeferredObservable.md#scanlast)
 - [scanMany](DeferredObservable.md#scanmany)
@@ -67,16 +74,12 @@
 
 ### Other Functions
 
-- [compute](DeferredObservable.md#compute)
-- [dispatchTo](DeferredObservable.md#dispatchto)
-- [enqueue](DeferredObservable.md#enqueue)
-- [generate](DeferredObservable.md#generate)
-- [multicast](DeferredObservable.md#multicast)
-- [repeat](DeferredObservable.md#repeat)
-- [retry](DeferredObservable.md#retry)
-- [share](DeferredObservable.md#share)
-- [throws](DeferredObservable.md#throws)
 - [toObservable](DeferredObservable.md#toobservable)
+
+### Transform Functions
+
+- [multicast](DeferredObservable.md#multicast)
+- [share](DeferredObservable.md#share)
 
 ## Type Aliases
 
@@ -124,6 +127,30 @@ ___
 Ƭ **Type**: [`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md)
 
 ## Constructor Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+___
 
 ### concat
 
@@ -286,6 +313,52 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(`options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 ___
 
@@ -624,6 +697,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
@@ -666,6 +761,28 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -1013,6 +1130,80 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -1470,33 +1661,9 @@ ___
 
 ## Other Functions
 
-### compute
+### toObservable
 
-▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1504,62 +1671,13 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
+[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
+## Transform Functions
 
 ### multicast
 
@@ -1587,80 +1705,6 @@ ___
 
 ___
 
-### repeat
-
-▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-
-#### Returns
-
-[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-___
-
-### retry
-
-▸ **retry**<`T`\>(`shouldRetry`): [`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
-
-#### Returns
-
-[`DeferredObservableOperator`](DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-___
-
 ### share
 
 ▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
@@ -1684,42 +1728,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>

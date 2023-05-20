@@ -16,13 +16,19 @@
 
 ## Table of contents
 
-### Methods
+### Constructor Methods
 
 - [compute](Runnable.RunnableModule.md#compute)
+
+### Other Methods
+
 - [run](Runnable.RunnableModule.md#run)
+
+### Transform Methods
+
 - [toObservable](Runnable.RunnableModule.md#toobservable)
 
-## Methods
+## Constructor Methods
 
 ### compute
 
@@ -48,6 +54,8 @@
 
 ___
 
+## Other Methods
+
 ### run
 
 ▸ **run**<`T`\>(`options?`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
@@ -71,6 +79,8 @@ ___
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
+
+## Transform Methods
 
 ### toObservable
 

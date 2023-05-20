@@ -94,6 +94,9 @@ export type Type = DeferredObservableContainer;
 export interface DeferredObservableModule
   extends StatefulContainerModule<Type>,
     HigherOrderObservableModule<Type, Type> {
+  /**
+   * @category Constructor
+   */
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -101,6 +104,9 @@ export interface DeferredObservableModule
     },
   ): DeferredObservableLike<T>;
 
+  /**
+   * @category Transform
+   */
   multicast<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {
@@ -113,14 +119,23 @@ export interface DeferredObservableModule
     ReplayObservableLike<T> & DisposableLike
   >;
 
+  /**
+   * @category Operator
+   */
   repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
   repeat<T>(count: number): DeferredObservableOperator<T, T>;
   repeat<T>(): DeferredObservableOperator<T, T>;
 
+  /**
+   * @category Operator
+   */
   retry<T>(
     shouldRetry: (count: number, error: Error) => boolean,
   ): DeferredObservableOperator<T, T>;
 
+  /**
+   * @category Transform
+   */
   share<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {

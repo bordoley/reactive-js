@@ -230,19 +230,34 @@ export type AnyObservableLike<T> =
  * @category Module
  */
 export interface ObservableModule extends ContainerModule<Type> {
+  /**
+   * @category Constructor
+   */
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
   ): RunnableLike<T>;
 
+  /**
+   * @category Operator
+   */
   backpressureStrategy<T>(
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ): ObservableOperator<T, T>;
 
+  /**
+   * @category Operator
+   */
   buffer<T>(options?: { count?: number }): ObservableOperator<T, readonly T[]>;
 
+  /**
+   * @category Operator
+   */
   catchError<T>(onError: SideEffect1<Error>): ObservableOperator<T, T>;
 
+  /**
+   * @category Constructor
+   */
   combineLatest<TA, TB>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -426,6 +441,9 @@ export interface ObservableModule extends ContainerModule<Type> {
     i: MaybeMulticastObservableLike<TI>,
   ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 
+  /**
+   * @category Constructor
+   */
   concat<T>(
     fst: EnumerableLike<T>,
     snd: EnumerableLike<T>,

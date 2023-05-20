@@ -19,9 +19,6 @@
 - [create](EventSource.EventSourceModule.md#create)
 - [createPublisher](EventSource.EventSourceModule.md#createpublisher)
 - [createRefCountedPublisher](EventSource.EventSourceModule.md#createrefcountedpublisher)
-
-### Other Methods
-
 - [merge](EventSource.EventSourceModule.md#merge)
 - [mergeMany](EventSource.EventSourceModule.md#mergemany)
 
@@ -80,8 +77,6 @@ ___
 [`EventPublisherLike`](types.EventPublisherLike.md)<`T`\>
 
 ___
-
-## Other Methods
 
 ### merge
 

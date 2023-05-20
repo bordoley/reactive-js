@@ -86,6 +86,9 @@ export interface RunnableModule
   extends RunnableContainerModule<Type>,
     HigherOrderObservableModule<Type, Type>,
     StatefulContainerModule<Type> {
+  /**
+   * @category Constructor
+   */
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -98,6 +101,9 @@ export interface RunnableModule
     readonly capacity?: number;
   }): SideEffect1<RunnableLike<T>>;
 
+  /**
+   * @category Transform
+   */
   toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
 }
 

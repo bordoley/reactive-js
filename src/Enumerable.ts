@@ -77,6 +77,9 @@ export type Type = EnumerableContainer;
 export interface EnumerableModule
   extends EnumerableContainerModule<Type>,
     StatefulContainerModule<Type> {
+  /**
+   * @category Constructor
+   */
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -84,6 +87,9 @@ export interface EnumerableModule
     },
   ): EnumerableLike<T>;
 
+  /**
+   * @category Transform
+   */
   toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;

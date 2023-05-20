@@ -36,6 +36,9 @@ export type Type = MulticastObservableContainer;
  */
 export interface MulticastObservableModule
   extends HigherOrderObservableModule<Type, DeferredObservable.Type> {
+  /**
+   * @category Constructor
+   */
   compute<T>(
     computation: Factory<T>,
     options?: {

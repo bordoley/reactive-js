@@ -26,40 +26,16 @@
 
 ## Table of contents
 
-### Operator Methods
-
-- [retry](types.StatefulContainerModule.md#retry)
-
-### Other Methods
+### Constructor Methods
 
 - [generate](types.StatefulContainerModule.md#generate)
 - [throws](types.StatefulContainerModule.md#throws)
 
-## Operator Methods
+### Operator Methods
 
-### retry
+- [retry](types.StatefulContainerModule.md#retry)
 
-▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-## Other Methods
+## Constructor Methods
 
 ### generate
 
@@ -104,3 +80,27 @@ ___
 #### Returns
 
 [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>
+
+___
+
+## Operator Methods
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>

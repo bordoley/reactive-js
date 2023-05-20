@@ -37,8 +37,10 @@
 - [concatAll](ReadonlyArray.md#concatall)
 - [concatMap](ReadonlyArray.md#concatmap)
 - [concatWith](ReadonlyArray.md#concatwith)
+- [dispatchTo](ReadonlyArray.md#dispatchto)
 - [distinctUntilChanged](ReadonlyArray.md#distinctuntilchanged)
 - [endWith](ReadonlyArray.md#endwith)
+- [enqueue](ReadonlyArray.md#enqueue)
 - [flatMapIterable](ReadonlyArray.md#flatmapiterable)
 - [forEach](ReadonlyArray.md#foreach)
 - [forEachWithKey](ReadonlyArray.md#foreachwithkey)
@@ -62,8 +64,6 @@
 
 ### Other Functions
 
-- [dispatchTo](ReadonlyArray.md#dispatchto)
-- [enqueue](ReadonlyArray.md#enqueue)
 - [flow](ReadonlyArray.md#flow)
 
 ### Transform Functions
@@ -581,6 +581,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
@@ -623,6 +645,28 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -1410,50 +1454,6 @@ ___
 ___
 
 ## Other Functions
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
-
-___
 
 ### flow
 

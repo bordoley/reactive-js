@@ -68,12 +68,18 @@ export interface EventSourceModule
    */
   createRefCountedPublisher<T>(): EventPublisherLike<T>;
 
+  /**
+   * @category Constructor
+   */
   merge<T>(
     fst: EventSourceLike<T>,
     snd: EventSourceLike<T>,
     ...tail: readonly EventSourceLike<T>[]
   ): EventSourceLike<T>;
 
+  /**
+   * @category Constructor
+   */
   mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
 }
 

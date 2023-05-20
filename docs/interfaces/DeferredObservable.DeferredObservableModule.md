@@ -14,15 +14,21 @@
 
 ## Table of contents
 
-### Methods
+### Constructor Methods
 
 - [compute](DeferredObservable.DeferredObservableModule.md#compute)
-- [multicast](DeferredObservable.DeferredObservableModule.md#multicast)
+
+### Operator Methods
+
 - [repeat](DeferredObservable.DeferredObservableModule.md#repeat)
 - [retry](DeferredObservable.DeferredObservableModule.md#retry)
+
+### Transform Methods
+
+- [multicast](DeferredObservable.DeferredObservableModule.md#multicast)
 - [share](DeferredObservable.DeferredObservableModule.md#share)
 
-## Methods
+## Constructor Methods
 
 ### compute
 
@@ -48,31 +54,7 @@
 
 ___
 
-### multicast
-
-▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](types.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](types.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](types.SchedulerLike.md) & [`DisposableLike`](types.DisposableLike.md)\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](types.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
-
-___
+## Operator Methods
 
 ### repeat
 
@@ -161,6 +143,34 @@ ___
 #### Overrides
 
 [StatefulContainerModule](types.StatefulContainerModule.md).[retry](types.StatefulContainerModule.md#retry)
+
+___
+
+## Transform Methods
+
+### multicast
+
+▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](types.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](types.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](types.SchedulerLike.md) & [`DisposableLike`](types.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](types.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 ___
 

@@ -14,11 +14,11 @@
 
 ## Table of contents
 
-### Methods
+### Transform Methods
 
 - [toObservable](EnumeratorFactory.EnumeratorFactoryModule.md#toobservable)
 
-## Methods
+## Transform Methods
 
 ### toObservable
 

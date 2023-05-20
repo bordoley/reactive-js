@@ -27,7 +27,9 @@
 ### Operator Methods
 
 - [buffer](types.ContainerModule.md#buffer)
+- [dispatchTo](types.ContainerModule.md#dispatchto)
 - [distinctUntilChanged](types.ContainerModule.md#distinctuntilchanged)
+- [enqueue](types.ContainerModule.md#enqueue)
 - [flatMapIterable](types.ContainerModule.md#flatmapiterable)
 - [forEach](types.ContainerModule.md#foreach)
 - [ignoreElements](types.ContainerModule.md#ignoreelements)
@@ -42,11 +44,6 @@
 - [takeFirst](types.ContainerModule.md#takefirst)
 - [takeLast](types.ContainerModule.md#takelast)
 - [takeWhile](types.ContainerModule.md#takewhile)
-
-### Other Methods
-
-- [dispatchTo](types.ContainerModule.md#dispatchto)
-- [enqueue](types.ContainerModule.md#enqueue)
 
 ## Operator Methods
 
@@ -73,6 +70,28 @@
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
@@ -92,6 +111,28 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -474,52 +515,6 @@ this predicate is not satisfied.
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> | The predicate function. |
 | `options?` | `Object` | - |
 | `options.inclusive?` | `boolean` | - |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-## Other Methods
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](types.QueueableLike.md)<`T`\> |
 
 #### Returns
 

@@ -17,6 +17,10 @@
 - [Signature](MulticastObservable.md#signature)
 - [Type](MulticastObservable.md#type)
 
+### Constructor Functions
+
+- [compute](MulticastObservable.md#compute)
+
 ### Operator Functions
 
 - [catchError](MulticastObservable.md#catcherror)
@@ -31,10 +35,6 @@
 - [switchAll](MulticastObservable.md#switchall)
 - [switchMap](MulticastObservable.md#switchmap)
 
-### Other Functions
-
-- [compute](MulticastObservable.md#compute)
-
 ## Type Aliases
 
 ### Signature
@@ -46,6 +46,32 @@ ___
 ### Type
 
 Ƭ **Type**: [`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md)
+
+## Constructor Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+___
 
 ## Operator Functions
 
@@ -288,29 +314,3 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TA`, `TB`\>
-
-___
-
-## Other Functions
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>

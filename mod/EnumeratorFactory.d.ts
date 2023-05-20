@@ -13,6 +13,9 @@ export type Type = EnumeratorFactoryContainer;
  * @category Module
  */
 export interface EnumeratorFactoryModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type> {
+    /**
+     * @category Transform
+     */
     toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
     toObservable<T>(options: {
         readonly delay: number;

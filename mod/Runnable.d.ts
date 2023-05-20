@@ -13,6 +13,9 @@ export type Type = RunnableContainer;
  * @category Module
  */
 export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrderObservableModule<Type, Type>, StatefulContainerModule<Type> {
+    /**
+     * @category Constructor
+     */
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableLike<T>;
@@ -20,6 +23,9 @@ export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrd
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
+    /**
+     * @category Transform
+     */
     toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
 }
 export type Signature = RunnableModule;

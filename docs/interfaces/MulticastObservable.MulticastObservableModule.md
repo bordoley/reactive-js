@@ -12,11 +12,11 @@
 
 ## Table of contents
 
-### Methods
+### Constructor Methods
 
 - [compute](MulticastObservable.MulticastObservableModule.md#compute)
 
-## Methods
+## Constructor Methods
 
 ### compute
 

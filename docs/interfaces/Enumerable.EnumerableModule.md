@@ -14,12 +14,15 @@
 
 ## Table of contents
 
-### Methods
+### Constructor Methods
 
 - [compute](Enumerable.EnumerableModule.md#compute)
+
+### Transform Methods
+
 - [toObservable](Enumerable.EnumerableModule.md#toobservable)
 
-## Methods
+## Constructor Methods
 
 ### compute
 
@@ -44,6 +47,8 @@
 [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
 
 ___
+
+## Transform Methods
 
 ### toObservable
 

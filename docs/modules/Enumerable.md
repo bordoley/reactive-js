@@ -19,6 +19,7 @@
 
 ### Constructor Functions
 
+- [compute](Enumerable.md#compute)
 - [concat](Enumerable.md#concat)
 - [empty](Enumerable.md#empty)
 - [fromEnumerable](Enumerable.md#fromenumerable)
@@ -28,6 +29,8 @@
 - [fromOptional](Enumerable.md#fromoptional)
 - [fromReadonlyArray](Enumerable.md#fromreadonlyarray)
 - [fromValue](Enumerable.md#fromvalue)
+- [generate](Enumerable.md#generate)
+- [throws](Enumerable.md#throws)
 - [zip](Enumerable.md#zip)
 
 ### Operator Functions
@@ -36,8 +39,10 @@
 - [concatAll](Enumerable.md#concatall)
 - [concatMap](Enumerable.md#concatmap)
 - [concatWith](Enumerable.md#concatwith)
+- [dispatchTo](Enumerable.md#dispatchto)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [endWith](Enumerable.md#endwith)
+- [enqueue](Enumerable.md#enqueue)
 - [flatMapIterable](Enumerable.md#flatmapiterable)
 - [forEach](Enumerable.md#foreach)
 - [ignoreElements](Enumerable.md#ignoreelements)
@@ -59,14 +64,7 @@
 
 ### Other Functions
 
-- [compute](Enumerable.md#compute)
-- [dispatchTo](Enumerable.md#dispatchto)
-- [enqueue](Enumerable.md#enqueue)
 - [flow](Enumerable.md#flow)
-- [generate](Enumerable.md#generate)
-- [throws](Enumerable.md#throws)
-- [toEnumeratorFactory](Enumerable.md#toenumeratorfactory)
-- [toObservable](Enumerable.md#toobservable)
 
 ### Transform Functions
 
@@ -78,7 +76,9 @@
 - [noneSatisfy](Enumerable.md#nonesatisfy)
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
+- [toEnumeratorFactory](Enumerable.md#toenumeratorfactory)
 - [toIterable](Enumerable.md#toiterable)
+- [toObservable](Enumerable.md#toobservable)
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
 
 ## Type Aliases
@@ -94,6 +94,30 @@ ___
 Ƭ **Type**: [`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md)
 
 ## Constructor Functions
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
 
 ### concat
 
@@ -256,6 +280,52 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+___
+
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
 
 ___
 
@@ -572,6 +642,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
@@ -614,6 +706,28 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -1314,74 +1428,6 @@ ___
 
 ## Other Functions
 
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-___
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
 ### flow
 
 ▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
@@ -1404,104 +1450,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-___
-
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -1673,6 +1621,22 @@ ___
 
 ___
 
+### toEnumeratorFactory
+
+▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `Iterable`<`T`\>\>
@@ -1688,6 +1652,42 @@ Converts the Container to a `IterableLike`.
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+
+▸ **toObservable**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 

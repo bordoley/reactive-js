@@ -14,18 +14,33 @@ export type Type = DeferredObservableContainer;
  * @category Module
  */
 export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
+    /**
+     * @category Constructor
+     */
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;
+    /**
+     * @category Transform
+     */
     multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+    /**
+     * @category Operator
+     */
     repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
     repeat<T>(count: number): DeferredObservableOperator<T, T>;
     repeat<T>(): DeferredObservableOperator<T, T>;
+    /**
+     * @category Operator
+     */
     retry<T>(shouldRetry: (count: number, error: Error) => boolean): DeferredObservableOperator<T, T>;
+    /**
+     * @category Transform
+     */
     share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

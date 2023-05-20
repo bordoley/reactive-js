@@ -27,18 +27,21 @@
 - [Signature](Observable.md#signature)
 - [Type](Observable.md#type)
 
+### Constructor Functions
+
+- [animate](Observable.md#animate)
+- [combineLatest](Observable.md#combinelatest)
+- [concat](Observable.md#concat)
+
 ### Operator Functions
 
+- [backpressureStrategy](Observable.md#backpressurestrategy)
+- [buffer](Observable.md#buffer)
+- [catchError](Observable.md#catcherror)
 - [flatMapIterable](Observable.md#flatmapiterable)
 
 ### Other Functions
 
-- [animate](Observable.md#animate)
-- [backpressureStrategy](Observable.md#backpressurestrategy)
-- [buffer](Observable.md#buffer)
-- [catchError](Observable.md#catcherror)
-- [combineLatest](Observable.md#combinelatest)
-- [concat](Observable.md#concat)
 - [concatMany](Observable.md#concatmany)
 - [concatWith](Observable.md#concatwith)
 - [create](Observable.md#create)
@@ -254,32 +257,7 @@ ___
 
 Ƭ **Type**: [`ObservableContainer`](../interfaces/Observable.ObservableContainer.md)
 
-## Operator Functions
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
-
-___
-
-## Other Functions
+## Constructor Functions
 
 ### animate
 
@@ -300,74 +278,6 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-___
-
-### backpressureStrategy
-
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-
-#### Returns
-
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
-
-___
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`SideEffect1`](functions.md#sideeffect1)<`Error`\> |
-
-#### Returns
-
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
 
 ___
 
@@ -1106,6 +1016,101 @@ ___
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
 
 ___
+
+## Operator Functions
+
+### backpressureStrategy
+
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `capacity` | `number` |
+| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`SideEffect1`](functions.md#sideeffect1)<`Error`\> |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+
+___
+
+## Other Functions
 
 ### concatMany
 

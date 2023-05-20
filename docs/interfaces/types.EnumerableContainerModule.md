@@ -22,17 +22,30 @@
 
 ## Table of contents
 
-### Other Methods
-
-- [toEnumeratorFactory](types.EnumerableContainerModule.md#toenumeratorfactory)
-- [toObservable](types.EnumerableContainerModule.md#toobservable)
-
 ### Transform Methods
 
 - [enumerate](types.EnumerableContainerModule.md#enumerate)
+- [toEnumeratorFactory](types.EnumerableContainerModule.md#toenumeratorfactory)
 - [toIterable](types.EnumerableContainerModule.md#toiterable)
+- [toObservable](types.EnumerableContainerModule.md#toobservable)
 
-## Other Methods
+## Transform Methods
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+___
 
 ### toEnumeratorFactory
 
@@ -47,6 +60,24 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+
+___
+
+### toIterable
+
+▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
+
+Converts the Container to a `IterableLike`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
 
 ___
 
@@ -91,39 +122,3 @@ ___
 #### Overrides
 
 RunnableContainerModule.toObservable
-
-___
-
-## Transform Methods
-
-### enumerate
-
-▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
-
-___
-
-### toIterable
-
-▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
-
-Converts the Container to a `IterableLike`.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>

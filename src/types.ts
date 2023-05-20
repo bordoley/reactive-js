@@ -789,6 +789,9 @@ export interface ContainerModule<C extends Container> {
     count?: number;
   }): ContainerOperator<C, T, readonly T[]>;
 
+  /**
+   * @category Operator
+   */
   dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
 
   /**
@@ -801,6 +804,9 @@ export interface ContainerModule<C extends Container> {
     readonly equality?: Equality<T>;
   }): ContainerOperator<C, T, T>;
 
+  /**
+   * @category Operator
+   */
   enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
 
   /**
@@ -1289,11 +1295,13 @@ export interface RunnableContainerModule<C extends Container>
 export interface EnumerableContainerModule<C extends Container>
   extends RunnableContainerModule<C> {
   /**
-   *
    * @category Transform
    */
   enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
 
+  /**
+   * @category Transform
+   */
   toEnumeratorFactory<T>(): Function1<
     ContainerOf<C, T>,
     EnumeratorFactoryLike<T>
@@ -1306,6 +1314,9 @@ export interface EnumerableContainerModule<C extends Container>
    */
   toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
 
+  /**
+   * @category Transform
+   */
   toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;
@@ -1319,6 +1330,9 @@ export interface EnumerableContainerModule<C extends Container>
  */
 export interface StatefulContainerModule<C extends Container>
   extends DeferredContainerModule<C> {
+  /**
+   * @category Constructor
+   */
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -1331,6 +1345,9 @@ export interface StatefulContainerModule<C extends Container>
     shouldRetry: (count: number, error: Error) => boolean,
   ): ContainerOperator<C, T, T>;
 
+  /**
+   * @category Constructor
+   */
   throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 

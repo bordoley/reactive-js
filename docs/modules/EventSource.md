@@ -22,11 +22,15 @@
 - [create](EventSource.md#create)
 - [createPublisher](EventSource.md#createpublisher)
 - [createRefCountedPublisher](EventSource.md#createrefcountedpublisher)
+- [merge](EventSource.md#merge)
+- [mergeMany](EventSource.md#mergemany)
 
 ### Operator Functions
 
 - [buffer](EventSource.md#buffer)
+- [dispatchTo](EventSource.md#dispatchto)
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
+- [enqueue](EventSource.md#enqueue)
 - [flatMapIterable](EventSource.md#flatmapiterable)
 - [forEach](EventSource.md#foreach)
 - [ignoreElements](EventSource.md#ignoreelements)
@@ -45,10 +49,6 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
-- [dispatchTo](EventSource.md#dispatchto)
-- [enqueue](EventSource.md#enqueue)
-- [merge](EventSource.md#merge)
-- [mergeMany](EventSource.md#mergemany)
 
 ### Transform Functions
 
@@ -124,6 +124,52 @@ ___
 
 ___
 
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
+| `snd` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### mergeMany
+
+▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventSources` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
 ## Operator Functions
 
 ### buffer
@@ -149,6 +195,28 @@ ___
 
 ___
 
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+___
+
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
@@ -168,6 +236,28 @@ are distinct by comparison from the previous item.
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.equality?` | [`Equality`](functions.md#equality)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -578,96 +668,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-___
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
-
-___
-
-### merge
-
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
-| `snd` | [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\> |
-| `...tail` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
-
-#### Returns
-
-[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
-
-___
-
-### mergeMany
-
-▸ **mergeMany**<`T`\>(`eventSources`): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `eventSources` | readonly [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>[] |
-
-#### Returns
-
-[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
 
 ___
 

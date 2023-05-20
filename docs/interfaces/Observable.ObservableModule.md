@@ -12,18 +12,21 @@
 
 ## Table of contents
 
+### Constructor Methods
+
+- [animate](Observable.ObservableModule.md#animate)
+- [combineLatest](Observable.ObservableModule.md#combinelatest)
+- [concat](Observable.ObservableModule.md#concat)
+
 ### Operator Methods
 
+- [backpressureStrategy](Observable.ObservableModule.md#backpressurestrategy)
+- [buffer](Observable.ObservableModule.md#buffer)
+- [catchError](Observable.ObservableModule.md#catcherror)
 - [flatMapIterable](Observable.ObservableModule.md#flatmapiterable)
 
 ### Other Methods
 
-- [animate](Observable.ObservableModule.md#animate)
-- [backpressureStrategy](Observable.ObservableModule.md#backpressurestrategy)
-- [buffer](Observable.ObservableModule.md#buffer)
-- [catchError](Observable.ObservableModule.md#catcherror)
-- [combineLatest](Observable.ObservableModule.md#combinelatest)
-- [concat](Observable.ObservableModule.md#concat)
 - [concatMany](Observable.ObservableModule.md#concatmany)
 - [concatWith](Observable.ObservableModule.md#concatwith)
 - [create](Observable.ObservableModule.md#create)
@@ -92,36 +95,7 @@
 - [zipWith](Observable.ObservableModule.md#zipwith)
 - [zipWithLatestFrom](Observable.ObservableModule.md#zipwithlatestfrom)
 
-## Operator Methods
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
-
-#### Overrides
-
-[ContainerModule](types.ContainerModule.md).[flatMapIterable](types.ContainerModule.md#flatmapiterable)
-
-___
-
-## Other Methods
+## Constructor Methods
 
 ### animate
 
@@ -142,78 +116,6 @@ ___
 #### Returns
 
 [`RunnableLike`](types.RunnableLike.md)<`T`\>
-
-___
-
-### backpressureStrategy
-
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-
-#### Returns
-
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
-
-___
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
-
-#### Overrides
-
-[ContainerModule](types.ContainerModule.md).[buffer](types.ContainerModule.md#buffer)
-
-___
-
-### catchError
-
-▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `onError` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`Error`\> |
-
-#### Returns
-
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
 ___
 
@@ -952,6 +854,109 @@ ___
 [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>
 
 ___
+
+## Operator Methods
+
+### backpressureStrategy
+
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `capacity` | `number` |
+| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### buffer
+
+▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
+
+#### Overrides
+
+[ContainerModule](types.ContainerModule.md).[buffer](types.ContainerModule.md#buffer)
+
+___
+
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`Error`\> |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Overrides
+
+[ContainerModule](types.ContainerModule.md).[flatMapIterable](types.ContainerModule.md#flatmapiterable)
+
+___
+
+## Other Methods
 
 ### concatMany
 
