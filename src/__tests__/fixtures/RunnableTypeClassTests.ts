@@ -18,7 +18,6 @@ import {
   alwaysTrue,
   arrayEquality,
   greaterThan,
-  none,
   pipe,
   pipeLazy,
   returns,
@@ -32,77 +31,17 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../types.js";
-import ContainerTypeClassTests from "./ContainerTypeClassTests.js";
+import DeferredTypeClassTests from "./DeferredTypeClassTests.js";
 
 const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
   describe(
     "RunnableTypeClass",
-    ...ContainerTypeClassTests(
+    ...DeferredTypeClassTests(
       m,
-      () => Disposable.disposed,
-      <T>() =>
-        (arr: ReadonlyArray<T>) =>
-          m.fromReadonlyArray<T>()(arr),
       <T>() =>
         (c: ContainerOf<C, T>) =>
           m.toReadonlyArray<T>()(c),
     ).tests,
-    describe(
-      "concat",
-      test(
-        "concats the input containers in order",
-        pipeLazy(
-          m.concat(
-            pipe([1, 2, 3], m.fromReadonlyArray()),
-            pipe([4, 5, 6], m.fromReadonlyArray()),
-          ),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4, 5, 6]),
-        ),
-      ),
-    ),
-    describe(
-      "concatAll",
-      test(
-        "concats the input containers in order",
-        pipeLazy(
-          [
-            pipe([1, 2, 3], m.fromReadonlyArray()),
-            pipe([4, 5, 6], m.fromReadonlyArray()),
-          ],
-          m.fromReadonlyArray(),
-          m.concatAll(),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4, 5, 6]),
-        ),
-      ),
-    ),
-    describe(
-      "concatMap",
-      test(
-        "maps each value to a container and flattens",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.concatMap(pipeLazy([1, 2, 3], m.fromReadonlyArray())),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-    describe(
-      "concatWith",
-      test(
-        "concats two containers together",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.concatWith(pipe([2, 3, 4], m.fromReadonlyArray())),
-          m.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2, 3, 4]),
-        ),
-      ),
-    ),
     describe(
       "contains",
       describe(
@@ -167,20 +106,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "endWith",
-      test(
-        "appends the additional values to the end of the container",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.endWith(2, 3, 4),
-          m.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2, 3, 4]),
-        ),
-      ),
-    ),
-
-    describe(
       "everySatisfy",
       test(
         "source is empty",
@@ -210,24 +135,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
         ),
       ),
     ),
-    describe(
-      "flatMapIterable",
-      test(
-        "maps the incoming value with the inline generator function",
-        pipeLazy(
-          [none, none],
-          m.fromReadonlyArray(),
-          m.flatMapIterable(function* (_) {
-            yield 1;
-            yield 2;
-            yield 3;
-          }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-
     describe(
       "flow",
       test("flow a generating source", () => {
@@ -273,31 +180,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
 
         pipe(subscription[DisposableLike_isDisposed], expectTrue);
       }),
-    ),
-
-    describe(
-      "fromFactory",
-      test(
-        "it produces the factory result",
-        pipeLazy(
-          () => 1,
-          m.fromFactory(),
-          m.first(),
-          expectEquals<Optional<number>>(1),
-        ),
-      ),
-    ),
-    describe(
-      "fromValue",
-      test(
-        "it produces the value",
-        pipeLazy(
-          none,
-          m.fromValue(),
-          m.toReadonlyArray(),
-          expectArrayEquals([none]),
-        ),
-      ),
     ),
     describe(
       "m.fromReadonlyArray",
@@ -404,19 +286,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
       ),
     ),
     describe(
-      "repeat",
-      test(
-        "when repeating a finite amount of times.",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.repeat(3),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-    describe(
       "someSatisfy",
       test(
         "some satisfies predicate",
@@ -425,114 +294,6 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
           m.fromReadonlyArray(),
           m.someSatisfy(greaterThan(5)),
           expectTrue,
-        ),
-      ),
-    ),
-    describe(
-      "startWith",
-      test(
-        "appends the additional values to the start of the container",
-        pipeLazy(
-          [0, 1],
-          m.fromReadonlyArray(),
-          m.startWith(2, 3, 4),
-          m.toReadonlyArray(),
-          expectArrayEquals([2, 3, 4, 0, 1]),
-        ),
-      ),
-    ),
-    describe(
-      "takeLast",
-      test(
-        "when count is less than the total number of elements",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast({ count: 3 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([3, 4, 5]),
-        ),
-      ),
-      test(
-        "when count is greater than the total number of elements",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast({ count: 10 }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4, 5]),
-        ),
-      ),
-      test(
-        "with default count",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast(),
-          m.toReadonlyArray(),
-          expectArrayEquals([5]),
-        ),
-      ),
-    ),
-    describe(
-      "zip",
-      test(
-        "when all inputs are the same length",
-        pipeLazy(
-          m.zip(
-            pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()),
-            pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
-          ),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly [number, number]>(
-            [
-              [1, 5],
-              [2, 4],
-              [3, 3],
-              [4, 2],
-              [5, 1],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-      test(
-        "when inputs are different length",
-        pipeLazy(
-          m.zip(
-            pipe([1, 2, 3], m.fromReadonlyArray()),
-            pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
-            pipe([1, 2, 3, 4], m.fromReadonlyArray()),
-          ),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly [number, number, number]>(
-            [
-              [1, 5, 1],
-              [2, 4, 2],
-              [3, 3, 3],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-    ),
-    describe(
-      "zipWith",
-      test(
-        "when inputs are different lengths",
-        pipeLazy(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.zipWith(pipe([1, 2, 3, 4], m.fromReadonlyArray())),
-          m.toReadonlyArray(),
-          expectArrayEquals<readonly [number, number]>(
-            [
-              [1, 1],
-              [2, 2],
-              [3, 3],
-            ],
-            arrayEquality(),
-          ),
         ),
       ),
     ),

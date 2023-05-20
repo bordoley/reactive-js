@@ -1,11 +1,8 @@
+import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import type * as Enumerable from "../../Enumerable.js";
 import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
-import { isSome, pipe, raiseError } from "../../functions.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_error,
-  EnumerableLike,
-} from "../../types.js";
+import { pipe } from "../../functions.js";
+import { DisposableLike_dispose, EnumerableLike } from "../../types.js";
 import Enumerable_enumerate from "./Enumerable.enumerate.js";
 
 const Enumerable_toReadonlyArray: Enumerable.Signature["toReadonlyArray"] =
@@ -16,10 +13,7 @@ const Enumerable_toReadonlyArray: Enumerable.Signature["toReadonlyArray"] =
 
     enumerator[DisposableLike_dispose]();
 
-    const err = enumerator[DisposableLike_error];
-    if (isSome(err)) {
-      raiseError(err);
-    }
+    Disposable_raiseIfDisposedWithError(enumerator);
 
     return result;
   };

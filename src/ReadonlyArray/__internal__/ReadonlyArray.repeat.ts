@@ -7,7 +7,7 @@ const ReadonlyArray_repeat: ReadonlyArray.Signature["repeat"] =
   (arr: ReadonlyArray<T>) => {
     let arrays: (readonly T[])[] = [];
     if (isFunction(countOrPredicate)) {
-      for (let i = 0; i === 0 || countOrPredicate(0); i++) {
+      for (let i = 0; i === 0 || countOrPredicate(i); i++) {
         arrays.push(arr);
       }
     } else {

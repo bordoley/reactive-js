@@ -1,15 +1,10 @@
+import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import type * as Runnable from "../../Runnable.js";
 import Scheduler_createVirtualTimeScheduler from "../../Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
 import { __DEV__ } from "../../__internal__/constants.js";
+import { pipe, raiseWithDebugMessage } from "../../functions.js";
 import {
-  isSome,
-  pipe,
-  raiseError,
-  raiseWithDebugMessage,
-} from "../../functions.js";
-import {
-  DisposableLike_error,
   ObservableLike_isRunnable,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -37,11 +32,8 @@ const Runnable_run: Runnable.Signature["run"] =
     );
 
     scheduler[VirtualTimeSchedulerLike_run]();
-    const error = subscription[DisposableLike_error];
 
-    if (isSome(error)) {
-      raiseError<T[]>(error);
-    }
+    Disposable_raiseIfDisposedWithError(subscription);
   };
 
 export default Runnable_run;

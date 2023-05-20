@@ -5,7 +5,7 @@ import { isFunction } from "../../functions.js";
 const ReadonlyArray_repeat = (countOrPredicate = MAX_SAFE_INTEGER) => (arr) => {
     let arrays = [];
     if (isFunction(countOrPredicate)) {
-        for (let i = 0; i === 0 || countOrPredicate(0); i++) {
+        for (let i = 0; i === 0 || countOrPredicate(i); i++) {
             arrays.push(arr);
         }
     }

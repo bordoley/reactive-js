@@ -1,3 +1,4 @@
+import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -12,6 +13,8 @@ const Enumerator_toReadonlyArray =
     while (enumerator[EnumeratorLike_move]()) {
       result.push(enumerator[EnumeratorLike_current]);
     }
+
+    Disposable_raiseIfDisposedWithError(enumerator);
 
     return result;
   };
