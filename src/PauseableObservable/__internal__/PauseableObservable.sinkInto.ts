@@ -11,7 +11,6 @@ import {
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
   DispatcherLikeEvent_ready,
-  MulticastObservableLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
@@ -39,7 +38,7 @@ const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
       );
 
       pipe(
-        pauseableObservable as MulticastObservableLike,
+        pauseableObservable,
         Observable_dispatchTo(sink),
         Observable_subscribe(observer),
         Disposable_addTo(observer),
