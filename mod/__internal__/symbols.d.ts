@@ -209,6 +209,8 @@ export const __TakeFirstLike_takeCount: unique symbol;
 /** @type {unique symbol} */
 export const __TakeFirstLike_count: unique symbol;
 /** @type {unique symbol} */
+export const __TakeLastLike_queue: unique symbol;
+/** @type {unique symbol} */
 export const __TakeWhileLike_inclusive: unique symbol;
 /** @type {unique symbol} */
 export const __WithLatestLike_hasLatest: unique symbol;
@@ -342,8 +344,6 @@ export const __ReadonlyArrayEnumerator_values: unique symbol;
 export const __ReadonlyArrayEnumerator_index: unique symbol;
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_count: unique symbol;
-/** @type {unique symbol} */
-export const __TakeLastObserver_takeLastQueue: unique symbol;
 /** @type {unique symbol} */
 export const __ThrottleObserver_value: unique symbol;
 /** @type {unique symbol} */

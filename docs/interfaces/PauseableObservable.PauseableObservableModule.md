@@ -21,7 +21,6 @@
 - [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
 - [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
-- [takeLast](PauseableObservable.PauseableObservableModule.md#takelast)
 
 ## Operator Methods
 
@@ -113,26 +112,3 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`void`\>\>
-
-___
-
-### takeLast
-
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>

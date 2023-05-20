@@ -37,6 +37,7 @@
 - [scan](types.ContainerTypeClass.md#scan)
 - [skipFirst](types.ContainerTypeClass.md#skipfirst)
 - [takeFirst](types.ContainerTypeClass.md#takefirst)
+- [takeLast](types.ContainerTypeClass.md#takelast)
 - [takeWhile](types.ContainerTypeClass.md#takewhile)
 
 ## Operator Methods
@@ -376,6 +377,31 @@ ___
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
 
 #### Type parameters
 

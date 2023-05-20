@@ -38,6 +38,7 @@
 - [scan](EventSource.md#scan)
 - [skipFirst](EventSource.md#skipfirst)
 - [takeFirst](EventSource.md#takefirst)
+- [takeLast](EventSource.md#takelast)
 - [takeWhile](EventSource.md#takewhile)
 
 ### Other Functions
@@ -457,6 +458,31 @@ ___
 ▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+___
+
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
 
 #### Type parameters
 

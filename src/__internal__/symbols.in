@@ -106,6 +106,7 @@ SkipFirstLike_skipCount
 SkipFirstLike_count
 TakeFirstLike_takeCount
 TakeFirstLike_count
+TakeLastLike_queue
 TakeWhileLike_inclusive
 WithLatestLike_hasLatest
 WithLatestLike_otherLatest
@@ -174,7 +175,6 @@ Publisher_observers
 ReadonlyArrayEnumerator_values
 ReadonlyArrayEnumerator_index
 ReadonlyArrayEnumerator_count
-TakeLastObserver_takeLastQueue
 ThrottleObserver_value
 ThrottleObserver_hasValue
 ThrottleObserver_durationSubscription

@@ -208,6 +208,8 @@ export declare const __TakeFirstLike_takeCount: unique symbol;
 
 export declare const __TakeFirstLike_count: unique symbol;
 
+export declare const __TakeLastLike_queue: unique symbol;
+
 export declare const __TakeWhileLike_inclusive: unique symbol;
 
 export declare const __WithLatestLike_hasLatest: unique symbol;
@@ -341,8 +343,6 @@ export declare const __ReadonlyArrayEnumerator_values: unique symbol;
 export declare const __ReadonlyArrayEnumerator_index: unique symbol;
 
 export declare const __ReadonlyArrayEnumerator_count: unique symbol;
-
-export declare const __TakeLastObserver_takeLastQueue: unique symbol;
 
 export declare const __ThrottleObserver_value: unique symbol;
 

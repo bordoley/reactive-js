@@ -19,9 +19,6 @@ export interface PauseableObservableModule extends ContainerTypeClass<Type> {
      */
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ContainerOperator<Type, TA, TB>;
     sinkInto<T>(sink: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
-    takeLast<T>(options?: {
-        readonly count?: number;
-    }): ContainerOperator<Type, T, T>;
 }
 export type Signature = PauseableObservableModule;
 export declare const buffer: Signature["buffer"];

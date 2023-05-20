@@ -30,7 +30,7 @@ const DeferredTypeClassTests = (m, toReadonlyArray) => [
         pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.repeat(_ => {
             throw err;
         }), toReadonlyArray()), expectToThrowError(err));
-    })), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], m.fromReadonlyArray(), m.startWith(2, 3, 4), toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("takeLast", test("when count is less than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 3 }), toReadonlyArray(), expectArrayEquals([3, 4, 5]))), test("when count is greater than the total number of elements", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast({ count: 10 }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with default count", pipeLazy([1, 2, 3, 4, 5], m.fromReadonlyArray(), m.takeLast(), toReadonlyArray(), expectArrayEquals([5])))), describe("zip", test("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), toReadonlyArray(), expectArrayEquals([
+    })), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], m.fromReadonlyArray(), m.startWith(2, 3, 4), toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("zip", test("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), toReadonlyArray(), expectArrayEquals([
         [1, 5],
         [2, 4],
         [3, 3],

@@ -217,6 +217,8 @@ export const __TakeFirstLike_takeCount = /*@__PURE__*/ symbol("TakeFirstLike_tak
 /** @type {unique symbol} */
 export const __TakeFirstLike_count = /*@__PURE__*/ symbol("TakeFirstLike_count");
 /** @type {unique symbol} */
+export const __TakeLastLike_queue = /*@__PURE__*/ symbol("TakeLastLike_queue");
+/** @type {unique symbol} */
 export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol("TakeWhileLike_inclusive");
 /** @type {unique symbol} */
 export const __WithLatestLike_hasLatest = /*@__PURE__*/ symbol("WithLatestLike_hasLatest");
@@ -351,8 +353,6 @@ export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyAr
 export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_index");
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_count");
-/** @type {unique symbol} */
-export const __TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol("TakeLastObserver_takeLastQueue");
 /** @type {unique symbol} */
 export const __ThrottleObserver_value = /*@__PURE__*/ symbol("ThrottleObserver_value");
 /** @type {unique symbol} */

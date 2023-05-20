@@ -44,7 +44,6 @@
 - [flatMapIterable](types.DeferredTypeClass.md#flatmapiterable)
 - [repeat](types.DeferredTypeClass.md#repeat)
 - [startWith](types.DeferredTypeClass.md#startwith)
-- [takeLast](types.DeferredTypeClass.md#takelast)
 - [zipWith](types.DeferredTypeClass.md#zipwith)
 
 ### Other Methods
@@ -621,31 +620,6 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-### takeLast
-
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-Returns a Container that only emits the last `count` items emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
 
 #### Returns
 

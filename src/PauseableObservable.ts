@@ -58,10 +58,6 @@ export interface PauseableObservableModule extends ContainerTypeClass<Type> {
   sinkInto<T>(
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
-
-  takeLast<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<Type, T, T>;
 }
 
 export type Signature = PauseableObservableModule;

@@ -2,7 +2,7 @@
 
 import { newInstance } from "../../functions.js";
 import { CollectionLike_count, KeyedCollectionLike_get, } from "../../types.js";
-const Indexed_toReadonlyArray = () => (queue) => {
+const IndexedCollection_toReadonlyArray = () => (queue) => {
     const count = queue[CollectionLike_count];
     const result = newInstance(Array, count);
     for (let i = 0; i < count; i++) {
@@ -10,4 +10,4 @@ const Indexed_toReadonlyArray = () => (queue) => {
     }
     return result;
 };
-export default Indexed_toReadonlyArray;
+export default IndexedCollection_toReadonlyArray;

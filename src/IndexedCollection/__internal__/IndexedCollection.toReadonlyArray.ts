@@ -5,7 +5,7 @@ import {
   KeyedCollectionLike_get,
 } from "../../types.js";
 
-const Indexed_toReadonlyArray =
+const IndexedCollection_toReadonlyArray =
   <T>() =>
   (queue: IndexedCollectionLike<T>) => {
     const count = queue[CollectionLike_count];
@@ -18,4 +18,4 @@ const Indexed_toReadonlyArray =
     return result;
   };
 
-export default Indexed_toReadonlyArray;
+export default IndexedCollection_toReadonlyArray;

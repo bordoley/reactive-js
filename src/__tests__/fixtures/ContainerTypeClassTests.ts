@@ -496,6 +496,45 @@ const ContainerTypeClassTests = <
       ),
     ),
     describe(
+      "takeLast",
+      test(
+        "when count is less than the total number of elements",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+            m.takeLast({ count: 3 }),
+            toReadonlyArray(ctx),
+            expectArrayEquals([3, 4, 5]),
+          ),
+        ),
+      ),
+      test(
+        "when count is greater than the total number of elements",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+            m.takeLast({ count: 10 }),
+            toReadonlyArray(ctx),
+            expectArrayEquals([1, 2, 3, 4, 5]),
+          ),
+        ),
+      ),
+      test(
+        "with default count",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+            m.takeLast(),
+            toReadonlyArray(ctx),
+            expectArrayEquals([5]),
+          ),
+        ),
+      ),
+    ),
+    describe(
       "takeWhile",
       test("exclusive", () => {
         Disposable.using(createCtx)((ctx: TCtx) =>

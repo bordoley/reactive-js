@@ -901,6 +901,15 @@ export interface ContainerTypeClass<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
+   *  Returns a Container that only emits the last `count` items emitted by the source.
+   *
+   * @category Operator
+   */
+  takeLast<T>(options?: {
+    readonly count?: number;
+  }): ContainerOperator<C, T, T>;
+
+  /**
    * Returns a Container which emits values emitted by the source as long
    * as each value satisfies the given predicate, and then completes as soon as
    * this predicate is not satisfied.
@@ -1068,15 +1077,6 @@ export interface DeferredTypeClass<C extends Container>
    * @category Operator
    */
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-
-  /**
-   *  Returns a Container that only emits the last `count` items emitted by the source.
-   *
-   * @category Operator
-   */
-  takeLast<T>(options?: {
-    readonly count?: number;
-  }): ContainerOperator<C, T, T>;
 
   toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 

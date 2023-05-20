@@ -495,6 +495,9 @@ export const __TakeFirstLike_count = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __TakeLastLike_queue = /*@__PURE__*/ symbol("TakeLastLike_queue");
+
+/** @type {unique symbol} */
 export const __TakeWhileLike_inclusive = /*@__PURE__*/ symbol(
   "TakeWhileLike_inclusive",
 );
@@ -812,11 +815,6 @@ export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __ReadonlyArrayEnumerator_count = /*@__PURE__*/ symbol(
   "ReadonlyArrayEnumerator_count",
-);
-
-/** @type {unique symbol} */
-export const __TakeLastObserver_takeLastQueue = /*@__PURE__*/ symbol(
-  "TakeLastObserver_takeLastQueue",
 );
 
 /** @type {unique symbol} */

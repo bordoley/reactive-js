@@ -33,6 +33,7 @@
 - [scan](PauseableObservable.md#scan)
 - [skipFirst](PauseableObservable.md#skipfirst)
 - [takeFirst](PauseableObservable.md#takefirst)
+- [takeLast](PauseableObservable.md#takelast)
 - [takeWhile](PauseableObservable.md#takewhile)
 
 ### Other Functions
@@ -40,7 +41,6 @@
 - [dispatchTo](PauseableObservable.md#dispatchto)
 - [enqueue](PauseableObservable.md#enqueue)
 - [sinkInto](PauseableObservable.md#sinkinto)
-- [takeLast](PauseableObservable.md#takelast)
 
 ## Type Aliases
 
@@ -434,6 +434,31 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 ___
 
+### takeLast
+
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
+
+Returns a Container that only emits the last `count` items emitted by the source.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
+
+___
+
 ### takeWhile
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
@@ -527,26 +552,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`void`\>\>
-
-___
-
-### takeLast
-
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>

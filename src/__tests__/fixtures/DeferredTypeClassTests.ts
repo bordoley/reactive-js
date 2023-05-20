@@ -244,39 +244,6 @@ const DeferredTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
-      "takeLast",
-      test(
-        "when count is less than the total number of elements",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast({ count: 3 }),
-          toReadonlyArray(),
-          expectArrayEquals([3, 4, 5]),
-        ),
-      ),
-      test(
-        "when count is greater than the total number of elements",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast({ count: 10 }),
-          toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 4, 5]),
-        ),
-      ),
-      test(
-        "with default count",
-        pipeLazy(
-          [1, 2, 3, 4, 5],
-          m.fromReadonlyArray(),
-          m.takeLast(),
-          toReadonlyArray(),
-          expectArrayEquals([5]),
-        ),
-      ),
-    ),
-    describe(
       "zip",
       test(
         "when all inputs are the same length",

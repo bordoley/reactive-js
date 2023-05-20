@@ -54,6 +54,7 @@ import {
   __StackLike_pop as StackLike_pop,
   __TakeFirstLike_count as TakeFirstLike_count,
   __TakeFirstLike_takeCount as TakeFirstLike_takeCount,
+  __TakeLastLike_queue as TakeLastLike_queue,
   __TakeWhileLike_inclusive as TakeWhileLike_inclusive,
   __WithLatestLike_hasLatest as WithLatestLike_hasLatest,
   __WithLatestLike_otherLatest as WithLatestLike_otherLatest,
@@ -96,6 +97,7 @@ export {
   StackLike_head,
   TakeFirstLike_count,
   TakeFirstLike_takeCount,
+  TakeLastLike_queue,
   TakeWhileLike_inclusive,
   WithLatestLike_hasLatest,
   WithLatestLike_otherLatest,
@@ -220,6 +222,10 @@ export interface SkipFirstLike {
 export interface TakeFirstLike {
   [TakeFirstLike_count]: number;
   [TakeFirstLike_takeCount]: number;
+}
+
+export interface TakeLastLike<T> {
+  [TakeLastLike_queue]: IndexedQueueLike<T>;
 }
 
 export interface TakeWhileLike<T> extends PredicatedLike<T> {
