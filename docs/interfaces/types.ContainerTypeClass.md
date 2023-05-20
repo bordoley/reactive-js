@@ -16,6 +16,8 @@
 
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
+  ↳ [`ObservableModule`](Observable.ObservableModule.md)
+
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
   ↳ [`DeferredTypeClass`](types.DeferredTypeClass.md)

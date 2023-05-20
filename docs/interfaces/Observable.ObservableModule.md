@@ -4,6 +4,12 @@
 
 [Observable](../modules/Observable.md).ObservableModule
 
+## Hierarchy
+
+- [`ContainerTypeClass`](types.ContainerTypeClass.md)<[`Type`](../modules/Observable.md#type)\>
+
+  ↳ **`ObservableModule`**
+
 ## Table of contents
 
 ### Operator Methods
@@ -109,6 +115,10 @@
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[flatMapIterable](types.ContainerTypeClass.md#flatmapiterable)
+
 ___
 
 ## Other Methods
@@ -178,6 +188,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
 
 ___
 
@@ -1221,11 +1235,18 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[dispatchTo](types.ContainerTypeClass.md#dispatchto)
+
 ___
 
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+Returns a ContainerOperator that emits all items emitted by the source that
+are distinct by comparison from the previous item.
 
 #### Type parameters
 
@@ -1243,6 +1264,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[distinctUntilChanged](types.ContainerTypeClass.md#distinctuntilchanged)
 
 ___
 
@@ -1334,6 +1359,10 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[enqueue](types.ContainerTypeClass.md#enqueue)
+
 ___
 
 ### firstAsync
@@ -1400,6 +1429,9 @@ ___
 
 ▸ **forEach**<`T`\>(`effect`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+Returns a ContainerOperator that applies the side effect function to each
+value emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -1415,6 +1447,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[forEach](types.ContainerTypeClass.md#foreach)
 
 ___
 
@@ -3086,6 +3122,10 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`unknown`, `T`\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[ignoreElements](types.ContainerTypeClass.md#ignoreelements)
+
 ___
 
 ### isDeferredObservable
@@ -3180,6 +3220,9 @@ ___
 
 ▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
 #### Type parameters
 
 | Name |
@@ -3196,9 +3239,36 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[keep](types.ContainerTypeClass.md#keep)
+
 ___
 
 ### keepType
+
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`ObservableContainer`](Observable.ObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<[`ObservableContainer`](Observable.ObservableContainer.md), `TA`, `TB`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[keepType](types.ContainerTypeClass.md#keeptype)
 
 ▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
 
@@ -3218,6 +3288,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Overrides
+
+ContainerTypeClass.keepType
 
 ___
 
@@ -3262,6 +3336,17 @@ ___
 
 ▸ **map**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
 
+Returns a ContainerOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
 #### Type parameters
 
 | Name |
@@ -3271,13 +3356,17 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
 
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[map](types.ContainerTypeClass.md#map)
 
 ___
 
@@ -3301,6 +3390,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[mapTo](types.ContainerTypeClass.md#mapto)
 
 ___
 
@@ -3632,6 +3725,10 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[pairwise](types.ContainerTypeClass.md#pairwise)
+
 ___
 
 ### pick
@@ -3655,6 +3752,10 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
+
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
@@ -3675,6 +3776,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -3699,11 +3804,18 @@ ___
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
+
 ___
 
 ### scan
 
 ▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `TAcc`\>
+
+Returns a Container that applies an accumulator function over the source,
+and emits each intermediate result.
 
 #### Type parameters
 
@@ -3714,20 +3826,26 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> | The accumulator function called on each source value. |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> | The initial accumulation value. |
 
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `TAcc`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[scan](types.ContainerTypeClass.md#scan)
 
 ___
 
 ### skipFirst
 
 ▸ **skipFirst**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+Returns a Container that skips the first count items emitted by the source.
 
 #### Type parameters
 
@@ -3745,6 +3863,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[skipFirst](types.ContainerTypeClass.md#skipfirst)
 
 ___
 
@@ -3825,6 +3947,8 @@ ___
 
 ▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+Returns a Container that only emits the first `count` values emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -3841,6 +3965,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[takeFirst](types.ContainerTypeClass.md#takefirst)
 
 ___
 
@@ -3848,6 +3976,8 @@ ___
 
 ▸ **takeLast**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+Returns a Container that only emits the last `count` items emitted by the source.
+
 #### Type parameters
 
 | Name |
@@ -3864,6 +3994,10 @@ ___
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[takeLast](types.ContainerTypeClass.md#takelast)
 
 ___
 
@@ -3947,6 +4081,10 @@ ___
 
 ▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
 
+Returns a Container which emits values emitted by the source as long
+as each value satisfies the given predicate, and then completes as soon as
+this predicate is not satisfied.
+
 #### Type parameters
 
 | Name |
@@ -3955,15 +4093,19 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.inclusive?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> | The predicate function. |
+| `options?` | `Object` | - |
+| `options.inclusive?` | `boolean` | - |
 
 #### Returns
 
 [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[ContainerTypeClass](types.ContainerTypeClass.md).[takeWhile](types.ContainerTypeClass.md#takewhile)
 
 ___
 

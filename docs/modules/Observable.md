@@ -3368,6 +3368,25 @@ ___
 
 ### keepType
 
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`ObservableContainer`](../interfaces/Observable.ObservableContainer.md), `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ObservableContainer`](../interfaces/Observable.ObservableContainer.md), `TA`, `TB`\>
+
 ▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
 
 #### Type parameters
