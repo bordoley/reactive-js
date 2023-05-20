@@ -9,7 +9,8 @@ import { arrayEquality, identityLazy, increment, isSome, none, pipe, pipeLazy, r
 import { DisposableLike_dispose, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../types.js";
 import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
-testModule("Runnable", RunnableTypeClassTests(Runnable), HigherOrderObservableTypeClassTests(Runnable, identityLazy), describe("compute", test("batch mode", pipeLazy(Runnable.compute(() => {
+import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
+testModule("Runnable", ...RunnableTypeClassTests(Runnable), HigherOrderObservableTypeClassTests(Runnable, identityLazy), StatefulTypeClassTests(Runnable, Observable.toReadonlyArrayAsync), describe("compute", test("batch mode", pipeLazy(Runnable.compute(() => {
     const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
     const obs1 = __memo(fromValueWithDelay, 10, 5);
     const result1 = __await(obs1);

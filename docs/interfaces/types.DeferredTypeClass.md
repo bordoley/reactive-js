@@ -16,9 +16,9 @@
 
   ↳ **`DeferredTypeClass`**
 
-  ↳↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
-
   ↳↳ [`RunnableTypeClass`](types.RunnableTypeClass.md)
+
+  ↳↳ [`StatefulTypeClass`](types.StatefulTypeClass.md)
 
 ## Table of contents
 

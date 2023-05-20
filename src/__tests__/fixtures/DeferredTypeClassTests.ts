@@ -19,19 +19,19 @@ import ContainerTypeClassTests from "./ContainerTypeClassTests.js";
 const DeferredTypeClassTests = <C extends Container>(
   m: DeferredTypeClass<C>,
   toReadonlyArray: <T>() => Function1<ContainerOf<C, T>, ReadonlyArray<T>>,
-) =>
+) => [
+  ContainerTypeClassTests(
+    m,
+    () => Disposable.disposed,
+    <T>() =>
+      (arr: ReadonlyArray<T>) =>
+        m.fromReadonlyArray<T>()(arr),
+    <T>() =>
+      (c: ContainerOf<C, T>) =>
+        toReadonlyArray<T>()(c),
+  ),
   describe(
     "DeferredTypeClass",
-    ...ContainerTypeClassTests(
-      m,
-      () => Disposable.disposed,
-      <T>() =>
-        (arr: ReadonlyArray<T>) =>
-          m.fromReadonlyArray<T>()(arr),
-      <T>() =>
-        (c: ContainerOf<C, T>) =>
-          toReadonlyArray<T>()(c),
-    ).tests,
     describe(
       "concat",
       test(
@@ -338,6 +338,7 @@ const DeferredTypeClassTests = <C extends Container>(
         ),
       ),
     ),
-  );
+  ),
+];
 
 export default DeferredTypeClassTests;

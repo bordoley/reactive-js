@@ -1,5 +1,5 @@
-import { Factory } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, StatefulTypeClass } from "./types.js";
+import { Factory, Function1 } from "./functions.js";
+import { Container, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, RunnableLike, StatefulTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -15,6 +15,11 @@ export interface EnumerableModule extends EnumerableTypeClass<Type>, StatefulTyp
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
+    toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
+        readonly delay: number;
+        readonly delayStart?: boolean;
+    }): Function1<EnumerableLike<T>, RunnableLike<T>>;
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];

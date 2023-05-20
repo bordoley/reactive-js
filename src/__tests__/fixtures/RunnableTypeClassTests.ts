@@ -33,15 +33,17 @@ import {
 } from "../../types.js";
 import DeferredTypeClassTests from "./DeferredTypeClassTests.js";
 
-const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
+const RunnableTypeClassTests = <C extends Container>(
+  m: RunnableTypeClass<C>,
+) => [
+  ...DeferredTypeClassTests(
+    m,
+    <T>() =>
+      (c: ContainerOf<C, T>) =>
+        m.toReadonlyArray<T>()(c),
+  ),
   describe(
     "RunnableTypeClass",
-    ...DeferredTypeClassTests(
-      m,
-      <T>() =>
-        (c: ContainerOf<C, T>) =>
-          m.toReadonlyArray<T>()(c),
-    ).tests,
     describe(
       "contains",
       describe(
@@ -297,6 +299,7 @@ const RunnableTypeClassTests = <C extends Container>(m: RunnableTypeClass<C>) =>
         ),
       ),
     ),
-  );
+  ),
+];
 
 export default RunnableTypeClassTests;

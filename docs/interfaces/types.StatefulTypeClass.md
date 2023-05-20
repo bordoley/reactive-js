@@ -12,15 +12,17 @@
 
 ## Hierarchy
 
-- **`StatefulTypeClass`**
+- [`DeferredTypeClass`](types.DeferredTypeClass.md)<`C`\>
 
-  ↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
+  ↳ **`StatefulTypeClass`**
 
-  ↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
+  ↳↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
 
-  ↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
+  ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
-  ↳ [`RunnableModule`](Runnable.RunnableModule.md)
+  ↳↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
+
+  ↳↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
 ## Table of contents
 

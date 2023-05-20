@@ -33,12 +33,16 @@ import {
 } from "../types.js";
 import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
 import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
+import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
 
 testModule(
   "Runnable",
-  RunnableTypeClassTests(Runnable),
+  ...RunnableTypeClassTests(Runnable),
   HigherOrderObservableTypeClassTests<Runnable.Type>(Runnable, identityLazy),
-
+  StatefulTypeClassTests<Runnable.Type>(
+    Runnable,
+    Observable.toReadonlyArrayAsync,
+  ),
   describe(
     "compute",
     test(

@@ -876,7 +876,7 @@ export interface EnumerableTypeClass<C extends Container> extends RunnableTypeCl
  * @noInheritDoc
  * @category TypeClass
  */
-export interface StatefulTypeClass<C extends Container> {
+export interface StatefulTypeClass<C extends Container> extends DeferredTypeClass<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
     /**
      * @category Operator

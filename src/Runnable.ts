@@ -53,7 +53,7 @@ import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.j
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
-import { Factory, SideEffect1, identityLazy } from "./functions.js";
+import { Factory, Function1, SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -94,6 +94,8 @@ export interface RunnableModule
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }): SideEffect1<RunnableLike<T>>;
+
+  toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
 }
 
 export type Signature = RunnableModule;

@@ -51,7 +51,6 @@ import {
   Container_T,
   Container_type,
   DeferredObservableLike,
-  DeferredTypeClass,
   DisposableLike,
   EnumerableLike,
   HigherOrderObservableTypeClass,
@@ -90,9 +89,8 @@ export type Type = DeferredObservableContainer;
  * @noInheritDoc
  */
 export interface DeferredObservableModule
-  extends DeferredTypeClass<Type>,
-    HigherOrderObservableTypeClass<Type, Type>,
-    StatefulTypeClass<Type> {
+  extends StatefulTypeClass<Type>,
+    HigherOrderObservableTypeClass<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

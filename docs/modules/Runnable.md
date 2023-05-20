@@ -73,6 +73,7 @@
 - [generate](Runnable.md#generate)
 - [run](Runnable.md#run)
 - [throws](Runnable.md#throws)
+- [toObservable](Runnable.md#toobservable)
 
 ### Transform Functions
 
@@ -83,7 +84,6 @@
 - [noneSatisfy](Runnable.md#nonesatisfy)
 - [reduce](Runnable.md#reduce)
 - [someSatisfy](Runnable.md#somesatisfy)
-- [toObservable](Runnable.md#toobservable)
 - [toReadonlyArray](Runnable.md#toreadonlyarray)
 
 ## Type Aliases
@@ -1638,6 +1638,22 @@ ___
 
 ___
 
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+___
+
 ## Transform Functions
 
 ### contains
@@ -1787,22 +1803,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 

@@ -1,4 +1,4 @@
-import { Factory, SideEffect1 } from "./functions.js";
+import { Factory, Function1, SideEffect1 } from "./functions.js";
 import { Container, Container_T, Container_type, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass, StatefulTypeClass } from "./types.js";
 /**
  * @noInheritDoc
@@ -19,6 +19,7 @@ export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObse
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
+    toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];

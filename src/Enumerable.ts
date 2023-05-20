@@ -46,13 +46,14 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { Factory, identityLazy } from "./functions.js";
+import { Factory, Function1, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
   EnumerableLike,
   EnumerableTypeClass,
+  RunnableLike,
   StatefulTypeClass,
 } from "./types.js";
 
@@ -78,6 +79,12 @@ export interface EnumerableModule
       mode?: "batched" | "combine-latest";
     },
   ): EnumerableLike<T>;
+
+  toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+  toObservable<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+  }): Function1<EnumerableLike<T>, RunnableLike<T>>;
 }
 
 export type Signature = EnumerableModule;

@@ -13,7 +13,7 @@ const EnumerableTypeClassTests = <C extends Container>(
 ) =>
   describe(
     "EnumerableTypeClass",
-    ...RunnableTypeClassTests(m).tests,
+    ...RunnableTypeClassTests(m),
     describe(
       "enumerate",
       test("with higher order observable and no delay", () => {

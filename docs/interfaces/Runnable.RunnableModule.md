@@ -20,6 +20,7 @@
 
 - [compute](Runnable.RunnableModule.md#compute)
 - [run](Runnable.RunnableModule.md#run)
+- [toObservable](Runnable.RunnableModule.md#toobservable)
 
 ## Methods
 
@@ -68,3 +69,23 @@ ___
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Overrides
+
+[RunnableTypeClass](types.RunnableTypeClass.md).[toObservable](types.RunnableTypeClass.md#toobservable)

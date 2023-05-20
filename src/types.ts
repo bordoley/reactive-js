@@ -1313,7 +1313,8 @@ export interface EnumerableTypeClass<C extends Container>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface StatefulTypeClass<C extends Container> {
+export interface StatefulTypeClass<C extends Container>
+  extends DeferredTypeClass<C> {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,

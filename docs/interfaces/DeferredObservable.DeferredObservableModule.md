@@ -6,11 +6,9 @@
 
 ## Hierarchy
 
-- [`DeferredTypeClass`](types.DeferredTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type)\>
+- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type)\>
 
 - [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
-
-- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type)\>
 
   ↳ **`DeferredObservableModule`**
 
@@ -98,7 +96,7 @@ ___
 
 #### Overrides
 
-[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+StatefulTypeClass.repeat
 
 ▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](../modules/DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
@@ -120,7 +118,7 @@ ___
 
 #### Overrides
 
-[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+StatefulTypeClass.repeat
 
 ▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](../modules/DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
@@ -136,7 +134,7 @@ ___
 
 #### Overrides
 
-[DeferredTypeClass](types.DeferredTypeClass.md).[repeat](types.DeferredTypeClass.md#repeat)
+StatefulTypeClass.repeat
 
 ___
 
