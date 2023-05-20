@@ -5,6 +5,7 @@ import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_toEnumeratorFactory from "./Enumerable/__internal__/Enumerable.toEnumeratorFactory.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
+import Enumerable_toObservable from "./Enumerable/__internal__/Enumerable.toObservable.js";
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
@@ -146,7 +147,7 @@ export const throws: Signature["throws"] = Observable_throws;
 export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
   Enumerable_toEnumeratorFactory;
 export const toIterable: Signature["toIterable"] = Enumerable_toIterable;
-export const toObservable: Signature["toObservable"] = identityLazy;
+export const toObservable: Signature["toObservable"] = Enumerable_toObservable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Enumerable_toReadonlyArray;
 export const zip: Signature["zip"] = Observable_zip;
