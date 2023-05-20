@@ -21,6 +21,7 @@ import {
   newInstance,
   none,
   pipe,
+  raiseError,
   raiseWithDebugMessage,
   returns,
   unsafeCast,
@@ -33,6 +34,20 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../types.js";
+
+class BackPressureError extends Error {
+  readonly [BufferLike_capacity]: number;
+  readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+
+  constructor(
+    capacity: number,
+    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
+  ) {
+    super();
+    this[BufferLike_capacity] = capacity;
+    this[QueueableLike_backpressureStrategy] = backpressureStrategy;
+  }
+}
 
 const Queue_indexedQueueMixin: <T>() => Mixin2<
   IndexedQueueLike<T>,
@@ -288,13 +303,8 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
             // to avoid unintentionally growing the queue.
             this[QueueLike_dequeue]();
           } else if (backpressureStrategy === "throw" && count >= capacity) {
-            // FIXME: Seems like we should have a known exception (symbol), that
-            // a caller could safely catch in this case and then make its own decisions.
-            // For instance using drop-latest is going to break priority queue,
-            // so it would expect a known exception if it was configured for drop-latest
-            // and handle it accordingly.
-            raiseWithDebugMessage(
-              "attempting to enque a value to a queue that is full",
+            raiseError(
+              newInstance(BackPressureError, capacity, backpressureStrategy),
             );
           }
 

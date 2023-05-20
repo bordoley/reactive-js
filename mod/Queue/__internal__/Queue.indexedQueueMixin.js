@@ -5,8 +5,17 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props } from "../../__internal__/mixins.js";
 import { __IndexedQueueMixin_capacityMask, __IndexedQueueMixin_head, __IndexedQueueMixin_tail, __IndexedQueueMixin_values, } from "../../__internal__/symbols.js";
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../__internal__/types.js";
-import { newInstance, none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
+import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../types.js";
+class BackPressureError extends Error {
+    [BufferLike_capacity];
+    [QueueableLike_backpressureStrategy];
+    constructor(capacity, backpressureStrategy) {
+        super();
+        this[BufferLike_capacity] = capacity;
+        this[QueueableLike_backpressureStrategy] = backpressureStrategy;
+    }
+}
 const Queue_indexedQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;
@@ -168,12 +177,7 @@ const Queue_indexedQueueMixin = /*@__PURE__*/ (() => {
                 this[QueueLike_dequeue]();
             }
             else if (backpressureStrategy === "throw" && count >= capacity) {
-                // FIXME: Seems like we should have a known exception (symbol), that
-                // a caller could safely catch in this case and then make its own decisions.
-                // For instance using drop-latest is going to break priority queue,
-                // so it would expect a known exception if it was configured for drop-latest
-                // and handle it accordingly.
-                raiseWithDebugMessage("attempting to enque a value to a queue that is full");
+                raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
             const values = this[__IndexedQueueMixin_values] ??
                 ((this[__IndexedQueueMixin_capacityMask] = 31),
