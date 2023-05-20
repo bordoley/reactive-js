@@ -41,7 +41,6 @@
 - [concatMap](types.DeferredTypeClass.md#concatmap)
 - [concatWith](types.DeferredTypeClass.md#concatwith)
 - [endWith](types.DeferredTypeClass.md#endwith)
-- [flatMapIterable](types.DeferredTypeClass.md#flatmapiterable)
 - [repeat](types.DeferredTypeClass.md#repeat)
 - [startWith](types.DeferredTypeClass.md#startwith)
 - [zipWith](types.DeferredTypeClass.md#zipwith)
@@ -526,29 +525,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 

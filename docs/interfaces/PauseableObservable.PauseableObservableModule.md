@@ -12,42 +12,13 @@
 
 ## Table of contents
 
-### Operator Methods
-
-- [flatMapIterable](PauseableObservable.PauseableObservableModule.md#flatmapiterable)
-
-### Other Methods
+### Methods
 
 - [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
 - [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
 
-## Operator Methods
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`\>
-
-___
-
-## Other Methods
+## Methods
 
 ### dispatchTo
 

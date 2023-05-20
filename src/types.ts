@@ -800,6 +800,13 @@ export interface ContainerTypeClass<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
+   * @category Operator
+   */
+  flatMapIterable<TA, TB>(
+    selector: Function1<TA, Iterable<TB>>,
+  ): ContainerOperator<C, TA, TB>;
+
+  /**
    * Returns a ContainerOperator that applies the side effect function to each
    * value emitted by the source.
    *
@@ -1017,13 +1024,6 @@ export interface DeferredTypeClass<C extends Container>
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
-  flatMapIterable<TA, TB>(
-    selector: Function1<TA, Iterable<TB>>,
-  ): ContainerOperator<C, TA, TB>;
 
   /**
    * @category Constructor

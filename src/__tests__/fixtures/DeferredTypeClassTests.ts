@@ -102,23 +102,6 @@ const DeferredTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
-      "flatMapIterable",
-      test(
-        "maps the incoming value with the inline generator function",
-        pipeLazy(
-          [none, none],
-          m.fromReadonlyArray(),
-          m.flatMapIterable(function* (_) {
-            yield 1;
-            yield 2;
-            yield 3;
-          }),
-          toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-    describe(
       "fromFactory",
       test(
         "it produces the factory result",

@@ -26,6 +26,7 @@
 
 - [buffer](types.ContainerTypeClass.md#buffer)
 - [distinctUntilChanged](types.ContainerTypeClass.md#distinctuntilchanged)
+- [flatMapIterable](types.ContainerTypeClass.md#flatmapiterable)
 - [forEach](types.ContainerTypeClass.md#foreach)
 - [ignoreElements](types.ContainerTypeClass.md#ignoreelements)
 - [keep](types.ContainerTypeClass.md#keep)
@@ -88,6 +89,29 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 

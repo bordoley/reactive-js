@@ -2,7 +2,7 @@
 
 import * as Disposable from "../../Disposable.js";
 import { describe, expectArrayEquals, expectToThrowError, test, } from "../../__internal__/testing.js";
-import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, pipe, returns, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, returns, } from "../../functions.js";
 const ContainerTypeClassTests = (m, createCtx, fromReadonlyArray, toReadonlyArray) => describe("ContainerTypeClass", describe("buffer", test("with multiple sub buffers", Disposable.usingLazy(createCtx)(ctx => pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], fromReadonlyArray(ctx), m.buffer({ count: 3 }), toReadonlyArray(ctx), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -17,7 +17,11 @@ const ContainerTypeClassTests = (m, createCtx, fromReadonlyArray, toReadonlyArra
         throw err;
     };
     pipe(Disposable.usingLazy(createCtx)((ctx) => pipe([1, 1], fromReadonlyArray(ctx), m.distinctUntilChanged({ equality }), toReadonlyArray(ctx))), expectToThrowError(err));
-})), describe("forEach", test("invokes the effect for each notified value", () => {
+})), describe("flatMapIterable", test("maps the incoming value with the inline generator function", Disposable.usingLazy(createCtx)((ctx) => pipe([none, none], fromReadonlyArray(ctx), m.flatMapIterable(function* (_) {
+    yield 1;
+    yield 2;
+    yield 3;
+}), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3, 1, 2, 3]))))), describe("forEach", test("invokes the effect for each notified value", () => {
     const result = [];
     Disposable.using(createCtx)((ctx) => pipe([1, 2, 3], fromReadonlyArray(ctx), m.forEach(x => {
         result.push(x + 10);

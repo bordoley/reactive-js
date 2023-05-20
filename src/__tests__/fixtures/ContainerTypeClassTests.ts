@@ -12,6 +12,7 @@ import {
   greaterThan,
   increment,
   lessThan,
+  none,
   pipe,
   returns,
 } from "../../functions.js";
@@ -124,6 +125,26 @@ const ContainerTypeClassTests = <
           expectToThrowError(err),
         );
       }),
+    ),
+
+    describe(
+      "flatMapIterable",
+      test(
+        "maps the incoming value with the inline generator function",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [none, none],
+            fromReadonlyArray(ctx),
+            m.flatMapIterable(function* (_) {
+              yield 1;
+              yield 2;
+              yield 3;
+            }),
+            toReadonlyArray(ctx),
+            expectArrayEquals([1, 2, 3, 1, 2, 3]),
+          ),
+        ),
+      ),
     ),
 
     describe(

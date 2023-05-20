@@ -34,6 +34,7 @@ export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
+export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const forEach: Signature["forEach"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
