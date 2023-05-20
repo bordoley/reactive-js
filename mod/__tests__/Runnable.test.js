@@ -39,11 +39,7 @@ testModule("Runnable", ...RunnableContainerModuleTests(Runnable), HigherOrderObs
     return v;
 }), Runnable.toReadonlyArray(), expectArrayEquals([
     101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
-])))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
-    pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 })),
-    pipe([4, 5, 6], Observable.fromReadonlyArray()),
-    pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 2 })),
-], Observable.fromReadonlyArray({ delay: 5 }), Runnable.exhaust(), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 7, 8, 9])))), describe("flow", test("a source with delay", () => {
+])))), describe("flow", test("a source with delay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const generateObservable = pipe(Observable.generate(increment, returns(-1), {
         delay: 1,

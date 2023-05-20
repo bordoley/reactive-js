@@ -1,4 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import ReadonlyArray_isEmpty from "../../ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
@@ -47,6 +48,7 @@ const Sink_bufferMixin: <T>() => Mixin3<
 
         pipe(
           instance,
+          Disposable_addTo(delegate),
           Disposable_onComplete(() => {
             const { [BufferingLike_buffer]: buffer } = instance;
             instance[BufferingLike_buffer] = [];

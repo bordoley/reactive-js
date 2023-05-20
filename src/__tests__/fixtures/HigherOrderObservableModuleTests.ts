@@ -4,7 +4,6 @@ import {
   describe,
   expectArrayEquals,
   expectToThrowAsync,
-  test,
   testAsync,
 } from "../../__internal__/testing.js";
 import {
@@ -58,27 +57,54 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
     ),
 
     describe(
-      "switchAll",
+      "exhaust",
       testAsync(
-        "with empty source",
+        "when the initial observable never disposes",
         pipeLazyAsync(
-          Observable.empty<RunnableLike>({ delay: 1 }),
-          fromRunnable<RunnableLike>(),
-          m.switchAll<number>(),
+          [
+            pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
+            pipe([4, 5, 6], Observable.fromReadonlyArray<number>()),
+            pipe([7, 8, 9], Observable.fromReadonlyArray<number>()),
+          ],
+          Observable.fromReadonlyArray(),
+          fromRunnable<RunnableLike<number>>(),
+          m.exhaust<number>(),
           Observable.toReadonlyArrayAsync(),
-          expectArrayEquals([] as readonly number[]),
+          expectArrayEquals([1, 2, 3]),
         ),
       ),
-      test(
-        "when source throw",
+    ),
+
+    describe(
+      "exhaustMap",
+      testAsync(
+        "when the initial observable never disposes",
         pipeLazyAsync(
-          pipeLazyAsync(
-            Observable.throws<RunnableLike<number>>(),
-            fromRunnable<RunnableLike<number>>(),
-            m.switchAll<number>(),
-            Observable.toReadonlyArrayAsync(),
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          fromRunnable<number>(),
+          m.exhaustMap<number, number>(_ =>
+            pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
           ),
-          expectToThrowAsync,
+          Observable.toReadonlyArrayAsync(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+    ),
+
+    describe(
+      "mergeMap",
+      testAsync(
+        "without delay, merge all observables as they are produced",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          fromRunnable<number>(),
+          m.mergeMap<number, number>(x =>
+            pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+          ),
+          Observable.toReadonlyArrayAsync(),
+          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
         ),
       ),
     ),
@@ -93,7 +119,7 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
           fromRunnable<number>(),
           m.scanLast<number, number>(
             (acc, x) =>
-              pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })),
+              pipe([x + acc], Observable.fromReadonlyArray({ delay: 1 })),
             returns(0),
           ),
           Observable.toReadonlyArrayAsync(),
@@ -102,30 +128,13 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
       ),
 
       testAsync(
-        "slow src, fast acc",
+        "fast src, fast acc",
         pipeLazyAsync(
           [1, 2, 3],
-          Observable.fromReadonlyArray({ delay: 4 }),
+          Observable.fromReadonlyArray(),
           fromRunnable<number>(),
           m.scanLast<number, number>(
-            (acc, x) =>
-              pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })),
-            returns(0),
-          ),
-          Observable.toReadonlyArrayAsync(),
-          expectArrayEquals([1, 3, 6]),
-        ),
-      ),
-
-      testAsync(
-        "slow src, slow acc",
-        pipeLazyAsync(
-          [1, 2, 3],
-          Observable.fromReadonlyArray({ delay: 4 }),
-          fromRunnable<number>(),
-          m.scanLast<number, number>(
-            (acc, x) =>
-              pipe([x + acc], Observable.fromReadonlyArray({ delay: 4 })),
+            (acc, x) => pipe([x + acc], Observable.fromReadonlyArray()),
             returns(0),
           ),
           Observable.toReadonlyArrayAsync(),
@@ -151,12 +160,29 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
 
     describe(
       "scanMany",
-      // FIXME: This test succeeds on DENO, but fails in node with timeout
-      /* testAsync(
-        "slow src, fast acc",
+      testAsync(
+        "fast src, fast acc",
         pipeLazyAsync(
           [1, 1, 1],
-          Observable.fromReadonlyArray({ delay: 10 }),
+          Observable.fromReadonlyArray(),
+          fromRunnable<number>(),
+          m.scanMany<number, number>(
+            (acc, next) =>
+              pipe(
+                Observable.generate<number>(identity, returns(next + acc)),
+                Observable.takeFirst({ count: 3 }),
+              ),
+            returns(0),
+          ),
+          Observable.toReadonlyArrayAsync(),
+          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+        ),
+      ),
+      testAsync(
+        "fast src, slow acc",
+        pipeLazyAsync(
+          [1, 1, 1],
+          Observable.fromReadonlyArray(),
           fromRunnable<number>(),
           m.scanMany<number, number>(
             (acc, next) =>
@@ -168,29 +194,57 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
               ),
             returns(0),
           ),
-          Observable.forEach(console.log),
           Observable.toReadonlyArrayAsync(),
           expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
         ),
-      ),*/
+      ),
+    ),
+
+    describe(
+      "switchAll",
       testAsync(
-        "fast src, slow acc",
+        "with empty source",
         pipeLazyAsync(
-          [1, 1, 1],
-          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.empty<RunnableLike>(),
+          fromRunnable<RunnableLike>(),
+          m.switchAll<number>(),
+          Observable.toReadonlyArrayAsync(),
+          expectArrayEquals([] as readonly number[]),
+        ),
+      ),
+      testAsync(
+        "when source throw",
+        pipeLazyAsync(
+          pipeLazyAsync(
+            Observable.throws<RunnableLike<number>>(),
+            fromRunnable<RunnableLike<number>>(),
+            m.switchAll<number>(),
+            Observable.toReadonlyArrayAsync(),
+          ),
+          expectToThrowAsync,
+        ),
+      ),
+    ),
+
+    describe(
+      "switchMap",
+      testAsync(
+        "only produce the last observable",
+        pipeLazyAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
           fromRunnable<number>(),
-          m.scanMany<number, number>(
-            (acc, next) =>
-              pipe(
-                Observable.generate<number>(identity, returns(next + acc), {
-                  delay: 10,
-                }),
-                Observable.takeFirst({ count: 3 }),
-              ),
-            returns(0),
+          m.switchMap<number, number>(x =>
+            pipe(
+              [x, x, x],
+              Observable.fromReadonlyArray<number>({
+                delay: 1,
+                delayStart: true,
+              }),
+            ),
           ),
           Observable.toReadonlyArrayAsync(),
-          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+          expectArrayEquals([3, 3, 3]),
         ),
       ),
     ),

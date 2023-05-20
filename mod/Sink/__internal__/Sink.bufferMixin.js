@@ -1,6 +1,7 @@
 /// <reference types="./Sink.bufferMixin.d.ts" />
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
+import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import ReadonlyArray_isEmpty from "../../ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
@@ -13,7 +14,7 @@ const Sink_bufferMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_mix
     init(Disposable_mixin, instance, delegate);
     instance[BufferingLike_count] = count;
     instance[BufferingLike_buffer] = [];
-    pipe(instance, Disposable_onComplete(() => {
+    pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
         const { [BufferingLike_buffer]: buffer } = instance;
         instance[BufferingLike_buffer] = [];
         if (ReadonlyArray_isEmpty(buffer)) {

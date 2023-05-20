@@ -124,24 +124,6 @@ testModule(
   ),
 
   describe(
-    "exhaust",
-    test(
-      "when the initial observable never disposes",
-      pipeLazy(
-        [
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 })),
-          pipe([4, 5, 6], Observable.fromReadonlyArray()),
-          pipe([7, 8, 9], Observable.fromReadonlyArray({ delay: 2 })),
-        ],
-        Observable.fromReadonlyArray({ delay: 5 }),
-        Runnable.exhaust<number>(),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 7, 8, 9]),
-      ),
-    ),
-  ),
-
-  describe(
     "flow",
     test("a source with delay", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
