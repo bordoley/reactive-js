@@ -1,17 +1,16 @@
 /// <reference types="./Observable.spring.d.ts" />
 
 import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
-import { MAX_VALUE, __DEV__ } from "../../__internal__/constants.js";
-import { abs, min } from "../../__internal__/math.js";
+import { MAX_VALUE } from "../../__internal__/constants.js";
+import { abs, clamp, min } from "../../__internal__/math.js";
 import { isNotEqualTo, pipe, returns } from "../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_spring = (options) => {
-    const { stiffness = 0.15, damping = 0.8, precision = 0.01 } = options ?? {};
-    if (__DEV__) {
-        // FIXME: Validate stiffness, damping, precision are within range.
-    }
+    const stiffness = clamp(0, options?.stiffness ?? 0.15, 1);
+    const damping = clamp(0, options?.damping ?? 0.8, 1);
+    const precision = clamp(0, options?.precision ?? 0.01, 1);
     return pipe(Observable_currentTime(), Observable_scan(([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
         const delta = 1 - value;
