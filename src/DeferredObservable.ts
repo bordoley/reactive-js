@@ -19,9 +19,11 @@ import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
+import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
@@ -138,10 +140,12 @@ export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
 export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
+export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const endWith: Signature["endWith"] = Observable_endWith;
+export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = DeferredObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] =
   DeferredObservable_exhaustMap;

@@ -558,6 +558,7 @@ export interface ContainerTypeClass<C extends Container> {
     buffer<T>(options?: {
         count?: number;
     }): ContainerOperator<C, T, readonly T[]>;
+    dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
     /**
      * Returns a ContainerOperator that emits all items emitted by the source that
      * are distinct by comparison from the previous item.
@@ -567,6 +568,7 @@ export interface ContainerTypeClass<C extends Container> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ContainerOperator<C, T, T>;
+    enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
     /**
      * @category Operator
      */

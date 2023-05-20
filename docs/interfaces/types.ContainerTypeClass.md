@@ -41,6 +41,11 @@
 - [takeLast](types.ContainerTypeClass.md#takelast)
 - [takeWhile](types.ContainerTypeClass.md#takewhile)
 
+### Other Methods
+
+- [dispatchTo](types.ContainerTypeClass.md#dispatchto)
+- [enqueue](types.ContainerTypeClass.md#enqueue)
+
 ## Operator Methods
 
 ### buffer
@@ -467,6 +472,52 @@ this predicate is not satisfied.
 | `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> | The predicate function. |
 | `options?` | `Object` | - |
 | `options.inclusive?` | `boolean` | - |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+## Other Methods
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](types.QueueableLike.md)<`T`\> |
 
 #### Returns
 

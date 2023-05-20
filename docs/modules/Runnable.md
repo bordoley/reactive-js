@@ -69,6 +69,8 @@
 ### Other Functions
 
 - [compute](Runnable.md#compute)
+- [dispatchTo](Runnable.md#dispatchto)
+- [enqueue](Runnable.md#enqueue)
 - [flow](Runnable.md#flow)
 - [generate](Runnable.md#generate)
 - [run](Runnable.md#run)
@@ -1540,6 +1542,50 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
 
 ___
 

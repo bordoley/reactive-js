@@ -5,9 +5,11 @@ import EnumeratorFactory_concatAll from "./EnumeratorFactory/__internal__/Enumer
 import EnumeratorFactory_concatMap from "./EnumeratorFactory/__internal__/EnumeratorFactory.concatMap.js";
 import EnumeratorFactory_concatWith from "./EnumeratorFactory/__internal__/EnumeratorFactory.concatWith.js";
 import EnumeratorFactory_contains from "./EnumeratorFactory/__internal__/EnumeratorFactory.contains.js";
+import EnumeratorFactory_dispatchTo from "./EnumeratorFactory/__internal__/EnumeratorFactory.dispatchTo.js";
 import EnumeratorFactory_distinctUntilChanged from "./EnumeratorFactory/__internal__/EnumeratorFactory.distinctUntilChanged.js";
 import EnumeratorFactory_empty from "./EnumeratorFactory/__internal__/EnumeratorFactory.empty.js";
 import EnumeratorFactory_endWith from "./EnumeratorFactory/__internal__/EnumeratorFactory.endWith.js";
+import EnumeratorFactory_enqueue from "./EnumeratorFactory/__internal__/EnumeratorFactory.enqueue.js";
 import EnumeratorFactory_enumerate from "./EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
 import EnumeratorFactory_everySatisfy from "./EnumeratorFactory/__internal__/EnumeratorFactory.everySatisfy.js";
 import EnumeratorFactory_first from "./EnumeratorFactory/__internal__/EnumeratorFactory.first.js";
@@ -88,10 +90,12 @@ export const concatAll: Signature["concatAll"] = EnumeratorFactory_concatAll;
 export const concatMap: Signature["concatMap"] = EnumeratorFactory_concatMap;
 export const concatWith: Signature["concatWith"] = EnumeratorFactory_concatWith;
 export const contains: Signature["contains"] = EnumeratorFactory_contains;
+export const dispatchTo: Signature["dispatchTo"] = EnumeratorFactory_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EnumeratorFactory_distinctUntilChanged;
 export const empty: Signature["empty"] = EnumeratorFactory_empty;
 export const endWith: Signature["endWith"] = EnumeratorFactory_endWith;
+export const enqueue: Signature["enqueue"] = EnumeratorFactory_enqueue;
 export const enumerate: Signature["enumerate"] = EnumeratorFactory_enumerate;
 export const everySatisfy: Signature["everySatisfy"] =
   EnumeratorFactory_everySatisfy;

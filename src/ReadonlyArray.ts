@@ -5,9 +5,11 @@ import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_concatMap from "./ReadonlyArray/__internal__/ReadonlyArray.concatMap.js";
 import ReadonlyArray_concatWith from "./ReadonlyArray/__internal__/ReadonlyArray.concatWith.js";
 import ReadonlyArray_contains from "./ReadonlyArray/__internal__/ReadonlyArray.contains.js";
+import ReadonlyArray_dispatchTo from "./ReadonlyArray/__internal__/ReadonlyArray.dispatchTo.js";
 import ReadonlyArray_distinctUntilChanged from "./ReadonlyArray/__internal__/ReadonlyArray.distinctUntilChanged.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_endWith from "./ReadonlyArray/__internal__/ReadonlyArray.endWith.js";
+import ReadonlyArray_enqueue from "./ReadonlyArray/__internal__/ReadonlyArray.enqueue.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_everySatisfy from "./ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
@@ -150,10 +152,12 @@ export const concatAll: Signature["concatAll"] = ReadonlyArray_concatAll;
 export const concatMap: Signature["concatMap"] = ReadonlyArray_concatMap;
 export const concatWith: Signature["concatWith"] = ReadonlyArray_concatWith;
 export const contains: Signature["contains"] = ReadonlyArray_contains;
+export const dispatchTo: Signature["dispatchTo"] = ReadonlyArray_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   ReadonlyArray_distinctUntilChanged;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const endWith: Signature["endWith"] = ReadonlyArray_endWith;
+export const enqueue: Signature["enqueue"] = ReadonlyArray_enqueue;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
 export const enumerate: Signature["enumerate"] = ReadonlyArray_enumerate;
 export const everySatisfy: Signature["everySatisfy"] =

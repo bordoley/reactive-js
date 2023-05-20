@@ -3,7 +3,9 @@ import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
 import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
+import EventSource_dispatchTo from "./EventSource/__internal__/EventSource.dispatchTo.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
+import EventSource_enqueue from "./EventSource/__internal__/EventSource.enqueue.js";
 import EventSource_flatMapIterable from "./EventSource/__internal__/EventSource.flatMapIterable.js";
 import EventSource_forEach from "./EventSource/__internal__/EventSource.forEach.js";
 import EventSource_ignoreElements from "./EventSource/__internal__/EventSource.ignoreElements.js";
@@ -84,8 +86,10 @@ export const createPublisher: Signature["createPublisher"] =
   EventSource_createPublisher;
 export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
   EventSource_createRefCountedPublisher;
+export const dispatchTo: Signature["dispatchTo"] = EventSource_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
+export const enqueue: Signature["enqueue"] = EventSource_enqueue;
 export const flatMapIterable: Signature["flatMapIterable"] =
   EventSource_flatMapIterable;
 export const forEach: Signature["forEach"] = EventSource_forEach;

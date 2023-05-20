@@ -14,55 +14,9 @@
 
 ### Methods
 
-- [dispatchTo](PauseableObservable.PauseableObservableModule.md#dispatchto)
-- [enqueue](PauseableObservable.PauseableObservableModule.md#enqueue)
 - [sinkInto](PauseableObservable.PauseableObservableModule.md#sinkinto)
 
 ## Methods
-
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<[`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-___
 
 ### sinkInto
 

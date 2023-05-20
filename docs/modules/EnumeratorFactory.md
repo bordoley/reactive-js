@@ -59,6 +59,8 @@
 
 ### Other Functions
 
+- [dispatchTo](EnumeratorFactory.md#dispatchto)
+- [enqueue](EnumeratorFactory.md#enqueue)
 - [flow](EnumeratorFactory.md#flow)
 - [generate](EnumeratorFactory.md#generate)
 - [throws](EnumeratorFactory.md#throws)
@@ -1310,6 +1312,50 @@ ___
 ___
 
 ## Other Functions
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+___
+
+### enqueue
+
+▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+___
 
 ### flow
 

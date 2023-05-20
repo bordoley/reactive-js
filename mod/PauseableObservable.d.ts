@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container, ContainerOperator, ContainerTypeClass, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike, QueueableLike } from "./types.js";
+import { Container, ContainerTypeClass, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,8 +12,6 @@ export type Type = PauseableObservableContainer;
  * @noInheritDoc
  */
 export interface PauseableObservableModule extends ContainerTypeClass<Type> {
-    enqueue<T>(queue: QueueableLike<T>): ContainerOperator<Type, T, T>;
-    dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<Type, T, T>;
     sinkInto<T>(sink: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
 }
 export type Signature = PauseableObservableModule;
