@@ -143,7 +143,7 @@ const DeferredTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
-      "m.fromReadonlyArray",
+      "fromReadonlyArray",
       test("negative count with start index", () => {
         pipe(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],

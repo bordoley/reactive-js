@@ -13,7 +13,7 @@ const DeferredTypeClassTests = (m, toReadonlyArray) => [
         yield 1;
         yield 2;
         yield 3;
-    }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("fromFactory", test("it produces the factory result", pipeLazy(() => 1, m.fromFactory(), toReadonlyArray(), expectArrayEquals([1])))), describe("fromValue", test("it produces the value", pipeLazy(none, m.fromValue(), toReadonlyArray(), expectArrayEquals([none])))), describe("m.fromReadonlyArray", test("negative count with start index", () => {
+    }), toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("fromFactory", test("it produces the factory result", pipeLazy(() => 1, m.fromFactory(), toReadonlyArray(), expectArrayEquals([1])))), describe("fromValue", test("it produces the value", pipeLazy(none, m.fromValue(), toReadonlyArray(), expectArrayEquals([none])))), describe("fromReadonlyArray", test("negative count with start index", () => {
         pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: -3, start: 4 }), toReadonlyArray(), expectArrayEquals([5, 4, 3]));
     }), test("positive count with start index", () => {
         pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: 3, start: 4 }), toReadonlyArray(), expectArrayEquals([5, 6, 7]));

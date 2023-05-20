@@ -138,6 +138,18 @@ const RunnableTypeClassTests = <C extends Container>(
       ),
     ),
     describe(
+      "first",
+      test(
+        "returns the first item in the src",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.first(),
+          expectEquals<Optional<number>>(1),
+        ),
+      ),
+    ),
+    describe(
       "flow",
       test("flow a generating source", () => {
         const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -184,7 +196,7 @@ const RunnableTypeClassTests = <C extends Container>(
       }),
     ),
     describe(
-      "m.fromReadonlyArray",
+      "fromReadonlyArray",
       test("negative count with start index", () => {
         pipe(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
