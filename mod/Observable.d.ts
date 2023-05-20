@@ -1,6 +1,6 @@
 import type * as MulticastObservable from "./MulticastObservable.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerOf, ContainerOperator, ContainerTypeClass, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableLike, EnumeratorLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, ContainerModule, ContainerOf, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableLike, EnumeratorLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
 export type ObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
@@ -67,7 +67,7 @@ export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | Deferre
 /**
  * @noInheritDoc
  */
-export interface ObservableModule extends ContainerTypeClass<Type> {
+export interface ObservableModule extends ContainerModule<Type> {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): ObservableOperator<T, T>;
     buffer<T>(options?: {

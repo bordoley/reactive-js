@@ -6,7 +6,7 @@ import {
   Container,
   Container_T,
   Container_type,
-  MulticastableTypeClass,
+  MulticastingContainerModule,
 } from "./types.js";
 
 /**
@@ -22,7 +22,7 @@ export type Type = PromiseContainer;
 /**
  * @noInheritDoc
  */
-export interface PromiseModule extends MulticastableTypeClass<Type> {}
+export interface PromiseModule extends MulticastingContainerModule<Type> {}
 
 export type Signature = PromiseModule;
 

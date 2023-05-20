@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`ContainerTypeClass`](types.ContainerTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
+- [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
 
-- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/EventSource.md#type)\>
+- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
 
   ↳ **`EventSourceModule`**
 

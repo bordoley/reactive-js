@@ -9,8 +9,8 @@ import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, testAsync, testModule, } from "../__internal__/testing.js";
 import { pipe } from "../functions.js";
 import { QueueableLike_enqueue } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-testModule("MulticastObservable", HigherOrderObservableTypeClassTests(MulticastObservable, () => DeferredObservable.share(Scheduler.createHostScheduler)), describe("compute", testAsync("__stream", async () => {
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
+testModule("MulticastObservable", HigherOrderObservableModuleTests(MulticastObservable, () => DeferredObservable.share(Scheduler.createHostScheduler)), describe("compute", testAsync("__stream", async () => {
     const result = await pipe(MulticastObservable.compute(() => {
         const stream = __stream(Streamable.identity());
         const push = __bindMethod(stream, QueueableLike_enqueue);

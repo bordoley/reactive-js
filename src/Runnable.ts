@@ -60,12 +60,12 @@ import {
   Container,
   Container_T,
   Container_type,
-  HigherOrderObservableTypeClass,
+  HigherOrderObservableModule,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  RunnableContainerModule,
   RunnableLike,
-  RunnableTypeClass,
-  StatefulTypeClass,
+  StatefulContainerModule,
 } from "./types.js";
 
 /**
@@ -82,9 +82,9 @@ export type Type = RunnableContainer;
  * @noInheritDoc
  */
 export interface RunnableModule
-  extends RunnableTypeClass<Type>,
-    HigherOrderObservableTypeClass<Type, Type>,
-    StatefulTypeClass<Type> {
+  extends RunnableContainerModule<Type>,
+    HigherOrderObservableModule<Type, Type>,
+    StatefulContainerModule<Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

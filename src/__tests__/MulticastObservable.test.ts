@@ -17,11 +17,11 @@ import {
 } from "../__internal__/testing.js";
 import { pipe } from "../functions.js";
 import { QueueableLike_enqueue } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
 
 testModule(
   "MulticastObservable",
-  HigherOrderObservableTypeClassTests<MulticastObservable.Type>(
+  HigherOrderObservableModuleTests<MulticastObservable.Type>(
     MulticastObservable,
     () => DeferredObservable.share(Scheduler.createHostScheduler),
   ),

@@ -6,11 +6,11 @@
 
 ## Hierarchy
 
-- [`RunnableTypeClass`](types.RunnableTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
+- [`RunnableContainerModule`](types.RunnableContainerModule.md)<[`Type`](../modules/Runnable.md#type)\>
 
-- [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
+- [`HigherOrderObservableModule`](types.HigherOrderObservableModule.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
 
-- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
+- [`StatefulContainerModule`](types.StatefulContainerModule.md)<[`Type`](../modules/Runnable.md#type)\>
 
   ↳ **`RunnableModule`**
 
@@ -88,4 +88,4 @@ ___
 
 #### Overrides
 
-[RunnableTypeClass](types.RunnableTypeClass.md).[toObservable](types.RunnableTypeClass.md#toobservable)
+[RunnableContainerModule](types.RunnableContainerModule.md).[toObservable](types.RunnableContainerModule.md#toobservable)

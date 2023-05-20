@@ -7,10 +7,10 @@ import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, identityLazy, increment, isSome, none, pipe, pipeLazy, returns, } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
-testModule("Runnable", ...RunnableTypeClassTests(Runnable), HigherOrderObservableTypeClassTests(Runnable, identityLazy), StatefulTypeClassTests(Runnable, Observable.toReadonlyArrayAsync), describe("compute", test("batch mode", pipeLazy(Runnable.compute(() => {
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
+import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
+testModule("Runnable", ...RunnableContainerModuleTests(Runnable), HigherOrderObservableModuleTests(Runnable, identityLazy), StatefulContainerModuleTests(Runnable, Observable.toReadonlyArrayAsync), describe("compute", test("batch mode", pipeLazy(Runnable.compute(() => {
     const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
     const obs1 = __memo(fromValueWithDelay, 10, 5);
     const result1 = __await(obs1);

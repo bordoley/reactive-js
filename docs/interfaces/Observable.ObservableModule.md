@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ContainerTypeClass`](types.ContainerTypeClass.md)<[`Type`](../modules/Observable.md#type)\>
+- [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/Observable.md#type)\>
 
   ↳ **`ObservableModule`**
 
@@ -117,7 +117,7 @@
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[flatMapIterable](types.ContainerTypeClass.md#flatmapiterable)
+[ContainerModule](types.ContainerModule.md).[flatMapIterable](types.ContainerModule.md#flatmapiterable)
 
 ___
 
@@ -191,7 +191,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[buffer](types.ContainerTypeClass.md#buffer)
+[ContainerModule](types.ContainerModule.md).[buffer](types.ContainerModule.md#buffer)
 
 ___
 
@@ -1237,7 +1237,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[dispatchTo](types.ContainerTypeClass.md#dispatchto)
+[ContainerModule](types.ContainerModule.md).[dispatchTo](types.ContainerModule.md#dispatchto)
 
 ___
 
@@ -1267,7 +1267,7 @@ are distinct by comparison from the previous item.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[distinctUntilChanged](types.ContainerTypeClass.md#distinctuntilchanged)
+[ContainerModule](types.ContainerModule.md).[distinctUntilChanged](types.ContainerModule.md#distinctuntilchanged)
 
 ___
 
@@ -1361,7 +1361,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[enqueue](types.ContainerTypeClass.md#enqueue)
+[ContainerModule](types.ContainerModule.md).[enqueue](types.ContainerModule.md#enqueue)
 
 ___
 
@@ -1450,7 +1450,7 @@ value emitted by the source.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[forEach](types.ContainerTypeClass.md#foreach)
+[ContainerModule](types.ContainerModule.md).[forEach](types.ContainerModule.md#foreach)
 
 ___
 
@@ -3124,7 +3124,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[ignoreElements](types.ContainerTypeClass.md#ignoreelements)
+[ContainerModule](types.ContainerModule.md).[ignoreElements](types.ContainerModule.md#ignoreelements)
 
 ___
 
@@ -3241,7 +3241,7 @@ source that satisfy the specified predicate.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[keep](types.ContainerTypeClass.md#keep)
+[ContainerModule](types.ContainerModule.md).[keep](types.ContainerModule.md#keep)
 
 ___
 
@@ -3268,7 +3268,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[keepType](types.ContainerTypeClass.md#keeptype)
+[ContainerModule](types.ContainerModule.md).[keepType](types.ContainerModule.md#keeptype)
 
 ▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
 
@@ -3291,7 +3291,7 @@ ___
 
 #### Overrides
 
-ContainerTypeClass.keepType
+ContainerModule.keepType
 
 ___
 
@@ -3366,7 +3366,7 @@ TB - The inner type of the mapped container
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[map](types.ContainerTypeClass.md#map)
+[ContainerModule](types.ContainerModule.md).[map](types.ContainerModule.md#map)
 
 ___
 
@@ -3393,7 +3393,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[mapTo](types.ContainerTypeClass.md#mapto)
+[ContainerModule](types.ContainerModule.md).[mapTo](types.ContainerModule.md#mapto)
 
 ___
 
@@ -3727,7 +3727,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[pairwise](types.ContainerTypeClass.md#pairwise)
+[ContainerModule](types.ContainerModule.md).[pairwise](types.ContainerModule.md#pairwise)
 
 ___
 
@@ -3754,7 +3754,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
+[ContainerModule](types.ContainerModule.md).[pick](types.ContainerModule.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
@@ -3779,7 +3779,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
+[ContainerModule](types.ContainerModule.md).[pick](types.ContainerModule.md#pick)
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
@@ -3806,7 +3806,7 @@ ___
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[pick](types.ContainerTypeClass.md#pick)
+[ContainerModule](types.ContainerModule.md).[pick](types.ContainerModule.md#pick)
 
 ___
 
@@ -3837,7 +3837,7 @@ and emits each intermediate result.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[scan](types.ContainerTypeClass.md#scan)
+[ContainerModule](types.ContainerModule.md).[scan](types.ContainerModule.md#scan)
 
 ___
 
@@ -3866,7 +3866,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[skipFirst](types.ContainerTypeClass.md#skipfirst)
+[ContainerModule](types.ContainerModule.md).[skipFirst](types.ContainerModule.md#skipfirst)
 
 ___
 
@@ -3968,7 +3968,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[takeFirst](types.ContainerTypeClass.md#takefirst)
+[ContainerModule](types.ContainerModule.md).[takeFirst](types.ContainerModule.md#takefirst)
 
 ___
 
@@ -3997,7 +3997,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[takeLast](types.ContainerTypeClass.md#takelast)
+[ContainerModule](types.ContainerModule.md).[takeLast](types.ContainerModule.md#takelast)
 
 ___
 
@@ -4105,7 +4105,7 @@ this predicate is not satisfied.
 
 #### Overrides
 
-[ContainerTypeClass](types.ContainerTypeClass.md).[takeWhile](types.ContainerTypeClass.md#takewhile)
+[ContainerModule](types.ContainerModule.md).[takeWhile](types.ContainerModule.md#takewhile)
 
 ___
 

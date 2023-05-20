@@ -12,7 +12,7 @@ import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toD
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
 import { identityLazy } from "./functions.js";
 import {
-  AssociativeKeyedContainerTypeClass,
+  AssociativeKeyedContainerModule,
   Container_T,
   Container_type,
   DictionaryLike,
@@ -42,7 +42,7 @@ export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
 export interface DictionaryModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends AssociativeKeyedContainerTypeClass<TType, TKey> {}
+> extends AssociativeKeyedContainerModule<TType, TKey> {}
 
 export type Signature = DictionaryModule;
 

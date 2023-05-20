@@ -7,7 +7,7 @@ import * as Scheduler from "../Scheduler.js";
 import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe, raiseError } from "../functions.js";
 import { DisposableLike_error, PauseableLike_resume, VirtualTimeSchedulerLike_run, } from "../types.js";
-import ContainerTypeClassTests from "./fixtures/ContainerTypeClassTests.js";
+import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
 const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray_flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
@@ -22,5 +22,5 @@ const toReadonlyArray = (scheduler) => (obs) => {
     }
     return result;
 };
-testModule("PauseableObservable", ContainerTypeClassTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray));
+testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray));
 ((_) => { })(PauseableObservable);

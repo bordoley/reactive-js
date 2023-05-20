@@ -18,7 +18,7 @@ import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/Re
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import { identityLazy } from "./functions.js";
 import {
-  ConcreteAssociativeKeyedContainerTypeClass,
+  ConcreteAssociativeKeyedContainerModule,
   Container_T,
   Container_type,
   KeyOf,
@@ -54,7 +54,7 @@ export type TKeyBase = KeyOf<Type>;
 export interface ReadonlyObjectMapModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {}
+> extends ConcreteAssociativeKeyedContainerModule<TType, TKey> {}
 
 export type Signature = ReadonlyObjectMapModule;
 

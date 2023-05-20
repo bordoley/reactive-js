@@ -50,7 +50,7 @@ import {
   ContainerOperator,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  HigherOrderObservableTypeClass,
+  HigherOrderObservableModule,
   ObservableLike,
   ObserverLike,
   QueueableLike,
@@ -68,7 +68,7 @@ const Observable_mergeAll = <
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<CInner, T>>>,
   ) => ContainerOperator<C, ContainerOf<CInner, T>, T>,
-): HigherOrderObservableTypeClass<C, CInner>["mergeAll"] => {
+): HigherOrderObservableModule<C, CInner>["mergeAll"] => {
   const createMergeAllObserver: <T>(
     delegate: ObserverLike<T>,
     capacity: number,

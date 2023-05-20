@@ -1,13 +1,13 @@
 import * as Enumerable from "../Enumerable.js";
 import * as Observable from "../Observable.js";
 import { testModule } from "../__internal__/testing.js";
-import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
+import EnumerableContainerModuleTests from "./fixtures/EnumerableContainerModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
 
 testModule(
   "Enumerable",
-  ...EnumerableTypeClassTests(Enumerable),
-  StatefulTypeClassTests<Enumerable.Type>(
+  ...EnumerableContainerModuleTests(Enumerable),
+  StatefulContainerModuleTests<Enumerable.Type>(
     Enumerable,
     Observable.toReadonlyArrayAsync,
   ),

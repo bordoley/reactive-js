@@ -1,4 +1,4 @@
-import { ConcreteAssociativeKeyedContainerTypeClass, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey, ReadonlyObjectMapLike } from "./types.js";
+import { ConcreteAssociativeKeyedContainerModule, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey, ReadonlyObjectMapLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type TKeyBase = KeyOf<Type>;
 /**
  * @noInheritDoc
  */
-export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerTypeClass<TType, TKey> {
+export interface ReadonlyObjectMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerModule<TType, TKey> {
 }
 export type Signature = ReadonlyObjectMapModule;
 /**

@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`ConcreteKeyedContainerTypeClass`](types.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
+- [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
-- `Omit`<[`EnumerableTypeClass`](types.EnumerableTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerTypeClass`](types.ConcreteKeyedContainerTypeClass.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
+- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -51,7 +51,7 @@
 
 #### Overrides
 
-[ConcreteKeyedContainerTypeClass](types.ConcreteKeyedContainerTypeClass.md).[keepType](types.ConcreteKeyedContainerTypeClass.md#keeptype)
+[ConcreteKeyedContainerModule](types.ConcreteKeyedContainerModule.md).[keepType](types.ConcreteKeyedContainerModule.md#keeptype)
 
 ▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<[`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md), `TKey`, `TA`, `TB`\>
 
@@ -75,7 +75,7 @@
 
 #### Overrides
 
-ConcreteKeyedContainerTypeClass.keepType
+ConcreteKeyedContainerModule.keepType
 
 ___
 

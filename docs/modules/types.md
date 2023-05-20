@@ -35,6 +35,21 @@
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
+### ModuleSignature Interfaces
+
+- [AssociativeKeyedContainerModule](../interfaces/types.AssociativeKeyedContainerModule.md)
+- [ConcreteAssociativeKeyedContainerModule](../interfaces/types.ConcreteAssociativeKeyedContainerModule.md)
+- [ConcreteKeyedContainerModule](../interfaces/types.ConcreteKeyedContainerModule.md)
+- [ContainerModule](../interfaces/types.ContainerModule.md)
+- [DeferredContainerModule](../interfaces/types.DeferredContainerModule.md)
+- [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
+- [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
+- [HigherOrderObservableModule](../interfaces/types.HigherOrderObservableModule.md)
+- [KeyedContainerModule](../interfaces/types.KeyedContainerModule.md)
+- [MulticastingContainerModule](../interfaces/types.MulticastingContainerModule.md)
+- [RunnableContainerModule](../interfaces/types.RunnableContainerModule.md)
+- [StatefulContainerModule](../interfaces/types.StatefulContainerModule.md)
+
 ### Observable Interfaces
 
 - [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
@@ -69,21 +84,6 @@
 - [PauseableSchedulerLike](../interfaces/types.PauseableSchedulerLike.md)
 - [SchedulerLike](../interfaces/types.SchedulerLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/types.VirtualTimeSchedulerLike.md)
-
-### TypeClass Interfaces
-
-- [AssociativeKeyedContainerTypeClass](../interfaces/types.AssociativeKeyedContainerTypeClass.md)
-- [ConcreteAssociativeKeyedContainerTypeClass](../interfaces/types.ConcreteAssociativeKeyedContainerTypeClass.md)
-- [ConcreteKeyedContainerTypeClass](../interfaces/types.ConcreteKeyedContainerTypeClass.md)
-- [ContainerTypeClass](../interfaces/types.ContainerTypeClass.md)
-- [DeferredTypeClass](../interfaces/types.DeferredTypeClass.md)
-- [EnumerableTypeClass](../interfaces/types.EnumerableTypeClass.md)
-- [FlowableTypeClass](../interfaces/types.FlowableTypeClass.md)
-- [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
-- [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
-- [MulticastableTypeClass](../interfaces/types.MulticastableTypeClass.md)
-- [RunnableTypeClass](../interfaces/types.RunnableTypeClass.md)
-- [StatefulTypeClass](../interfaces/types.StatefulTypeClass.md)
 
 ### Collection Type Aliases
 

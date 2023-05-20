@@ -2,7 +2,7 @@
 
 import * as EnumeratorFactory from "../EnumeratorFactory.js";
 import { testModule } from "../__internal__/testing.js";
-import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
-testModule("EnumeratorFactory", ...EnumerableTypeClassTests(EnumeratorFactory), StatefulTypeClassTests(EnumeratorFactory, () => async (f) => EnumeratorFactory.toReadonlyArray()(f)));
+import EnumerableContainerModuleTests from "./fixtures/EnumerableContainerModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
+testModule("EnumeratorFactory", ...EnumerableContainerModuleTests(EnumeratorFactory), StatefulContainerModuleTests(EnumeratorFactory, () => async (f) => EnumeratorFactory.toReadonlyArray()(f)));
 ((_) => { })(EnumeratorFactory);

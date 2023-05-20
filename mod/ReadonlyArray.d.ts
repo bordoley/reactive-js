@@ -1,5 +1,5 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerTypeClass, ContainerOperator, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, EnumeratorFactoryLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
+import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorFactoryLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -13,7 +13,7 @@ export type TKeyBase = KeyOf<Type>;
 /**
  * @noInheritDoc
  */
-export interface ReadonlyArrayModule extends ConcreteKeyedContainerTypeClass<Type>, Omit<EnumerableTypeClass<Type>, keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"> {
+export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>, Omit<EnumerableContainerModule<Type>, keyof ConcreteKeyedContainerModule<Type> | "enumerate" | "keepType"> {
     /** @category Transform */
     enumerate<T>(options?: {
         readonly start?: number;

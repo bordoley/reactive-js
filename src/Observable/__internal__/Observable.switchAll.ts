@@ -31,7 +31,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  HigherOrderObservableTypeClass,
+  HigherOrderObservableModule,
   ObserverLike,
   SinkLike_notify,
 } from "../../types.js";
@@ -45,7 +45,7 @@ const Observable_switchAll = <
   lift: <T>(
     f: Function1<ObserverLike<T>, ObserverLike<ContainerOf<CInner, T>>>,
   ) => ContainerOperator<C, ContainerOf<CInner, T>, T>,
-): HigherOrderObservableTypeClass<C, CInner>["switchAll"] => {
+): HigherOrderObservableModule<C, CInner>["switchAll"] => {
   const createSwitchAllObserver: <T>(
     o: ObserverLike<T>,
   ) => ObserverLike<ContainerOf<CInner, T>> = (<T>() => {

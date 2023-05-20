@@ -54,10 +54,10 @@ import {
   Container,
   Container_T,
   Container_type,
+  EnumerableContainerModule,
   EnumerableLike,
-  EnumerableTypeClass,
   RunnableLike,
-  StatefulTypeClass,
+  StatefulContainerModule,
 } from "./types.js";
 
 /**
@@ -74,8 +74,8 @@ export type Type = EnumerableContainer;
  * @noInheritDoc
  */
 export interface EnumerableModule
-  extends EnumerableTypeClass<Type>,
-    StatefulTypeClass<Type> {
+  extends EnumerableContainerModule<Type>,
+    StatefulContainerModule<Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

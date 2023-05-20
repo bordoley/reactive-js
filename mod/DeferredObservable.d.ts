@@ -1,5 +1,5 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableTypeClass, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike, StatefulTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike, StatefulContainerModule } from "./types.js";
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
@@ -12,7 +12,7 @@ export type Type = DeferredObservableContainer;
 /**
  * @noInheritDoc
  */
-export interface DeferredObservableModule extends StatefulTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
+export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;

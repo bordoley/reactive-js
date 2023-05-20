@@ -29,7 +29,7 @@ import {
   Container,
   Container_type,
   DisposableLike,
-  MulticastableTypeClass,
+  MulticastingContainerModule,
 } from "./types.js";
 
 /**
@@ -45,7 +45,7 @@ export type Type = DisposableContainer;
 /**
  * @noInheritDoc
  */
-export interface DisposableModule extends MulticastableTypeClass<Type> {
+export interface DisposableModule extends MulticastingContainerModule<Type> {
   readonly disposed: DisposableLike;
 
   add<TDisposable extends DisposableLike>(

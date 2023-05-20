@@ -31,15 +31,15 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-import RunnableTypeClassTests from "./fixtures/RunnableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
+import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
 
 testModule(
   "Runnable",
-  ...RunnableTypeClassTests(Runnable),
-  HigherOrderObservableTypeClassTests<Runnable.Type>(Runnable, identityLazy),
-  StatefulTypeClassTests<Runnable.Type>(
+  ...RunnableContainerModuleTests(Runnable),
+  HigherOrderObservableModuleTests<Runnable.Type>(Runnable, identityLazy),
+  StatefulContainerModuleTests<Runnable.Type>(
     Runnable,
     Observable.toReadonlyArrayAsync,
   ),

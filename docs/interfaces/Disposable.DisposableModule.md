@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Disposable.md#type)\>
+- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/Disposable.md#type)\>
 
   ↳ **`DisposableModule`**
 

@@ -52,12 +52,12 @@ import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
 import { Function1, TypePredicate } from "./functions.js";
 import {
-  ConcreteKeyedContainerTypeClass,
+  ConcreteKeyedContainerModule,
   ContainerOperator,
   Container_T,
   Container_type,
+  EnumerableContainerModule,
   EnumerableLike,
-  EnumerableTypeClass,
   EnumeratorFactoryLike,
   EnumeratorLike,
   KeyOf,
@@ -85,10 +85,10 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  */
 export interface ReadonlyArrayModule
-  extends ConcreteKeyedContainerTypeClass<Type>,
+  extends ConcreteKeyedContainerModule<Type>,
     Omit<
-      EnumerableTypeClass<Type>,
-      keyof ConcreteKeyedContainerTypeClass<Type> | "enumerate" | "keepType"
+      EnumerableContainerModule<Type>,
+      keyof ConcreteKeyedContainerModule<Type> | "enumerate" | "keepType"
     > {
   /** @category Transform */
   enumerate<T>(options?: {

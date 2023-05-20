@@ -6,7 +6,7 @@ import ReadonlyArray_toEventSource from "../ReadonlyArray/__internal__/ReadonlyA
 import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe } from "../functions.js";
 import { DisposableLike_error } from "../types.js";
-import ContainerTypeClassTests from "./fixtures/ContainerTypeClassTests.js";
+import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
 const toReadonlyArray = () => (eventSource) => {
     const result = [];
     const subscription = pipe(eventSource, EventSource.addEventHandler(v => {
@@ -17,5 +17,5 @@ const toReadonlyArray = () => (eventSource) => {
     }
     return result;
 };
-testModule("EventSource", ContainerTypeClassTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray));
+testModule("EventSource", ContainerModuleTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray));
 ((_) => { })(EventSource);

@@ -2,13 +2,13 @@ import * as EnumeratorFactory from "../EnumeratorFactory.js";
 import { testModule } from "../__internal__/testing.js";
 import { EnumeratorFactoryLike } from "../types.js";
 
-import EnumerableTypeClassTests from "./fixtures/EnumerableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
+import EnumerableContainerModuleTests from "./fixtures/EnumerableContainerModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
 
 testModule(
   "EnumeratorFactory",
-  ...EnumerableTypeClassTests(EnumeratorFactory),
-  StatefulTypeClassTests<EnumeratorFactory.Type>(
+  ...EnumerableContainerModuleTests(EnumeratorFactory),
+  StatefulContainerModuleTests<EnumeratorFactory.Type>(
     EnumeratorFactory,
     <T>() =>
       async (f: EnumeratorFactoryLike<T>) =>

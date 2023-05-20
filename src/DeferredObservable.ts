@@ -55,14 +55,14 @@ import {
   DeferredObservableLike,
   DisposableLike,
   EnumerableLike,
-  HigherOrderObservableTypeClass,
+  HigherOrderObservableModule,
   MulticastObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReplayObservableLike,
   RunnableLike,
   SchedulerLike,
-  StatefulTypeClass,
+  StatefulContainerModule,
 } from "./types.js";
 
 export type DeferredObservableOperator<TIn, TOut> = <
@@ -91,8 +91,8 @@ export type Type = DeferredObservableContainer;
  * @noInheritDoc
  */
 export interface DeferredObservableModule
-  extends StatefulTypeClass<Type>,
-    HigherOrderObservableTypeClass<Type, Type> {
+  extends StatefulContainerModule<Type>,
+    HigherOrderObservableModule<Type, Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {

@@ -1,5 +1,5 @@
 import { Factory, Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, RunnableLike, StatefulTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, RunnableLike, StatefulContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -11,7 +11,7 @@ export type Type = EnumerableContainer;
 /**
  * @noInheritDoc
  */
-export interface EnumerableModule extends EnumerableTypeClass<Type>, StatefulTypeClass<Type> {
+export interface EnumerableModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Store.md#type)\>
+- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/Store.md#type)\>
 
   ↳ **`StoreModule`**
 

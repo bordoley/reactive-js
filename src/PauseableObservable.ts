@@ -20,7 +20,7 @@ import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/Pa
 import { Function1 } from "./functions.js";
 import {
   Container,
-  ContainerTypeClass,
+  ContainerModule,
   Container_T,
   Container_type,
   DeferredObservableLike,
@@ -41,7 +41,7 @@ export type Type = PauseableObservableContainer;
 /**
  * @noInheritDoc
  */
-export interface PauseableObservableModule extends ContainerTypeClass<Type> {
+export interface PauseableObservableModule extends ContainerModule<Type> {
   sinkInto<T>(
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;

@@ -13,6 +13,6 @@
 
 ## Hierarchy
 
-- [`AssociativeKeyedContainerTypeClass`](types.AssociativeKeyedContainerTypeClass.md)<`TType`, `TKey`\>
+- [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)<`TType`, `TKey`\>
 
   ↳ **`DictionaryModule`**

@@ -551,9 +551,9 @@ export type KeyOf<C extends KeyedContainer> = NonNullable<C[typeof KeyedContaine
 export type KeyedContainerOperator<C extends KeyedContainer, TKey, TA, TB> = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ContainerTypeClass<C extends Container> {
+export interface ContainerModule<C extends Container> {
     /** @category Operator */
     buffer<T>(options?: {
         count?: number;
@@ -669,9 +669,9 @@ export interface ContainerTypeClass<C extends Container> {
 }
 /**
  * @noInheritDoc
- *  @category TypeClass
+ *  @category ModuleSignature
  */
-export interface FlowableTypeClass<C extends Container> {
+export interface FlowableContainerModule<C extends Container> {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -679,9 +679,9 @@ export interface FlowableTypeClass<C extends Container> {
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface MulticastableTypeClass<C extends Container> {
+export interface MulticastingContainerModule<C extends Container> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
     /**
      * @category Transform
@@ -698,9 +698,9 @@ export interface MulticastableTypeClass<C extends Container> {
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface DeferredTypeClass<C extends Container> extends ContainerTypeClass<C> {
+export interface DeferredContainerModule<C extends Container> extends ContainerModule<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -802,9 +802,9 @@ export interface DeferredTypeClass<C extends Container> extends ContainerTypeCla
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface RunnableTypeClass<C extends Container> extends DeferredTypeClass<C>, FlowableTypeClass<C> {
+export interface RunnableContainerModule<C extends Container> extends DeferredContainerModule<C>, FlowableContainerModule<C> {
     /**
      * @category Transform
      */
@@ -853,9 +853,9 @@ export interface RunnableTypeClass<C extends Container> extends DeferredTypeClas
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface EnumerableTypeClass<C extends Container> extends RunnableTypeClass<C> {
+export interface EnumerableContainerModule<C extends Container> extends RunnableContainerModule<C> {
     /**
      *
      * @category Transform
@@ -876,9 +876,9 @@ export interface EnumerableTypeClass<C extends Container> extends RunnableTypeCl
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface StatefulTypeClass<C extends Container> extends DeferredTypeClass<C> {
+export interface StatefulContainerModule<C extends Container> extends DeferredContainerModule<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
     /**
      * @category Operator
@@ -890,9 +890,9 @@ export interface StatefulTypeClass<C extends Container> extends DeferredTypeClas
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInner extends DeferredObservable.Type> {
+export interface HigherOrderObservableModule<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     /** @category Operator */
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;
     /**
@@ -950,9 +950,9 @@ export interface HigherOrderObservableTypeClass<C extends Observable.Type, CInne
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
+export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**
      * @category Transform
      */
@@ -987,9 +987,9 @@ export interface KeyedContainerTypeClass<C extends KeyedContainer, TKeyBase exte
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
+export interface ConcreteKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
@@ -1034,9 +1034,9 @@ export interface ConcreteKeyedContainerTypeClass<C extends KeyedContainer, TKeyB
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerTypeClass<C, TKeyBase> {
+export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
     /**
      * @category Constructor
      */
@@ -1073,9 +1073,9 @@ export interface AssociativeKeyedContainerTypeClass<C extends KeyedContainer, TK
 }
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ConcreteAssociativeKeyedContainerTypeClass<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>, AssociativeKeyedContainerTypeClass<C, TKeyBase> {
+export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerModule<C, TKeyBase>, AssociativeKeyedContainerModule<C, TKeyBase> {
     /**
      * Return an Container that emits no items.
      *

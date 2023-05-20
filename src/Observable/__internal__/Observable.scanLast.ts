@@ -14,7 +14,7 @@ import {
 import {
   ContainerOf,
   ContainerOperator,
-  HigherOrderObservableTypeClass,
+  HigherOrderObservableModule,
   ObservableLike_observe,
   ObserverLike,
   SinkLike_notify,
@@ -26,7 +26,7 @@ import Observable_zipWithLatestFrom from "./Observable.zipWithLatestFrom.js";
 const Observable_scanLast =
   <C extends Observable.Type, CInner extends DeferredObservable.Type>(
     createObservable: <T>(f: SideEffect1<ObserverLike<T>>) => ContainerOf<C, T>,
-  ): HigherOrderObservableTypeClass<C, CInner>["scanLast"] =>
+  ): HigherOrderObservableModule<C, CInner>["scanLast"] =>
   <T, TAcc>(
     scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
     initialValue: Factory<TAcc>,

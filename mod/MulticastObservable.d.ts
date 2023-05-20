@@ -1,6 +1,6 @@
 import type * as DeferredObservable from "./DeferredObservable.js";
 import { Factory } from "./functions.js";
-import { Container, Container_T, Container_type, HigherOrderObservableTypeClass, MulticastObservableLike } from "./types.js";
+import { Container, Container_T, Container_type, HigherOrderObservableModule, MulticastObservableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = MulticastObservableContainer;
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableModule extends HigherOrderObservableTypeClass<Type, DeferredObservable.Type> {
+export interface MulticastObservableModule extends HigherOrderObservableModule<Type, DeferredObservable.Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): MulticastObservableLike<T>;

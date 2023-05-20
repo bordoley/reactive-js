@@ -10,16 +10,16 @@ import {
 } from "../__internal__/testing.js";
 import { identityLazy, pipe } from "../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
 
 testModule(
   "DeferredObservable",
-  HigherOrderObservableTypeClassTests<DeferredObservable.Type>(
+  HigherOrderObservableModuleTests<DeferredObservable.Type>(
     DeferredObservable,
     identityLazy,
   ),
-  StatefulTypeClassTests<DeferredObservable.Type>(
+  StatefulContainerModuleTests<DeferredObservable.Type>(
     DeferredObservable,
     Observable.toReadonlyArrayAsync,
   ),

@@ -7,9 +7,9 @@ import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
 import { identityLazy, pipe } from "../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../types.js";
-import HigherOrderObservableTypeClassTests from "./fixtures/HigherOrderObservableTypeClassTests.js";
-import StatefulTypeClassTests from "./fixtures/StatefulTypeClassTests.js";
-testModule("DeferredObservable", HigherOrderObservableTypeClassTests(DeferredObservable, identityLazy), StatefulTypeClassTests(DeferredObservable, Observable.toReadonlyArrayAsync), describe("share", test("shared observable zipped with itself", () => {
+import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
+import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
+testModule("DeferredObservable", HigherOrderObservableModuleTests(DeferredObservable, identityLazy), StatefulContainerModuleTests(DeferredObservable, Observable.toReadonlyArrayAsync), describe("share", test("shared observable zipped with itself", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const shared = pipe([1, 2, 3], ReadonlyArray.toObservable({ delay: 1 }), DeferredObservable.share(scheduler, { replay: 1 }));
     let result = [];

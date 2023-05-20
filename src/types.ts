@@ -781,9 +781,9 @@ export type KeyedContainerOperator<
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ContainerTypeClass<C extends Container> {
+export interface ContainerModule<C extends Container> {
   /** @category Operator */
   buffer<T>(options?: {
     count?: number;
@@ -937,9 +937,9 @@ export interface ContainerTypeClass<C extends Container> {
 
 /**
  * @noInheritDoc
- *  @category TypeClass
+ *  @category ModuleSignature
  */
-export interface FlowableTypeClass<C extends Container> {
+export interface FlowableContainerModule<C extends Container> {
   flow<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -951,9 +951,9 @@ export interface FlowableTypeClass<C extends Container> {
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface MulticastableTypeClass<C extends Container> {
+export interface MulticastingContainerModule<C extends Container> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<ContainerOf<C, T>, DisposableLike>;
@@ -979,10 +979,10 @@ export interface MulticastableTypeClass<C extends Container> {
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface DeferredTypeClass<C extends Container>
-  extends ContainerTypeClass<C> {
+export interface DeferredContainerModule<C extends Container>
+  extends ContainerModule<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -1210,11 +1210,11 @@ export interface DeferredTypeClass<C extends Container>
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface RunnableTypeClass<C extends Container>
-  extends DeferredTypeClass<C>,
-    FlowableTypeClass<C> {
+export interface RunnableContainerModule<C extends Container>
+  extends DeferredContainerModule<C>,
+    FlowableContainerModule<C> {
   /**
    * @category Transform
    */
@@ -1284,10 +1284,10 @@ export interface RunnableTypeClass<C extends Container>
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface EnumerableTypeClass<C extends Container>
-  extends RunnableTypeClass<C> {
+export interface EnumerableContainerModule<C extends Container>
+  extends RunnableContainerModule<C> {
   /**
    *
    * @category Transform
@@ -1315,10 +1315,10 @@ export interface EnumerableTypeClass<C extends Container>
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface StatefulTypeClass<C extends Container>
-  extends DeferredTypeClass<C> {
+export interface StatefulContainerModule<C extends Container>
+  extends DeferredContainerModule<C> {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -1336,9 +1336,9 @@ export interface StatefulTypeClass<C extends Container>
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface HigherOrderObservableTypeClass<
+export interface HigherOrderObservableModule<
   C extends Observable.Type,
   CInner extends DeferredObservable.Type,
 > {
@@ -1427,9 +1427,9 @@ export interface HigherOrderObservableTypeClass<
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface KeyedContainerTypeClass<
+export interface KeyedContainerModule<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
 > {
@@ -1486,12 +1486,12 @@ export interface KeyedContainerTypeClass<
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ConcreteKeyedContainerTypeClass<
+export interface ConcreteKeyedContainerModule<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
-> extends KeyedContainerTypeClass<C, TKeyBase> {
+> extends KeyedContainerModule<C, TKeyBase> {
   /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
@@ -1551,12 +1551,12 @@ export interface ConcreteKeyedContainerTypeClass<
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface AssociativeKeyedContainerTypeClass<
+export interface AssociativeKeyedContainerModule<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
-> extends KeyedContainerTypeClass<C, TKeyBase> {
+> extends KeyedContainerModule<C, TKeyBase> {
   /**
    * @category Constructor
    */
@@ -1625,13 +1625,13 @@ export interface AssociativeKeyedContainerTypeClass<
 
 /**
  * @noInheritDoc
- * @category TypeClass
+ * @category ModuleSignature
  */
-export interface ConcreteAssociativeKeyedContainerTypeClass<
+export interface ConcreteAssociativeKeyedContainerModule<
   C extends KeyedContainer,
   TKeyBase extends KeyOf<C> = KeyOf<C>,
-> extends ConcreteKeyedContainerTypeClass<C, TKeyBase>,
-    AssociativeKeyedContainerTypeClass<C, TKeyBase> {
+> extends ConcreteKeyedContainerModule<C, TKeyBase>,
+    AssociativeKeyedContainerModule<C, TKeyBase> {
   /**
    * Return an Container that emits no items.
    *

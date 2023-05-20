@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/MulticastObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
+- [`HigherOrderObservableModule`](types.HigherOrderObservableModule.md)<[`Type`](../modules/MulticastObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
 
   ↳ **`MulticastObservableModule`**
 

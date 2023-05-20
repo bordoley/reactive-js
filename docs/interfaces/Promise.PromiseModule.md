@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`MulticastableTypeClass`](types.MulticastableTypeClass.md)<[`Type`](../modules/Promise.md#type)\>
+- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/Promise.md#type)\>
 
   ↳ **`PromiseModule`**

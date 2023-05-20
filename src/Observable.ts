@@ -88,9 +88,9 @@ import {
 } from "./functions.js";
 import {
   Container,
+  ContainerModule,
   ContainerOf,
   ContainerOperator,
-  ContainerTypeClass,
   Container_T,
   Container_type,
   DeferredObservableLike,
@@ -228,7 +228,7 @@ export type AnyObservableLike<T> =
 /**
  * @noInheritDoc
  */
-export interface ObservableModule extends ContainerTypeClass<Type> {
+export interface ObservableModule extends ContainerModule<Type> {
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
   ): RunnableLike<T>;

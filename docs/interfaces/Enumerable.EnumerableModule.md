@@ -6,9 +6,9 @@
 
 ## Hierarchy
 
-- [`EnumerableTypeClass`](types.EnumerableTypeClass.md)<[`Type`](../modules/Enumerable.md#type)\>
+- [`EnumerableContainerModule`](types.EnumerableContainerModule.md)<[`Type`](../modules/Enumerable.md#type)\>
 
-- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/Enumerable.md#type)\>
+- [`StatefulContainerModule`](types.StatefulContainerModule.md)<[`Type`](../modules/Enumerable.md#type)\>
 
   ↳ **`EnumerableModule`**
 
@@ -61,7 +61,7 @@ ___
 
 #### Overrides
 
-[EnumerableTypeClass](types.EnumerableTypeClass.md).[toObservable](types.EnumerableTypeClass.md#toobservable)
+[EnumerableContainerModule](types.EnumerableContainerModule.md).[toObservable](types.EnumerableContainerModule.md#toobservable)
 
 ▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
@@ -85,4 +85,4 @@ ___
 
 #### Overrides
 
-[EnumerableTypeClass](types.EnumerableTypeClass.md).[toObservable](types.EnumerableTypeClass.md#toobservable)
+[EnumerableContainerModule](types.EnumerableContainerModule.md).[toObservable](types.EnumerableContainerModule.md#toobservable)

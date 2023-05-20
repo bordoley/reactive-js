@@ -1,4 +1,4 @@
-import { Container, Container_T, Container_type, DisposableLike, MulticastableTypeClass, StoreLike, WritableStoreLike } from "./types.js";
+import { Container, Container_T, Container_type, DisposableLike, MulticastingContainerModule, StoreLike, WritableStoreLike } from "./types.js";
 /**
  * @noInheritDoc
  */
@@ -9,7 +9,7 @@ export type Type = StoreContainer;
 /**
  * @noInheritDoc
  */
-export interface StoreModule extends MulticastableTypeClass<Type> {
+export interface StoreModule extends MulticastingContainerModule<Type> {
     create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
 }
 export type Signature = StoreModule;

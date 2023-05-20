@@ -52,11 +52,11 @@ import {
   Container,
   Container_T,
   Container_type,
+  EnumerableContainerModule,
   EnumerableLike,
-  EnumerableTypeClass,
   EnumeratorFactoryLike,
   RunnableLike,
-  StatefulTypeClass,
+  StatefulContainerModule,
 } from "./types.js";
 
 /**
@@ -73,8 +73,8 @@ export type Type = EnumeratorFactoryContainer;
  * @noInheritDoc
  */
 export interface EnumeratorFactoryModule
-  extends EnumerableTypeClass<Type>,
-    StatefulTypeClass<Type> {
+  extends EnumerableContainerModule<Type>,
+    StatefulContainerModule<Type> {
   toObservable<T>(): Function1<EnumeratorFactoryLike<T>, EnumerableLike<T>>;
   toObservable<T>(options: {
     readonly delay: number;
