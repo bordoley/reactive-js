@@ -35,7 +35,7 @@
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
 
-### ModuleSignature Interfaces
+### Module Interfaces
 
 - [AssociativeKeyedContainerModule](../interfaces/types.AssociativeKeyedContainerModule.md)
 - [ConcreteAssociativeKeyedContainerModule](../interfaces/types.ConcreteAssociativeKeyedContainerModule.md)

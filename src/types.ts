@@ -781,7 +781,7 @@ export type KeyedContainerOperator<
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ContainerModule<C extends Container> {
   /** @category Operator */
@@ -937,7 +937,7 @@ export interface ContainerModule<C extends Container> {
 
 /**
  * @noInheritDoc
- *  @category ModuleSignature
+ *  @category Module
  */
 export interface FlowableContainerModule<C extends Container> {
   flow<T>(
@@ -951,7 +951,7 @@ export interface FlowableContainerModule<C extends Container> {
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface MulticastingContainerModule<C extends Container> {
   addEventHandler<T>(
@@ -979,7 +979,7 @@ export interface MulticastingContainerModule<C extends Container> {
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface DeferredContainerModule<C extends Container>
   extends ContainerModule<C> {
@@ -1210,7 +1210,7 @@ export interface DeferredContainerModule<C extends Container>
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface RunnableContainerModule<C extends Container>
   extends DeferredContainerModule<C>,
@@ -1284,7 +1284,7 @@ export interface RunnableContainerModule<C extends Container>
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface EnumerableContainerModule<C extends Container>
   extends RunnableContainerModule<C> {
@@ -1315,7 +1315,7 @@ export interface EnumerableContainerModule<C extends Container>
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface StatefulContainerModule<C extends Container>
   extends DeferredContainerModule<C> {
@@ -1336,7 +1336,7 @@ export interface StatefulContainerModule<C extends Container>
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface HigherOrderObservableModule<
   C extends Observable.Type,
@@ -1427,7 +1427,7 @@ export interface HigherOrderObservableModule<
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface KeyedContainerModule<
   C extends KeyedContainer,
@@ -1486,7 +1486,7 @@ export interface KeyedContainerModule<
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ConcreteKeyedContainerModule<
   C extends KeyedContainer,
@@ -1551,7 +1551,7 @@ export interface ConcreteKeyedContainerModule<
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface AssociativeKeyedContainerModule<
   C extends KeyedContainer,
@@ -1625,7 +1625,7 @@ export interface AssociativeKeyedContainerModule<
 
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ConcreteAssociativeKeyedContainerModule<
   C extends KeyedContainer,

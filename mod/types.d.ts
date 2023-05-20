@@ -551,7 +551,7 @@ export type KeyOf<C extends KeyedContainer> = NonNullable<C[typeof KeyedContaine
 export type KeyedContainerOperator<C extends KeyedContainer, TKey, TA, TB> = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ContainerModule<C extends Container> {
     /** @category Operator */
@@ -669,7 +669,7 @@ export interface ContainerModule<C extends Container> {
 }
 /**
  * @noInheritDoc
- *  @category ModuleSignature
+ *  @category Module
  */
 export interface FlowableContainerModule<C extends Container> {
     flow<T>(scheduler: SchedulerLike, options?: {
@@ -679,7 +679,7 @@ export interface FlowableContainerModule<C extends Container> {
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface MulticastingContainerModule<C extends Container> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
@@ -698,7 +698,7 @@ export interface MulticastingContainerModule<C extends Container> {
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface DeferredContainerModule<C extends Container> extends ContainerModule<C> {
     /**
@@ -802,7 +802,7 @@ export interface DeferredContainerModule<C extends Container> extends ContainerM
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface RunnableContainerModule<C extends Container> extends DeferredContainerModule<C>, FlowableContainerModule<C> {
     /**
@@ -853,7 +853,7 @@ export interface RunnableContainerModule<C extends Container> extends DeferredCo
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface EnumerableContainerModule<C extends Container> extends RunnableContainerModule<C> {
     /**
@@ -876,7 +876,7 @@ export interface EnumerableContainerModule<C extends Container> extends Runnable
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface StatefulContainerModule<C extends Container> extends DeferredContainerModule<C> {
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): ContainerOf<C, T>;
@@ -890,7 +890,7 @@ export interface StatefulContainerModule<C extends Container> extends DeferredCo
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface HigherOrderObservableModule<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     /** @category Operator */
@@ -950,7 +950,7 @@ export interface HigherOrderObservableModule<C extends Observable.Type, CInner e
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
     /**
@@ -987,7 +987,7 @@ export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ConcreteKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
     /**
@@ -1034,7 +1034,7 @@ export interface ConcreteKeyedContainerModule<C extends KeyedContainer, TKeyBase
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
     /**
@@ -1073,7 +1073,7 @@ export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyB
 }
 /**
  * @noInheritDoc
- * @category ModuleSignature
+ * @category Module
  */
 export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerModule<C, TKeyBase>, AssociativeKeyedContainerModule<C, TKeyBase> {
     /**
