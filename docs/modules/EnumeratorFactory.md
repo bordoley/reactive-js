@@ -48,6 +48,7 @@
 - [pairwise](EnumeratorFactory.md#pairwise)
 - [pick](EnumeratorFactory.md#pick)
 - [repeat](EnumeratorFactory.md#repeat)
+- [retry](EnumeratorFactory.md#retry)
 - [scan](EnumeratorFactory.md#scan)
 - [skipFirst](EnumeratorFactory.md#skipfirst)
 - [startWith](EnumeratorFactory.md#startwith)
@@ -871,6 +872,18 @@ ___
 
 ### repeat
 
+▸ **repeat**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
 
 #### Type parameters
@@ -884,6 +897,46 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`EnumeratorFactoryContainer`](../interfaces/EnumeratorFactory.EnumeratorFactoryContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 

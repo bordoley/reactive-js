@@ -48,6 +48,7 @@
 - [pairwise](Enumerable.md#pairwise)
 - [pick](Enumerable.md#pick)
 - [repeat](Enumerable.md#repeat)
+- [retry](Enumerable.md#retry)
 - [scan](Enumerable.md#scan)
 - [skipFirst](Enumerable.md#skipfirst)
 - [startWith](Enumerable.md#startwith)
@@ -872,6 +873,18 @@ ___
 
 ### repeat
 
+▸ **repeat**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
 
 #### Type parameters
@@ -885,6 +898,46 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 

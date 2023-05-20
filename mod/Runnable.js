@@ -1,6 +1,7 @@
 /// <reference types="./Runnable.d.ts" />
 
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -14,6 +15,7 @@ import Observable_flatMapIterable from "./Observable/__internal__/Observable.fla
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
@@ -27,6 +29,7 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -79,6 +82,7 @@ export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;
 export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromValue = Observable_fromValue;
+export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
@@ -92,6 +96,7 @@ export const pairwise = Observable_pairwise;
 export const pick = Observable_pick;
 export const reduce = Runnable_reduce;
 export const repeat = DeferredObservable_repeat;
+export const retry = DeferredObservable_retry;
 export const run = Runnable_run;
 export const scan = Observable_scan;
 export const scanLast = Runnable_scanLast;
@@ -104,6 +109,7 @@ export const switchMap = Runnable_switchMap;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
+export const throws = Observable_throws;
 export const toObservable = identityLazy;
 export const toReadonlyArray = Runnable_toReadonlyArray;
 export const zip = Observable_zip;

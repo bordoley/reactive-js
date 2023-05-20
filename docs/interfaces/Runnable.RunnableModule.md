@@ -10,6 +10,8 @@
 
 - [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
 
+- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/Runnable.md#type)\>
+
   ↳ **`RunnableModule`**
 
 ## Table of contents

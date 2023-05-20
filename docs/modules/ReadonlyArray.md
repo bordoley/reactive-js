@@ -992,6 +992,18 @@ ___
 
 ### repeat
 
+▸ **repeat**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
 
 #### Type parameters
@@ -1005,6 +1017,24 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
 
 #### Returns
 

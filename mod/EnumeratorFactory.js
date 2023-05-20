@@ -30,6 +30,7 @@ import EnumeratorFactory_pairwise from "./EnumeratorFactory/__internal__/Enumera
 import EnumeratorFactory_pick from "./EnumeratorFactory/__internal__/EnumeratorFactory.pick.js";
 import EnumeratorFactory_reduce from "./EnumeratorFactory/__internal__/EnumeratorFactory.reduce.js";
 import EnumeratorFactory_repeat from "./EnumeratorFactory/__internal__/EnumeratorFactory.repeat.js";
+import EnumeratorFactory_retry from "./EnumeratorFactory/__internal__/EnumeratorFactory.retry.js";
 import EnumeratorFactory_scan from "./EnumeratorFactory/__internal__/EnumeratorFactory.scan.js";
 import EnumeratorFactory_skipFirst from "./EnumeratorFactory/__internal__/EnumeratorFactory.skipFirst.js";
 import EnumeratorFactory_someSatisfy from "./EnumeratorFactory/__internal__/EnumeratorFactory.someSatisfy.js";
@@ -82,6 +83,7 @@ export const pairwise = EnumeratorFactory_pairwise;
 export const pick = EnumeratorFactory_pick;
 export const reduce = EnumeratorFactory_reduce;
 export const repeat = EnumeratorFactory_repeat;
+export const retry = EnumeratorFactory_retry;
 export const scan = EnumeratorFactory_scan;
 export const skipFirst = EnumeratorFactory_skipFirst;
 export const someSatisfy = EnumeratorFactory_someSatisfy;

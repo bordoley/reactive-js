@@ -1,4 +1,5 @@
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
@@ -51,7 +52,8 @@ import {
   Container_T,
   Container_type,
   EnumerableLike,
-  GeneratorTypeClass,
+  EnumerableTypeClass,
+  StatefulTypeClass,
 } from "./types.js";
 
 /**
@@ -67,7 +69,9 @@ export type Type = EnumerableContainer;
 /**
  * @noInheritDoc
  */
-export interface EnumerableModule extends GeneratorTypeClass<Type> {
+export interface EnumerableModule
+  extends EnumerableTypeClass<Type>,
+    StatefulTypeClass<Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -119,6 +123,7 @@ export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Runnable_reduce;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
+export const retry: Signature["retry"] = DeferredObservable_retry;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] = Runnable_someSatisfy;

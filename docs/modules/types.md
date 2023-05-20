@@ -79,11 +79,11 @@
 - [DeferredTypeClass](../interfaces/types.DeferredTypeClass.md)
 - [EnumerableTypeClass](../interfaces/types.EnumerableTypeClass.md)
 - [FlowableTypeClass](../interfaces/types.FlowableTypeClass.md)
-- [GeneratorTypeClass](../interfaces/types.GeneratorTypeClass.md)
 - [HigherOrderObservableTypeClass](../interfaces/types.HigherOrderObservableTypeClass.md)
 - [KeyedContainerTypeClass](../interfaces/types.KeyedContainerTypeClass.md)
 - [MulticastableTypeClass](../interfaces/types.MulticastableTypeClass.md)
 - [RunnableTypeClass](../interfaces/types.RunnableTypeClass.md)
+- [StatefulTypeClass](../interfaces/types.StatefulTypeClass.md)
 
 ### Collection Type Aliases
 

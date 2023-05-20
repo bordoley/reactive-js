@@ -92,6 +92,7 @@ BufferingLike_count
 LiftedLike_source
 LiftedLike_operators
 ForEachLike_effect
+HigherOrderEnumerator_inner
 MappingLike_selector
 PairwiseLike_prev
 PairwiseLike_hasPrev
@@ -129,7 +130,6 @@ ComputeContext_awaitOrObserve
 ComputeContext_constant
 ComputeContext_memoOrUse
 ComputeEffect_type
-ConcatEnumerator_inner
 ConstantEffect_args
 ConstantEffect_value
 Continuation_effect

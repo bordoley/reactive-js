@@ -10,6 +10,8 @@
 
 - [`HigherOrderObservableTypeClass`](types.HigherOrderObservableTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
 
+- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/DeferredObservable.md#type)\>
+
   ↳ **`DeferredObservableModule`**
 
 ## Table of contents
@@ -160,7 +162,7 @@ ___
 
 #### Overrides
 
-[DeferredTypeClass](types.DeferredTypeClass.md).[retry](types.DeferredTypeClass.md#retry)
+[StatefulTypeClass](types.StatefulTypeClass.md).[retry](types.StatefulTypeClass.md#retry)
 
 ___
 

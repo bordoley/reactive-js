@@ -53,6 +53,7 @@
 - [pairwise](Runnable.md#pairwise)
 - [pick](Runnable.md#pick)
 - [repeat](Runnable.md#repeat)
+- [retry](Runnable.md#retry)
 - [scan](Runnable.md#scan)
 - [scanLast](Runnable.md#scanlast)
 - [scanMany](Runnable.md#scanmany)
@@ -69,7 +70,9 @@
 
 - [compute](Runnable.md#compute)
 - [flow](Runnable.md#flow)
+- [generate](Runnable.md#generate)
 - [run](Runnable.md#run)
+- [throws](Runnable.md#throws)
 
 ### Transform Functions
 
@@ -990,6 +993,18 @@ ___
 
 ### repeat
 
+▸ **repeat**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
 ▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
 
 #### Type parameters
@@ -1003,6 +1018,46 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `count` | `number` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 
@@ -1513,6 +1568,29 @@ ___
 
 ___
 
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+___
+
 ### run
 
 ▸ **run**<`T`\>(`options?`): [`SideEffect1`](functions.md#sideeffect1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
@@ -1534,6 +1612,29 @@ ___
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 

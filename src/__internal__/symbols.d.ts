@@ -180,6 +180,8 @@ export declare const __LiftedLike_operators: unique symbol;
 
 export declare const __ForEachLike_effect: unique symbol;
 
+export declare const __HigherOrderEnumerator_inner: unique symbol;
+
 export declare const __MappingLike_selector: unique symbol;
 
 export declare const __PairwiseLike_prev: unique symbol;
@@ -251,8 +253,6 @@ export declare const __ComputeContext_constant: unique symbol;
 export declare const __ComputeContext_memoOrUse: unique symbol;
 
 export declare const __ComputeEffect_type: unique symbol;
-
-export declare const __ConcatEnumerator_inner: unique symbol;
 
 export declare const __ConstantEffect_args: unique symbol;
 

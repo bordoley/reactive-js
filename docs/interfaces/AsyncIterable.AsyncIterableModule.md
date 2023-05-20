@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`DeferredTypeClass`](types.DeferredTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>
+- `Pick`<[`DeferredTypeClass`](types.DeferredTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>, ``"toObservable"``\>
 
 - [`FlowableTypeClass`](types.FlowableTypeClass.md)<[`Type`](../modules/AsyncIterable.md#type)\>
 

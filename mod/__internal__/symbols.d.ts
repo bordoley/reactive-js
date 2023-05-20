@@ -181,6 +181,8 @@ export const __LiftedLike_operators: unique symbol;
 /** @type {unique symbol} */
 export const __ForEachLike_effect: unique symbol;
 /** @type {unique symbol} */
+export const __HigherOrderEnumerator_inner: unique symbol;
+/** @type {unique symbol} */
 export const __MappingLike_selector: unique symbol;
 /** @type {unique symbol} */
 export const __PairwiseLike_prev: unique symbol;
@@ -252,8 +254,6 @@ export const __ComputeContext_constant: unique symbol;
 export const __ComputeContext_memoOrUse: unique symbol;
 /** @type {unique symbol} */
 export const __ComputeEffect_type: unique symbol;
-/** @type {unique symbol} */
-export const __ConcatEnumerator_inner: unique symbol;
 /** @type {unique symbol} */
 export const __ConstantEffect_args: unique symbol;
 /** @type {unique symbol} */

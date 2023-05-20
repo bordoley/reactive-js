@@ -1,6 +1,7 @@
 /// <reference types="./Enumerable.d.ts" />
 
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
@@ -84,6 +85,7 @@ export const pairwise = Observable_pairwise;
 export const pick = Observable_pick;
 export const reduce = Runnable_reduce;
 export const repeat = DeferredObservable_repeat;
+export const retry = DeferredObservable_retry;
 export const scan = Observable_scan;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Runnable_someSatisfy;

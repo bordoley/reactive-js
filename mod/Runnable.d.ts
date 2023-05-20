@@ -1,5 +1,5 @@
 import { Factory, SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, HigherOrderObservableTypeClass, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableTypeClass, StatefulTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -11,7 +11,7 @@ export type Type = RunnableContainer;
 /**
  * @noInheritDoc
  */
-export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type> {
+export interface RunnableModule extends RunnableTypeClass<Type>, HigherOrderObservableTypeClass<Type, Type>, StatefulTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableLike<T>;
@@ -46,6 +46,7 @@ export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
+export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
@@ -59,6 +60,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
+export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
 export declare const scanLast: Signature["scanLast"];
@@ -71,6 +73,7 @@ export declare const switchMap: Signature["switchMap"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const throws: Signature["throws"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const zip: Signature["zip"];

@@ -17,12 +17,7 @@
 - [Signature](AsyncIterable.md#signature)
 - [Type](AsyncIterable.md#type)
 
-### Operator Functions
-
-- [repeat](AsyncIterable.md#repeat)
-- [retry](AsyncIterable.md#retry)
-
-### Other Functions
+### Functions
 
 - [flow](AsyncIterable.md#flow)
 - [toObservable](AsyncIterable.md#toobservable)
@@ -39,83 +34,7 @@ ___
 
 Ƭ **Type**: [`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md)
 
-## Operator Functions
-
-### repeat
-
-▸ **repeat**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-▸ **repeat**<`T`\>(`count`): [`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `count` | `number` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-▸ **repeat**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-___
-
-### retry
-
-▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`AsyncIterableContainer`](../interfaces/AsyncIterable.AsyncIterableContainer.md), `T`, `T`\>
-
-___
-
-## Other Functions
+## Functions
 
 ### flow
 

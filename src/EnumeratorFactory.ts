@@ -28,6 +28,7 @@ import EnumeratorFactory_pairwise from "./EnumeratorFactory/__internal__/Enumera
 import EnumeratorFactory_pick from "./EnumeratorFactory/__internal__/EnumeratorFactory.pick.js";
 import EnumeratorFactory_reduce from "./EnumeratorFactory/__internal__/EnumeratorFactory.reduce.js";
 import EnumeratorFactory_repeat from "./EnumeratorFactory/__internal__/EnumeratorFactory.repeat.js";
+import EnumeratorFactory_retry from "./EnumeratorFactory/__internal__/EnumeratorFactory.retry.js";
 import EnumeratorFactory_scan from "./EnumeratorFactory/__internal__/EnumeratorFactory.scan.js";
 import EnumeratorFactory_skipFirst from "./EnumeratorFactory/__internal__/EnumeratorFactory.skipFirst.js";
 import EnumeratorFactory_someSatisfy from "./EnumeratorFactory/__internal__/EnumeratorFactory.someSatisfy.js";
@@ -49,8 +50,9 @@ import {
   Container,
   Container_T,
   Container_type,
+  EnumerableTypeClass,
   EnumeratorFactoryLike,
-  GeneratorTypeClass,
+  StatefulTypeClass,
 } from "./types.js";
 
 /**
@@ -66,7 +68,9 @@ export type Type = EnumeratorFactoryContainer;
 /**
  * @noInheritDoc
  */
-export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {}
+export interface EnumeratorFactoryModule
+  extends EnumerableTypeClass<Type>,
+    StatefulTypeClass<Type> {}
 
 export type Signature = EnumeratorFactoryModule;
 
@@ -116,6 +120,7 @@ export const pairwise: Signature["pairwise"] = EnumeratorFactory_pairwise;
 export const pick: Signature["pick"] = EnumeratorFactory_pick;
 export const reduce: Signature["reduce"] = EnumeratorFactory_reduce;
 export const repeat: Signature["repeat"] = EnumeratorFactory_repeat;
+export const retry: Signature["retry"] = EnumeratorFactory_retry;
 export const scan: Signature["scan"] = EnumeratorFactory_scan;
 export const skipFirst: Signature["skipFirst"] = EnumeratorFactory_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] =

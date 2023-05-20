@@ -9,12 +9,13 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { __ConcatEnumerator_inner } from "../../__internal__/symbols.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
+  HigherOrderEnumeratorLike,
+  HigherOrderEnumerator_inner,
 } from "../../__internal__/types.js";
-import { Function1, none, pipe, unsafeCast } from "../../functions.js";
+import { Function1, none, pipe, returns, unsafeCast } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -28,69 +29,65 @@ import Enumerator_empty from "./Enumerator.empty.js";
 const Enumerator_concatAll: <T>() => Function1<
   EnumeratorLike<EnumeratorLike<T>>,
   EnumeratorLike<T>
-> = /*@__PURE__*/ (<T>() => {
-  type TProperties = {
-    [__ConcatEnumerator_inner]: EnumeratorLike<T>;
-  };
-  const createConcatAllEnumerator = createInstanceFactory(
-    mix(
-      include(Delegating_mixin(), Disposable_mixin),
-      function ConcatAllEnumerator(
-        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & TProperties,
-        delegate: EnumeratorLike<EnumeratorLike<T>>,
-      ): EnumeratorLike<T> {
-        init(Delegating_mixin(), instance, delegate);
-        init(Disposable_mixin, instance);
+> = /*@__PURE__*/ (<T>() =>
+  returns(
+    createInstanceFactory(
+      mix(
+        include(Delegating_mixin(), Disposable_mixin),
+        function ConcatAllEnumerator(
+          instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
+            HigherOrderEnumeratorLike<T>,
+          delegate: EnumeratorLike<EnumeratorLike<T>>,
+        ): EnumeratorLike<T> {
+          init(Delegating_mixin(), instance, delegate);
+          init(Disposable_mixin, instance);
 
-        pipe(instance, Disposable_add(delegate));
+          pipe(instance, Disposable_add(delegate));
 
-        instance[__ConcatEnumerator_inner] = Enumerator_empty();
+          instance[HigherOrderEnumerator_inner] = Enumerator_empty();
 
-        return instance;
-      },
-      props<TProperties>({
-        [__ConcatEnumerator_inner]: none,
-      }),
-      {
-        get [EnumeratorLike_current]() {
-          unsafeCast<TProperties>(this);
-          return this[__ConcatEnumerator_inner][EnumeratorLike_current];
+          return instance;
         },
+        props<HigherOrderEnumeratorLike<T>>({
+          [HigherOrderEnumerator_inner]: none,
+        }),
+        {
+          get [EnumeratorLike_current]() {
+            unsafeCast<HigherOrderEnumeratorLike<T>>(this);
+            return this[HigherOrderEnumerator_inner][EnumeratorLike_current];
+          },
 
-        get [EnumeratorLike_hasCurrent]() {
-          unsafeCast<TProperties>(this);
-          return this[__ConcatEnumerator_inner][EnumeratorLike_hasCurrent];
-        },
+          get [EnumeratorLike_hasCurrent]() {
+            unsafeCast<HigherOrderEnumeratorLike<T>>(this);
+            return this[HigherOrderEnumerator_inner][EnumeratorLike_hasCurrent];
+          },
 
-        [EnumeratorLike_move](
-          this: TProperties &
-            EnumeratorLike<T> &
-            DelegatingLike<EnumeratorLike<EnumeratorLike<T>>>,
-        ): boolean {
-          const delegate = this[DelegatingLike_delegate];
-          let inner = this[__ConcatEnumerator_inner];
+          [EnumeratorLike_move](
+            this: HigherOrderEnumeratorLike<T> &
+              EnumeratorLike<T> &
+              DelegatingLike<EnumeratorLike<EnumeratorLike<T>>>,
+          ): boolean {
+            const delegate = this[DelegatingLike_delegate];
+            let inner = this[HigherOrderEnumerator_inner];
 
-          while (!inner[EnumeratorLike_move]()) {
-            if (delegate[EnumeratorLike_move]()) {
-              inner = delegate[EnumeratorLike_current];
-              pipe(this, Disposable_add(inner));
-              this[__ConcatEnumerator_inner] = inner;
-            } else {
-              this[DisposableLike_dispose]();
-              inner = Enumerator_empty();
-              this[__ConcatEnumerator_inner] = inner;
-              break;
+            while (!inner[EnumeratorLike_move]()) {
+              if (delegate[EnumeratorLike_move]()) {
+                inner = delegate[EnumeratorLike_current];
+                pipe(this, Disposable_add(inner));
+                this[HigherOrderEnumerator_inner] = inner;
+              } else {
+                this[DisposableLike_dispose]();
+                inner = Enumerator_empty();
+                this[HigherOrderEnumerator_inner] = inner;
+                break;
+              }
             }
-          }
 
-          return this[EnumeratorLike_hasCurrent];
+            return this[EnumeratorLike_hasCurrent];
+          },
         },
-      },
+      ),
     ),
-  );
-
-  return () => (delegate: EnumeratorLike<EnumeratorLike<T>>) =>
-    createConcatAllEnumerator(delegate);
-})();
+  ))();
 
 export default Enumerator_concatAll;

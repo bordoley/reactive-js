@@ -16,7 +16,9 @@
 
   ↳ **`EnumerableTypeClass`**
 
-  ↳↳ [`GeneratorTypeClass`](types.GeneratorTypeClass.md)
+  ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
+
+  ↳↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
 
 ## Table of contents
 

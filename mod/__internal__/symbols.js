@@ -189,6 +189,8 @@ export const __LiftedLike_operators = /*@__PURE__*/ symbol("LiftedLike_operators
 /** @type {unique symbol} */
 export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 /** @type {unique symbol} */
+export const __HigherOrderEnumerator_inner = /*@__PURE__*/ symbol("HigherOrderEnumerator_inner");
+/** @type {unique symbol} */
 export const __MappingLike_selector = /*@__PURE__*/ symbol("MappingLike_selector");
 /** @type {unique symbol} */
 export const __PairwiseLike_prev = /*@__PURE__*/ symbol("PairwiseLike_prev");
@@ -261,8 +263,6 @@ export const __ComputeContext_constant = /*@__PURE__*/ symbol("ComputeContext_co
 export const __ComputeContext_memoOrUse = /*@__PURE__*/ symbol("ComputeContext_memoOrUse");
 /** @type {unique symbol} */
 export const __ComputeEffect_type = /*@__PURE__*/ symbol("ComputeEffect_type");
-/** @type {unique symbol} */
-export const __ConcatEnumerator_inner = /*@__PURE__*/ symbol("ConcatEnumerator_inner");
 /** @type {unique symbol} */
 export const __ConstantEffect_args = /*@__PURE__*/ symbol("ConstantEffect_args");
 /** @type {unique symbol} */

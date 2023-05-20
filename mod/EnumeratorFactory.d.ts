@@ -1,4 +1,4 @@
-import { Container, Container_T, Container_type, EnumeratorFactoryLike, GeneratorTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableTypeClass, EnumeratorFactoryLike, StatefulTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -10,7 +10,7 @@ export type Type = EnumeratorFactoryContainer;
 /**
  * @noInheritDoc
  */
-export interface EnumeratorFactoryModule extends GeneratorTypeClass<Type> {
+export interface EnumeratorFactoryModule extends EnumerableTypeClass<Type>, StatefulTypeClass<Type> {
 }
 export type Signature = EnumeratorFactoryModule;
 export declare const buffer: Signature["buffer"];
@@ -47,6 +47,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
+export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];

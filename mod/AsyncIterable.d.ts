@@ -10,10 +10,8 @@ export type Type = AsyncIterableContainer;
 /**
  * @noInheritDoc
  */
-export interface AsyncIterableModule extends DeferredTypeClass<Type>, FlowableTypeClass<Type> {
+export interface AsyncIterableModule extends Pick<DeferredTypeClass<Type>, "toObservable">, FlowableTypeClass<Type> {
 }
 export type Signature = AsyncIterableModule;
 export declare const flow: Signature["flow"];
-export declare const repeat: Signature["repeat"];
-export declare const retry: Signature["retry"];
 export declare const toObservable: Signature["toObservable"];

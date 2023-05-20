@@ -18,7 +18,7 @@
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
-  ↳ [`RunnableTypeClass`](types.RunnableTypeClass.md)
+  ↳ [`DeferredTypeClass`](types.DeferredTypeClass.md)
 
 ## Table of contents
 

@@ -32,6 +32,7 @@ import {
   __DistinctUntilChangedLike_hasValue as DistinctUntilChangedLike_hasValue,
   __DistinctUntilChangedLike_prev as DistinctUntilChangedLike_prev,
   __ForEachLike_effect as ForEachLike_effect,
+  __HigherOrderEnumerator_inner as HigherOrderEnumerator_inner,
   __LiftedLike_operators as LiftedLike_operators,
   __LiftedLike_source as LiftedLike_source,
   __MappingLike_selector as MappingLike_selector,
@@ -73,6 +74,7 @@ export {
   DistinctUntilChangedLike_hasValue,
   DistinctUntilChangedLike_prev,
   ForEachLike_effect,
+  HigherOrderEnumerator_inner,
   LiftedLike_operators,
   LiftedLike_source,
   MappingLike_selector,
@@ -232,4 +234,8 @@ export interface WithLatestLike<TA, TB, T> {
 
 export interface ZipLike {
   [ZipLike_enumerators]: readonly EnumeratorLike<unknown>[];
+}
+
+export interface HigherOrderEnumeratorLike<T> {
+  [HigherOrderEnumerator_inner]: EnumeratorLike<T>;
 }

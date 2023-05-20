@@ -6,6 +6,8 @@
 
 ## Hierarchy
 
-- [`GeneratorTypeClass`](types.GeneratorTypeClass.md)<[`Type`](../modules/EnumeratorFactory.md#type)\>
+- [`EnumerableTypeClass`](types.EnumerableTypeClass.md)<[`Type`](../modules/EnumeratorFactory.md#type)\>
+
+- [`StatefulTypeClass`](types.StatefulTypeClass.md)<[`Type`](../modules/EnumeratorFactory.md#type)\>
 
   ↳ **`EnumeratorFactoryModule`**

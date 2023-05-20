@@ -1,4 +1,5 @@
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
@@ -12,6 +13,7 @@ import Observable_flatMapIterable from "./Observable/__internal__/Observable.fla
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
+import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
@@ -25,6 +27,7 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -60,6 +63,7 @@ import {
   QueueableLike_backpressureStrategy,
   RunnableLike,
   RunnableTypeClass,
+  StatefulTypeClass,
 } from "./types.js";
 
 /**
@@ -77,7 +81,8 @@ export type Type = RunnableContainer;
  */
 export interface RunnableModule
   extends RunnableTypeClass<Type>,
-    HigherOrderObservableTypeClass<Type, Type> {
+    HigherOrderObservableTypeClass<Type, Type>,
+    StatefulTypeClass<Type> {
   compute<T>(
     computation: Factory<T>,
     options?: {
@@ -122,6 +127,7 @@ export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
+export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;
@@ -137,6 +143,7 @@ export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Runnable_reduce;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
+export const retry: Signature["retry"] = DeferredObservable_retry;
 export const run: Signature["run"] = Runnable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanLast: Signature["scanLast"] = Runnable_scanLast;
@@ -149,6 +156,7 @@ export const switchMap: Signature["switchMap"] = Runnable_switchMap;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const throws: Signature["throws"] = Observable_throws;
 export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Runnable_toReadonlyArray;

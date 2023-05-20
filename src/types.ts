@@ -961,31 +961,8 @@ export interface MulticastableTypeClass<C extends Container> {
  * @noInheritDoc
  * @category TypeClass
  */
-export interface DeferredTypeClass<C extends Container> {
-  /**
-   * @category Operator
-   */
-  repeat<T>(): ContainerOperator<C, T, T>;
-  repeat<T>(count: number): ContainerOperator<C, T, T>;
-  repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
-  retry<T>(
-    shouldRetry: (count: number, error: Error) => boolean,
-  ): ContainerOperator<C, T, T>;
-
-  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category TypeClass
- */
-export interface RunnableTypeClass<C extends Container>
-  extends ContainerTypeClass<C>,
-    FlowableTypeClass<C> {
+export interface DeferredTypeClass<C extends Container>
+  extends ContainerTypeClass<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -1021,16 +998,6 @@ export interface RunnableTypeClass<C extends Container>
   ): ContainerOperator<C, T, T>;
 
   /**
-   * @category Transform
-   */
-  contains<T>(
-    value: T,
-    options?: {
-      readonly equality?: Equality<T>;
-    },
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
    * Return an Container that emits no items.
    *
    * @category Constructor
@@ -1041,24 +1008,6 @@ export interface RunnableTypeClass<C extends Container>
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
-
-  /**
-   * Determines whether all the members of an Container satisfy the predicate.
-   * The predicate function is invoked for each element in the Container until the
-   * it returns false, or until the end of the Container.
-   *
-   * @param predicate
-   * @category Transform
-   */
-  everySatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   *
-   * @category Transform
-   */
-  first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
 
   /**
    * @category Operator
@@ -1109,37 +1058,11 @@ export interface RunnableTypeClass<C extends Container>
   fromValue<T>(): Function1<T, ContainerOf<C, T>>;
 
   /**
-   *
-   * @category Transform
-   */
-  last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-
-  /**
-   * @category Transform
-   */
-  noneSatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   * @category Transform
-   */
-  reduce<T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<ContainerOf<C, T>, TAcc>;
-
-  /**
    * @category Operator
    */
+  repeat<T>(): ContainerOperator<C, T, T>;
   repeat<T>(count: number): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Transform
-   */
-  someSatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
+  repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
 
   /**
    * @category Operator
@@ -1155,15 +1078,7 @@ export interface RunnableTypeClass<C extends Container>
     readonly count?: number;
   }): ContainerOperator<C, T, T>;
 
-  /** @category Transform */
-  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
-
-  /**
-   * Converts the Container to a `ReadonlyArrayContainer`.
-   *
-   * @category Transform
-   */
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 
   /**
    * Combines multiple sources to create a Container whose values are calculated from the values,
@@ -1293,6 +1208,80 @@ export interface RunnableTypeClass<C extends Container>
  * @noInheritDoc
  * @category TypeClass
  */
+export interface RunnableTypeClass<C extends Container>
+  extends DeferredTypeClass<C>,
+    FlowableTypeClass<C> {
+  /**
+   * @category Transform
+   */
+  contains<T>(
+    value: T,
+    options?: {
+      readonly equality?: Equality<T>;
+    },
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
+   * Determines whether all the members of an Container satisfy the predicate.
+   * The predicate function is invoked for each element in the Container until the
+   * it returns false, or until the end of the Container.
+   *
+   * @param predicate
+   * @category Transform
+   */
+  everySatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
+   *
+   * @category Transform
+   */
+  first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+
+  /**
+   *
+   * @category Transform
+   */
+  last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+
+  /**
+   * @category Transform
+   */
+  noneSatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
+   * @category Transform
+   */
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<ContainerOf<C, T>, TAcc>;
+
+  /**
+   * @category Transform
+   */
+  someSatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /** @category Transform */
+  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+
+  /**
+   * Converts the Container to a `ReadonlyArrayContainer`.
+   *
+   * @category Transform
+   */
+  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+}
+
+/**
+ * @noInheritDoc
+ * @category TypeClass
+ */
 export interface EnumerableTypeClass<C extends Container>
   extends RunnableTypeClass<C> {
   /**
@@ -1324,12 +1313,18 @@ export interface EnumerableTypeClass<C extends Container>
  * @noInheritDoc
  * @category TypeClass
  */
-export interface GeneratorTypeClass<C extends Container>
-  extends EnumerableTypeClass<C> {
+export interface StatefulTypeClass<C extends Container> {
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
   ): ContainerOf<C, T>;
+
+  /**
+   * @category Operator
+   */
+  retry<T>(
+    shouldRetry: (count: number, error: Error) => boolean,
+  ): ContainerOperator<C, T, T>;
 
   throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }

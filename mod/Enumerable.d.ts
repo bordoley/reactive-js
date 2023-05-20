@@ -1,5 +1,5 @@
 import { Factory } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableLike, GeneratorTypeClass } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableLike, EnumerableTypeClass, StatefulTypeClass } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -11,7 +11,7 @@ export type Type = EnumerableContainer;
 /**
  * @noInheritDoc
  */
-export interface EnumerableModule extends GeneratorTypeClass<Type> {
+export interface EnumerableModule extends EnumerableTypeClass<Type>, StatefulTypeClass<Type> {
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): EnumerableLike<T>;
@@ -52,6 +52,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
+export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];
