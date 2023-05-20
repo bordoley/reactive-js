@@ -34,7 +34,7 @@ export type Test = {
 export type TestAsync = {
   readonly type: typeof TestAsyncType;
   readonly name: string;
-  readonly f: Function1<string, Factory<PromiseLike<void>>>;
+  readonly f: Function1<string, Factory<Promise<void>>>;
 };
 
 export type TestGroup = Describe | Test | TestAsync;
@@ -60,7 +60,7 @@ export { createTest as test };
 
 export const testAsync = (
   name: string,
-  f: Factory<PromiseLike<void>>,
+  f: Factory<Promise<void>>,
 ): TestAsync => ({
   type: TestAsyncType,
   name,

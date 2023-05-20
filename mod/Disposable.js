@@ -16,6 +16,7 @@ import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObse
 import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
 import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
+import Disposable_usingAsyncLazy from "./Disposable/__internal__/Disposable.usingAsyncLazy.js";
 import Disposable_usingLazy from "./Disposable/__internal__/Disposable.usingLazy.js";
 import { Container_type, } from "./types.js";
 export const add = Disposable_add;
@@ -34,4 +35,5 @@ export const toObservable = Disposable_toObservable;
 export const toReadonlyArrayAsync = Disposable_toReadonlyArrayAsync;
 export const using = Disposable_using;
 export const usingAsync = Disposable_usingAsync;
+export const usingAsyncLazy = Disposable_usingAsyncLazy;
 export const usingLazy = Disposable_usingLazy;

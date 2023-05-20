@@ -35,6 +35,7 @@
 - [toErrorHandler](Disposable.md#toerrorhandler)
 - [using](Disposable.md#using)
 - [usingAsync](Disposable.md#usingasync)
+- [usingAsyncLazy](Disposable.md#usingasynclazy)
 - [usingLazy](Disposable.md#usinglazy)
 
 ### Transform Functions
@@ -274,7 +275,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -294,7 +295,7 @@ ___
 | :------ | :------ |
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -316,7 +317,7 @@ ___
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -341,7 +342,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -361,7 +362,7 @@ ___
 | :------ | :------ |
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -383,7 +384,7 @@ ___
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -399,6 +400,73 @@ ___
 
 ___
 
+### usingAsyncLazy
+
+▸ **usingAsyncLazy**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `void` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `void` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
+| `TResult` | `void` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+
+___
+
 ### usingLazy
 
 ▸ **usingLazy**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
@@ -408,7 +476,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TDisposable` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -428,7 +496,7 @@ ___
 | :------ | :------ |
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 
@@ -450,7 +518,7 @@ ___
 | `TDisposableA` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableB` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
 | `TDisposableC` | extends [`DisposableLike`](../interfaces/types.DisposableLike.md) |
-| `TResult` | `unknown` |
+| `TResult` | `void` |
 
 #### Parameters
 

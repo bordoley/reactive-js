@@ -15,14 +15,14 @@ export type Test = {
 export type TestAsync = {
     readonly type: typeof TestAsyncType;
     readonly name: string;
-    readonly f: Function1<string, Factory<PromiseLike<void>>>;
+    readonly f: Function1<string, Factory<Promise<void>>>;
 };
 export type TestGroup = Describe | Test | TestAsync;
 declare const createDescribe: (name: string, ...tests: TestGroup[]) => Describe;
 export { createDescribe as describe };
 declare const createTest: (name: string, f: SideEffect) => Test;
 export { createTest as test };
-export declare const testAsync: (name: string, f: Factory<PromiseLike<void>>) => TestAsync;
+export declare const testAsync: (name: string, f: Factory<Promise<void>>) => TestAsync;
 export declare const expectToThrow: (f: SideEffect) => void;
 export declare const expectToThrowAsync: (f: Factory<Promise<unknown>>) => Promise<void>;
 export declare const expectToThrowError: (error: unknown) => (f: SideEffect) => void;
