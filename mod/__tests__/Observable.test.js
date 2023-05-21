@@ -7,7 +7,7 @@ import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, bindMethod, increment, incrementBy, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
@@ -92,6 +92,14 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
     pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Runnable.toReadonlyArray(), x => x.join(), expectEquals(str));
+})), describe("empty", test("with delay", () => {
+    let disposedTime = -1;
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), Disposable.onComplete(() => {
+        disposedTime = scheduler[SchedulerLike_now];
+    }));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(disposedTime, expectEquals(5));
 })), describe("firstAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectIsNone);

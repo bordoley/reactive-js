@@ -40,6 +40,7 @@ import {
   DisposableLike_isDisposed,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_notify,
   VirtualTimeSchedulerLike_run,
@@ -261,6 +262,24 @@ testModule(
         x => x.join(),
         expectEquals(str),
       );
+    }),
+  ),
+  describe(
+    "empty",
+    test("with delay", () => {
+      let disposedTime = -1;
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+      pipe(
+        Observable.empty({ delay: 5 }),
+        Observable.subscribe(scheduler),
+        Disposable.onComplete(() => {
+          disposedTime = scheduler[SchedulerLike_now];
+        }),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(disposedTime, expectEquals(5));
     }),
   ),
   describe(
