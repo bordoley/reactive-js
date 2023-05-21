@@ -2,10 +2,8 @@ import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/D
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import type * as Runnable from "../../Runnable.js";
 import Scheduler_createVirtualTimeScheduler from "../../Scheduler/__internal__/Scheduler.createVirtualTimeScheduler.js";
-import { __DEV__ } from "../../__internal__/constants.js";
-import { pipe, raiseWithDebugMessage } from "../../functions.js";
+import { pipe } from "../../functions.js";
 import {
-  ObservableLike_isRunnable,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableLike,
@@ -18,12 +16,6 @@ const Runnable_run: Runnable.Signature["run"] =
     readonly capacity?: number;
   }) =>
   (observable: RunnableLike<T>) => {
-    if (__DEV__ && !observable[ObservableLike_isRunnable]) {
-      raiseWithDebugMessage(
-        "Runnable.run() invoked with a non-runnable ObservableLike",
-      );
-    }
-
     const scheduler = Scheduler_createVirtualTimeScheduler();
 
     const subscription = pipe(

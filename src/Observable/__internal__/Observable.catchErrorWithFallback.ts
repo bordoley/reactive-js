@@ -40,7 +40,7 @@ const Observable_catchErrorWithFallback = <
             const next = errorHandler(err, causedBy);
             next[ObservableLike_observe](delegate);
           } catch (e) {
-            delegate[DisposableLike_dispose](error([e, err]));
+            delegate[DisposableLike_dispose](error([error(e), err]));
           }
         }),
       );

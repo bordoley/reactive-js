@@ -19,7 +19,7 @@ const DeferredObservable_repeatOrRetry =
             }
             catch (e) {
                 shouldComplete = true;
-                err = isSome(err) ? error([e, err]) : error(e);
+                err = isSome(err) ? error([error(e), err]) : error(e);
             }
             if (shouldComplete) {
                 delegate[DisposableLike_dispose](err);

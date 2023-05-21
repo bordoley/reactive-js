@@ -33,7 +33,7 @@ const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
           shouldComplete = !shouldRepeat(count, err);
         } catch (e) {
           shouldComplete = true;
-          err = isSome(err) ? error([e, err]) : error(e);
+          err = isSome(err) ? error([error(e), err]) : error(e);
         }
 
         if (shouldComplete) {

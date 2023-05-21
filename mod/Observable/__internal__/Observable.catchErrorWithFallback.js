@@ -12,7 +12,7 @@ const Observable_catchErrorWithFallback = (lift) => {
             next[ObservableLike_observe](delegate);
         }
         catch (e) {
-            delegate[DisposableLike_dispose](error([e, err]));
+            delegate[DisposableLike_dispose](error([error(e), err]));
         }
     }));
     return (errorHandler) => (observable) => pipe(createCatchErrorObserver(errorHandler, observable), lift)(observable);

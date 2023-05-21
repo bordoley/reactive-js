@@ -11,9 +11,10 @@ const Observable_catchError =
     const createCatchErrorObserver = (errorHandler) => (delegate) => pipe(Observer_createWithDelegate(delegate), Disposable_onComplete(bindMethod(delegate, DisposableLike_dispose)), Disposable_onError((err) => {
         try {
             errorHandler(err);
+            delegate[DisposableLike_dispose]();
         }
         catch (e) {
-            delegate[DisposableLike_dispose](error([e, err]));
+            delegate[DisposableLike_dispose](error([error(e), err]));
         }
     }));
     return (errorHandler) => pipe(errorHandler, createCatchErrorObserver, Observable_liftEnumerableUpperBounded);

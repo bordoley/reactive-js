@@ -16,8 +16,9 @@ const Observable_catchError: Observable.Signature["catchError"] =
           Disposable_onError((err: Error) => {
             try {
               errorHandler(err);
+              delegate[DisposableLike_dispose]();
             } catch (e) {
-              delegate[DisposableLike_dispose](error([e, err]));
+              delegate[DisposableLike_dispose](error([error(e), err]));
             }
           }),
         );

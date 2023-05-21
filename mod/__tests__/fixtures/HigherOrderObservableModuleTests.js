@@ -1,12 +1,23 @@
 /// <reference types="./HigherOrderObservableModuleTests.d.ts" />
 
 import * as Observable from "../../Observable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import * as Runnable from "../../Runnable.js";
 import { describe, expectArrayEquals, expectToThrowAsync, testAsync, } from "../../__internal__/testing.js";
-import { identity, pipe, pipeAsync, pipeLazyAsync, returns, } from "../../functions.js";
+import { identity, none, pipe, pipeAsync, pipeLazyAsync, returns, } from "../../functions.js";
 const HigherOrderObservableModuleTests = (m, fromRunnable) => describe("HigherOrderObservableModule", describe("catchError", testAsync("when source throws", async () => {
     const e = {};
     await pipeAsync(Observable.throws({ raise: returns(e) }), fromRunnable(), m.catchError(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3]));
+}), testAsync("when source throws and the error handler also throws", async () => {
+    const e1 = "e1";
+    const e2 = "e2";
+    let result = none;
+    await pipeAsync(Observable.throws({ raise: returns(e1) }), fromRunnable(), m.catchError(_ => {
+        throw e2;
+    }), Observable.catchError(e => {
+        result = e["cause"];
+    }), Observable.toReadonlyArrayAsync());
+    pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals([e2, e1]));
 }), testAsync("when source does not throw", pipeLazyAsync([4, 5, 6], Observable.fromReadonlyArray(), fromRunnable(), m.catchError(_ => pipe([1, 2, 3], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(), expectArrayEquals([4, 5, 6])))), describe("exhaust", testAsync("when the initial observable never disposes", pipeLazyAsync([
     pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),

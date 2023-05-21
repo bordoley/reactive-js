@@ -102,7 +102,7 @@ const EnumeratorFactory_repeatOrRetry: <T>(
                 shouldComplete = cnt !== 0 && !this.p(cnt, err);
               } catch (e) {
                 shouldComplete = true;
-                err = isSome(err) ? error([e, err]) : error(e);
+                err = isSome(err) ? error([error(e), err]) : error(e);
               }
 
               if (shouldComplete) {

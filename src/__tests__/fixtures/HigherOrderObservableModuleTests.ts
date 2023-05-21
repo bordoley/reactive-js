@@ -1,4 +1,5 @@
 import * as Observable from "../../Observable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import * as Runnable from "../../Runnable.js";
 import {
   describe,
@@ -8,7 +9,9 @@ import {
 } from "../../__internal__/testing.js";
 import {
   Function1,
+  Optional,
   identity,
+  none,
   pipe,
   pipeAsync,
   pipeLazyAsync,
@@ -41,6 +44,33 @@ const HigherOrderObservableModuleTests = <C extends Observable.Type>(
           expectArrayEquals([1, 2, 3]),
         );
       }),
+      testAsync(
+        "when source throws and the error handler also throws",
+        async () => {
+          const e1 = "e1";
+          const e2 = "e2";
+
+          let result: Optional<unknown> = none;
+
+          await pipeAsync(
+            Observable.throws<number>({ raise: returns(e1) }),
+            fromRunnable<number>(),
+            m.catchError<number>(_ => {
+              throw e2;
+            }),
+            Observable.catchError<number>(e => {
+              result = e["cause"];
+            }),
+            Observable.toReadonlyArrayAsync(),
+          );
+
+          pipe(
+            result as ReadonlyArray<Error>,
+            ReadonlyArray.map(x => x.message),
+            expectArrayEquals([e2, e1]),
+          );
+        },
+      ),
       testAsync(
         "when source does not throw",
         pipeLazyAsync(

@@ -12,6 +12,7 @@ import {
   expectToHaveBeenCalledTimes,
   expectToThrow,
   expectToThrowError,
+  expectTrue,
   mockFn,
   test,
   testAsync,
@@ -24,6 +25,7 @@ import {
   increment,
   incrementBy,
   newInstance,
+  none,
   pipe,
   pipeLazy,
   raise,
@@ -32,13 +34,41 @@ import {
 import {
   DisposableLike_dispose,
   DisposableLike_error,
+  DisposableLike_isDisposed,
   PublisherLike_observerCount,
+  SchedulerLike_schedule,
   SinkLike_notify,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
 
 testModule(
   "Observable",
+  describe(
+    "catchError",
+    test("when the error handler throws an error", () => {
+      const e1 = "e1";
+      const e2 = "e2";
+
+      let result: Optional<unknown> = none;
+
+      pipe(
+        Observable.throws({ raise: () => e1 }),
+        Observable.catchError(_ => {
+          throw e2;
+        }),
+        Observable.catchError<number>(e => {
+          result = e["cause"];
+        }),
+        Runnable.toReadonlyArray(),
+      );
+
+      pipe(
+        result as ReadonlyArray<Error>,
+        ReadonlyArray.map(x => x.message),
+        expectArrayEquals(["e2", "e1"]),
+      );
+    }),
+  ),
   describe(
     "combineLatest",
     test(
@@ -101,6 +131,83 @@ testModule(
       pipe(publisher[PublisherLike_observerCount], expectEquals(1));
       sub2[DisposableLike_dispose]();
       pipe(publisher[PublisherLike_observerCount], expectEquals(0));
+    }),
+    test("notifying a disposed publisher", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+      const publisher = Observable.createPublisher<number>();
+
+      const result: number[] = [];
+
+      const publisherSubscription = pipe(
+        publisher,
+        Observable.forEach<number>(v => {
+          result.push(v);
+        }),
+        Observable.subscribe(scheduler),
+      );
+
+      const generateSubscription = pipe(
+        Observable.generate(increment, returns(-1), {
+          delay: 3,
+          delayStart: true,
+        }),
+        Observable.forEach(bindMethod(publisher, SinkLike_notify)),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[SchedulerLike_schedule](
+        () => {
+          publisher[DisposableLike_dispose]();
+        },
+        { delay: 7 },
+      );
+
+      scheduler[SchedulerLike_schedule](
+        () => {
+          generateSubscription[DisposableLike_dispose]();
+        },
+        { delay: 10 },
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      expectTrue(publisherSubscription[DisposableLike_isDisposed]);
+
+      pipe(result, expectArrayEquals([0, 1]));
+    }),
+    test("subscribing to a publisher disposed with an error", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+      const publisher = Observable.createPublisher<number>();
+
+      const e = new Error();
+      publisher[DisposableLike_dispose](e);
+
+      const subscription = pipe(publisher, Observable.subscribe(scheduler));
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(
+        subscription[DisposableLike_error],
+        expectEquals<Optional<Error>>(e),
+      );
+    }),
+    test("notifing an observer that throws an exception on overflow", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+      const publisher = Observable.createPublisher<number>();
+
+      const subscription = pipe(
+        publisher,
+        Observable.subscribe(scheduler, {
+          backpressureStrategy: "throw",
+          capacity: 1,
+        }),
+      );
+
+      publisher[SinkLike_notify](1);
+      publisher[SinkLike_notify](2);
+      publisher[SinkLike_notify](3);
+
+      expectIsSome(subscription[DisposableLike_error]);
     }),
   ),
   describe(
@@ -386,7 +493,7 @@ testModule(
       pipeLazy(
         [1],
         Observable.fromReadonlyArray(),
-        Observable.throwIfEmpty(() => undefined),
+        Observable.throwIfEmpty(returns(none)),
         Runnable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
       ),
@@ -420,10 +527,7 @@ testModule(
       pipeLazy(
         [0],
         Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.withLatestFrom(
-          Runnable.empty<number>(),
-          (a: number, b: number) => a + b,
-        ),
+        Observable.withLatestFrom(Runnable.empty<number>(), returns(1)),
         Runnable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
@@ -437,7 +541,7 @@ testModule(
           Observable.fromReadonlyArray({ delay: 1 }),
           Observable.withLatestFrom(
             Observable.throws<number>({ raise: returns(error) }),
-            (a: number, b) => a + b,
+            returns(1),
           ),
           Runnable.toReadonlyArray(),
           expectArrayEquals([] as number[]),
@@ -523,7 +627,7 @@ testModule(
           Observable.throws(),
           Observable.zipWithLatestFrom(
             pipe([1], ReadonlyArray.toObservable()),
-            (_, b) => b,
+            returns(1),
           ),
           Runnable.toReadonlyArray(),
         ),
