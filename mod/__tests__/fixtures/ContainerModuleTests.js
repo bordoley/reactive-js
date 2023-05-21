@@ -1,8 +1,12 @@
 /// <reference types="./ContainerModuleTests.d.ts" />
 
 import * as Disposable from "../../Disposable.js";
-import { describe, expectArrayEquals, expectToThrowError, test, } from "../../__internal__/testing.js";
+import * as EventSource from "../../EventSource.js";
+import * as Scheduler from "../../Scheduler.js";
+import * as Streamable from "../../Streamable.js";
+import { describe, expectArrayEquals, expectToThrow, expectToThrowError, expectTrue, test, } from "../../__internal__/testing.js";
 import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, returns, } from "../../functions.js";
+import { DispatcherLikeEvent_completed, StreamableLike_stream, } from "../../types.js";
 const ContainerModuleTests = (m, createCtx, fromReadonlyArray, toReadonlyArray) => describe("ContainerModule", describe("buffer", test("with multiple sub buffers", Disposable.usingLazy(createCtx)(ctx => pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], fromReadonlyArray(ctx), m.buffer({ count: 3 }), toReadonlyArray(ctx), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -11,7 +15,28 @@ const ContainerModuleTests = (m, createCtx, fromReadonlyArray, toReadonlyArray) 
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],
-], arrayEquality()))))), describe("distinctUntilChanged", test("when source has duplicates in order", Disposable.usingLazy(createCtx)((ctx) => pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(ctx), m.distinctUntilChanged(), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3, 4])))), test("when source is empty", Disposable.usingLazy(createCtx)((ctx) => pipe([], fromReadonlyArray(ctx), m.distinctUntilChanged(), toReadonlyArray(ctx), expectArrayEquals([])))), test("when equality operator throws", () => {
+], arrayEquality()))))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+    });
+    expectToThrow(Disposable.usingLazy(createCtx)((ctx) => pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(ctx), m.dispatchTo(stream), toReadonlyArray(ctx))));
+}), test("when completed successfully", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+    });
+    let completed = false;
+    pipe(stream, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+        }
+    }));
+    Disposable.using(createCtx)((ctx) => pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(ctx), m.dispatchTo(stream), toReadonlyArray(ctx), expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4])));
+    expectTrue(completed);
+})), describe("distinctUntilChanged", test("when source has duplicates in order", Disposable.usingLazy(createCtx)((ctx) => pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(ctx), m.distinctUntilChanged(), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3, 4])))), test("when source is empty", Disposable.usingLazy(createCtx)((ctx) => pipe([], fromReadonlyArray(ctx), m.distinctUntilChanged(), toReadonlyArray(ctx), expectArrayEquals([])))), test("when equality operator throws", () => {
     const err = new Error();
     const equality = (_a, _b) => {
         throw err;
