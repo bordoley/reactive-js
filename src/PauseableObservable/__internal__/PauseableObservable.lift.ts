@@ -1,23 +1,30 @@
+import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Observable_liftMixin from "../../Observable/__internal__/Observable.liftMixin.js";
-import Pauseable_delegatingMixin from "../../Pauseable/__internal__/Pauseable.delegatingMixin.js";
 import type * as PauseableObservable from "../../PauseableObservable.js";
 import {
   createInstanceFactory,
   include,
   init,
   mix,
+  props,
 } from "../../__internal__/mixins.js";
 import {
+  DelegatingLike,
+  DelegatingLike_delegate,
   Lift,
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../__internal__/types.js";
-import { Function1 } from "../../functions.js";
+import { Function1, unsafeCast } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
+  PauseableLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   PauseableObservableLike,
 } from "../../types.js";
 
@@ -27,9 +34,9 @@ const createLiftedPauseableObservable: <TIn, TOut>(
 ) => PauseableObservableLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   return createInstanceFactory(
     mix(
-      include(Observable_liftMixin(), Pauseable_delegatingMixin),
+      include(Observable_liftMixin(), Delegating_mixin()),
       function LiftedPauseableObservable(
-        instance: unknown,
+        instance: PauseableLike,
         source: PauseableObservableLike<TIn>,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
       ): PauseableObservableLike<TOut> {
@@ -38,9 +45,26 @@ const createLiftedPauseableObservable: <TIn, TOut>(
           [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
         });
-        init(Pauseable_delegatingMixin, instance, source);
+        init(Delegating_mixin(), instance, source);
 
         return instance as PauseableObservableLike<TOut>;
+      },
+      props({}),
+      {
+        get [PauseableLike_isPaused]() {
+          unsafeCast<DelegatingLike<PauseableObservableLike<TIn>>>(this);
+          return this[DelegatingLike_delegate][PauseableLike_isPaused];
+        },
+        [PauseableLike_pause](
+          this: DelegatingLike<PauseableObservableLike<TIn>>,
+        ): void {
+          this[DelegatingLike_delegate][PauseableLike_pause]();
+        },
+        [PauseableLike_resume](
+          this: DelegatingLike<PauseableObservableLike<TIn>>,
+        ): void {
+          this[DelegatingLike_delegate][PauseableLike_resume]();
+        },
       },
     ),
   );

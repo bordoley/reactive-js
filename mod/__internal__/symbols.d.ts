@@ -135,8 +135,6 @@ export const __DelegatingDisposableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingReplayObservableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
-export const __DelegatingPauseableMixin_delegate: unique symbol;
-/** @type {unique symbol} */
 export const __DelegatingQueueableMixin_delegate: unique symbol;
 /** @type {unique symbol} */
 export const __DelegatingSchedulerImplementationMixin_delegate: unique symbol;

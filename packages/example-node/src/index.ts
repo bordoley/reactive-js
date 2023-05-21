@@ -10,7 +10,7 @@ import * as Scheduler from "@reactive-js/core/Scheduler";
 import {
   DisposableLike_dispose,
   SchedulerLike_schedule,
-} from "@reactive-js/core/types";
+} from "@reactive-js/core";
 
 const scheduler = Scheduler.createHostScheduler();
 

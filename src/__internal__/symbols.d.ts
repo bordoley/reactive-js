@@ -134,8 +134,6 @@ export declare const __DelegatingDisposableMixin_delegate: unique symbol;
 
 export declare const __DelegatingReplayObservableMixin_delegate: unique symbol;
 
-export declare const __DelegatingPauseableMixin_delegate: unique symbol;
-
 export declare const __DelegatingQueueableMixin_delegate: unique symbol;
 
 export declare const __DelegatingSchedulerImplementationMixin_delegate: unique symbol;
