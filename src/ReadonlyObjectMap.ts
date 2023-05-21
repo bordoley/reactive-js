@@ -84,6 +84,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyObjectMapModule<
     reduceWithKey: ReadonlyObjectMap_reduceWithKey,
     toDictionary: ReadonlyObjectMap_toDictionary,
     toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
+    toReadonlyObjectMap: identityLazy,
     values: ReadonlyObjectMap_values,
   } as ReadonlyObjectMapModule<Type<TKey>, TKey>);
 

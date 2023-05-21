@@ -41,6 +41,7 @@ export const CreateModule = () => ({
     reduceWithKey: ReadonlyObjectMap_reduceWithKey,
     toDictionary: ReadonlyObjectMap_toDictionary,
     toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
+    toReadonlyObjectMap: identityLazy,
     values: ReadonlyObjectMap_values,
 });
 export const empty = ReadonlyObjectMap_empty;

@@ -1,7 +1,7 @@
 import Promise_addEventHandler from "./Promise/__internal__/Promise.addEventHandler.js";
 import Promise_toEventSource from "./Promise/__internal__/Promise.toEventSource.js";
 import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
-import Promise_toReadonlyArrayAsync from "./Promise/__internal__/Promise.toReadonlyArray.js";
+import Promise_toReadonlyArrayAsync from "./Promise/__internal__/Promise.toReadonlyArrayAsync.js";
 import {
   Container,
   Container_T,
