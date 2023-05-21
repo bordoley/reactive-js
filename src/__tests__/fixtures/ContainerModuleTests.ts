@@ -426,6 +426,18 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
     describe(
       "skipFirst",
       test(
+        "with default count",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3],
+            fromReadonlyArray(ctx),
+            m.skipFirst(),
+            toReadonlyArray(ctx),
+            expectArrayEquals([2, 3]),
+          ),
+        ),
+      ),
+      test(
         "when skipped source has additional elements",
         Disposable.usingLazy(createCtx)((ctx: TCtx) =>
           pipe(
@@ -452,6 +464,18 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
     ),
     describe(
       "takeFirst",
+      test(
+        "with default count",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+            m.takeFirst(),
+            toReadonlyArray(ctx),
+            expectArrayEquals([1]),
+          ),
+        ),
+      ),
       test(
         "when taking fewer than the total number of elements in the source",
         Disposable.usingLazy(createCtx)((ctx: TCtx) =>
@@ -515,6 +539,18 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
     ),
     describe(
       "takeLast",
+      test(
+        "with default count",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+            m.takeLast(),
+            toReadonlyArray(ctx),
+            expectArrayEquals([5]),
+          ),
+        ),
+      ),
       test(
         "when count is less than the total number of elements",
         Disposable.usingLazy(createCtx)((ctx: TCtx) =>
