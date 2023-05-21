@@ -1,5 +1,4 @@
 import type * as DeferredObservable from "../../DeferredObservable.js";
-import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
 import { Factory, Optional, none, pipe } from "../../functions.js";
@@ -45,9 +44,6 @@ const DeferredObservable_share: DeferredObservable.Signature["share"] =
               schedulerOrFactory,
               options,
             ),
-            Disposable_onDisposed(() => {
-              multicasted = none;
-            }),
           );
           return multicasted;
         })(),
