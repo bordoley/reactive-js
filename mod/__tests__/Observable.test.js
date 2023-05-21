@@ -5,7 +5,7 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
-import { arrayEquality, bindMethod, increment, incrementBy, newInstance, none, pipe, pipeLazy, raise, returns, } from "../functions.js";
+import { arrayEquality, bindMethod, increment, incrementBy, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("catchError", test("when the error handler throws an error", () => {
     const e1 = "e1";
@@ -91,7 +91,7 @@ testModule("Observable", describe("catchError", test("when the error handler thr
 }), testAsync("it returns the first value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectEquals(1));
-})), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+})), describe("flatMapAsync", testAsync("mapping a number to a promise", pipeLazyAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
     const result = await pipe(async () => {
         await Promise.resolve(1);
         return 2;

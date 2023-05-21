@@ -28,6 +28,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  pipeLazyAsync,
   raise,
   returns,
 } from "../functions.js";
@@ -256,6 +257,19 @@ testModule(
       );
       pipe(result, expectEquals<Optional<number>>(1));
     }),
+  ),
+  describe(
+    "flatMapAsync",
+    testAsync(
+      "mapping a number to a promise",
+      pipeLazyAsync(
+        1,
+        Observable.fromValue(),
+        Observable.flatMapAsync(async x => await Promise.resolve(x)),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1]),
+      ),
+    ),
   ),
   describe(
     "fromAsyncFactory",
