@@ -36,6 +36,14 @@ const EnumerableContainerModuleTests = <C extends Container>(
         );
       }),
     ),
+    describe(
+      "toIterable",
+      test("when the source completes without error", () => {
+        const iter = pipe([0, 1, 2], m.fromReadonlyArray(), m.toIterable());
+
+        pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
+      }),
+    ),
   ),
 ];
 
