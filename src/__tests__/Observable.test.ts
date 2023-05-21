@@ -1,3 +1,4 @@
+import * as Disposable from "../Disposable.js";
 import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
@@ -11,6 +12,7 @@ import {
   expectPromiseToThrow,
   expectToHaveBeenCalledTimes,
   expectToThrow,
+  expectToThrowAsync,
   expectToThrowError,
   expectTrue,
   mockFn,
@@ -37,6 +39,7 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   PublisherLike_observerCount,
+  QueueableLike_enqueue,
   SchedulerLike_schedule,
   SinkLike_notify,
   VirtualTimeSchedulerLike_run,
@@ -44,6 +47,27 @@ import {
 
 testModule(
   "Observable",
+  describe(
+    "backpressureStrategy",
+    testAsync(
+      "with a throw backpressure strategy",
+      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+        async scheduler => {
+          expectToThrowAsync(
+            pipeLazyAsync(
+              Observable.create(observer => {
+                for (let i = 0; i < 10; i++) {
+                  observer[QueueableLike_enqueue](i);
+                }
+              }),
+              Observable.backpressureStrategy(1, "throw"),
+              Observable.toReadonlyArrayAsync<number>(scheduler),
+            ),
+          );
+        },
+      ),
+    ),
+  ),
   describe(
     "catchError",
     test("when the error handler throws an error", () => {
