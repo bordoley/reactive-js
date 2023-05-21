@@ -5,7 +5,7 @@ import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
-import { describe, expectArrayEquals, expectEquals, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, bindMethod, increment, incrementBy, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
@@ -141,6 +141,17 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const subscription = pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
     pipe(subscription[DisposableLike_error], expectIsSome);
+}), test("when call back returns a disposable", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const disp = Disposable.create();
+    const f = mockFn(disp);
+    pipe([1], ReadonlyArray.toObservable(), Observable.onSubscribe(f), Observable.subscribe(scheduler));
+    expectFalse(disp[DisposableLike_isDisposed]);
+    pipe(f, expectToHaveBeenCalledTimes(1));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    expectTrue(disp[DisposableLike_isDisposed]);
+    expectIsNone(disp[DisposableLike_error]);
+    pipe(f, expectToHaveBeenCalledTimes(1));
 })), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,

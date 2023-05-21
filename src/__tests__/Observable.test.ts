@@ -7,6 +7,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
   expectIsNone,
   expectIsSome,
   expectPromiseToThrow,
@@ -467,6 +468,29 @@ testModule(
       );
 
       pipe(subscription[DisposableLike_error], expectIsSome);
+    }),
+
+    test("when call back returns a disposable", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const disp = Disposable.create();
+      const f = mockFn(disp);
+
+      pipe(
+        [1],
+        ReadonlyArray.toObservable(),
+        Observable.onSubscribe(f),
+        Observable.subscribe(scheduler),
+      );
+
+      expectFalse(disp[DisposableLike_isDisposed]);
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      expectTrue(disp[DisposableLike_isDisposed]);
+      expectIsNone(disp[DisposableLike_error]);
+      pipe(f, expectToHaveBeenCalledTimes(1));
     }),
   ),
 
