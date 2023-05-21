@@ -1,8 +1,10 @@
 import * as Disposable from "../../Disposable.js";
+import * as EnumeratorFactory from "../../EnumeratorFactory.js";
 import {
   describe,
   expectArrayEquals,
   expectToThrowError,
+  expectTrue,
   test,
 } from "../../__internal__/testing.js";
 import {
@@ -17,6 +19,7 @@ import {
   Container,
   ContainerOf,
   DeferredContainerModule,
+  ObservableLike_isDeferred,
 } from "../../types.js";
 import ContainerModuleTests from "./ContainerModuleTests.js";
 
@@ -118,14 +121,36 @@ const DeferredContainerModuleTests = <C extends Container>(
       ),
     ),
     describe(
-      "fromValue",
+      "fromOptional",
       test(
-        "it produces the value",
+        "when none",
         pipeLazy(
           none,
-          m.fromValue(),
-          toReadonlyArray(),
-          expectArrayEquals([none]),
+          m.fromOptional(),
+          toReadonlyArray<never>(),
+          expectArrayEquals([]),
+        ),
+      ),
+      test(
+        "when some",
+        pipeLazy(
+          1,
+          m.fromOptional(),
+          toReadonlyArray<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+    ),
+    describe(
+      "fromEnumeratorFactory",
+      test(
+        "that produces 3 items",
+        pipeLazy(
+          [1, 2, 3],
+          EnumeratorFactory.fromReadonlyArray(),
+          m.fromEnumeratorFactory(),
+          toReadonlyArray<number>(),
+          expectArrayEquals([1, 2, 3]),
         ),
       ),
     ),
@@ -181,6 +206,18 @@ const DeferredContainerModuleTests = <C extends Container>(
       }),
     ),
     describe(
+      "fromValue",
+      test(
+        "it produces the value",
+        pipeLazy(
+          none,
+          m.fromValue(),
+          toReadonlyArray(),
+          expectArrayEquals([none]),
+        ),
+      ),
+    ),
+    describe(
       "repeat",
       test(
         "when repeating a finite amount of times.",
@@ -229,6 +266,14 @@ const DeferredContainerModuleTests = <C extends Container>(
           expectArrayEquals([2, 3, 4, 0, 1]),
         ),
       ),
+    ),
+    describe(
+      "toObservable",
+      test("returns a  deferred observable", () => {
+        const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable());
+
+        expectTrue(obs[ObservableLike_isDeferred]);
+      }),
     ),
     describe(
       "zip",

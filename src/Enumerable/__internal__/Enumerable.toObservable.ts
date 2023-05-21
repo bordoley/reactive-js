@@ -1,6 +1,6 @@
 import type * as Enumerable from "../../Enumerable.js";
 import EnumeratorFactory_toObservable from "../../EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
-import { compose, identityLazy } from "../../functions.js";
+import { compose, identity } from "../../functions.js";
 import Enumerable_toEnumeratorFactory from "./Enumerable.toEnumeratorFactory.js";
 
 const Enumerable_toObservable: Enumerable.Signature["toObservable"] =
@@ -15,6 +15,6 @@ const Enumerable_toObservable: Enumerable.Signature["toObservable"] =
             },
           ),
         )
-      : identityLazy) as Enumerable.Signature["toObservable"];
+      : identity) as Enumerable.Signature["toObservable"];
 
 export default Enumerable_toObservable;

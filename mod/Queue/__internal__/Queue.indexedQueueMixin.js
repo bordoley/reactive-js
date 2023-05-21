@@ -172,9 +172,16 @@ const Queue_indexedQueueMixin = /*@__PURE__*/ (() => {
             }
             else if (backpressureStrategy === "drop-oldest" &&
                 count >= capacity) {
-                // We want to pop off the oldest value first, before enqueueing
-                // to avoid unintentionally growing the queue.
-                this[QueueLike_dequeue]();
+                if (capacity > 0) {
+                    // We want to pop off the oldest value first, before enqueueing
+                    // to avoid unintentionally growing the queue.
+                    this[QueueLike_dequeue]();
+                }
+                else {
+                    // Special case the 0 capacity queue so that we don't fall through
+                    // to pushing an item onto the queue
+                    return false;
+                }
             }
             else if (backpressureStrategy === "throw" && count >= capacity) {
                 raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));

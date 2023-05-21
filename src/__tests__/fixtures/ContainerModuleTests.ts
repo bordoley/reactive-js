@@ -552,6 +552,20 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
         ),
       ),
       test(
+        "when count is 0",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, 2, 3, 4, 5],
+            fromReadonlyArray(ctx),
+
+            // Some implementations special case this
+            m.takeLast({ count: 0 }),
+            toReadonlyArray(ctx),
+            expectArrayEquals([] as number[]),
+          ),
+        ),
+      ),
+      test(
         "when count is less than the total number of elements",
         Disposable.usingLazy(createCtx)((ctx: TCtx) =>
           pipe(
