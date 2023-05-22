@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorFactoryLike, RunnableLike, StatefulContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, EffectsContainerModule, EnumerableContainerModule, EnumerableLike, EnumeratorFactoryLike, RunnableLike, StatefulContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = EnumeratorFactoryContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface EnumeratorFactoryModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type> {
+export interface EnumeratorFactoryModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type>, EffectsContainerModule<Type> {
     /**
      * @category Transform
      */

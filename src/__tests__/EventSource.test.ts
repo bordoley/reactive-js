@@ -5,6 +5,7 @@ import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe } from "../functions.js";
 import { DisposableLike_error, EventSourceLike } from "../types.js";
 import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
+import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 
 const toReadonlyArray =
   <T>() =>
@@ -27,6 +28,12 @@ const toReadonlyArray =
 testModule(
   "EventSource",
   ContainerModuleTests(
+    EventSource,
+    () => Disposable.disposed,
+    ReadonlyArray_toEventSource,
+    toReadonlyArray,
+  ),
+  EffectsContainerModuleTests(
     EventSource,
     () => Disposable.disposed,
     ReadonlyArray_toEventSource,

@@ -1,5 +1,5 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike, StatefulContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EffectsContainerModule, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike, StatefulContainerModule } from "./types.js";
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
@@ -13,7 +13,7 @@ export type Type = DeferredObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
+export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type>, EffectsContainerModule<Type> {
     /**
      * @category Constructor
      */

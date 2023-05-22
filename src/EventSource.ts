@@ -30,6 +30,7 @@ import {
   ContainerModule,
   Container_T,
   Container_type,
+  EffectsContainerModule,
   EventListenerLike,
   EventPublisherLike,
   EventSourceLike,
@@ -52,7 +53,8 @@ export type Type = EventSourceContainer;
  */
 export interface EventSourceModule
   extends ContainerModule<Type>,
-    MulticastingContainerModule<Type> {
+    MulticastingContainerModule<Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Constructor
    */

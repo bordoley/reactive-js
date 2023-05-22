@@ -96,6 +96,7 @@ import {
   DeferredObservableLike,
   DispatcherLike,
   DisposableLike,
+  EffectsContainerModule,
   EnumerableLike,
   EnumeratorLike,
   EventSourceLike,
@@ -229,7 +230,9 @@ export type AnyObservableLike<T> =
  * @noInheritDoc
  * @category Module
  */
-export interface ObservableModule extends ContainerModule<Type> {
+export interface ObservableModule
+  extends ContainerModule<Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Constructor
    */

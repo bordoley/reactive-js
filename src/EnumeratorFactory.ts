@@ -52,6 +52,7 @@ import {
   Container,
   Container_T,
   Container_type,
+  EffectsContainerModule,
   EnumerableContainerModule,
   EnumerableLike,
   EnumeratorFactoryLike,
@@ -75,7 +76,8 @@ export type Type = EnumeratorFactoryContainer;
  */
 export interface EnumeratorFactoryModule
   extends EnumerableContainerModule<Type>,
-    StatefulContainerModule<Type> {
+    StatefulContainerModule<Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Transform
    */

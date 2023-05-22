@@ -60,6 +60,7 @@ import {
   Container,
   Container_T,
   Container_type,
+  EffectsContainerModule,
   HigherOrderObservableModule,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -85,7 +86,8 @@ export type Type = RunnableContainer;
 export interface RunnableModule
   extends RunnableContainerModule<Type>,
     HigherOrderObservableModule<Type, Type>,
-    StatefulContainerModule<Type> {
+    StatefulContainerModule<Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Constructor
    */

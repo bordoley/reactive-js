@@ -10,6 +10,8 @@
 
 - [`StatefulContainerModule`](types.StatefulContainerModule.md)<[`Type`](../modules/Enumerable.md#type)\>
 
+- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/Enumerable.md#type)\>
+
   ↳ **`EnumerableModule`**
 
 ## Table of contents

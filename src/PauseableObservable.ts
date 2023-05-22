@@ -25,6 +25,7 @@ import {
   Container_type,
   DeferredObservableLike,
   DispatcherLike,
+  EffectsContainerModule,
   PauseableObservableLike,
 } from "./types.js";
 
@@ -42,7 +43,9 @@ export type Type = PauseableObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PauseableObservableModule extends ContainerModule<Type> {
+export interface PauseableObservableModule
+  extends ContainerModule<Type>,
+    EffectsContainerModule<Type> {
   sinkInto<T>(
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;

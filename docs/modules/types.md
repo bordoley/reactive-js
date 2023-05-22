@@ -60,6 +60,10 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
+### Other Interfaces
+
+- [EffectsContainerModule](../interfaces/types.EffectsContainerModule.md)
+
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)

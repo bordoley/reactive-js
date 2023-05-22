@@ -8,6 +8,8 @@
 
 - [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/Observable.md#type)\>
 
+- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/Observable.md#type)\>
+
   ↳ **`ObservableModule`**
 
 ## Table of contents
@@ -1242,7 +1244,7 @@ ___
 
 #### Overrides
 
-[ContainerModule](types.ContainerModule.md).[dispatchTo](types.ContainerModule.md#dispatchto)
+[EffectsContainerModule](types.EffectsContainerModule.md).[dispatchTo](types.EffectsContainerModule.md#dispatchto)
 
 ___
 
@@ -1366,7 +1368,7 @@ ___
 
 #### Overrides
 
-[ContainerModule](types.ContainerModule.md).[enqueue](types.ContainerModule.md#enqueue)
+[EffectsContainerModule](types.EffectsContainerModule.md).[enqueue](types.EffectsContainerModule.md#enqueue)
 
 ___
 
@@ -1455,7 +1457,7 @@ value emitted by the source.
 
 #### Overrides
 
-[ContainerModule](types.ContainerModule.md).[forEach](types.ContainerModule.md#foreach)
+[EffectsContainerModule](types.EffectsContainerModule.md).[forEach](types.EffectsContainerModule.md#foreach)
 
 ___
 
@@ -3129,7 +3131,7 @@ ___
 
 #### Overrides
 
-[ContainerModule](types.ContainerModule.md).[ignoreElements](types.ContainerModule.md#ignoreelements)
+[EffectsContainerModule](types.EffectsContainerModule.md).[ignoreElements](types.EffectsContainerModule.md#ignoreelements)
 
 ___
 

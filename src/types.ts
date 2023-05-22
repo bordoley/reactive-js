@@ -790,11 +790,6 @@ export interface ContainerModule<C extends Container> {
   }): ContainerOperator<C, T, readonly T[]>;
 
   /**
-   * @category Operator
-   */
-  dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
-
-  /**
    * Returns a ContainerOperator that emits all items emitted by the source that
    * are distinct by comparison from the previous item.
    *
@@ -807,27 +802,9 @@ export interface ContainerModule<C extends Container> {
   /**
    * @category Operator
    */
-  enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
   flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
   ): ContainerOperator<C, TA, TB>;
-
-  /**
-   * Returns a ContainerOperator that applies the side effect function to each
-   * value emitted by the source.
-   *
-   * @category Operator
-   */
-  forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
-  ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 
   /**
    * Returns a ContainerOperator that only emits items produced by the
@@ -1322,6 +1299,31 @@ export interface EnumerableContainerModule<C extends Container>
     readonly delay: number;
     readonly delayStart?: boolean;
   }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+}
+
+export interface EffectsContainerModule<C extends Container> {
+  /**
+   * @category Operator
+   */
+  dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
+
+  /**
+   * @category Operator
+   */
+  enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
+
+  /**
+   * Returns a ContainerOperator that applies the side effect function to each
+   * value emitted by the source.
+   *
+   * @category Operator
+   */
+  forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
+
+  /**
+   * @category Operator
+   */
+  ignoreElements<T>(): ContainerOperator<C, unknown, T>;
 }
 
 /**

@@ -54,6 +54,7 @@ import {
   Container_type,
   DeferredObservableLike,
   DisposableLike,
+  EffectsContainerModule,
   EnumerableLike,
   HigherOrderObservableModule,
   MulticastObservableLike,
@@ -93,7 +94,8 @@ export type Type = DeferredObservableContainer;
  */
 export interface DeferredObservableModule
   extends StatefulContainerModule<Type>,
-    HigherOrderObservableModule<Type, Type> {
+    HigherOrderObservableModule<Type, Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Constructor
    */

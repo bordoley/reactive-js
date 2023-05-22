@@ -8,6 +8,8 @@
 
 - [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/PauseableObservable.md#type)\>
 
+- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/PauseableObservable.md#type)\>
+
   ↳ **`PauseableObservableModule`**
 
 ## Table of contents

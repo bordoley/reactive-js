@@ -54,6 +54,7 @@ import {
   Container,
   Container_T,
   Container_type,
+  EffectsContainerModule,
   EnumerableContainerModule,
   EnumerableLike,
   RunnableLike,
@@ -76,7 +77,8 @@ export type Type = EnumerableContainer;
  */
 export interface EnumerableModule
   extends EnumerableContainerModule<Type>,
-    StatefulContainerModule<Type> {
+    StatefulContainerModule<Type>,
+    EffectsContainerModule<Type> {
   /**
    * @category Constructor
    */

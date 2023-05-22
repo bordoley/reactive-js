@@ -1,3 +1,4 @@
+import * as Disposable from "../Disposable.js";
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
@@ -22,6 +23,7 @@ import {
   returns,
 } from "../functions.js";
 import {
+  ContainerOf,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   PauseableLike_pause,
@@ -31,6 +33,7 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
+import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
 import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
 import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
@@ -42,6 +45,16 @@ testModule(
   StatefulContainerModuleTests<Runnable.Type>(
     Runnable,
     Observable.toReadonlyArrayAsync,
+  ),
+  EffectsContainerModuleTests(
+    Runnable,
+    () => Disposable.disposed,
+    <T>() =>
+      (arr: ReadonlyArray<T>) =>
+        Runnable.fromReadonlyArray<T>()(arr),
+    <T>() =>
+      (c: ContainerOf<Runnable.Type, T>) =>
+        Runnable.toReadonlyArray<T>()(c),
   ),
   describe(
     "compute",

@@ -1,5 +1,5 @@
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, HigherOrderObservableModule, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerModule, RunnableLike, StatefulContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, EffectsContainerModule, HigherOrderObservableModule, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerModule, RunnableLike, StatefulContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = RunnableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrderObservableModule<Type, Type>, StatefulContainerModule<Type> {
+export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrderObservableModule<Type, Type>, StatefulContainerModule<Type>, EffectsContainerModule<Type> {
     /**
      * @category Constructor
      */

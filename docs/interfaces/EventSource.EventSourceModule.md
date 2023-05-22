@@ -10,6 +10,8 @@
 
 - [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
 
+- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
+
   ↳ **`EventSourceModule`**
 
 ## Table of contents

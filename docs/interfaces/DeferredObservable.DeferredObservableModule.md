@@ -10,6 +10,8 @@
 
 - [`HigherOrderObservableModule`](types.HigherOrderObservableModule.md)<[`Type`](../modules/DeferredObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
 
+- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/DeferredObservable.md#type)\>
+
   ↳ **`DeferredObservableModule`**
 
 ## Table of contents
