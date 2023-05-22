@@ -10,20 +10,16 @@ const Observable_createWithConfig =
         instance[__CreateObservable_effect] = effect;
         instance[ObservableLike_isDeferred] =
             config[ObservableLike_isDeferred] ||
-                config[ObservableLike_isEnumerable] ||
                 config[ObservableLike_isRunnable];
         instance[ObservableLike_isRunnable] =
-            config[ObservableLike_isEnumerable] ||
-                config[ObservableLike_isRunnable];
-        instance[ObservableLike_isEnumerable] =
-            config[ObservableLike_isEnumerable];
+            config[ObservableLike_isRunnable];
         return instance;
     }, props({
         [__CreateObservable_effect]: none,
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isRunnable]: false,
-        [ObservableLike_isEnumerable]: false,
     }), {
+        [ObservableLike_isEnumerable]: false,
         [ObservableLike_observe](observer) {
             try {
                 this[__CreateObservable_effect](observer);

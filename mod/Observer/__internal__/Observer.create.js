@@ -5,7 +5,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { BufferLike_capacity, QueueableLike_backpressureStrategy, } from "../../types.js";
 import Observer_mixin from "./Observer.mixin.js";
 const Observer_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function DelegatingObserver(instance, scheduler, config) {
+    return createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin()), function SubscribeObserver(instance, scheduler, config) {
         init(Disposable_mixin, instance);
         init(Observer_mixin(), instance, scheduler, config);
         return instance;

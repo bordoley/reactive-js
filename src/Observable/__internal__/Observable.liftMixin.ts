@@ -26,7 +26,6 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
   readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   }
 > = /*@__PURE__*/ (<TIn, TOut>() => {
@@ -37,7 +36,6 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
       ObserverLike<any>
     >[];
     [ObservableLike_isDeferred]: boolean;
-    [ObservableLike_isEnumerable]: boolean;
     [ObservableLike_isRunnable]: boolean;
   };
 
@@ -49,7 +47,6 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
-          readonly [ObservableLike_isEnumerable]: boolean;
           readonly [ObservableLike_isRunnable]: boolean;
         },
       ): LiftedLike<ObservableLike<TIn>, ObserverLike> & ObservableLike<TOut> {
@@ -57,8 +54,6 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
         instance[LiftedLike_operators] = ops;
 
         instance[ObservableLike_isDeferred] = config[ObservableLike_isDeferred];
-        instance[ObservableLike_isEnumerable] =
-          config[ObservableLike_isEnumerable];
         instance[ObservableLike_isRunnable] = config[ObservableLike_isRunnable];
 
         return instance;
@@ -67,10 +62,11 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
         [LiftedLike_source]: none,
         [LiftedLike_operators]: none,
         [ObservableLike_isDeferred]: false,
-        [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: false,
       }),
       {
+        [ObservableLike_isEnumerable]: false as const,
+
         [ObservableLike_observe](
           this: TProperties,
           observer: ObserverLike<TOut>,

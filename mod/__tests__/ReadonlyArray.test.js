@@ -1,13 +1,13 @@
 /// <reference types="./ReadonlyArray.test.d.ts" />
 
-import * as EnumeratorFactory from "../EnumeratorFactory.js";
+import * as Enumerable from "../Enumerable.js";
 import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, pipe, pipeLazy, returns } from "../functions.js";
 import EnumerableContainerModuleTests from "./fixtures/EnumerableContainerModuleTests.js";
-testModule("ReadonlyArray", ...EnumerableContainerModuleTests(ReadonlyArray), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], ReadonlyArray.entries(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals([
+testModule("ReadonlyArray", ...EnumerableContainerModuleTests(ReadonlyArray), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], ReadonlyArray.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([
     [0, "b"],
     [1, "d"],
 ], arrayEquality())))), describe("forEachWithKey", test("iterate and imperatively sum the keys", () => {

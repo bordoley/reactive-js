@@ -28,6 +28,7 @@ import {
   __ContinuationLike_scheduler as ContinuationLike_scheduler,
   __ContinuationSchedulerLike_schedule as ContinuationSchedulerLike_schedule,
   __CountingLike_count as CountingLike_count,
+  __DecodeWithCharsetLike_textDecoder as DecodeWithCharsetLike_textDecoder,
   __DelegatingLike_delegate as DelegatingLike_delegate,
   __DistinctUntilChangedLike_equality as DistinctUntilChangedLike_equality,
   __DistinctUntilChangedLike_hasValue as DistinctUntilChangedLike_hasValue,
@@ -68,6 +69,7 @@ export {
   ContinuationLike_scheduler,
   ContinuationSchedulerLike_schedule,
   CountingLike_count,
+  DecodeWithCharsetLike_textDecoder,
   DelegatingLike_delegate,
   DistinctUntilChangedLike_equality,
   DistinctUntilChangedLike_hasValue,
@@ -176,6 +178,10 @@ export interface BufferingLike<T> {
 
 export interface CountingLike {
   [CountingLike_count]: number;
+}
+
+export interface DecodeWithCharsetLike {
+  [DecodeWithCharsetLike_textDecoder]: TextDecoder;
 }
 
 export interface ForEachLike<T> {

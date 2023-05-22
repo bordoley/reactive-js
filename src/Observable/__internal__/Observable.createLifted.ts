@@ -3,7 +3,6 @@ import { Function1 } from "../../functions.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
 } from "../../types.js";
@@ -14,7 +13,6 @@ const Observable_createLifted: <TA, TB>(
   ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   config: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   },
 ) => ObservableLike<TB> = /*@__PURE__*/ (() =>

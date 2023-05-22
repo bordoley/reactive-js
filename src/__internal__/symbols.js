@@ -60,6 +60,11 @@ export const __DisposableLike_isDisposed = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __EnumerableLike_enumerate = /*@__PURE__*/ symbol(
+  "EnumerableLike_enumerate",
+);
+
+/** @type {unique symbol} */
 export const __EnumeratorLike_move = /*@__PURE__*/ symbol(
   "EnumeratorLike_move",
 );
@@ -414,6 +419,11 @@ export const __BufferingLike_count = /*@__PURE__*/ symbol(
 export const __CountingLike_count = /*@__PURE__*/ symbol("CountingLike_count");
 
 /** @type {unique symbol} */
+export const __DecodeWithCharsetLike_textDecoder = /*@__PURE__*/ symbol(
+  "DecodeWithCharsetLike_textDecoder",
+);
+
+/** @type {unique symbol} */
 export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 
 /** @type {unique symbol} */
@@ -610,11 +620,6 @@ export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol(
   "CreateObservable_effect",
-);
-
-/** @type {unique symbol} */
-export const __DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol(
-  "DecodeWithCharsetObserver_textDecoder",
 );
 
 /** @type {unique symbol} */

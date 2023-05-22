@@ -15,7 +15,6 @@ import DeferredObservable_scanMany from "./DeferredObservable/__internal__/Defer
 import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
-import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -68,7 +67,6 @@ export const exhaustMap = DeferredObservable_exhaustMap;
 export const flatMapIterable = Observable_flatMapIterable;
 export const forEach = Observable_forEach;
 export const fromEnumerable = identityLazy;
-export const fromEnumeratorFactory = EnumeratorFactory_toObservable;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;

@@ -1,8 +1,5 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
-import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -27,9 +24,9 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_buffer: <T>(options?: {
-  count?: number;
-}) => Function1<EnumeratorLike<T>, EnumeratorLike<readonly T[]>> =
+const Enumerator_buffer: <T>(
+  count: number,
+) => Function1<EnumeratorLike<T>, EnumeratorLike<readonly T[]>> =
   /*@__PURE__*/ (<T>() => {
     const createBufferEnumerator = createInstanceFactory(
       mix(
@@ -87,11 +84,8 @@ const Enumerator_buffer: <T>(options?: {
       ),
     );
 
-    return (options?: { count?: number }) => (delegate: EnumeratorLike<T>) =>
-      createBufferEnumerator(
-        delegate,
-        clampPositiveInteger(options?.count ?? MAX_SAFE_INTEGER),
-      );
+    return (count: number) => (delegate: EnumeratorLike<T>) =>
+      createBufferEnumerator(delegate, count);
   })();
 
 export default Enumerator_buffer;

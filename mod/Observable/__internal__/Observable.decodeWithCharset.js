@@ -1,10 +1,12 @@
 /// <reference types="./Observable.decodeWithCharset.d.ts" />
 
+import Enumerator_decodeWithCharset from "../../Enumerator/__internal__/Enumerator.decodeWithCharset.js";
 import Observer_createDecodeWithCharsetObserver from "../../Observer/__internal__/Observer.createDecodeWithCharsetObserver.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
 const Observable_decodeWithCharset = options => {
     const charset = options?.charset ?? "utf-8";
-    return pipe(Observer_createDecodeWithCharsetObserver, partial(charset), Observable_liftEnumerableUpperBounded);
+    const op = pipe(Observer_createDecodeWithCharsetObserver, partial(charset));
+    return Observable_liftEnumerableUpperBound(Enumerator_decodeWithCharset(charset), op);
 };
 export default Observable_decodeWithCharset;

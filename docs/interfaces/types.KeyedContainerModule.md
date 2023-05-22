@@ -91,7 +91,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -102,7 +102,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
@@ -158,7 +158,7 @@ ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -168,4 +168,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `any`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>

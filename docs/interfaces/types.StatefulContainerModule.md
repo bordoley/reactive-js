@@ -20,8 +20,6 @@
 
   ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
-  ↳↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
-
   ↳↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
 ## Table of contents

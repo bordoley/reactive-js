@@ -18,14 +18,11 @@
 
   ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
-  ↳↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
-
 ## Table of contents
 
 ### Transform Methods
 
 - [enumerate](types.EnumerableContainerModule.md#enumerate)
-- [toEnumeratorFactory](types.EnumerableContainerModule.md#toenumeratorfactory)
 - [toIterable](types.EnumerableContainerModule.md#toiterable)
 - [toObservable](types.EnumerableContainerModule.md#toobservable)
 
@@ -44,22 +41,6 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
-
-___
-
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
 
 ___
 

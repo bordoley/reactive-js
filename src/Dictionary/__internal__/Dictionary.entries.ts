@@ -1,5 +1,5 @@
 import type * as Dictionary from "../../Dictionary.js";
-import EnumeratorFactory_map from "../../EnumeratorFactory/__internal__/EnumeratorFactory.map.js";
+import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import { pipe } from "../../functions.js";
 import { DictionaryLike, KeyedCollectionLike_get } from "../../types.js";
 import Dictionary_keys from "./Dictionary.keys.js";
@@ -10,7 +10,7 @@ const Dictionary_entries: Dictionary.Signature["entries"] =
     pipe(
       dict,
       Dictionary_keys(),
-      EnumeratorFactory_map(key => [
+      Observable_map<TKey, [TKey, T]>(key => [
         key,
         dict[KeyedCollectionLike_get](key) as T,
       ]),

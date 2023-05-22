@@ -1,5 +1,4 @@
 import * as Disposable from "../../Disposable.js";
-import * as EnumeratorFactory from "../../EnumeratorFactory.js";
 import {
   describe,
   expectArrayEquals,
@@ -138,19 +137,6 @@ const DeferredContainerModuleTests = <C extends Container>(
           m.fromOptional(),
           toReadonlyArray<number>(),
           expectArrayEquals([1]),
-        ),
-      ),
-    ),
-    describe(
-      "fromEnumeratorFactory",
-      test(
-        "that produces 3 items",
-        pipeLazy(
-          [1, 2, 3],
-          EnumeratorFactory.fromReadonlyArray(),
-          m.fromEnumeratorFactory(),
-          toReadonlyArray<number>(),
-          expectArrayEquals([1, 2, 3]),
         ),
       ),
     ),

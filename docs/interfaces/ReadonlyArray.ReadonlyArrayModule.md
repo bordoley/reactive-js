@@ -21,7 +21,6 @@
 ### Transform Methods
 
 - [enumerate](ReadonlyArray.ReadonlyArrayModule.md#enumerate)
-- [toEnumeratorFactory](ReadonlyArray.ReadonlyArrayModule.md#toenumeratorfactory)
 - [toIterable](ReadonlyArray.ReadonlyArrayModule.md#toiterable)
 - [toObservable](ReadonlyArray.ReadonlyArrayModule.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
@@ -102,34 +101,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
-
-___
-
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Overrides
-
-Omit.toEnumeratorFactory
 
 ___
 

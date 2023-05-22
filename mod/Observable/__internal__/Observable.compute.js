@@ -267,8 +267,3 @@ export const Runnable_compute = (computation, options = {}) => Observable_comput
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: true,
 }, options);
-export const Enumerable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isEnumerable]: true,
-    [ObservableLike_isRunnable]: true,
-}, options);

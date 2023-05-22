@@ -1,23 +1,9 @@
 /// <reference types="./Enumerable.zipMany.d.ts" />
 
-import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Enumerable_enumerate from "../../Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerator_zipMany from "../../Enumerator/__internal__/Enumerator.zipMany.js";
-import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { pipe } from "../../functions.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_move, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
-const Enumerable_zipMany = (observables) => Enumerable_create((observer) => {
-    const enumerators = pipe(observables, ReadonlyArray_map(Enumerable_enumerate()), ReadonlyArray_forEach(Disposable_addTo(observer)));
-    const enumerator = Enumerator_zipMany(enumerators);
-    const continuation = (scheduler) => {
-        while (enumerator[EnumeratorLike_move]()) {
-            observer[SinkLike_notify](enumerator[EnumeratorLike_current]);
-            scheduler[SchedulerLike_yield]();
-        }
-        observer[DisposableLike_dispose]();
-    };
-    pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
-});
+import { pipeLazy } from "../../functions.js";
+const Enumerable_zipMany = (observables) => Enumerable_create(pipeLazy(observables, ReadonlyArray_map(Enumerable_enumerate()), Enumerator_zipMany));
 export default Enumerable_zipMany;

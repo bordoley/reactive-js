@@ -1,6 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import { clampPositiveInteger, max } from "../../__internal__/math.js";
+import { max } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -27,11 +27,9 @@ import MutableEnumerator_mixin, {
   MutableEnumeratorLike_reset,
 } from "./MutableEnumerator.mixin.js";
 
-const Enumerator_takeFirst: <T>(options?: {
-  readonly count?: number;
-}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<
-  T,
->() => {
+const Enumerator_takeFirst: <T>(
+  count: number,
+) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createTakeFirstEnumerator = createInstanceFactory(
     mix(
       include(MutableEnumerator_mixin(), Disposable_delegatingMixin),
@@ -82,11 +80,8 @@ const Enumerator_takeFirst: <T>(options?: {
     ),
   );
 
-  return (options: { readonly count?: number } = {}) => {
-    const count = clampPositiveInteger(options.count ?? 1);
-    return (delegate: EnumeratorLike<T>) =>
-      createTakeFirstEnumerator(delegate, count);
-  };
+  return (count: number) => (delegate: EnumeratorLike<T>) =>
+    createTakeFirstEnumerator(delegate, count);
 })();
 
 export default Enumerator_takeFirst;

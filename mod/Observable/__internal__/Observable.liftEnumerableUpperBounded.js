@@ -1,11 +1,14 @@
 /// <reference types="./Observable.liftEnumerableUpperBounded.d.ts" />
 
-import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../types.js";
-import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
-const Observable_liftEnumerableUpperBounded = 
-/*@__PURE__*/ Observable_liftUpperBoundedBy({
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isEnumerable]: true,
-    [ObservableLike_isRunnable]: true,
-});
-export default Observable_liftEnumerableUpperBounded;
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import { invoke, pipeLazy } from "../../functions.js";
+import { EnumerableLike_enumerate, } from "../../types.js";
+import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
+const Observable_liftEnumerableUpperBound = (enumeratorOperator, observerOperator) => {
+    const lift = Observable_liftRunnableUpperBounded(observerOperator);
+    return ((observable) => Observable_isEnumerable(observable)
+        ? Enumerable_create(pipeLazy(observable, invoke(EnumerableLike_enumerate), enumeratorOperator))
+        : lift(observable));
+};
+export default Observable_liftEnumerableUpperBound;

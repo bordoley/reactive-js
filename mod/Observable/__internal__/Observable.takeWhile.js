@@ -1,10 +1,12 @@
 /// <reference types="./Observable.takeWhile.d.ts" />
 
+import Enumerator_takeWhile from "../../Enumerator/__internal__/Enumerator.takeWhile.js";
 import Observer_createTakeWhileObserver from "../../Observer/__internal__/Observer.createTakeWhileObserver.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftEnumerableUpperBounded from "./Observable.liftEnumerableUpperBounded.js";
-const Observable_takeWhile = (predicate, options = {}) => {
+import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+const Observable_takeWhile = ((predicate, options = {}) => {
     const { inclusive = false } = options;
-    return pipe(Observer_createTakeWhileObserver, partial(predicate, inclusive), Observable_liftEnumerableUpperBounded);
-};
+    const op = pipe(Observer_createTakeWhileObserver, partial(predicate, inclusive));
+    return Observable_liftEnumerableUpperBound(Enumerator_takeWhile(predicate, options), op);
+});
 export default Observable_takeWhile;

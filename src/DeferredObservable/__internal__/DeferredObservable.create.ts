@@ -3,7 +3,6 @@ import { SideEffect1 } from "../../functions.js";
 import {
   DeferredObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
 } from "../../types.js";
@@ -13,7 +12,6 @@ const DeferredObservable_create = <T>(
 ): DeferredObservableLike<T> =>
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: true,
-    [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
   });
 

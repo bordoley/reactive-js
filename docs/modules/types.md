@@ -103,7 +103,6 @@
 
 ### Interactive Type Aliases
 
-- [EnumeratorFactoryLike](types.md#enumeratorfactorylike)
 - [StreamOf](types.md#streamof)
 
 ### Variables
@@ -121,6 +120,7 @@
 - [DisposableLike\_dispose](types.md#disposablelike_dispose)
 - [DisposableLike\_error](types.md#disposablelike_error)
 - [DisposableLike\_isDisposed](types.md#disposablelike_isdisposed)
+- [EnumerableLike\_enumerate](types.md#enumerablelike_enumerate)
 - [EnumeratorLike\_current](types.md#enumeratorlike_current)
 - [EnumeratorLike\_hasCurrent](types.md#enumeratorlike_hascurrent)
 - [EnumeratorLike\_move](types.md#enumeratorlike_move)
@@ -245,20 +245,6 @@ ___
 
 ## Interactive Type Aliases
 
-### EnumeratorFactoryLike
-
-Ƭ **EnumeratorFactoryLike**<`T`\>: [`Factory`](functions.md#factory)<[`EnumeratorLike`](../interfaces/types.EnumeratorLike.md)<`T`\>\>
-
-**`No Inherit Doc`**
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
-___
-
 ### StreamOf
 
 Ƭ **StreamOf**<`TStreamable`\>: `NonNullable`<`TStreamable`[typeof [`StreamableLike_TStream`](types.md#streamablelike_tstream)]\>
@@ -346,6 +332,12 @@ ___
 ### DisposableLike\_isDisposed
 
 • `Const` **DisposableLike\_isDisposed**: typeof `__DisposableLike_isDisposed`
+
+___
+
+### EnumerableLike\_enumerate
+
+• `Const` **EnumerableLike\_enumerate**: typeof `__EnumerableLike_enumerate`
 
 ___
 

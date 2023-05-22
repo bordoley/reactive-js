@@ -3,6 +3,7 @@ import { Factory, Function3 } from "../../functions.js";
 import {
   AssociativeCollectionLike_keys,
   DictionaryLike,
+  EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
   KeyedCollectionLike_get,
@@ -14,7 +15,8 @@ const Dictionary_reduceWithKey: Dictionary.Signature["reduceWithKey"] =
     initialValue: Factory<TAcc>,
   ) =>
   (dict: DictionaryLike<TKey, T>) => {
-    const keys = dict[AssociativeCollectionLike_keys]();
+    const keys =
+      dict[AssociativeCollectionLike_keys][EnumerableLike_enumerate]();
     let acc = initialValue();
 
     while (keys[EnumeratorLike_move]()) {

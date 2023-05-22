@@ -6,7 +6,7 @@ import Runnable_last from "./Runnable.last.js";
 
 const Runnable_first: Runnable.Signature["first"] =
   <T>() =>
-  (src: RunnableLike<T>) =>
-    pipe(src, Observable_takeFirst(), Runnable_last<T>());
+  (obs: RunnableLike<T>) =>
+    pipe(obs, Observable_takeFirst<T>(), Runnable_last<T>());
 
 export default Runnable_first;

@@ -1,8 +1,4 @@
 /// <reference types="./Iterable.toReadonlyArray.d.ts" />
 
-import Enumerator_toReadonlyArray from "../../Enumerator/__internal__/Enumerator.toReadonlyArray.js";
-import { compose, returns } from "../../functions.js";
-import Iterable_enumerate from "./Iterable.enumerate.js";
-const Iterable_toReadonlyArray = 
-/*@__PURE__*/ (() => returns(compose(Iterable_enumerate(), Enumerator_toReadonlyArray())))();
+const Iterable_toReadonlyArray = () => (iterable) => Array.from(iterable);
 export default Iterable_toReadonlyArray;

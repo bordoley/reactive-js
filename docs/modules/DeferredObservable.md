@@ -24,7 +24,6 @@
 - [concat](DeferredObservable.md#concat)
 - [empty](DeferredObservable.md#empty)
 - [fromEnumerable](DeferredObservable.md#fromenumerable)
-- [fromEnumeratorFactory](DeferredObservable.md#fromenumeratorfactory)
 - [fromFactory](DeferredObservable.md#fromfactory)
 - [fromIterable](DeferredObservable.md#fromiterable)
 - [fromOptional](DeferredObservable.md#fromoptional)
@@ -209,22 +208,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 ___
 

@@ -3,15 +3,15 @@ import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js"
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
-  Mutable,
   createInstanceFactory,
   include,
   init,
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { __DecodeWithCharsetObserver_textDecoder } from "../../__internal__/symbols.js";
 import {
+  DecodeWithCharsetLike,
+  DecodeWithCharsetLike_textDecoder,
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
@@ -26,12 +26,8 @@ import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "./Observer.mixin.js";
 
-const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
-  type TProperties = {
-    readonly [__DecodeWithCharsetObserver_textDecoder]: TextDecoder;
-  };
-
-  return createInstanceFactory(
+const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() =>
+  createInstanceFactory(
     mix(
       include(
         Disposable_mixin,
@@ -40,7 +36,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
       ),
       function DecodeWithCharsetObserver(
         instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
+          DecodeWithCharsetLike,
         delegate: ObserverLike<string>,
         charset: string,
       ): ObserverLike<ArrayBuffer> {
@@ -51,7 +47,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         const textDecoder = newInstance(TextDecoder, charset, {
           fatal: true,
         });
-        instance[__DecodeWithCharsetObserver_textDecoder] = textDecoder;
+        instance[DecodeWithCharsetLike_textDecoder] = textDecoder;
 
         pipe(
           instance,
@@ -72,31 +68,27 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
         return instance;
       },
-      props<TProperties>({
-        [__DecodeWithCharsetObserver_textDecoder]: none,
+      props<DecodeWithCharsetLike>({
+        [DecodeWithCharsetLike_textDecoder]: none,
       }),
       {
         [SinkLike_notify](
-          this: TProperties &
+          this: DecodeWithCharsetLike &
             DelegatingLike<ObserverLike<string>> &
             ObserverLike<ArrayBuffer>,
           next: ArrayBuffer,
         ) {
           Observer_assertState(this);
 
-          const data = this[__DecodeWithCharsetObserver_textDecoder].decode(
-            next,
-            {
-              stream: true,
-            },
-          );
+          const data = this[DecodeWithCharsetLike_textDecoder].decode(next, {
+            stream: true,
+          });
           if (data.length > 0) {
             this[DelegatingLike_delegate][SinkLike_notify](data);
           }
         },
       },
     ),
-  );
-})();
+  ))();
 
 export default Observer_createDecodeWithCharsetObserver;

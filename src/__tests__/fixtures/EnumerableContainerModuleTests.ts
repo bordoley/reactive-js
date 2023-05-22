@@ -44,7 +44,7 @@ const EnumerableContainerModuleTests = <C extends Container>(
       test(
         "with higher order observable and no delay",
         pipeLazy(
-          Observable.generate(
+          Observable.generate<ContainerOf<C, number>>(
             _ => pipe(1, m.fromValue()),
             returns(m.empty<number>()),
           ),

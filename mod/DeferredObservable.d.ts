@@ -65,7 +65,6 @@ export declare const exhaustMap: Signature["exhaustMap"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const forEach: Signature["forEach"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
-export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];

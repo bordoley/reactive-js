@@ -1,12 +1,13 @@
 import type * as DeferredObservable from "./DeferredObservable.js";
 import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate, Updater } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
 export declare const Container_T: typeof __Container_T;
 export declare const Container_type: typeof __Container_type;
+export declare const EnumerableLike_enumerate: typeof __EnumerableLike_enumerate;
 export declare const EnumeratorLike_current: typeof __EnumeratorLike_current;
 export declare const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurrent;
 export declare const EnumeratorLike_move: typeof __EnumeratorLike_move;
@@ -73,11 +74,6 @@ export interface EnumeratorLike<T = unknown> extends DisposableLike {
 }
 /**
  * @noInheritDoc
- * @category Interactive
- */
-export type EnumeratorFactoryLike<T = unknown> = Factory<EnumeratorLike<T>>;
-/**
- * @noInheritDoc
  * @category Collection
  */
 export type ReadonlyObjectMapLike<TKey extends symbol | number | string = string, T = unknown> = {
@@ -102,7 +98,7 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends Collec
  * @category Collection
  */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown> extends KeyedCollectionLike<TKey, T> {
-    [AssociativeCollectionLike_keys](): EnumeratorLike<TKey>;
+    readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
 }
 /**
  * @noInheritDoc
@@ -418,6 +414,7 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
+    [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }
 /**
  * A stateful ObservableLike resource.
@@ -726,10 +723,6 @@ export interface DeferredContainerModule<C extends Container> extends ContainerM
     /**
      * @category Constructor
      */
-    fromEnumeratorFactory<T>(): Function1<EnumeratorFactoryLike<T>, ContainerOf<C, T>>;
-    /**
-     * @category Constructor
-     */
     fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
     /**
      * @category Constructor
@@ -847,10 +840,6 @@ export interface EnumerableContainerModule<C extends Container> extends Runnable
      * @category Transform
      */
     enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
-    /**
-     * @category Transform
-     */
-    toEnumeratorFactory<T>(): Function1<ContainerOf<C, T>, EnumeratorFactoryLike<T>>;
     /**
      * Converts the Container to a `IterableLike`.
      *
@@ -975,7 +964,7 @@ export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends
     /**
      * @category Transform
      */
-    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumeratorFactoryLike<[TKey, T]>>;
+    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumerableLike<[TKey, T]>>;
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
@@ -1002,7 +991,7 @@ export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends
      *
      * @category Transform
      */
-    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorFactoryLike<T>>;
+    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumerableLike<T>>;
 }
 /**
  * @noInheritDoc
@@ -1068,7 +1057,7 @@ export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyB
      *
      * @category Transform
      */
-    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumeratorFactoryLike<TKey>>;
+    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumerableLike<TKey>>;
     /**
      *
      * @category Transform
@@ -1104,5 +1093,5 @@ export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContaine
     /**
      * @category Constructor
      */
-    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumeratorFactoryLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
+    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumerableLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
 }

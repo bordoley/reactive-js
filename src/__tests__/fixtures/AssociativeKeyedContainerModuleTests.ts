@@ -1,5 +1,5 @@
 import * as Dictionary from "../../Dictionary.js";
-import * as EnumeratorFactory from "../../EnumeratorFactory.js";
+import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
@@ -12,14 +12,12 @@ import {
 import {
   Optional,
   arrayEquality,
-  invoke,
   none,
   pipe,
   pipeLazy,
   returns,
 } from "../../functions.js";
 import {
-  AssociativeCollectionLike_keys,
   AssociativeKeyedContainerModule,
   CollectionLike_count,
   KeyedContainer,
@@ -38,7 +36,7 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
           { a: "b", c: "d" },
           m.fromReadonlyObjectMap<string, string>(),
           m.entries(),
-          EnumeratorFactory.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
           expectArrayEquals(
             [
               ["a", "b"],
@@ -142,24 +140,21 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
         pipe(
           dict,
           Dictionary.values(),
-          EnumeratorFactory.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
           expectArrayEquals(["b", none, "v"]),
         );
       }),
-      test("keys", () => {
-        const keys = pipeLazy(
+      test(
+        "keys",
+        pipeLazy(
           { a: "b", c: none, e: "v" },
           m.fromReadonlyObjectMap<Optional<string>, string>(),
-          m.toDictionary(),
-          invoke(AssociativeCollectionLike_keys),
-        );
-
-        pipe(
-          keys,
-          EnumeratorFactory.toReadonlyArray(),
+          m.toDictionary<Optional<string>, string>(),
+          Dictionary.keys(),
+          Enumerable.toReadonlyArray(),
           expectArrayEquals(["a", "c", "e"]),
-        );
-      }),
+        ),
+      ),
     ),
     describe(
       "toReadonlyMap",
@@ -173,7 +168,7 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
         pipe(
           dict,
           ReadonlyMap.keys(),
-          EnumeratorFactory.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
           expectArrayEquals(["a", "c", "e"]),
         );
       }),
@@ -190,7 +185,7 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
         pipe(
           dict,
           ReadonlyObjectMap.keys(),
-          EnumeratorFactory.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
           expectArrayEquals(["a", "c", "e"]),
         );
       }),

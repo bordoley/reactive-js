@@ -18,8 +18,6 @@
 
   ↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
 
-  ↳ [`EnumeratorFactoryModule`](EnumeratorFactory.EnumeratorFactoryModule.md)
-
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
   ↳ [`ObservableModule`](Observable.ObservableModule.md)

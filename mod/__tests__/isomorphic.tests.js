@@ -8,7 +8,6 @@ import "./DeferredObservable.test.js";
 import "./Dictionary.test.js";
 import "./Disposable.test.js";
 import "./Enumerable.test.js";
-import "./EnumeratorFactory.test.js";
 import "./EventSource.test.js";
 import "./MulticastObservable.test.js";
 import "./Observable.test.js";

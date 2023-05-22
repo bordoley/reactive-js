@@ -16,39 +16,9 @@
 
 ## Table of contents
 
-### Constructor Methods
-
-- [compute](Enumerable.EnumerableModule.md#compute)
-
 ### Transform Methods
 
 - [toObservable](Enumerable.EnumerableModule.md#toobservable)
-
-## Constructor Methods
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`EnumerableLike`](types.EnumerableLike.md)<`T`\>
-
-___
 
 ## Transform Methods
 

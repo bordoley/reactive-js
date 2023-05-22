@@ -2,13 +2,11 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import EnumeratorFactory_enumerate from "../../EnumeratorFactory/__internal__/EnumeratorFactory.enumerate.js";
-import EnumeratorFactory_map from "../../EnumeratorFactory/__internal__/EnumeratorFactory.map.js";
-import EnumeratorFactory_toReadonlyArray from "../../EnumeratorFactory/__internal__/EnumeratorFactory.toReadonlyArray.js";
 import EventSource_createPublisher from "../../EventSource/__internal__/EventSource.createPublisher.js";
 import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
+import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_mergeMany from "../../Observable/__internal__/Observable.mergeMany.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import ReadonlyObjectMap_keys from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
@@ -16,6 +14,7 @@ import ReadonlyObjectMap_map from "../../ReadonlyObjectMap/__internal__/Readonly
 import ReadonlyObjectMap_mapWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
+import Runnable_toReadonlyArray from "../../Runnable/__internal__/Runnable.toReadonlyArray.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -31,7 +30,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
                     publisher[SinkLike_notify](value);
                 }
             }), Observable_ignoreElements())));
-            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), EnumeratorFactory_map(Observable_subscribeOn(animationScheduler)), EnumeratorFactory_toReadonlyArray());
+            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), Observable_map(Observable_subscribeOn(animationScheduler)), Runnable_toReadonlyArray());
             return Observable_mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);
@@ -43,9 +42,9 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
     }, props({
         [CollectionLike_count]: 0,
     }), {
-        [AssociativeCollectionLike_keys]() {
+        get [AssociativeCollectionLike_keys]() {
             unsafeCast(this);
-            return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys(), EnumeratorFactory_enumerate());
+            return pipe(this[DelegatingLike_delegate], ReadonlyObjectMap_keys());
         },
         [KeyedCollectionLike_get](index) {
             return this[DelegatingLike_delegate][index];

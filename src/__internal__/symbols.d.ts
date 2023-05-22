@@ -24,6 +24,8 @@ export declare const __DisposableLike_error: unique symbol;
 
 export declare const __DisposableLike_isDisposed: unique symbol;
 
+export declare const __EnumerableLike_enumerate: unique symbol;
+
 export declare const __EnumeratorLike_move: unique symbol;
 
 export declare const __EnumeratorLike_current: unique symbol;
@@ -174,6 +176,8 @@ export declare const __BufferingLike_count: unique symbol;
 
 export declare const __CountingLike_count: unique symbol;
 
+export declare const __DecodeWithCharsetLike_textDecoder: unique symbol;
+
 export declare const __ForEachLike_effect: unique symbol;
 
 export declare const __HigherOrderEnumerator_inner: unique symbol;
@@ -257,8 +261,6 @@ export declare const __Continuation_effect: unique symbol;
 export declare const __CreateEventSource_createDelegate: unique symbol;
 
 export declare const __CreateObservable_effect: unique symbol;
-
-export declare const __DecodeWithCharsetObserver_textDecoder: unique symbol;
 
 export declare const __DispatchedObservable_observer: unique symbol;
 

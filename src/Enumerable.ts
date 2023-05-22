@@ -3,14 +3,10 @@ import DeferredObservable_retry from "./DeferredObservable/__internal__/Deferred
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
-import Enumerable_toEnumeratorFactory from "./Enumerable/__internal__/Enumerable.toEnumeratorFactory.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toObservable from "./Enumerable/__internal__/Enumerable.toObservable.js";
-import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
-import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
-import { Enumerable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
@@ -49,7 +45,8 @@ import Runnable_last from "./Runnable/__internal__/Runnable.last.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
-import { Factory, Function1, identityLazy } from "./functions.js";
+import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
+import { Function1, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -80,16 +77,6 @@ export interface EnumerableModule
     StatefulContainerModule<Type>,
     EffectsContainerModule<Type> {
   /**
-   * @category Constructor
-   */
-  compute<T>(
-    computation: Factory<T>,
-    options?: {
-      mode?: "batched" | "combine-latest";
-    },
-  ): EnumerableLike<T>;
-
-  /**
    * @category Transform
    */
   toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
@@ -102,7 +89,6 @@ export interface EnumerableModule
 export type Signature = EnumerableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
-export const compute: Signature["compute"] = Enumerable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
 export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
@@ -122,8 +108,6 @@ export const flatMapIterable: Signature["flatMapIterable"] =
 export const flow: Signature["flow"] = Runnable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
-export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
-  EnumeratorFactory_toObservable;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
 export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
@@ -153,11 +137,9 @@ export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throws: Signature["throws"] = Observable_throws;
-export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
-  Enumerable_toEnumeratorFactory;
 export const toIterable: Signature["toIterable"] = Enumerable_toIterable;
 export const toObservable: Signature["toObservable"] = Enumerable_toObservable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
-  Enumerable_toReadonlyArray;
+  Runnable_toReadonlyArray;
 export const zip: Signature["zip"] = Observable_zip;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;

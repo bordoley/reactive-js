@@ -1,7 +1,11 @@
 import type * as Dictionary from "../../Dictionary.js";
-import EnumeratorFactory_map from "../../EnumeratorFactory/__internal__/EnumeratorFactory.map.js";
-import { pipe } from "../../functions.js";
-import { DictionaryLike, KeyedCollectionLike_get } from "../../types.js";
+import Observable_map from "../../Observable/__internal__/Observable.map.js";
+import { Optional, bindMethod, pipe } from "../../functions.js";
+import {
+  DictionaryLike,
+  EnumerableLike,
+  KeyedCollectionLike_get,
+} from "../../types.js";
 import Dictionary_keys from "./Dictionary.keys.js";
 
 const Dictionary_values: Dictionary.Signature["values"] =
@@ -10,7 +14,9 @@ const Dictionary_values: Dictionary.Signature["values"] =
     pipe(
       dict,
       Dictionary_keys(),
-      EnumeratorFactory_map(key => dict[KeyedCollectionLike_get](key) as T),
-    );
+      Observable_map<TKey, Optional<T>>(
+        bindMethod(dict, KeyedCollectionLike_get),
+      ),
+    ) as EnumerableLike<T>;
 
 export default Dictionary_values;

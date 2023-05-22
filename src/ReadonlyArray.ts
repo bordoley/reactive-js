@@ -1,4 +1,3 @@
-import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
@@ -16,7 +15,6 @@ import ReadonlyArray_flatMapIterable from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
-import ReadonlyArray_fromEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromEnumeratorFactory.js";
 import ReadonlyArray_fromFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromFactory.js";
 import ReadonlyArray_fromIterable from "./ReadonlyArray/__internal__/ReadonlyArray.fromIterable.js";
 import ReadonlyArray_fromOptional from "./ReadonlyArray/__internal__/ReadonlyArray.fromOptional.js";
@@ -41,12 +39,12 @@ import ReadonlyArray_startWith from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.takeFirst.js";
 import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
 import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
-import ReadonlyArray_toEnumeratorFactory from "./ReadonlyArray/__internal__/ReadonlyArray.toEnumeratorFactory.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
+import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Function1, TypePredicate } from "./functions.js";
 import {
   ConcreteKeyedContainerModule,
@@ -55,7 +53,6 @@ import {
   Container_type,
   EnumerableContainerModule,
   EnumerableLike,
-  EnumeratorFactoryLike,
   EnumeratorLike,
   KeyOf,
   KeyedContainer,
@@ -103,12 +100,6 @@ export interface ReadonlyArrayModule
   keepType<TA, TB extends TA, TKey extends TKeyBase>(
     predicate: TypePredicate<TA, TB>,
   ): KeyedContainerOperator<Type, TKey, TA, TB>;
-
-  /** @category Transform */
-  toEnumeratorFactory<T>(options?: {
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<ReadonlyArray<T>, EnumeratorFactoryLike<T>>;
 
   /** @category Transform */
   toIterable<T>(options?: {
@@ -166,9 +157,7 @@ export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
 export const fromEnumerable: Signature["fromEnumerable"] =
-  Enumerable_toReadonlyArray;
-export const fromEnumeratorFactory: Signature["fromEnumeratorFactory"] =
-  ReadonlyArray_fromEnumeratorFactory;
+  Runnable_toReadonlyArray;
 export const fromFactory: Signature["fromFactory"] = ReadonlyArray_fromFactory;
 export const fromIterable: Signature["fromIterable"] =
   ReadonlyArray_fromIterable;
@@ -198,8 +187,6 @@ export const startWith: Signature["startWith"] = ReadonlyArray_startWith;
 export const takeFirst: Signature["takeFirst"] = ReadonlyArray_takeFirst;
 export const takeLast: Signature["takeLast"] = ReadonlyArray_takeLast;
 export const takeWhile: Signature["takeWhile"] = ReadonlyArray_takeWhile;
-export const toEnumeratorFactory: Signature["toEnumeratorFactory"] =
-  ReadonlyArray_toEnumeratorFactory;
 export const toIterable: Signature["toIterable"] =
   ReadonlyArray_toReadonlyArray;
 export const toObservable: Signature["toObservable"] =

@@ -2,12 +2,7 @@ import type * as Observable from "../../Observable.js";
 import Observer_createThrottleObserver from "../../Observer/__internal__/Observer.createThrottleObserver.js";
 import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
-import {
-  ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
-} from "../../types.js";
-import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
+import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
 
 const Observable_throttle: Observable.Signature["throttle"] = (
   duration: number,
@@ -26,11 +21,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   return pipe(
     Observer_createThrottleObserver,
     partial(durationObservable, mode),
-    Observable_liftUpperBoundedBy({
-      [ObservableLike_isDeferred]: true,
-      [ObservableLike_isEnumerable]: false,
-      [ObservableLike_isRunnable]: true,
-    }),
+    Observable_liftRunnableUpperBounded,
   );
 };
 

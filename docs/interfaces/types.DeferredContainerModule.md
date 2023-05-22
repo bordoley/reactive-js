@@ -27,7 +27,6 @@
 - [concat](types.DeferredContainerModule.md#concat)
 - [empty](types.DeferredContainerModule.md#empty)
 - [fromEnumerable](types.DeferredContainerModule.md#fromenumerable)
-- [fromEnumeratorFactory](types.DeferredContainerModule.md#fromenumeratorfactory)
 - [fromFactory](types.DeferredContainerModule.md#fromfactory)
 - [fromIterable](types.DeferredContainerModule.md#fromiterable)
 - [fromOptional](types.DeferredContainerModule.md#fromoptional)
@@ -108,22 +107,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>\>
 
 ___
 

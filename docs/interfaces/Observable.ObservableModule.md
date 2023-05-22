@@ -52,7 +52,6 @@
 - [forkZip](Observable.ObservableModule.md#forkzip)
 - [forkZipLatest](Observable.ObservableModule.md#forkziplatest)
 - [fromAsyncFactory](Observable.ObservableModule.md#fromasyncfactory)
-- [fromEnumeratorFactory](Observable.ObservableModule.md#fromenumeratorfactory)
 - [fromFactory](Observable.ObservableModule.md#fromfactory)
 - [fromIterable](Observable.ObservableModule.md#fromiterable)
 - [fromOptional](Observable.ObservableModule.md#fromoptional)
@@ -861,7 +860,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -878,13 +877,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -901,7 +900,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly `T`[]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly `T`[]\>
 
 #### Overrides
 
@@ -911,7 +910,7 @@ ___
 
 ### catchError
 
-▸ **catchError**<`T`\>(`onError`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **catchError**<`T`\>(`onError`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -927,13 +926,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -950,7 +949,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Overrides
 
@@ -1038,7 +1037,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1055,7 +1054,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ▸ **concatWith**<`T`\>(`snd`, `...tail`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
@@ -1185,7 +1184,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -1196,7 +1195,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`ArrayBuffer`, `string`\>
 
 ___
 
@@ -1224,7 +1223,7 @@ ___
 
 ### dispatchTo
 
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1240,7 +1239,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -1250,7 +1249,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -1270,7 +1269,7 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -1315,17 +1314,17 @@ ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`string`, `Uint8Array`\>
+▸ **encodeUtf8**(): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`string`, `Uint8Array`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`string`, `Uint8Array`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1342,13 +1341,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
 ### enqueue
 
-▸ **enqueue**<`T`\>(`queue`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **enqueue**<`T`\>(`queue`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1364,7 +1363,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -1434,7 +1433,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`\>(`effect`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **forEach**<`T`\>(`effect`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -1453,7 +1452,7 @@ value emitted by the source.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -2775,42 +2774,6 @@ ___
 
 ___
 
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-▸ **fromEnumeratorFactory**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-___
-
 ### fromFactory
 
 ▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
@@ -3117,7 +3080,7 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`unknown`, `T`\>
 
 #### Type parameters
 
@@ -3127,7 +3090,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`unknown`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`unknown`, `T`\>
 
 #### Overrides
 
@@ -3225,7 +3188,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -3244,7 +3207,7 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -3277,7 +3240,7 @@ ___
 
 [ContainerModule](types.ContainerModule.md).[keepType](types.ContainerModule.md#keeptype)
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -3294,7 +3257,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Overrides
 
@@ -3341,7 +3304,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -3369,7 +3332,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Overrides
 
@@ -3379,7 +3342,7 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -3396,7 +3359,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Overrides
 
@@ -3566,7 +3529,7 @@ ___
 
 ### mergeWith
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3583,7 +3546,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
@@ -3662,7 +3625,7 @@ ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3678,9 +3641,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3696,9 +3659,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3714,13 +3677,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -3730,7 +3693,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, readonly [`T`, `T`]\>
 
 #### Overrides
 
@@ -3740,7 +3703,7 @@ ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -3757,13 +3720,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKey`]\>
 
 #### Overrides
 
 [ContainerModule](types.ContainerModule.md).[pick](types.ContainerModule.md#pick)
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -3782,13 +3745,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Overrides
 
 [ContainerModule](types.ContainerModule.md).[pick](types.ContainerModule.md#pick)
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -3809,7 +3772,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Overrides
 
@@ -3819,7 +3782,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `TAcc`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -3840,7 +3803,7 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `TAcc`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `TAcc`\>
 
 #### Overrides
 
@@ -3850,7 +3813,7 @@ ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -3869,7 +3832,7 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -3879,7 +3842,7 @@ ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3896,7 +3859,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -3952,7 +3915,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -3971,7 +3934,7 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -3981,7 +3944,7 @@ ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -4000,7 +3963,7 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -4010,7 +3973,7 @@ ___
 
 ### takeUntil
 
-▸ **takeUntil**<`T`\>(`notifier`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeUntil**<`T`\>(`notifier`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -4026,7 +3989,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ▸ **takeUntil**<`T`\>(`notifier`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`T`, `T`\>
 
@@ -4086,7 +4049,7 @@ ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -4108,7 +4071,7 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Overrides
 
@@ -4142,7 +4105,7 @@ ___
 
 ### throwIfEmpty
 
-▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+▸ **throwIfEmpty**<`T`\>(`factory`, `options?`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -4159,7 +4122,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`T`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -4317,7 +4280,7 @@ ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
@@ -4336,7 +4299,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
 ▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
 
@@ -5925,7 +5888,7 @@ ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -5942,9 +5905,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -5963,9 +5926,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -5986,9 +5949,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -6011,9 +5974,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -6038,9 +6001,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -6067,9 +6030,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -6098,9 +6061,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -6131,7 +6094,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
@@ -6761,7 +6724,7 @@ ___
 
 ### zipWithLatestFrom
 
-▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `T`\>
+▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
@@ -6780,7 +6743,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `T`\>
+[`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`TA`, `T`\>
 
 ▸ **zipWithLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `T`\>
 
