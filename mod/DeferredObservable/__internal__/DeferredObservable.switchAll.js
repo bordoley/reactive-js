@@ -1,7 +1,7 @@
 /// <reference types="./DeferredObservable.switchAll.d.ts" />
 
+import Observable_liftDeferredObservableUpperBounded from "../../Observable/__internal__/Observable.liftDeferredObservableUpperBounded.js";
 import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll.js";
-import DeferredObservable_lift from "./DeferredObservable.lift.js";
 const DeferredObservable_switchAll = 
-/*@__PURE__*/ Observable_switchAll(DeferredObservable_lift);
+/*@__PURE__*/ Observable_switchAll(Observable_liftDeferredObservableUpperBounded);
 export default DeferredObservable_switchAll;

@@ -146,6 +146,14 @@ export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
 
+export type MulticastObservableUpperBoundObservableOperator<TIn, TOut> = <
+  TObservableIn extends ObservableLike<TIn>,
+>(
+  observable: TObservableIn,
+) => TObservableIn extends MulticastObservableLike<TIn>
+  ? MulticastObservableLike<TOut>
+  : ObservableLike<TOut>;
+
 /**
  * @noInheritDoc
  * @category Container
@@ -1236,7 +1244,7 @@ export interface ObservableModule
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
-  ): ObservableOperator<TA, TB>;
+  ): RunnableUpperBoundObservableOperator<TA, TB>;
 
   withLatestFrom<TA, TB, T>(
     other: EnumerableLike<TB>,

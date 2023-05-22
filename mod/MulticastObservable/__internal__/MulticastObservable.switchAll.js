@@ -1,7 +1,7 @@
 /// <reference types="./MulticastObservable.switchAll.d.ts" />
 
+import Observable_liftMulticastObservableUpperBounded from "../../Observable/__internal__/Observable.liftMulticastObservableUpperBounded.js";
 import Observable_switchAll from "../../Observable/__internal__/Observable.switchAll.js";
-import MulticastObservable_lift from "./MulticastObservable.lift.js";
 const MulticastObservable_switchAll = 
-/*@__PURE__*/ Observable_switchAll(MulticastObservable_lift);
+/*@__PURE__*/ Observable_switchAll(Observable_liftMulticastObservableUpperBounded);
 export default MulticastObservable_switchAll;

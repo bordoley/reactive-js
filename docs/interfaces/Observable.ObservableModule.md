@@ -4294,7 +4294,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -4311,7 +4311,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](../modules/Observable.md#observableoperator)<`TA`, `TB`\>
+[`RunnableUpperBoundObservableOperator`](../modules/Observable.md#runnableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 

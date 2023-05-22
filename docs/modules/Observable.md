@@ -22,6 +22,7 @@
 - [AnyObservableLike](Observable.md#anyobservablelike)
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [MaybeMulticastObservableLike](Observable.md#maybemulticastobservablelike)
+- [MulticastObservableUpperBoundObservableOperator](Observable.md#multicastobservableupperboundobservableoperator)
 - [ObservableOperator](Observable.md#observableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
 - [Signature](Observable.md#signature)
@@ -178,6 +179,39 @@ ___
 | Name |
 | :------ |
 | `T` |
+
+___
+
+### MulticastObservableUpperBoundObservableOperator
+
+Ƭ **MulticastObservableUpperBoundObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
 
 ___
 
@@ -4337,7 +4371,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -4354,7 +4388,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+[`RunnableUpperBoundObservableOperator`](Observable.md#runnableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 

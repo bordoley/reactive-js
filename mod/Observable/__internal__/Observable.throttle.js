@@ -5,7 +5,7 @@ import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/Readonl
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
 import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../types.js";
 import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
-const Observable_throttle = ((duration, options = {}) => {
+const Observable_throttle = (duration, options = {}) => {
     const { mode = "interval" } = options;
     const durationObservable = pipeLazy([none], ReadonlyArray_toObservable({
         delay: duration,
@@ -16,5 +16,5 @@ const Observable_throttle = ((duration, options = {}) => {
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_isRunnable]: true,
     }));
-});
+};
 export default Observable_throttle;

@@ -1,7 +1,7 @@
 /// <reference types="./DeferredObservable.mergeAll.d.ts" />
 
+import Observable_liftDeferredObservableUpperBounded from "../../Observable/__internal__/Observable.liftDeferredObservableUpperBounded.js";
 import Observable_mergeAll from "../../Observable/__internal__/Observable.mergeAll.js";
-import DeferredObservable_lift from "./DeferredObservable.lift.js";
 const DeferredObservable_mergeAll = 
-/*@__PURE__*/ Observable_mergeAll(DeferredObservable_lift);
+/*@__PURE__*/ Observable_mergeAll(Observable_liftDeferredObservableUpperBounded);
 export default DeferredObservable_mergeAll;

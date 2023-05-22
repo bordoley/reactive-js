@@ -3,7 +3,7 @@
 import { LiftedLike_operators, LiftedLike_source, } from "../../__internal__/types.js";
 import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../types.js";
 import Observable_createLifted from "./Observable.createLifted.js";
-const Observable_liftUpperBoundedBy = (config) => (operator) => (source) => {
+const Observable_liftUpperBoundedBy = ((config) => (operator) => (source) => {
     const sourceSource = source[LiftedLike_source] ?? source;
     const allFunctions = [
         operator,
@@ -23,5 +23,5 @@ const Observable_liftUpperBoundedBy = (config) => (operator) => (source) => {
         [ObservableLike_isDeferred]: isDeferredObservable,
     };
     return Observable_createLifted(sourceSource, allFunctions, liftedConfig);
-};
+});
 export default Observable_liftUpperBoundedBy;

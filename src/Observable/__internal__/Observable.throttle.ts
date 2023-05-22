@@ -9,7 +9,7 @@ import {
 } from "../../types.js";
 import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
 
-const Observable_throttle: Observable.Signature["throttle"] = ((
+const Observable_throttle: Observable.Signature["throttle"] = (
   duration: number,
   options: { readonly mode?: "first" | "last" | "interval" } = {},
 ) => {
@@ -32,6 +32,6 @@ const Observable_throttle: Observable.Signature["throttle"] = ((
       [ObservableLike_isRunnable]: true,
     }),
   );
-}) as Observable.Signature["throttle"];
+};
 
 export default Observable_throttle;

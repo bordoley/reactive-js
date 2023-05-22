@@ -1,13 +1,11 @@
 /// <reference types="./Observable.liftEnumerableUpperBounded.d.ts" />
 
-import { LiftedLike_operators, LiftedLike_source, } from "../../__internal__/types.js";
-import Observable_createLifted from "./Observable.createLifted.js";
-const Observable_liftEnumerableUpperBounded = (operator) => (source => {
-    const sourceSource = source[LiftedLike_source] ?? source;
-    const allFunctions = [
-        operator,
-        ...(source[LiftedLike_operators] ?? []),
-    ];
-    return Observable_createLifted(sourceSource, allFunctions, sourceSource);
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../types.js";
+import Observable_liftUpperBoundedBy from "./Observable.liftUpperBoundedBy.js";
+const Observable_liftEnumerableUpperBounded = 
+/*@__PURE__*/ Observable_liftUpperBoundedBy({
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isEnumerable]: true,
+    [ObservableLike_isRunnable]: true,
 });
 export default Observable_liftEnumerableUpperBounded;

@@ -1,8 +1,32 @@
+import type { DeferredObservableUpperBoundObservableOperator, MulticastObservableUpperBoundObservableOperator, ObservableOperator, RunnableUpperBoundObservableOperator } from "../../Observable.js";
 import { Function1 } from "../../functions.js";
 import { ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike } from "../../types.js";
-declare const Observable_liftUpperBoundedBy: (config: {
-    readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isEnumerable]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
-}) => <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => (source: ObservableLike) => ObservableLike<unknown>;
+interface ObservableLiftUpperBoundedBy {
+    liftUpperBoundedBy(options: {
+        readonly [ObservableLike_isDeferred]: true;
+        readonly [ObservableLike_isEnumerable]: true;
+        readonly [ObservableLike_isRunnable]: true;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => ObservableOperator<TA, TB>;
+    liftUpperBoundedBy(options: {
+        readonly [ObservableLike_isDeferred]: true;
+        readonly [ObservableLike_isEnumerable]: false;
+        readonly [ObservableLike_isRunnable]: true;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => RunnableUpperBoundObservableOperator<TA, TB>;
+    liftUpperBoundedBy(options: {
+        readonly [ObservableLike_isDeferred]: true;
+        readonly [ObservableLike_isEnumerable]: false;
+        readonly [ObservableLike_isRunnable]: false;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => DeferredObservableUpperBoundObservableOperator<TA, TB>;
+    liftUpperBoundedBy(options: {
+        readonly [ObservableLike_isDeferred]: false;
+        readonly [ObservableLike_isEnumerable]: false;
+        readonly [ObservableLike_isRunnable]: false;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => MulticastObservableUpperBoundObservableOperator<TA, TB>;
+    liftUpperBoundedBy(options: {
+        readonly [ObservableLike_isDeferred]: boolean;
+        readonly [ObservableLike_isEnumerable]: boolean;
+        readonly [ObservableLike_isRunnable]: boolean;
+    }): <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
+}
+declare const Observable_liftUpperBoundedBy: ObservableLiftUpperBoundedBy["liftUpperBoundedBy"];
 export default Observable_liftUpperBoundedBy;
