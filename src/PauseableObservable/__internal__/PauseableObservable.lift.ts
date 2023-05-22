@@ -18,7 +18,6 @@ import {
 import { Function1, unsafeCast } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   PauseableLike,
@@ -42,7 +41,6 @@ const createLiftedPauseableObservable: <TIn, TOut>(
       ): PauseableObservableLike<TOut> {
         init(Observable_liftMixin<TIn, TOut>(), instance, source, ops, {
           [ObservableLike_isDeferred]: false,
-          [ObservableLike_isEnumerable]: false,
           [ObservableLike_isRunnable]: false,
         });
         init(Delegating_mixin(), instance, source);

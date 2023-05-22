@@ -2,7 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import { clampPositiveInteger, max } from "../../__internal__/math.js";
+import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CountingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { unsafeCast } from "../../functions.js";
@@ -35,9 +35,6 @@ const Enumerator_skipFirst = /*@__PURE__*/ (() => {
             return this[EnumeratorLike_hasCurrent];
         },
     }));
-    return (options = {}) => {
-        const count = clampPositiveInteger(options.count ?? 1);
-        return (delegate) => createSkipFirstEnumerator(delegate, count);
-    };
+    return (count) => (delegate) => createSkipFirstEnumerator(delegate, count);
 })();
 export default Enumerator_skipFirst;

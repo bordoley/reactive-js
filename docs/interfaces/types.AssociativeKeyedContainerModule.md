@@ -92,7 +92,7 @@ ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -102,7 +102,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumeratorFactoryLike`](../modules/types.md#enumeratorfactorylike)<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `unknown`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
 
 ___
 

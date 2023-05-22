@@ -24,6 +24,10 @@ An `ObservableLike` that supports interactive enumeration.
 
 - [[\_\_\_ObservableLike\_isEnumerable]](types.EnumerableLike.md#[___observablelike_isenumerable])
 
+### Methods
+
+- [[\_\_\_EnumerableLike\_enumerate]](types.EnumerableLike.md#[___enumerablelike_enumerate])
+
 ## Properties
 
 ### [\_\_\_ObservableLike\_isEnumerable]
@@ -32,4 +36,14 @@ An `ObservableLike` that supports interactive enumeration.
 
 #### Overrides
 
-RunnableLike.\_\_@\_\_\_ObservableLike\_isEnumerable@24337
+RunnableLike.\_\_@\_\_\_ObservableLike\_isEnumerable@24336
+
+## Methods
+
+### [\_\_\_EnumerableLike\_enumerate]
+
+▸ **[___EnumerableLike_enumerate]**(): [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>
+
+#### Returns
+
+[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>

@@ -25,6 +25,8 @@ export const __DisposableLike_error: unique symbol;
 /** @type {unique symbol} */
 export const __DisposableLike_isDisposed: unique symbol;
 /** @type {unique symbol} */
+export const __EnumerableLike_enumerate: unique symbol;
+/** @type {unique symbol} */
 export const __EnumeratorLike_move: unique symbol;
 /** @type {unique symbol} */
 export const __EnumeratorLike_current: unique symbol;
@@ -175,6 +177,8 @@ export const __BufferingLike_count: unique symbol;
 /** @type {unique symbol} */
 export const __CountingLike_count: unique symbol;
 /** @type {unique symbol} */
+export const __DecodeWithCharsetLike_textDecoder: unique symbol;
+/** @type {unique symbol} */
 export const __ForEachLike_effect: unique symbol;
 /** @type {unique symbol} */
 export const __HigherOrderEnumerator_inner: unique symbol;
@@ -258,8 +262,6 @@ export const __Continuation_effect: unique symbol;
 export const __CreateEventSource_createDelegate: unique symbol;
 /** @type {unique symbol} */
 export const __CreateObservable_effect: unique symbol;
-/** @type {unique symbol} */
-export const __DecodeWithCharsetObserver_textDecoder: unique symbol;
 /** @type {unique symbol} */
 export const __DispatchedObservable_observer: unique symbol;
 /** @type {unique symbol} */

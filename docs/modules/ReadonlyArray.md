@@ -23,7 +23,6 @@
 - [concat](ReadonlyArray.md#concat)
 - [empty](ReadonlyArray.md#empty)
 - [fromEnumerable](ReadonlyArray.md#fromenumerable)
-- [fromEnumeratorFactory](ReadonlyArray.md#fromenumeratorfactory)
 - [fromFactory](ReadonlyArray.md#fromfactory)
 - [fromIterable](ReadonlyArray.md#fromiterable)
 - [fromOptional](ReadonlyArray.md#fromoptional)
@@ -75,7 +74,6 @@
 - [reduce](ReadonlyArray.md#reduce)
 - [reduceWithKey](ReadonlyArray.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.md#somesatisfy)
-- [toEnumeratorFactory](ReadonlyArray.md#toenumeratorfactory)
 - [toIterable](ReadonlyArray.md#toiterable)
 - [toObservable](ReadonlyArray.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.md#toreadonlyarray)
@@ -158,22 +156,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, readonly `T`[]\>
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, readonly `T`[]\>
 
 ___
 
@@ -1445,7 +1427,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
@@ -1456,7 +1438,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
@@ -1636,30 +1618,6 @@ ___
 
 ___
 
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-___
-
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
@@ -1806,7 +1764,7 @@ ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1816,4 +1774,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>

@@ -5,8 +5,10 @@ import {
   ObservableLike_isEnumerable,
 } from "../../types.js";
 
-const Observable_isEnumerable: Observable.Signature["isEnumerable"] = (
+const Observable_isEnumerable: Observable.Signature["isEnumerable"] = <
+  T = unknown,
+>(
   obs: ObservableLike,
-): obs is EnumerableLike => obs[ObservableLike_isEnumerable];
+): obs is EnumerableLike<T> => obs[ObservableLike_isEnumerable];
 
 export default Observable_isEnumerable;

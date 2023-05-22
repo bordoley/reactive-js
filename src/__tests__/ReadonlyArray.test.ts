@@ -1,4 +1,4 @@
-import * as EnumeratorFactory from "../EnumeratorFactory.js";
+import * as Enumerable from "../Enumerable.js";
 import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
@@ -22,7 +22,7 @@ testModule(
       pipeLazy(
         ["b", "d"],
         ReadonlyArray.entries(),
-        EnumeratorFactory.toReadonlyArray(),
+        Enumerable.toReadonlyArray(),
         expectArrayEquals(
           [
             [0, "b"],

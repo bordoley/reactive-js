@@ -25,7 +25,7 @@ const Observer_create: <T>(
   return createInstanceFactory(
     mix(
       include(Disposable_mixin, Observer_mixin<T>()),
-      function DelegatingObserver(
+      function SubscribeObserver(
         instance: unknown,
         scheduler: SchedulerLike,
         config: {

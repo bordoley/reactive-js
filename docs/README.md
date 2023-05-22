@@ -11,7 +11,6 @@ Reactive-JS
 - [Dictionary](modules/Dictionary.md)
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)
-- [EnumeratorFactory](modules/EnumeratorFactory.md)
 - [EventSource](modules/EventSource.md)
 - [MulticastObservable](modules/MulticastObservable.md)
 - [Observable](modules/Observable.md)

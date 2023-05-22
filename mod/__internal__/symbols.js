@@ -28,6 +28,8 @@ export const __DisposableLike_error = /*@__PURE__*/ symbol("DisposableLike_error
 /** @type {unique symbol} */
 export const __DisposableLike_isDisposed = /*@__PURE__*/ symbol("DisposableLike_isDisposed");
 /** @type {unique symbol} */
+export const __EnumerableLike_enumerate = /*@__PURE__*/ symbol("EnumerableLike_enumerate");
+/** @type {unique symbol} */
 export const __EnumeratorLike_move = /*@__PURE__*/ symbol("EnumeratorLike_move");
 /** @type {unique symbol} */
 export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_current");
@@ -183,6 +185,8 @@ export const __BufferingLike_count = /*@__PURE__*/ symbol("BufferingLike_count")
 /** @type {unique symbol} */
 export const __CountingLike_count = /*@__PURE__*/ symbol("CountingLike_count");
 /** @type {unique symbol} */
+export const __DecodeWithCharsetLike_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetLike_textDecoder");
+/** @type {unique symbol} */
 export const __ForEachLike_effect = /*@__PURE__*/ symbol("ForEachLike_effect");
 /** @type {unique symbol} */
 export const __HigherOrderEnumerator_inner = /*@__PURE__*/ symbol("HigherOrderEnumerator_inner");
@@ -267,8 +271,6 @@ export const __Continuation_effect = /*@__PURE__*/ symbol("Continuation_effect")
 export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol("CreateEventSource_createDelegate");
 /** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
-/** @type {unique symbol} */
-export const __DecodeWithCharsetObserver_textDecoder = /*@__PURE__*/ symbol("DecodeWithCharsetObserver_textDecoder");
 /** @type {unique symbol} */
 export const __DispatchedObservable_observer = /*@__PURE__*/ symbol("DispatchedObservable_observer");
 /** @type {unique symbol} */

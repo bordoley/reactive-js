@@ -1,7 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-
-import { clampPositiveInteger, max } from "../../__internal__/math.js";
+import { max } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -24,11 +23,9 @@ import {
   EnumeratorLike_move,
 } from "../../types.js";
 
-const Enumerator_skipFirst: <T>(options?: {
-  readonly count?: number;
-}) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<
-  T,
->() => {
+const Enumerator_skipFirst: <T>(
+  count: number,
+) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createSkipFirstEnumerator = createInstanceFactory(
     mix(
       include(Delegating_mixin(), Disposable_delegatingMixin),
@@ -79,11 +76,8 @@ const Enumerator_skipFirst: <T>(options?: {
     ),
   );
 
-  return (options: { readonly count?: number } = {}) => {
-    const count = clampPositiveInteger(options.count ?? 1);
-    return (delegate: EnumeratorLike<T>) =>
-      createSkipFirstEnumerator(delegate, count);
-  };
+  return (count: number) => (delegate: EnumeratorLike<T>) =>
+    createSkipFirstEnumerator(delegate, count);
 })();
 
 export default Enumerator_skipFirst;

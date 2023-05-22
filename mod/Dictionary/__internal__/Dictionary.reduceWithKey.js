@@ -1,8 +1,8 @@
 /// <reference types="./Dictionary.reduceWithKey.d.ts" />
 
-import { AssociativeCollectionLike_keys, EnumeratorLike_current, EnumeratorLike_move, KeyedCollectionLike_get, } from "../../types.js";
+import { AssociativeCollectionLike_keys, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, KeyedCollectionLike_get, } from "../../types.js";
 const Dictionary_reduceWithKey = (reducer, initialValue) => (dict) => {
-    const keys = dict[AssociativeCollectionLike_keys]();
+    const keys = dict[AssociativeCollectionLike_keys][EnumerableLike_enumerate]();
     let acc = initialValue();
     while (keys[EnumeratorLike_move]()) {
         const key = keys[EnumeratorLike_current];

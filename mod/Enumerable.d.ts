@@ -1,4 +1,4 @@
-import { Factory, Function1 } from "./functions.js";
+import { Function1 } from "./functions.js";
 import { Container, Container_T, Container_type, EffectsContainerModule, EnumerableContainerModule, EnumerableLike, RunnableLike, StatefulContainerModule } from "./types.js";
 /**
  * @noInheritDoc
@@ -14,12 +14,6 @@ export type Type = EnumerableContainer;
  */
 export interface EnumerableModule extends EnumerableContainerModule<Type>, StatefulContainerModule<Type>, EffectsContainerModule<Type> {
     /**
-     * @category Constructor
-     */
-    compute<T>(computation: Factory<T>, options?: {
-        mode?: "batched" | "combine-latest";
-    }): EnumerableLike<T>;
-    /**
      * @category Transform
      */
     toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
@@ -30,7 +24,6 @@ export interface EnumerableModule extends EnumerableContainerModule<Type>, State
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];
-export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
@@ -48,7 +41,6 @@ export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
-export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
@@ -75,7 +67,6 @@ export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
 export declare const throws: Signature["throws"];
-export declare const toEnumeratorFactory: Signature["toEnumeratorFactory"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

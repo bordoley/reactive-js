@@ -5,7 +5,9 @@ import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDi
 import { identity, isFunction, isSome, none, pipe, } from "../../functions.js";
 import { ObservableLike_observe, } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
-const Observable_onSubscribe = ((f) => (obs) => Observable_createWithConfig(observer => {
+const Observable_onSubscribe = ((f) => (obs) => 
+// FIXME: Need to support the Enumerable case
+Observable_createWithConfig(observer => {
     obs[ObservableLike_observe](observer);
     const disposable = f() || none;
     pipe(observer, isFunction(disposable)

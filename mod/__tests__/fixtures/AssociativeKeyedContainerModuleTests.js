@@ -1,13 +1,13 @@
 /// <reference types="./AssociativeKeyedContainerModuleTests.d.ts" />
 
 import * as Dictionary from "../../Dictionary.js";
-import * as EnumeratorFactory from "../../EnumeratorFactory.js";
+import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import { describe, expectArrayEquals, expectEquals, test, } from "../../__internal__/testing.js";
-import { arrayEquality, invoke, none, pipe, pipeLazy, returns, } from "../../functions.js";
-import { AssociativeCollectionLike_keys, CollectionLike_count, } from "../../types.js";
-const AssociativeKeyedContainerModuleTests = (m) => describe("AssociativeKeyedContainerModuleTests", describe("entries", test("enumerates all entries", pipeLazy({ a: "b", c: "d" }, m.fromReadonlyObjectMap(), m.entries(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals([
+import { arrayEquality, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { CollectionLike_count, } from "../../types.js";
+const AssociativeKeyedContainerModuleTests = (m) => describe("AssociativeKeyedContainerModuleTests", describe("entries", test("enumerates all entries", pipeLazy({ a: "b", c: "d" }, m.fromReadonlyObjectMap(), m.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([
     ["a", "b"],
     ["c", "d"],
 ], arrayEquality())))), describe("forEach", test("iterate and imperatively sum the keys", () => {
@@ -31,15 +31,12 @@ const AssociativeKeyedContainerModuleTests = (m) => describe("AssociativeKeyedCo
     expectEquals(3)(dict[CollectionLike_count]);
 }), test("get values", () => {
     const dict = pipe({ a: "b", c: none, e: "v" }, m.fromReadonlyObjectMap(), m.toDictionary());
-    pipe(dict, Dictionary.values(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals(["b", none, "v"]));
-}), test("keys", () => {
-    const keys = pipeLazy({ a: "b", c: none, e: "v" }, m.fromReadonlyObjectMap(), m.toDictionary(), invoke(AssociativeCollectionLike_keys));
-    pipe(keys, EnumeratorFactory.toReadonlyArray(), expectArrayEquals(["a", "c", "e"]));
-})), describe("toReadonlyMap", test("from non-empty map", () => {
+    pipe(dict, Dictionary.values(), Enumerable.toReadonlyArray(), expectArrayEquals(["b", none, "v"]));
+}), test("keys", pipeLazy({ a: "b", c: none, e: "v" }, m.fromReadonlyObjectMap(), m.toDictionary(), Dictionary.keys(), Enumerable.toReadonlyArray(), expectArrayEquals(["a", "c", "e"])))), describe("toReadonlyMap", test("from non-empty map", () => {
     const dict = pipe({ a: "b", c: "d", e: "v" }, m.fromReadonlyObjectMap(), m.toReadonlyMap());
-    pipe(dict, ReadonlyMap.keys(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals(["a", "c", "e"]));
+    pipe(dict, ReadonlyMap.keys(), Enumerable.toReadonlyArray(), expectArrayEquals(["a", "c", "e"]));
 })), describe("toReadonlyObjectMap", test("from non-empty map", () => {
     const dict = pipe({ a: "b", c: "d", e: "v" }, m.fromReadonlyObjectMap(), m.toReadonlyObjectMap());
-    pipe(dict, ReadonlyObjectMap.keys(), EnumeratorFactory.toReadonlyArray(), expectArrayEquals(["a", "c", "e"]));
+    pipe(dict, ReadonlyObjectMap.keys(), Enumerable.toReadonlyArray(), expectArrayEquals(["a", "c", "e"]));
 })));
 export default AssociativeKeyedContainerModuleTests;

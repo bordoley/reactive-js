@@ -11,6 +11,7 @@ DisposableLike_add
 DisposableLike_dispose
 DisposableLike_error
 DisposableLike_isDisposed
+EnumerableLike_enumerate
 EnumeratorLike_move
 EnumeratorLike_current
 EnumeratorLike_hasCurrent
@@ -89,6 +90,7 @@ SerialDisposableMixin_current
 BufferingLike_buffer
 BufferingLike_count
 CountingLike_count
+DecodeWithCharsetLike_textDecoder
 ForEachLike_effect
 HigherOrderEnumerator_inner
 LiftedLike_source
@@ -132,7 +134,6 @@ ConstantEffect_value
 Continuation_effect
 CreateEventSource_createDelegate
 CreateObservable_effect
-DecodeWithCharsetObserver_textDecoder
 DispatchedObservable_observer
 EnqueueObserver_queue
 Enumerator_private_current

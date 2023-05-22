@@ -15,6 +15,7 @@ import {
   __DisposableLike_dispose,
   __DisposableLike_error,
   __DisposableLike_isDisposed,
+  __EnumerableLike_enumerate,
   __EnumeratorLike_current,
   __EnumeratorLike_hasCurrent,
   __EnumeratorLike_move,
@@ -69,6 +70,8 @@ export const CollectionLike_count: typeof __CollectionLike_count =
   __CollectionLike_count;
 export const Container_T: typeof __Container_T = __Container_T;
 export const Container_type: typeof __Container_type = __Container_type;
+export const EnumerableLike_enumerate: typeof __EnumerableLike_enumerate =
+  __EnumerableLike_enumerate;
 export const EnumeratorLike_current: typeof __EnumeratorLike_current =
   __EnumeratorLike_current;
 export const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurrent =
@@ -178,12 +181,6 @@ export interface EnumeratorLike<T = unknown> extends DisposableLike {
 
 /**
  * @noInheritDoc
- * @category Interactive
- */
-export type EnumeratorFactoryLike<T = unknown> = Factory<EnumeratorLike<T>>;
-
-/**
- * @noInheritDoc
  * @category Collection
  */
 export type ReadonlyObjectMapLike<
@@ -214,7 +211,7 @@ export interface KeyedCollectionLike<TKey = unknown, T = unknown>
  */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
   extends KeyedCollectionLike<TKey, T> {
-  [AssociativeCollectionLike_keys](): EnumeratorLike<TKey>;
+  readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
 }
 
 /**
@@ -596,6 +593,8 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
  */
 export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
   readonly [ObservableLike_isEnumerable]: true;
+
+  [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }
 
 /**
@@ -1020,14 +1019,6 @@ export interface DeferredContainerModule<C extends Container>
   /**
    * @category Constructor
    */
-  fromEnumeratorFactory<T>(): Function1<
-    EnumeratorFactoryLike<T>,
-    ContainerOf<C, T>
-  >;
-
-  /**
-   * @category Constructor
-   */
   fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
 
   /**
@@ -1277,14 +1268,6 @@ export interface EnumerableContainerModule<C extends Container>
   enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
 
   /**
-   * @category Transform
-   */
-  toEnumeratorFactory<T>(): Function1<
-    ContainerOf<C, T>,
-    EnumeratorFactoryLike<T>
-  >;
-
-  /**
    * Converts the Container to a `IterableLike`.
    *
    * @category Transform
@@ -1457,7 +1440,7 @@ export interface KeyedContainerModule<
    */
   entries<T, TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, T>,
-    EnumeratorFactoryLike<[TKey, T]>
+    EnumerableLike<[TKey, T]>
   >;
 
   /**
@@ -1500,7 +1483,7 @@ export interface KeyedContainerModule<
    *
    * @category Transform
    */
-  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumeratorFactoryLike<T>>;
+  values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumerableLike<T>>;
 }
 
 /**
@@ -1600,7 +1583,7 @@ export interface AssociativeKeyedContainerModule<
    */
   keys<TKey extends TKeyBase>(): Function1<
     KeyedContainerOf<C, TKey, unknown>,
-    EnumeratorFactoryLike<TKey>
+    EnumerableLike<TKey>
   >;
 
   /**
@@ -1667,7 +1650,7 @@ export interface ConcreteAssociativeKeyedContainerModule<
    * @category Constructor
    */
   fromEntries<T, TKey extends TKeyBase>(): Function1<
-    EnumeratorFactoryLike<[TKey, T]>,
+    EnumerableLike<[TKey, T]>,
     KeyedContainerOf<C, TKey, T>
   >;
 }

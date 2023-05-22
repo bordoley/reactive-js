@@ -2,7 +2,6 @@
 
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
-import EnumeratorFactory_toObservable from "./EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -80,7 +79,6 @@ export const flatMapIterable = Observable_flatMapIterable;
 export const flow = Runnable_flow;
 export const forEach = Observable_forEach;
 export const fromEnumerable = identityLazy;
-export const fromEnumeratorFactory = EnumeratorFactory_toObservable;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Iterable_toObservable;
 export const fromOptional = Optional_toObservable;

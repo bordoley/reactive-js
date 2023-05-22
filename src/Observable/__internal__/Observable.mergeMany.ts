@@ -8,7 +8,6 @@ import {
   DisposableLike_dispose,
   ObservableLike,
   ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -40,12 +39,10 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>(
   };
 
   const isDeferred = Observable_allAreEnumerable(observables);
-  const isEnumerable = Observable_allAreEnumerable(observables);
   const isRunnable = Observable_allAreRunnable(observables);
 
   return Observable_createWithConfig(onSubscribe, {
     [ObservableLike_isDeferred]: isDeferred,
-    [ObservableLike_isEnumerable]: isEnumerable,
     [ObservableLike_isRunnable]: isRunnable,
   });
 }) as Observable.Signature["mergeMany"];

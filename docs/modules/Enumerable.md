@@ -19,11 +19,9 @@
 
 ### Constructor Functions
 
-- [compute](Enumerable.md#compute)
 - [concat](Enumerable.md#concat)
 - [empty](Enumerable.md#empty)
 - [fromEnumerable](Enumerable.md#fromenumerable)
-- [fromEnumeratorFactory](Enumerable.md#fromenumeratorfactory)
 - [fromFactory](Enumerable.md#fromfactory)
 - [fromIterable](Enumerable.md#fromiterable)
 - [fromOptional](Enumerable.md#fromoptional)
@@ -76,7 +74,6 @@
 - [noneSatisfy](Enumerable.md#nonesatisfy)
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
-- [toEnumeratorFactory](Enumerable.md#toenumeratorfactory)
 - [toIterable](Enumerable.md#toiterable)
 - [toObservable](Enumerable.md#toobservable)
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
@@ -94,30 +91,6 @@ ___
 Ƭ **Type**: [`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md)
 
 ## Constructor Functions
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-___
 
 ### concat
 
@@ -176,22 +149,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-___
-
-### fromEnumeratorFactory
-
-▸ **fromEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -1618,22 +1575,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `boolean`\>
-
-___
-
-### toEnumeratorFactory
-
-▸ **toEnumeratorFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EnumeratorFactoryLike`](types.md#enumeratorfactorylike)<`T`\>\>
 
 ___
 

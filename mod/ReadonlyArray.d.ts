@@ -1,5 +1,5 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorFactoryLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
+import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -25,11 +25,6 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>,
      */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<Type, TA, TB>;
     keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<Type, TKey, TA, TB>;
-    /** @category Transform */
-    toEnumeratorFactory<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, EnumeratorFactoryLike<T>>;
     /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
@@ -78,7 +73,6 @@ export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
-export declare const fromEnumeratorFactory: Signature["fromEnumeratorFactory"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
@@ -104,7 +98,6 @@ export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
-export declare const toEnumeratorFactory: Signature["toEnumeratorFactory"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

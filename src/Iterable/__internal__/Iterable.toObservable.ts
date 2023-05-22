@@ -1,18 +1,18 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
-import { Function1, none, pipe } from "../../functions.js";
+import { Function1, none, pipe, pipeLazy } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumerableLike,
-  ObservableLike,
   ObserverLike,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
   SinkLike_notify,
 } from "../../types.js";
+import Iterable_enumerate from "./Iterable.enumerate.js";
 
 const Iterable_toObservable: <T>() => Function1<
   Iterable<T>,
@@ -49,10 +49,9 @@ const Iterable_toObservable: <T>() => Function1<
       );
     };
 
-    const retval: ObservableLike<T> =
-      delay > 0 ? Runnable_create(onSubscribe) : Enumerable_create(onSubscribe);
-
-    return retval;
+    return delay > 0
+      ? Runnable_create(onSubscribe)
+      : Enumerable_create(pipeLazy(iterable, Iterable_enumerate()));
   }) as <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
 
 export default Iterable_toObservable;

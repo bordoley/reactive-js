@@ -1,9 +1,9 @@
 /// <reference types="./ReadonlyObjectMap.fromEntries.d.ts" />
 
 import * as Obj from "../../__internal__/Object.js";
-import { EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
-const ReadonlyObjectMap_fromEntries = () => (factory) => {
-    const entries = factory();
+import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
+const ReadonlyObjectMap_fromEntries = () => (enumerable) => {
+    const entries = enumerable[EnumerableLike_enumerate]();
     const obj = Obj.create(null);
     while (entries[EnumeratorLike_move]()) {
         const [key, value] = entries[EnumeratorLike_current];

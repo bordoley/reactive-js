@@ -1,7 +1,6 @@
 import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import { clampPositiveInteger } from "../../__internal__/math.js";
 import { pipe } from "../../functions.js";
 import {
   EnumeratorLike,
@@ -9,28 +8,21 @@ import {
   EnumeratorLike_move,
   QueueableLike_enqueue,
 } from "../../types.js";
-import Enumerator_empty from "./Enumerator.empty.js";
 
-const Enumerator_takeLast = <T>(options?: { readonly count?: number }) => {
-  const count = clampPositiveInteger(options?.count ?? 1);
+const Enumerator_takeLast =
+  <T>(count: number) =>
+  (enumerator: EnumeratorLike<T>) => {
+    const queue = Queue_createIndexedQueue<T>(count, "drop-oldest");
 
-  return (enumerator: EnumeratorLike<T>) => {
-    if (count === 0) {
-      return Enumerator_empty<T>();
-    } else {
-      const queue = Queue_createIndexedQueue<T>(count, "drop-oldest");
-
-      while (enumerator[EnumeratorLike_move]()) {
-        const next = enumerator[EnumeratorLike_current];
-        queue[QueueableLike_enqueue](next);
-      }
-
-      return pipe(
-        queue,
-        IndexedCollection_toReadonlyArray<T>(),
-        ReadonlyArray_enumerate<T>(),
-      );
+    while (enumerator[EnumeratorLike_move]()) {
+      const next = enumerator[EnumeratorLike_current];
+      queue[QueueableLike_enqueue](next);
     }
+
+    return pipe(
+      queue,
+      IndexedCollection_toReadonlyArray<T>(),
+      ReadonlyArray_enumerate<T>(),
+    );
   };
-};
 export default Enumerator_takeLast;

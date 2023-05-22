@@ -28,7 +28,7 @@ const ReadonlyArray_enumerate =
                 return false;
             }
             const count = this[CountingLike_count];
-            if (count != 0) {
+            if (count !== 0) {
                 const values = this[__ReadonlyArrayEnumerator_values];
                 const index = this[__ReadonlyArrayEnumerator_index];
                 const value = values[index];

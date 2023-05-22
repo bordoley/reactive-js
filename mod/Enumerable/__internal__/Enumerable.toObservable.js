@@ -1,9 +1,9 @@
 /// <reference types="./Enumerable.toObservable.d.ts" />
 
-import EnumeratorFactory_toObservable from "../../EnumeratorFactory/__internal__/EnumeratorFactory.toObservable.js";
-import { compose, identity } from "../../functions.js";
-import Enumerable_toEnumeratorFactory from "./Enumerable.toEnumeratorFactory.js";
-const Enumerable_toObservable = ((options) => (options?.delay ?? 0 > 0)
-    ? compose(Enumerable_toEnumeratorFactory(), EnumeratorFactory_toObservable(options))
-    : identity);
+import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
+import { pipe } from "../../functions.js";
+import Enumerable_observeWith from "./Enumerable.observeWith.js";
+const Enumerable_toObservable = ((options) => (enumerable) => (options?.delay ?? 0 > 0)
+    ? Runnable_create((observer) => pipe(enumerable, Enumerable_observeWith(observer, options)))
+    : enumerable);
 export default Enumerable_toObservable;

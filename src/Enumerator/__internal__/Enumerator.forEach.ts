@@ -14,16 +14,8 @@ import {
   ForEachLike,
   ForEachLike_effect,
 } from "../../__internal__/types.js";
+import { Function1, SideEffect1, error, none, pipe } from "../../functions.js";
 import {
-  Function1,
-  SideEffect1,
-  error,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../functions.js";
-import {
-  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   EnumeratorLike,
@@ -31,19 +23,24 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
 } from "../../types.js";
+import MutableEnumerator_mixin, {
+  MutableEnumeratorLike,
+  MutableEnumeratorLike_reset,
+} from "./MutableEnumerator.mixin.js";
 
 const Enumerator_forEach: <T>(
   effect: SideEffect1<T>,
 ) => Function1<EnumeratorLike<T>, EnumeratorLike<T>> = /*@__PURE__*/ (<T>() => {
   const createForEachEnumerator = createInstanceFactory(
     mix(
-      include(Delegating_mixin(), Disposable_mixin),
+      include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_mixin),
       function ForEachEnumerator(
-        instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
+        instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           ForEachLike<T>,
         delegate: EnumeratorLike<T>,
         effect: SideEffect1<T>,
       ): EnumeratorLike<T> {
+        init(MutableEnumerator_mixin<T>(), instance);
         init(Delegating_mixin(), instance, delegate);
         init(Disposable_mixin, instance);
 
@@ -57,31 +54,26 @@ const Enumerator_forEach: <T>(
         [ForEachLike_effect]: none,
       }),
       {
-        get [EnumeratorLike_current]() {
-          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
-          return this[DelegatingLike_delegate][EnumeratorLike_current];
-        },
-
-        get [EnumeratorLike_hasCurrent]() {
-          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
-          return this[DelegatingLike_delegate][EnumeratorLike_hasCurrent];
-        },
-
         [EnumeratorLike_move](
           this: ForEachLike<T> &
-            EnumeratorLike<T> &
+            MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
+          this[MutableEnumeratorLike_reset]();
+
           const delegate = this[DelegatingLike_delegate];
           const delegateHasCurrent = delegate[EnumeratorLike_move]();
 
           try {
             if (delegateHasCurrent) {
-              this[ForEachLike_effect](delegate[EnumeratorLike_current]);
+              const current = delegate[EnumeratorLike_current];
+              this[ForEachLike_effect](current);
+              this[EnumeratorLike_current] = current;
             }
           } catch (e) {
             // catch exceptions thrown by the effect function
             this[DisposableLike_dispose](error(e));
+            this[MutableEnumeratorLike_reset]();
           }
 
           if (delegate[DisposableLike_isDisposed]) {

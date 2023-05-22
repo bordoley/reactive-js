@@ -2,7 +2,7 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import { clampPositiveInteger, max } from "../../__internal__/math.js";
+import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CountingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
@@ -34,9 +34,6 @@ const Enumerator_takeFirst = /*@__PURE__*/ (() => {
             return this[EnumeratorLike_hasCurrent];
         },
     }));
-    return (options = {}) => {
-        const count = clampPositiveInteger(options.count ?? 1);
-        return (delegate) => createTakeFirstEnumerator(delegate, count);
-    };
+    return (count) => (delegate) => createTakeFirstEnumerator(delegate, count);
 })();
 export default Enumerator_takeFirst;

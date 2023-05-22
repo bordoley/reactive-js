@@ -1,4 +1,4 @@
-import { ObservableOperator } from "../../Observable.js";
+import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Equality,
@@ -10,22 +10,23 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  DeferredObservableLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";
-import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
 import Observable_mergeWith from "./Observable.mergeWith.js";
 import Observable_scan from "./Observable.scan.js";
 
-const Observable_actionReducer = <TAction, T>(
-  reducer: Reducer<TAction, T>,
-  initialState: Factory<T>,
-  options?: { readonly equality?: Equality<T> },
-): ObservableOperator<TAction, T> =>
-  (obs =>
-    Observable_createWithConfig((observer: ObserverLike<T>) => {
+const Observable_actionReducer =
+  <TAction, T>(
+    reducer: Reducer<TAction, T>,
+    initialState: Factory<T>,
+    options?: { readonly equality?: Equality<T> },
+  ) =>
+  (obs: DeferredObservableLike<TAction>) =>
+    DeferredObservable_create((observer: ObserverLike<T>) => {
       const acc = initialState();
       return pipe(
         obs,
@@ -37,6 +38,6 @@ const Observable_actionReducer = <TAction, T>(
         >,
         invoke(ObservableLike_observe, observer),
       );
-    }, obs)) as ObservableOperator<TAction, T>;
+    });
 
 export default Observable_actionReducer;

@@ -1,5 +1,6 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
 import type * as Observable from "../../Observable.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { Factory, Updater, none, pipe } from "../../functions.js";
@@ -39,9 +40,23 @@ const Observable_generate: Observable.Signature["generate"] = (<T>(
     );
   };
 
+  const generateEnumerator =
+    <T>(generator: Updater<T>, initialValue: Factory<T>) =>
+    () => {
+      const iter = function* () {
+        let acc = initialValue();
+        while (true) {
+          acc = generator(acc);
+          yield acc;
+        }
+      };
+
+      return pipe(iter(), Iterable_enumerate());
+    };
+
   return delay > 0
     ? Runnable_create(onSubscribe)
-    : Enumerable_create(onSubscribe);
+    : Enumerable_create(generateEnumerator(generator, initialValue));
 }) as Observable.Signature["generate"];
 
 export default Observable_generate;

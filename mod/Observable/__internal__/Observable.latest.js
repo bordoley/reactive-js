@@ -10,9 +10,8 @@ import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.ma
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __LatestCtx_completedCount, __LatestCtx_delegate, __LatestCtx_mode, __LatestCtx_observers, __LatestObserver_ctx, __LatestObserver_latest, __LatestObserver_ready, } from "../../__internal__/symbols.js";
 import { none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, SinkLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
-import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const zipMode = 2;
@@ -68,11 +67,9 @@ const Observable_latest = /*@__PURE__*/ (() => {
             }
         };
         const isDeferred = Observable_allAreDeferred(observables);
-        const isEnumerable = Observable_allAreEnumerable(observables);
         const isRunnable = Observable_allAreRunnable(observables);
         return Observable_createWithConfig(onSubscribe, {
             [ObservableLike_isDeferred]: isDeferred,
-            [ObservableLike_isEnumerable]: isEnumerable,
             [ObservableLike_isRunnable]: isRunnable,
         });
     };

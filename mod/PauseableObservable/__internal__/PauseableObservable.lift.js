@@ -5,12 +5,11 @@ import Observable_liftMixin from "../../Observable/__internal__/Observable.liftM
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, LiftedLike_operators, LiftedLike_source, } from "../../__internal__/types.js";
 import { unsafeCast } from "../../functions.js";
-import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../types.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../types.js";
 const createLiftedPauseableObservable = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Observable_liftMixin(), Delegating_mixin()), function LiftedPauseableObservable(instance, source, ops) {
         init(Observable_liftMixin(), instance, source, ops, {
             [ObservableLike_isDeferred]: false,
-            [ObservableLike_isEnumerable]: false,
             [ObservableLike_isRunnable]: false,
         });
         init(Delegating_mixin(), instance, source);

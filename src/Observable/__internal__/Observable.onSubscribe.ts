@@ -22,6 +22,7 @@ const Observable_onSubscribe: Observable.Signature["onSubscribe"] = (<T>(
     f: Factory<DisposableLike | SideEffect1<Optional<Error>> | void>,
   ) =>
   (obs: ObservableLike<T>): ObservableLike<T> =>
+    // FIXME: Need to support the Enumerable case
     Observable_createWithConfig(observer => {
       obs[ObservableLike_observe](observer);
 
