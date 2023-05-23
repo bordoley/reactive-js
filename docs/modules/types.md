@@ -24,10 +24,6 @@
 - [StoreLike](../interfaces/types.StoreLike.md)
 - [WritableStoreLike](../interfaces/types.WritableStoreLike.md)
 
-### EventMap Interfaces
-
-- [DispatcherLikeEventMap](../interfaces/types.DispatcherLikeEventMap.md)
-
 ### Interactive Interfaces
 
 - [EnumerableLike](../interfaces/types.EnumerableLike.md)
@@ -42,6 +38,7 @@
 - [ConcreteKeyedContainerModule](../interfaces/types.ConcreteKeyedContainerModule.md)
 - [ContainerModule](../interfaces/types.ContainerModule.md)
 - [DeferredContainerModule](../interfaces/types.DeferredContainerModule.md)
+- [EffectsContainerModule](../interfaces/types.EffectsContainerModule.md)
 - [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [HigherOrderObservableModule](../interfaces/types.HigherOrderObservableModule.md)
@@ -59,14 +56,11 @@
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
-### Other Interfaces
-
-- [EffectsContainerModule](../interfaces/types.EffectsContainerModule.md)
-
 ### Queueing Interfaces
 
 - [BufferLike](../interfaces/types.BufferLike.md)
 - [DispatcherLike](../interfaces/types.DispatcherLike.md)
+- [DispatcherLikeEventMap](../interfaces/types.DispatcherLikeEventMap.md)
 - [IndexedBufferCollectionLike](../interfaces/types.IndexedBufferCollectionLike.md)
 - [QueueableLike](../interfaces/types.QueueableLike.md)
 

@@ -366,7 +366,7 @@ export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
 
 /**
  * @noInheritDoc
- * @category EventMap
+ * @category Queueing
  */
 export interface DispatcherLikeEventMap {
   [DispatcherLikeEvent_ready]: typeof DispatcherLikeEvent_ready;
@@ -1283,6 +1283,10 @@ export interface EnumerableContainerModule<C extends Container>
   }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface EffectsContainerModule<C extends Container> {
   /**
    * @category Operator
