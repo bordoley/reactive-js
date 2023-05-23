@@ -1,5 +1,5 @@
-import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredContainerModule, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
+import { Factory, Predicate } from "./functions.js";
+import { Container, Container_T, Container_type, DeferredContainerModule, DeferredObservableLike, EnumerableLike, HigherOrderObservableModule, RunnableLike } from "./types.js";
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
@@ -21,14 +21,6 @@ export interface DeferredObservableModule extends DeferredContainerModule<Type>,
         mode?: "batched" | "combine-latest";
     }): DeferredObservableLike<T>;
     /**
-     * @category Transform
-     */
-    multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
-        readonly replay?: number;
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
-    /**
      * @category Operator
      */
     repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
@@ -38,14 +30,6 @@ export interface DeferredObservableModule extends DeferredContainerModule<Type>,
      * @category Operator
      */
     retry<T>(shouldRetry: (count: number, error: Error) => boolean): DeferredObservableOperator<T, T>;
-    /**
-     * @category Transform
-     */
-    share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
-        readonly replay?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 }
 export type Signature = DeferredObservableModule;
 export declare const buffer: Signature["buffer"];
@@ -73,7 +57,6 @@ export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
 export declare const mergeAll: Signature["mergeAll"];
 export declare const mergeMap: Signature["mergeMap"];
-export declare const multicast: Signature["multicast"];
 export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const repeat: Signature["repeat"];
@@ -81,7 +64,6 @@ export declare const retry: Signature["retry"];
 export declare const scan: Signature["scan"];
 export declare const scanLast: Signature["scanLast"];
 export declare const scanMany: Signature["scanMany"];
-export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const startWith: Signature["startWith"];
 export declare const switchAll: Signature["switchAll"];

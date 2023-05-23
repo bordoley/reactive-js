@@ -156,6 +156,15 @@ testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposabl
     expectTrue(disp[DisposableLike_isDisposed]);
     expectIsNone(disp[DisposableLike_error]);
     pipe(f, expectToHaveBeenCalledTimes(1));
+})), describe("share", test("shared observable zipped with itself", () => {
+    const scheduler = Scheduler.createVirtualTimeScheduler();
+    const shared = pipe([1, 2, 3], ReadonlyArray.toObservable({ delay: 1 }), Observable.share(scheduler, { replay: 1 }));
+    let result = [];
+    pipe(Observable.zip(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(x => {
+        result.push(x);
+    }), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([2, 4, 6]));
 })), describe("throttle", test("first", pipeLazy(Observable.generate(increment, returns(-1), {
     delay: 1,
     delayStart: true,

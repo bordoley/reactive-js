@@ -46,11 +46,13 @@ import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
 import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
+import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
@@ -104,6 +106,7 @@ import {
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  ReplayObservableLike,
   RunnableLike,
   SchedulerLike,
 } from "./types.js";
@@ -1137,6 +1140,18 @@ export interface ObservableModule
 
   mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
 
+  /**
+   * @category Transform
+   */
+  multicast<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+
   never<T>(): MulticastObservableLike<T>;
 
   onSubscribe<T>(
@@ -1171,6 +1186,18 @@ export interface ObservableModule
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): EnumerableUpperBoundObservableOperator<T, TAcc>;
+
+  /**
+   * @category Transform
+   */
+  share<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly replay?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, MulticastObservableLike<T>>;
 
   skipFirst<T>(options?: {
     readonly count?: number;
@@ -2086,6 +2113,8 @@ export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const scan: Signature["scan"] = Observable_scan;
+export const multicast: Signature["multicast"] = Observable_multicast;
+export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;

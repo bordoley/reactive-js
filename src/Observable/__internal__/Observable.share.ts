@@ -1,9 +1,8 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
-import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
+import type * as Observable from "../../Observable.js";
+import Observable_multicastImpl from "../../Observable/__internal__/Observable.multicastImpl.js";
 import { Factory, Optional, none, pipe } from "../../functions.js";
 import {
-  DeferredObservableLike,
   DisposableLike,
   ObservableLike,
   ObservableLike_observe,
@@ -12,7 +11,7 @@ import {
   ReplayObservableLike,
   SchedulerLike,
 } from "../../types.js";
-import DeferredObservable_multicastImpl from "./DeferredObservable.multicastImpl.js";
+import Observable_createRefCountedPublisher from "./Observable.createRefCountedPublisher.js";
 
 const createLazyMulticastObservable = <T>(
   factory: Factory<ObservableLike<T>>,
@@ -21,7 +20,7 @@ const createLazyMulticastObservable = <T>(
     factory()[ObservableLike_observe](observer);
   });
 
-const DeferredObservable_share: DeferredObservable.Signature["share"] =
+const Observable_share: Observable.Signature["share"] =
   <T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options?: {
@@ -30,7 +29,7 @@ const DeferredObservable_share: DeferredObservable.Signature["share"] =
       readonly capacity?: number;
     },
   ) =>
-  (source: DeferredObservableLike<T>) => {
+  (source: ObservableLike<T>) => {
     let multicasted: Optional<ReplayObservableLike<T>> = none;
 
     return createLazyMulticastObservable<T>(
@@ -39,7 +38,7 @@ const DeferredObservable_share: DeferredObservable.Signature["share"] =
         (() => {
           multicasted = pipe(
             source,
-            DeferredObservable_multicastImpl<T>(
+            Observable_multicastImpl<T>(
               Observable_createRefCountedPublisher,
               schedulerOrFactory,
               options,
@@ -50,4 +49,4 @@ const DeferredObservable_share: DeferredObservable.Signature["share"] =
     );
   };
 
-export default DeferredObservable_share;
+export default Observable_share;

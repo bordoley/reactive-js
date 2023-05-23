@@ -1,6 +1,5 @@
 /// <reference types="./PauseableObservable.create.d.ts" />
 
-import DeferredObservable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
@@ -8,6 +7,7 @@ import Observable_create from "../../Observable/__internal__/Observable.create.j
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
+import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
@@ -24,7 +24,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
             const pauseableScheduler = pipe(observer, Scheduler_createPausableScheduler, Disposable_addTo(observer));
             const multicastedMode = pipe(mode, Observable_mergeWith(
             // Initialize to paused state
-            pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), DeferredObservable_multicast(observer, {
+            pipe(true, Optional_toObservable())), Observable_distinctUntilChanged(), Observable_multicast(observer, {
                 replay: 1,
                 capacity: 1,
                 backpressureStrategy: "drop-oldest",

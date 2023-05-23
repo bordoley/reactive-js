@@ -1,7 +1,5 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "../../Disposable/__internal__/Disposable.bindTo.js";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   Factory,
@@ -13,8 +11,8 @@ import {
 } from "../../functions.js";
 import {
   BufferLike_capacity,
-  DeferredObservableLike,
   DisposableLike,
+  ObservableLike,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -22,8 +20,10 @@ import {
   SchedulerLike,
   SinkLike_notify,
 } from "../../types.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
-const DeferredObservable_multicastImpl =
+const Observable_multicastImpl =
   <T>(
     publisherFactory: Function1<
       Optional<{
@@ -37,10 +37,7 @@ const DeferredObservable_multicastImpl =
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     } = {},
-  ): Function1<
-    DeferredObservableLike<T>,
-    ReplayObservableLike<T> & DisposableLike
-  > =>
+  ): Function1<ObservableLike<T>, ReplayObservableLike<T> & DisposableLike> =>
   observable => {
     const {
       backpressureStrategy = "overflow",
@@ -66,4 +63,4 @@ const DeferredObservable_multicastImpl =
     return publisher;
   };
 
-export default DeferredObservable_multicastImpl;
+export default Observable_multicastImpl;

@@ -1,6 +1,6 @@
 import type * as MulticastObservable from "./MulticastObservable.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerModule, ContainerOf, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EffectsContainerModule, EnumerableLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, ContainerModule, ContainerOf, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EffectsContainerModule, EnumerableLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
@@ -294,6 +294,14 @@ export interface ObservableModule extends ContainerModule<Type>, EffectsContaine
     mergeMany<T>(observables: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
     mergeMany<T>(observables: readonly MaybeMulticastObservableLike<T>[]): MulticastObservableLike<T>;
     mapTo<TA, TB>(value: TB): EnumerableUpperBoundObservableOperator<TA, TB>;
+    /**
+     * @category Transform
+     */
+    multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): EnumerableUpperBoundObservableOperator<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): EnumerableUpperBoundObservableOperator<T, T>;
@@ -303,6 +311,14 @@ export interface ObservableModule extends ContainerModule<Type>, EffectsContaine
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): EnumerableUpperBoundObservableOperator<T, T[TKeyA][TKeyB]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): EnumerableUpperBoundObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): EnumerableUpperBoundObservableOperator<T, TAcc>;
+    /**
+     * @category Transform
+     */
+    share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+        readonly replay?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ObservableLike<T>, MulticastObservableLike<T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): EnumerableUpperBoundObservableOperator<T, T>;
@@ -503,6 +519,8 @@ export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
 export declare const pick: Signature["pick"];
 export declare const scan: Signature["scan"];
+export declare const multicast: Signature["multicast"];
+export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];

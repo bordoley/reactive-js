@@ -1,6 +1,5 @@
 /// <reference types="./MulticastObservable.test.d.ts" />
 
-import * as DeferredObservable from "../DeferredObservable.js";
 import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
@@ -10,7 +9,7 @@ import { describe, expectArrayEquals, testAsync, testModule, } from "../__intern
 import { pipe } from "../functions.js";
 import { QueueableLike_enqueue } from "../types.js";
 import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
-testModule("MulticastObservable", HigherOrderObservableModuleTests(MulticastObservable, () => DeferredObservable.share(Scheduler.createHostScheduler)), describe("compute", testAsync("__stream", async () => {
+testModule("MulticastObservable", HigherOrderObservableModuleTests(MulticastObservable, () => Observable.share(Scheduler.createHostScheduler)), describe("compute", testAsync("__stream", async () => {
     const result = await pipe(MulticastObservable.compute(() => {
         const stream = __stream(Streamable.identity());
         const push = __bindMethod(stream, QueueableLike_enqueue);

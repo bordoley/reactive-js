@@ -5,12 +5,10 @@ import DeferredObservable_exhaust from "./DeferredObservable/__internal__/Deferr
 import DeferredObservable_exhaustMap from "./DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
 import DeferredObservable_mergeAll from "./DeferredObservable/__internal__/DeferredObservable.mergeAll.js";
 import DeferredObservable_mergeMap from "./DeferredObservable/__internal__/DeferredObservable.mergeMap.js";
-import DeferredObservable_multicast from "./DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import DeferredObservable_retry from "./DeferredObservable/__internal__/DeferredObservable.retry.js";
 import DeferredObservable_scanLast from "./DeferredObservable/__internal__/DeferredObservable.scanLast.js";
 import DeferredObservable_scanMany from "./DeferredObservable/__internal__/DeferredObservable.scanMany.js";
-import DeferredObservable_share from "./DeferredObservable/__internal__/DeferredObservable.share.js";
 import DeferredObservable_switchAll from "./DeferredObservable/__internal__/DeferredObservable.switchAll.js";
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
@@ -40,22 +38,16 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Factory, Function1, Predicate, identityLazy } from "./functions.js";
+import { Factory, Predicate, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
   DeferredContainerModule,
   DeferredObservableLike,
-  DisposableLike,
   EnumerableLike,
   HigherOrderObservableModule,
-  MulticastObservableLike,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
-  ReplayObservableLike,
   RunnableLike,
-  SchedulerLike,
 } from "./types.js";
 
 export type DeferredObservableOperator<TIn, TOut> = <
@@ -98,21 +90,6 @@ export interface DeferredObservableModule
   ): DeferredObservableLike<T>;
 
   /**
-   * @category Transform
-   */
-  multicast<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
-    options?: {
-      readonly replay?: number;
-      readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    },
-  ): Function1<
-    DeferredObservableLike<T>,
-    ReplayObservableLike<T> & DisposableLike
-  >;
-
-  /**
    * @category Operator
    */
   repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
@@ -125,18 +102,6 @@ export interface DeferredObservableModule
   retry<T>(
     shouldRetry: (count: number, error: Error) => boolean,
   ): DeferredObservableOperator<T, T>;
-
-  /**
-   * @category Transform
-   */
-  share<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
-    options?: {
-      readonly replay?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
 }
 
 export type Signature = DeferredObservableModule;
@@ -172,7 +137,6 @@ export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const mergeAll: Signature["mergeAll"] = DeferredObservable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = DeferredObservable_mergeMap;
-export const multicast: Signature["multicast"] = DeferredObservable_multicast;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const repeat: Signature["repeat"] = DeferredObservable_repeat;
@@ -180,7 +144,6 @@ export const retry: Signature["retry"] = DeferredObservable_retry;
 export const scan: Signature["scan"] = Observable_scan;
 export const scanLast: Signature["scanLast"] = DeferredObservable_scanLast;
 export const scanMany: Signature["scanMany"] = DeferredObservable_scanMany;
-export const share: Signature["share"] = DeferredObservable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const switchAll: Signature["switchAll"] = DeferredObservable_switchAll;

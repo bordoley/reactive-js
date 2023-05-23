@@ -1,4 +1,3 @@
-import * as DeferredObservable from "../DeferredObservable.js";
 import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import {
@@ -23,7 +22,7 @@ testModule(
   "MulticastObservable",
   HigherOrderObservableModuleTests<MulticastObservable.Type>(
     MulticastObservable,
-    () => DeferredObservable.share(Scheduler.createHostScheduler),
+    () => Observable.share(Scheduler.createHostScheduler),
   ),
 
   describe(

@@ -1,7 +1,7 @@
 import type * as DeferredObservable from "../../DeferredObservable.js";
-import Observable_multicast from "../../DeferredObservable/__internal__/DeferredObservable.multicast.js";
 import Dispatcher_delegatingMixin from "../../Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
+import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
 import ReplayObservable_delegatingMixin from "../../ReplayObservable/__internal__/ReplayObservable.delegatingMixin.js";
 import { __DEV__ } from "../../__internal__/constants.js";
 import {
