@@ -211,7 +211,6 @@ class ComputeContext {
   readonly [__ComputeContext_effects]: ComputeEffect[] = [];
   readonly [__ComputeContext_observableConfig]: {
     readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isEnumerable]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   };
   readonly [__ComputeContext_observer]: ObserverLike;
@@ -264,13 +263,6 @@ class ComputeContext {
     shouldAwait: boolean,
   ): Optional<T> {
     if (
-      this[__ComputeContext_observableConfig][ObservableLike_isEnumerable] &&
-      !observable[ObservableLike_isEnumerable]
-    ) {
-      raiseWithDebugMessage(
-        "cannot observe a non-enumerable observable in an Enumerable computation",
-      );
-    } else if (
       this[__ComputeContext_observableConfig][ObservableLike_isRunnable] &&
       !observable[ObservableLike_isRunnable]
     ) {

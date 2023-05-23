@@ -1,6 +1,5 @@
 import DeferredObservable_create from "../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../Disposable/__internal__/Disposable.addTo.js";
-import Enumerable_create from "../Enumerable/__internal__/Enumerable.create.js";
 import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import {
@@ -38,7 +37,6 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   ObservableLike,
-  ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
   ObserverLike,
   QueueableLike,
@@ -165,9 +163,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
     const observable = ctx[__ComputeContext_memoOrUse](
       false,
       deferSideEffect,
-      observableConfig[ObservableLike_isEnumerable]
-        ? Enumerable_create
-        : observableConfig[ObservableLike_isRunnable]
+      observableConfig[ObservableLike_isRunnable]
         ? Runnable_create
         : DeferredObservable_create,
       f,

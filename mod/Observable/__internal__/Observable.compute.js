@@ -96,11 +96,7 @@ class ComputeContext {
         this[__ComputeContext_observableConfig] = config;
     }
     [__ComputeContext_awaitOrObserve](observable, shouldAwait) {
-        if (this[__ComputeContext_observableConfig][ObservableLike_isEnumerable] &&
-            !observable[ObservableLike_isEnumerable]) {
-            raiseWithDebugMessage("cannot observe a non-enumerable observable in an Enumerable computation");
-        }
-        else if (this[__ComputeContext_observableConfig][ObservableLike_isRunnable] &&
+        if (this[__ComputeContext_observableConfig][ObservableLike_isRunnable] &&
             !observable[ObservableLike_isRunnable]) {
             raiseWithDebugMessage("cannot observe a non-runnable observable in a Runnable computation");
         }

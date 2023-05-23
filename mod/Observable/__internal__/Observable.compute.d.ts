@@ -46,7 +46,6 @@ declare class ComputeContext {
     readonly [__ComputeContext_effects]: ComputeEffect[];
     readonly [__ComputeContext_observableConfig]: {
         readonly [ObservableLike_isDeferred]: boolean;
-        readonly [ObservableLike_isEnumerable]: boolean;
         readonly [ObservableLike_isRunnable]: boolean;
     };
     readonly [__ComputeContext_observer]: ObserverLike;
