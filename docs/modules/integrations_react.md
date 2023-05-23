@@ -319,7 +319,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`ContainerOperator`](types.md#containeroperator)<[`MulticastObservableContainer`](../interfaces/MulticastObservable.MulticastObservableContainer.md), `TProps`, `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\> |
+| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

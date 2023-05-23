@@ -1,8 +1,15 @@
 import * as Disposable from "../Disposable.js";
 import * as Observable from "../Observable.js";
+import {
+  __bindMethod,
+  __do,
+  __observe,
+  __stream,
+} from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
+import * as Streamable from "../Streamable.js";
 import {
   describe,
   expectArrayEquals,
@@ -135,6 +142,27 @@ testModule(
         ),
       ),
     ),
+  ),
+  describe(
+    "compute",
+    testAsync("__stream", async () => {
+      const result = await pipe(
+        Observable.compute(() => {
+          const stream = __stream(Streamable.identity<number>());
+          const push = __bindMethod(stream, QueueableLike_enqueue);
+
+          const result = __observe(stream) ?? 0;
+          __do(push, result + 1);
+
+          return result;
+        }),
+        Observable.takeFirst({ count: 10 }),
+        Observable.buffer(),
+        Observable.lastAsync<readonly number[]>(),
+      );
+
+      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }),
   ),
   describe(
     "createPublisher",

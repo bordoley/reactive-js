@@ -10,8 +10,6 @@ import MulticastObservable_scanLast from "./MulticastObservable/__internal__/Mul
 import MulticastObservable_scanMany from "./MulticastObservable/__internal__/MulticastObservable.scanMany.js";
 import MulticastObservable_switchAll from "./MulticastObservable/__internal__/MulticastObservable.switchAll.js";
 import MulticastObservable_switchMap from "./MulticastObservable/__internal__/MulticastObservable.switchMap.js";
-import { MulticastObservable_compute } from "./Observable/__internal__/Observable.compute.js";
-import { Factory } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -35,23 +33,12 @@ export type Type = MulticastObservableContainer;
  * @category Module
  */
 export interface MulticastObservableModule
-  extends HigherOrderObservableModule<Type, DeferredObservable.Type> {
-  /**
-   * @category Constructor
-   */
-  compute<T>(
-    computation: Factory<T>,
-    options?: {
-      mode?: "batched" | "combine-latest";
-    },
-  ): MulticastObservableLike<T>;
-}
+  extends HigherOrderObservableModule<Type, DeferredObservable.Type> {}
 
 export type Signature = MulticastObservableModule;
 
 export const catchError: Signature["catchError"] =
   MulticastObservable_catchError;
-export const compute: Signature["compute"] = MulticastObservable_compute;
 export const concatAll: Signature["concatAll"] = MulticastObservable_concatAll;
 export const concatMap: Signature["concatMap"] = MulticastObservable_concatMap;
 export const exhaust: Signature["exhaust"] = MulticastObservable_exhaust;

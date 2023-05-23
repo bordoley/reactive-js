@@ -2,7 +2,6 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import type * as MulticastObservable from "../../MulticastObservable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -268,13 +267,6 @@ class ComputeContext {
     ) {
       raiseWithDebugMessage(
         "cannot observe a non-runnable observable in a Runnable computation",
-      );
-    } else if (
-      this[__ComputeContext_observableConfig][ObservableLike_isDeferred] &&
-      !observable[ObservableLike_isDeferred]
-    ) {
-      raiseWithDebugMessage(
-        "cannot observe a non-deferred observable in a DeferredObservable computation",
       );
     }
 
@@ -570,21 +562,6 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
         Disposable_addTo(observer),
       );
     }, config)) as ObservableComputeWithConfig["computeWithConfig"];
-
-export const MulticastObservable_compute: MulticastObservable.Signature["compute"] =
-  <T>(
-    computation: Factory<T>,
-    options: { mode?: "batched" | "combine-latest" } = {},
-  ): MulticastObservableLike<T> =>
-    Observable_computeWithConfig(
-      computation,
-      {
-        [ObservableLike_isDeferred]: false,
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
-      },
-      options,
-    );
 
 export const Observable_compute: Observable.Signature["compute"] = <T>(
   computation: Factory<T>,

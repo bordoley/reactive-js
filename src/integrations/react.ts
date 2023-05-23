@@ -11,7 +11,6 @@ import * as Disposable from "../Disposable.js";
 import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
 import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
-import type * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import Observable_isReplayObservable from "../Observable/__internal__/Observable.isReplayObservable.js";
 import {
@@ -29,7 +28,6 @@ import {
 } from "../functions.js";
 import {
   CollectionLike_count,
-  ContainerOperator,
   DispatcherLike,
   DispatcherLike_complete,
   DisposableLike,
@@ -40,6 +38,7 @@ import {
   EnumeratorLike_move,
   EventSourceLike,
   KeyedCollectionLike_get,
+  MulticastObservableLike,
   ObservableLike,
   PauseableLike,
   PauseableLike_isPaused,
@@ -429,7 +428,7 @@ export const usePauseable = (
 };
 
 export const createComponent = <TProps>(
-  fn: ContainerOperator<MulticastObservable.Type, TProps, ReactElement>,
+  fn: Function1<MulticastObservableLike<TProps>, ObservableLike<ReactElement>>,
   options: {
     readonly priority?: 1 | 2 | 3 | 4 | 5;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

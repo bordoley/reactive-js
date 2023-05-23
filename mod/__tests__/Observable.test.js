@@ -2,9 +2,11 @@
 
 import * as Disposable from "../Disposable.js";
 import * as Observable from "../Observable.js";
+import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
+import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, bindMethod, compose, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
@@ -25,7 +27,16 @@ testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposabl
         result = e["cause"];
     }), Runnable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-})), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality())))), describe("createPublisher", test("with replay", () => {
+})), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1), { delay: 2 }), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0), { delay: 3 }), Observable.takeFirst({ count: 2 }))), Runnable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality())))), describe("compute", testAsync("__stream", async () => {
+    const result = await pipe(Observable.compute(() => {
+        const stream = __stream(Streamable.identity());
+        const push = __bindMethod(stream, QueueableLike_enqueue);
+        const result = __observe(stream) ?? 0;
+        __do(push, result + 1);
+        return result;
+    }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync());
+    pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+})), describe("createPublisher", test("with replay", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const publisher = Observable.createPublisher({ replay: 2 });
     pipe([1, 2, 3, 4], ReadonlyArray.forEach(bindMethod(publisher, SinkLike_notify)));

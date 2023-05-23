@@ -1,4 +1,3 @@
-import type * as MulticastObservable from "../../MulticastObservable.js";
 import type * as Observable from "../../Observable.js";
 import type * as Runnable from "../../Runnable.js";
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../__internal__/symbols.js";
@@ -64,7 +63,6 @@ declare class ComputeContext {
     [__ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }
 export declare const assertCurrentContext: () => ComputeContext;
-export declare const MulticastObservable_compute: MulticastObservable.Signature["compute"];
 export declare const Observable_compute: Observable.Signature["compute"];
 export declare const Runnable_compute: Runnable.Signature["compute"];
 export {};
