@@ -864,31 +864,6 @@ export interface EnumerableContainerModule<C extends Container> extends Runnable
  * @noInheritDoc
  * @category Module
  */
-export interface EffectsContainerModule<C extends Container> {
-    /**
-     * @category Operator
-     */
-    dispatchTo<T>(dispatcher: DispatcherLike<T>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    enqueue<T>(queue: QueueableLike<T>): ContainerOperator<C, T, T>;
-    /**
-     * Returns a ContainerOperator that applies the side effect function to each
-     * value emitted by the source.
-     *
-     * @category Operator
-     */
-    forEach<T>(effect: SideEffect1<T>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    ignoreElements<T>(): ContainerOperator<C, unknown, T>;
-}
-/**
- * @noInheritDoc
- * @category Module
- */
 export interface HigherOrderObservableModule<C extends Observable.Type, CInner extends DeferredObservable.Type> {
     /** @category Operator */
     catchError<T>(onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>): ContainerOperator<C, T, T>;

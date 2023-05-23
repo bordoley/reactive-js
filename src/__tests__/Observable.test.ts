@@ -1,4 +1,5 @@
 import * as Disposable from "../Disposable.js";
+import * as EventSource from "../EventSource.js";
 import * as Observable from "../Observable.js";
 import {
   __bindMethod,
@@ -46,8 +47,7 @@ import {
   returns,
 } from "../functions.js";
 import {
-  ContainerOf,
-  DisposableLike,
+  DispatcherLikeEvent_completed,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -57,22 +57,12 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_notify,
+  StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 
 testModule(
   "Observable",
-  EffectsContainerModuleTests<Runnable.Type, DisposableLike>(
-    Observable,
-    () => Disposable.disposed,
-    <T>() =>
-      (arr: ReadonlyArray<T>) =>
-        Observable.fromReadonlyArray<T>()(arr),
-    <T>() =>
-      (c: ContainerOf<Runnable.Type, T>) =>
-        Runnable.toReadonlyArray<T>()(c),
-  ),
   describe(
     "backpressureStrategy",
     testAsync(
@@ -324,6 +314,52 @@ testModule(
     }),
   ),
   describe(
+    "dispatchTo",
+    test("when backpressure exception is thrown", () => {
+      const vts = Scheduler.createVirtualTimeScheduler();
+      const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+      });
+
+      expectToThrow(
+        pipeLazy(
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.dispatchTo<number>(stream),
+          Runnable.toReadonlyArray(),
+        ),
+      );
+    }),
+    test("when completed successfully", () => {
+      const vts = Scheduler.createVirtualTimeScheduler();
+      const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+      });
+
+      let completed = false;
+
+      pipe(
+        stream,
+        EventSource.addEventHandler(ev => {
+          if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+          }
+        }),
+      );
+
+      pipe(
+        [1, 2, 2, 2, 2, 3, 3, 3, 4],
+        Observable.fromReadonlyArray(),
+        Observable.dispatchTo<number>(stream),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]),
+      ),
+        expectTrue(completed);
+    }),
+  ),
+  describe(
     "empty",
     test("with delay", () => {
       let disposedTime = -1;
@@ -373,6 +409,39 @@ testModule(
       ),
     ),
   ),
+  describe(
+    "forEach",
+    test("invokes the effect for each notified value", () => {
+      const result: number[] = [];
+
+      pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forEach((x: number) => {
+          result.push(x + 10);
+        }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+        pipe(result, expectArrayEquals([11, 12, 13]));
+    }),
+
+    test("when the effect function throws", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          Observable.fromReadonlyArray(),
+          Observable.forEach(_ => {
+            throw err;
+          }),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
+  ),
+
   describe(
     "fromAsyncFactory",
     testAsync("when promise resolves", async () => {
@@ -440,6 +509,20 @@ testModule(
       );
       pipe(result, expectEquals<Optional<number>>(3));
     }),
+  ),
+
+  describe(
+    "ignoreElements",
+    test(
+      "ignores all elements",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.ignoreElements<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      ),
+    ),
   ),
 
   describe(

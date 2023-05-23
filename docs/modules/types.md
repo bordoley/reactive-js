@@ -38,7 +38,6 @@
 - [ConcreteKeyedContainerModule](../interfaces/types.ConcreteKeyedContainerModule.md)
 - [ContainerModule](../interfaces/types.ContainerModule.md)
 - [DeferredContainerModule](../interfaces/types.DeferredContainerModule.md)
-- [EffectsContainerModule](../interfaces/types.EffectsContainerModule.md)
 - [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [HigherOrderObservableModule](../interfaces/types.HigherOrderObservableModule.md)

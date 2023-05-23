@@ -1,6 +1,6 @@
 import type * as MulticastObservable from "./MulticastObservable.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, ContainerModule, ContainerOf, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EffectsContainerModule, EnumerableLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, ContainerModule, ContainerOf, ContainerOperator, Container_T, Container_type, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObserverLike, PublisherLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type EnumerableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type RunnableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredObservableUpperBoundObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
@@ -69,7 +69,7 @@ export type AnyObservableLike<T> = EnumerableLike<T> | RunnableLike<T> | Deferre
  * @noInheritDoc
  * @category Module
  */
-export interface ObservableModule extends ContainerModule<Type>, EffectsContainerModule<Type> {
+export interface ObservableModule extends ContainerModule<Type> {
     /**
      * @category Constructor
      */

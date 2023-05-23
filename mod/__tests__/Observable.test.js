@@ -1,6 +1,7 @@
 /// <reference types="./Observable.test.d.ts" />
 
 import * as Disposable from "../Disposable.js";
+import * as EventSource from "../EventSource.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
@@ -9,9 +10,8 @@ import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, bindMethod, compose, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
-import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
-testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposable.disposed, () => (arr) => Observable.fromReadonlyArray()(arr), () => (c) => Runnable.toReadonlyArray()(c)), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+import { DispatcherLikeEvent_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
+testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
@@ -107,6 +107,27 @@ testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposabl
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
     pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Runnable.toReadonlyArray(), x => x.join(), expectEquals(str));
+})), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+    });
+    expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Runnable.toReadonlyArray()));
+}), test("when completed successfully", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+    });
+    let completed = false;
+    pipe(stream, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+        }
+    }));
+    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4])),
+        expectTrue(completed);
 })), describe("empty", test("with delay", () => {
     let disposedTime = -1;
     const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -121,7 +142,18 @@ testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposabl
 }), testAsync("it returns the first value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectEquals(1));
-})), describe("flatMapAsync", testAsync("mapping a number to a promise", pipeLazyAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+})), describe("flatMapAsync", testAsync("mapping a number to a promise", pipeLazyAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("forEach", test("invokes the effect for each notified value", () => {
+    const result = [];
+    pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach((x) => {
+        result.push(x + 10);
+    }), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3])),
+        pipe(result, expectArrayEquals([11, 12, 13]));
+}), test("when the effect function throws", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], Observable.fromReadonlyArray(), Observable.forEach(_ => {
+        throw err;
+    }), Runnable.toReadonlyArray()), expectToThrowError(err));
+})), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
     const result = await pipe(async () => {
         await Promise.resolve(1);
         return 2;
@@ -142,7 +174,7 @@ testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposabl
 }), testAsync("it returns the last value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectEquals(3));
-})), describe("merge", test("two arrays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy(Observable.merge(pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })), Observable.throws({ delay: 5 })), Runnable.toReadonlyArray()), expectToThrow))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable({ delay: 1 }), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+})), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Runnable.toReadonlyArray(), expectArrayEquals([])))), describe("merge", test("two arrays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray({ delay: 1, delayStart: true })), pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy(Observable.merge(pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })), Observable.throws({ delay: 5 })), Runnable.toReadonlyArray()), expectToThrow))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable({ delay: 1 }), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true }))), Runnable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const disp = mockFn();
     const f = mockFn(disp);

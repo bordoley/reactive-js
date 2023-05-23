@@ -8,8 +8,6 @@
 
 - [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/Observable.md#type)\>
 
-- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/Observable.md#type)\>
-
   ↳ **`ObservableModule`**
 
 ## Table of contents
@@ -1271,10 +1269,6 @@ ___
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
-#### Overrides
-
-[EffectsContainerModule](types.EffectsContainerModule.md).[dispatchTo](types.EffectsContainerModule.md#dispatchto)
-
 ___
 
 ### distinctUntilChanged
@@ -1395,10 +1389,6 @@ ___
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
-#### Overrides
-
-[EffectsContainerModule](types.EffectsContainerModule.md).[enqueue](types.EffectsContainerModule.md#enqueue)
-
 ___
 
 ### firstAsync
@@ -1465,9 +1455,6 @@ ___
 
 ▸ **forEach**<`T`\>(`effect`): [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
 
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
 #### Type parameters
 
 | Name |
@@ -1483,10 +1470,6 @@ value emitted by the source.
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
-
-#### Overrides
-
-[EffectsContainerModule](types.EffectsContainerModule.md).[forEach](types.EffectsContainerModule.md#foreach)
 
 ___
 
@@ -3121,10 +3104,6 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](../modules/Observable.md#enumerableupperboundobservableoperator)<`unknown`, `T`\>
-
-#### Overrides
-
-[EffectsContainerModule](types.EffectsContainerModule.md).[ignoreElements](types.EffectsContainerModule.md#ignoreelements)
 
 ___
 
