@@ -5,6 +5,7 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import { Observable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -456,6 +457,16 @@ export interface ObservableModule
     h: MaybeMulticastObservableLike<TH>,
     i: MaybeMulticastObservableLike<TI>,
   ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+
+  /**
+   * @category Constructor
+   */
+  compute<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): DeferredObservableLike<T>;
 
   /**
    * @category Constructor
@@ -2052,6 +2063,7 @@ export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =
   Observable_combineLatest;
+export const compute: Signature["compute"] = Observable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;

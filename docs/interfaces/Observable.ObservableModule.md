@@ -18,6 +18,7 @@
 
 - [animate](Observable.ObservableModule.md#animate)
 - [combineLatest](Observable.ObservableModule.md#combinelatest)
+- [compute](Observable.ObservableModule.md#compute)
 - [concat](Observable.ObservableModule.md#concat)
 
 ### Operator Methods
@@ -774,6 +775,30 @@ ___
 #### Returns
 
 [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+___
+
+### compute
+
+▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
 
 ___
 

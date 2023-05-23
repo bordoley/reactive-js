@@ -253,7 +253,7 @@ export const MulticastObservable_compute = (computation, options = {}) => Observ
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,
 }, options);
-export const DeferredObservable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
+export const Observable_compute = (computation, options = {}) => Observable_computeWithConfig(computation, {
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isEnumerable]: false,
     [ObservableLike_isRunnable]: false,

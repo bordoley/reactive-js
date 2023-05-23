@@ -20,7 +20,6 @@
 
 ### Constructor Functions
 
-- [compute](DeferredObservable.md#compute)
 - [concat](DeferredObservable.md#concat)
 - [empty](DeferredObservable.md#empty)
 - [fromEnumerable](DeferredObservable.md#fromenumerable)
@@ -115,30 +114,6 @@ ___
 Ƭ **Type**: [`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md)
 
 ## Constructor Functions
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
 
 ### concat
 

@@ -1,9 +1,9 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
 import type * as MulticastObservable from "../../MulticastObservable.js";
+import type * as Observable from "../../Observable.js";
 import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import type * as Runnable from "../../Runnable.js";
@@ -586,20 +586,19 @@ export const MulticastObservable_compute: MulticastObservable.Signature["compute
       options,
     );
 
-export const DeferredObservable_compute: DeferredObservable.Signature["compute"] =
-  <T>(
-    computation: Factory<T>,
-    options: { mode?: "batched" | "combine-latest" } = {},
-  ) =>
-    Observable_computeWithConfig(
-      computation,
-      {
-        [ObservableLike_isDeferred]: true as const,
-        [ObservableLike_isEnumerable]: false,
-        [ObservableLike_isRunnable]: false,
-      },
-      options,
-    );
+export const Observable_compute: Observable.Signature["compute"] = <T>(
+  computation: Factory<T>,
+  options: { mode?: "batched" | "combine-latest" } = {},
+) =>
+  Observable_computeWithConfig(
+    computation,
+    {
+      [ObservableLike_isDeferred]: true as const,
+      [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isRunnable]: false,
+    },
+    options,
+  );
 
 export const Runnable_compute: Runnable.Signature["compute"] = <T>(
   computation: Factory<T>,

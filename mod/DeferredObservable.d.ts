@@ -1,4 +1,4 @@
-import { Factory, Predicate } from "./functions.js";
+import { Predicate } from "./functions.js";
 import { Container, Container_T, Container_type, DeferredContainerModule, DeferredObservableLike, EnumerableLike, HigherOrderObservableModule, RunnableLike } from "./types.js";
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
@@ -15,12 +15,6 @@ export type Type = DeferredObservableContainer;
  */
 export interface DeferredObservableModule extends DeferredContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
     /**
-     * @category Constructor
-     */
-    compute<T>(computation: Factory<T>, options?: {
-        mode?: "batched" | "combine-latest";
-    }): DeferredObservableLike<T>;
-    /**
      * @category Operator
      */
     repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
@@ -34,7 +28,6 @@ export interface DeferredObservableModule extends DeferredContainerModule<Type>,
 export type Signature = DeferredObservableModule;
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
-export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];

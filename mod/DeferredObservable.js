@@ -15,7 +15,6 @@ import DeferredObservable_switchAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
-import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -44,7 +43,6 @@ import { identityLazy } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const buffer = Observable_buffer;
 export const catchError = DeferredObservable_catchError;
-export const compute = DeferredObservable_compute;
 export const concat = Observable_concat;
 export const concatAll = DeferredObservable_concatAll;
 export const concatMap = DeferredObservable_concatMap;

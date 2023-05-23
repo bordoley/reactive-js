@@ -118,6 +118,12 @@ export interface ObservableModule extends ContainerModule<Type>, EffectsContaine
     /**
      * @category Constructor
      */
+    compute<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): DeferredObservableLike<T>;
+    /**
+     * @category Constructor
+     */
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredObservableLike<T>;
@@ -470,6 +476,7 @@ export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];
+export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];

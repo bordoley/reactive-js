@@ -14,40 +14,10 @@
 
 ## Table of contents
 
-### Constructor Methods
-
-- [compute](DeferredObservable.DeferredObservableModule.md#compute)
-
 ### Operator Methods
 
 - [repeat](DeferredObservable.DeferredObservableModule.md#repeat)
 - [retry](DeferredObservable.DeferredObservableModule.md#retry)
-
-## Constructor Methods
-
-### compute
-
-▸ **compute**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
-
-___
 
 ## Operator Methods
 

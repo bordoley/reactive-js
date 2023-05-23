@@ -13,7 +13,6 @@ import DeferredObservable_switchAll from "./DeferredObservable/__internal__/Defe
 import DeferredObservable_switchMap from "./DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
-import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
@@ -38,7 +37,7 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import { Factory, Predicate, identityLazy } from "./functions.js";
+import { Predicate, identityLazy } from "./functions.js";
 import {
   Container,
   Container_T,
@@ -80,16 +79,6 @@ export interface DeferredObservableModule
   extends DeferredContainerModule<Type>,
     HigherOrderObservableModule<Type, Type> {
   /**
-   * @category Constructor
-   */
-  compute<T>(
-    computation: Factory<T>,
-    options?: {
-      mode?: "batched" | "combine-latest";
-    },
-  ): DeferredObservableLike<T>;
-
-  /**
    * @category Operator
    */
   repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
@@ -109,7 +98,6 @@ export type Signature = DeferredObservableModule;
 export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] =
   DeferredObservable_catchError;
-export const compute: Signature["compute"] = DeferredObservable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
 export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
