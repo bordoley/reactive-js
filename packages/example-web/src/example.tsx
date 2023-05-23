@@ -46,7 +46,7 @@ import {
   StoreLike_value,
 } from "@reactive-js/core/types";
 import * as Dictionary from "@reactive-js/core/Dictionary";
-import * as EnumeratorFactory from "@reactive-js/core/EnumeratorFactory";
+import * as Enumerable from "@reactive-js/core/Enumerable";
 import {
   __await,
   __bindMethod,
@@ -135,10 +135,10 @@ const AnimationGroup = () => {
         {pipeSome(
           animationStream,
           Dictionary.entries(),
-          EnumeratorFactory.map(([key, animation]) => (
+          Enumerable.map(([key, animation]) => (
             <AnimatedBox key={key} animation={animation} />
           )),
-          EnumeratorFactory.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
         )}
       </div>
       <div>
