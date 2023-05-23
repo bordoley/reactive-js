@@ -1,6 +1,5 @@
 import type {
   DeferredObservableUpperBoundObservableOperator,
-  MulticastObservableUpperBoundObservableOperator,
   RunnableUpperBoundObservableOperator,
 } from "../../Observable.js";
 import {
@@ -30,13 +29,6 @@ interface ObservableLiftUpperBoundedBy {
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => DeferredObservableUpperBoundObservableOperator<TA, TB>;
-
-  liftUpperBoundedBy(options: {
-    readonly [ObservableLike_isDeferred]: false;
-    readonly [ObservableLike_isRunnable]: false;
-  }): <TA, TB>(
-    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => MulticastObservableUpperBoundObservableOperator<TA, TB>;
 
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: boolean;

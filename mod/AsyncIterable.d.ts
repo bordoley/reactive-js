@@ -1,4 +1,4 @@
-import { Container, Container_T, Container_type, DeferredContainerModule, FlowableContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, FlowableContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -11,7 +11,7 @@ export type Type = AsyncIterableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface AsyncIterableModule extends Pick<DeferredContainerModule<Type>, "toObservable">, FlowableContainerModule<Type> {
+export interface AsyncIterableModule extends FlowableContainerModule<Type> {
 }
 export type Signature = AsyncIterableModule;
 export declare const flow: Signature["flow"];

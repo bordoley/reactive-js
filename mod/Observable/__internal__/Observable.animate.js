@@ -1,6 +1,6 @@
 /// <reference types="./Observable.animate.d.ts" />
 
-import DeferredObservable_repeat from "../../DeferredObservable/__internal__/DeferredObservable.repeat.js";
+import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
@@ -14,7 +14,7 @@ const scale = (start, end) => (v) => {
     return start + v * diff;
 };
 const parseAnimationConfig = (config) => config.type === "loop"
-    ? pipe(Observable_animate(config.animation), DeferredObservable_repeat(config.count ?? 1))
+    ? pipe(Observable_animate(config.animation), Observable_repeat(config.count ?? 1))
     : config.type === "delay"
         ? Observable_empty({ delay: config.duration })
         : config.type === "frame"

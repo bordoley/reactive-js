@@ -1,6 +1,6 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import EventSource_addEventHandler from "../../EventSource/__internal__/EventSource.addEventHandler.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import type * as PauseableObservable from "../../PauseableObservable.js";
@@ -19,7 +19,7 @@ import {
 const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
   <T>(sink: DispatcherLike<T>) =>
   (pauseableObservable: PauseableObservableLike<T>) =>
-    DeferredObservable_create(observer => {
+    Observable_create(observer => {
       pipe(
         sink,
         EventSource_addEventHandler(

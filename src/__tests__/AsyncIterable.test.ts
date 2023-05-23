@@ -1,17 +1,16 @@
 import * as AsyncIterable from "../AsyncIterable.js";
-import * as DeferredObservable from "../DeferredObservable.js";
 import * as Disposable from "../Disposable.js";
-import * as MulticastObservable from "../MulticastObservable.js";
 import * as Observable from "../Observable.js";
 import * as Scheduler from "../Scheduler.js";
 import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToThrowAsync,
   testAsync,
   testModule,
 } from "../__internal__/testing.js";
-import { error, pipe } from "../functions.js";
+import { error, pipe, pipeLazy } from "../functions.js";
 import { PauseableLike_resume, SchedulerLike } from "../types.js";
 
 testModule(
@@ -69,28 +68,23 @@ testModule(
     ),
     testAsync(
       "iterable that throws",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
-        async (scheduler: SchedulerLike) => {
-          const e = error();
+      pipeLazy(
+        Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+          async (scheduler: SchedulerLike) => {
+            const e = error();
 
-          const stream = pipe(
-            (async function* foo() {
-              throw e;
-            })(),
-            AsyncIterable.flow(scheduler),
-          );
-          stream[PauseableLike_resume]();
+            const stream = pipe(
+              (async function* foo() {
+                throw e;
+              })(),
+              AsyncIterable.flow(scheduler),
+            );
+            stream[PauseableLike_resume]();
 
-          const result = await pipe(
-            stream,
-            MulticastObservable.catchError(e =>
-              pipe([e], Observable.fromReadonlyArray()),
-            ),
-            Observable.lastAsync(scheduler),
-          );
-
-          pipe(result, expectEquals(e as unknown));
-        },
+            await pipe(stream, Observable.lastAsync(scheduler));
+          },
+        ),
+        expectToThrowAsync,
       ),
     ),
   ),
@@ -139,23 +133,23 @@ testModule(
 
     testAsync(
       "iterable that throws",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
-        async (scheduler: SchedulerLike) => {
-          const e = error();
+      pipeLazy(
+        Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+          async (scheduler: SchedulerLike) => {
+            const e = error();
 
-          const result = await pipe(
-            (async function* foo() {
-              throw e;
-            })(),
-            AsyncIterable.toObservable(),
-            DeferredObservable.catchError(e =>
-              pipe([e], Observable.fromReadonlyArray()),
-            ),
-            Observable.lastAsync(scheduler, { capacity: 1 }),
-          );
+            const result = await pipe(
+              (async function* foo() {
+                throw e;
+              })(),
+              AsyncIterable.toObservable(),
+              Observable.lastAsync(scheduler, { capacity: 1 }),
+            );
 
-          pipe(result, expectEquals(e as unknown));
-        },
+            pipe(result, expectEquals(e as unknown));
+          },
+        ),
+        expectToThrowAsync,
       ),
     ),
   ),

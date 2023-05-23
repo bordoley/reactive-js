@@ -1,10 +1,10 @@
 /// <reference types="./Streamable.createCache.d.ts" />
 
-import DeferredObservable_concatMap from "../../DeferredObservable/__internal__/DeferredObservable.concatMap.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
+import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
@@ -58,7 +58,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             updaters,
             pipe(updaters, ReadonlyObjectMap_mapWithKey((_, k) => instance.store.get(k))),
         ]), isSome(persistentStore)
-            ? DeferredObservable_concatMap((next) => {
+            ? Observable_concatMap((next) => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap_keep(isNone), ReadonlyObjectMap_keySet());
                 return keys.size > 0
@@ -89,7 +89,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
             }
             instance.scheduleCleanup(key);
         })), isSome(persistentStore)
-            ? DeferredObservable_concatMap(bindMethod(persistentStore, "store"))
+            ? Observable_concatMap(bindMethod(persistentStore, "store"))
             : Observable_ignoreElements())), invoke(StreamableLike_stream, scheduler, options));
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);

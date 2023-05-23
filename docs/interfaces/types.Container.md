@@ -10,17 +10,15 @@
 
   ↳ [`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md)
 
-  ↳ [`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md)
-
   ↳ [`DisposableContainer`](Disposable.DisposableContainer.md)
 
   ↳ [`EnumerableContainer`](Enumerable.EnumerableContainer.md)
 
   ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)
 
-  ↳ [`MulticastObservableContainer`](MulticastObservable.MulticastObservableContainer.md)
-
   ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
+
+  ↳ [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)
 
   ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
 

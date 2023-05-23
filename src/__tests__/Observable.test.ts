@@ -31,6 +31,7 @@ import {
 } from "../__internal__/testing.js";
 import {
   Optional,
+  alwaysTrue,
   arrayEquality,
   bindMethod,
   compose,
@@ -555,6 +556,26 @@ testModule(
           Runnable.toReadonlyArray(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+
+  describe(
+    "retry",
+    test(
+      "retrys the container on an exception",
+      pipeLazy(
+        Observable.concat(
+          pipe(
+            Observable.generate(increment, returns(0)),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          Observable.throws(),
+        ),
+        Observable.retry(alwaysTrue),
+        Observable.takeFirst<number>({ count: 6 }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   ),

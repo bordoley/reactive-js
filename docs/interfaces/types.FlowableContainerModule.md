@@ -23,6 +23,7 @@
 ### Methods
 
 - [flow](types.FlowableContainerModule.md#flow)
+- [toObservable](types.FlowableContainerModule.md#toobservable)
 
 ## Methods
 
@@ -48,3 +49,19 @@
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>

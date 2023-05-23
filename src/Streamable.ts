@@ -1,4 +1,3 @@
-import type * as DeferredObservable from "./DeferredObservable.js";
 import { Animation } from "./Observable.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createAnimationGroupEventHandler, {
@@ -18,7 +17,6 @@ import {
   Updater,
 } from "./functions.js";
 import {
-  ContainerOperator,
   DeferredObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -37,7 +35,7 @@ export interface StreamableModule {
    * @category Constructor
    */
   create<TReq, T>(
-    op: ContainerOperator<DeferredObservable.Type, TReq, T>,
+    op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   createAnimationGroupEventHandler<

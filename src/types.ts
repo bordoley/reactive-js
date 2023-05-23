@@ -1,5 +1,3 @@
-import type * as DeferredObservable from "./DeferredObservable.js";
-import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import {
   __AssociativeCollectionLike_keys,
@@ -936,6 +934,8 @@ export interface FlowableContainerModule<C extends Container> {
       readonly capacity?: number;
     },
   ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
+
+  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
 }
 
 /**
@@ -970,8 +970,9 @@ export interface MulticastingContainerModule<C extends Container> {
  * @noInheritDoc
  * @category Module
  */
-export interface DeferredContainerModule<C extends Container>
-  extends ContainerModule<C> {
+export interface RunnableContainerModule<C extends Container>
+  extends ContainerModule<C>,
+    FlowableContainerModule<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -1007,6 +1008,16 @@ export interface DeferredContainerModule<C extends Container>
   ): ContainerOperator<C, T, T>;
 
   /**
+   * @category Transform
+   */
+  contains<T>(
+    value: T,
+    options?: {
+      readonly equality?: Equality<T>;
+    },
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
    * Return an Container that emits no items.
    *
    * @category Constructor
@@ -1017,6 +1028,24 @@ export interface DeferredContainerModule<C extends Container>
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
+
+  /**
+   * Determines whether all the members of an Container satisfy the predicate.
+   * The predicate function is invoked for each element in the Container until the
+   * it returns false, or until the end of the Container.
+   *
+   * @param predicate
+   * @category Transform
+   */
+  everySatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
+   *
+   * @category Transform
+   */
+  first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
 
   /**
    * @category Constructor
@@ -1052,6 +1081,27 @@ export interface DeferredContainerModule<C extends Container>
   fromValue<T>(): Function1<T, ContainerOf<C, T>>;
 
   /**
+   *
+   * @category Transform
+   */
+  last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
+
+  /**
+   * @category Transform
+   */
+  noneSatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
+   * @category Transform
+   */
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<ContainerOf<C, T>, TAcc>;
+
+  /**
    * @category Operator
    */
   repeat<T>(): ContainerOperator<C, T, T>;
@@ -1059,11 +1109,25 @@ export interface DeferredContainerModule<C extends Container>
   repeat<T>(predicate: Predicate<number>): ContainerOperator<C, T, T>;
 
   /**
+   * @category Transform
+   */
+  someSatisfy<T>(
+    predicate: Predicate<T>,
+  ): Function1<ContainerOf<C, T>, boolean>;
+
+  /**
    * @category Operator
    */
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 
-  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
+  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+
+  /**
+   * Converts the Container to a `ReadonlyArrayContainer`.
+   *
+   * @category Transform
+   */
+  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 
   /**
    * Combines multiple sources to create a Container whose values are calculated from the values,
@@ -1193,80 +1257,6 @@ export interface DeferredContainerModule<C extends Container>
  * @noInheritDoc
  * @category Module
  */
-export interface RunnableContainerModule<C extends Container>
-  extends DeferredContainerModule<C>,
-    FlowableContainerModule<C> {
-  /**
-   * @category Transform
-   */
-  contains<T>(
-    value: T,
-    options?: {
-      readonly equality?: Equality<T>;
-    },
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   * Determines whether all the members of an Container satisfy the predicate.
-   * The predicate function is invoked for each element in the Container until the
-   * it returns false, or until the end of the Container.
-   *
-   * @param predicate
-   * @category Transform
-   */
-  everySatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   *
-   * @category Transform
-   */
-  first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-
-  /**
-   *
-   * @category Transform
-   */
-  last<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-
-  /**
-   * @category Transform
-   */
-  noneSatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /**
-   * @category Transform
-   */
-  reduce<T, TAcc>(
-    reducer: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<ContainerOf<C, T>, TAcc>;
-
-  /**
-   * @category Transform
-   */
-  someSatisfy<T>(
-    predicate: Predicate<T>,
-  ): Function1<ContainerOf<C, T>, boolean>;
-
-  /** @category Transform */
-  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
-
-  /**
-   * Converts the Container to a `ReadonlyArrayContainer`.
-   *
-   * @category Transform
-   */
-  toReadonlyArray<T>(): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category Module
- */
 export interface EnumerableContainerModule<C extends Container>
   extends RunnableContainerModule<C> {
   /**
@@ -1289,97 +1279,6 @@ export interface EnumerableContainerModule<C extends Container>
     readonly delay: number;
     readonly delayStart?: boolean;
   }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
-}
-
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface HigherOrderObservableModule<
-  C extends Observable.Type,
-  CInner extends DeferredObservable.Type,
-> {
-  /** @category Operator */
-  catchError<T>(
-    onError: Function2<Error, ContainerOf<C, T>, ContainerOf<CInner, T>>,
-  ): ContainerOperator<C, T, T>;
-
-  /**
-   * Converts a higher-order Container into a first-order
-   * Container by concatenating the inner sources in order.
-   *
-   * @category Operator
-   */
-  concatAll<T>(): ContainerOperator<C, ContainerOf<CInner, T>, T>;
-
-  /**
-   * @category Operator
-   */
-  concatMap<TA, TB>(
-    selector: Function1<TA, ContainerOf<CInner, TB>>,
-  ): ContainerOperator<C, TA, TB>;
-
-  /**
-   * @category Operator
-   */
-  exhaust<T>(): ContainerOperator<C, ContainerOf<CInner, T>, T>;
-
-  /**
-   * @category Operator
-   */
-  exhaustMap<TA, TB>(
-    selector: Function1<TA, ContainerOf<CInner, TB>>,
-  ): ContainerOperator<C, TA, TB>;
-
-  /**
-   * @category Operator
-   */
-  mergeAll<T>(options?: {
-    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly capacity?: number;
-    readonly concurrency?: number;
-  }): ContainerOperator<C, ContainerOf<CInner, T>, T>;
-
-  /**
-   * @category Operator
-   */
-  mergeMap<TA, TB>(
-    selector: Function1<TA, ContainerOf<CInner, TB>>,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-      readonly concurrency?: number;
-    },
-  ): ContainerOperator<C, TA, TB>;
-
-  /**
-   * @category Operator
-   */
-  scanLast<T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
-    initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc>;
-
-  /**
-   * @category Operator
-   */
-  scanMany<T, TAcc>(
-    scanner: Function2<TAcc, T, ContainerOf<CInner, TAcc>>,
-    initialValue: Factory<TAcc>,
-  ): ContainerOperator<C, T, TAcc>;
-
-  /**
-   *
-   * @category Operator
-   */
-  switchAll<T>(): ContainerOperator<C, ContainerOf<CInner, T>, T>;
-
-  /**
-   * @category Operator
-   */
-  switchMap<TA, TB>(
-    selector: Function1<TA, ContainerOf<CInner, TB>>,
-  ): ContainerOperator<C, TA, TB>;
 }
 
 /**

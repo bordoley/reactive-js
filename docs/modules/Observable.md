@@ -10,6 +10,7 @@
 
 ### Container Interfaces
 
+- [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
 - [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
 
 ### Module Interfaces
@@ -20,10 +21,10 @@
 
 - [Animation](Observable.md#animation)
 - [AnyObservableLike](Observable.md#anyobservablelike)
+- [DeferredObservableLowerBoundObservableOperator](Observable.md#deferredobservablelowerboundobservableoperator)
 - [DeferredObservableUpperBoundObservableOperator](Observable.md#deferredobservableupperboundobservableoperator)
 - [EnumerableUpperBoundObservableOperator](Observable.md#enumerableupperboundobservableoperator)
 - [MaybeMulticastObservableLike](Observable.md#maybemulticastobservablelike)
-- [MulticastObservableUpperBoundObservableOperator](Observable.md#multicastobservableupperboundobservableoperator)
 - [RunnableUpperBoundObservableOperator](Observable.md#runnableupperboundobservableoperator)
 - [Signature](Observable.md#signature)
 - [Type](Observable.md#type)
@@ -41,10 +42,14 @@
 - [buffer](Observable.md#buffer)
 - [catchError](Observable.md#catcherror)
 - [flatMapIterable](Observable.md#flatmapiterable)
+- [repeat](Observable.md#repeat)
+- [retry](Observable.md#retry)
 
 ### Other Functions
 
+- [concatAll](Observable.md#concatall)
 - [concatMany](Observable.md#concatmany)
+- [concatMap](Observable.md#concatmap)
 - [concatWith](Observable.md#concatwith)
 - [create](Observable.md#create)
 - [createPublisher](Observable.md#createpublisher)
@@ -58,6 +63,8 @@
 - [encodeUtf8](Observable.md#encodeutf8)
 - [endWith](Observable.md#endwith)
 - [enqueue](Observable.md#enqueue)
+- [exhaust](Observable.md#exhaust)
+- [exhaustMap](Observable.md#exhaustmap)
 - [firstAsync](Observable.md#firstasync)
 - [flatMapAsync](Observable.md#flatmapasync)
 - [forEach](Observable.md#foreach)
@@ -84,7 +91,9 @@
 - [map](Observable.md#map)
 - [mapTo](Observable.md#mapto)
 - [merge](Observable.md#merge)
+- [mergeAll](Observable.md#mergeall)
 - [mergeMany](Observable.md#mergemany)
+- [mergeMap](Observable.md#mergemap)
 - [mergeWith](Observable.md#mergewith)
 - [never](Observable.md#never)
 - [onSubscribe](Observable.md#onsubscribe)
@@ -95,6 +104,8 @@
 - [startWith](Observable.md#startwith)
 - [subscribe](Observable.md#subscribe)
 - [subscribeOn](Observable.md#subscribeon)
+- [switchAll](Observable.md#switchall)
+- [switchMap](Observable.md#switchmap)
 - [takeFirst](Observable.md#takefirst)
 - [takeLast](Observable.md#takelast)
 - [takeUntil](Observable.md#takeuntil)
@@ -139,6 +150,39 @@ ___
 | Name |
 | :------ |
 | `T` |
+
+___
+
+### DeferredObservableLowerBoundObservableOperator
+
+Ƭ **DeferredObservableLowerBoundObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ___
 
@@ -217,39 +261,6 @@ ___
 | Name |
 | :------ |
 | `T` |
-
-___
-
-### MulticastObservableUpperBoundObservableOperator
-
-Ƭ **MulticastObservableUpperBoundObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
 
 ___
 
@@ -1173,7 +1184,97 @@ ___
 
 ___
 
+### repeat
+
+▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(`count`): [`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(): [`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry`): [`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`DeferredObservableLowerBoundObservableOperator`](Observable.md#deferredobservablelowerboundobservableoperator)<`T`, `T`\>
+
+___
+
 ## Other Functions
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+___
 
 ### concatMany
 
@@ -1248,6 +1349,29 @@ ___
 #### Returns
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -1569,6 +1693,45 @@ ___
 #### Returns
 
 [`EnumerableUpperBoundObservableOperator`](Observable.md#enumerableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### exhaustMap
+
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -2192,9 +2355,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\>\> |
-| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\>\> |
-| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\>\>[] |
+| `fst` | [`Function1`](functions.md#function1)<`TObservableIn`, [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TOut`\>\> |
+| `snd` | [`Function1`](functions.md#function1)<`TObservableIn`, [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TOut`\>\> |
+| `...tail` | readonly [`Function1`](functions.md#function1)<`TObservableIn`, [`MaybeMulticastObservableLike`](Observable.md#maybemulticastobservablelike)<`TOut`\>\>[] |
 
 #### Returns
 
@@ -3607,6 +3770,31 @@ ___
 
 ___
 
+### mergeAll
+
+▸ **mergeAll**<`T`\>(`options?`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+___
+
 ### mergeMany
 
 ▸ **mergeMany**<`T`\>(`observables`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
@@ -3680,6 +3868,33 @@ ___
 #### Returns
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+___
+
+### mergeMap
+
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.concurrency?` | `number` |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -4037,6 +4252,45 @@ ___
 #### Returns
 
 [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`T`, `T`\>
+
+___
+
+### switchAll
+
+▸ **switchAll**<`T`\>(): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+
+___
+
+### switchMap
+
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`DeferredObservableUpperBoundObservableOperator`](Observable.md#deferredobservableupperboundobservableoperator)<`TA`, `TB`\>
 
 ___
 

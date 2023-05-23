@@ -8,6 +8,7 @@ import {
   expectFalse,
   expectIsNone,
   expectToHaveBeenCalledTimes,
+  expectToThrowError,
   expectTrue,
   mockFn,
   test,
@@ -18,6 +19,8 @@ import {
   alwaysTrue,
   arrayEquality,
   greaterThan,
+  lessThan,
+  none,
   pipe,
   pipeLazy,
   returns,
@@ -26,24 +29,86 @@ import {
   Container,
   ContainerOf,
   DisposableLike_isDisposed,
+  ObservableLike_isDeferred,
   PauseableLike_resume,
   RunnableContainerModule,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../types.js";
-import DeferredContainerModuleTests from "./DeferredContainerModuleTests.js";
+import ContainerModuleTests from "./ContainerModuleTests.js";
 
 const RunnableContainerModuleTests = <C extends Container>(
   m: RunnableContainerModule<C>,
 ) => [
-  ...DeferredContainerModuleTests(
+  ContainerModuleTests(
     m,
+    () => Disposable.disposed,
+    <T>() =>
+      (arr: ReadonlyArray<T>) =>
+        m.fromReadonlyArray<T>()(arr),
     <T>() =>
       (c: ContainerOf<C, T>) =>
         m.toReadonlyArray<T>()(c),
   ),
   describe(
     "RunnableContainerModule",
+
+    describe(
+      "concat",
+      test(
+        "concats the input containers in order",
+        pipeLazy(
+          m.concat(
+            pipe([1, 2, 3], m.fromReadonlyArray()),
+            pipe([4, 5, 6], m.fromReadonlyArray()),
+          ),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        ),
+      ),
+    ),
+    describe(
+      "concatAll",
+      test(
+        "concats the input containers in order",
+        pipeLazy(
+          [
+            pipe([1, 2, 3], m.fromReadonlyArray()),
+            pipe([4, 5, 6], m.fromReadonlyArray()),
+          ],
+          m.fromReadonlyArray(),
+          m.concatAll(),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        ),
+      ),
+    ),
+    describe(
+      "concatMap",
+      test(
+        "maps each value to a container and flattens",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.concatMap(pipeLazy([1, 2, 3], m.fromReadonlyArray())),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+    ),
+    describe(
+      "concatWith",
+      test(
+        "concats two containers together",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.concatWith(pipe([2, 3, 4], m.fromReadonlyArray())),
+          m.toReadonlyArray(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
+        ),
+      ),
+    ),
     describe(
       "contains",
       describe(
@@ -104,6 +169,19 @@ const RunnableContainerModuleTests = <C extends Container>(
             m.contains(1, { equality: (a, b) => a === b }),
             expectEquals(false),
           ),
+        ),
+      ),
+    ),
+    describe(
+      "endWith",
+      test(
+        "appends the additional values to the end of the container",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.endWith(2, 3, 4),
+          m.toReadonlyArray(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
         ),
       ),
     ),
@@ -196,6 +274,39 @@ const RunnableContainerModuleTests = <C extends Container>(
       }),
     ),
     describe(
+      "fromFactory",
+      test(
+        "it produces the factory result",
+        pipeLazy(
+          () => 1,
+          m.fromFactory(),
+          m.toReadonlyArray(),
+          expectArrayEquals([1]),
+        ),
+      ),
+    ),
+    describe(
+      "fromOptional",
+      test(
+        "when none",
+        pipeLazy(
+          none,
+          m.fromOptional(),
+          m.toReadonlyArray<never>(),
+          expectArrayEquals([]),
+        ),
+      ),
+      test(
+        "when some",
+        pipeLazy(
+          1,
+          m.fromOptional(),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+    ),
+    describe(
       "fromReadonlyArray",
       test("negative count with start index", () => {
         pipe(
@@ -247,6 +358,19 @@ const RunnableContainerModuleTests = <C extends Container>(
       }),
     ),
     describe(
+      "fromValue",
+      test(
+        "it produces the value",
+        pipeLazy(
+          none,
+          m.fromValue(),
+          m.toReadonlyArray(),
+          expectArrayEquals([none]),
+        ),
+      ),
+    ),
+
+    describe(
       "last",
       test("empty source", () => {
         const result = pipe([], m.fromReadonlyArray(), m.last());
@@ -257,6 +381,7 @@ const RunnableContainerModuleTests = <C extends Container>(
         pipe(result, expectEquals<Optional<number>>(3));
       }),
     ),
+
     describe(
       "noneSatisfy",
       test(
@@ -287,6 +412,7 @@ const RunnableContainerModuleTests = <C extends Container>(
         ),
       ),
     ),
+
     describe(
       "reduce",
       test(
@@ -300,6 +426,44 @@ const RunnableContainerModuleTests = <C extends Container>(
       ),
     ),
     describe(
+      "repeat",
+      test(
+        "when repeating a finite amount of times.",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.repeat(3),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+        ),
+      ),
+      test(
+        "when repeating with a predicate",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.repeat<number>(lessThan(1)),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+      test("when the repeat function throws", () => {
+        const err = new Error();
+        pipe(
+          pipeLazy(
+            [1, 1],
+            m.fromReadonlyArray(),
+            m.repeat(_ => {
+              throw err;
+            }),
+            m.toReadonlyArray(),
+          ),
+          expectToThrowError(err),
+        );
+      }),
+    ),
+
+    describe(
       "someSatisfy",
       test(
         "some satisfies predicate",
@@ -308,6 +472,89 @@ const RunnableContainerModuleTests = <C extends Container>(
           m.fromReadonlyArray(),
           m.someSatisfy(greaterThan(5)),
           expectTrue,
+        ),
+      ),
+    ),
+    describe(
+      "startWith",
+      test(
+        "appends the additional values to the start of the container",
+        pipeLazy(
+          [0, 1],
+          m.fromReadonlyArray(),
+          m.startWith(2, 3, 4),
+          m.toReadonlyArray(),
+          expectArrayEquals([2, 3, 4, 0, 1]),
+        ),
+      ),
+    ),
+    describe(
+      "toObservable",
+      test("returns a  deferred observable", () => {
+        const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable());
+
+        expectTrue(obs[ObservableLike_isDeferred]);
+      }),
+    ),
+    describe(
+      "zip",
+      test(
+        "when all inputs are the same length",
+        pipeLazy(
+          m.zip(
+            pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()),
+            pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
+          ),
+          m.toReadonlyArray(),
+          expectArrayEquals<readonly [number, number]>(
+            [
+              [1, 5],
+              [2, 4],
+              [3, 3],
+              [4, 2],
+              [5, 1],
+            ],
+            arrayEquality(),
+          ),
+        ),
+      ),
+      test(
+        "when inputs are different length",
+        pipeLazy(
+          m.zip(
+            pipe([1, 2, 3], m.fromReadonlyArray()),
+            pipe([5, 4, 3, 2, 1], m.fromReadonlyArray()),
+            pipe([1, 2, 3, 4], m.fromReadonlyArray()),
+          ),
+          m.toReadonlyArray(),
+          expectArrayEquals<readonly [number, number, number]>(
+            [
+              [1, 5, 1],
+              [2, 4, 2],
+              [3, 3, 3],
+            ],
+            arrayEquality(),
+          ),
+        ),
+      ),
+    ),
+    describe(
+      "zipWith",
+      test(
+        "when inputs are different lengths",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromReadonlyArray(),
+          m.zipWith(pipe([1, 2, 3, 4], m.fromReadonlyArray())),
+          m.toReadonlyArray(),
+          expectArrayEquals<readonly [number, number]>(
+            [
+              [1, 1],
+              [2, 2],
+              [3, 3],
+            ],
+            arrayEquality(),
+          ),
         ),
       ),
     ),

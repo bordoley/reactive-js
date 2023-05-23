@@ -1,15 +1,15 @@
 /// <reference types="./AsyncIterable.flow.d.ts" />
 
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
 import { bindMethod, error, pipe } from "../../functions.js";
 import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../types.js";
 const AsyncIterable_flow = (scheduler, options) => (iterable) => {
-    const op = (modeObs) => DeferredObservable_create((observer) => {
+    const op = (modeObs) => Observable_create((observer) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
         let isPaused = true;

@@ -1,6 +1,6 @@
 import type * as AsyncIterable from "../../AsyncIterable.js";
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { error, pipe } from "../../functions.js";
 import {
   DispatcherLike_complete,
@@ -16,7 +16,7 @@ import {
 const AsyncIterable_toObservable: AsyncIterable.Signature["toObservable"] =
   <T>() =>
   (iterable: AsyncIterable<T>) =>
-    DeferredObservable_create<T>((observer: ObserverLike<T>) => {
+    Observable_create<T>((observer: ObserverLike<T>) => {
       const iterator = iterable[Symbol.asyncIterator]();
       const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 

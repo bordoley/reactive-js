@@ -1,7 +1,7 @@
 import type * as AsyncIterable from "../../AsyncIterable.js";
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
@@ -31,7 +31,7 @@ const AsyncIterable_flow: AsyncIterable.Signature["flow"] =
   ) =>
   (iterable: AsyncIterable<T>) => {
     const op = (modeObs: ObservableLike<boolean>) =>
-      DeferredObservable_create((observer: ObserverLike<T>) => {
+      Observable_create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
 

@@ -1,4 +1,3 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
 import Dispatcher_delegatingMixin from "../../Dispatcher/__internal__/Dispatcher.delegatingMixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
@@ -16,6 +15,7 @@ import {
 import { __DispatchedObservable_observer } from "../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../__internal__/types.js";
 import {
+  Function1,
   Optional,
   isNone,
   isSome,
@@ -28,7 +28,6 @@ import {
 import {
   BufferLike_capacity,
   CollectionLike_count,
-  ContainerOperator,
   DeferredObservableLike,
   DispatcherLike,
   DispatcherLikeEventMap,
@@ -198,7 +197,7 @@ type TProperties = {
 
 const Stream_mixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  ContainerOperator<DeferredObservable.Type, TReq, T>,
+  Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
   SchedulerLike,
   Optional<{
     replay?: number;
@@ -215,7 +214,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
       ),
       function StreamMixin(
         instance: TProperties,
-        op: ContainerOperator<DeferredObservable.Type, TReq, T>,
+        op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           replay?: number;

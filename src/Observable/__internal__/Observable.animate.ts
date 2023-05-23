@@ -1,5 +1,5 @@
-import DeferredObservable_repeat from "../../DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import type * as Observable from "../../Observable.js";
+import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
@@ -21,7 +21,7 @@ const parseAnimationConfig = <T = number>(
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),
-        DeferredObservable_repeat<T>(config.count ?? 1),
+        Observable_repeat<T>(config.count ?? 1),
       )
     : config.type === "delay"
     ? Observable_empty({ delay: config.duration })

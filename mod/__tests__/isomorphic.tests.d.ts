@@ -2,12 +2,10 @@
  * @jest-environment node
  */
 import "./AsyncIterable.test.js";
-import "./DeferredObservable.test.js";
 import "./Dictionary.test.js";
 import "./Disposable.test.js";
 import "./Enumerable.test.js";
 import "./EventSource.test.js";
-import "./MulticastObservable.test.js";
 import "./Observable.test.js";
 import "./PauseableObservable.test.js";
 import "./Promise.test.js";

@@ -7,12 +7,10 @@ Reactive-JS
 ### Modules
 
 - [AsyncIterable](modules/AsyncIterable.md)
-- [DeferredObservable](modules/DeferredObservable.md)
 - [Dictionary](modules/Dictionary.md)
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)
 - [EventSource](modules/EventSource.md)
-- [MulticastObservable](modules/MulticastObservable.md)
 - [Observable](modules/Observable.md)
 - [Observable/effects](modules/Observable_effects.md)
 - [PauseableObservable](modules/PauseableObservable.md)
