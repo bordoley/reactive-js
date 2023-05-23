@@ -5,7 +5,7 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, PairwiseLike_hasPrev, PairwiseLike_prev, } from "../../__internal__/types.js";
 import { none, returns } from "../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
+import { EnumeratorLike_current, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_pairwise = /*@__PURE__*/ (() => returns(createInstanceFactory(mix(include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_delegatingMixin), function PairwiseEnumerator(instance, delegate) {
     init(MutableEnumerator_mixin(), instance);
@@ -17,6 +17,9 @@ const Enumerator_pairwise = /*@__PURE__*/ (() => returns(createInstanceFactory(m
     [PairwiseLike_hasPrev]: false,
 }), {
     [EnumeratorLike_move]() {
+        if (this[EnumeratorLike_isCompleted]) {
+            return false;
+        }
         this[MutableEnumeratorLike_reset]();
         const delegate = this[DelegatingLike_delegate];
         const delegateHasCurrent = delegate[EnumeratorLike_move]();
@@ -32,6 +35,7 @@ const Enumerator_pairwise = /*@__PURE__*/ (() => returns(createInstanceFactory(m
             return this[EnumeratorLike_move]();
         }
         else {
+            this[EnumeratorLike_isCompleted] = true;
             return false;
         }
     },

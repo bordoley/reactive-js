@@ -15,7 +15,7 @@ import Observer_createWithDelegate from "../../Observer/__internal__/Observer.cr
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CountingLike_count, DelegatingLike_delegate, HigherOrderEnumerator_inner, } from "../../__internal__/types.js";
 import { alwaysFalse, bindMethod, error, isSome, none, partial, pipe, unsafeCast, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, SinkLike_notify, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, SinkLike_notify, } from "../../types.js";
 const DeferredObservable_repeatOrRetry = 
 /*@__PURE__*/ (() => {
     const createRepeatObserver = (delegate, observable, shouldRepeat) => {
@@ -49,6 +49,7 @@ const DeferredObservable_repeatOrRetry =
         [HigherOrderEnumerator_inner]: none,
         p: alwaysFalse,
         [CountingLike_count]: 0,
+        [EnumeratorLike_isCompleted]: false,
     }), {
         get [EnumeratorLike_current]() {
             unsafeCast(this);
@@ -60,6 +61,7 @@ const DeferredObservable_repeatOrRetry =
         },
         [EnumeratorLike_move]() {
             let inner = this[HigherOrderEnumerator_inner];
+            this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
             while (!this[DisposableLike_isDisposed] &&
                 !inner[EnumeratorLike_move]()) {
                 const cnt = this[CountingLike_count];

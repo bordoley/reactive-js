@@ -1,10 +1,11 @@
 /// <reference types="./Enumerator.empty.d.ts" />
 
 import { isFunction, none } from "../../functions.js";
-import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 const empty = {
     [EnumeratorLike_current]: none,
     [EnumeratorLike_hasCurrent]: false,
+    [EnumeratorLike_isCompleted]: true,
     [EnumeratorLike_move]() {
         return false;
     },

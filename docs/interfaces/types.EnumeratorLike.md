@@ -25,6 +25,7 @@ over an underlying source of data.
 
 - [[\_\_\_EnumeratorLike\_current]](types.EnumeratorLike.md#[___enumeratorlike_current])
 - [[\_\_\_EnumeratorLike\_hasCurrent]](types.EnumeratorLike.md#[___enumeratorlike_hascurrent])
+- [[\_\_\_EnumeratorLike\_isCompleted]](types.EnumeratorLike.md#[___enumeratorlike_iscompleted])
 
 ### Methods
 
@@ -45,6 +46,14 @@ ___
 • `Readonly` **[\_\_\_EnumeratorLike\_hasCurrent]**: `boolean`
 
 Indicates if the `EnumeratorLike` has a current value.
+
+___
+
+### [\_\_\_EnumeratorLike\_isCompleted]
+
+• `Readonly` **[\_\_\_EnumeratorLike\_isCompleted]**: `boolean`
+
+Indicates if the `EnumeratorLike` is completed.
 
 ## Methods
 

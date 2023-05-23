@@ -2,6 +2,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import {
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -29,6 +30,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
@@ -53,8 +55,12 @@ const Enumerator_keep: <T>(
 
         return instance;
       },
-      props<PredicatedLike<T>>({
+      props<
+        PredicatedLike<T> &
+          Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+      >({
         [PredicatedLike_predicate]: none,
+        [EnumeratorLike_isCompleted]: false,
       }),
       {
         get [EnumeratorLike_current]() {
@@ -69,9 +75,13 @@ const Enumerator_keep: <T>(
 
         [EnumeratorLike_move](
           this: PredicatedLike<T> &
-            EnumeratorLike<T> &
+            Mutable<EnumeratorLike<T>> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
           const delegate = this[DelegatingLike_delegate];
           const predicate = this[PredicatedLike_predicate];
 
@@ -88,6 +98,8 @@ const Enumerator_keep: <T>(
           if (delegate[DisposableLike_isDisposed]) {
             this[DisposableLike_dispose]();
           }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
           return this[EnumeratorLike_hasCurrent];
         },

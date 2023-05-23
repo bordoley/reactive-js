@@ -6,7 +6,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ReadonlyArrayEnumerator_index, __ReadonlyArrayEnumerator_values, } from "../../__internal__/symbols.js";
 import { CountingLike_count } from "../../__internal__/types.js";
 import { none } from "../../functions.js";
-import { Container_type, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { Container_type, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
 const ReadonlyArray_enumerate = 
 /*@__PURE__*/ (() => {
@@ -25,6 +25,7 @@ const ReadonlyArray_enumerate =
         [EnumeratorLike_move]() {
             this[MutableEnumeratorLike_reset]();
             if (this[DisposableLike_isDisposed]) {
+                this[EnumeratorLike_isCompleted] = true;
                 return false;
             }
             const count = this[CountingLike_count];

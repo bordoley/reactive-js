@@ -19,6 +19,7 @@ import { Function1, none, returns } from "../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 import MutableEnumerator_mixin, {
@@ -62,6 +63,10 @@ const Enumerator_pairwise: <T>() => Function1<
               MutableEnumeratorLike<readonly [T, T]> &
               DelegatingLike<EnumeratorLike<T>>,
           ): boolean {
+            if (this[EnumeratorLike_isCompleted]) {
+              return false;
+            }
+
             this[MutableEnumeratorLike_reset]();
 
             const delegate = this[DelegatingLike_delegate];
@@ -78,6 +83,7 @@ const Enumerator_pairwise: <T>() => Function1<
 
               return this[EnumeratorLike_move]();
             } else {
+              this[EnumeratorLike_isCompleted] = true;
               return false;
             }
           },

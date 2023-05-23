@@ -18,6 +18,7 @@ import {
   __EnumerableLike_enumerate,
   __EnumeratorLike_current,
   __EnumeratorLike_hasCurrent,
+  __EnumeratorLike_isCompleted,
   __EnumeratorLike_move,
   __EventListenerLike_isErrorSafe,
   __EventPublisherLike_listenerCount,
@@ -75,6 +76,8 @@ export const EnumeratorLike_current: typeof __EnumeratorLike_current =
   __EnumeratorLike_current;
 export const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurrent =
   __EnumeratorLike_hasCurrent;
+export const EnumeratorLike_isCompleted: typeof __EnumeratorLike_isCompleted =
+  __EnumeratorLike_isCompleted;
 export const EnumeratorLike_move: typeof __EnumeratorLike_move =
   __EnumeratorLike_move;
 export const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get =
@@ -160,6 +163,11 @@ export const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run
  * @category Interactive
  */
 export interface EnumeratorLike<T = unknown> extends DisposableLike {
+  /**
+   * Indicates if the `EnumeratorLike` is completed.
+   */
+  readonly [EnumeratorLike_isCompleted]: boolean;
+
   /**
    * Returns the element if present.
    */

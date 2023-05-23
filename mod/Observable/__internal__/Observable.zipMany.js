@@ -22,7 +22,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -35,11 +35,13 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
             // FIXME: Maybe should clear the queue here as well to early
             // release references?
             instance[EnumeratorLike_hasCurrent] = false;
+            instance[EnumeratorLike_isCompleted] = true;
         }));
         return instance;
     }, props({
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
+        [EnumeratorLike_isCompleted]: false,
     }), {
         [EnumeratorLike_move]() {
             if (this[CollectionLike_count] > 0) {
@@ -58,7 +60,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_everySatisfy(isTrue));
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
     const Enumerator_move = () => (enumerator) => enumerator[EnumeratorLike_move]();
-    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_someSatisfy(x => x[DisposableLike_isDisposed])))();
+    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_someSatisfy(x => x[EnumeratorLike_isCompleted])))();
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin(), Delegating_mixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
@@ -96,7 +98,6 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
                 const enumerator = pipe(next, Enumerable_enumerate(), Disposable_addTo(observer));
-                enumerator[EnumeratorLike_move]();
                 enumerators.push(enumerator);
             }
             else {

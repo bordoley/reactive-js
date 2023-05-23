@@ -42,6 +42,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
   ObservableLike,
   ObservableLike_observe,
@@ -68,6 +69,7 @@ const QueuedEnumerator_create: <T>(
   type TProperties = {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_hasCurrent]: boolean;
+    [EnumeratorLike_isCompleted]: boolean;
   };
 
   return createInstanceFactory(
@@ -93,6 +95,7 @@ const QueuedEnumerator_create: <T>(
             // FIXME: Maybe should clear the queue here as well to early
             // release references?
             instance[EnumeratorLike_hasCurrent] = false;
+            instance[EnumeratorLike_isCompleted] = true;
           }),
         );
 
@@ -101,6 +104,7 @@ const QueuedEnumerator_create: <T>(
       props<TProperties>({
         [EnumeratorLike_current]: none,
         [EnumeratorLike_hasCurrent]: false,
+        [EnumeratorLike_isCompleted]: false,
       }),
       {
         [EnumeratorLike_move](
@@ -140,13 +144,12 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
 
   const shouldComplete = /*@__PURE__*/ (() =>
     compose(
-      ReadonlyArray_forEach(Enumerator_move<EnumeratorLike & DisposableLike>()),
-      ReadonlyArray_someSatisfy(x => x[DisposableLike_isDisposed]),
+      ReadonlyArray_forEach(Enumerator_move<EnumeratorLike>()),
+      ReadonlyArray_someSatisfy(x => x[EnumeratorLike_isCompleted]),
     ))();
 
   type TProperties = {
-    readonly [ZipLike_enumerators]: readonly (EnumeratorLike<any> &
-      DisposableLike)[];
+    readonly [ZipLike_enumerators]: readonly EnumeratorLike<any>[];
     readonly [__ZipObserver_queuedEnumerator]: QueuedEnumeratorLike;
   };
 
@@ -157,7 +160,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         instance: Pick<ObserverLike, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<readonly unknown[]>,
-        enumerators: readonly (EnumeratorLike<any> & DisposableLike)[],
+        enumerators: readonly EnumeratorLike<any>[],
         queuedEnumerator: QueuedEnumeratorLike,
       ): ObserverLike {
         init(Disposable_mixin, instance);
@@ -220,7 +223,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
   const onSubscribe =
     (observables: readonly ObservableLike[]) =>
     (observer: ObserverLike<ReadonlyArray<unknown>>) => {
-      const enumerators: (EnumeratorLike & DisposableLike)[] = [];
+      const enumerators: EnumeratorLike[] = [];
 
       for (const next of observables) {
         if (Observable_isEnumerable(next)) {
@@ -230,7 +233,6 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
             Disposable_addTo(observer),
           );
 
-          enumerator[EnumeratorLike_move]();
           enumerators.push(enumerator);
         } else {
           const enumerator = pipe(

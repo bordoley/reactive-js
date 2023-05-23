@@ -30,6 +30,8 @@ export const __DisposableLike_isDisposed = /*@__PURE__*/ symbol("DisposableLike_
 /** @type {unique symbol} */
 export const __EnumerableLike_enumerate = /*@__PURE__*/ symbol("EnumerableLike_enumerate");
 /** @type {unique symbol} */
+export const __EnumeratorLike_isCompleted = /*@__PURE__*/ symbol("EnumeratorLike_isCompleted");
+/** @type {unique symbol} */
 export const __EnumeratorLike_move = /*@__PURE__*/ symbol("EnumeratorLike_move");
 /** @type {unique symbol} */
 export const __EnumeratorLike_current = /*@__PURE__*/ symbol("EnumeratorLike_current");

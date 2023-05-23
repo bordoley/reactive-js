@@ -5,7 +5,7 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 import { max } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CountingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_takeFirst = /*@__PURE__*/ (() => {
     const createTakeFirstEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_delegatingMixin), function TakeFirstEnumerator(instance, delegate, takeCount) {
@@ -21,7 +21,11 @@ const Enumerator_takeFirst = /*@__PURE__*/ (() => {
         [CountingLike_count]: 0,
     }), {
         [EnumeratorLike_move]() {
+            if (this[EnumeratorLike_isCompleted]) {
+                return false;
+            }
             this[MutableEnumeratorLike_reset]();
+            this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
             this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
             const delegate = this[DelegatingLike_delegate];
             if (this[CountingLike_count] >= 0 &&
@@ -31,6 +35,7 @@ const Enumerator_takeFirst = /*@__PURE__*/ (() => {
             else {
                 this[DisposableLike_dispose]();
             }
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
             return this[EnumeratorLike_hasCurrent];
         },
     }));
