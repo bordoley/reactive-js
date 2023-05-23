@@ -61,7 +61,6 @@ import {
   SideEffect1,
   SideEffect2,
   TypePredicate,
-  Updater,
 } from "./functions.js";
 
 export const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys =
@@ -1307,33 +1306,6 @@ export interface EffectsContainerModule<C extends Container> {
    * @category Operator
    */
   ignoreElements<T>(): ContainerOperator<C, unknown, T>;
-}
-
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface StatefulContainerModule<C extends Container>
-  extends DeferredContainerModule<C> {
-  /**
-   * @category Constructor
-   */
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-  ): ContainerOf<C, T>;
-
-  /**
-   * @category Operator
-   */
-  retry<T>(
-    shouldRetry: (count: number, error: Error) => boolean,
-  ): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Constructor
-   */
-  throws<T>(options?: { readonly raise?: Factory<unknown> }): ContainerOf<C, T>;
 }
 
 /**

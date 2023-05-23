@@ -48,7 +48,6 @@
 - [KeyedContainerModule](../interfaces/types.KeyedContainerModule.md)
 - [MulticastingContainerModule](../interfaces/types.MulticastingContainerModule.md)
 - [RunnableContainerModule](../interfaces/types.RunnableContainerModule.md)
-- [StatefulContainerModule](../interfaces/types.StatefulContainerModule.md)
 
 ### Observable Interfaces
 

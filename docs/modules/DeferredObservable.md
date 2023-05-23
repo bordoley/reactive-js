@@ -29,8 +29,6 @@
 - [fromOptional](DeferredObservable.md#fromoptional)
 - [fromReadonlyArray](DeferredObservable.md#fromreadonlyarray)
 - [fromValue](DeferredObservable.md#fromvalue)
-- [generate](DeferredObservable.md#generate)
-- [throws](DeferredObservable.md#throws)
 - [zip](DeferredObservable.md#zip)
 
 ### Operator Functions
@@ -40,15 +38,11 @@
 - [concatAll](DeferredObservable.md#concatall)
 - [concatMap](DeferredObservable.md#concatmap)
 - [concatWith](DeferredObservable.md#concatwith)
-- [dispatchTo](DeferredObservable.md#dispatchto)
 - [distinctUntilChanged](DeferredObservable.md#distinctuntilchanged)
 - [endWith](DeferredObservable.md#endwith)
-- [enqueue](DeferredObservable.md#enqueue)
 - [exhaust](DeferredObservable.md#exhaust)
 - [exhaustMap](DeferredObservable.md#exhaustmap)
 - [flatMapIterable](DeferredObservable.md#flatmapiterable)
-- [forEach](DeferredObservable.md#foreach)
-- [ignoreElements](DeferredObservable.md#ignoreelements)
 - [keep](DeferredObservable.md#keep)
 - [keepType](DeferredObservable.md#keeptype)
 - [map](DeferredObservable.md#map)
@@ -296,52 +290,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 ___
 
@@ -680,28 +628,6 @@ ___
 
 ___
 
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
@@ -744,28 +670,6 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -832,47 +736,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `TA`, `TB`\>
-
-___
-
-### forEach
-
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `T`, `T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`DeferredObservableContainer`](../interfaces/DeferredObservable.DeferredObservableContainer.md), `unknown`, `T`\>
 
 ___
 

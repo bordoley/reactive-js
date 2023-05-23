@@ -10,10 +10,6 @@
 
 - [`HigherOrderObservableModule`](types.HigherOrderObservableModule.md)<[`Type`](../modules/Runnable.md#type), [`Type`](../modules/Runnable.md#type)\>
 
-- [`StatefulContainerModule`](types.StatefulContainerModule.md)<[`Type`](../modules/Runnable.md#type)\>
-
-- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/Runnable.md#type)\>
-
   ↳ **`RunnableModule`**
 
 ## Table of contents

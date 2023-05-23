@@ -18,17 +18,12 @@ import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { DeferredObservable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
-import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
-import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
-import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
-import Observable_generate from "./Observable/__internal__/Observable.generate.js";
-import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
@@ -41,7 +36,6 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
-import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
@@ -51,9 +45,9 @@ import {
   Container,
   Container_T,
   Container_type,
+  DeferredContainerModule,
   DeferredObservableLike,
   DisposableLike,
-  EffectsContainerModule,
   EnumerableLike,
   HigherOrderObservableModule,
   MulticastObservableLike,
@@ -62,7 +56,6 @@ import {
   ReplayObservableLike,
   RunnableLike,
   SchedulerLike,
-  StatefulContainerModule,
 } from "./types.js";
 
 export type DeferredObservableOperator<TIn, TOut> = <
@@ -92,9 +85,8 @@ export type Type = DeferredObservableContainer;
  * @category Module
  */
 export interface DeferredObservableModule
-  extends StatefulContainerModule<Type>,
-    HigherOrderObservableModule<Type, Type>,
-    EffectsContainerModule<Type> {
+  extends DeferredContainerModule<Type>,
+    HigherOrderObservableModule<Type, Type> {
   /**
    * @category Constructor
    */
@@ -157,18 +149,15 @@ export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = DeferredObservable_concatAll;
 export const concatMap: Signature["concatMap"] = DeferredObservable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
-export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const endWith: Signature["endWith"] = Observable_endWith;
-export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const exhaust: Signature["exhaust"] = DeferredObservable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] =
   DeferredObservable_exhaustMap;
 export const flatMapIterable: Signature["flatMapIterable"] =
   Observable_flatMapIterable;
-export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
@@ -176,9 +165,6 @@ export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
-export const generate: Signature["generate"] = Observable_generate;
-export const ignoreElements: Signature["ignoreElements"] =
-  Observable_ignoreElements;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];
@@ -202,7 +188,6 @@ export const switchMap: Signature["switchMap"] = DeferredObservable_switchMap;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
-export const throws: Signature["throws"] = Observable_throws;
 export const toObservable: Signature["toObservable"] = identityLazy;
 export const zip: Signature["zip"] = Observable_zip;
 export const zipWith: Signature["zipWith"] = Observable_zipWith;

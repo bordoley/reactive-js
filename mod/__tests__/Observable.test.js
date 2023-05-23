@@ -8,7 +8,8 @@ import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { arrayEquality, bindMethod, increment, incrementBy, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, VirtualTimeSchedulerLike_run, } from "../types.js";
-testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
+testModule("Observable", EffectsContainerModuleTests(Observable, () => Disposable.disposed, () => (arr) => Observable.fromReadonlyArray()(arr), () => (c) => Runnable.toReadonlyArray()(c)), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);

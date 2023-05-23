@@ -27,8 +27,6 @@
 - [fromOptional](Enumerable.md#fromoptional)
 - [fromReadonlyArray](Enumerable.md#fromreadonlyarray)
 - [fromValue](Enumerable.md#fromvalue)
-- [generate](Enumerable.md#generate)
-- [throws](Enumerable.md#throws)
 - [zip](Enumerable.md#zip)
 
 ### Operator Functions
@@ -37,13 +35,9 @@
 - [concatAll](Enumerable.md#concatall)
 - [concatMap](Enumerable.md#concatmap)
 - [concatWith](Enumerable.md#concatwith)
-- [dispatchTo](Enumerable.md#dispatchto)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [endWith](Enumerable.md#endwith)
-- [enqueue](Enumerable.md#enqueue)
 - [flatMapIterable](Enumerable.md#flatmapiterable)
-- [forEach](Enumerable.md#foreach)
-- [ignoreElements](Enumerable.md#ignoreelements)
 - [keep](Enumerable.md#keep)
 - [keepType](Enumerable.md#keeptype)
 - [map](Enumerable.md#map)
@@ -51,7 +45,6 @@
 - [pairwise](Enumerable.md#pairwise)
 - [pick](Enumerable.md#pick)
 - [repeat](Enumerable.md#repeat)
-- [retry](Enumerable.md#retry)
 - [scan](Enumerable.md#scan)
 - [skipFirst](Enumerable.md#skipfirst)
 - [startWith](Enumerable.md#startwith)
@@ -237,52 +230,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
 
 ___
 
@@ -599,28 +546,6 @@ ___
 
 ___
 
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
@@ -670,28 +595,6 @@ ___
 
 ___
 
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
 ### flatMapIterable
 
 ▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `TA`, `TB`\>
@@ -712,47 +615,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `TA`, `TB`\>
-
-___
-
-### forEach
-
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `unknown`, `T`\>
 
 ___
 
@@ -989,28 +851,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
-### retry
-
-▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 

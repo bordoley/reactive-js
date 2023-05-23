@@ -1,5 +1,5 @@
 import { Factory, Function1, Predicate } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, DisposableLike, EffectsContainerModule, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike, StatefulContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, DeferredContainerModule, DeferredObservableLike, DisposableLike, EnumerableLike, HigherOrderObservableModule, MulticastObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableLike, SchedulerLike } from "./types.js";
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends DeferredObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 /**
  * @noInheritDoc
@@ -13,7 +13,7 @@ export type Type = DeferredObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface DeferredObservableModule extends StatefulContainerModule<Type>, HigherOrderObservableModule<Type, Type>, EffectsContainerModule<Type> {
+export interface DeferredObservableModule extends DeferredContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
     /**
      * @category Constructor
      */
@@ -55,23 +55,18 @@ export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
 export declare const concatMap: Signature["concatMap"];
 export declare const concatWith: Signature["concatWith"];
-export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const endWith: Signature["endWith"];
-export declare const enqueue: Signature["enqueue"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
-export declare const forEach: Signature["forEach"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
-export declare const generate: Signature["generate"];
-export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];
@@ -94,7 +89,6 @@ export declare const switchMap: Signature["switchMap"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
-export declare const throws: Signature["throws"];
 export declare const toObservable: Signature["toObservable"];
 export declare const zip: Signature["zip"];
 export declare const zipWith: Signature["zipWith"];
