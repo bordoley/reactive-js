@@ -252,7 +252,20 @@ testModule(
   ),
   describe(
     "decodeWithCharset",
-    test("decoding ascii", () => {
+    test("decoding ascii from runnable", () => {
+      const str = "abcdefghijklmnsopqrstuvwxyz";
+
+      pipe(
+        [str],
+        Observable.fromReadonlyArray({delay: 1}),
+        Observable.encodeUtf8(),
+        Observable.decodeWithCharset(),
+        Runnable.toReadonlyArray(),
+        x => x.join(),
+        expectEquals(str),
+      );
+    }),
+    test("decoding ascii from enumerable", () => {
       const str = "abcdefghijklmnsopqrstuvwxyz";
 
       pipe(
