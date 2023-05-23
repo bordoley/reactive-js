@@ -1,13 +1,13 @@
 /// <reference types="./PauseableObservable.sinkInto.d.ts" />
 
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import EventSource_addEventHandler from "../../EventSource/__internal__/EventSource.addEventHandler.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import { pipe } from "../../functions.js";
 import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, PauseableLike_pause, PauseableLike_resume, } from "../../types.js";
-const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => DeferredObservable_create(observer => {
+const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => Observable_create(observer => {
     pipe(sink, EventSource_addEventHandler((ev) => {
         if (ev === DispatcherLikeEvent_capacityExceeded ||
             ev === DispatcherLikeEvent_completed) {

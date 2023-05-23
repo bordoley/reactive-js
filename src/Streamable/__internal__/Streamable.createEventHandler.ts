@@ -1,10 +1,10 @@
-import DeferredObservable_exhaustMap from "../../DeferredObservable/__internal__/DeferredObservable.exhaustMap.js";
-import DeferredObservable_mergeMap from "../../DeferredObservable/__internal__/DeferredObservable.mergeMap.js";
-import DeferredObservable_switchMap from "../../DeferredObservable/__internal__/DeferredObservable.switchMap.js";
 import Observable_endWith from "../../Observable/__internal__/Observable.endWith.js";
+import Observable_exhaustMap from "../../Observable/__internal__/Observable.exhaustMap.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
+import Observable_mergeMap from "../../Observable/__internal__/Observable.mergeMap.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Observable_startWith from "../../Observable/__internal__/Observable.startWith.js";
+import Observable_switchMap from "../../Observable/__internal__/Observable.switchMap.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import type * as Streamable from "../../Streamable.js";
 import { Function1, compose, pipe } from "../../functions.js";
@@ -29,7 +29,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
     return Streamable_create<TEventType, unknown>(
       compose(
         mode === "switching"
-          ? DeferredObservable_switchMap<TEventType, never>(
+          ? Observable_switchMap<TEventType, never>(
               compose(
                 op,
                 Observable_ignoreElements(),
@@ -38,7 +38,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
               ),
             )
           : mode === "blocking"
-          ? DeferredObservable_exhaustMap<TEventType, boolean>(
+          ? Observable_exhaustMap<TEventType, boolean>(
               compose(
                 op,
                 Observable_ignoreElements<boolean>(),
@@ -46,7 +46,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
                 Observable_endWith<boolean>(false),
               ),
             )
-          : DeferredObservable_mergeMap<TEventType, never>(
+          : Observable_mergeMap<TEventType, never>(
               compose(
                 op,
                 Observable_ignoreElements<never>(),

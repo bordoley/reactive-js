@@ -1,6 +1,5 @@
 /// <reference types="./Enumerable.d.ts" />
 
-import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_enumerate from "./Enumerable/__internal__/Enumerable.enumerate.js";
@@ -22,6 +21,7 @@ import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
@@ -72,7 +72,7 @@ export const noneSatisfy = Runnable_noneSatisfy;
 export const pairwise = Observable_pairwise;
 export const pick = Observable_pick;
 export const reduce = Runnable_reduce;
-export const repeat = DeferredObservable_repeat;
+export const repeat = Observable_repeat;
 export const scan = Observable_scan;
 export const skipFirst = Observable_skipFirst;
 export const someSatisfy = Runnable_someSatisfy;

@@ -1,4 +1,3 @@
-import DeferredObservable_repeat from "./DeferredObservable/__internal__/DeferredObservable.repeat.js";
 import Iterable_toObservable from "./Iterable/__internal__/Iterable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
@@ -16,6 +15,7 @@ import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
@@ -26,7 +26,6 @@ import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
-import Runnable_catchError from "./Runnable/__internal__/Runnable.catchError.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
 import Runnable_concatMap from "./Runnable/__internal__/Runnable.concatMap.js";
 import Runnable_contains from "./Runnable/__internal__/Runnable.contains.js";
@@ -41,8 +40,6 @@ import Runnable_mergeMap from "./Runnable/__internal__/Runnable.mergeMap.js";
 import Runnable_noneSatisfy from "./Runnable/__internal__/Runnable.noneSatisfy.js";
 import Runnable_reduce from "./Runnable/__internal__/Runnable.reduce.js";
 import Runnable_run from "./Runnable/__internal__/Runnable.run.js";
-import Runnable_scanLast from "./Runnable/__internal__/Runnable.scanLast.js";
-import Runnable_scanMany from "./Runnable/__internal__/Runnable.scanMany.js";
 import Runnable_someSatisfy from "./Runnable/__internal__/Runnable.someSatisfy.js";
 import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
@@ -52,7 +49,6 @@ import {
   Container,
   Container_T,
   Container_type,
-  HigherOrderObservableModule,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableContainerModule,
@@ -73,9 +69,7 @@ export type Type = RunnableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface RunnableModule
-  extends RunnableContainerModule<Type>,
-    HigherOrderObservableModule<Type, Type> {
+export interface RunnableModule extends RunnableContainerModule<Type> {
   /**
    * @category Constructor
    */
@@ -86,21 +80,61 @@ export interface RunnableModule
     },
   ): RunnableLike<T>;
 
+  /**
+   * @category Operator
+   */
+  exhaust<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+
+  /**
+   * @category Operator
+   */
+  exhaustMap<TA, TB>(
+    selector: Function1<TA, RunnableLike<TB>>,
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
+
+  /**
+   * @category Operator
+   */
+  mergeAll<T>(options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+
+  /**
+   * @category Operator
+   */
+  mergeMap<TA, TB>(
+    selector: Function1<TA, RunnableLike<TB>>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
+
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }): SideEffect1<RunnableLike<T>>;
 
   /**
-   * @category Transform
+   *
+   * @category Operator
    */
-  toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
+  switchAll<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+
+  /**
+   * @category Operator
+   */
+  switchMap<TA, TB>(
+    selector: Function1<TA, RunnableLike<TB>>,
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
 }
 
 export type Signature = RunnableModule;
 
 export const buffer: Signature["buffer"] = Observable_buffer;
-export const catchError: Signature["catchError"] = Runnable_catchError;
 export const compute: Signature["compute"] = Runnable_compute;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatAll: Signature["concatAll"] = Runnable_concatAll;
@@ -137,11 +171,9 @@ export const noneSatisfy: Signature["noneSatisfy"] = Runnable_noneSatisfy;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Runnable_reduce;
-export const repeat: Signature["repeat"] = DeferredObservable_repeat;
+export const repeat: Signature["repeat"] = Observable_repeat;
 export const run: Signature["run"] = Runnable_run;
 export const scan: Signature["scan"] = Observable_scan;
-export const scanLast: Signature["scanLast"] = Runnable_scanLast;
-export const scanMany: Signature["scanMany"] = Runnable_scanMany;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] = Runnable_someSatisfy;
 export const startWith: Signature["startWith"] = Observable_startWith;

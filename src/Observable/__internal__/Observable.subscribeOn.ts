@@ -1,7 +1,7 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import type * as Observable from "../../Observable.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { Factory, isFunction, pipe } from "../../functions.js";
 import {
   BufferLike_capacity,
@@ -24,7 +24,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> => {
     const create = Observable_isDeferredObservable(observable)
-      ? DeferredObservable_create
+      ? Observable_create
       : MulticastObservable_create;
 
     return create<T>(observer => {

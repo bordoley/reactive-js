@@ -1,5 +1,9 @@
 /// <reference types="./Observable.create.d.ts" />
 
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
-const Observable_create = DeferredObservable_create;
+import Observable_createWithConfig from "../../Observable/__internal__/Observable.createWithConfig.js";
+import { ObservableLike_isDeferred, ObservableLike_isRunnable, } from "../../types.js";
+const Observable_create = (f) => Observable_createWithConfig(f, {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isRunnable]: false,
+});
 export default Observable_create;

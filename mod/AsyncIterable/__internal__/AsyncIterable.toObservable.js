@@ -1,10 +1,10 @@
 /// <reference types="./AsyncIterable.toObservable.d.ts" />
 
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { error, pipe } from "../../functions.js";
 import { DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, } from "../../types.js";
-const AsyncIterable_toObservable = () => (iterable) => DeferredObservable_create((observer) => {
+const AsyncIterable_toObservable = () => (iterable) => Observable_create((observer) => {
     const iterator = iterable[Symbol.asyncIterator]();
     const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];
     const continuation = async () => {

@@ -1,5 +1,5 @@
-import DeferredObservable_create from "../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../Disposable/__internal__/Disposable.addTo.js";
+import Observable_create from "../Observable/__internal__/Observable.create.js";
 import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import {
@@ -165,7 +165,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       deferSideEffect,
       observableConfig[ObservableLike_isRunnable]
         ? Runnable_create
-        : DeferredObservable_create,
+        : Observable_create,
       f,
       ...args,
     );

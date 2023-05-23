@@ -1,4 +1,3 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
@@ -7,6 +6,7 @@ import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDi
 import Enumerable_enumerate from "../../Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -265,7 +265,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
       : isRunnable
       ? Runnable_create(onSubscribe(observables))
       : isDeferred
-      ? DeferredObservable_create(onSubscribe(observables))
+      ? Observable_create(onSubscribe(observables))
       : MulticastObservable_create(onSubscribe(observables));
   };
 })();

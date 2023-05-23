@@ -6,6 +6,7 @@ import {
   describe,
   expectArrayEquals,
   expectToHaveBeenCalledTimes,
+  expectToThrowAsync,
   expectTrue,
   mockFn,
   test,
@@ -13,7 +14,6 @@ import {
 } from "../__internal__/testing.js";
 import {
   arrayEquality,
-  identityLazy,
   increment,
   isSome,
   none,
@@ -31,13 +31,11 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
 import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
 
 testModule(
   "Runnable",
   ...RunnableContainerModuleTests(Runnable),
-  HigherOrderObservableModuleTests<Runnable.Type>(Runnable, identityLazy),
   describe(
     "compute",
     test(
@@ -119,6 +117,40 @@ testModule(
   ),
 
   describe(
+    "exhaust",
+    test(
+      "when the initial observable never disposes",
+      pipeLazy(
+        [
+          pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
+          pipe([4, 5, 6], Observable.fromReadonlyArray<number>()),
+          pipe([7, 8, 9], Observable.fromReadonlyArray<number>()),
+        ],
+        Observable.fromReadonlyArray(),
+        Runnable.exhaust<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+  ),
+
+  describe(
+    "exhaustMap",
+    test(
+      "when the initial observable never disposes",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Runnable.exhaustMap<number, number>(_ =>
+          pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
+        ),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+  ),
+
+  describe(
     "flow",
     test("a source with delay", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -179,6 +211,68 @@ testModule(
 
       pipe(subscription[DisposableLike_isDisposed], expectTrue);
     }),
+  ),
+
+  describe(
+    "mergeMap",
+    test(
+      "without delay, merge all observables as they are produced",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Runnable.mergeMap<number, number>(x =>
+          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+        ),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+  ),
+
+  describe(
+    "switchAll",
+    test(
+      "with empty source",
+      pipeLazy(
+        Observable.empty<RunnableLike>(),
+        Runnable.switchAll<number>(),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([] as readonly number[]),
+      ),
+    ),
+    test(
+      "when source throw",
+      pipeLazy(
+        pipeLazy(
+          Observable.throws<RunnableLike<number>>(),
+          Runnable.switchAll<number>(),
+          Observable.toReadonlyArrayAsync(),
+        ),
+        expectToThrowAsync,
+      ),
+    ),
+  ),
+
+  describe(
+    "switchMap",
+    test(
+      "only produce the last observable",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Runnable.switchMap<number, number>(x =>
+          pipe(
+            [x, x, x],
+            Observable.fromReadonlyArray<number>({
+              delay: 1,
+              delayStart: true,
+            }),
+          ),
+        ),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([3, 3, 3]),
+      ),
+    ),
   ),
 
   describe(

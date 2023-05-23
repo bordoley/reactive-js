@@ -1,5 +1,5 @@
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, HigherOrderObservableModule, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerModule, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, QueueableLike, QueueableLike_backpressureStrategy, RunnableContainerModule, RunnableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,25 +12,53 @@ export type Type = RunnableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface RunnableModule extends RunnableContainerModule<Type>, HigherOrderObservableModule<Type, Type> {
+export interface RunnableModule extends RunnableContainerModule<Type> {
     /**
      * @category Constructor
      */
     compute<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableLike<T>;
+    /**
+     * @category Operator
+     */
+    exhaust<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+    /**
+     * @category Operator
+     */
+    exhaustMap<TA, TB>(selector: Function1<TA, RunnableLike<TB>>): Function1<RunnableLike<TA>, RunnableLike<TB>>;
+    /**
+     * @category Operator
+     */
+    mergeAll<T>(options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly concurrency?: number;
+    }): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+    /**
+     * @category Operator
+     */
+    mergeMap<TA, TB>(selector: Function1<TA, RunnableLike<TB>>, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+        readonly concurrency?: number;
+    }): Function1<RunnableLike<TA>, RunnableLike<TB>>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
     /**
-     * @category Transform
+     *
+     * @category Operator
      */
-    toObservable<T>(): Function1<RunnableLike<T>, RunnableLike<T>>;
+    switchAll<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
+    /**
+     * @category Operator
+     */
+    switchMap<TA, TB>(selector: Function1<TA, RunnableLike<TB>>): Function1<RunnableLike<TA>, RunnableLike<TB>>;
 }
 export type Signature = RunnableModule;
 export declare const buffer: Signature["buffer"];
-export declare const catchError: Signature["catchError"];
 export declare const compute: Signature["compute"];
 export declare const concat: Signature["concat"];
 export declare const concatAll: Signature["concatAll"];
@@ -66,8 +94,6 @@ export declare const reduce: Signature["reduce"];
 export declare const repeat: Signature["repeat"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
-export declare const scanLast: Signature["scanLast"];
-export declare const scanMany: Signature["scanMany"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];
 export declare const startWith: Signature["startWith"];

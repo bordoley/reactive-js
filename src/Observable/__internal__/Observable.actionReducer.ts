@@ -1,4 +1,4 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Equality,
@@ -26,7 +26,7 @@ const Observable_actionReducer =
     options?: { readonly equality?: Equality<T> },
   ) =>
   (obs: DeferredObservableLike<TAction>) =>
-    DeferredObservable_create((observer: ObserverLike<T>) => {
+    Observable_create((observer: ObserverLike<T>) => {
       const acc = initialState();
       return pipe(
         obs,

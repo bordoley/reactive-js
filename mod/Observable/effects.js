@@ -1,7 +1,7 @@
 /// <reference types="./effects.d.ts" />
 
-import DeferredObservable_create from "../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_addTo from "../Disposable/__internal__/Disposable.addTo.js";
+import Observable_create from "../Observable/__internal__/Observable.create.js";
 import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import { __ComputeContext_awaitOrObserve, __ComputeContext_constant, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
@@ -40,7 +40,7 @@ export const __do = /*@__PURE__*/ (() => {
         const observableConfig = ctx[__ComputeContext_observableConfig];
         const observable = ctx[__ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isRunnable]
             ? Runnable_create
-            : DeferredObservable_create, f, ...args);
+            : Observable_create, f, ...args);
         const subscribeOnScheduler = ctx[__ComputeContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[__ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
     };

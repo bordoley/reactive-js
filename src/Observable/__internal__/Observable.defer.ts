@@ -1,5 +1,5 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import type * as Observable from "../../Observable.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { Factory, invoke, pipe } from "../../functions.js";
 import {
   MulticastObservableLike,
@@ -9,7 +9,7 @@ import {
 const Observable_defer: Observable.Signature["defer"] = <T>(
   factory: Factory<MulticastObservableLike<T>>,
 ) =>
-  DeferredObservable_create<T>(observer => {
+  Observable_create<T>(observer => {
     pipe(factory(), invoke(ObservableLike_observe, observer));
   });
 

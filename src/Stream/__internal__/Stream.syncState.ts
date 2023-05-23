@@ -1,4 +1,4 @@
-import MulticastObservable_concatMap from "../../MulticastObservable/__internal__/MulticastObservable.concatMap.js";
+import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
 import Observable_forkMerge from "../../Observable/__internal__/Observable.forkMerge.js";
 import Observable_pairwise from "../../Observable/__internal__/Observable.pairwise.js";
@@ -35,13 +35,13 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
     return pipe(
       stateStore,
       Observable_forkMerge<MulticastObservableLike<T>, T, Updater<T>>(
-        compose(Observable_takeFirst(), MulticastObservable_concatMap(onInit)),
+        compose(Observable_takeFirst(), Observable_concatMap(onInit)),
         compose(
           throttleDuration > 0
             ? Observable_throttle(throttleDuration)
             : identity,
           Observable_pairwise(),
-          MulticastObservable_concatMap<readonly [T, T], Updater<T>>(
+          Observable_concatMap<readonly [T, T], Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
           ),
         ),

@@ -1,6 +1,6 @@
-import type * as DeferredObservable from "../../DeferredObservable.js";
-import { ContainerOperator, DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "../../types.js";
-declare const Stream_create: <TReq, T>(op: ContainerOperator<DeferredObservable.Type, TReq, T>, scheduler: SchedulerLike, options?: {
+import { Function1 } from "../../functions.js";
+import { DeferredObservableLike, DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "../../types.js";
+declare const Stream_create: <TReq, T>(op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>, scheduler: SchedulerLike, options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly replay?: number;
     readonly capacity?: number;

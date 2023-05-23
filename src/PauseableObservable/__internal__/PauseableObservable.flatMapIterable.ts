@@ -1,7 +1,6 @@
 import Iterable_toObservable from "../../Iterable/__internal__/Iterable.toObservable.js";
-import Observable_mergeAll from "../../Observable/__internal__/Observable.mergeAll.js";
+import Observer_createMergeAllObserverOperator from "../../Observer/__internal__/Observer.createMergeAllObserverOperator.js";
 import type * as PauseableObservable from "../../PauseableObservable.js";
-import type * as Runnable from "../../Runnable.js";
 import { Function1, compose } from "../../functions.js";
 import { PauseableObservableLike, RunnableLike } from "../../types.js";
 import PauseableObservable_lift from "./PauseableObservable.lift.js";
@@ -12,7 +11,8 @@ const PauseableObservable_mergeAll: <T>(options?: {
 }) => Function1<
   PauseableObservableLike<RunnableLike<T>>,
   PauseableObservableLike<T>
-> = /*@__PURE__*/ Observable_mergeAll<PauseableObservable.Type, Runnable.Type>(
+> = /*@__PURE__*/ compose(
+  Observer_createMergeAllObserverOperator,
   PauseableObservable_lift,
 );
 

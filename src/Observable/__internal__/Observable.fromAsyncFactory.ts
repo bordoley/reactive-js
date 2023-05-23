@@ -1,6 +1,6 @@
-import DeferredObservable_create from "../../DeferredObservable/__internal__/DeferredObservable.create.js";
 import Disposable_toAbortSignal from "../../Disposable/__internal__/Disposable.toAbortSignal.js";
 import type * as Observable from "../../Observable.js";
+import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { error } from "../../functions.js";
 import {
   DispatcherLike_complete,
@@ -12,7 +12,7 @@ import {
 const Observable_fromAsyncFactory: Observable.Signature["fromAsyncFactory"] =
   <T>() =>
   (f: (abortSignal: AbortSignal) => Promise<T>) =>
-    DeferredObservable_create<T>(async (observer: ObserverLike<T>) => {
+    Observable_create<T>(async (observer: ObserverLike<T>) => {
       const abortSignal = Disposable_toAbortSignal(observer);
       try {
         const result = await f(abortSignal);

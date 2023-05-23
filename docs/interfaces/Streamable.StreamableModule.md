@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`ContainerOperator`](../modules/types.md#containeroperator)<[`DeferredObservableContainer`](DeferredObservable.DeferredObservableContainer.md), `TReq`, `T`\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
 
 #### Returns
 

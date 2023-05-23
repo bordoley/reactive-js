@@ -4,7 +4,6 @@ import {
   Container,
   Container_T,
   Container_type,
-  DeferredContainerModule,
   FlowableContainerModule,
 } from "./types.js";
 
@@ -25,8 +24,7 @@ export type Type = AsyncIterableContainer;
 export interface AsyncIterableModule
   // FIXME: Should actually extend StatefulContainerModule but
   // not really interested in implementing all the operators
-  extends Pick<DeferredContainerModule<Type>, "toObservable">,
-    FlowableContainerModule<Type> {}
+  extends FlowableContainerModule<Type> {}
 
 export type Signature = AsyncIterableModule;
 
