@@ -292,6 +292,8 @@ export declare const __LatestObserver_latest: unique symbol;
 
 export declare const __LatestObserver_ctx: unique symbol;
 
+export declare const __LiftedEnumerable_ops: unique symbol;
+
 export declare const __MemoOrUsingEffect_func: unique symbol;
 
 export declare const __MemoOrUsingEffect_args: unique symbol;

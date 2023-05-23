@@ -149,6 +149,7 @@ LatestCtx_observers
 LatestObserver_ready
 LatestObserver_latest
 LatestObserver_ctx
+LiftedEnumerable_ops
 MemoOrUsingEffect_func
 MemoOrUsingEffect_args
 MemoOrUsingEffect_value

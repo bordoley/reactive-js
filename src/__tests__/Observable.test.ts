@@ -25,8 +25,11 @@ import {
   Optional,
   arrayEquality,
   bindMethod,
+  compose,
   increment,
   incrementBy,
+  isEven,
+  lessThan,
   newInstance,
   none,
   pipe,
@@ -43,6 +46,7 @@ import {
   DisposableLike_isDisposed,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  RunnableLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_notify,
@@ -822,6 +826,35 @@ testModule(
       ),
     ),
   ),
+  test("composite operators with both enumerable and runnable sources", () => {
+    const op = compose(
+      Observable.map(incrementBy(2)),
+      Observable.keep(isEven),
+      Observable.map(incrementBy(2)),
+      Observable.buffer({ count: 3 }),
+      Observable.takeFirst({ count: 3 }),
+      Observable.flatMapIterable<Iterable<number>, number>(x => x),
+      Observable.skipFirst(),
+      Observable.takeWhile(lessThan(100)),
+      Observable.pairwise<number>(),
+      x => x as unknown as RunnableLike<number[]>,
+      Observable.flatMapIterable<Iterable<number>, number>(x => x),
+    );
+
+    const enumerated = pipe(
+      Observable.generate(increment, returns(-1)),
+      op,
+      Runnable.toReadonlyArray(),
+    );
+
+    const observed = pipe(
+      Observable.generate(increment, returns(-1), { delay: 5 }),
+      op,
+      Runnable.toReadonlyArray(),
+    );
+
+    pipe(observed, expectArrayEquals(enumerated));
+  }),
 );
 
 ((_: Observable.Signature) => {})(Observable);

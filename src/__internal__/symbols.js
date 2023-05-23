@@ -692,6 +692,11 @@ export const __LatestObserver_latest = /*@__PURE__*/ symbol(
 export const __LatestObserver_ctx = /*@__PURE__*/ symbol("LatestObserver_ctx");
 
 /** @type {unique symbol} */
+export const __LiftedEnumerable_ops = /*@__PURE__*/ symbol(
+  "LiftedEnumerable_ops",
+);
+
+/** @type {unique symbol} */
 export const __MemoOrUsingEffect_func = /*@__PURE__*/ symbol(
   "MemoOrUsingEffect_func",
 );

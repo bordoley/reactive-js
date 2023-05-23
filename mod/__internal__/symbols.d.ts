@@ -293,6 +293,8 @@ export const __LatestObserver_latest: unique symbol;
 /** @type {unique symbol} */
 export const __LatestObserver_ctx: unique symbol;
 /** @type {unique symbol} */
+export const __LiftedEnumerable_ops: unique symbol;
+/** @type {unique symbol} */
 export const __MemoOrUsingEffect_func: unique symbol;
 /** @type {unique symbol} */
 export const __MemoOrUsingEffect_args: unique symbol;
