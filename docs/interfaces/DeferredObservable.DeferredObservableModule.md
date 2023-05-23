@@ -6,11 +6,9 @@
 
 ## Hierarchy
 
-- [`StatefulContainerModule`](types.StatefulContainerModule.md)<[`Type`](../modules/DeferredObservable.md#type)\>
+- [`DeferredContainerModule`](types.DeferredContainerModule.md)<[`Type`](../modules/DeferredObservable.md#type)\>
 
 - [`HigherOrderObservableModule`](types.HigherOrderObservableModule.md)<[`Type`](../modules/DeferredObservable.md#type), [`Type`](../modules/DeferredObservable.md#type)\>
-
-- [`EffectsContainerModule`](types.EffectsContainerModule.md)<[`Type`](../modules/DeferredObservable.md#type)\>
 
   ↳ **`DeferredObservableModule`**
 
@@ -80,7 +78,7 @@ ___
 
 #### Overrides
 
-StatefulContainerModule.repeat
+[DeferredContainerModule](types.DeferredContainerModule.md).[repeat](types.DeferredContainerModule.md#repeat)
 
 ▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](../modules/DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
@@ -102,7 +100,7 @@ StatefulContainerModule.repeat
 
 #### Overrides
 
-StatefulContainerModule.repeat
+[DeferredContainerModule](types.DeferredContainerModule.md).[repeat](types.DeferredContainerModule.md#repeat)
 
 ▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](../modules/DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
 
@@ -118,7 +116,7 @@ StatefulContainerModule.repeat
 
 #### Overrides
 
-StatefulContainerModule.repeat
+[DeferredContainerModule](types.DeferredContainerModule.md).[repeat](types.DeferredContainerModule.md#repeat)
 
 ___
 
@@ -141,10 +139,6 @@ ___
 #### Returns
 
 [`DeferredObservableOperator`](../modules/DeferredObservable.md#deferredobservableoperator)<`T`, `T`\>
-
-#### Overrides
-
-[StatefulContainerModule](types.StatefulContainerModule.md).[retry](types.StatefulContainerModule.md#retry)
 
 ___
 

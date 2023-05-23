@@ -14,17 +14,11 @@
 
 - **`EffectsContainerModule`**
 
-  ↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
-
-  ↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
-
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
   ↳ [`ObservableModule`](Observable.ObservableModule.md)
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
-
-  ↳ [`RunnableModule`](Runnable.RunnableModule.md)
 
 ## Table of contents
 

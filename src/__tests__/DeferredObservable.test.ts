@@ -1,6 +1,7 @@
 import * as DeferredObservable from "../DeferredObservable.js";
 import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
+import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import {
   describe,
@@ -8,10 +9,16 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { identityLazy, pipe } from "../functions.js";
+import {
+  alwaysTrue,
+  identityLazy,
+  increment,
+  pipe,
+  pipeLazy,
+  returns,
+} from "../functions.js";
 import { VirtualTimeSchedulerLike_run } from "../types.js";
 import HigherOrderObservableModuleTests from "./fixtures/HigherOrderObservableModuleTests.js";
-import StatefulContainerModuleTests from "./fixtures/StatefulContainerModuleTests.js";
 
 testModule(
   "DeferredObservable",
@@ -19,9 +26,24 @@ testModule(
     DeferredObservable,
     identityLazy,
   ),
-  StatefulContainerModuleTests<DeferredObservable.Type>(
-    DeferredObservable,
-    Observable.toReadonlyArrayAsync,
+  describe(
+    "retry",
+    test(
+      "retrys the container on an exception",
+      pipeLazy(
+        Observable.concat(
+          pipe(
+            Observable.generate(increment, returns(0)),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          Observable.throws(),
+        ),
+        DeferredObservable.retry(alwaysTrue),
+        Observable.takeFirst<number>({ count: 6 }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
   ),
   describe(
     "share",

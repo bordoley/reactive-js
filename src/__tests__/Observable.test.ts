@@ -36,6 +36,8 @@ import {
   returns,
 } from "../functions.js";
 import {
+  ContainerOf,
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -46,9 +48,20 @@ import {
   SinkLike_notify,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
+import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 
 testModule(
   "Observable",
+  EffectsContainerModuleTests<Runnable.Type, DisposableLike>(
+    Observable,
+    () => Disposable.disposed,
+    <T>() =>
+      (arr: ReadonlyArray<T>) =>
+        Observable.fromReadonlyArray<T>()(arr),
+    <T>() =>
+      (c: ContainerOf<Runnable.Type, T>) =>
+        Runnable.toReadonlyArray<T>()(c),
+  ),
   describe(
     "backpressureStrategy",
     testAsync(

@@ -28,8 +28,6 @@
 - [fromOptional](Runnable.md#fromoptional)
 - [fromReadonlyArray](Runnable.md#fromreadonlyarray)
 - [fromValue](Runnable.md#fromvalue)
-- [generate](Runnable.md#generate)
-- [throws](Runnable.md#throws)
 - [zip](Runnable.md#zip)
 
 ### Operator Functions
@@ -39,15 +37,11 @@
 - [concatAll](Runnable.md#concatall)
 - [concatMap](Runnable.md#concatmap)
 - [concatWith](Runnable.md#concatwith)
-- [dispatchTo](Runnable.md#dispatchto)
 - [distinctUntilChanged](Runnable.md#distinctuntilchanged)
 - [endWith](Runnable.md#endwith)
-- [enqueue](Runnable.md#enqueue)
 - [exhaust](Runnable.md#exhaust)
 - [exhaustMap](Runnable.md#exhaustmap)
 - [flatMapIterable](Runnable.md#flatmapiterable)
-- [forEach](Runnable.md#foreach)
-- [ignoreElements](Runnable.md#ignoreelements)
 - [keep](Runnable.md#keep)
 - [keepType](Runnable.md#keeptype)
 - [map](Runnable.md#map)
@@ -57,7 +51,6 @@
 - [pairwise](Runnable.md#pairwise)
 - [pick](Runnable.md#pick)
 - [repeat](Runnable.md#repeat)
-- [retry](Runnable.md#retry)
 - [scan](Runnable.md#scan)
 - [scanLast](Runnable.md#scanlast)
 - [scanMany](Runnable.md#scanmany)
@@ -270,52 +263,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-___
-
-### generate
-
-▸ **generate**<`T`\>(`generator`, `initialValue`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-___
-
-### throws
-
-▸ **throws**<`T`\>(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -654,28 +601,6 @@ ___
 
 ___
 
-### dispatchTo
-
-▸ **dispatchTo**<`T`\>(`dispatcher`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-___
-
 ### distinctUntilChanged
 
 ▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
@@ -718,28 +643,6 @@ ___
 | :------ | :------ |
 | `value` | `T` |
 | `...values` | readonly `T`[] |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-___
-
-### enqueue
-
-▸ **enqueue**<`T`\>(`queue`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `queue` | [`QueueableLike`](../interfaces/types.QueueableLike.md)<`T`\> |
 
 #### Returns
 
@@ -806,47 +709,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `TA`, `TB`\>
-
-___
-
-### forEach
-
-▸ **forEach**<`T`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-___
-
-### ignoreElements
-
-▸ **ignoreElements**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `unknown`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `unknown`, `T`\>
 
 ___
 
@@ -1135,28 +997,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `predicate` | [`Predicate`](functions.md#predicate)<`number`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-___
-
-### retry
-
-▸ **retry**<`T`\>(`shouldRetry`): [`ContainerOperator`](types.md#containeroperator)<[`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 

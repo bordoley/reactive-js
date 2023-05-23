@@ -16,9 +16,9 @@
 
   ↳ **`DeferredContainerModule`**
 
-  ↳↳ [`RunnableContainerModule`](types.RunnableContainerModule.md)
+  ↳↳ [`DeferredObservableModule`](DeferredObservable.DeferredObservableModule.md)
 
-  ↳↳ [`StatefulContainerModule`](types.StatefulContainerModule.md)
+  ↳↳ [`RunnableContainerModule`](types.RunnableContainerModule.md)
 
 ## Table of contents
 
