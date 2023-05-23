@@ -7,7 +7,6 @@ import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe } from "../functions.js";
 import { DisposableLike_error } from "../types.js";
 import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
-import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 const toReadonlyArray = () => (eventSource) => {
     const result = [];
     const subscription = pipe(eventSource, EventSource.addEventHandler(v => {
@@ -18,5 +17,5 @@ const toReadonlyArray = () => (eventSource) => {
     }
     return result;
 };
-testModule("EventSource", ContainerModuleTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray), EffectsContainerModuleTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray));
+testModule("EventSource", ContainerModuleTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray));
 ((_) => { })(EventSource);

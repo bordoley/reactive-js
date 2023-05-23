@@ -14,8 +14,6 @@
 
 - **`EffectsContainerModule`**
 
-  ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
-
   ↳ [`ObservableModule`](Observable.ObservableModule.md)
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)

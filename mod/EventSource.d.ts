@@ -1,5 +1,5 @@
 import { SideEffect1 } from "./functions.js";
-import { Container, ContainerModule, Container_T, Container_type, EffectsContainerModule, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastingContainerModule } from "./types.js";
+import { Container, ContainerModule, Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastingContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = EventSourceContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface EventSourceModule extends ContainerModule<Type>, MulticastingContainerModule<Type>, EffectsContainerModule<Type> {
+export interface EventSourceModule extends ContainerModule<Type>, MulticastingContainerModule<Type> {
     /**
      * @category Constructor
      */
@@ -40,12 +40,8 @@ export declare const buffer: Signature["buffer"];
 export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];
-export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
-export declare const enqueue: Signature["enqueue"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
-export declare const forEach: Signature["forEach"];
-export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];
