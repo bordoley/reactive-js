@@ -16,8 +16,6 @@
 
   ↳ [`ObservableModule`](Observable.ObservableModule.md)
 
-  ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
-
 ## Table of contents
 
 ### Operator Methods

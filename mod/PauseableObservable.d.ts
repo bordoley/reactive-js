@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container, ContainerModule, Container_T, Container_type, DeferredObservableLike, DispatcherLike, EffectsContainerModule, PauseableObservableLike } from "./types.js";
+import { Container, ContainerModule, Container_T, Container_type, DeferredObservableLike, DispatcherLike, PauseableObservableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,17 +12,13 @@ export type Type = PauseableObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PauseableObservableModule extends ContainerModule<Type>, EffectsContainerModule<Type> {
+export interface PauseableObservableModule extends ContainerModule<Type> {
     sinkInto<T>(sink: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
 }
 export type Signature = PauseableObservableModule;
 export declare const buffer: Signature["buffer"];
-export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
-export declare const enqueue: Signature["enqueue"];
-export declare const forEach: Signature["forEach"];
 export declare const flatMapIterable: Signature["flatMapIterable"];
-export declare const ignoreElements: Signature["ignoreElements"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];

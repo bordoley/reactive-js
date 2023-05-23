@@ -10,7 +10,6 @@ import { describe, expectArrayEquals, test, testModule, } from "../__internal__/
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
 import { DisposableLike_error, PauseableLike_resume, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
-import EffectsContainerModuleTests from "./fixtures/EffectsContainerModuleTests.js";
 const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray_flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
@@ -25,7 +24,7 @@ const toReadonlyArray = (scheduler) => (obs) => {
     }
     return result;
 };
-testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), EffectsContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
+testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const src = pipe(Observable.generate(increment, returns(-1), {
         delay: 1,
