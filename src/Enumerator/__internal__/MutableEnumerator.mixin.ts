@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../__internal__/constants.js";
 import { Mixin, mix, props } from "../../__internal__/mixins.js";
 import {
   __MutableEnumeratorLike_reset as MutableEnumeratorLike_reset,
@@ -23,7 +24,7 @@ export { MutableEnumeratorLike_reset };
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
   [EnumeratorLike_isCompleted]: boolean;
-  [MutableEnumeratorLike_reset](): void;
+  [MutableEnumeratorLike_reset](): boolean;
 }
 
 type TEnumeratorMixinReturn<T> = Omit<
@@ -66,12 +67,19 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
+
+            if (__DEV__ && this[EnumeratorLike_isCompleted]) {
+              raiseWithDebugMessage("enumerator has already been completed");
+            }
+
             this[__Enumerator_private_current] = v;
             this[EnumeratorLike_hasCurrent] = true;
           },
-          [MutableEnumeratorLike_reset](this: TProperties) {
+          [MutableEnumeratorLike_reset](this: TProperties): boolean {
             this[__Enumerator_private_current] = none as T;
             this[EnumeratorLike_hasCurrent] = false;
+
+            return this[EnumeratorLike_isCompleted];
           },
         },
       ),

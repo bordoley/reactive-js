@@ -77,9 +77,10 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
           [EnumeratorLike_move](
             this: TReadonlyArrayEnumeratorProperties & MutableEnumeratorLike<T>,
           ) {
-            this[MutableEnumeratorLike_reset]();
-
-            if (this[DisposableLike_isDisposed]) {
+            if (
+              this[MutableEnumeratorLike_reset]() ||
+              this[DisposableLike_isDisposed]
+            ) {
               this[EnumeratorLike_isCompleted] = true;
               return false;
             }

@@ -28,10 +28,9 @@ const Enumerator_decodeWithCharset =
         [DecodeWithCharsetLike_textDecoder]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             const delegate = this[DelegatingLike_delegate];
             const decoder = this[DecodeWithCharsetLike_textDecoder];
             try {

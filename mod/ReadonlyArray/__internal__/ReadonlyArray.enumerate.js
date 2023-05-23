@@ -23,8 +23,8 @@ const ReadonlyArray_enumerate =
         [CountingLike_count]: 0,
     }), {
         [EnumeratorLike_move]() {
-            this[MutableEnumeratorLike_reset]();
-            if (this[DisposableLike_isDisposed]) {
+            if (this[MutableEnumeratorLike_reset]() ||
+                this[DisposableLike_isDisposed]) {
                 this[EnumeratorLike_isCompleted] = true;
                 return false;
             }

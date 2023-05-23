@@ -5,7 +5,7 @@ export { MutableEnumeratorLike_reset };
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
     [EnumeratorLike_current]: T;
     [EnumeratorLike_isCompleted]: boolean;
-    [MutableEnumeratorLike_reset](): void;
+    [MutableEnumeratorLike_reset](): boolean;
 }
 type TEnumeratorMixinReturn<T> = Omit<MutableEnumeratorLike<T>, typeof EnumeratorLike_move | keyof DisposableLike>;
 declare const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>>;

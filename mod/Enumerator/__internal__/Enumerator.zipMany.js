@@ -29,10 +29,9 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
         [ZipLike_enumerators]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             const enumerators = this[ZipLike_enumerators];
             if (moveAll(enumerators)) {
                 const next = pipe(enumerators, ReadonlyArray_map(Enumerator_getCurrent));

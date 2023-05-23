@@ -75,11 +75,9 @@ const Enumerator_decodeWithCharset: (
               MutableEnumeratorLike<string> &
               DelegatingLike<EnumeratorLike<ArrayBuffer>>,
           ): boolean {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
               return false;
             }
-
-            this[MutableEnumeratorLike_reset]();
 
             const delegate = this[DelegatingLike_delegate];
             const decoder = this[DecodeWithCharsetLike_textDecoder];

@@ -20,10 +20,9 @@ const Enumerator_forEach = /*@__PURE__*/ (() => {
         [ForEachLike_effect]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             const delegate = this[DelegatingLike_delegate];
             const delegateHasCurrent = delegate[EnumeratorLike_move]();
             try {

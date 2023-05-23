@@ -20,10 +20,9 @@ const Enumerator_map = /*@__PURE__*/ (() => {
         [MappingLike_selector]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             const delegate = this[DelegatingLike_delegate];
             const delegateHasCurrent = delegate[EnumeratorLike_move]();
             try {

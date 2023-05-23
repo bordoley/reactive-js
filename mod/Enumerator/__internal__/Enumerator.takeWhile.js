@@ -22,10 +22,9 @@ const Enumerator_takeWhile = /*@__PURE__*/ (() => {
         [TakeWhileLike_inclusive]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             const delegate = this[DelegatingLike_delegate];
             try {
                 if (delegate[EnumeratorLike_move]()) {

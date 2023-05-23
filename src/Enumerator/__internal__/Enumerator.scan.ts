@@ -68,11 +68,10 @@ const Enumerator_scan: <T, TAcc>(
             MutableEnumeratorLike<TAcc> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
+          if (this[MutableEnumeratorLike_reset]()) {
             return false;
           }
 
-          this[MutableEnumeratorLike_reset]();
           this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
 
           const delegate = this[DelegatingLike_delegate];

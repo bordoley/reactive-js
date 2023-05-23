@@ -21,10 +21,9 @@ const Enumerator_takeFirst = /*@__PURE__*/ (() => {
         [CountingLike_count]: 0,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
             this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
             const delegate = this[DelegatingLike_delegate];

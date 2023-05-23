@@ -17,10 +17,9 @@ const Enumerator_pairwise = /*@__PURE__*/ (() => returns(createInstanceFactory(m
     [PairwiseLike_hasPrev]: false,
 }), {
     [EnumeratorLike_move]() {
-        if (this[EnumeratorLike_isCompleted]) {
+        if (this[MutableEnumeratorLike_reset]()) {
             return false;
         }
-        this[MutableEnumeratorLike_reset]();
         const delegate = this[DelegatingLike_delegate];
         const delegateHasCurrent = delegate[EnumeratorLike_move]();
         if (delegateHasCurrent && this[PairwiseLike_hasPrev]) {

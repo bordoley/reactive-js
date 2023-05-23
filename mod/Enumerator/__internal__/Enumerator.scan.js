@@ -22,10 +22,9 @@ const Enumerator_scan = /*@__PURE__*/ (() => {
         [ReducerAccumulatorLike_reducer]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
             const delegate = this[DelegatingLike_delegate];
             const delegateHasCurrent = delegate[EnumeratorLike_move]();

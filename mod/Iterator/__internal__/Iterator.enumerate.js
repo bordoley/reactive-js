@@ -17,10 +17,9 @@ const Iterator_enumerate =
         [__IteratorEnumerator_iterator]: none,
     }), {
         [EnumeratorLike_move]() {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
                 return false;
             }
-            this[MutableEnumeratorLike_reset]();
             if (this[DisposableLike_isDisposed]) {
                 return false;
             }

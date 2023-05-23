@@ -63,11 +63,9 @@ const Enumerator_pairwise: <T>() => Function1<
               MutableEnumeratorLike<readonly [T, T]> &
               DelegatingLike<EnumeratorLike<T>>,
           ): boolean {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
               return false;
             }
-
-            this[MutableEnumeratorLike_reset]();
 
             const delegate = this[DelegatingLike_delegate];
             const delegateHasCurrent = delegate[EnumeratorLike_move]();

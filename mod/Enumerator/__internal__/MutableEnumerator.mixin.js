@@ -1,5 +1,6 @@
 /// <reference types="./MutableEnumerator.mixin.d.ts" />
 
+import { __DEV__ } from "../../__internal__/constants.js";
 import { mix, props } from "../../__internal__/mixins.js";
 import { __MutableEnumeratorLike_reset as MutableEnumeratorLike_reset, __Enumerator_private_current, } from "../../__internal__/symbols.js";
 import { none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
@@ -22,12 +23,16 @@ const MutableEnumerator_mixin =
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);
+            if (__DEV__ && this[EnumeratorLike_isCompleted]) {
+                raiseWithDebugMessage("enumerator has already been completed");
+            }
             this[__Enumerator_private_current] = v;
             this[EnumeratorLike_hasCurrent] = true;
         },
         [MutableEnumeratorLike_reset]() {
             this[__Enumerator_private_current] = none;
             this[EnumeratorLike_hasCurrent] = false;
+            return this[EnumeratorLike_isCompleted];
         },
     }), returns);
 })();

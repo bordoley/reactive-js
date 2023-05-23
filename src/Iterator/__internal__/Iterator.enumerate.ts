@@ -50,11 +50,9 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
           [EnumeratorLike_move](
             this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
           ) {
-            if (this[EnumeratorLike_isCompleted]) {
+            if (this[MutableEnumeratorLike_reset]()) {
               return false;
             }
-
-            this[MutableEnumeratorLike_reset]();
 
             if (this[DisposableLike_isDisposed]) {
               return false;

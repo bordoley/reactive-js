@@ -60,11 +60,9 @@ const Enumerator_forEach: <T>(
             MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
+          if (this[MutableEnumeratorLike_reset]()) {
             return false;
           }
-
-          this[MutableEnumeratorLike_reset]();
 
           const delegate = this[DelegatingLike_delegate];
           const delegateHasCurrent = delegate[EnumeratorLike_move]();

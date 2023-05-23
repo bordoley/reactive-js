@@ -67,11 +67,9 @@ const Enumerator_takeWhile: <T>(
             MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
-          if (this[EnumeratorLike_isCompleted]) {
+          if (this[MutableEnumeratorLike_reset]()) {
             return false;
           }
-
-          this[MutableEnumeratorLike_reset]();
 
           const delegate = this[DelegatingLike_delegate];
 
