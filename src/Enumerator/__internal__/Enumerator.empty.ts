@@ -8,12 +8,14 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
 const empty: EnumeratorLike = {
   [EnumeratorLike_current]: none,
   [EnumeratorLike_hasCurrent]: false,
+  [EnumeratorLike_isCompleted]: true,
   [EnumeratorLike_move](): boolean {
     return false;
   },

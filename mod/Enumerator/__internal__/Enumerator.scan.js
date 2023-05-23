@@ -6,7 +6,7 @@ import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js"
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, ReducerAccumulatorLike_acc, ReducerAccumulatorLike_reducer, } from "../../__internal__/types.js";
 import { error, none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_scan = /*@__PURE__*/ (() => {
     const createScanEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Delegating_mixin(), Disposable_mixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
@@ -22,7 +22,11 @@ const Enumerator_scan = /*@__PURE__*/ (() => {
         [ReducerAccumulatorLike_reducer]: none,
     }), {
         [EnumeratorLike_move]() {
+            if (this[EnumeratorLike_isCompleted]) {
+                return false;
+            }
             this[MutableEnumeratorLike_reset]();
+            this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
             const delegate = this[DelegatingLike_delegate];
             const delegateHasCurrent = delegate[EnumeratorLike_move]();
             try {
@@ -39,6 +43,7 @@ const Enumerator_scan = /*@__PURE__*/ (() => {
             if (delegate[DisposableLike_isDisposed]) {
                 this[DisposableLike_dispose]();
             }
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
             return this[EnumeratorLike_hasCurrent];
         },
     }));

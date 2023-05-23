@@ -257,7 +257,7 @@ testModule(
 
       pipe(
         [str],
-        Observable.fromReadonlyArray({delay: 1}),
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.encodeUtf8(),
         Observable.decodeWithCharset(),
         Runnable.toReadonlyArray(),
@@ -580,6 +580,19 @@ testModule(
       );
     }),
 
+    test("when source is empty and delayed", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.throwIfEmpty(() => error),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
     test("when factory throw", () => {
       const error = new Error();
       pipe(
@@ -595,11 +608,37 @@ testModule(
       );
     }),
 
+    test("when factory throws after a delay", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.throwIfEmpty(() => {
+            throw error;
+          }),
+          Runnable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+
     test(
       "when source is not empty",
       pipeLazy(
         [1],
         Observable.fromReadonlyArray(),
+        Observable.throwIfEmpty(returns(none)),
+        Runnable.toReadonlyArray<number>(),
+        expectArrayEquals([1]),
+      ),
+    ),
+
+    test(
+      "when source is not empty with delay",
+      pipeLazy(
+        [1],
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.throwIfEmpty(returns(none)),
         Runnable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
@@ -666,7 +705,7 @@ testModule(
         Runnable.zip(
           pipe([1, 2], Observable.fromReadonlyArray({ delay: 1 })),
           pipe([2, 3], Observable.fromReadonlyArray()),
-          pipe([3, 4, 5], Observable.fromReadonlyArray({ delay: 1 })),
+          pipe([3, 4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
         ),
         Runnable.toReadonlyArray(),
         expectArrayEquals(

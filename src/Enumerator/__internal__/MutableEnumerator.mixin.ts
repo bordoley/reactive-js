@@ -15,12 +15,14 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 export { MutableEnumeratorLike_reset };
 
 export interface MutableEnumeratorLike<T = unknown> extends EnumeratorLike<T> {
   [EnumeratorLike_current]: T;
+  [EnumeratorLike_isCompleted]: boolean;
   [MutableEnumeratorLike_reset](): void;
 }
 
@@ -34,6 +36,7 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
     type TProperties = {
       [__Enumerator_private_current]: T;
       [EnumeratorLike_hasCurrent]: boolean;
+      [EnumeratorLike_isCompleted]: boolean;
     };
 
     return pipe(
@@ -52,6 +55,7 @@ const MutableEnumerator_mixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
         props<TProperties>({
           [__Enumerator_private_current]: none,
           [EnumeratorLike_hasCurrent]: false,
+          [EnumeratorLike_isCompleted]: false,
         }),
         {
           get [EnumeratorLike_current](): T {

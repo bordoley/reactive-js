@@ -21,6 +21,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
@@ -47,11 +48,13 @@ const Enumerator_buffer: <T>(
         props<
           BufferingLike<T> & {
             [EnumeratorLike_hasCurrent]: boolean;
+            [EnumeratorLike_isCompleted]: boolean;
           }
         >({
           [BufferingLike_buffer]: none,
           [BufferingLike_count]: 0,
           [EnumeratorLike_hasCurrent]: false,
+          [EnumeratorLike_isCompleted]: false,
         }),
         {
           get [EnumeratorLike_current]() {
@@ -64,6 +67,10 @@ const Enumerator_buffer: <T>(
               Mutable<EnumeratorLike<T>> &
               DelegatingLike<EnumeratorLike<T>>,
           ): boolean {
+            if (this[EnumeratorLike_isCompleted]) {
+              return false;
+            }
+
             const delegate = this[DelegatingLike_delegate];
             const buffer: T[] = [];
             this[BufferingLike_buffer] = buffer;
@@ -77,6 +84,8 @@ const Enumerator_buffer: <T>(
                 break;
               }
             }
+
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
             return this[EnumeratorLike_hasCurrent];
           },

@@ -116,6 +116,7 @@
 - [EnumerableLike\_enumerate](types.md#enumerablelike_enumerate)
 - [EnumeratorLike\_current](types.md#enumeratorlike_current)
 - [EnumeratorLike\_hasCurrent](types.md#enumeratorlike_hascurrent)
+- [EnumeratorLike\_isCompleted](types.md#enumeratorlike_iscompleted)
 - [EnumeratorLike\_move](types.md#enumeratorlike_move)
 - [EventListenerLike\_isErrorSafe](types.md#eventlistenerlike_iserrorsafe)
 - [EventPublisherLike\_listenerCount](types.md#eventpublisherlike_listenercount)
@@ -343,6 +344,12 @@ ___
 ### EnumeratorLike\_hasCurrent
 
 • `Const` **EnumeratorLike\_hasCurrent**: typeof `__EnumeratorLike_hasCurrent`
+
+___
+
+### EnumeratorLike\_isCompleted
+
+• `Const` **EnumeratorLike\_isCompleted**: typeof `__EnumeratorLike_isCompleted`
 
 ___
 

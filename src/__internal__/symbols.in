@@ -12,6 +12,7 @@ DisposableLike_dispose
 DisposableLike_error
 DisposableLike_isDisposed
 EnumerableLike_enumerate
+EnumeratorLike_isCompleted
 EnumeratorLike_move
 EnumeratorLike_current
 EnumeratorLike_hasCurrent

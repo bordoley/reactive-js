@@ -2,6 +2,7 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { max } from "../../__internal__/math.js";
 import {
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -17,9 +18,11 @@ import {
 import { Function1, unsafeCast } from "../../functions.js";
 import {
   DisposableLike,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
@@ -41,8 +44,12 @@ const Enumerator_skipFirst: <T>(
 
         return instance;
       },
-      props<CountingLike>({
+      props<
+        CountingLike &
+          Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+      >({
         [CountingLike_count]: 0,
+        [EnumeratorLike_isCompleted]: false,
       }),
       {
         get [EnumeratorLike_current]() {
@@ -57,10 +64,16 @@ const Enumerator_skipFirst: <T>(
 
         [EnumeratorLike_move](
           this: CountingLike &
-            EnumeratorLike<T> &
+            Mutable<EnumeratorLike<T>> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
           const delegate = this[DelegatingLike_delegate];
+
+          this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
 
           while (delegate[EnumeratorLike_move]()) {
             this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
@@ -69,6 +82,8 @@ const Enumerator_skipFirst: <T>(
               break;
             }
           }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
           return this[EnumeratorLike_hasCurrent];
         },

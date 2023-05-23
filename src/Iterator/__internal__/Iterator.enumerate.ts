@@ -19,6 +19,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
@@ -49,6 +50,10 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
           [EnumeratorLike_move](
             this: TIteratorEnumeratorProperties & MutableEnumeratorLike<T>,
           ) {
+            if (this[EnumeratorLike_isCompleted]) {
+              return false;
+            }
+
             this[MutableEnumeratorLike_reset]();
 
             if (this[DisposableLike_isDisposed]) {
@@ -66,6 +71,8 @@ const Iterator_enumerate: <T>() => Function1<Iterator<T>, EnumeratorLike<T>> =
               // Catch any errors thrown by the iterator
               this[DisposableLike_dispose](error(e));
             }
+
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
             return this[EnumeratorLike_hasCurrent];
           },

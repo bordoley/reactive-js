@@ -27,6 +27,8 @@ export const __DisposableLike_isDisposed: unique symbol;
 /** @type {unique symbol} */
 export const __EnumerableLike_enumerate: unique symbol;
 /** @type {unique symbol} */
+export const __EnumeratorLike_isCompleted: unique symbol;
+/** @type {unique symbol} */
 export const __EnumeratorLike_move: unique symbol;
 /** @type {unique symbol} */
 export const __EnumeratorLike_current: unique symbol;

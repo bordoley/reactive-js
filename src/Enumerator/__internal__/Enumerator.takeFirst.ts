@@ -17,9 +17,11 @@ import {
 import { Function1 } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  DisposableLike_isDisposed,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 import MutableEnumerator_mixin, {
@@ -60,7 +62,13 @@ const Enumerator_takeFirst: <T>(
             MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
           this[MutableEnumeratorLike_reset]();
+          this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
+
           this[CountingLike_count] = max(this[CountingLike_count] - 1, -1);
 
           const delegate = this[DelegatingLike_delegate];
@@ -73,6 +81,8 @@ const Enumerator_takeFirst: <T>(
           } else {
             this[DisposableLike_dispose]();
           }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
           return this[EnumeratorLike_hasCurrent];
         },

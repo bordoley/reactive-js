@@ -26,6 +26,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
@@ -79,6 +80,7 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
             this[MutableEnumeratorLike_reset]();
 
             if (this[DisposableLike_isDisposed]) {
+              this[EnumeratorLike_isCompleted] = true;
               return false;
             }
 

@@ -96,6 +96,19 @@ testModule(
         expectArrayEquals([0, 2, 4, 6]),
       ),
     ),
+    test(
+      "reversed with delay",
+      pipeLazy(
+        [1, 2, 3, 4],
+        ReadonlyArray.toObservable({
+          count: -2,
+          start: 3,
+          delay: 1,
+        }),
+        Runnable.toReadonlyArray(),
+        expectArrayEquals([4, 3]),
+      ),
+    ),
   ),
   describe("values"),
 );

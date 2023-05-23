@@ -26,6 +26,8 @@ export declare const __DisposableLike_isDisposed: unique symbol;
 
 export declare const __EnumerableLike_enumerate: unique symbol;
 
+export declare const __EnumeratorLike_isCompleted: unique symbol;
+
 export declare const __EnumeratorLike_move: unique symbol;
 
 export declare const __EnumeratorLike_current: unique symbol;

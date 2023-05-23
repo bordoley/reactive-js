@@ -8,7 +8,7 @@ import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.ma
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { ZipLike_enumerators } from "../../__internal__/types.js";
 import { none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_zipMany = /*@__PURE__*/ (() => {
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
@@ -29,6 +29,9 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
         [ZipLike_enumerators]: none,
     }), {
         [EnumeratorLike_move]() {
+            if (this[EnumeratorLike_isCompleted]) {
+                return false;
+            }
             this[MutableEnumeratorLike_reset]();
             const enumerators = this[ZipLike_enumerators];
             if (moveAll(enumerators)) {
@@ -38,6 +41,7 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
             else {
                 this[DisposableLike_dispose]();
             }
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
             return this[EnumeratorLike_hasCurrent];
         },
     }));

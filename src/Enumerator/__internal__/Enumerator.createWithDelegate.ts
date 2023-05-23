@@ -18,6 +18,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 
@@ -50,6 +51,11 @@ const Enumerator_createWithDelegate: <T>(
         get [EnumeratorLike_hasCurrent]() {
           unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
           return this[DelegatingLike_delegate][EnumeratorLike_hasCurrent];
+        },
+
+        get [EnumeratorLike_isCompleted]() {
+          unsafeCast<DelegatingLike<EnumeratorLike<T>>>(this);
+          return this[DelegatingLike_delegate][EnumeratorLike_isCompleted];
         },
 
         [EnumeratorLike_move](

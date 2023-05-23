@@ -3,7 +3,7 @@
 import { mix, props } from "../../__internal__/mixins.js";
 import { __MutableEnumeratorLike_reset as MutableEnumeratorLike_reset, __Enumerator_private_current, } from "../../__internal__/symbols.js";
 import { none, pipe, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, } from "../../types.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, } from "../../types.js";
 export { MutableEnumeratorLike_reset };
 const MutableEnumerator_mixin = 
 /*@__PURE__*/ (() => {
@@ -12,6 +12,7 @@ const MutableEnumerator_mixin =
     }, props({
         [__Enumerator_private_current]: none,
         [EnumeratorLike_hasCurrent]: false,
+        [EnumeratorLike_isCompleted]: false,
     }), {
         get [EnumeratorLike_current]() {
             unsafeCast(this);

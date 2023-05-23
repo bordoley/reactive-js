@@ -6,7 +6,7 @@ import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js"
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { pipe, unsafeCast } from "../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 const Enumerator_createWithDelegate = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Delegating_mixin(), Disposable_mixin), function CreateWithDelegateEnumerator(instance, delegate) {
     init(Delegating_mixin(), instance, delegate);
     init(Disposable_mixin, instance);
@@ -22,6 +22,10 @@ const Enumerator_createWithDelegate = /*@__PURE__*/ (() => createInstanceFactory
     get [EnumeratorLike_hasCurrent]() {
         unsafeCast(this);
         return this[DelegatingLike_delegate][EnumeratorLike_hasCurrent];
+    },
+    get [EnumeratorLike_isCompleted]() {
+        unsafeCast(this);
+        return this[DelegatingLike_delegate][EnumeratorLike_isCompleted];
     },
     [EnumeratorLike_move]() {
         return this[DelegatingLike_delegate][EnumeratorLike_move]();

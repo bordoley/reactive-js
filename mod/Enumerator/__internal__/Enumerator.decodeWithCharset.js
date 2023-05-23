@@ -3,10 +3,11 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
+import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DecodeWithCharsetLike_textDecoder, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { error, newInstance, none, pipe } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../types.js";
+import { DisposableLike_dispose, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
 const Enumerator_decodeWithCharset = 
 /*@__PURE__*/ (() => {
@@ -19,21 +20,34 @@ const Enumerator_decodeWithCharset =
             fatal: true,
         });
         instance[DecodeWithCharsetLike_textDecoder] = textDecoder;
+        pipe(instance, Disposable_onDisposed(_ => {
+            textDecoder.decode();
+        }));
         return instance;
     }, props({
         [DecodeWithCharsetLike_textDecoder]: none,
     }), {
         [EnumeratorLike_move]() {
+            if (this[EnumeratorLike_isCompleted]) {
+                return false;
+            }
             this[MutableEnumeratorLike_reset]();
             const delegate = this[DelegatingLike_delegate];
+            const decoder = this[DecodeWithCharsetLike_textDecoder];
             try {
                 while (delegate[EnumeratorLike_move]()) {
-                    const data = this[DecodeWithCharsetLike_textDecoder].decode(delegate[EnumeratorLike_current], {
+                    const data = decoder.decode(delegate[EnumeratorLike_current], {
                         stream: true,
                     });
                     if (data.length > 0) {
                         this[EnumeratorLike_current] = data;
                         break;
+                    }
+                }
+                if (!this[EnumeratorLike_hasCurrent]) {
+                    const data = decoder.decode();
+                    if (data.length > 0) {
+                        this[EnumeratorLike_current] = data;
                     }
                 }
             }
@@ -42,7 +56,8 @@ const Enumerator_decodeWithCharset =
                 this[DisposableLike_dispose](error(e));
                 this[MutableEnumeratorLike_reset]();
             }
-            if (delegate[DisposableLike_isDisposed]) {
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+            if (this[EnumeratorLike_isCompleted]) {
                 this[DisposableLike_dispose]();
             }
             return this[EnumeratorLike_hasCurrent];

@@ -21,6 +21,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 import MutableEnumerator_mixin, {
@@ -59,6 +60,10 @@ const Enumerator_forEach: <T>(
             MutableEnumeratorLike<T> &
             DelegatingLike<EnumeratorLike<T>>,
         ): boolean {
+          if (this[EnumeratorLike_isCompleted]) {
+            return false;
+          }
+
           this[MutableEnumeratorLike_reset]();
 
           const delegate = this[DelegatingLike_delegate];
@@ -79,6 +84,8 @@ const Enumerator_forEach: <T>(
           if (delegate[DisposableLike_isDisposed]) {
             this[DisposableLike_dispose]();
           }
+
+          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
           return this[EnumeratorLike_hasCurrent];
         },

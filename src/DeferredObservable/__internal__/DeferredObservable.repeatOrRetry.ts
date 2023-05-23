@@ -49,6 +49,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
   ObservableLike,
   ObserverLike,
@@ -103,6 +104,7 @@ const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
       CountingLike & {
         p: (count: number, error?: Error) => boolean;
         [CountingLike_count]: number;
+        [EnumeratorLike_isCompleted]: boolean;
       };
 
     const createRepeatOrRetryEnumerator = createInstanceFactory(
@@ -125,6 +127,7 @@ const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
           [HigherOrderEnumerator_inner]: none,
           p: alwaysFalse,
           [CountingLike_count]: 0,
+          [EnumeratorLike_isCompleted]: false,
         }),
         {
           get [EnumeratorLike_current]() {
@@ -143,6 +146,8 @@ const DeferredObservable_repeatOrRetry: DeferredObservableRepeatOrRetry =
               DelegatingLike<EnumerableLike<T>>,
           ): boolean {
             let inner = this[HigherOrderEnumerator_inner];
+
+            this[EnumeratorLike_isCompleted] = this[DisposableLike_isDisposed];
 
             while (
               !this[DisposableLike_isDisposed] &&

@@ -65,6 +65,11 @@ export const __EnumerableLike_enumerate = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __EnumeratorLike_isCompleted = /*@__PURE__*/ symbol(
+  "EnumeratorLike_isCompleted",
+);
+
+/** @type {unique symbol} */
 export const __EnumeratorLike_move = /*@__PURE__*/ symbol(
   "EnumeratorLike_move",
 );

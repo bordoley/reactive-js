@@ -3,6 +3,7 @@ import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 
 import {
+  Mutable,
   createInstanceFactory,
   include,
   init,
@@ -22,6 +23,7 @@ import {
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../types.js";
 import Enumerator_empty from "./Enumerator.empty.js";
@@ -48,8 +50,12 @@ const Enumerator_concatAll: <T>() => Function1<
 
           return instance;
         },
-        props<HigherOrderEnumeratorLike<T>>({
+        props<
+          HigherOrderEnumeratorLike<T> &
+            Pick<EnumeratorLike<T>, typeof EnumeratorLike_isCompleted>
+        >({
           [HigherOrderEnumerator_inner]: none,
+          [EnumeratorLike_isCompleted]: false,
         }),
         {
           get [EnumeratorLike_current]() {
@@ -64,9 +70,13 @@ const Enumerator_concatAll: <T>() => Function1<
 
           [EnumeratorLike_move](
             this: HigherOrderEnumeratorLike<T> &
-              EnumeratorLike<T> &
+              Mutable<EnumeratorLike<T>> &
               DelegatingLike<EnumeratorLike<EnumeratorLike<T>>>,
           ): boolean {
+            if (this[EnumeratorLike_isCompleted]) {
+              return false;
+            }
+
             const delegate = this[DelegatingLike_delegate];
             let inner = this[HigherOrderEnumerator_inner];
 
@@ -82,6 +92,8 @@ const Enumerator_concatAll: <T>() => Function1<
                 break;
               }
             }
+
+            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
 
             return this[EnumeratorLike_hasCurrent];
           },
