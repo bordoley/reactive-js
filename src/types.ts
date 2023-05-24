@@ -990,7 +990,8 @@ export interface ContainerModule<C extends Container> {
  * @noInheritDoc
  *  @category Module
  */
-export interface FlowableContainerModule<C extends Container> {
+export interface FlowableContainerModule<C extends Container>
+  extends ContainerModule<C> {
   flow<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1006,37 +1007,8 @@ export interface FlowableContainerModule<C extends Container> {
  * @noInheritDoc
  * @category Module
  */
-export interface MulticastingContainerModule<C extends Container> {
-  addEventHandler<T>(
-    handler: SideEffect1<T>,
-  ): Function1<ContainerOf<C, T>, DisposableLike>;
-
-  /**
-   * @category Transform
-   */
-  toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
-
-  /**
-   * @category Transform
-   */
-  toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
-
-  /**
-   * @category Transform
-   */
-  toReadonlyArrayAsync<T>(): Function1<
-    ContainerOf<C, T>,
-    Promise<ReadonlyArray<T>>
-  >;
-}
-
-/**
- * @noInheritDoc
- * @category Module
- */
 export interface EnumerableContainerModule<C extends Container>
-  extends ContainerModule<C>,
-    FlowableContainerModule<C> {
+  extends FlowableContainerModule<C> {
   /**
    * Returns a Container which emits all values from each source sequentially.
    *
@@ -1329,6 +1301,34 @@ export interface EnumerableContainerModule<C extends Container>
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Module
+ */
+export interface MulticastingContainerModule<C extends Container> {
+  addEventHandler<T>(
+    handler: SideEffect1<T>,
+  ): Function1<ContainerOf<C, T>, DisposableLike>;
+
+  /**
+   * @category Transform
+   */
+  toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
+
+  /**
+   * @category Transform
+   */
+  toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
+
+  /**
+   * @category Transform
+   */
+  toReadonlyArrayAsync<T>(): Function1<
+    ContainerOf<C, T>,
+    Promise<ReadonlyArray<T>>
+  >;
 }
 
 /**

@@ -12,8 +12,6 @@
 
 ## Hierarchy
 
-- [`ContainerModule`](types.ContainerModule.md)<`C`\>
-
 - [`FlowableContainerModule`](types.FlowableContainerModule.md)<`C`\>
 
   ↳ **`EnumerableContainerModule`**

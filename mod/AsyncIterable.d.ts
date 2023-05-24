@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableLike, FlowableContainerModule } from "./types.js";
+import { Container, ContainerModule, Container_T, Container_type, DeferredObservableLike, FlowableContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = AsyncIterableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface AsyncIterableModule extends FlowableContainerModule<Type> {
+export interface AsyncIterableModule extends Omit<FlowableContainerModule<Type>, keyof ContainerModule<Type>> {
     toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
 }
 export type Signature = AsyncIterableModule;

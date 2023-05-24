@@ -8,7 +8,7 @@
 
 - [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
-- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\> \| ``"enumerate"`` \| ``"keepType"``\>
+- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>, keyof [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>\>
 
   ↳ **`ReadonlyArrayModule`**
 
@@ -147,6 +147,10 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Overrides
+
+Omit.enumerate
 
 ___
 

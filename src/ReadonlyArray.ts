@@ -83,7 +83,7 @@ export interface ReadonlyArrayModule
   extends ConcreteKeyedContainerModule<Type>,
     Omit<
       EnumerableContainerModule<Type>,
-      keyof ConcreteKeyedContainerModule<Type> | "enumerate" | "keepType"
+      keyof ConcreteKeyedContainerModule<Type>
     > {
   /** @category Transform */
   enumerate<T>(options?: {

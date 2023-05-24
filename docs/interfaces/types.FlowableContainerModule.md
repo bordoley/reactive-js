@@ -12,11 +12,11 @@
 
 ## Hierarchy
 
-- **`FlowableContainerModule`**
+- [`ContainerModule`](types.ContainerModule.md)<`C`\>
 
-  ↳ [`AsyncIterableModule`](AsyncIterable.AsyncIterableModule.md)
+  ↳ **`FlowableContainerModule`**
 
-  ↳ [`EnumerableContainerModule`](types.EnumerableContainerModule.md)
+  ↳↳ [`EnumerableContainerModule`](types.EnumerableContainerModule.md)
 
 ## Table of contents
 

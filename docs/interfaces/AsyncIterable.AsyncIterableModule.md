@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`FlowableContainerModule`](types.FlowableContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type)\>
+- `Omit`<[`FlowableContainerModule`](types.FlowableContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type)\>, keyof [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type)\>\>
 
   ↳ **`AsyncIterableModule`**
 
@@ -34,4 +34,4 @@
 
 #### Overrides
 
-[FlowableContainerModule](types.FlowableContainerModule.md).[toObservable](types.FlowableContainerModule.md#toobservable)
+Omit.toObservable
