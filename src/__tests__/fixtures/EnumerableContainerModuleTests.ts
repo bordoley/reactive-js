@@ -41,10 +41,17 @@ import {
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
 } from "../../types.js";
+import ContainerModuleTests from "./ContainerModuleTests.js";
 
 const EnumerableContainerModuleTests = <C extends Container>(
   m: EnumerableContainerModule<C>,
 ) => [
+  ContainerModuleTests(
+    m,
+    () => Disposable.disposed,
+    <T>() => m.fromReadonlyArray<T>(),
+    <T>() => m.toReadonlyArray<T>(),
+  ),
   describe(
     "EnumerableContainerModule",
     describe(

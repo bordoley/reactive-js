@@ -6,7 +6,9 @@ import * as Scheduler from "../../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectToThrowError, expectTrue, mockFn, test, } from "../../__internal__/testing.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, identity, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
 import { DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, PauseableLike_resume, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../types.js";
+import ContainerModuleTests from "./ContainerModuleTests.js";
 const EnumerableContainerModuleTests = (m) => [
+    ContainerModuleTests(m, () => Disposable.disposed, () => m.fromReadonlyArray(), () => m.toReadonlyArray()),
     describe("EnumerableContainerModule", describe("concat", test("concats the input containers in order", pipeLazy(m.concat(pipe([1, 2, 3], m.fromReadonlyArray()), pipe([4, 5, 6], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatAll", test("concats the input containers in order", pipeLazy([
         pipe([1, 2, 3], m.fromReadonlyArray()),
         pipe([4, 5, 6], m.fromReadonlyArray()),
