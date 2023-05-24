@@ -1,7 +1,7 @@
 import { EnumerableBaseLike, EnumerableLike_enumerate } from "../../types.js";
-const EnumerableBase_enumerate =
+const Observable_enumerate =
   <T>() =>
   (enumerable: EnumerableBaseLike<T>) =>
     enumerable[EnumerableLike_enumerate]();
 
-export default EnumerableBase_enumerate;
+export default Observable_enumerate;

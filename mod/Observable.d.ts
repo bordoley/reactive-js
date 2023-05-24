@@ -1,5 +1,5 @@
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, SchedulerLike } from "./types.js";
+import { Container, Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, MulticastObservableLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, SchedulerLike } from "./types.js";
 export type ObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends EnumerableWithSideEffectsLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends EnumerableBaseLike<TIn> ? EnumerableBaseLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableBaseLike<TIn> ? RunnableBaseLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends DeferredObservableBaseLike<TIn> ? DeferredObservableBaseLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : TObservableIn extends PureObservableLike<TIn> ? PureObservableLike<TOut> : TObservableIn extends ObservableWithSideEffectsLike<TIn> ? ObservableWithSideEffectsLike<TOut> : ObservableLike<TOut>;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableBaseLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableBaseLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableBaseLike<TIn> ? DeferredObservableLike<TOut> : ObservableWithSideEffectsLike<TOut>;
 export type RunnableBoundedObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableBaseLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredObservableBaseLike<TIn> ? DeferredObservableLike<TOut> : ObservableWithSideEffectsLike<TOut>;
@@ -180,6 +180,7 @@ export interface ObservableModule {
     encodeUtf8(): ObservableOperator<string, Uint8Array>;
     endWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
+    enumerate<T>(): Function1<EnumerableBaseLike<T>, EnumeratorLike<T>>;
     everySatisfy<T>(predicate: Predicate<T>): Function1<RunnableBaseLike<T>, boolean>;
     exhaust<T>(): DeferredObservableBoundedObservableOperatorWithSideEffects<DeferredObservableLike<T>, T>;
     exhaustMap<TA, TB>(selector: Function1<TA, DeferredObservableBaseLike<TB>>): DeferredObservableBoundedObservableOperatorWithSideEffects<TA, TB>;
@@ -533,6 +534,7 @@ export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
+export declare const enumerate: Signature["enumerate"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];

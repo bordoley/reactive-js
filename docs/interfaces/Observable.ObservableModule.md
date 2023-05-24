@@ -41,6 +41,7 @@
 - [encodeUtf8](Observable.ObservableModule.md#encodeutf8)
 - [endWith](Observable.ObservableModule.md#endwith)
 - [enqueue](Observable.ObservableModule.md#enqueue)
+- [enumerate](Observable.ObservableModule.md#enumerate)
 - [everySatisfy](Observable.ObservableModule.md#everysatisfy)
 - [exhaust](Observable.ObservableModule.md#exhaust)
 - [exhaustMap](Observable.ObservableModule.md#exhaustmap)
@@ -1813,6 +1814,22 @@ ___
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
+### enumerate
+
+▸ **enumerate**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>, [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>\>
 
 ___
 

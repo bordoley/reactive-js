@@ -2,7 +2,6 @@ import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
 import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toObservable from "./Enumerable/__internal__/Enumerable.toObservable.js";
-import Enumerable_enumerate from "./EnumerableBase/__internal__/EnumerableBase.enumerate.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -10,6 +9,7 @@ import Observable_contains from "./Observable/__internal__/Observable.contains.j
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
+import Observable_enumerate from "./Observable/__internal__/Observable.enumerate.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_first from "./Observable/__internal__/Observable.first.js";
 import Observable_flow from "./Observable/__internal__/Observable.flow.js";
@@ -74,7 +74,7 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const endWith: Signature["endWith"] = Observable_endWith;
-export const enumerate: Signature["enumerate"] = Enumerable_enumerate;
+export const enumerate: Signature["enumerate"] = Observable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Observable_everySatisfy;
 export const first: Signature["first"] = Observable_first;
 export const flow: Signature["flow"] = Observable_flow;

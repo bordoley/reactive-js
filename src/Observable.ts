@@ -23,6 +23,7 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
+import Observable_enumerate from "./Observable/__internal__/Observable.enumerate.js";
 import Observable_everySatisfy from "./Observable/__internal__/Observable.everySatisfy.js";
 import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
@@ -114,6 +115,7 @@ import {
   EnumerableBaseLike,
   EnumerableLike,
   EnumerableWithSideEffectsLike,
+  EnumeratorLike,
   EventSourceLike,
   MulticastObservableLike,
   ObservableLike,
@@ -690,6 +692,8 @@ export interface ObservableModule {
   endWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
+
+  enumerate<T>(): Function1<EnumerableBaseLike<T>, EnumeratorLike<T>>;
 
   everySatisfy<T>(
     predicate: Predicate<T>,
@@ -2176,6 +2180,7 @@ export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
+export const enumerate: Signature["enumerate"] = Observable_enumerate;
 export const everySatisfy: Signature["everySatisfy"] = Observable_everySatisfy;
 export const exhaust: Signature["exhaust"] = Observable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] = Observable_exhaustMap;

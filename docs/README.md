@@ -10,7 +10,6 @@ Reactive-JS
 - [Dictionary](modules/Dictionary.md)
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)
-- [EnumerableWithSideEffects](modules/EnumerableWithSideEffects.md)
 - [EventSource](modules/EventSource.md)
 - [Observable](modules/Observable.md)
 - [Observable/effects](modules/Observable_effects.md)

@@ -6,7 +6,6 @@ import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js"
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
-import EnumerableBase_enumerate from "../../EnumerableBase/__internal__/EnumerableBase.enumerate.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -26,6 +25,7 @@ import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, Disp
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import EnumerableBase_enumerate from "./Observable.enumerate.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function QueuedEnumerator(instance, capacity, backpressureStrategy) {
