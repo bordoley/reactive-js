@@ -45,7 +45,7 @@ import {
 } from "../../functions.js";
 import {
   CollectionLike_count,
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   ObservableLike,
@@ -60,19 +60,19 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   readonly capacity?: number;
   readonly concurrency?: number;
-}) => Function1<ObserverLike<T>, ObserverLike<DeferredObservableLike<T>>> =
+}) => Function1<ObserverLike<T>, ObserverLike<DeferredObservableBaseLike<T>>> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
       [__MergeAllObserver_activeCount]: number;
       readonly [__MergeAllObserver_concurrency]: number;
       readonly [__MergeAllObserver_onDispose]: SideEffect;
       readonly [__MergeAllObserver_observablesQueue]: IndexedQueueLike<
-        DeferredObservableLike<T>
+        DeferredObservableBaseLike<T>
       >;
     };
 
     const subscribeToObservable = (
-      observer: ObserverLike<DeferredObservableLike<T>> &
+      observer: ObserverLike<DeferredObservableBaseLike<T>> &
         DelegatingLike<ObserverLike<T>> &
         TProperties,
       nextObs: ObservableLike<T>,
@@ -97,12 +97,12 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
       mix(
         include(
           Disposable_mixin,
-          Observer_mixin<DeferredObservableLike<T>>(),
+          Observer_mixin<DeferredObservableBaseLike<T>>(),
           Delegating_mixin(),
         ),
         function MergeAllObserver(
           instance: Pick<
-            ObserverLike<DeferredObservableLike<T>>,
+            ObserverLike<DeferredObservableBaseLike<T>>,
             typeof SinkLike_notify
           > &
             Mutable<TProperties>,
@@ -110,7 +110,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
           capacity: number,
           backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
           concurrency: number,
-        ): ObserverLike<DeferredObservableLike<T>> {
+        ): ObserverLike<DeferredObservableBaseLike<T>> {
           init(Disposable_mixin, instance);
           Observer_mixin_initFromDelegate(instance, delegate);
           init(Delegating_mixin<ObserverLike<T>>(), instance, delegate);
@@ -165,10 +165,10 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
         {
           [SinkLike_notify](
             this: TProperties &
-              ObserverLike<DeferredObservableLike<T>> &
+              ObserverLike<DeferredObservableBaseLike<T>> &
               DelegatingLike<ObserverLike<T>> &
-              QueueLike<DeferredObservableLike<T>>,
-            next: DeferredObservableLike<T>,
+              QueueLike<DeferredObservableBaseLike<T>>,
+            next: DeferredObservableBaseLike<T>,
           ) {
             Observer_assertState(this);
 

@@ -1,7 +1,6 @@
 <script>
 import * as Scheduler from "@reactive-js/core/Scheduler";
 import * as Observable from "@reactive-js/core/Observable";
-import * as Runnable from "@reactive-js/core/Runnable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
   bindMethod,
@@ -19,7 +18,7 @@ import * as Store from "@reactive-js/core/Store";
 
   const counter = pipe(
     Observable.generate(increment, returns(-1), { delay: 500 }),
-    Runnable.flow(scheduler),
+    Observable.flow(scheduler),
   );
 
   const pause = bindMethod(counter, PauseableLike_pause);

@@ -2,7 +2,7 @@
 
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_concatAll from "../../Enumerator/__internal__/Enumerator.concatAll.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
@@ -10,9 +10,10 @@ import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyAr
 import ReadonlyArray_isEmpty from "../../ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { bindMethod, invoke, pipe, pipeLazy } from "../../functions.js";
-import { DisposableLike_dispose, EnumerableLike_enumerate, ObservableLike_isDeferred, ObservableLike_isRunnable, ObservableLike_observe, } from "../../types.js";
+import { DisposableLike_dispose, EnumerableLike_enumerate, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 const Observable_concatMany = 
@@ -37,11 +38,13 @@ const Observable_concatMany =
         const isEnumerable = Observable_allAreEnumerable(observables);
         const isDeferred = Observable_allAreDeferred(observables);
         const isRunnable = Observable_allAreRunnable(observables);
+        const isPure = Observable_allArePure(observables);
         return isEnumerable
-            ? Enumerable_create(pipeLazy(observables, ReadonlyArray_map(invoke(EnumerableLike_enumerate)), ReadonlyArray_enumerate(), Enumerator_concatAll()))
+            ? Enumerable_create(pipeLazy(observables, ReadonlyArray_map(invoke(EnumerableLike_enumerate)), ReadonlyArray_enumerate(), Enumerator_concatAll()), isPure)
             : Observable_createWithConfig(onSubscribe, {
                 [ObservableLike_isDeferred]: isDeferred,
                 [ObservableLike_isRunnable]: isRunnable,
+                [ObservableLike_isPure]: isPure,
             });
     };
 })();

@@ -3,7 +3,7 @@ import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
@@ -35,11 +35,12 @@ import {
   unsafeCast,
 } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EnumerableBaseLike,
   EnumerableLike,
   EnumerableLike_enumerate,
   EnumeratorLike,
@@ -53,12 +54,13 @@ import {
 } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_isPure from "./Observable.isPure.js";
 import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Observable.DeferredObservableLowerBoundObservableOperator<T, T>;
+) => Observable.DeferredObservableOperator<T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,
@@ -113,7 +115,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
       include(Delegating_mixin(), Disposable_mixin),
       function RepeatOrRetryEnumerator(
         instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & TProperties,
-        delegate: EnumerableLike<T>,
+        delegate: EnumerableBaseLike<T>,
         shouldRepeat: Function2<number, Optional<Error>, boolean>,
       ): EnumeratorLike<T> {
         init(Delegating_mixin(), instance, delegate);
@@ -182,10 +184,11 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   );
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: DeferredObservableLike<T>) => {
+    (observable: DeferredObservableBaseLike<T>) => {
       if (Observable_isEnumerable(observable)) {
-        return Enumerable_create(() =>
-          createRepeatOrRetryEnumerator(observable, shouldRepeat),
+        return Enumerable_create(
+          () => createRepeatOrRetryEnumerator(observable, shouldRepeat),
+          Observable_isPure(observable),
         );
       } else {
         const operator = pipe(

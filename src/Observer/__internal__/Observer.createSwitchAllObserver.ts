@@ -23,7 +23,7 @@ import {
 } from "../../__internal__/types.js";
 import { bind, bindMethod, none, pipe } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -36,7 +36,7 @@ import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createSwitchAllObserver: <T>(
   o: ObserverLike<T>,
-) => ObserverLike<DeferredObservableLike<T>> = /*@__PURE__*/ (<T>() => {
+) => ObserverLike<DeferredObservableBaseLike<T>> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     readonly [__HigherOrderObservable_currentRef]: SerialDisposableLike;
   };
@@ -57,17 +57,17 @@ const Observer_createSwitchAllObserver: <T>(
     mix(
       include(
         Disposable_mixin,
-        Observer_mixin<DeferredObservableLike<T>>(),
+        Observer_mixin<DeferredObservableBaseLike<T>>(),
         Delegating_mixin(),
       ),
       function SwitchAllObserver(
         instance: Pick<
-          ObserverLike<DeferredObservableLike<T>>,
+          ObserverLike<DeferredObservableBaseLike<T>>,
           typeof SinkLike_notify
         > &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
-      ): ObserverLike<DeferredObservableLike<T>> {
+      ): ObserverLike<DeferredObservableBaseLike<T>> {
         init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         init(Delegating_mixin(), instance, delegate);
@@ -87,11 +87,11 @@ const Observer_createSwitchAllObserver: <T>(
       {
         [SinkLike_notify](
           this: TProperties &
-            ObserverLike<DeferredObservableLike<T>> &
+            ObserverLike<DeferredObservableBaseLike<T>> &
             SerialDisposableLike &
             DelegatingLike<ObserverLike<T>> &
             DelegatingLike<ObserverLike>,
-          next: DeferredObservableLike<T>,
+          next: DeferredObservableBaseLike<T>,
         ) {
           Observer_assertState(this);
           this[__HigherOrderObservable_currentRef][

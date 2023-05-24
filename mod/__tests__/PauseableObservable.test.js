@@ -3,7 +3,6 @@
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
 import ReadonlyArray_flow from "../ReadonlyArray/__internal__/ReadonlyArray.flow.js";
-import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
@@ -29,7 +28,7 @@ testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Sche
     const src = pipe(Observable.generate(increment, returns(-1), {
         delay: 1,
         delayStart: true,
-    }), Runnable.flow(scheduler), PauseableObservable.takeFirst({ count: 5 }));
+    }), Observable.flow(scheduler), PauseableObservable.takeFirst({ count: 5 }));
     const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
         backpressureStrategy: "throw",
         capacity: 1,

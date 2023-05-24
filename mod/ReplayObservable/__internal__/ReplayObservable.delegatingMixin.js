@@ -3,7 +3,7 @@
 import { mix, props } from "../../__internal__/mixins.js";
 import { __DelegatingReplayObservableMixin_delegate } from "../../__internal__/symbols.js";
 import { none, returns, unsafeCast } from "../../functions.js";
-import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, } from "../../types.js";
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, } from "../../types.js";
 const ReplayObservable_delegatingMixin = /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingReplayObservableMixin(instance, delegate) {
         instance[__DelegatingReplayObservableMixin_delegate] = delegate;
@@ -13,6 +13,7 @@ const ReplayObservable_delegatingMixin = /*@__PURE__*/ (() => {
     }), {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
         get [ReplayObservableLike_buffer]() {
             unsafeCast(this);

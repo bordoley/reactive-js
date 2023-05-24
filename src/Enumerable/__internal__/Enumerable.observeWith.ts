@@ -3,7 +3,7 @@ import { none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EnumerableLike,
+  EnumerableBaseLike,
   EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
@@ -19,7 +19,7 @@ const Enumerable_observeWith =
     observer: ObserverLike<T>,
     options?: { delay?: number; delayStart?: boolean },
   ) =>
-  (enumerable: EnumerableLike<T>) => {
+  (enumerable: EnumerableBaseLike<T>) => {
     const { delay = 0, delayStart = false } = options ?? {};
 
     const enumerator = pipe(

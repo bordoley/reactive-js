@@ -51,6 +51,8 @@ export const __ObservableLike_isDeferred: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_isEnumerable: unique symbol;
 /** @type {unique symbol} */
+export const __ObservableLike_isPure: unique symbol;
+/** @type {unique symbol} */
 export const __ObservableLike_isRunnable: unique symbol;
 /** @type {unique symbol} */
 export const __PauseableLike_isPaused: unique symbol;
@@ -265,7 +267,7 @@ export const __CreateEventSource_createDelegate: unique symbol;
 /** @type {unique symbol} */
 export const __CreateObservable_effect: unique symbol;
 /** @type {unique symbol} */
-export const __DispatchedObservable_observer: unique symbol;
+export const __DispatchedObservable_dispatcher: unique symbol;
 /** @type {unique symbol} */
 export const __EnqueueObserver_queue: unique symbol;
 /** @type {unique symbol} */

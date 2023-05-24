@@ -1,4 +1,4 @@
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import type * as Observable from "../../Observable.js";
 import {
   Function1,
@@ -31,7 +31,7 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
             ),
             invoke(EnumerableLike_enumerate),
           );
-        })
+        }, true)
       : Observable_createWithConfig(observer => {
           const textEncoder = newInstance(TextEncoder);
 

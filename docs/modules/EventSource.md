@@ -29,7 +29,6 @@
 
 - [buffer](EventSource.md#buffer)
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
-- [flatMapIterable](EventSource.md#flatmapiterable)
 - [keep](EventSource.md#keep)
 - [keepType](EventSource.md#keeptype)
 - [map](EventSource.md#map)
@@ -214,29 +213,6 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
 
 ___
 

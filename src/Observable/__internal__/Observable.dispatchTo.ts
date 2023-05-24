@@ -1,5 +1,5 @@
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createDispatchToObserver from "../../Observer/__internal__/Observer.createDispatchToObserver.js";
 import {
@@ -39,6 +39,7 @@ const Observable_dispatchTo: Observable.Signature["dispatchTo"] = (<T>(
               bindMethod(dispatcher, DispatcherLike_complete),
             ),
           ),
+          false,
         )
       : lift(observable);
 }) as Observable.Signature["dispatchTo"];

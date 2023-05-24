@@ -4,6 +4,7 @@ import { none, returns, unsafeCast } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -37,6 +38,7 @@ const ReplayObservable_delegatingMixin: <T>() => Mixin1<
       {
         [ObservableLike_isDeferred]: false as const,
         [ObservableLike_isEnumerable]: false as const,
+        [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
 
         get [ReplayObservableLike_buffer]() {

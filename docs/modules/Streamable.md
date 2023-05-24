@@ -48,7 +48,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](functions.md#function1)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -259,7 +259,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 
@@ -279,7 +279,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 
@@ -299,7 +299,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -321,7 +321,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 
 #### Returns
 
@@ -368,8 +368,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `persistentStore` | `Object` |
-| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](functions.md#optional)<`T`\>\>\>\> |
-| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`void`\> |
+| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`Readonly`<`Record`<`string`, [`Optional`](functions.md#optional)<`T`\>\>\>\> |
+| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`void`\> |
 | `options?` | `Object` |
 | `options.capacity?` | `number` |
 | `options.cleanupScheduler?` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |

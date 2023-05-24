@@ -17,7 +17,7 @@ import {
   Updater,
 } from "./functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReadonlyObjectMapLike,
@@ -35,7 +35,10 @@ export interface StreamableModule {
    * @category Constructor
    */
   create<TReq, T>(
-    op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<
+      DeferredObservableBaseLike<TReq>,
+      DeferredObservableBaseLike<T>
+    >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   createAnimationGroupEventHandler<
@@ -141,15 +144,15 @@ export interface StreamableModule {
   >;
 
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableBaseLike<unknown>>,
     options: { readonly mode: "switching" },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableBaseLike<unknown>>,
     options: { readonly mode: "blocking" },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableBaseLike<unknown>>,
     options: {
       readonly mode: "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -157,7 +160,7 @@ export interface StreamableModule {
     },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableBaseLike<unknown>>,
   ): StreamableLike<TEventType, boolean>;
 
   createInMemoryCache<T>(options?: {
@@ -169,8 +172,10 @@ export interface StreamableModule {
     persistentStore: {
       load(
         keys: ReadonlySet<string>,
-      ): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-      store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+      ): DeferredObservableBaseLike<Readonly<Record<string, Optional<T>>>>;
+      store(
+        updates: Readonly<Record<string, T>>,
+      ): DeferredObservableBaseLike<void>;
     },
     options?: {
       readonly capacity?: number;

@@ -9,12 +9,12 @@ import Observable_ignoreElements from "../../Observable/__internal__/Observable.
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import Observable_mergeMany from "../../Observable/__internal__/Observable.mergeMany.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
+import Observable_toReadonlyArray from "../../Observable/__internal__/Observable.toReadonlyArray.js";
 import ReadonlyObjectMap_keys from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
 import ReadonlyObjectMap_map from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
 import ReadonlyObjectMap_mapWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_values from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
-import Runnable_toReadonlyArray from "../../Runnable/__internal__/Runnable.toReadonlyArray.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
@@ -30,7 +30,7 @@ export const Streamable_createAnimationGroupEventHandlerStream = /*@__PURE__*/ (
                     publisher[SinkLike_notify](value);
                 }
             }), Observable_ignoreElements())));
-            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), Observable_map(Observable_subscribeOn(animationScheduler)), Runnable_toReadonlyArray());
+            const deferredAnimatedObservables = pipe(observables, ReadonlyObjectMap_values(), Observable_map(Observable_subscribeOn(animationScheduler)), Observable_toReadonlyArray());
             return Observable_mergeMany(deferredAnimatedObservables);
         }, creationOptions)[StreamableLike_stream](scheduler, streamOptions);
         init(Stream_delegatingMixin(), instance, streamDelegate);

@@ -34,6 +34,7 @@ import {
   KeyedCollectionLike_get,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -60,6 +61,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
             | typeof ObservableLike_observe
             | typeof ObservableLike_isDeferred
             | typeof ObservableLike_isEnumerable
+            | typeof ObservableLike_isPure
             | typeof ObservableLike_isRunnable
             | typeof PublisherLike_observerCount
             | typeof ReplayObservableLike_buffer
@@ -107,6 +109,7 @@ const Observable_createPublisher: Observable.Signature["createPublisher"] =
           [EventListenerLike_isErrorSafe]: true as const,
           [ObservableLike_isDeferred]: false as const,
           [ObservableLike_isEnumerable]: false as const,
+          [ObservableLike_isPure]: true as const,
           [ObservableLike_isRunnable]: false as const,
 
           get [PublisherLike_observerCount]() {

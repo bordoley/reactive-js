@@ -18,8 +18,6 @@
 
   ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
 
-  ↳ [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)
-
   ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
 
   ↳ [`PromiseContainer`](Promise.PromiseContainer.md)

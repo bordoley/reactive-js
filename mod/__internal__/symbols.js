@@ -54,6 +54,8 @@ export const __ObservableLike_isDeferred = /*@__PURE__*/ symbol("ObservableLike_
 /** @type {unique symbol} */
 export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol("ObservableLike_isEnumerable");
 /** @type {unique symbol} */
+export const __ObservableLike_isPure = /*@__PURE__*/ symbol("ObservableLike_isPure");
+/** @type {unique symbol} */
 export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol("ObservableLike_isRunnable");
 /** @type {unique symbol} */
 export const __PauseableLike_isPaused = /*@__PURE__*/ symbol("PauseableLike_isPaused");
@@ -274,7 +276,7 @@ export const __CreateEventSource_createDelegate = /*@__PURE__*/ symbol("CreateEv
 /** @type {unique symbol} */
 export const __CreateObservable_effect = /*@__PURE__*/ symbol("CreateObservable_effect");
 /** @type {unique symbol} */
-export const __DispatchedObservable_observer = /*@__PURE__*/ symbol("DispatchedObservable_observer");
+export const __DispatchedObservable_dispatcher = /*@__PURE__*/ symbol("DispatchedObservable_dispatcher");
 /** @type {unique symbol} */
 export const __EnqueueObserver_queue = /*@__PURE__*/ symbol("EnqueueObserver_queue");
 /** @type {unique symbol} */

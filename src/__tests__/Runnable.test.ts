@@ -1,19 +1,15 @@
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
-import * as Scheduler from "../Scheduler.js";
 import {
   describe,
   expectArrayEquals,
-  expectToHaveBeenCalledTimes,
   expectToThrowAsync,
-  expectTrue,
-  mockFn,
   test,
   testModule,
 } from "../__internal__/testing.js";
 import {
-  arrayEquality,
+  Optional,
   increment,
   isSome,
   none,
@@ -21,21 +17,10 @@ import {
   pipeLazy,
   returns,
 } from "../functions.js";
-import {
-  DisposableLike_dispose,
-  DisposableLike_isDisposed,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  RunnableLike,
-  SchedulerLike_now,
-  SchedulerLike_schedule,
-  VirtualTimeSchedulerLike_run,
-} from "../types.js";
-import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+import { RunnableLike } from "../types.js";
 
 testModule(
   "Runnable",
-  ...RunnableContainerModuleTests(Runnable),
   describe(
     "compute",
     test(
@@ -55,8 +40,8 @@ testModule(
 
           return result1 + result2 + result3;
         }),
-        Runnable.takeLast<number>(),
-        Runnable.toReadonlyArray(),
+        Observable.takeLast<number>(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([22]),
       ),
     ),
@@ -69,7 +54,7 @@ testModule(
               pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
             );
             const createOneTwoThree = __constant((_: unknown) =>
-              pipe([1, 2, 3], Runnable.fromReadonlyArray()),
+              pipe([1, 2, 3], Observable.fromReadonlyArray()),
             );
 
             const v = __await(oneTwoThreeDelayed);
@@ -78,8 +63,8 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        Runnable.keepType(isSome),
-        Runnable.toReadonlyArray(),
+        Observable.keepType<Optional<number>, number>(isSome),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -108,7 +93,7 @@ testModule(
           }
           return v;
         }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([
           101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
         ]),
@@ -128,7 +113,7 @@ testModule(
         ],
         Observable.fromReadonlyArray(),
         Runnable.exhaust<number>(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -144,73 +129,10 @@ testModule(
         Runnable.exhaustMap<number, number>(_ =>
           pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
-  ),
-
-  describe(
-    "flow",
-    test("a source with delay", () => {
-      const scheduler = Scheduler.createVirtualTimeScheduler();
-
-      const generateObservable = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
-        Runnable.flow(scheduler),
-      );
-
-      generateObservable[PauseableLike_resume](),
-        scheduler[SchedulerLike_schedule](
-          () => generateObservable[PauseableLike_pause](),
-          {
-            delay: 2,
-          },
-        );
-
-      scheduler[SchedulerLike_schedule](
-        () => generateObservable[PauseableLike_resume](),
-        {
-          delay: 4,
-        },
-      );
-
-      scheduler[SchedulerLike_schedule](
-        () => generateObservable[DisposableLike_dispose](),
-        {
-          delay: 6,
-        },
-      );
-
-      const f = mockFn();
-      const subscription = pipe(
-        generateObservable,
-        Observable.forEach((x: number) => {
-          f(scheduler[SchedulerLike_now], x);
-        }),
-        Observable.subscribe(scheduler),
-      );
-
-      scheduler[VirtualTimeSchedulerLike_run]();
-
-      pipe(f, expectToHaveBeenCalledTimes(3));
-      pipe(
-        f.calls as [][],
-        expectArrayEquals(
-          [
-            [1, 0],
-            [2, 1],
-            [5, 2],
-          ],
-          arrayEquality(),
-        ),
-      );
-
-      pipe(subscription[DisposableLike_isDisposed], expectTrue);
-    }),
   ),
 
   describe(
@@ -223,7 +145,7 @@ testModule(
         Runnable.mergeMap<number, number>(x =>
           pipe([x, x, x], Observable.fromReadonlyArray<number>()),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
@@ -236,7 +158,7 @@ testModule(
       pipeLazy(
         Observable.empty<RunnableLike>(),
         Runnable.switchAll<number>(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([] as readonly number[]),
       ),
     ),
@@ -269,7 +191,7 @@ testModule(
             }),
           ),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([3, 3, 3]),
       ),
     ),
@@ -285,7 +207,7 @@ testModule(
         Runnable.switchMap<void, number>(_ =>
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 1, 2, 1, 2, 3]),
       ),
     ),
@@ -298,7 +220,7 @@ testModule(
         Runnable.switchMap<number, number>(_ =>
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 0 })),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),

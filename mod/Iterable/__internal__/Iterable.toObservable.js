@@ -1,7 +1,7 @@
 /// <reference types="./Iterable.toObservable.d.ts" />
 
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
@@ -26,6 +26,6 @@ const Iterable_toObservable = ((options) => (iterable) => {
     };
     return delay > 0
         ? Runnable_create(onSubscribe)
-        : Enumerable_create(pipeLazy(iterable, Iterable_enumerate()));
+        : Enumerable_create(pipeLazy(iterable, Iterable_enumerate()), false);
 });
 export default Iterable_toObservable;

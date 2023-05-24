@@ -1,3 +1,4 @@
+import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
@@ -44,7 +45,6 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
-import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Function1, TypePredicate } from "./functions.js";
 import {
   ConcreteKeyedContainerModule,
@@ -90,6 +90,15 @@ export interface ReadonlyArrayModule
     readonly start?: number;
     readonly count?: number;
   }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
+
+  /**
+   * @category Operator
+   */
+  flatMapIterable<TA, TB>(
+    selector: Function1<TA, Iterable<TB>>,
+  ): Function1<ReadonlyArray<TA>, ReadonlyArray<TB>>;
+
+  fromIterable<T>(): Function1<Iterable<T>, readonly T[]>;
 
   /**
    * @category Operator
@@ -157,7 +166,7 @@ export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;
 export const fromEnumerable: Signature["fromEnumerable"] =
-  Runnable_toReadonlyArray;
+  Observable_toReadonlyArray;
 export const fromFactory: Signature["fromFactory"] = ReadonlyArray_fromFactory;
 export const fromIterable: Signature["fromIterable"] =
   ReadonlyArray_fromIterable;

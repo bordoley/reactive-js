@@ -15,18 +15,26 @@ import {
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";
 
 const Observable_liftMixin: <TIn, TOut>() => Mixin3<
-  LiftedLike<ObservableLike<TIn>, ObserverLike> & ObservableLike<TOut>,
+  LiftedLike<ObservableLike<TIn>, ObserverLike> &
+    ObservableLike<TOut> & {
+      [ObservableLike_isEnumerable]: false;
+    },
   ObservableLike<TIn>,
   readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   {
     readonly [ObservableLike_isDeferred]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
+  },
+  unknown,
+  Pick<ObservableLike<TOut>, typeof ObservableLike_observe> & {
+    [ObservableLike_isEnumerable]: false;
   }
 > = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
@@ -42,14 +50,20 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
   return returns(
     mix(
       function LiftedObservable(
-        instance: TProperties & ObservableLike<TOut>,
+        instance: TProperties &
+          ObservableLike<TOut> & {
+            [ObservableLike_isEnumerable]: false;
+          },
         source: ObservableLike<TIn>,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
           readonly [ObservableLike_isRunnable]: boolean;
         },
-      ): LiftedLike<ObservableLike<TIn>, ObserverLike> & ObservableLike<TOut> {
+      ): LiftedLike<ObservableLike<TIn>, ObserverLike> &
+        ObservableLike<TOut> & {
+          [ObservableLike_isEnumerable]: false;
+        } {
         instance[LiftedLike_source] = source;
         instance[LiftedLike_operators] = ops;
 
@@ -65,6 +79,7 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
         [ObservableLike_isRunnable]: false,
       }),
       {
+        [ObservableLike_isPure]: false,
         [ObservableLike_isEnumerable]: false as const,
 
         [ObservableLike_observe](

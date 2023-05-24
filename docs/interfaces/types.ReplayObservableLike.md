@@ -39,8 +39,6 @@ A stateful ObservableLike resource.
 
 • `Readonly` **[\_\_\_ObservableLike\_isDeferred]**: ``false``
 
-Indicates if the `ObservableLike` is deferred, ie. cold.
-
 #### Overrides
 
 [MulticastObservableLike](types.MulticastObservableLike.md).[[___ObservableLike_isDeferred]](types.MulticastObservableLike.md#[___observablelike_isdeferred])
@@ -51,8 +49,6 @@ ___
 
 • `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: ``false``
 
-Indicates if the `ObservableLike` supports interactive enumeration.
-
 #### Overrides
 
 [MulticastObservableLike](types.MulticastObservableLike.md).[[___ObservableLike_isEnumerable]](types.MulticastObservableLike.md#[___observablelike_isenumerable])
@@ -62,9 +58,6 @@ ___
 ### [\_\_\_ObservableLike\_isRunnable]
 
 • `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``false``
-
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
 
 #### Overrides
 

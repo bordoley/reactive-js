@@ -5,8 +5,8 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_enumerate from "../../Enumerable/__internal__/Enumerable.enumerate.js";
 import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
+import EnumerableBase_enumerate from "../../EnumerableBase/__internal__/EnumerableBase.enumerate.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -97,7 +97,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         const enumerators = [];
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
-                const enumerator = pipe(next, Enumerable_enumerate(), Disposable_addTo(observer));
+                const enumerator = pipe(next, EnumerableBase_enumerate(), Disposable_addTo(observer));
                 enumerators.push(enumerator);
             }
             else {

@@ -4,12 +4,6 @@
 
 [Runnable](../modules/Runnable.md).RunnableModule
 
-## Hierarchy
-
-- [`RunnableContainerModule`](types.RunnableContainerModule.md)<[`Type`](../modules/Runnable.md#type)\>
-
-  ↳ **`RunnableModule`**
-
 ## Table of contents
 
 ### Constructor Methods
@@ -18,6 +12,8 @@
 
 ### Operator Methods
 
+- [concatAll](Runnable.RunnableModule.md#concatall)
+- [concatMap](Runnable.RunnableModule.md#concatmap)
 - [exhaust](Runnable.RunnableModule.md#exhaust)
 - [exhaustMap](Runnable.RunnableModule.md#exhaustmap)
 - [mergeAll](Runnable.RunnableModule.md#mergeall)
@@ -57,9 +53,9 @@ ___
 
 ## Operator Methods
 
-### exhaust
+### concatAll
 
-▸ **exhaust**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ **concatAll**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -69,13 +65,52 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+
+___
+
+### exhaust
+
+▸ **exhaust**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -88,17 +123,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ **mergeAll**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -117,13 +152,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -136,7 +171,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TB`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -144,13 +179,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ **switchAll**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -160,13 +195,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -179,11 +214,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](types.RunnableLike.md)<`TB`\>\>
 
 ___
 
@@ -191,7 +226,7 @@ ___
 
 ### run
 
-▸ **run**<`T`\>(`options?`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+▸ **run**<`T`\>(`options?`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -209,4 +244,4 @@ ___
 
 #### Returns
 
-[`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>\>
+[`SideEffect1`](../modules/functions.md#sideeffect1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>\>

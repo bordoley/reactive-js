@@ -35,6 +35,7 @@ import {
 } from "../../functions.js";
 import {
   DisposableLike,
+  EnumerableBaseLike,
   IndexedBufferCollectionLike,
   MulticastObservableLike,
   ObservableLike_observe,
@@ -322,7 +323,7 @@ export const subscribe: (
               ? Observable.enqueue(replaceState)
               : push
               ? Observable.enqueue(pushState)
-              : identity,
+              : identity<EnumerableBaseLike>,
             Observable.ignoreElements(),
           );
         },

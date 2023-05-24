@@ -2,7 +2,7 @@ import { Animation } from "./Observable.js";
 import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
 import type Streamable_createCache from "./Streamable/__internal__/Streamable.createCache.js";
 import { Equality, Factory, Function1, Optional, Updater } from "./functions.js";
-import { DeferredObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
+import { DeferredObservableBaseLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Module
@@ -11,7 +11,7 @@ export interface StreamableModule {
     /**
      * @category Constructor
      */
-    create<TReq, T>(op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+    create<TReq, T>(op: Function1<DeferredObservableBaseLike<TReq>, DeferredObservableBaseLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;
@@ -40,25 +40,25 @@ export interface StreamableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): StreamableLike<void, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>>>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableBaseLike<unknown>>, options: {
         readonly mode: "switching";
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableBaseLike<unknown>>, options: {
         readonly mode: "blocking";
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableBaseLike<unknown>>, options: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>): StreamableLike<TEventType, boolean>;
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableBaseLike<unknown>>): StreamableLike<TEventType, boolean>;
     createInMemoryCache<T>(options?: {
         readonly capacity?: number;
         readonly cleanupScheduler?: SchedulerLike;
     }): ReturnType<typeof Streamable_createCache<T>>;
     createPersistentCache<T>(persistentStore: {
-        load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
-        store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+        load(keys: ReadonlySet<string>): DeferredObservableBaseLike<Readonly<Record<string, Optional<T>>>>;
+        store(updates: Readonly<Record<string, T>>): DeferredObservableBaseLike<void>;
     }, options?: {
         readonly capacity?: number;
         readonly cleanupScheduler?: SchedulerLike;

@@ -23,7 +23,6 @@
 - [empty](Enumerable.md#empty)
 - [fromEnumerable](Enumerable.md#fromenumerable)
 - [fromFactory](Enumerable.md#fromfactory)
-- [fromIterable](Enumerable.md#fromiterable)
 - [fromOptional](Enumerable.md#fromoptional)
 - [fromReadonlyArray](Enumerable.md#fromreadonlyarray)
 - [fromValue](Enumerable.md#fromvalue)
@@ -37,7 +36,6 @@
 - [concatWith](Enumerable.md#concatwith)
 - [distinctUntilChanged](Enumerable.md#distinctuntilchanged)
 - [endWith](Enumerable.md#endwith)
-- [flatMapIterable](Enumerable.md#flatmapiterable)
 - [keep](Enumerable.md#keep)
 - [keepType](Enumerable.md#keeptype)
 - [map](Enumerable.md#map)
@@ -158,22 +156,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 ___
 
@@ -592,29 +574,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `T`, `T`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EnumerableContainer`](../interfaces/Enumerable.EnumerableContainer.md), `TA`, `TB`\>
 
 ___
 

@@ -4,7 +4,7 @@
 
 [types](../modules/types.md).EnumerableLike
 
-An `ObservableLike` that supports interactive enumeration.
+An `EnumerableLike` that yields no side effects when enumerated
 
 ## Type parameters
 
@@ -14,7 +14,9 @@ An `ObservableLike` that supports interactive enumeration.
 
 ## Hierarchy
 
-- [`RunnableLike`](types.RunnableLike.md)<`T`\>
+- [`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>
+
+- [`PureObservableLike`](types.PureObservableLike.md)<`T`\>
 
   ↳ **`EnumerableLike`**
 
@@ -22,13 +24,22 @@ An `ObservableLike` that supports interactive enumeration.
 
 ### Properties
 
+- [[\_\_\_ObservableLike\_isDeferred]](types.EnumerableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](types.EnumerableLike.md#[___observablelike_isenumerable])
-
-### Methods
-
-- [[\_\_\_EnumerableLike\_enumerate]](types.EnumerableLike.md#[___enumerablelike_enumerate])
+- [[\_\_\_ObservableLike\_isPure]](types.EnumerableLike.md#[___observablelike_ispure])
+- [[\_\_\_ObservableLike\_isRunnable]](types.EnumerableLike.md#[___observablelike_isrunnable])
 
 ## Properties
+
+### [\_\_\_ObservableLike\_isDeferred]
+
+• `Readonly` **[\_\_\_ObservableLike\_isDeferred]**: ``true``
+
+#### Overrides
+
+[EnumerableBaseLike](types.EnumerableBaseLike.md).[[___ObservableLike_isDeferred]](types.EnumerableBaseLike.md#[___observablelike_isdeferred])
+
+___
 
 ### [\_\_\_ObservableLike\_isEnumerable]
 
@@ -36,14 +47,26 @@ An `ObservableLike` that supports interactive enumeration.
 
 #### Overrides
 
-RunnableLike.\_\_@\_\_\_ObservableLike\_isEnumerable@22431
+[EnumerableBaseLike](types.EnumerableBaseLike.md).[[___ObservableLike_isEnumerable]](types.EnumerableBaseLike.md#[___observablelike_isenumerable])
 
-## Methods
+___
 
-### [\_\_\_EnumerableLike\_enumerate]
+### [\_\_\_ObservableLike\_isPure]
 
-▸ **[___EnumerableLike_enumerate]**(): [`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>
+• `Readonly` **[\_\_\_ObservableLike\_isPure]**: ``true``
 
-#### Returns
+Indicates if subscribing to the `ObservableLike` is free of side-effects
 
-[`EnumeratorLike`](types.EnumeratorLike.md)<`T`\>
+#### Overrides
+
+[PureObservableLike](types.PureObservableLike.md).[[___ObservableLike_isPure]](types.PureObservableLike.md#[___observablelike_ispure])
+
+___
+
+### [\_\_\_ObservableLike\_isRunnable]
+
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``true``
+
+#### Overrides
+
+[EnumerableBaseLike](types.EnumerableBaseLike.md).[[___ObservableLike_isRunnable]](types.EnumerableBaseLike.md#[___observablelike_isrunnable])

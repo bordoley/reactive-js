@@ -1,7 +1,7 @@
 /// <reference types="./Observable.generate.d.ts" />
 
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
@@ -31,6 +31,6 @@ const Observable_generate = ((generator, initialValue, options) => {
     };
     return delay > 0
         ? Runnable_create(onSubscribe)
-        : Enumerable_create(generateEnumerator(generator, initialValue));
+        : Enumerable_create(generateEnumerator(generator, initialValue), true);
 });
 export default Observable_generate;

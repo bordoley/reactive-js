@@ -16,11 +16,11 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 - **`ObservableLike`**
 
-  ↳ [`MulticastObservableLike`](types.MulticastObservableLike.md)
+  ↳ [`PureObservableLike`](types.PureObservableLike.md)
 
-  ↳ [`DeferredObservableLike`](types.DeferredObservableLike.md)
+  ↳ [`ObservableWithSideEffectsLike`](types.ObservableWithSideEffectsLike.md)
 
-  ↳ [`PauseableObservableLike`](types.PauseableObservableLike.md)
+  ↳ [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)
 
 ## Table of contents
 
@@ -28,6 +28,7 @@ The source of notifications which can be consumed by an `ObserverLike` instance.
 
 - [[\_\_\_ObservableLike\_isDeferred]](types.ObservableLike.md#[___observablelike_isdeferred])
 - [[\_\_\_ObservableLike\_isEnumerable]](types.ObservableLike.md#[___observablelike_isenumerable])
+- [[\_\_\_ObservableLike\_isPure]](types.ObservableLike.md#[___observablelike_ispure])
 - [[\_\_\_ObservableLike\_isRunnable]](types.ObservableLike.md#[___observablelike_isrunnable])
 
 ### Methods
@@ -49,6 +50,14 @@ ___
 • `Readonly` **[\_\_\_ObservableLike\_isEnumerable]**: `boolean`
 
 Indicates if the `ObservableLike` supports interactive enumeration.
+
+___
+
+### [\_\_\_ObservableLike\_isPure]
+
+• `Readonly` **[\_\_\_ObservableLike\_isPure]**: `boolean`
+
+Indicates if subscribing to the `ObservableLike` is free of side-effects
 
 ___
 

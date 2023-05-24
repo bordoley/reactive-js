@@ -10,7 +10,7 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -25,7 +25,7 @@ const Observable_actionReducer =
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
   ) =>
-  (obs: DeferredObservableLike<TAction>) =>
+  (obs: DeferredObservableBaseLike<TAction>) =>
     Observable_create((observer: ObserverLike<T>) => {
       const acc = initialState();
       return pipe(

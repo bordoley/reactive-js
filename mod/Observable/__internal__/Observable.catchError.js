@@ -6,7 +6,7 @@ import Enumerator_createWithDelegate from "../../Enumerator/__internal__/Enumera
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import { bindMethod, error, pipe } from "../../functions.js";
 import { DisposableLike_dispose, } from "../../types.js";
-import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observable_catchError = 
 /*@__PURE__*/ (() => {
     const createCatchErrorEnumerator = (errorHandler) => (delegate) => {
@@ -31,6 +31,6 @@ const Observable_catchError =
             delegate[DisposableLike_dispose](error([error(e), err]));
         }
     }));
-    return (errorHandler) => Observable_liftEnumerableUpperBound(createCatchErrorEnumerator(errorHandler), createCatchErrorObserver(errorHandler));
+    return (errorHandler) => Observable_liftWithSideEffects(createCatchErrorEnumerator(errorHandler), createCatchErrorObserver(errorHandler));
 })();
 export default Observable_catchError;

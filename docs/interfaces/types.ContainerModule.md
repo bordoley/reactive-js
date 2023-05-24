@@ -16,11 +16,9 @@
 
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
-  ↳ [`ObservableModule`](Observable.ObservableModule.md)
-
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
-  ↳ [`RunnableContainerModule`](types.RunnableContainerModule.md)
+  ↳ [`EnumerableContainerModule`](types.EnumerableContainerModule.md)
 
 ## Table of contents
 
@@ -28,7 +26,6 @@
 
 - [buffer](types.ContainerModule.md#buffer)
 - [distinctUntilChanged](types.ContainerModule.md#distinctuntilchanged)
-- [flatMapIterable](types.ContainerModule.md#flatmapiterable)
 - [keep](types.ContainerModule.md#keep)
 - [keepType](types.ContainerModule.md#keeptype)
 - [map](types.ContainerModule.md#map)
@@ -89,29 +86,6 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`\>
 
 ___
 

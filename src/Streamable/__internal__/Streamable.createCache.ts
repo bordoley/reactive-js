@@ -47,7 +47,7 @@ import {
   AssociativeCollectionLike,
   AssociativeCollectionLike_keys,
   CollectionLike_count,
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DispatcherLike,
   DisposableLike,
   DisposableLike_isDisposed,
@@ -73,10 +73,10 @@ import Streamable_create from "./Streamable.create.js";
 interface ReactiveCachePersistentStorageLike<T> {
   load(
     keys: ReadonlySet<string>,
-  ): DeferredObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+  ): DeferredObservableBaseLike<ReadonlyObjectMapLike<string, Optional<T>>>;
   store(
     updates: ReadonlyObjectMapLike<string, Optional<T>>,
-  ): DeferredObservableLike<void>;
+  ): DeferredObservableBaseLike<void>;
 }
 
 type CacheLike<T> = StreamableLike<
@@ -381,10 +381,10 @@ const Streamable_createCache = <T>(
   persistentStore: Optional<{
     load(
       keys: ReadonlySet<string>,
-    ): DeferredObservableLike<ReadonlyObjectMapLike<string, Optional<T>>>;
+    ): DeferredObservableBaseLike<ReadonlyObjectMapLike<string, Optional<T>>>;
     store(
       updates: ReadonlyObjectMapLike<string, T>,
-    ): DeferredObservableLike<void>;
+    ): DeferredObservableBaseLike<void>;
   }>,
   options: {
     readonly capacity?: number;

@@ -24,6 +24,7 @@ KeyedContainer_TKey
 ObservableLike_observe
 ObservableLike_isDeferred
 ObservableLike_isEnumerable
+ObservableLike_isPure
 ObservableLike_isRunnable
 PauseableLike_isPaused
 PauseableLike_pause
@@ -135,7 +136,7 @@ ConstantEffect_value
 Continuation_effect
 CreateEventSource_createDelegate
 CreateObservable_effect
-DispatchedObservable_observer
+DispatchedObservable_dispatcher
 EnqueueObserver_queue
 Enumerator_private_current
 EnumerableEnumerator_continuationQueue

@@ -1,7 +1,6 @@
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
 import ReadonlyArray_flow from "../ReadonlyArray/__internal__/ReadonlyArray.flow.js";
-import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import {
@@ -68,7 +67,7 @@ testModule(
           delay: 1,
           delayStart: true,
         }),
-        Runnable.flow(scheduler),
+        Observable.flow(scheduler),
         PauseableObservable.takeFirst({ count: 5 }),
       );
 

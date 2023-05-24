@@ -1,6 +1,6 @@
 /// <reference types="./Observable.encodeUtf8.d.ts" />
 
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import { bindMethod, invoke, newInstance, pipe, returns, } from "../../functions.js";
 import { EnumerableLike_enumerate, ObservableLike_observe, } from "../../types.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -11,7 +11,7 @@ const Observable_encodeUtf8 =
     ? Enumerable_create(() => {
         const textEncoder = newInstance(TextEncoder);
         return pipe(observable, Observable_map(bindMethod(textEncoder, "encode")), invoke(EnumerableLike_enumerate));
-    })
+    }, true)
     : Observable_createWithConfig(observer => {
         const textEncoder = newInstance(TextEncoder);
         pipe(observable, Observable_map(bindMethod(textEncoder, "encode")), invoke(ObservableLike_observe, observer));

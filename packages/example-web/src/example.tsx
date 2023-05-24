@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Runnable from "@reactive-js/core/Runnable";
 import * as Observable from "@reactive-js/core/Observable";
 import {
   createComponent,
@@ -219,7 +218,7 @@ const Counter = () => {
             query: `v=${value}`,
           })),
         ),
-        Runnable.flow(ReactScheduler.get()),
+        Observable.flow(ReactScheduler.get()),
       ),
     [history.replace, counterInitialValue],
   );

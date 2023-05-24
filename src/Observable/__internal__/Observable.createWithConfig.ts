@@ -13,6 +13,7 @@ import {
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
@@ -23,7 +24,6 @@ interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: {
-      readonly [ObservableLike_isDeferred]: true;
       readonly [ObservableLike_isRunnable]: true;
     },
   ): RunnableLike<T>;
@@ -32,15 +32,13 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: {
       readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isRunnable]: false;
     },
   ): DeferredObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: {
-      readonly [ObservableLike_isDeferred]: false;
-      readonly [ObservableLike_isRunnable]: false;
+      readonly [ObservableLike_isPure]: true;
     },
   ): MulticastObservableLike<T>;
 
@@ -48,6 +46,7 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: {
       readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ObservableLike_isPure]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     },
   ): ObservableLike<T>;
@@ -57,6 +56,7 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
     type TProperties = {
       readonly [__CreateObservable_effect]: SideEffect1<ObserverLike>;
       readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ObservableLike_isPure]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     };
 
@@ -70,22 +70,31 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
             Mutable<TProperties>,
           effect: SideEffect1<ObserverLike>,
           config: {
-            readonly [ObservableLike_isDeferred]: boolean;
-            readonly [ObservableLike_isRunnable]: boolean;
+            readonly [ObservableLike_isDeferred]?: boolean;
+            readonly [ObservableLike_isPure]?: boolean;
+            readonly [ObservableLike_isRunnable]?: boolean;
           },
         ): ObservableLike {
           instance[__CreateObservable_effect] = effect;
+
+          const configRunnable = config[ObservableLike_isRunnable] ?? false;
+          const configDeferred = config[ObservableLike_isDeferred] ?? false;
+          const configPure = config[ObservableLike_isPure] ?? false;
+
           instance[ObservableLike_isDeferred] =
-            config[ObservableLike_isDeferred] ||
-            config[ObservableLike_isRunnable];
-          instance[ObservableLike_isRunnable] =
-            config[ObservableLike_isRunnable];
+            !configPure && (configRunnable || configDeferred);
+
+          instance[ObservableLike_isRunnable] = configRunnable && !configPure;
+
+          instance[ObservableLike_isPure] =
+            configPure && !configRunnable && !configDeferred;
 
           return instance;
         },
         props<TProperties>({
           [__CreateObservable_effect]: none,
           [ObservableLike_isDeferred]: false,
+          [ObservableLike_isPure]: false,
           [ObservableLike_isRunnable]: false,
         }),
         {

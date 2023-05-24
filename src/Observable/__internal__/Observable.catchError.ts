@@ -9,7 +9,7 @@ import {
   EnumeratorLike,
   ObserverLike,
 } from "../../types.js";
-import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
 const Observable_catchError: Observable.Signature["catchError"] =
   /*@__PURE__*/ (<T>() => {
@@ -46,7 +46,7 @@ const Observable_catchError: Observable.Signature["catchError"] =
         );
 
     return (errorHandler: SideEffect1<Error>) =>
-      Observable_liftEnumerableUpperBound(
+      Observable_liftWithSideEffects(
         createCatchErrorEnumerator(errorHandler),
         createCatchErrorObserver(errorHandler),
       );

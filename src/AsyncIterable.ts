@@ -1,9 +1,11 @@
 import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.js";
 import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterable.toObservable.js";
+import { Function1 } from "./functions.js";
 import {
   Container,
   Container_T,
   Container_type,
+  DeferredObservableLike,
   FlowableContainerModule,
 } from "./types.js";
 
@@ -21,10 +23,9 @@ export type Type = AsyncIterableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface AsyncIterableModule
-  // FIXME: Should actually extend StatefulContainerModule but
-  // not really interested in implementing all the operators
-  extends FlowableContainerModule<Type> {}
+export interface AsyncIterableModule extends FlowableContainerModule<Type> {
+  toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
+}
 
 export type Signature = AsyncIterableModule;
 

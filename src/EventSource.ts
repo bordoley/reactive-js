@@ -4,7 +4,6 @@ import EventSource_create from "./EventSource/__internal__/EventSource.create.js
 import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
 import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
-import EventSource_flatMapIterable from "./EventSource/__internal__/EventSource.flatMapIterable.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
@@ -91,8 +90,6 @@ export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
   EventSource_createRefCountedPublisher;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
-export const flatMapIterable: Signature["flatMapIterable"] =
-  EventSource_flatMapIterable;
 export const keep: Signature["keep"] = EventSource_keep;
 export const keepType: Signature["keepType"] = EventSource_keepType;
 export const map: Signature["map"] = EventSource_map;

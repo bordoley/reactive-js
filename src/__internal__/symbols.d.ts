@@ -50,6 +50,8 @@ export declare const __ObservableLike_isDeferred: unique symbol;
 
 export declare const __ObservableLike_isEnumerable: unique symbol;
 
+export declare const __ObservableLike_isPure: unique symbol;
+
 export declare const __ObservableLike_isRunnable: unique symbol;
 
 export declare const __PauseableLike_isPaused: unique symbol;
@@ -264,7 +266,7 @@ export declare const __CreateEventSource_createDelegate: unique symbol;
 
 export declare const __CreateObservable_effect: unique symbol;
 
-export declare const __DispatchedObservable_observer: unique symbol;
+export declare const __DispatchedObservable_dispatcher: unique symbol;
 
 export declare const __EnqueueObserver_queue: unique symbol;
 

@@ -1,5 +1,5 @@
 import type * as Observable from "../../Observable.js";
-import Runnable_toReadonlyArray from "../../Runnable/__internal__/Runnable.toReadonlyArray.js";
+import Observable_toReadonlyArray from "../../Observable/__internal__/Observable.toReadonlyArray.js";
 import { pipe, pipeAsync } from "../../functions.js";
 import {
   ObservableLike,
@@ -24,7 +24,7 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
       if (Observable_isRunnable(observable)) {
         // Add a microtask queue hop, so that the evaluation occurs asynchronously.
         await Promise.resolve();
-        return pipe(observable, Runnable_toReadonlyArray());
+        return pipe(observable, Observable_toReadonlyArray());
       } else {
         return await pipeAsync(
           observable,

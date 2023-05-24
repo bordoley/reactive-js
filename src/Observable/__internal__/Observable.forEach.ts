@@ -2,14 +2,14 @@ import Enumerator_forEach from "../../Enumerator/__internal__/Enumerator.forEach
 import type * as Observable from "../../Observable.js";
 import Observer_createForEachObserver from "../../Observer/__internal__/Observer.createForEachObserver.js";
 import { SideEffect1, partial, pipe } from "../../functions.js";
-import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
 const Observable_forEach: Observable.Signature["forEach"] = <T>(
   effect: SideEffect1<T>,
 ) => {
   const op = pipe(Observer_createForEachObserver<T>, partial(effect));
 
-  return Observable_liftEnumerableUpperBound(Enumerator_forEach(effect), op);
+  return Observable_liftWithSideEffects(Enumerator_forEach(effect), op);
 };
 
 export default Observable_forEach;

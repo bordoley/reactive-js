@@ -1,5 +1,4 @@
-import { Function1 } from "./functions.js";
-import { Container, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, RunnableLike } from "./types.js";
+import { Container, Container_T, Container_type, EnumerableContainerModule, EnumerableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -13,14 +12,6 @@ export type Type = EnumerableContainer;
  * @category Module
  */
 export interface EnumerableModule extends EnumerableContainerModule<Type> {
-    /**
-     * @category Transform
-     */
-    toObservable<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<EnumerableLike<T>, RunnableLike<T>>;
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];
@@ -35,11 +26,9 @@ export declare const endWith: Signature["endWith"];
 export declare const enumerate: Signature["enumerate"];
 export declare const everySatisfy: Signature["everySatisfy"];
 export declare const first: Signature["first"];
-export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const flow: Signature["flow"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromFactory: Signature["fromFactory"];
-export declare const fromIterable: Signature["fromIterable"];
 export declare const fromOptional: Signature["fromOptional"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];

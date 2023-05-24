@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`T`\>\> |
 
 #### Returns
 
@@ -247,7 +247,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"switching"`` |
 
@@ -267,7 +267,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.mode` | ``"blocking"`` |
 
@@ -287,7 +287,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 | `options` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -309,7 +309,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`unknown`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<`TEventType`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`unknown`\>\> |
 
 #### Returns
 
@@ -356,8 +356,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `persistentStore` | `Object` |
-| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableLike`](types.DeferredObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\> |
-| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableLike`](types.DeferredObservableLike.md)<`void`\> |
+| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`Readonly`<`Record`<`string`, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\> |
+| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`void`\> |
 | `options?` | `Object` |
 | `options.capacity?` | `number` |
 | `options.cleanupScheduler?` | [`SchedulerLike`](types.SchedulerLike.md) |
