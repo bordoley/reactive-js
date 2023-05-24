@@ -9,7 +9,7 @@ import type * as Stream from "../../Stream.js";
 import { Updater, compose, identity, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
-  MulticastObservableLike,
+  ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   SchedulerLike,
@@ -34,12 +34,12 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
 
     return pipe(
       stateStore,
-      Observable_forkMerge<MulticastObservableLike<T>, T, Updater<T>>(
+      Observable_forkMerge(
         compose(Observable_takeFirst(), Observable_concatMap(onInit)),
         compose(
           throttleDuration > 0
             ? Observable_throttle(throttleDuration)
-            : identity,
+            : identity<ObservableLike<T>>,
           Observable_pairwise(),
           Observable_concatMap<readonly [T, T], Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),

@@ -25,6 +25,7 @@ import {
   __KeyedContainer_TKey,
   __ObservableLike_isDeferred,
   __ObservableLike_isEnumerable,
+  __ObservableLike_isPure,
   __ObservableLike_isRunnable,
   __ObservableLike_observe,
   __PauseableLike_isPaused,
@@ -88,6 +89,8 @@ export const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred =
   __ObservableLike_isDeferred;
 export const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable =
   __ObservableLike_isEnumerable;
+export const ObservableLike_isPure: typeof __ObservableLike_isPure =
+  __ObservableLike_isPure;
 export const ObservableLike_isRunnable: typeof __ObservableLike_isRunnable =
   __ObservableLike_isRunnable;
 export const ObservableLike_observe: typeof __ObservableLike_observe =
@@ -546,6 +549,11 @@ export interface ObservableLike<T = unknown> {
   readonly [ObservableLike_isEnumerable]: boolean;
 
   /**
+   * Indicates if subscribing to the `ObservableLike` is free of side-effects
+   */
+  readonly [ObservableLike_isPure]: boolean;
+
+  /**
    * Indicates if the `ObservableLike` supports being subscribed to
    * on a VirtualTimeScheduler.
    */
@@ -563,21 +571,57 @@ export interface ObservableLike<T = unknown> {
  * @noInheritDoc
  * @category Observable
  */
-export interface MulticastObservableLike<T = unknown>
+export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
+  [ObservableLike_isPure]: true;
+}
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface ObservableWithSideEffectsLike<T = unknown>
   extends ObservableLike<T> {
+  [ObservableLike_isPure]: false;
+}
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface MulticastObservableLike<T = unknown>
+  extends PureObservableLike<T> {
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 }
 
 /**
- * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
- *
  * @noInheritDoc
  * @category Observable
  */
-export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
+export interface DeferredObservableBaseLike<T = unknown>
+  extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
+}
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface DeferredObservableLike<T = unknown>
+  extends DeferredObservableBaseLike<T>,
+    ObservableWithSideEffectsLike<T> {
+  readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isPure]: false;
+}
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface RunnableBaseLike<T = unknown>
+  extends DeferredObservableBaseLike<T> {
+  readonly [ObservableLike_isRunnable]: true;
 }
 
 /**
@@ -586,8 +630,23 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  * @category Observable
  */
-export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
+export interface RunnableLike<T = unknown>
+  extends RunnableBaseLike<T>,
+    DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
+  readonly [ObservableLike_isPure]: false;
+}
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface EnumerableBaseLike<T = unknown> extends RunnableBaseLike<T> {
+  readonly [ObservableLike_isEnumerable]: true;
+  readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isRunnable]: true;
+
+  [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }
 
 /**
@@ -596,10 +655,26 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
  * @noInheritDoc
  * @category Interactive
  */
-export interface EnumerableLike<T = unknown> extends RunnableLike<T> {
+export interface EnumerableWithSideEffectsLike<T = unknown>
+  extends EnumerableBaseLike<T>,
+    RunnableLike<T> {
   readonly [ObservableLike_isEnumerable]: true;
+  readonly [ObservableLike_isPure]: false;
+}
 
-  [EnumerableLike_enumerate](): EnumeratorLike<T>;
+/**
+ * An `EnumerableLike` that yields no side effects when enumerated
+ *
+ * @noInheritDoc
+ * @category Interactive
+ */
+export interface EnumerableLike<T = unknown>
+  extends EnumerableBaseLike<T>,
+    PureObservableLike<T> {
+  readonly [ObservableLike_isEnumerable]: true;
+  readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isPure]: true;
+  readonly [ObservableLike_isRunnable]: true;
 }
 
 /**
@@ -640,12 +715,8 @@ export interface PublisherLike<T = unknown>
  * @category Observable
  */
 export interface PauseableObservableLike<T = unknown>
-  extends ObservableLike<T>,
-    PauseableLike {
-  readonly [ObservableLike_isDeferred]: false;
-  readonly [ObservableLike_isEnumerable]: false;
-  readonly [ObservableLike_isRunnable]: false;
-}
+  extends MulticastObservableLike<T>,
+    PauseableLike {}
 
 /**
  * Represents a duplex stream
@@ -804,13 +875,6 @@ export interface ContainerModule<C extends Container> {
   }): ContainerOperator<C, T, T>;
 
   /**
-   * @category Operator
-   */
-  flatMapIterable<TA, TB>(
-    selector: Function1<TA, Iterable<TB>>,
-  ): ContainerOperator<C, TA, TB>;
-
-  /**
    * Returns a ContainerOperator that only emits items produced by the
    * source that satisfy the specified predicate.
    *
@@ -935,7 +999,7 @@ export interface FlowableContainerModule<C extends Container> {
     },
   ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 
-  toObservable<T>(): Function1<ContainerOf<C, T>, DeferredObservableLike<T>>;
+  toObservable<T>(): Function1<ContainerOf<C, T>, ObservableLike<T>>;
 }
 
 /**
@@ -970,7 +1034,7 @@ export interface MulticastingContainerModule<C extends Container> {
  * @noInheritDoc
  * @category Module
  */
-export interface RunnableContainerModule<C extends Container>
+export interface EnumerableContainerModule<C extends Container>
   extends ContainerModule<C>,
     FlowableContainerModule<C> {
   /**
@@ -1030,6 +1094,11 @@ export interface RunnableContainerModule<C extends Container>
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 
   /**
+   * @category Transform
+   */
+  enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
+
+  /**
    * Determines whether all the members of an Container satisfy the predicate.
    * The predicate function is invoked for each element in the Container until the
    * it returns false, or until the end of the Container.
@@ -1056,11 +1125,6 @@ export interface RunnableContainerModule<C extends Container>
    * @category Constructor
    */
   fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
 
   /**
    * @category Constructor
@@ -1120,7 +1184,21 @@ export interface RunnableContainerModule<C extends Container>
    */
   startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
 
-  toObservable<T>(): Function1<ContainerOf<C, T>, RunnableLike<T>>;
+  /**
+   * Converts the Container to a `IterableLike`.
+   *
+   * @category Transform
+   */
+  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
+
+  /**
+   * @category Transform
+   */
+  toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
+  toObservable<T>(options: {
+    readonly delay: number;
+    readonly delayStart?: boolean;
+  }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 
   /**
    * Converts the Container to a `ReadonlyArrayContainer`.
@@ -1251,34 +1329,6 @@ export interface RunnableContainerModule<C extends Container>
     h: ContainerOf<C, TH>,
     i: ContainerOf<C, TI>,
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-}
-
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface EnumerableContainerModule<C extends Container>
-  extends RunnableContainerModule<C> {
-  /**
-   * @category Transform
-   */
-  enumerate<T>(): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
-
-  /**
-   * Converts the Container to a `IterableLike`.
-   *
-   * @category Transform
-   */
-  toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-
-  /**
-   * @category Transform
-   */
-  toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-  toObservable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 }
 
 /**

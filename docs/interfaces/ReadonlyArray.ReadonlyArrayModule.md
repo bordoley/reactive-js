@@ -16,7 +16,12 @@
 
 ### Operator Methods
 
+- [flatMapIterable](ReadonlyArray.ReadonlyArrayModule.md#flatmapiterable)
 - [keepType](ReadonlyArray.ReadonlyArrayModule.md#keeptype)
+
+### Other Methods
+
+- [fromIterable](ReadonlyArray.ReadonlyArrayModule.md#fromiterable)
 
 ### Transform Methods
 
@@ -26,6 +31,29 @@
 - [toReadonlyArray](ReadonlyArray.ReadonlyArrayModule.md#toreadonlyarray)
 
 ## Operator Methods
+
+### flatMapIterable
+
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<readonly `TA`[], readonly `TB`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `TA`[], readonly `TB`[]\>
+
+___
 
 ### keepType
 
@@ -75,6 +103,24 @@
 #### Overrides
 
 ConcreteKeyedContainerModule.keepType
+
+___
+
+## Other Methods
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
 ___
 

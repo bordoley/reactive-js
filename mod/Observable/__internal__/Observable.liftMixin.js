@@ -3,7 +3,7 @@
 import { mix, props } from "../../__internal__/mixins.js";
 import { LiftedLike_operators, LiftedLike_source, } from "../../__internal__/types.js";
 import { bindMethod, none, pipeUnsafe, returns, } from "../../functions.js";
-import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, } from "../../types.js";
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../types.js";
 const Observable_liftMixin = /*@__PURE__*/ (() => {
     return returns(mix(function LiftedObservable(instance, source, ops, config) {
         instance[LiftedLike_source] = source;
@@ -17,6 +17,7 @@ const Observable_liftMixin = /*@__PURE__*/ (() => {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isRunnable]: false,
     }), {
+        [ObservableLike_isPure]: false,
         [ObservableLike_isEnumerable]: false,
         [ObservableLike_observe](observer) {
             pipeUnsafe(observer, ...this[LiftedLike_operators], bindMethod(this[LiftedLike_source], ObservableLike_observe));

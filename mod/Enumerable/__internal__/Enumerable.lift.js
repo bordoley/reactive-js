@@ -6,18 +6,20 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __LiftedEnumerable_ops } from "../../__internal__/symbols.js";
 import { LiftedLike_operators, LiftedLike_source, } from "../../__internal__/types.js";
 import { none, pipeUnsafe } from "../../functions.js";
-import { EnumerableLike_enumerate, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, } from "../../types.js";
+import { EnumerableLike_enumerate, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../types.js";
 const createLiftedEnumerable = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Observable_liftMixin(), Delegating_mixin()), function LiftedEnumerable(instance, source, observerOps, enumeratorOps) {
+    return createInstanceFactory(mix(include(Observable_liftMixin(), Delegating_mixin()), function LiftedEnumerable(instance, source, observerOps, enumeratorOps, isPure) {
+        instance[__LiftedEnumerable_ops] = enumeratorOps;
+        instance[ObservableLike_isPure] = isPure;
         init(Observable_liftMixin(), instance, source, observerOps, {
             [ObservableLike_isDeferred]: true,
             [ObservableLike_isRunnable]: true,
         });
         init(Delegating_mixin(), instance, source);
-        instance[__LiftedEnumerable_ops] = enumeratorOps;
         return instance;
     }, props({
         [__LiftedEnumerable_ops]: none,
+        [ObservableLike_isPure]: false,
     }), {
         [ObservableLike_isEnumerable]: true,
         [EnumerableLike_enumerate]() {
@@ -25,7 +27,7 @@ const createLiftedEnumerable = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const Enumerable_lift = (observerOp, enumeratorOp) => source => {
+const Enumerable_lift = ((observerOp, enumeratorOp, isPure) => source => {
     const sourceSource = source[LiftedLike_source] ?? source;
     const observerOps = [
         observerOp,
@@ -35,6 +37,7 @@ const Enumerable_lift = (observerOp, enumeratorOp) => source => {
         ...(source[__LiftedEnumerable_ops] ?? []),
         enumeratorOp,
     ];
-    return createLiftedEnumerable(sourceSource, observerOps, enumeratorOps);
-};
+    const isOpPure = sourceSource[ObservableLike_isPure] && isPure;
+    return createLiftedEnumerable(sourceSource, observerOps, enumeratorOps, isOpPure);
+});
 export default Enumerable_lift;

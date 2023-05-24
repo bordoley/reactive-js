@@ -17,7 +17,7 @@ import Stream_create from "../../Stream/__internal__/Stream.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { invoke, none, pipe } from "../../functions.js";
-import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, StoreLike_value, } from "../../types.js";
+import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, QueueableLike_enqueue, StoreLike_value, } from "../../types.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_delegatingMixin, Delegating_mixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable_create(observer => {
@@ -50,6 +50,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
     }), {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isEnumerable]: false,
+        [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
         [ObservableLike_observe](observer) {
             this[DelegatingLike_delegate][ObservableLike_observe](observer);

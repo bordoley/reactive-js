@@ -1,7 +1,6 @@
 import * as Enumerable from "../Enumerable.js";
 import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
-import * as Runnable from "../Runnable.js";
 import {
   describe,
   expectArrayEquals,
@@ -92,7 +91,7 @@ testModule(
         [9, 9, 9, 9],
         ReadonlyArray.toObservable({ delay: 2 }),
         Observable.withCurrentTime(t => t),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([0, 2, 4, 6]),
       ),
     ),
@@ -105,7 +104,7 @@ testModule(
           start: 3,
           delay: 1,
         }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([4, 3]),
       ),
     ),

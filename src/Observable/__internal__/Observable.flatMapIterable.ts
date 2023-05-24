@@ -1,4 +1,4 @@
-import Enumerable_concatMap from "../../Enumerable/__internal__/Enumerable.concatMap.js";
+import EnumerableWithSideEffects_concatMap from "../../EnumerableWithSideEffects/__internal__/EnumerableWithSideEffects.concatMap.js";
 import Iterable_toObservable from "../../Iterable/__internal__/Iterable.toObservable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
@@ -18,7 +18,7 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
 
   return (observable: ObservableLike<TA>) =>
     Observable_isEnumerable(observable)
-      ? pipe(observable, Enumerable_concatMap(mapper))
+      ? pipe(observable, EnumerableWithSideEffects_concatMap(mapper))
       : Observable_isRunnable(observable)
       ? pipe(observable, Runnable_concatMap(mapper))
       : pipe(observable, Observable_concatMap(mapper));

@@ -8,7 +8,6 @@ import {
   __stream,
 } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
-import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import {
@@ -52,6 +51,8 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  PauseableLike_pause,
+  PauseableLike_resume,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
   RunnableLike,
@@ -101,7 +102,7 @@ testModule(
         Observable.catchError<number>(e => {
           result = e["cause"];
         }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
       );
 
       pipe(
@@ -126,7 +127,7 @@ testModule(
             Observable.takeFirst({ count: 2 }),
           ),
         ),
-        Runnable.toReadonlyArray<readonly [number, number]>(),
+        Observable.toReadonlyArray<readonly [number, number]>(),
         expectArrayEquals(
           [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
           arrayEquality(),
@@ -283,7 +284,7 @@ testModule(
         Observable.fromReadonlyArray({ delay: 1 }),
         Observable.encodeUtf8(),
         Observable.decodeWithCharset(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         x => x.join(),
         expectEquals(str),
       );
@@ -296,7 +297,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
         Observable.decodeWithCharset(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         x => x.join(),
         expectEquals(str),
       );
@@ -308,7 +309,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Observable.encodeUtf8(),
         Observable.decodeWithCharset(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         x => x.join(),
         expectEquals(str),
       );
@@ -328,7 +329,7 @@ testModule(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
           Observable.fromReadonlyArray(),
           Observable.dispatchTo<number>(stream),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
       );
     }),
@@ -354,7 +355,7 @@ testModule(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         Observable.fromReadonlyArray(),
         Observable.dispatchTo<number>(stream),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]),
       ),
         expectTrue(completed);
@@ -411,6 +412,87 @@ testModule(
     ),
   ),
   describe(
+    "flatMapIterable",
+    test(
+      "maps the incoming value with the inline generator function",
+      pipeLazy(
+        [none, none],
+        Observable.fromReadonlyArray(),
+        Observable.flatMapIterable(function* (_) {
+          yield 1;
+          yield 2;
+          yield 3;
+        }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+
+  describe(
+    "flow",
+    test("a source with delay", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const generateObservable = pipe(
+        Observable.generate(increment, returns(-1), {
+          delay: 1,
+          delayStart: true,
+        }),
+        Observable.flow(scheduler),
+      );
+
+      generateObservable[PauseableLike_resume](),
+        scheduler[SchedulerLike_schedule](
+          () => generateObservable[PauseableLike_pause](),
+          {
+            delay: 2,
+          },
+        );
+
+      scheduler[SchedulerLike_schedule](
+        () => generateObservable[PauseableLike_resume](),
+        {
+          delay: 4,
+        },
+      );
+
+      scheduler[SchedulerLike_schedule](
+        () => generateObservable[DisposableLike_dispose](),
+        {
+          delay: 6,
+        },
+      );
+
+      const f = mockFn();
+      const subscription = pipe(
+        generateObservable,
+        Observable.forEach((x: number) => {
+          f(scheduler[SchedulerLike_now], x);
+        }),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(
+        f.calls as [][],
+        expectArrayEquals(
+          [
+            [1, 0],
+            [2, 1],
+            [5, 2],
+          ],
+          arrayEquality(),
+        ),
+      );
+
+      pipe(subscription[DisposableLike_isDisposed], expectTrue);
+    }),
+  ),
+
+  describe(
     "forEach",
     test("invokes the effect for each notified value", () => {
       const result: number[] = [];
@@ -421,7 +503,7 @@ testModule(
         Observable.forEach((x: number) => {
           result.push(x + 10);
         }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
       ),
         pipe(result, expectArrayEquals([11, 12, 13]));
@@ -436,7 +518,7 @@ testModule(
           Observable.forEach(_ => {
             throw err;
           }),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );
@@ -487,7 +569,7 @@ testModule(
         [9, 9, 9, 9],
         Observable.fromIterable({ delay: 2 }),
         Observable.withCurrentTime(t => t),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([0, 2, 4, 6]),
       ),
     ),
@@ -520,7 +602,7 @@ testModule(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
         Observable.ignoreElements<number>(),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
     ),
@@ -541,7 +623,7 @@ testModule(
             Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
           ),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
       ),
     ),
@@ -553,7 +635,7 @@ testModule(
             pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })),
             Observable.throws({ delay: 5 }),
           ),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrow,
       ),
@@ -574,7 +656,7 @@ testModule(
         ),
         Observable.retry(alwaysTrue),
         Observable.takeFirst<number>({ count: 6 }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
@@ -590,7 +672,7 @@ testModule(
         Observable.takeUntil(
           pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true })),
         ),
-        Runnable.toReadonlyArray<number>(),
+        Observable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3]),
       ),
     ),
@@ -692,7 +774,7 @@ testModule(
         }),
         Observable.takeFirst({ count: 100 }),
         Observable.throttle<number>(50, { mode: "first" }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([0, 49, 99]),
       ),
     ),
@@ -706,7 +788,7 @@ testModule(
         }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(50, { mode: "last" }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([49, 99, 149, 199]),
       ),
     ),
@@ -720,7 +802,7 @@ testModule(
         }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(75, { mode: "interval" }),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
@@ -735,7 +817,7 @@ testModule(
           [],
           Observable.fromReadonlyArray(),
           Observable.throwIfEmpty(() => error),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -748,7 +830,7 @@ testModule(
           [],
           Observable.fromReadonlyArray({ delay: 1 }),
           Observable.throwIfEmpty(() => error),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -759,11 +841,11 @@ testModule(
       pipe(
         pipeLazy(
           [],
-          Runnable.fromReadonlyArray(),
+          Observable.fromReadonlyArray(),
           Observable.throwIfEmpty(() => {
             throw error;
           }),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -778,7 +860,7 @@ testModule(
           Observable.throwIfEmpty(() => {
             throw error;
           }),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -790,7 +872,7 @@ testModule(
         [1],
         Observable.fromReadonlyArray(),
         Observable.throwIfEmpty(returns(none)),
-        Runnable.toReadonlyArray<number>(),
+        Observable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
       ),
     ),
@@ -801,7 +883,7 @@ testModule(
         [1],
         Observable.fromReadonlyArray({ delay: 1 }),
         Observable.throwIfEmpty(returns(none)),
-        Runnable.toReadonlyArray<number>(),
+        Observable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
       ),
     ),
@@ -817,7 +899,7 @@ testModule(
           pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           (a: number, b: number): [number, number] => [a, b],
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals(
           [
             [0, 0],
@@ -834,8 +916,8 @@ testModule(
       pipeLazy(
         [0],
         Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.withLatestFrom(Runnable.empty<number>(), returns(1)),
-        Runnable.toReadonlyArray(),
+        Observable.withLatestFrom(Observable.empty<number>(), returns(1)),
+        Observable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
       ),
     ),
@@ -850,7 +932,7 @@ testModule(
             Observable.throws<number>({ raise: returns(error) }),
             returns(1),
           ),
-          Runnable.toReadonlyArray(),
+          Observable.toReadonlyArray(),
           expectArrayEquals([] as number[]),
         ),
         expectToThrowError(error),
@@ -863,12 +945,12 @@ testModule(
     test(
       "with synchronous and non-synchronous sources",
       pipeLazy(
-        Runnable.zip(
+        Observable.zip(
           pipe([1, 2], Observable.fromReadonlyArray({ delay: 1 })),
           pipe([2, 3], Observable.fromReadonlyArray()),
           pipe([3, 4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals(
           [[1, 2, 3] as readonly number[], [2, 3, 4]],
           arrayEquality(),
@@ -878,11 +960,11 @@ testModule(
     test(
       "fast with slow",
       pipeLazy(
-        Runnable.zip(
+        Observable.zip(
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
           pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 5 })),
         ),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals(
           [[1, 1] as readonly number[], [2, 2], [3, 3]],
           arrayEquality(),
@@ -893,12 +975,12 @@ testModule(
       "when source throws",
       pipeLazy(
         pipeLazy(
-          Runnable.zip(
+          Observable.zip(
             Observable.throws(),
             pipe([1, 2, 3], Observable.fromReadonlyArray()),
           ),
-          Runnable.map<readonly [unknown, number], number>(([, b]) => b),
-          Runnable.toReadonlyArray(),
+          Observable.map<readonly [unknown, number], number>(([, b]) => b),
+          Observable.toReadonlyArray(),
         ),
         expectToThrow,
       ),
@@ -920,66 +1002,8 @@ testModule(
           ),
         ),
         Observable.map<readonly [number, number], number>(([a, b]) => a + b),
-        Runnable.toReadonlyArray(),
+        Observable.toReadonlyArray(),
         expectArrayEquals([2, 5, 8, 11]),
-      ),
-    ),
-  ),
-  describe(
-    "zipWithLatestFrom",
-    test(
-      "when source throws",
-      pipeLazy(
-        pipeLazy(
-          Observable.throws(),
-          Observable.zipWithLatestFrom(
-            pipe([1], ReadonlyArray.toObservable()),
-            returns(1),
-          ),
-          Runnable.toReadonlyArray(),
-        ),
-        expectToThrow,
-      ),
-    ),
-
-    test(
-      "when other throws",
-      pipeLazy(
-        pipeLazy(
-          [1, 2, 3],
-          ReadonlyArray.toObservable({ delay: 1 }),
-          Observable.zipWithLatestFrom(Observable.throws(), (_, b) => b),
-          Runnable.toReadonlyArray(),
-        ),
-        expectToThrow,
-      ),
-    ),
-
-    test(
-      "when other completes first",
-      pipeLazy(
-        [1, 2, 3],
-        ReadonlyArray.toObservable({ delay: 2 }),
-        Observable.zipWithLatestFrom(
-          pipe([2, 4], ReadonlyArray.toObservable({ delay: 1 })),
-          (a: number, b) => a + b,
-        ),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([3, 6]),
-      ),
-    ),
-
-    test(
-      "when this completes first",
-      pipeLazy(
-        [1, 2, 3],
-        ReadonlyArray.toObservable({ delay: 2 }),
-        Observable.zipWithLatestFrom(
-          pipe([2, 4, 6, 8], ReadonlyArray.toObservable({ delay: 1 })),
-          (a: number, b) => a + b,
-        ),
-        Runnable.toReadonlyArray(),
-        expectArrayEquals([3, 6, 11]),
       ),
     ),
   ),
@@ -1001,13 +1025,13 @@ testModule(
     const enumerated = pipe(
       Observable.generate(increment, returns(-1)),
       op,
-      Runnable.toReadonlyArray(),
+      Observable.toReadonlyArray(),
     );
 
     const observed = pipe(
       Observable.generate(increment, returns(-1), { delay: 5 }),
       op,
-      Runnable.toReadonlyArray(),
+      Observable.toReadonlyArray(),
     );
 
     pipe(observed, expectArrayEquals(enumerated));

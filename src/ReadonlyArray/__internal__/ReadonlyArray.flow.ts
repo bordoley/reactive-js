@@ -1,5 +1,5 @@
+import Observable_flow from "../../Observable/__internal__/Observable.flow.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
-import Runnable_flow from "../../Runnable/__internal__/Runnable.flow.js";
 import { Function1, compose } from "../../functions.js";
 import {
   DisposableLike,
@@ -30,7 +30,8 @@ const ReadonlyArray_flow: ReadonlyArray.Signature["flow"] = <T>(
         readonly start?: number;
       },
     ),
-    Runnable_flow(scheduler, options),
+
+    Observable_flow(scheduler, options),
   );
 
 export default ReadonlyArray_flow;

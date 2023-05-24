@@ -2,8 +2,14 @@ import type * as Observable from "../../Observable.js";
 import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
-import { RunnableLike } from "../../types.js";
+import {
+  Function1,
+  identity,
+  isReadonlyArray,
+  isSome,
+  pipe,
+} from "../../functions.js";
+import { EnumerableLike, RunnableBaseLike } from "../../types.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
@@ -17,7 +23,7 @@ const scale = (start: number, end: number) => (v: number) => {
 
 const parseAnimationConfig = <T = number>(
   config: Observable.Animation<T>,
-): RunnableLike<T> =>
+): RunnableBaseLike<T> =>
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),
@@ -31,10 +37,7 @@ const parseAnimationConfig = <T = number>(
         Optional_toObservable(),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as Observable.RunnableUpperBoundObservableOperator<
-              number,
-              T
-            >),
+          : (identity as Function1<EnumerableLike<number>, EnumerableLike<T>>),
       )
     : pipe(
         config.type === "keyframe"
@@ -43,7 +46,7 @@ const parseAnimationConfig = <T = number>(
         Observable_map(scale(config.from, config.to)),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as Observable.RunnableUpperBoundObservableOperator<
+          : (identity as Observable.RunnableBoundedObservableOperatorWithSideEffects<
               number,
               T
             >),

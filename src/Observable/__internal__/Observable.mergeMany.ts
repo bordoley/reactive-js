@@ -8,11 +8,13 @@ import {
   DisposableLike_dispose,
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -39,10 +41,12 @@ const Observable_mergeMany: Observable.Signature["mergeMany"] = (<T>(
   };
 
   const isDeferred = Observable_allAreEnumerable(observables);
+  const isPure = Observable_allArePure(observables);
   const isRunnable = Observable_allAreRunnable(observables);
 
   return Observable_createWithConfig(onSubscribe, {
     [ObservableLike_isDeferred]: isDeferred,
+    [ObservableLike_isPure]: isPure,
     [ObservableLike_isRunnable]: isRunnable,
   });
 }) as Observable.Signature["mergeMany"];

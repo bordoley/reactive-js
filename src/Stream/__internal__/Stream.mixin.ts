@@ -2,7 +2,6 @@ import Dispatcher_delegatingMixin from "../../Dispatcher/__internal__/Dispatcher
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
 import ReplayObservable_delegatingMixin from "../../ReplayObservable/__internal__/ReplayObservable.delegatingMixin.js";
-import { __DEV__ } from "../../__internal__/constants.js";
 import {
   Mixin3,
   Mutable,
@@ -12,53 +11,41 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { __DispatchedObservable_observer } from "../../__internal__/symbols.js";
-import { IndexedQueueLike } from "../../__internal__/types.js";
+import { __DispatchedObservable_dispatcher } from "../../__internal__/symbols.js";
 import {
   Function1,
   Optional,
-  isNone,
   isSome,
   none,
   pipe,
   raiseWithDebugMessage,
   returns,
-  unsafeCast,
 } from "../../functions.js";
 import {
-  BufferLike_capacity,
-  CollectionLike_count,
   DeferredObservableLike,
   DispatcherLike,
-  DispatcherLikeEventMap,
-  DispatcherLike_complete,
   DisposableLike,
-  DisposableLike_isDisposed,
-  EventListenerLike,
-  EventSourceLike_addEventListener,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  QueueableLike_enqueue,
   SchedulerLike,
-  SchedulerLike_inContinuation,
-  SinkLike_notify,
   StreamLike,
   StreamLike_scheduler,
 } from "../../types.js";
 
-interface DispatchedObservableLike<T>
-  extends DeferredObservableLike<T>,
-    Omit<DispatcherLike<T>, keyof DisposableLike> {}
+interface DispatchedObservableLike<T> extends DeferredObservableLike<T> {
+  [__DispatchedObservable_dispatcher]: Optional<DispatcherLike<T>>;
+}
 
 const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
   /*@__PURE__*/ (<T>() => {
     type TProperties = {
-      [__DispatchedObservable_observer]: Optional<ObserverLike<T>>;
+      [__DispatchedObservable_dispatcher]: Optional<DispatcherLike<T>>;
     };
 
     return createInstanceFactory(
@@ -69,122 +56,25 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
           return instance;
         },
         props<TProperties>({
-          [__DispatchedObservable_observer]: none,
+          [__DispatchedObservable_dispatcher]: none,
         }),
         {
           [ObservableLike_isDeferred]: true as const,
           [ObservableLike_isEnumerable]: false as const,
+          [ObservableLike_isPure]: false as const,
           [ObservableLike_isRunnable]: false as const,
-
-          get [QueueableLike_backpressureStrategy]() {
-            unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
-
-            const observer = this[
-              __DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            return observer[QueueableLike_backpressureStrategy];
-          },
-
-          get [BufferLike_capacity](): number {
-            unsafeCast<DispatchedObservableLike<T> & TProperties>(this);
-            // Practically the observer can never be none.
-            const observer = this[
-              __DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            return observer[BufferLike_capacity];
-          },
-
-          [QueueableLike_enqueue](
-            this: TProperties & DispatchedObservableLike<T>,
-            next: T,
-          ): boolean {
-            const observer = this[
-              __DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            // Practically the observer can never be none,
-            // unless the stream operator uses fromFactory subscriptions
-            // eg. concat.
-            if (__DEV__ && isNone(observer)) {
-              raiseWithDebugMessage(
-                "DispatchedObservable has not been subscribed to yet",
-              );
-            }
-
-            const inContinuation = observer[SchedulerLike_inContinuation];
-
-            // Observer only implement Queueable publicly so cast to the implementation interface
-            // to enable bypassing the queue
-            const observerQueueIsEmpty =
-              (observer as unknown as IndexedQueueLike<T>)[
-                CollectionLike_count
-              ] === 0;
-            const isDisposed = observer[DisposableLike_isDisposed];
-
-            if (inContinuation && observerQueueIsEmpty && !isDisposed) {
-              observer[SinkLike_notify](next);
-              return true;
-            } else if (!isDisposed) {
-              return observer[QueueableLike_enqueue](next);
-            } else {
-              return true;
-            }
-          },
-
-          [DispatcherLike_complete](
-            this: TProperties & DispatchedObservableLike<T>,
-          ) {
-            const observer = this[
-              __DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            // Practically the observer can never be none,
-            // unless the stream operator uses fromFactory subscriptions
-            // eg. concat.
-            if (__DEV__ && isNone(observer)) {
-              raiseWithDebugMessage(
-                "DispatchedObservable has not been subscribed to yet",
-              );
-            }
-
-            observer[DispatcherLike_complete]();
-          },
 
           [ObservableLike_observe](
             this: TProperties & DispatchedObservableLike<T> & DisposableLike,
             observer: ObserverLike<T>,
           ) {
-            if (isSome(this[__DispatchedObservable_observer])) {
+            if (isSome(this[__DispatchedObservable_dispatcher])) {
               raiseWithDebugMessage(
                 "DispatchedObservable already subscribed to",
               );
             }
 
-            this[__DispatchedObservable_observer] = observer;
-          },
-
-          [EventSourceLike_addEventListener](
-            this: TProperties,
-            listener: EventListenerLike<
-              DispatcherLikeEventMap[keyof DispatcherLikeEventMap]
-            >,
-          ): void {
-            const observer = this[
-              __DispatchedObservable_observer
-            ] as ObserverLike<T>;
-
-            // Practically the observer can never be none,
-            // unless the stream operator uses fromFactory subscriptions
-            // eg. concat.
-            if (__DEV__ && isNone(observer)) {
-              raiseWithDebugMessage(
-                "DispatchedObservable has not been subscribed to yet",
-              );
-            }
-
-            observer[EventSourceLike_addEventListener](listener);
+            this[__DispatchedObservable_dispatcher] = observer;
           },
         },
       ),
@@ -236,7 +126,7 @@ const Stream_mixin: <TReq, T>() => Mixin3<
         init(
           Dispatcher_delegatingMixin<TReq>(),
           instance,
-          dispatchedObservable,
+          dispatchedObservable[__DispatchedObservable_dispatcher],
         );
         init(ReplayObservable_delegatingMixin<T>(), instance, delegate);
 

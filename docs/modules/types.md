@@ -27,6 +27,7 @@
 ### Interactive Interfaces
 
 - [EnumerableLike](../interfaces/types.EnumerableLike.md)
+- [EnumerableWithSideEffectsLike](../interfaces/types.EnumerableWithSideEffectsLike.md)
 - [EnumeratorLike](../interfaces/types.EnumeratorLike.md)
 - [StreamLike](../interfaces/types.StreamLike.md)
 - [StreamableLike](../interfaces/types.StreamableLike.md)
@@ -41,16 +42,20 @@
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [KeyedContainerModule](../interfaces/types.KeyedContainerModule.md)
 - [MulticastingContainerModule](../interfaces/types.MulticastingContainerModule.md)
-- [RunnableContainerModule](../interfaces/types.RunnableContainerModule.md)
 
 ### Observable Interfaces
 
+- [DeferredObservableBaseLike](../interfaces/types.DeferredObservableBaseLike.md)
 - [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
+- [EnumerableBaseLike](../interfaces/types.EnumerableBaseLike.md)
 - [MulticastObservableLike](../interfaces/types.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/types.ObservableLike.md)
+- [ObservableWithSideEffectsLike](../interfaces/types.ObservableWithSideEffectsLike.md)
 - [PauseableObservableLike](../interfaces/types.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/types.PublisherLike.md)
+- [PureObservableLike](../interfaces/types.PureObservableLike.md)
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
+- [RunnableBaseLike](../interfaces/types.RunnableBaseLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
 ### Queueing Interfaces
@@ -122,6 +127,7 @@
 - [KeyedContainer\_TKey](types.md#keyedcontainer_tkey)
 - [ObservableLike\_isDeferred](types.md#observablelike_isdeferred)
 - [ObservableLike\_isEnumerable](types.md#observablelike_isenumerable)
+- [ObservableLike\_isPure](types.md#observablelike_ispure)
 - [ObservableLike\_isRunnable](types.md#observablelike_isrunnable)
 - [ObservableLike\_observe](types.md#observablelike_observe)
 - [PauseableLike\_isPaused](types.md#pauseablelike_ispaused)
@@ -395,6 +401,12 @@ ___
 ### ObservableLike\_isEnumerable
 
 • `Const` **ObservableLike\_isEnumerable**: typeof `__ObservableLike_isEnumerable`
+
+___
+
+### ObservableLike\_isPure
+
+• `Const` **ObservableLike\_isPure**: typeof `__ObservableLike_isPure`
 
 ___
 

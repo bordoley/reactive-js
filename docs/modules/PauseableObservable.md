@@ -21,7 +21,6 @@
 
 - [buffer](PauseableObservable.md#buffer)
 - [distinctUntilChanged](PauseableObservable.md#distinctuntilchanged)
-- [flatMapIterable](PauseableObservable.md#flatmapiterable)
 - [keep](PauseableObservable.md#keep)
 - [keepType](PauseableObservable.md#keeptype)
 - [map](PauseableObservable.md#map)
@@ -98,29 +97,6 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`\>
-
-___
-
-### flatMapIterable
-
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `Iterable`<`TB`\>\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`\>
 
 ___
 

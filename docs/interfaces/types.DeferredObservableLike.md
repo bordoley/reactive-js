@@ -4,8 +4,6 @@
 
 [types](../modules/types.md).DeferredObservableLike
 
-An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
-
 ## Type parameters
 
 | Name | Type |
@@ -14,7 +12,9 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 ## Hierarchy
 
-- [`ObservableLike`](types.ObservableLike.md)<`T`\>
+- [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`T`\>
+
+- [`ObservableWithSideEffectsLike`](types.ObservableWithSideEffectsLike.md)<`T`\>
 
   ↳ **`DeferredObservableLike`**
 
@@ -25,6 +25,7 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 ### Properties
 
 - [[\_\_\_ObservableLike\_isDeferred]](types.DeferredObservableLike.md#[___observablelike_isdeferred])
+- [[\_\_\_ObservableLike\_isPure]](types.DeferredObservableLike.md#[___observablelike_ispure])
 
 ## Properties
 
@@ -36,4 +37,16 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 
 #### Overrides
 
-[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isDeferred]](types.ObservableLike.md#[___observablelike_isdeferred])
+[DeferredObservableBaseLike](types.DeferredObservableBaseLike.md).[[___ObservableLike_isDeferred]](types.DeferredObservableBaseLike.md#[___observablelike_isdeferred])
+
+___
+
+### [\_\_\_ObservableLike\_isPure]
+
+• `Readonly` **[\_\_\_ObservableLike\_isPure]**: ``false``
+
+Indicates if subscribing to the `ObservableLike` is free of side-effects
+
+#### Overrides
+
+[ObservableWithSideEffectsLike](types.ObservableWithSideEffectsLike.md).[[___ObservableLike_isPure]](types.ObservableWithSideEffectsLike.md#[___observablelike_ispure])

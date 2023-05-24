@@ -2,7 +2,7 @@
 
 import * as Disposable from "../../Disposable.js";
 import { describe, expectArrayEquals, expectToThrowError, test, } from "../../__internal__/testing.js";
-import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, none, pipe, returns, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, pipe, returns, } from "../../functions.js";
 const ContainerModuleTests = (m, createCtx, fromReadonlyArray, toReadonlyArray) => describe("ContainerModule", describe("buffer", test("with multiple sub buffers", Disposable.usingLazy(createCtx)(ctx => pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], fromReadonlyArray(ctx), m.buffer({ count: 3 }), toReadonlyArray(ctx), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -17,11 +17,7 @@ const ContainerModuleTests = (m, createCtx, fromReadonlyArray, toReadonlyArray) 
         throw err;
     };
     pipe(Disposable.usingLazy(createCtx)((ctx) => pipe([1, 1], fromReadonlyArray(ctx), m.distinctUntilChanged({ equality }), toReadonlyArray(ctx))), expectToThrowError(err));
-})), describe("flatMapIterable", test("maps the incoming value with the inline generator function", Disposable.usingLazy(createCtx)((ctx) => pipe([none, none], fromReadonlyArray(ctx), m.flatMapIterable(function* (_) {
-    yield 1;
-    yield 2;
-    yield 3;
-}), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3, 1, 2, 3]))))), describe("keep", test("keeps only values greater than 5", Disposable.usingLazy(createCtx)((ctx) => pipe([4, 8, 10, 7], fromReadonlyArray(ctx), m.keep(greaterThan(5)), toReadonlyArray(ctx), expectArrayEquals([8, 10, 7])))), test("when predicate throws", () => {
+})), describe("keep", test("keeps only values greater than 5", Disposable.usingLazy(createCtx)((ctx) => pipe([4, 8, 10, 7], fromReadonlyArray(ctx), m.keep(greaterThan(5)), toReadonlyArray(ctx), expectArrayEquals([8, 10, 7])))), test("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {
         throw err;

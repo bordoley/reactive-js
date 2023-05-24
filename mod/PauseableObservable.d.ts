@@ -18,7 +18,6 @@ export interface PauseableObservableModule extends ContainerModule<Type> {
 export type Signature = PauseableObservableModule;
 export declare const buffer: Signature["buffer"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
-export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const map: Signature["map"];

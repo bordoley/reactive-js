@@ -1,6 +1,6 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_concatAll from "../../Enumerator/__internal__/Enumerator.concatAll.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
@@ -14,12 +14,14 @@ import {
   EnumerableLike_enumerate,
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
@@ -59,6 +61,7 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       const isEnumerable = Observable_allAreEnumerable<T>(observables);
       const isDeferred = Observable_allAreDeferred(observables);
       const isRunnable = Observable_allAreRunnable(observables);
+      const isPure = Observable_allArePure(observables);
 
       return isEnumerable
         ? Enumerable_create(
@@ -68,10 +71,12 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
               ReadonlyArray_enumerate(),
               Enumerator_concatAll(),
             ),
+            isPure,
           )
         : Observable_createWithConfig(onSubscribe, {
             [ObservableLike_isDeferred]: isDeferred,
             [ObservableLike_isRunnable]: isRunnable,
+            [ObservableLike_isPure]: isPure,
           });
     };
   })() as Observable.Signature["concatMany"];

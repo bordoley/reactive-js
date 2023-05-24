@@ -5,7 +5,7 @@ import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
@@ -14,6 +14,7 @@ import { alwaysFalse, bindMethod, error, isSome, none, partial, pipe, unsafeCast
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, SinkLike_notify, } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_isPure from "./Observable.isPure.js";
 import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
@@ -88,7 +89,7 @@ const Observable_repeatOrRetry = /*@__PURE__*/ (() => {
     }));
     return ((shouldRepeat) => (observable) => {
         if (Observable_isEnumerable(observable)) {
-            return Enumerable_create(() => createRepeatOrRetryEnumerator(observable, shouldRepeat));
+            return Enumerable_create(() => createRepeatOrRetryEnumerator(observable, shouldRepeat), Observable_isPure(observable));
         }
         else {
             const operator = pipe(createRepeatObserver, partial(observable, shouldRepeat));

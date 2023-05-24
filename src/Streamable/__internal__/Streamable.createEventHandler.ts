@@ -9,7 +9,7 @@ import Optional_toObservable from "../../Optional/__internal__/Optional.toObserv
 import type * as Streamable from "../../Streamable.js";
 import { Function1, compose, pipe } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   StreamableLike,
@@ -18,7 +18,7 @@ import Streamable_create from "./Streamable.create.js";
 
 const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] =
   (<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableBaseLike<unknown>>,
     options: {
       readonly mode?: "switching" | "blocking" | "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -29,7 +29,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
     return Streamable_create<TEventType, unknown>(
       compose(
         mode === "switching"
-          ? Observable_switchMap<TEventType, never>(
+          ? Observable_switchMap<TEventType, boolean>(
               compose(
                 op,
                 Observable_ignoreElements(),
@@ -46,7 +46,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
                 Observable_endWith<boolean>(false),
               ),
             )
-          : Observable_mergeMap<TEventType, never>(
+          : Observable_mergeMap<TEventType, boolean>(
               compose(
                 op,
                 Observable_ignoreElements<never>(),

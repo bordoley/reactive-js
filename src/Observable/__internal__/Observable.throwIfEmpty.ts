@@ -12,7 +12,7 @@ import {
   pipe,
 } from "../../functions.js";
 import { DisposableLike_dispose, EnumeratorLike } from "../../types.js";
-import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (<T>(
   factory: Factory<unknown>,
@@ -45,7 +45,7 @@ const Observable_throwIfEmpty: Observable.Signature["throwIfEmpty"] = (<T>(
 
   const op = pipe(Observer_createThrowIfEmptyObserver, partial(factory));
 
-  return Observable_liftEnumerableUpperBound(createThrowIfEmptyEnumerator, op);
+  return Observable_liftPure(createThrowIfEmptyEnumerator, op);
 }) as Observable.Signature["throwIfEmpty"];
 
 export default Observable_throwIfEmpty;

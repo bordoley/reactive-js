@@ -14,19 +14,34 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 ## Hierarchy
 
+- [`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>
+
 - [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>
 
   ↳ **`RunnableLike`**
 
-  ↳↳ [`EnumerableLike`](types.EnumerableLike.md)
+  ↳↳ [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)
 
 ## Table of contents
 
 ### Properties
 
+- [[\_\_\_ObservableLike\_isPure]](types.RunnableLike.md#[___observablelike_ispure])
 - [[\_\_\_ObservableLike\_isRunnable]](types.RunnableLike.md#[___observablelike_isrunnable])
 
 ## Properties
+
+### [\_\_\_ObservableLike\_isPure]
+
+• `Readonly` **[\_\_\_ObservableLike\_isPure]**: ``false``
+
+Indicates if subscribing to the `ObservableLike` is free of side-effects
+
+#### Overrides
+
+[DeferredObservableLike](types.DeferredObservableLike.md).[[___ObservableLike_isPure]](types.DeferredObservableLike.md#[___observablelike_ispure])
+
+___
 
 ### [\_\_\_ObservableLike\_isRunnable]
 
@@ -34,4 +49,4 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 #### Overrides
 
-DeferredObservableLike.\_\_@\_\_\_ObservableLike\_isRunnable@22432
+[RunnableBaseLike](types.RunnableBaseLike.md).[[___ObservableLike_isRunnable]](types.RunnableBaseLike.md#[___observablelike_isrunnable])

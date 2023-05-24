@@ -18,6 +18,7 @@ import {
 import { Function1, unsafeCast } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   PauseableLike,
@@ -49,6 +50,8 @@ const createLiftedPauseableObservable: <TIn, TOut>(
       },
       props({}),
       {
+        [ObservableLike_isPure]: true as const,
+
         get [PauseableLike_isPaused]() {
           unsafeCast<DelegatingLike<PauseableObservableLike<TIn>>>(this);
           return this[DelegatingLike_delegate][PauseableLike_isPaused];

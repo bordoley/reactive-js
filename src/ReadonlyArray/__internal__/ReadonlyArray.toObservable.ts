@@ -1,5 +1,5 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 import type * as Runnable from "../../Runnable.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
@@ -79,8 +79,9 @@ const ReadonlyArray_toObservable: ReadonlyArray.Signature["toObservable"] =
       (options?.delay ?? 0) > 0
         ? toRunnable(options)
         : (arr: ReadonlyArray<T>) =>
-            Enumerable_create<T>(() =>
-              pipe(arr, ReadonlyArray_enumerate(options)),
+            Enumerable_create<T>(
+              () => pipe(arr, ReadonlyArray_enumerate(options)),
+              true,
             );
   })() as ReadonlyArray.Signature["toObservable"];
 

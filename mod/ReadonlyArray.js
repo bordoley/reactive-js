@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
+import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
 import ReadonlyArray_concat from "./ReadonlyArray/__internal__/ReadonlyArray.concat.js";
 import ReadonlyArray_concatAll from "./ReadonlyArray/__internal__/ReadonlyArray.concatAll.js";
@@ -46,7 +47,6 @@ import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/Readonly
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
-import Runnable_toReadonlyArray from "./Runnable/__internal__/Runnable.toReadonlyArray.js";
 import { Container_type, KeyedContainer_TKey, } from "./types.js";
 export const buffer = ReadonlyArray_buffer;
 export const concat = ReadonlyArray_concat;
@@ -65,7 +65,7 @@ export const flatMapIterable = ReadonlyArray_flatMapIterable;
 export const flow = ReadonlyArray_flow;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
-export const fromEnumerable = Runnable_toReadonlyArray;
+export const fromEnumerable = Observable_toReadonlyArray;
 export const fromFactory = ReadonlyArray_fromFactory;
 export const fromIterable = ReadonlyArray_fromIterable;
 export const fromOptional = ReadonlyArray_fromOptional;

@@ -1,11 +1,11 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { Function1, none, pipe, pipeLazy } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EnumerableLike,
+  EnumerableWithSideEffectsLike,
   ObserverLike,
   SchedulerLike,
   SchedulerLike_schedule,
@@ -16,7 +16,7 @@ import Iterable_enumerate from "./Iterable.enumerate.js";
 
 const Iterable_toObservable: <T>() => Function1<
   Iterable<T>,
-  EnumerableLike<T>
+  EnumerableWithSideEffectsLike<T>
 > = (<T>(options?: {
     readonly delay?: number;
     readonly delayStart?: boolean;
@@ -51,7 +51,7 @@ const Iterable_toObservable: <T>() => Function1<
 
     return delay > 0
       ? Runnable_create(onSubscribe)
-      : Enumerable_create(pipeLazy(iterable, Iterable_enumerate()));
-  }) as <T>() => Function1<Iterable<T>, EnumerableLike<T>>;
+      : Enumerable_create(pipeLazy(iterable, Iterable_enumerate()), false);
+  }) as <T>() => Function1<Iterable<T>, EnumerableWithSideEffectsLike<T>>;
 
 export default Iterable_toObservable;

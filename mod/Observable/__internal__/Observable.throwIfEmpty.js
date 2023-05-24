@@ -6,7 +6,7 @@ import Enumerator_forEach from "../../Enumerator/__internal__/Enumerator.forEach
 import Observer_createThrowIfEmptyObserver from "../../Observer/__internal__/Observer.createThrowIfEmptyObserver.js";
 import { error, none, partial, pipe, } from "../../functions.js";
 import { DisposableLike_dispose } from "../../types.js";
-import Observable_liftEnumerableUpperBound from "./Observable.liftEnumerableUpperBounded.js";
+import Observable_liftPure from "./Observable.liftPure.js";
 const Observable_throwIfEmpty = ((factory) => {
     const createThrowIfEmptyEnumerator = (enumerator) => {
         let hasValue = false;
@@ -27,6 +27,6 @@ const Observable_throwIfEmpty = ((factory) => {
         return throwIfEmptyEnumerator;
     };
     const op = pipe(Observer_createThrowIfEmptyObserver, partial(factory));
-    return Observable_liftEnumerableUpperBound(createThrowIfEmptyEnumerator, op);
+    return Observable_liftPure(createThrowIfEmptyEnumerator, op);
 });
 export default Observable_throwIfEmpty;

@@ -24,7 +24,6 @@
 - [empty](ReadonlyArray.md#empty)
 - [fromEnumerable](ReadonlyArray.md#fromenumerable)
 - [fromFactory](ReadonlyArray.md#fromfactory)
-- [fromIterable](ReadonlyArray.md#fromiterable)
 - [fromOptional](ReadonlyArray.md#fromoptional)
 - [fromReadonlyArray](ReadonlyArray.md#fromreadonlyarray)
 - [fromValue](ReadonlyArray.md#fromvalue)
@@ -61,6 +60,7 @@
 ### Other Functions
 
 - [flow](ReadonlyArray.md#flow)
+- [fromIterable](ReadonlyArray.md#fromiterable)
 
 ### Transform Functions
 
@@ -172,22 +172,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, readonly `T`[]\>
-
-___
-
-### fromIterable
-
-▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
 ___
 
@@ -611,7 +595,7 @@ ___
 
 ### flatMapIterable
 
-▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
+▸ **flatMapIterable**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<readonly `TA`[], readonly `TB`[]\>
 
 #### Type parameters
 
@@ -628,7 +612,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`\>
+[`Function1`](functions.md#function1)<readonly `TA`[], readonly `TB`[]\>
 
 ___
 
@@ -1396,6 +1380,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, readonly `T`[]\>
 
 ___
 

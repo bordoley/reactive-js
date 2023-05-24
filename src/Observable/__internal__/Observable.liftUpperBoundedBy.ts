@@ -1,6 +1,6 @@
 import type {
-  DeferredObservableUpperBoundObservableOperator,
-  RunnableUpperBoundObservableOperator,
+  DeferredObservableBoundedObservableOperatorWithSideEffects,
+  RunnableBoundedObservableOperatorWithSideEffects,
 } from "../../Observable.js";
 import {
   LiftedLike_operators,
@@ -21,14 +21,14 @@ interface ObservableLiftUpperBoundedBy {
     readonly [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => RunnableUpperBoundObservableOperator<TA, TB>;
+  ) => RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
 
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: true;
     readonly [ObservableLike_isRunnable]: false;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferredObservableUpperBoundObservableOperator<TA, TB>;
+  ) => DeferredObservableBoundedObservableOperatorWithSideEffects<TA, TB>;
 
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: boolean;

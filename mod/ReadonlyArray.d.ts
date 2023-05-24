@@ -23,6 +23,11 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>,
     /**
      * @category Operator
      */
+    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): Function1<ReadonlyArray<TA>, ReadonlyArray<TB>>;
+    fromIterable<T>(): Function1<Iterable<T>, readonly T[]>;
+    /**
+     * @category Operator
+     */
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<Type, TA, TB>;
     keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<Type, TKey, TA, TB>;
     /** @category Transform */

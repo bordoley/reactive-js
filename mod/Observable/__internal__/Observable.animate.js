@@ -3,7 +3,7 @@
 import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
 import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { identity, isReadonlyArray, isSome, pipe } from "../../functions.js";
+import { identity, isReadonlyArray, isSome, pipe, } from "../../functions.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";

@@ -125,6 +125,11 @@ export const __ObservableLike_isEnumerable = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
+export const __ObservableLike_isPure = /*@__PURE__*/ symbol(
+  "ObservableLike_isPure",
+);
+
+/** @type {unique symbol} */
 export const __ObservableLike_isRunnable = /*@__PURE__*/ symbol(
   "ObservableLike_isRunnable",
 );
@@ -628,8 +633,8 @@ export const __CreateObservable_effect = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __DispatchedObservable_observer = /*@__PURE__*/ symbol(
-  "DispatchedObservable_observer",
+export const __DispatchedObservable_dispatcher = /*@__PURE__*/ symbol(
+  "DispatchedObservable_dispatcher",
 );
 
 /** @type {unique symbol} */

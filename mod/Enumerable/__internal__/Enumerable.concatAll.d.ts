@@ -1,3 +1,3 @@
-import type * as Enumerable from "../../Enumerable.js";
-declare const Enumerable_concatAll: Enumerable.Signature["concatAll"];
+import { EnumerableLike } from "../../types.js";
+declare const Enumerable_concatAll: <T>() => (enumerable: EnumerableLike<EnumerableLike<T>>) => EnumerableLike<T>;
 export default Enumerable_concatAll;

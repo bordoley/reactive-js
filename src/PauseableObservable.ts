@@ -1,6 +1,5 @@
 import PauseableObservable_buffer from "./PauseableObservable/__internal__/PauseableObservable.buffer.js";
 import PauseableObservable_distinctUntilChanged from "./PauseableObservable/__internal__/PauseableObservable.distinctUntilChanged.js";
-import PauseableObservable_flatMapIterable from "./PauseableObservable/__internal__/PauseableObservable.flatMapIterable.js";
 import PauseableObservable_keep from "./PauseableObservable/__internal__/PauseableObservable.keep.js";
 import PauseableObservable_keepType from "./PauseableObservable/__internal__/PauseableObservable.keepType.js";
 import PauseableObservable_map from "./PauseableObservable/__internal__/PauseableObservable.map.js";
@@ -49,8 +48,6 @@ export type Signature = PauseableObservableModule;
 export const buffer: Signature["buffer"] = PauseableObservable_buffer;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   PauseableObservable_distinctUntilChanged;
-export const flatMapIterable: Signature["flatMapIterable"] =
-  PauseableObservable_flatMapIterable;
 export const keep: Signature["keep"] = PauseableObservable_keep;
 export const keepType: Signature["keepType"] = PauseableObservable_keepType;
 export const map: Signature["map"] = PauseableObservable_map;

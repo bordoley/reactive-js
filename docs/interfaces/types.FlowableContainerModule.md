@@ -16,7 +16,7 @@
 
   ↳ [`AsyncIterableModule`](AsyncIterable.AsyncIterableModule.md)
 
-  ↳ [`RunnableContainerModule`](types.RunnableContainerModule.md)
+  ↳ [`EnumerableContainerModule`](types.EnumerableContainerModule.md)
 
 ## Table of contents
 
@@ -54,7 +54,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ObservableLike`](types.ObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -64,4 +64,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ObservableLike`](types.ObservableLike.md)<`T`\>\>
