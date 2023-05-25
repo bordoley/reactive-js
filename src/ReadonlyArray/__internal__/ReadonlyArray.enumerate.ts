@@ -115,7 +115,6 @@ const ReadonlyArray_enumerate: ReadonlyArray.Signature["enumerate"] =
       value: readonly T[],
       start: number,
       count: number,
-      o?: unknown,
     ) => EnumeratorLike<T>;
 
     return ReadonlyArray_toContainer<EnumeratorContainer>(createEnumerator);

@@ -57,6 +57,7 @@
 - [currentTime](Observable.md#currenttime)
 - [decodeWithCharset](Observable.md#decodewithcharset)
 - [defer](Observable.md#defer)
+- [delay](Observable.md#delay)
 - [dispatchTo](Observable.md#dispatchto)
 - [distinctUntilChanged](Observable.md#distinctuntilchanged)
 - [empty](Observable.md#empty)
@@ -1872,15 +1873,7 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
+▸ **currentTime**(): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 #### Returns
 
@@ -1924,6 +1917,30 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
+
+___
+
+### delay
+
+▸ **delay**<`T`\>(`delay`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delay` | `number` |
+| `options?` | `Object` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -1985,25 +2002,6 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-▸ **empty**<`T`\>(`options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -2318,25 +2316,6 @@ ___
 
 [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
-▸ **fromFactory**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
 ___
 
 ### fromIterable
@@ -2353,26 +2332,6 @@ ___
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\>\>
 
-▸ **fromIterable**<`T`\>(`options`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
 ___
 
 ### fromOptional
@@ -2388,25 +2347,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **fromOptional**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -2482,28 +2422,6 @@ ___
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
-▸ **fromReadonlyArray**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count?` | `number` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
 ___
 
 ### fromValue
@@ -2519,25 +2437,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **fromValue**<`T`\>(`options`): [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
@@ -2561,50 +2460,6 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-▸ **generate**<`T`\>(`generator`, `initialValue`, `options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `generator` | [`Updater`](functions.md#updater)<`T`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.delay?` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -3803,26 +3658,6 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
-
-▸ **throws**<`T`\>(`options`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.raise?` | [`Factory`](functions.md#factory)<`unknown`\> |
-
-#### Returns
-
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 

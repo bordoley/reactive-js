@@ -15,7 +15,8 @@ import {
 const scheduler = Scheduler.createHostScheduler();
 
 const subscription = pipe(
-  Observable.generate(incrementBy(1), returns(0), { delay: 1 }),
+  Observable.generate(incrementBy(1), returns(0)),
+  Observable.delay(1),
   Observable.throttle(2000),
   Observable.map(x => `${x}`),
   Observable.forEach(x => console.log(x)),

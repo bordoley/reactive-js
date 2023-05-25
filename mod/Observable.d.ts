@@ -161,22 +161,19 @@ export interface ObservableModule {
     createRefCountedPublisher<T>(options?: {
         readonly replay?: number;
     }): PublisherLike<T>;
-    currentTime(options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    }): RunnableLike<number>;
+    currentTime(): RunnableLike<number>;
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): ObservableOperator<ArrayBuffer, string>;
     defer<T>(f: Factory<ObservableLike<T>>): DeferredObservableLike<T>;
+    delay<T>(delay: number, options?: {
+        delayStart?: boolean;
+    }): Function1<EnumerableBaseLike<T>, RunnableLike<T>>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperatorWithSideEffects<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ObservableOperator<T, T>;
     empty<T>(): EnumerableLike<T>;
-    empty<T>(options: {
-        readonly delay: number;
-    }): RunnableLike<T>;
     encodeUtf8(): ObservableOperator<string, Uint8Array>;
     endWith<T>(value: T, ...values: readonly T[]): ObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
@@ -203,18 +200,8 @@ export interface ObservableModule {
     forkMerge<TOut, TObservableIn extends ObservableLike, TObservableOut extends ObservableLike<TOut>>(fst: Function1<TObservableIn, TObservableOut>, snd: Function1<TObservableIn, TObservableOut>, ...tail: readonly Function1<TObservableIn, TObservableOut>[]): TObservableIn extends PureObservableLike ? TObservableOut extends PureObservableLike<TOut> ? Function1<TObservableIn, MulticastObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
-    fromFactory<T>(options: {
-        readonly delay: number;
-    }): Function1<Factory<T>, RunnableLike<T>>;
     fromIterable<T>(): Function1<Iterable<T>, EnumerableWithSideEffectsLike<T>>;
-    fromIterable<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): Function1<Iterable<T>, RunnableLike<T>>;
     fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-    fromOptional<T>(options: {
-        readonly delay: number;
-    }): Function1<Optional<T>, RunnableLike<T>>;
     fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
     fromReadonlyArray<T>(options: {
         readonly count: number;
@@ -226,25 +213,8 @@ export interface ObservableModule {
     fromReadonlyArray<T>(options: {
         readonly start: number;
     }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    fromReadonlyArray<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
     fromValue<T>(): Function1<T, EnumerableLike<T>>;
-    fromValue<T>(options: {
-        readonly delay: number;
-    }): Function1<T, RunnableLike<T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-    }): RunnableLike<T>;
-    generate<T>(generator: Updater<T>, initialValue: Factory<T>, options?: {
-        readonly delay?: number;
-        readonly delayStart?: boolean;
-    }): RunnableLike<T>;
     ignoreElements<T>(): ObservableOperatorWithSideEffects<unknown, T>;
     isDeferredObservable<T>(obs: ObservableLike<T>): obs is DeferredObservableBaseLike<T>;
     isEnumerable<T>(obs: ObservableLike<T>): obs is EnumerableBaseLike<T>;
@@ -360,10 +330,6 @@ export interface ObservableModule {
     throws<T>(options: {
         readonly raise: Factory<unknown>;
     }): EnumerableLike<T>;
-    throws<T>(options: {
-        readonly delay: number;
-        readonly raise?: Factory<unknown>;
-    }): RunnableLike<T>;
     toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -529,6 +495,7 @@ export declare const createRefCountedPublisher: Signature["createRefCountedPubli
 export declare const currentTime: Signature["currentTime"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const defer: Signature["defer"];
+export declare const delay: Signature["delay"];
 export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];

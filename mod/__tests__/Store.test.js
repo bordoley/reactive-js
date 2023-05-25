@@ -13,7 +13,7 @@ testModule("Store", describe("toObservable", test("", () => {
     pipe(store, Store.toObservable(), Observable.withCurrentTime(identity), Observable.forEach(x => {
         result.push(x);
     }), Observable.subscribe(scheduler));
-    pipe(Observable.generate(increment, returns(-1), { delay: 3 }), Observable.takeFirst({ count: 3 }), Observable.forEach(x => {
+    pipe(Observable.generate(increment, returns(-1)), Observable.delay(3), Observable.takeFirst({ count: 3 }), Observable.forEach(x => {
         store[StoreLike_value] = x;
     }), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();

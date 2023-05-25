@@ -2,7 +2,6 @@
 
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
-import Enumerable_toObservable from "./Enumerable/__internal__/Enumerable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -77,7 +76,7 @@ export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
 export const toIterable = Observable_toIterable;
-export const toObservable = Enumerable_toObservable;
+export const toObservable = identityLazy;
 export const toReadonlyArray = Observable_toReadonlyArray;
 export const zip = Observable_zip;
 export const zipWith = Observable_zipWith;

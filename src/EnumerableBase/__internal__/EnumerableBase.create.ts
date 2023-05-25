@@ -1,11 +1,11 @@
-import Enumerable_observeWith from "../../Enumerable/__internal__/Enumerable.observeWith.js";
+import Observable_delay from "../../Observable/__internal__/Observable.delay.js";
 import {
   Mutable,
   createInstanceFactory,
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import { Factory, none, pipe } from "../../functions.js";
+import { Factory, invoke, none, pipe } from "../../functions.js";
 import {
   EnumerableBaseLike,
   EnumerableLike,
@@ -75,7 +75,11 @@ const EnumerableBase_create: EnumerableBaseCreate["create"] = /*@__PURE__*/ (<
           this: TProperties & EnumerableBaseLike<T>,
           observer: ObserverLike,
         ) {
-          pipe(this, Enumerable_observeWith(observer));
+          pipe(
+            this,
+            Observable_delay(0),
+            invoke(ObservableLike_observe, observer),
+          );
         },
       },
     ),

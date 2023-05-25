@@ -119,11 +119,13 @@ testModule(
       pipeLazy(
         Observable.combineLatest(
           pipe(
-            Observable.generate(incrementBy(2), returns(1), { delay: 2 }),
+            Observable.generate(incrementBy(2), returns(1)),
+            Observable.delay(2),
             Observable.takeFirst({ count: 3 }),
           ),
           pipe(
-            Observable.generate(incrementBy(2), returns(0), { delay: 3 }),
+            Observable.generate(incrementBy(2), returns(0)),
+            Observable.delay(3),
             Observable.takeFirst({ count: 2 }),
           ),
         ),
@@ -211,10 +213,8 @@ testModule(
       );
 
       const generateSubscription = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 3,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns(-1)),
+        Observable.delay(3, { delayStart: true }),
         Observable.forEach(bindMethod(publisher, SinkLike_notify)),
         Observable.subscribe(scheduler),
       );
@@ -281,7 +281,8 @@ testModule(
 
       pipe(
         [str],
-        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
         Observable.encodeUtf8(),
         Observable.decodeWithCharset(),
         Observable.toReadonlyArray(),
@@ -367,7 +368,8 @@ testModule(
       let disposedTime = -1;
       const scheduler = Scheduler.createVirtualTimeScheduler();
       pipe(
-        Observable.empty({ delay: 5 }),
+        Observable.empty(),
+        Observable.delay(5, { delayStart: true }),
         Observable.subscribe(scheduler),
         Disposable.onComplete(() => {
           disposedTime = scheduler[SchedulerLike_now];
@@ -435,10 +437,8 @@ testModule(
       const scheduler = Scheduler.createVirtualTimeScheduler();
 
       const generateObservable = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns(-1)),
+        Observable.delay(1, { delayStart: true }),
         Observable.flow(scheduler),
       );
 
@@ -567,7 +567,8 @@ testModule(
       "fromIterable with delay",
       pipeLazy(
         [9, 9, 9, 9],
-        Observable.fromIterable({ delay: 2 }),
+        Observable.fromIterable(),
+        Observable.delay(2),
         Observable.withCurrentTime(t => t),
         Observable.toReadonlyArray(),
         expectArrayEquals([0, 2, 4, 6]),
@@ -616,11 +617,13 @@ testModule(
         Observable.merge(
           pipe(
             [0, 2, 3, 5, 6],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+            Observable.fromReadonlyArray(),
+            Observable.delay(1, { delayStart: true }),
           ),
           pipe(
             [1, 4, 7],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+            Observable.fromReadonlyArray(),
+            Observable.delay(2, { delayStart: true }),
           ),
         ),
         Observable.toReadonlyArray(),
@@ -632,8 +635,12 @@ testModule(
       pipeLazy(
         pipeLazy(
           Observable.merge(
-            pipe([1, 4, 7], Observable.fromReadonlyArray({ delay: 2 })),
-            Observable.throws({ delay: 5 }),
+            pipe(
+              [1, 4, 7],
+              Observable.fromReadonlyArray(),
+              Observable.delay(2),
+            ),
+            pipe(Observable.throws(), Observable.delay(5)),
           ),
           Observable.toReadonlyArray(),
         ),
@@ -668,9 +675,14 @@ testModule(
       "takes until the notifier notifies its first notification",
       pipeLazy(
         [1, 2, 3, 4, 5],
-        ReadonlyArray.toObservable({ delay: 1 }),
+        ReadonlyArray.toObservable(),
+        Observable.delay(1),
         Observable.takeUntil(
-          pipe([1], ReadonlyArray.toObservable({ delay: 3, delayStart: true })),
+          pipe(
+            [1],
+            ReadonlyArray.toObservable(),
+            Observable.delay(3, { delayStart: true }),
+          ),
         ),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 3]),
@@ -744,7 +756,8 @@ testModule(
       const scheduler = Scheduler.createVirtualTimeScheduler();
       const shared = pipe(
         [1, 2, 3],
-        ReadonlyArray.toObservable({ delay: 1 }),
+        ReadonlyArray.toObservable(),
+        Observable.delay(1),
         Observable.share(scheduler, { replay: 1 }),
       );
 
@@ -768,10 +781,8 @@ testModule(
     test(
       "first",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns<number>(-1)),
+        Observable.delay(1, { delayStart: true }),
         Observable.takeFirst({ count: 100 }),
         Observable.throttle<number>(50, { mode: "first" }),
         Observable.toReadonlyArray(),
@@ -782,10 +793,8 @@ testModule(
     test(
       "last",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns<number>(-1)),
+        Observable.delay(1, { delayStart: true }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(50, { mode: "last" }),
         Observable.toReadonlyArray(),
@@ -796,10 +805,8 @@ testModule(
     test(
       "interval",
       pipeLazy(
-        Observable.generate(increment, returns<number>(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns<number>(-1)),
+        Observable.delay(1, { delayStart: true }),
         Observable.takeFirst({ count: 200 }),
         Observable.throttle<number>(75, { mode: "interval" }),
         Observable.toReadonlyArray(),
@@ -828,7 +835,8 @@ testModule(
       pipe(
         pipeLazy(
           [],
-          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.fromReadonlyArray(),
+          Observable.delay(1),
           Observable.throwIfEmpty(() => error),
           Observable.toReadonlyArray(),
         ),
@@ -856,7 +864,8 @@ testModule(
       pipe(
         pipeLazy(
           [],
-          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.fromReadonlyArray(),
+          Observable.delay(1),
           Observable.throwIfEmpty(() => {
             throw error;
           }),
@@ -881,7 +890,8 @@ testModule(
       "when source is not empty with delay",
       pipeLazy(
         [1],
-        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
         Observable.throwIfEmpty(returns(none)),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
@@ -894,9 +904,14 @@ testModule(
       "when source and latest are interlaced",
       pipeLazy(
         [0, 1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
         Observable.withLatestFrom(
-          pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+          pipe(
+            [0, 1, 2, 3],
+            Observable.fromReadonlyArray(),
+            Observable.delay(2),
+          ),
           (a: number, b: number): [number, number] => [a, b],
         ),
         Observable.toReadonlyArray(),
@@ -915,7 +930,8 @@ testModule(
       "when latest produces no values",
       pipeLazy(
         [0],
-        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
         Observable.withLatestFrom(Observable.empty<number>(), returns(1)),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
@@ -927,7 +943,8 @@ testModule(
       pipe(
         pipeLazy(
           [0],
-          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.fromReadonlyArray(),
+          Observable.delay(1),
           Observable.withLatestFrom(
             Observable.throws<number>({ raise: returns(error) }),
             returns(1),
@@ -946,9 +963,13 @@ testModule(
       "with synchronous and non-synchronous sources",
       pipeLazy(
         Observable.zip(
-          pipe([1, 2], Observable.fromReadonlyArray({ delay: 1 })),
+          pipe([1, 2], Observable.fromReadonlyArray(), Observable.delay(1)),
           pipe([2, 3], Observable.fromReadonlyArray()),
-          pipe([3, 4, 5, 6], Observable.fromReadonlyArray({ delay: 1 })),
+          pipe(
+            [3, 4, 5, 6],
+            Observable.fromReadonlyArray(),
+            Observable.delay(1),
+          ),
         ),
         Observable.toReadonlyArray(),
         expectArrayEquals(
@@ -961,8 +982,8 @@ testModule(
       "fast with slow",
       pipeLazy(
         Observable.zip(
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
-          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 5 })),
+          pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1)),
+          pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(5)),
         ),
         Observable.toReadonlyArray(),
         expectArrayEquals(
@@ -994,11 +1015,13 @@ testModule(
         Observable.zipLatest(
           pipe(
             [1, 2, 3, 4, 5, 6, 7, 8],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
+            Observable.fromReadonlyArray(),
+            Observable.delay(1, { delayStart: true }),
           ),
           pipe(
             [1, 2, 3, 4],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
+            Observable.fromReadonlyArray(),
+            Observable.delay(2, { delayStart: true }),
           ),
         ),
         Observable.map<readonly [number, number], number>(([a, b]) => a + b),
@@ -1029,7 +1052,8 @@ testModule(
     );
 
     const observed = pipe(
-      Observable.generate(increment, returns(-1), { delay: 5 }),
+      Observable.generate(increment, returns(-1)),
+      Observable.delay(5),
       op,
       Observable.toReadonlyArray(),
     );

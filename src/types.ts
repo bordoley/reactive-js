@@ -1167,10 +1167,6 @@ export interface EnumerableContainerModule<C extends Container>
    * @category Transform
    */
   toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
-  toObservable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<ContainerOf<C, T>, RunnableLike<T>>;
 
   /**
    * Converts the Container to a `ReadonlyArrayContainer`.

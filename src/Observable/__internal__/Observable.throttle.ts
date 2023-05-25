@@ -1,7 +1,8 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createThrottleObserver from "../../Observer/__internal__/Observer.createThrottleObserver.js";
-import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
+import Observable_delay from "./Observable.delay.js";
+import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
 
 const Observable_throttle: Observable.Signature["throttle"] = (
@@ -11,11 +12,9 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   const { mode = "interval" } = options;
 
   const durationObservable = pipeLazy(
-    [none],
-    ReadonlyArray_toObservable({
-      delay: duration,
-      delayStart: true,
-    }),
+    none,
+    Observable_fromValue(),
+    Observable_delay(duration, { delayStart: true }),
   );
 
   return pipe(

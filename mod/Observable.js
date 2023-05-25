@@ -19,6 +19,7 @@ import Observable_createRefCountedPublisher from "./Observable/__internal__/Obse
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
+import Observable_delay from "./Observable/__internal__/Observable.delay.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
@@ -113,6 +114,7 @@ export const createRefCountedPublisher = Observable_createRefCountedPublisher;
 export const currentTime = Observable_currentTime;
 export const decodeWithCharset = Observable_decodeWithCharset;
 export const defer = Observable_defer;
+export const delay = Observable_delay;
 export const dispatchTo = Observable_dispatchTo;
 export const distinctUntilChanged = Observable_distinctUntilChanged;
 export const empty = Observable_empty;

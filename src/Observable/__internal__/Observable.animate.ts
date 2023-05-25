@@ -11,6 +11,7 @@ import {
 } from "../../functions.js";
 import { EnumerableLike, RunnableBaseLike } from "../../types.js";
 import Observable_concatMany from "./Observable.concatMany.js";
+import Observable_delay from "./Observable.delay.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
 import Observable_map from "./Observable.map.js";
@@ -30,7 +31,10 @@ const parseAnimationConfig = <T = number>(
         Observable_repeat<T>(config.count ?? 1),
       )
     : config.type === "delay"
-    ? Observable_empty({ delay: config.duration })
+    ? pipe(
+        Observable_empty(),
+        Observable_delay(config.duration, { delayStart: true }),
+      )
     : config.type === "frame"
     ? pipe(
         config.value,

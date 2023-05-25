@@ -17,6 +17,7 @@ import Observable_createRefCountedPublisher from "./Observable/__internal__/Obse
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__internal__/Observable.defer.js";
+import Observable_delay from "./Observable/__internal__/Observable.delay.js";
 import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
@@ -666,16 +667,18 @@ export interface ObservableModule {
     readonly replay?: number;
   }): PublisherLike<T>;
 
-  currentTime(options?: {
-    readonly delay?: number;
-    readonly delayStart?: boolean;
-  }): RunnableLike<number>;
+  currentTime(): RunnableLike<number>;
 
   decodeWithCharset(options?: {
     readonly charset?: string;
   }): ObservableOperator<ArrayBuffer, string>;
 
   defer<T>(f: Factory<ObservableLike<T>>): DeferredObservableLike<T>;
+
+  delay<T>(
+    delay: number,
+    options?: { delayStart?: boolean },
+  ): Function1<EnumerableBaseLike<T>, RunnableLike<T>>;
 
   dispatchTo<T>(
     dispatcher: DispatcherLike<T>,
@@ -686,7 +689,6 @@ export interface ObservableModule {
   }): ObservableOperator<T, T>;
 
   empty<T>(): EnumerableLike<T>;
-  empty<T>(options: { readonly delay: number }): RunnableLike<T>;
 
   encodeUtf8(): ObservableOperator<string, Uint8Array>;
 
@@ -764,20 +766,10 @@ export interface ObservableModule {
   >;
 
   fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
-  fromFactory<T>(options: {
-    readonly delay: number;
-  }): Function1<Factory<T>, RunnableLike<T>>;
 
   fromIterable<T>(): Function1<Iterable<T>, EnumerableWithSideEffectsLike<T>>;
-  fromIterable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-  }): Function1<Iterable<T>, RunnableLike<T>>;
 
   fromOptional<T>(): Function1<Optional<T>, EnumerableLike<T>>;
-  fromOptional<T>(options: {
-    readonly delay: number;
-  }): Function1<Optional<T>, RunnableLike<T>>;
 
   fromReadonlyArray<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
   fromReadonlyArray<T>(options: {
@@ -790,32 +782,13 @@ export interface ObservableModule {
   fromReadonlyArray<T>(options: {
     readonly start: number;
   }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  fromReadonlyArray<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 
   fromValue<T>(): Function1<T, EnumerableLike<T>>;
-  fromValue<T>(options: {
-    readonly delay: number;
-  }): Function1<T, RunnableLike<T>>;
 
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
   ): EnumerableLike<T>;
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options: { readonly delay: number; readonly delayStart?: boolean },
-  ): RunnableLike<T>;
-  generate<T>(
-    generator: Updater<T>,
-    initialValue: Factory<T>,
-    options?: { readonly delay?: number; readonly delayStart?: boolean },
-  ): RunnableLike<T>;
 
   ignoreElements<T>(): ObservableOperatorWithSideEffects<unknown, T>;
 
@@ -1076,10 +1049,6 @@ export interface ObservableModule {
 
   throws<T>(): EnumerableLike<T>;
   throws<T>(options: { readonly raise: Factory<unknown> }): EnumerableLike<T>;
-  throws<T>(options: {
-    readonly delay: number;
-    readonly raise?: Factory<unknown>;
-  }): RunnableLike<T>;
 
   toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
   toEventSource<T>(
@@ -2176,6 +2145,7 @@ export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const defer: Signature["defer"] = Observable_defer;
+export const delay: Signature["delay"] = Observable_delay;
 export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;

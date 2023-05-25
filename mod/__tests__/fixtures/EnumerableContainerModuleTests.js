@@ -4,8 +4,8 @@ import * as Disposable from "../../Disposable.js";
 import * as Observable from "../../Observable.js";
 import * as Scheduler from "../../Scheduler.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectToThrowError, expectTrue, mockFn, test, } from "../../__internal__/testing.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, identity, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
-import { DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, PauseableLike_resume, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../types.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, greaterThan, lessThan, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, PauseableLike_resume, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../types.js";
 import ContainerModuleTests from "./ContainerModuleTests.js";
 const EnumerableContainerModuleTests = (m) => [
     ContainerModuleTests(m, () => Disposable.disposed, () => m.fromReadonlyArray(), () => m.toReadonlyArray()),
@@ -65,15 +65,10 @@ const EnumerableContainerModuleTests = (m) => [
     })), describe("someSatisfy", test("some satisfies predicate", pipeLazy([1, 2, 30, 4], m.fromReadonlyArray(), m.someSatisfy(greaterThan(5)), expectTrue))), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], m.fromReadonlyArray(), m.startWith(2, 3, 4), m.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("toIterable", test("when the source completes without error", () => {
         const iter = pipe([0, 1, 2], m.fromReadonlyArray(), m.toIterable());
         pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
-    })), describe("toObservable", test("with delay", () => {
-        const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable({ delay: 1 }));
-        expectTrue(obs[ObservableLike_isDeferred]);
-        expectTrue(obs[ObservableLike_isRunnable]);
-        expectFalse(obs[ObservableLike_isEnumerable]);
-        pipe(obs, Observable.withCurrentTime(identity), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2]));
-    }), test("returns a  deferred observable", () => {
+    })), describe("toObservable", test("returns a  deferred observable", () => {
         const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable());
         expectTrue(obs[ObservableLike_isDeferred]);
+        pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
     })), describe("zip", test("when all inputs are the same length", pipeLazy(m.zip(pipe([1, 2, 3, 4, 5], m.fromReadonlyArray()), pipe([5, 4, 3, 2, 1], m.fromReadonlyArray())), m.toReadonlyArray(), expectArrayEquals([
         [1, 5],
         [2, 4],

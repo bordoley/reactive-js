@@ -19,7 +19,6 @@ import {
   alwaysTrue,
   arrayEquality,
   greaterThan,
-  identity,
   lessThan,
   none,
   pipe,
@@ -35,8 +34,6 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   ObservableLike_isDeferred,
-  ObservableLike_isEnumerable,
-  ObservableLike_isRunnable,
   PauseableLike_resume,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
@@ -547,29 +544,12 @@ const EnumerableContainerModuleTests = <C extends Container>(
     ),
     describe(
       "toObservable",
-      test("with delay", () => {
-        const obs = pipe(
-          [1, 2, 3],
-          m.fromReadonlyArray(),
-          m.toObservable({ delay: 1 }),
-        );
-
-        expectTrue(obs[ObservableLike_isDeferred]);
-        expectTrue(obs[ObservableLike_isRunnable]);
-        expectFalse(obs[ObservableLike_isEnumerable]);
-
-        pipe(
-          obs,
-          Observable.withCurrentTime(identity),
-          Observable.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2]),
-        );
-      }),
-
       test("returns a  deferred observable", () => {
         const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable());
 
         expectTrue(obs[ObservableLike_isDeferred]);
+
+        pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
       }),
     ),
     describe(

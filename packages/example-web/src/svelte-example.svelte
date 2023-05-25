@@ -17,7 +17,8 @@ import * as Store from "@reactive-js/core/Store";
   const scheduler = Scheduler.createHostScheduler();
 
   const counter = pipe(
-    Observable.generate(increment, returns(-1), { delay: 500 }),
+    Observable.generate(increment, returns(-1)),
+    Observable.delay(500),
     Observable.flow(scheduler),
   );
 

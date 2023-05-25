@@ -1,5 +1,5 @@
 import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey, RunnableLike } from "./types.js";
+import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -47,12 +47,6 @@ export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>,
     toObservable<T>(options: {
         readonly start: number;
     }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly delay: number;
-        readonly delayStart?: boolean;
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
     /** @category Transform */
     toReadonlyArray<T>(options?: {
         readonly count?: number;

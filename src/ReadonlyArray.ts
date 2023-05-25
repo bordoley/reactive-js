@@ -58,7 +58,6 @@ import {
   KeyedContainer,
   KeyedContainerOperator,
   KeyedContainer_TKey,
-  RunnableLike,
 } from "./types.js";
 
 /**
@@ -128,12 +127,6 @@ export interface ReadonlyArrayModule
   toObservable<T>(options: {
     readonly start: number;
   }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-  toObservable<T>(options: {
-    readonly delay: number;
-    readonly delayStart?: boolean;
-    readonly count?: number;
-    readonly start?: number;
-  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
 
   /** @category Transform */
   toReadonlyArray<T>(options?: {

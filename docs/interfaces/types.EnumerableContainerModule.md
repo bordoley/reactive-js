@@ -993,30 +993,6 @@ ___
 
 [FlowableContainerModule](types.FlowableContainerModule.md).[toObservable](types.FlowableContainerModule.md#toobservable)
 
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.delay` | `number` |
-| `options.delayStart?` | `boolean` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`RunnableLike`](types.RunnableLike.md)<`T`\>\>
-
-#### Overrides
-
-FlowableContainerModule.toObservable
-
 ___
 
 ### toReadonlyArray

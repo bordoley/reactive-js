@@ -5,6 +5,7 @@ import Optional_toObservable from "../../Optional/__internal__/Optional.toObserv
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { identity, isReadonlyArray, isSome, pipe, } from "../../functions.js";
 import Observable_concatMany from "./Observable.concatMany.js";
+import Observable_delay from "./Observable.delay.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
 import Observable_map from "./Observable.map.js";
@@ -16,7 +17,7 @@ const scale = (start, end) => (v) => {
 const parseAnimationConfig = (config) => config.type === "loop"
     ? pipe(Observable_animate(config.animation), Observable_repeat(config.count ?? 1))
     : config.type === "delay"
-        ? Observable_empty({ delay: config.duration })
+        ? pipe(Observable_empty(), Observable_delay(config.duration, { delayStart: true }))
         : config.type === "frame"
             ? pipe(config.value, Optional_toObservable(), isSome(config.selector)
                 ? Observable_map(config.selector)

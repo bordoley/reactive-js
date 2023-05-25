@@ -1,5 +1,4 @@
 import * as Enumerable from "../Enumerable.js";
-import * as Observable from "../Observable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import {
   describe,
@@ -80,32 +79,6 @@ testModule(
           returns(0),
         ),
         expectEquals(3),
-      ),
-    ),
-  ),
-  describe(
-    "toObservable",
-    test(
-      "with delay",
-      pipeLazy(
-        [9, 9, 9, 9],
-        ReadonlyArray.toObservable({ delay: 2 }),
-        Observable.withCurrentTime(t => t),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([0, 2, 4, 6]),
-      ),
-    ),
-    test(
-      "reversed with delay",
-      pipeLazy(
-        [1, 2, 3, 4],
-        ReadonlyArray.toObservable({
-          count: -2,
-          start: 3,
-          delay: 1,
-        }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([4, 3]),
       ),
     ),
   ),

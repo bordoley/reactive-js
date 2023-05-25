@@ -63,10 +63,8 @@ testModule(
       const scheduler = Scheduler.createVirtualTimeScheduler();
 
       const src = pipe(
-        Observable.generate(increment, returns(-1), {
-          delay: 1,
-          delayStart: true,
-        }),
+        Observable.generate(increment, returns(-1)),
+        Observable.delay(1, { delayStart: true }),
         Observable.flow(scheduler),
         PauseableObservable.takeFirst({ count: 5 }),
       );

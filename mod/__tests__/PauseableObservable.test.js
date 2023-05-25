@@ -25,10 +25,7 @@ const toReadonlyArray = (scheduler) => (obs) => {
 };
 testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
-    const src = pipe(Observable.generate(increment, returns(-1), {
-        delay: 1,
-        delayStart: true,
-    }), Observable.flow(scheduler), PauseableObservable.takeFirst({ count: 5 }));
+    const src = pipe(Observable.generate(increment, returns(-1)), Observable.delay(1, { delayStart: true }), Observable.flow(scheduler), PauseableObservable.takeFirst({ count: 5 }));
     const dest = Streamable.identity()[StreamableLike_stream](scheduler, {
         backpressureStrategy: "throw",
         capacity: 1,
