@@ -2,7 +2,7 @@
 
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_concatAll from "../../Enumerator/__internal__/Enumerator.concatAll.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
@@ -40,7 +40,7 @@ const Observable_concatMany =
         const isRunnable = Observable_allAreRunnable(observables);
         const isPure = Observable_allArePure(observables);
         return isEnumerable
-            ? Enumerable_create(pipeLazy(observables, ReadonlyArray_map(invoke(EnumerableLike_enumerate)), ReadonlyArray_enumerate(), Enumerator_concatAll()), isPure)
+            ? EnumerableBase_create(pipeLazy(observables, ReadonlyArray_map(invoke(EnumerableLike_enumerate)), ReadonlyArray_enumerate(), Enumerator_concatAll()), { [ObservableLike_isPure]: isPure })
             : Observable_createWithConfig(onSubscribe, {
                 [ObservableLike_isDeferred]: isDeferred,
                 [ObservableLike_isRunnable]: isRunnable,

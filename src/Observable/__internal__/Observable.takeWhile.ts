@@ -2,7 +2,7 @@ import Enumerator_takeWhile from "../../Enumerator/__internal__/Enumerator.takeW
 import type * as Observable from "../../Observable.js";
 import Observer_createTakeWhileObserver from "../../Observer/__internal__/Observer.createTakeWhileObserver.js";
 import { Predicate, partial, pipe } from "../../functions.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureObservableOperator from "./Observable.liftPureObservableOperator.js";
 
 const Observable_takeWhile: Observable.Signature["takeWhile"] = (<T>(
   predicate: Predicate<T>,
@@ -14,7 +14,10 @@ const Observable_takeWhile: Observable.Signature["takeWhile"] = (<T>(
     partial(predicate, inclusive),
   );
 
-  return Observable_liftPure(Enumerator_takeWhile(predicate, options), op);
+  return Observable_liftPureObservableOperator(
+    Enumerator_takeWhile(predicate, options),
+    op,
+  );
 }) as Observable.Signature["takeWhile"];
 
 export default Observable_takeWhile;

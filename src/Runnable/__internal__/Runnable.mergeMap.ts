@@ -8,7 +8,8 @@ import {
 } from "../../types.js";
 import Runnable_mergeAll from "./Runnable.mergeAll.js";
 
-const Runnable_mergeMap: Runnable.Signature["mergeMap"] = (<TA, TB>(
+const Runnable_mergeMap: Runnable.Signature["mergeMap"] =
+  <TA, TB>(
     selector: Function1<TA, RunnableLike<TB>>,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -17,10 +18,6 @@ const Runnable_mergeMap: Runnable.Signature["mergeMap"] = (<TA, TB>(
     },
   ) =>
   (obs: RunnableLike<TA>) =>
-    pipe(
-      obs,
-      Observable_map(selector),
-      Runnable_mergeAll<TB>(options),
-    )) as Runnable.Signature["mergeMap"];
+    pipe(obs, Observable_map(selector), Runnable_mergeAll<TB>(options));
 
 export default Runnable_mergeMap;

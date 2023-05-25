@@ -1,23 +1,49 @@
 import type {
   DeferredObservableBoundedObservableOperatorWithSideEffects,
   RunnableBoundedObservableOperatorWithSideEffects,
+  RunnableBoundedPureObservableOperator,
 } from "../../Observable.js";
+import { createInstanceFactory } from "../../__internal__/mixins.js";
 import {
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../__internal__/types.js";
-import { Function1 } from "../../functions.js";
+import { Function1, bindMethod, pipeUnsafe } from "../../functions.js";
 import {
+  ObservableBaseLike,
   ObservableLike,
   ObservableLike_isDeferred,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   ObserverLike,
 } from "../../types.js";
-import Observable_createLifted from "./Observable.createLifted.js";
+import Observable_create from "./Observable.create.js";
+import Observable_liftMixin from "./Observable.liftMixin.js";
+
+const Observable_createLifted: <TA, TB>(
+  obs: ObservableLike<TA>,
+  ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+  config: {
+    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isPure]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
+  },
+) => ObservableBaseLike<TB> = /*@__PURE__*/ (() =>
+  createInstanceFactory(Observable_liftMixin<unknown, unknown>()))();
 
 interface ObservableLiftUpperBoundedBy {
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: true;
+    readonly [ObservableLike_isRunnable]: true;
+  }): <TA, TB>(
+    operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
+  ) => RunnableBoundedPureObservableOperator<TA, TB>;
+
+  liftUpperBoundedBy(options: {
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: false;
     readonly [ObservableLike_isRunnable]: true;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
@@ -25,6 +51,7 @@ interface ObservableLiftUpperBoundedBy {
 
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: false;
     readonly [ObservableLike_isRunnable]: false;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
@@ -32,15 +59,17 @@ interface ObservableLiftUpperBoundedBy {
 
   liftUpperBoundedBy(options: {
     readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   }): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => Function1<ObservableLike<TA>, ObservableLike<TB>>;
+  ) => Function1<ObservableBaseLike<TA>, ObservableBaseLike<TB>>;
 }
 
 const Observable_liftUpperBoundedBy: ObservableLiftUpperBoundedBy["liftUpperBoundedBy"] =
   ((config: {
       readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ObservableLike_isPure]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     }) =>
     <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) =>
@@ -51,24 +80,34 @@ const Observable_liftUpperBoundedBy: ObservableLiftUpperBoundedBy["liftUpperBoun
         ...((source as any)[LiftedLike_operators] ?? []),
       ];
 
+      const isDeferredObservable =
+        config[ObservableLike_isDeferred] &&
+        sourceSource[ObservableLike_isDeferred];
+      const isPure =
+        config[ObservableLike_isPure] && sourceSource[ObservableLike_isPure];
       const isRunnable =
         config[ObservableLike_isRunnable] &&
         sourceSource[ObservableLike_isRunnable];
-      const isDeferredObservable =
-        isRunnable ||
-        (config[ObservableLike_isDeferred] &&
-          sourceSource[ObservableLike_isDeferred]);
 
       const liftedConfig = {
-        [ObservableLike_isRunnable]: isRunnable,
         [ObservableLike_isDeferred]: isDeferredObservable,
+        [ObservableLike_isPure]: isPure,
+        [ObservableLike_isRunnable]: isRunnable,
       };
 
-      return Observable_createLifted<TA, TB>(
-        sourceSource,
-        allFunctions,
-        liftedConfig,
-      );
+      return !isDeferredObservable && !isPure && !isRunnable
+        ? Observable_create(observer => {
+            pipeUnsafe(
+              observer,
+              ...allFunctions,
+              bindMethod(sourceSource, ObservableLike_observe),
+            );
+          })
+        : Observable_createLifted<TA, TB>(
+            sourceSource,
+            allFunctions,
+            liftedConfig,
+          );
     }) as ObservableLiftUpperBoundedBy["liftUpperBoundedBy"];
 
 export default Observable_liftUpperBoundedBy;

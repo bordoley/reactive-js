@@ -16,8 +16,10 @@ import {
   SinkLike_notify,
 } from "../../types.js";
 
-const Observable_delay: Observable.Signature["delay"] =
-  <T>(delay: number, options?: { delayStart?: boolean }) =>
+const Observable_delay: Observable.Signature["delay"] = (<T>(
+    delay: number,
+    options?: { delayStart?: boolean },
+  ) =>
   (observable: EnumerableBaseLike<T>) =>
     Runnable_create((observer: ObserverLike<T>) => {
       const { delayStart = false } = options ?? {};
@@ -46,6 +48,6 @@ const Observable_delay: Observable.Signature["delay"] =
         ),
         Disposable_addTo(observer),
       );
-    });
+    }, observable)) as Observable.Signature["delay"];
 
 export default Observable_delay;

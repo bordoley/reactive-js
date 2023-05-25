@@ -1,7 +1,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import type {
-  ObservableOperator,
   ObservableOperatorWithSideEffects,
+  PureObservableOperator,
 } from "../../Observable.js";
 import Observable_liftMixin from "../../Observable/__internal__/Observable.liftMixin.js";
 import {
@@ -31,16 +31,15 @@ import {
 } from "../../types.js";
 
 const createLiftedEnumerable: <TIn, TOut>(
-  source: EnumerableLike<TIn>,
+  source: EnumerableBaseLike<TIn>,
   observerOps: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   enumeratorOps: readonly Function1<EnumeratorLike<any>, EnumeratorLike<any>>[],
   isPure: boolean,
-) => EnumerableLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
+) => EnumerableBaseLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
     [__LiftedEnumerable_ops]: ReadonlyArray<
       Function1<EnumeratorLike<any>, EnumeratorLike<any>>
     >;
-    [ObservableLike_isPure]: boolean;
   };
   return createInstanceFactory(
     mix(
@@ -48,10 +47,10 @@ const createLiftedEnumerable: <TIn, TOut>(
       function LiftedEnumerable(
         instance: TProperties &
           Pick<
-            EnumerableLike<TOut>,
+            EnumerableBaseLike<TOut>,
             typeof ObservableLike_isEnumerable | typeof EnumerableLike_enumerate
           >,
-        source: EnumerableLike<TIn>,
+        source: EnumerableBaseLike<TIn>,
         observerOps: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
         enumeratorOps: readonly Function1<
           EnumeratorLike<any>,
@@ -60,11 +59,11 @@ const createLiftedEnumerable: <TIn, TOut>(
         isPure: boolean,
       ): EnumerableLike<TOut> {
         instance[__LiftedEnumerable_ops] = enumeratorOps;
-        instance[ObservableLike_isPure] = isPure;
 
         init(Observable_liftMixin<TIn, TOut>(), instance, source, observerOps, {
           [ObservableLike_isDeferred]: true,
           [ObservableLike_isRunnable]: true,
+          [ObservableLike_isPure]: isPure,
         });
         init(Delegating_mixin(), instance, source);
 
@@ -72,7 +71,6 @@ const createLiftedEnumerable: <TIn, TOut>(
       },
       props<TProperties>({
         [__LiftedEnumerable_ops]: none,
-        [ObservableLike_isPure]: false,
       }),
       {
         [ObservableLike_isEnumerable]: true as const,
@@ -92,12 +90,12 @@ const createLiftedEnumerable: <TIn, TOut>(
   );
 })();
 
-interface EnumerableLift {
+interface EnumerableBaseLift {
   lift<TA, TB>(
     observerOp: Function1<ObserverLike<TB>, ObserverLike<TA>>,
     enumeratorOp: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
     isPure: true,
-  ): ObservableOperator<TA, TB>;
+  ): PureObservableOperator<TA, TB>;
   lift<TA, TB>(
     observerOp: Function1<ObserverLike<TB>, ObserverLike<TA>>,
     enumeratorOp: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
@@ -110,11 +108,11 @@ interface EnumerableLift {
   ): Function1<EnumerableBaseLike<TA>, EnumerableBaseLike<TB>>;
 }
 
-const Enumerable_lift: EnumerableLift["lift"] = (<TA, TB>(
+const EnumerableBase_lift: EnumerableBaseLift["lift"] = (<TA, TB>(
     observerOp: Function1<ObserverLike<TB>, ObserverLike<TA>>,
     enumeratorOp: Function1<EnumeratorLike<TA>, EnumeratorLike<TB>>,
     isPure: boolean,
-  ): Function1<EnumerableLike<TA>, EnumerableLike<TB>> =>
+  ): Function1<EnumerableBaseLike<TA>, EnumerableBaseLike<TB>> =>
   source => {
     const sourceSource = (source as any)[LiftedLike_source] ?? source;
 
@@ -136,6 +134,6 @@ const Enumerable_lift: EnumerableLift["lift"] = (<TA, TB>(
       enumeratorOps,
       isOpPure,
     );
-  }) as EnumerableLift["lift"];
+  }) as EnumerableBaseLift["lift"];
 
-export default Enumerable_lift;
+export default EnumerableBase_lift;

@@ -32,7 +32,7 @@ const parseAnimationConfig = <T = number>(
       )
     : config.type === "delay"
     ? pipe(
-        Observable_empty(),
+        Observable_empty<T>(),
         Observable_delay(config.duration, { delayStart: true }),
       )
     : config.type === "frame"
@@ -63,6 +63,9 @@ const Observable_animate: Observable.Signature["animate"] = <T = number>(
     ? config
     : [config];
   const observables = pipe(configs, ReadonlyArray_map(parseAnimationConfig));
+
+  // FIXME: concat many will return the wrong purity flag in some cases.
+  // Need to wrap this is in a Runnable.defer or RunnableWithSideEffects create function
   return Observable_concatMany(observables);
 };
 

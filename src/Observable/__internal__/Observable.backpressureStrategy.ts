@@ -6,20 +6,20 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../types.js";
-import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
+import Observable_liftRunnableBoundedPureObservableOperator from "./Observable.liftRunnableBoundedPureObservableOperator.js";
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
-  (
+  <T>(
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ) =>
     pipe(
-      Observer_createBackpressureObserver,
+      Observer_createBackpressureObserver<T>,
       partial({
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
         [BufferLike_capacity]: capacity,
       }),
-      Observable_liftRunnableUpperBounded,
+      Observable_liftRunnableBoundedPureObservableOperator<T, T>,
     );
 
 export default Observable_backpressureStrategy;

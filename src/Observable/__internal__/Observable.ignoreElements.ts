@@ -8,8 +8,11 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { EnumeratorLike } from "../../types.js";
-import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
+import { EnumeratorLike, ObservableLike } from "../../types.js";
+import Observable_empty from "./Observable.empty.js";
+import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_isPure from "./Observable.isPure.js";
+import Observable_liftPureObservableOperator from "./Observable.liftPureObservableOperator.js";
 
 const Observable_ignoreElements: Observable.Signature["ignoreElements"] =
   /*@__PURE__*/ (<T>() => {
@@ -20,7 +23,14 @@ const Observable_ignoreElements: Observable.Signature["ignoreElements"] =
 
     const op = pipe(Observer_createKeepObserver<T>, partial(alwaysFalse));
 
-    return returns(Observable_liftWithSideEffects(enumeratorOp, op));
-  })();
+    const pureLift = Observable_liftPureObservableOperator(enumeratorOp, op);
+
+    return returns((obs: ObservableLike<T>) => {
+      const isPure = Observable_isPure(obs);
+      const isEnumerable = Observable_isEnumerable(obs);
+
+      return isPure && isEnumerable ? Observable_empty() : pureLift(obs);
+    });
+  })() as Observable.Signature["ignoreElements"];
 
 export default Observable_ignoreElements;

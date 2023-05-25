@@ -7,7 +7,7 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { RunnableLike } from "../../types.js";
+import { RunnableWithSideEffectsLike } from "../../types.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_pick from "./Observable.pick.js";
 import Observable_scan from "./Observable.scan.js";
@@ -18,7 +18,7 @@ const Observable_keyFrame = (
   options?: {
     readonly easing?: Function1<number, number>;
   },
-): RunnableLike<number> => {
+): RunnableWithSideEffectsLike<number> => {
   const { easing = identity } = options ?? {};
 
   return pipe(

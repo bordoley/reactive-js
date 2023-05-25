@@ -49,16 +49,15 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  EnumerableLike,
   KeyedCollectionLike_get,
-  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   ReplayObservableLike_buffer,
-  RunnableLike,
+  RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
   SinkLike_notify,
 } from "../../types.js";
@@ -407,47 +406,22 @@ interface ObservableComputeWithConfig {
     computation: Factory<T>,
     config: {
       readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isEnumerable]: true;
-      readonly [ObservableLike_isRunnable]: true;
-    },
-    options?: { readonly mode?: "batched" | "combine-latest" },
-  ): EnumerableLike<T>;
-  computeWithConfig<T>(
-    computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
       readonly [ObservableLike_isEnumerable]: false;
       readonly [ObservableLike_isRunnable]: true;
+      readonly [ObservableLike_isPure]: false;
     },
     options?: { readonly mode?: "batched" | "combine-latest" },
-  ): RunnableLike<T>;
+  ): RunnableWithSideEffectsLike<T>;
   computeWithConfig<T>(
     computation: Factory<T>,
     config: {
       readonly [ObservableLike_isDeferred]: true;
       readonly [ObservableLike_isEnumerable]: false;
       readonly [ObservableLike_isRunnable]: false;
+      readonly [ObservableLike_isPure]: false;
     },
     options?: { readonly mode?: "batched" | "combine-latest" },
   ): DeferredObservableLike<T>;
-  computeWithConfig<T>(
-    computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isEnumerable]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-    },
-    options?: { readonly mode?: "batched" | "combine-latest" },
-  ): DeferredObservableLike<T>;
-  computeWithConfig<T>(
-    computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: boolean;
-      readonly [ObservableLike_isEnumerable]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-    },
-    options?: { readonly mode?: "batched" | "combine-latest" },
-  ): MulticastObservableLike<T>;
 }
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
@@ -456,6 +430,7 @@ const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConf
       readonly [ObservableLike_isDeferred]: true;
       readonly [ObservableLike_isEnumerable]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
+      readonly [ObservableLike_isPure]: false;
     },
     { mode = "batched" }: { readonly mode?: "batched" | "combine-latest" } = {},
   ) =>
@@ -572,6 +547,7 @@ export const Observable_compute: Observable.Signature["compute"] = <T>(
     {
       [ObservableLike_isDeferred]: true as const,
       [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isPure]: false,
       [ObservableLike_isRunnable]: false,
     },
     options,
@@ -586,6 +562,7 @@ export const Runnable_compute: Runnable.Signature["compute"] = <T>(
     {
       [ObservableLike_isDeferred]: true as const,
       [ObservableLike_isEnumerable]: false,
+      [ObservableLike_isPure]: false,
       [ObservableLike_isRunnable]: true,
     },
     options,

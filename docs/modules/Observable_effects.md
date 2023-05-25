@@ -34,7 +34,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `observable` | [`ObservableLike`](types.md#observablelike)<`T`\> |
 
 #### Returns
 
@@ -469,7 +469,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observable` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `observable` | [`ObservableLike`](types.md#observablelike)<`T`\> |
 
 #### Returns
 

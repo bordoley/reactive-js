@@ -1,6 +1,6 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_concatAll from "../../Enumerator/__internal__/Enumerator.concatAll.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
@@ -12,6 +12,7 @@ import { bindMethod, invoke, pipe, pipeLazy } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EnumerableLike_enumerate,
+  ObservableBaseLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -46,7 +47,9 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
         }),
       );
 
-    return (observables: readonly ObservableLike<T>[]): ObservableLike<T> => {
+    return (
+      observables: readonly ObservableLike<T>[],
+    ): ObservableBaseLike<T> => {
       const onSubscribe = (observer: ObserverLike<T>) => {
         if (!ReadonlyArray_isEmpty(observables)) {
           pipe(
@@ -64,14 +67,14 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       const isPure = Observable_allArePure(observables);
 
       return isEnumerable
-        ? Enumerable_create(
+        ? EnumerableBase_create(
             pipeLazy(
               observables,
               ReadonlyArray_map(invoke(EnumerableLike_enumerate)),
               ReadonlyArray_enumerate(),
               Enumerator_concatAll(),
             ),
-            isPure,
+            { [ObservableLike_isPure]: isPure },
           )
         : Observable_createWithConfig(onSubscribe, {
             [ObservableLike_isDeferred]: isDeferred,

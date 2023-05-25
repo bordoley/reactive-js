@@ -1,12 +1,12 @@
 import type * as Observable from "../../Observable.js";
 import {
-  DeferredObservableLike,
-  ObservableLike,
+  DeferredObservableBaseLike,
+  ObservableBaseLike,
   ObservableLike_isDeferred,
 } from "../../types.js";
 
 const Observable_isDeferredObservable: Observable.Signature["isDeferredObservable"] =
-  (obs: ObservableLike): obs is DeferredObservableLike =>
+  (obs: ObservableBaseLike): obs is DeferredObservableBaseLike =>
     obs[ObservableLike_isDeferred];
 
 export default Observable_isDeferredObservable;

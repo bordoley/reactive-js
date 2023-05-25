@@ -1,11 +1,11 @@
 import type * as Observable from "../../Observable.js";
 import { Function1, pipe } from "../../functions.js";
-import { DeferredObservableLike, ObservableLike } from "../../types.js";
+import { DeferredObservableBaseLike, ObservableLike } from "../../types.js";
 import Observable_map from "./Observable.map.js";
 import Observable_switchAll from "./Observable.switchAll.js";
 
 const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
-    selector: Function1<TA, DeferredObservableLike<TB>>,
+    selector: Function1<TA, DeferredObservableBaseLike<TB>>,
   ) =>
   (obs: ObservableLike<TA>) =>
     pipe(

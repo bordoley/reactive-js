@@ -22,7 +22,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe, pipeLazy, } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_isPure, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allArePure from "./Observable.allArePure.js";
@@ -58,7 +58,7 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
         },
     }));
 })();
-const Enumerable_zipMany = (observables) => EnumerableBase_create(pipeLazy(observables, ReadonlyArray_map(Observable_enumerate()), Enumerator_zipMany), Observable_allArePure(observables));
+const Enumerable_zipMany = (observables, config) => EnumerableBase_create(pipeLazy(observables, ReadonlyArray_map(Observable_enumerate()), Enumerator_zipMany), config);
 const Observable_zipMany = /*@__PURE__*/ (() => {
     const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_everySatisfy(isTrue));
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
@@ -113,14 +113,18 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     return (observables) => {
         const isDeferred = Observable_allAreDeferred(observables);
         const isEnumerable = Observable_allAreEnumerable(observables);
+        const isPure = Observable_allArePure(observables);
         const isRunnable = Observable_allAreRunnable(observables);
-        return isEnumerable
-            ? Enumerable_zipMany(observables)
-            : isRunnable
-                ? Runnable_create(onSubscribe(observables))
-                : isDeferred
-                    ? Observable_create(onSubscribe(observables))
-                    : MulticastObservable_create(onSubscribe(observables));
+        const pureConfig = {
+            [ObservableLike_isPure]: isPure,
+        };
+        return isEnumerable && isRunnable && isDeferred
+            ? Enumerable_zipMany(observables, pureConfig)
+            : isRunnable && isDeferred
+                ? Runnable_create(onSubscribe(observables), pureConfig)
+                : isPure && !isEnumerable && !isRunnable && !isDeferred
+                    ? MulticastObservable_create(onSubscribe(observables))
+                    : Observable_create(onSubscribe(observables));
     };
 })();
 export default Observable_zipMany;

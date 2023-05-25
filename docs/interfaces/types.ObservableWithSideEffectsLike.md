@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](types.ObservableLike.md)<`T`\>
+- [`ObservableBaseLike`](types.ObservableBaseLike.md)<`T`\>
 
   ↳ **`ObservableWithSideEffectsLike`**
 
@@ -34,4 +34,4 @@ Indicates if subscribing to the `ObservableLike` is free of side-effects
 
 #### Overrides
 
-[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isPure]](types.ObservableLike.md#[___observablelike_ispure])
+[ObservableBaseLike](types.ObservableBaseLike.md).[[___ObservableLike_isPure]](types.ObservableBaseLike.md#[___observablelike_ispure])

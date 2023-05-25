@@ -48,7 +48,6 @@ import {
   DeferredObservableBaseLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -75,7 +74,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
       observer: ObserverLike<DeferredObservableBaseLike<T>> &
         DelegatingLike<ObserverLike<T>> &
         TProperties,
-      nextObs: ObservableLike<T>,
+      nextObs: DeferredObservableBaseLike<T>,
     ) => {
       observer[__MergeAllObserver_activeCount]++;
 
@@ -122,7 +121,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
           instance[__MergeAllObserver_activeCount] = 0;
           instance[__MergeAllObserver_onDispose] = () => {
             instance[__MergeAllObserver_activeCount]--;
-            const nextObs: Optional<ObservableLike<T>> =
+            const nextObs: Optional<DeferredObservableBaseLike<T>> =
               instance[__MergeAllObserver_observablesQueue][
                 QueueLike_dequeue
               ]();

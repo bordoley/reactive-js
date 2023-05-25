@@ -16,6 +16,8 @@
 
   ↳ **`RunnableBaseLike`**
 
+  ↳↳ [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)
+
   ↳↳ [`RunnableLike`](types.RunnableLike.md)
 
   ↳↳ [`EnumerableBaseLike`](types.EnumerableBaseLike.md)

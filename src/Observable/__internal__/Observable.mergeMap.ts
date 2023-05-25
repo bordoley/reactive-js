@@ -1,7 +1,7 @@
 import type * as Observable from "../../Observable.js";
 import { Function1, pipe } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -10,7 +10,7 @@ import Observable_map from "./Observable.map.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 
 const Observable_mergeMap: Observable.Signature["mergeMap"] = (<TA, TB>(
-    selector: Function1<TA, DeferredObservableLike<TB>>,
+    selector: Function1<TA, DeferredObservableBaseLike<TB>>,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;

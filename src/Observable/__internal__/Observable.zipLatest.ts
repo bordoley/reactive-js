@@ -4,7 +4,6 @@ import Observable_latest from "./Observable.latest.js";
 
 const Observable_zipLatest: Observable.Signature["zipLatest"] = ((
   ...observables: readonly ObservableLike<any>[]
-): ObservableLike<readonly unknown[]> =>
-  Observable_latest(observables, 2)) as Observable.Signature["zipLatest"];
+) => Observable_latest(observables, 2)) as Observable.Signature["zipLatest"];
 
 export default Observable_zipLatest;

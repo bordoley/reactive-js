@@ -3,9 +3,9 @@
 import Enumerator_keep from "../../Enumerator/__internal__/Enumerator.keep.js";
 import Observer_createKeepObserver from "../../Observer/__internal__/Observer.createKeepObserver.js";
 import { partial, pipe } from "../../functions.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_liftPureObservableOperator from "./Observable.liftPureObservableOperator.js";
 const Observable_keep = (predicate) => {
     const op = pipe((Observer_createKeepObserver), partial(predicate));
-    return Observable_liftPure(Enumerator_keep(predicate), op);
+    return Observable_liftPureObservableOperator(Enumerator_keep(predicate), op);
 };
 export default Observable_keep;

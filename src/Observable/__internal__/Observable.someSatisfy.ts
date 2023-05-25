@@ -4,7 +4,7 @@ import {
   EnumerableLike_enumerate,
   EnumeratorLike_current,
   EnumeratorLike_move,
-  RunnableBaseLike,
+  RunnableLike,
 } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
@@ -14,7 +14,7 @@ import Observable_takeWhile from "./Observable.takeWhile.js";
 
 const Observable_someSatisfy: Observable.Signature["everySatisfy"] =
   <T>(predicate: Predicate<T>) =>
-  (runnable: RunnableBaseLike<T>) => {
+  (runnable: RunnableLike<T>) => {
     if (Observable_isEnumerable(runnable)) {
       const enumerator = runnable[EnumerableLike_enumerate]();
       let result = false;
@@ -36,6 +36,7 @@ const Observable_someSatisfy: Observable.Signature["everySatisfy"] =
         Observable_forEach((next: boolean) => {
           result = next;
         }),
+        x => x,
         Observable_takeWhile(isFalse),
         Observable_run(),
       );

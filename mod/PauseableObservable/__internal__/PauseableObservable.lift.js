@@ -10,6 +10,7 @@ const createLiftedPauseableObservable = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Observable_liftMixin(), Delegating_mixin()), function LiftedPauseableObservable(instance, source, ops) {
         init(Observable_liftMixin(), instance, source, ops, {
             [ObservableLike_isDeferred]: false,
+            [ObservableLike_isPure]: true,
             [ObservableLike_isRunnable]: false,
         });
         init(Delegating_mixin(), instance, source);

@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](types.ObservableLike.md)<`T`\>
+- [`ObservableBaseLike`](types.ObservableBaseLike.md)<`T`\>
 
   ↳ **`DeferredObservableBaseLike`**
 
@@ -36,4 +36,4 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 
 #### Overrides
 
-[ObservableLike](types.ObservableLike.md).[[___ObservableLike_isDeferred]](types.ObservableLike.md#[___observablelike_isdeferred])
+[ObservableBaseLike](types.ObservableBaseLike.md).[[___ObservableLike_isDeferred]](types.ObservableBaseLike.md#[___observablelike_isdeferred])

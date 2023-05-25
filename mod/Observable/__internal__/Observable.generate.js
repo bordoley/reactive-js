@@ -1,6 +1,6 @@
 /// <reference types="./Observable.generate.d.ts" />
 
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Iterable_enumerate from "../../Iterable/__internal__/Iterable.enumerate.js";
 import { pipe } from "../../functions.js";
 const Observable_generate = (generator, initialValue) => {
@@ -14,6 +14,6 @@ const Observable_generate = (generator, initialValue) => {
         };
         return pipe(iter(), Iterable_enumerate());
     };
-    return Enumerable_create(generateEnumerator(generator, initialValue), true);
+    return Enumerable_create(generateEnumerator(generator, initialValue));
 };
 export default Observable_generate;

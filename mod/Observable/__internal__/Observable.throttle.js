@@ -4,10 +4,10 @@ import Observer_createThrottleObserver from "../../Observer/__internal__/Observe
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_fromValue from "./Observable.fromValue.js";
-import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
+import Observable_liftRunnableBoundedObservableOperatorWithSideEffects from "./Observable.liftRunnableBoundedObservableOperatorWithSideEffects.js";
 const Observable_throttle = (duration, options = {}) => {
     const { mode = "interval" } = options;
     const durationObservable = pipeLazy(none, Observable_fromValue(), Observable_delay(duration, { delayStart: true }));
-    return pipe(Observer_createThrottleObserver, partial(durationObservable, mode), Observable_liftRunnableUpperBounded);
+    return pipe(Observer_createThrottleObserver, partial(durationObservable, mode), Observable_liftRunnableBoundedObservableOperatorWithSideEffects);
 };
 export default Observable_throttle;

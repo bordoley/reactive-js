@@ -12,7 +12,7 @@ import {
 import {
   BufferLike_capacity,
   DisposableLike,
-  ObservableLike,
+  ObservableWithSideEffectsLike,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -37,7 +37,10 @@ const Observable_multicastImpl =
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     } = {},
-  ): Function1<ObservableLike<T>, ReplayObservableLike<T> & DisposableLike> =>
+  ): Function1<
+    ObservableWithSideEffectsLike<T>,
+    ReplayObservableLike<T> & DisposableLike
+  > =>
   observable => {
     const {
       backpressureStrategy = "overflow",

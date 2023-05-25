@@ -3,7 +3,7 @@ import Observer_createThrottleObserver from "../../Observer/__internal__/Observe
 import { none, partial, pipe, pipeLazy } from "../../functions.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_fromValue from "./Observable.fromValue.js";
-import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
+import Observable_liftRunnableBoundedObservableOperatorWithSideEffects from "./Observable.liftRunnableBoundedObservableOperatorWithSideEffects.js";
 
 const Observable_throttle: Observable.Signature["throttle"] = (
   duration: number,
@@ -20,7 +20,7 @@ const Observable_throttle: Observable.Signature["throttle"] = (
   return pipe(
     Observer_createThrottleObserver,
     partial(durationObservable, mode),
-    Observable_liftRunnableUpperBounded,
+    Observable_liftRunnableBoundedObservableOperatorWithSideEffects,
   );
 };
 

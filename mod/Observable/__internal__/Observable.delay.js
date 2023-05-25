@@ -4,7 +4,7 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { none, pipe } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
-const Observable_delay = (delay, options) => (observable) => Runnable_create((observer) => {
+const Observable_delay = ((delay, options) => (observable) => Runnable_create((observer) => {
     const { delayStart = false } = options ?? {};
     const enumerator = pipe(observable[EnumerableLike_enumerate](), Disposable_addTo(observer));
     const continuation = (scheduler) => {
@@ -17,5 +17,5 @@ const Observable_delay = (delay, options) => (observable) => Runnable_create((ob
         observer[DisposableLike_dispose]();
     };
     pipe(observer[SchedulerLike_schedule](continuation, delayStart ? { delay } : none), Disposable_addTo(observer));
-});
+}, observable));
 export default Observable_delay;

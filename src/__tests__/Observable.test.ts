@@ -34,6 +34,7 @@ import {
   arrayEquality,
   bindMethod,
   compose,
+  ignore,
   increment,
   incrementBy,
   isEven,
@@ -86,7 +87,7 @@ testModule(
       "with a throw backpressure strategy",
       Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
         async scheduler => {
-          expectToThrowAsync(
+          await expectToThrowAsync(
             pipeLazyAsync(
               Observable.create(observer => {
                 for (let i = 0; i < 10; i++) {
@@ -117,7 +118,7 @@ testModule(
         Observable.catchError<number>(e => {
           result = e["cause"];
         }),
-        Observable.toReadonlyArray(),
+        Observable.run(),
       );
 
       pipe(
@@ -345,7 +346,7 @@ testModule(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
           Observable.fromReadonlyArray(),
           Observable.dispatchTo<number>(stream),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
       );
     }),
@@ -371,10 +372,10 @@ testModule(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         Observable.fromReadonlyArray(),
         Observable.dispatchTo<number>(stream),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]),
-      ),
-        expectTrue(completed);
+        Observable.run(),
+      );
+
+      expectTrue(completed);
     }),
   ),
   describe(
@@ -518,8 +519,7 @@ testModule(
         Observable.forEach((x: number) => {
           result.push(x + 10);
         }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3]),
+        Observable.run(),
       ),
         pipe(result, expectArrayEquals([11, 12, 13]));
     }),
@@ -533,7 +533,7 @@ testModule(
           Observable.forEach(_ => {
             throw err;
           }),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrowError(err),
       );
@@ -578,17 +578,20 @@ testModule(
   ),
   describe(
     "fromIterable",
-    test(
-      "fromIterable with delay",
-      pipeLazy(
+    test("fromIterable with delay", () => {
+      const result: number[] = [];
+      pipe(
         [9, 9, 9, 9],
         Observable.fromIterable(),
         Observable.delay(2),
         Observable.withCurrentTime(t => t),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([0, 2, 4, 6]),
-      ),
-    ),
+        Observable.forEach<number>(x => {
+          result.push(x);
+        }),
+        Observable.run(),
+      );
+      pipe(result, expectArrayEquals([0, 2, 4, 6]));
+    }),
   ),
   describe(
     "lastAsync",
@@ -641,7 +644,7 @@ testModule(
             Observable.delay(2, { delayStart: true }),
           ),
         ),
-        Observable.toReadonlyArray(),
+        Observable.toReadonlyArray<number>(),
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
       ),
     ),
@@ -657,7 +660,7 @@ testModule(
             ),
             pipe(Observable.throws(), Observable.delay(5)),
           ),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrow,
       ),
@@ -773,6 +776,7 @@ testModule(
         [1, 2, 3],
         ReadonlyArray.toObservable(),
         Observable.delay(1),
+        Observable.forEach(ignore),
         Observable.share(scheduler, { replay: 1 }),
       );
 
@@ -839,7 +843,7 @@ testModule(
           [],
           Observable.fromReadonlyArray(),
           Observable.throwIfEmpty(() => error),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrowError(error),
       );
@@ -853,7 +857,7 @@ testModule(
           Observable.fromReadonlyArray(),
           Observable.delay(1),
           Observable.throwIfEmpty(() => error),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrowError(error),
       );
@@ -868,7 +872,7 @@ testModule(
           Observable.throwIfEmpty(() => {
             throw error;
           }),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrowError(error),
       );
@@ -884,7 +888,7 @@ testModule(
           Observable.throwIfEmpty(() => {
             throw error;
           }),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrowError(error),
       );
@@ -964,8 +968,7 @@ testModule(
             Observable.throws<number>({ raise: returns(error) }),
             returns(1),
           ),
-          Observable.toReadonlyArray(),
-          expectArrayEquals([] as number[]),
+          Observable.run(),
         ),
         expectToThrowError(error),
       );
@@ -986,7 +989,7 @@ testModule(
             Observable.delay(1),
           ),
         ),
-        Observable.toReadonlyArray(),
+        Observable.toReadonlyArray<readonly [number, number, number]>(),
         expectArrayEquals(
           [[1, 2, 3] as readonly number[], [2, 3, 4]],
           arrayEquality(),
@@ -1000,7 +1003,7 @@ testModule(
           pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1)),
           pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(5)),
         ),
-        Observable.toReadonlyArray(),
+        Observable.toReadonlyArray<readonly [number, number]>(),
         expectArrayEquals(
           [[1, 1] as readonly number[], [2, 2], [3, 3]],
           arrayEquality(),
@@ -1016,7 +1019,7 @@ testModule(
             pipe([1, 2, 3], Observable.fromReadonlyArray()),
           ),
           Observable.map<readonly [unknown, number], number>(([, b]) => b),
-          Observable.toReadonlyArray(),
+          Observable.run(),
         ),
         expectToThrow,
       ),
@@ -1052,12 +1055,9 @@ testModule(
       Observable.map(incrementBy(2)),
       Observable.buffer({ count: 3 }),
       Observable.takeFirst({ count: 3 }),
-      Observable.flatMapIterable<Iterable<number>, number>(x => x),
       Observable.skipFirst(),
       Observable.takeWhile(lessThan(100)),
       Observable.pairwise<number>(),
-      x => x as unknown as RunnableLike<number[]>,
-      Observable.flatMapIterable<Iterable<number>, number>(x => x),
     );
 
     const enumerated = pipe(

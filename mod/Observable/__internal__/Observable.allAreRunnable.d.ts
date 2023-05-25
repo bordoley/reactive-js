@@ -1,4 +1,4 @@
 import { TypePredicate } from "../../functions.js";
-import { ObservableLike, RunnableLike } from "../../types.js";
-declare const Observable_allAreRunnable: TypePredicate<ReadonlyArray<ObservableLike>, ReadonlyArray<RunnableLike>>;
+import { ObservableBaseLike, RunnableWithSideEffectsLike } from "../../types.js";
+declare const Observable_allAreRunnable: TypePredicate<ReadonlyArray<ObservableBaseLike>, ReadonlyArray<RunnableWithSideEffectsLike>>;
 export default Observable_allAreRunnable;

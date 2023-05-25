@@ -24,7 +24,7 @@ const Observable_someSatisfy = (predicate) => (runnable) => {
         let result = false;
         pipe(runnable, Observable_map(predicate), Observable_forEach((next) => {
             result = next;
-        }), Observable_takeWhile(isFalse), Observable_run());
+        }), x => x, Observable_takeWhile(isFalse), Observable_run());
         return result;
     }
 };

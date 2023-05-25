@@ -12,7 +12,6 @@ const Runnable_concatMap: Runnable.Signature["concatMap"] = <TA, TB>(
       RunnableBaseLike<TA>,
       RunnableLike<RunnableLike<TB>>
     >,
-    x => x,
     Runnable_concatAll<TB>(),
   );
 
