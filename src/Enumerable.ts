@@ -1,6 +1,5 @@
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
-import Enumerable_toIterable from "./Enumerable/__internal__/Enumerable.toIterable.js";
 import Enumerable_toObservable from "./Enumerable/__internal__/Enumerable.toObservable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
@@ -32,6 +31,7 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_toIterable from "./Observable/__internal__/Observable.toIterable.js";
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
@@ -102,7 +102,7 @@ export const startWith: Signature["startWith"] = Observable_startWith;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
-export const toIterable: Signature["toIterable"] = Enumerable_toIterable;
+export const toIterable: Signature["toIterable"] = Observable_toIterable;
 export const toObservable: Signature["toObservable"] = Enumerable_toObservable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;

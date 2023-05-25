@@ -82,6 +82,7 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle.j
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
+import Observable_toIterable from "./Observable/__internal__/Observable.toIterable.js";
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
@@ -1088,6 +1089,8 @@ export interface ObservableModule {
       readonly capacity?: number;
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T>>;
+
+  toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
 
   toReadonlyArray<T>(): Function1<RunnableBaseLike<T>, ReadonlyArray<T>>;
 
@@ -2249,6 +2252,7 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toIterable: Signature["toIterable"] = Observable_toIterable;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

@@ -369,6 +369,7 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
+    toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
     toReadonlyArray<T>(): Function1<RunnableBaseLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
@@ -596,6 +597,7 @@ export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
+export declare const toIterable: Signature["toIterable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];

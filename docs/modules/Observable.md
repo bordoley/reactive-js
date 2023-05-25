@@ -120,6 +120,7 @@
 - [throwIfEmpty](Observable.md#throwifempty)
 - [throws](Observable.md#throws)
 - [toEventSource](Observable.md#toeventsource)
+- [toIterable](Observable.md#toiterable)
 - [toReadonlyArray](Observable.md#toreadonlyarray)
 - [toReadonlyArrayAsync](Observable.md#toreadonlyarrayasync)
 - [withCurrentTime](Observable.md#withcurrenttime)
@@ -3859,6 +3860,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### toIterable
+
+▸ **toIterable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, `Iterable`<`T`\>\>
 
 ___
 
