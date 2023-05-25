@@ -3,7 +3,8 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
+import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import Enumerator_zipMany from "../../Enumerator/__internal__/Enumerator.zipMany.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -31,13 +32,21 @@ import {
   QueueLike_dequeue,
   ZipLike_enumerators,
 } from "../../__internal__/types.js";
-import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
+import {
+  bindMethod,
+  compose,
+  isTrue,
+  none,
+  pipe,
+  pipeLazy,
+} from "../../functions.js";
 import {
   BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
   EnumeratorLike_hasCurrent,
@@ -53,8 +62,9 @@ import {
 } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import EnumerableBase_enumerate from "./Observable.enumerate.js";
+import Observable_enumerate from "./Observable.enumerate.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 
 interface QueuedEnumeratorLike<T = unknown>
@@ -124,6 +134,16 @@ const QueuedEnumerator_create: <T>(
     ),
   );
 })();
+
+const Enumerable_zipMany = (observables: readonly EnumerableLike<unknown>[]) =>
+  EnumerableBase_create(
+    pipeLazy(
+      observables,
+      ReadonlyArray_map(Observable_enumerate()),
+      Enumerator_zipMany,
+    ),
+    Observable_allArePure(observables),
+  );
 
 const Observable_zipMany = /*@__PURE__*/ (() => {
   const shouldEmit = compose(
@@ -229,7 +249,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         if (Observable_isEnumerable(next)) {
           const enumerator = pipe(
             next,
-            EnumerableBase_enumerate(),
+            Observable_enumerate(),
             Disposable_addTo(observer),
           );
 

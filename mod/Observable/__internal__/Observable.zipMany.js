@@ -5,7 +5,8 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_zipMany from "../../Enumerable/__internal__/Enumerable.zipMany.js";
+import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import Enumerator_zipMany from "../../Enumerator/__internal__/Enumerator.zipMany.js";
 import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
@@ -20,12 +21,13 @@ import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
-import { bindMethod, compose, isTrue, none, pipe } from "../../functions.js";
+import { bindMethod, compose, isTrue, none, pipe, pipeLazy, } from "../../functions.js";
 import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
+import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import EnumerableBase_enumerate from "./Observable.enumerate.js";
+import Observable_enumerate from "./Observable.enumerate.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function QueuedEnumerator(instance, capacity, backpressureStrategy) {
@@ -56,6 +58,7 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
         },
     }));
 })();
+const Enumerable_zipMany = (observables) => EnumerableBase_create(pipeLazy(observables, ReadonlyArray_map(Observable_enumerate()), Enumerator_zipMany), Observable_allArePure(observables));
 const Observable_zipMany = /*@__PURE__*/ (() => {
     const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_everySatisfy(isTrue));
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
@@ -97,7 +100,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         const enumerators = [];
         for (const next of observables) {
             if (Observable_isEnumerable(next)) {
-                const enumerator = pipe(next, EnumerableBase_enumerate(), Disposable_addTo(observer));
+                const enumerator = pipe(next, Observable_enumerate(), Disposable_addTo(observer));
                 enumerators.push(enumerator);
             }
             else {
