@@ -3,7 +3,6 @@ import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_empty from "../../Enumerator/__internal__/Enumerator.empty.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
@@ -48,26 +47,24 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
-  ObservableLike,
+  ObservableBaseLike,
   ObserverLike,
   SinkLike_notify,
 } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
-import Observable_isEnumerable from "./Observable.isEnumerable.js";
-import Observable_isPure from "./Observable.isPure.js";
-import Observable_liftRunnableUpperBounded from "./Observable.liftRunnableUpperBounded.js";
+import Observable_liftPureObservableOperator from "./Observable.liftPureObservableOperator.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Observable.DeferredObservableOperator<T, T>;
+) => Observable.PureDeferredObservableOperator<T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,
 >() => {
   const createRepeatObserver = (
     delegate: ObserverLike<T>,
-    observable: ObservableLike<T>,
+    observable: ObservableBaseLike<T>,
     shouldRepeat: (count: number, error?: Error) => boolean,
   ) => {
     let count = 1;
@@ -184,20 +181,15 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   );
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (observable: DeferredObservableBaseLike<T>) => {
-      if (Observable_isEnumerable(observable)) {
-        return Enumerable_create(
-          () => createRepeatOrRetryEnumerator(observable, shouldRepeat),
-          Observable_isPure(observable),
-        );
-      } else {
-        const operator = pipe(
-          createRepeatObserver,
-          partial(observable, shouldRepeat),
-        );
-        return pipe(observable, Observable_liftRunnableUpperBounded(operator));
-      }
-    }) as ObservableRepeatOrRetry;
+    (observable: DeferredObservableBaseLike<T>) =>
+      Observable_liftPureObservableOperator(
+        () =>
+          createRepeatOrRetryEnumerator(
+            observable as EnumerableBaseLike<T>,
+            shouldRepeat,
+          ),
+        pipe(createRepeatObserver, partial(observable, shouldRepeat)),
+      )(observable)) as ObservableRepeatOrRetry;
 })();
 
 export default Observable_repeatOrRetry;

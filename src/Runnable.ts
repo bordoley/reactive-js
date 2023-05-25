@@ -15,8 +15,8 @@ import {
   Container_type,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  RunnableBaseLike,
   RunnableLike,
+  RunnableWithSideEffectsLike,
 } from "./types.js";
 
 /**
@@ -42,37 +42,31 @@ export interface RunnableModule {
     options?: {
       mode?: "batched" | "combine-latest";
     },
-  ): RunnableLike<T>;
+  ): RunnableWithSideEffectsLike<T>;
 
   /**
    * @category Operator
    */
-  concatAll<T>(): Function1<
-    RunnableBaseLike<RunnableBaseLike<T>>,
-    RunnableLike<T>
-  >;
+  concatAll<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
 
   /**
    * @category Operator
    */
   concatMap<TA, TB>(
-    selector: Function1<TA, RunnableBaseLike<TB>>,
-  ): Function1<RunnableBaseLike<TA>, RunnableLike<TB>>;
+    selector: Function1<TA, RunnableLike<TB>>,
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
 
   /**
    * @category Operator
    */
-  exhaust<T>(): Function1<
-    RunnableBaseLike<RunnableBaseLike<T>>,
-    RunnableLike<T>
-  >;
+  exhaust<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
 
   /**
    * @category Operator
    */
   exhaustMap<TA, TB>(
-    selector: Function1<TA, RunnableBaseLike<TB>>,
-  ): Function1<RunnableBaseLike<TA>, RunnableLike<TB>>;
+    selector: Function1<TA, RunnableLike<TB>>,
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
   /**
    * @category Operator
    */
@@ -80,40 +74,37 @@ export interface RunnableModule {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
     readonly concurrency?: number;
-  }): Function1<RunnableBaseLike<RunnableBaseLike<T>>, RunnableLike<T>>;
+  }): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
 
   /**
    * @category Operator
    */
   mergeMap<TA, TB>(
-    selector: Function1<TA, RunnableBaseLike<TB>>,
+    selector: Function1<TA, RunnableLike<TB>>,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
       readonly concurrency?: number;
     },
-  ): Function1<RunnableBaseLike<TA>, RunnableLike<TB>>;
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
 
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
-  }): SideEffect1<RunnableBaseLike<T>>;
+  }): SideEffect1<RunnableLike<T>>;
 
   /**
    *
    * @category Operator
    */
-  switchAll<T>(): Function1<
-    RunnableBaseLike<RunnableBaseLike<T>>,
-    RunnableLike<T>
-  >;
+  switchAll<T>(): Function1<RunnableLike<RunnableLike<T>>, RunnableLike<T>>;
 
   /**
    * @category Operator
    */
   switchMap<TA, TB>(
-    selector: Function1<TA, RunnableBaseLike<TB>>,
-  ): Function1<RunnableBaseLike<TA>, RunnableLike<TB>>;
+    selector: Function1<TA, RunnableLike<TB>>,
+  ): Function1<RunnableLike<TA>, RunnableLike<TB>>;
 }
 
 export type Signature = RunnableModule;

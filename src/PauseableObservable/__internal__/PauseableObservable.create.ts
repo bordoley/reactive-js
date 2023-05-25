@@ -1,7 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import type * as Observable from "../../Observable.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
@@ -24,11 +23,11 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { invoke, none, pipe } from "../../functions.js";
+import { Function1, invoke, none, pipe } from "../../functions.js";
 import {
-  ContainerOperator,
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike,
+  MulticastObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
@@ -49,7 +48,10 @@ import {
 } from "../../types.js";
 
 const PauseableObservable_create: <T>(
-  op: ContainerOperator<Observable.Type, boolean, T>,
+  op: Function1<
+    MulticastObservableLike<boolean>,
+    DeferredObservableBaseLike<T>
+  >,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -65,14 +67,17 @@ const PauseableObservable_create: <T>(
       include(Disposable_delegatingMixin, Delegating_mixin()),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: ContainerOperator<Observable.Type, boolean, T>,
+        op: Function1<
+          MulticastObservableLike<boolean>,
+          DeferredObservableBaseLike<T>
+        >,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): PauseableObservableLike<T> & DisposableLike {
-        const liftedOp = (mode: DeferredObservableLike<boolean>) =>
+        const liftedOp = (mode: DeferredObservableBaseLike<boolean>) =>
           Observable_create(observer => {
             const pauseableScheduler = pipe(
               observer,

@@ -2,7 +2,7 @@ import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
 import { MAX_VALUE } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
 import { isNotEqualTo, pipe, returns } from "../../functions.js";
-import { RunnableLike } from "../../types.js";
+import { RunnableWithSideEffectsLike } from "../../types.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
@@ -11,7 +11,7 @@ const Observable_spring = (options?: {
   readonly stiffness?: number;
   readonly damping?: number;
   readonly precision?: number;
-}): RunnableLike<number> => {
+}): RunnableWithSideEffectsLike<number> => {
   const stiffness = clamp(0, options?.stiffness ?? 0.15, 1);
   const damping = clamp(0, options?.damping ?? 0.8, 1);
   const precision = clamp(0, options?.precision ?? 0.01, 1);

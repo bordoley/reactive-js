@@ -1,7 +1,6 @@
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import type * as Observable from "../../Observable.js";
 import {
-  Function1,
   bindMethod,
   invoke,
   newInstance,
@@ -19,9 +18,9 @@ import Observable_isEnumerable from "./Observable.isEnumerable.js";
 import Observable_map from "./Observable.map.js";
 
 const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
-  /*@__PURE__*/ returns(observable =>
+  /*@__PURE__*/ returns((observable: ObservableLike<string>) =>
     Observable_isEnumerable<string>(observable)
-      ? Enumerable_create(() => {
+      ? EnumerableBase_create(() => {
           const textEncoder = newInstance(TextEncoder);
 
           return pipe(
@@ -31,7 +30,7 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
             ),
             invoke(EnumerableLike_enumerate),
           );
-        }, true)
+        }, observable)
       : Observable_createWithConfig(observer => {
           const textEncoder = newInstance(TextEncoder);
 
@@ -39,7 +38,7 @@ const Observable_encodeUtf8: Observable.Signature["encodeUtf8"] =
             observable,
             Observable_map<string, Uint8Array>(
               bindMethod(textEncoder, "encode"),
-            ) as Function1<ObservableLike<string>, ObservableLike<Uint8Array>>,
+            ),
             invoke(ObservableLike_observe, observer),
           );
         }, observable),

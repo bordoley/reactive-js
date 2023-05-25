@@ -49,13 +49,17 @@
 - [DeferredObservableLike](../interfaces/types.DeferredObservableLike.md)
 - [EnumerableBaseLike](../interfaces/types.EnumerableBaseLike.md)
 - [MulticastObservableLike](../interfaces/types.MulticastObservableLike.md)
-- [ObservableLike](../interfaces/types.ObservableLike.md)
+- [ObservableBaseLike](../interfaces/types.ObservableBaseLike.md)
 - [ObservableWithSideEffectsLike](../interfaces/types.ObservableWithSideEffectsLike.md)
 - [PauseableObservableLike](../interfaces/types.PauseableObservableLike.md)
 - [PublisherLike](../interfaces/types.PublisherLike.md)
 - [PureObservableLike](../interfaces/types.PureObservableLike.md)
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableBaseLike](../interfaces/types.RunnableBaseLike.md)
+- [RunnableWithSideEffectsLike](../interfaces/types.RunnableWithSideEffectsLike.md)
+
+### Other Interfaces
+
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 
 ### Queueing Interfaces
@@ -99,6 +103,10 @@
 ### Interactive Type Aliases
 
 - [StreamOf](types.md#streamof)
+
+### Other Type Aliases
+
+- [ObservableLike](types.md#observablelike)
 
 ### Variables
 
@@ -251,6 +259,20 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/types.StreamableLike.md) |
+
+___
+
+## Other Type Aliases
+
+### ObservableLike
+
+Ƭ **ObservableLike**<`T`\>: [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> \| [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\> \| [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 ## Variables
 

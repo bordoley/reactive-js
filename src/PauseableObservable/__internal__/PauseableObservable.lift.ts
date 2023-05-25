@@ -42,6 +42,7 @@ const createLiftedPauseableObservable: <TIn, TOut>(
       ): PauseableObservableLike<TOut> {
         init(Observable_liftMixin<TIn, TOut>(), instance, source, ops, {
           [ObservableLike_isDeferred]: false,
+          [ObservableLike_isPure]: true,
           [ObservableLike_isRunnable]: false,
         });
         init(Delegating_mixin(), instance, source);

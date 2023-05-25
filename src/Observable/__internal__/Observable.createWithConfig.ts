@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../__internal__/constants.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -5,12 +6,17 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { __CreateObservable_effect } from "../../__internal__/symbols.js";
-import { SideEffect1, error, none } from "../../functions.js";
+import {
+  SideEffect1,
+  error,
+  none,
+  raiseWithDebugMessage,
+} from "../../functions.js";
 import {
   DeferredObservableLike,
   DisposableLike_dispose,
   MulticastObservableLike,
-  ObservableLike,
+  ObservableBaseLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
@@ -18,12 +24,15 @@ import {
   ObservableLike_observe,
   ObserverLike,
   RunnableLike,
+  RunnableWithSideEffectsLike,
 } from "../../types.js";
 
 interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: {
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: true;
       readonly [ObservableLike_isRunnable]: true;
     },
   ): RunnableLike<T>;
@@ -32,13 +41,26 @@ interface ObservableCreateWithConfig {
     f: SideEffect1<ObserverLike<T>>,
     config: {
       readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: false;
+      readonly [ObservableLike_isRunnable]: true;
+    },
+  ): RunnableWithSideEffectsLike<T>;
+
+  createWithConfig<T>(
+    f: SideEffect1<ObserverLike<T>>,
+    config: {
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: true;
+      readonly [ObservableLike_isRunnable]: false;
     },
   ): DeferredObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: {
+      readonly [ObservableLike_isDeferred]: false;
       readonly [ObservableLike_isPure]: true;
+      readonly [ObservableLike_isRunnable]: false;
     },
   ): MulticastObservableLike<T>;
 
@@ -49,7 +71,7 @@ interface ObservableCreateWithConfig {
       readonly [ObservableLike_isPure]: boolean;
       readonly [ObservableLike_isRunnable]: boolean;
     },
-  ): ObservableLike<T>;
+  ): ObservableBaseLike<T>;
 }
 const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"] =
   /*@__PURE__*/ (() => {
@@ -64,30 +86,38 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
       mix(
         function CreateObservable(
           instance: Pick<
-            ObservableLike,
+            ObservableBaseLike,
             typeof ObservableLike_observe | typeof ObservableLike_isEnumerable
           > &
             Mutable<TProperties>,
           effect: SideEffect1<ObserverLike>,
           config: {
-            readonly [ObservableLike_isDeferred]?: boolean;
-            readonly [ObservableLike_isPure]?: boolean;
-            readonly [ObservableLike_isRunnable]?: boolean;
+            readonly [ObservableLike_isDeferred]: boolean;
+            readonly [ObservableLike_isPure]: boolean;
+            readonly [ObservableLike_isRunnable]: boolean;
           },
-        ): ObservableLike {
+        ): ObservableBaseLike {
           instance[__CreateObservable_effect] = effect;
 
           const configRunnable = config[ObservableLike_isRunnable] ?? false;
           const configDeferred = config[ObservableLike_isDeferred] ?? false;
           const configPure = config[ObservableLike_isPure] ?? false;
 
-          instance[ObservableLike_isDeferred] =
-            !configPure && (configRunnable || configDeferred);
+          if (__DEV__) {
+            if (configRunnable && !configDeferred) {
+              raiseWithDebugMessage(
+                "Attempting to create a non-deferred, runnable observable, which is an illegal state",
+              );
+            } else if (!configDeferred && !configPure) {
+              raiseWithDebugMessage(
+                "Attempting to create a non-deferred, not-pure observable which is an illegal state",
+              );
+            }
+          }
 
-          instance[ObservableLike_isRunnable] = configRunnable && !configPure;
-
-          instance[ObservableLike_isPure] =
-            configPure && !configRunnable && !configDeferred;
+          instance[ObservableLike_isRunnable] = configRunnable;
+          instance[ObservableLike_isDeferred] = configDeferred;
+          instance[ObservableLike_isPure] = configPure;
 
           return instance;
         },

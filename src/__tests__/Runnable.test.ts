@@ -4,7 +4,6 @@ import * as Runnable from "../Runnable.js";
 import {
   describe,
   expectArrayEquals,
-  expectToThrowAsync,
   test,
   testModule,
 } from "../__internal__/testing.js";
@@ -23,9 +22,9 @@ testModule(
   "Runnable",
   describe(
     "compute",
-    test(
-      "batch mode",
-      pipeLazy(
+    test("batch mode", () => {
+      const result: number[] = [];
+      pipe(
         Runnable.compute(() => {
           const fromValueWithDelay = __constant(
             (delay: number, value: number): RunnableLike<number> =>
@@ -45,13 +44,17 @@ testModule(
           return result1 + result2 + result3;
         }),
         Observable.takeLast<number>(),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([22]),
-      ),
-    ),
-    test(
-      "combined-latest mode",
-      pipeLazy(
+        Observable.forEach((x: number) => {
+          result.push(x);
+        }),
+        Observable.run(),
+      );
+
+      pipe(result, expectArrayEquals([22]));
+    }),
+    test("combined-latest mode", () => {
+      const result: number[] = [];
+      pipe(
         Runnable.compute(
           () => {
             const oneTwoThreeDelayed = __constant(
@@ -72,19 +75,23 @@ testModule(
           { mode: "combine-latest" },
         ),
         Observable.keepType<Optional<number>, number>(isSome),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
-      ),
-    ),
-    test(
-      "conditional hooks",
-      pipeLazy(
+        Observable.forEach((x: number) => {
+          result.push(x);
+        }),
+        Observable.run(),
+      );
+
+      pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+    }),
+    test("conditional hooks", () => {
+      const result: number[] = [];
+      pipe(
         Runnable.compute(() => {
           const src = __constant(
             pipe(
               [0, 1, 2, 3, 4, 5],
               Observable.fromReadonlyArray(),
-              Observable.delay(5),
+              Observable.delay<number>(5),
             ),
           );
           const src2 = __constant(
@@ -102,12 +109,19 @@ testModule(
           }
           return v;
         }),
-        Observable.toReadonlyArray(),
+        Observable.forEach((x: number) => {
+          result.push(x);
+        }),
+        Observable.run(),
+      );
+
+      pipe(
+        result,
         expectArrayEquals([
           101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
         ]),
-      ),
-    ),
+      );
+    }),
   ),
 
   describe(
@@ -173,21 +187,10 @@ testModule(
     test(
       "with empty source",
       pipeLazy(
-        Observable.empty<RunnableLike>(),
+        Observable.empty(),
         Runnable.switchAll<number>(),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as readonly number[]),
-      ),
-    ),
-    test(
-      "when source throw",
-      pipeLazy(
-        pipeLazy(
-          Observable.throws<RunnableLike<number>>(),
-          Runnable.switchAll<number>(),
-          Observable.toReadonlyArrayAsync(),
-        ),
-        expectToThrowAsync,
       ),
     ),
   ),

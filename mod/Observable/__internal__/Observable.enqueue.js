@@ -4,9 +4,9 @@ import Enumerator_forEach from "../../Enumerator/__internal__/Enumerator.forEach
 import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";
 import { bindMethod, partial, pipe } from "../../functions.js";
 import { QueueableLike_enqueue } from "../../types.js";
-import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
+import Observable_liftObservableOperatorWithSideEffects from "./Observable.liftObservableOperatorWithSideEffects.js";
 const Observable_enqueue = (queue) => {
     const op = pipe(Observer_createEnqueueObserver, partial(queue));
-    return Observable_liftWithSideEffects(Enumerator_forEach(bindMethod(queue, QueueableLike_enqueue)), op);
+    return Observable_liftObservableOperatorWithSideEffects(Enumerator_forEach(bindMethod(queue, QueueableLike_enqueue)), op);
 };
 export default Observable_enqueue;

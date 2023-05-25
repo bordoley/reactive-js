@@ -1,11 +1,11 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createSwitchAllObserver from "../../Observer/__internal__/Observer.createSwitchAllObserver.js";
 import { returns } from "../../functions.js";
-import Observable_liftDeferredObservableUpperBounded from "./Observable.liftDeferredObservableUpperBounded.js";
+import Observable_liftDeferredObservableBoundedObservableOperatorWithSideEffects from "./Observable.liftDeferredObservableBoundedObservableOperatorWithSideEffects.js";
 
 const Observable_switchAll: Observable.Signature["switchAll"] =
   /*@__PURE__*/ returns(
-    Observable_liftDeferredObservableUpperBounded(
+    Observable_liftDeferredObservableBoundedObservableOperatorWithSideEffects(
       Observer_createSwitchAllObserver,
     ),
   );

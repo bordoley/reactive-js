@@ -23,15 +23,21 @@ import {
 interface EnumerableBaseCreate {
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    isPure: true,
+    config: {
+      [ObservableLike_isPure]: true;
+    },
   ): EnumerableLike<T>;
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    isPure: false,
+    config: {
+      [ObservableLike_isPure]: false;
+    },
   ): EnumerableWithSideEffectsLike<T>;
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    isPure: boolean,
+    config: {
+      [ObservableLike_isPure]: boolean;
+    },
   ): EnumerableBaseLike<T>;
 }
 
@@ -55,10 +61,12 @@ const EnumerableBase_create: EnumerableBaseCreate["create"] = /*@__PURE__*/ (<
         > &
           Mutable<TProperties>,
         enumerate: Factory<EnumeratorLike<T>>,
-        isPure: boolean,
+        config: {
+          readonly [ObservableLike_isPure]: boolean;
+        },
       ): EnumerableBaseLike<T> {
         instance[EnumerableLike_enumerate] = enumerate;
-        instance[ObservableLike_isPure] = isPure;
+        instance[ObservableLike_isPure] = config[ObservableLike_isPure];
 
         return instance;
       },
@@ -73,11 +81,12 @@ const EnumerableBase_create: EnumerableBaseCreate["create"] = /*@__PURE__*/ (<
 
         [ObservableLike_observe](
           this: TProperties & EnumerableBaseLike<T>,
-          observer: ObserverLike,
+          observer: ObserverLike<T>,
         ) {
           pipe(
-            this,
-            Observable_delay(0),
+            // FIXME: Lieing to the typechecker
+            this as EnumerableLike<T>,
+            Observable_delay<T>(0),
             invoke(ObservableLike_observe, observer),
           );
         },

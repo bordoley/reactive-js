@@ -20,11 +20,12 @@
 
 - [Animation](Observable.md#animation)
 - [DeferredObservableBoundedObservableOperatorWithSideEffects](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)
-- [DeferredObservableOperator](Observable.md#deferredobservableoperator)
 - [MulticastObservableBoundedPureObservableOperator](Observable.md#multicastobservableboundedpureobservableoperator)
-- [ObservableOperator](Observable.md#observableoperator)
 - [ObservableOperatorWithSideEffects](Observable.md#observableoperatorwithsideeffects)
+- [PureDeferredObservableOperator](Observable.md#puredeferredobservableoperator)
+- [PureObservableOperator](Observable.md#pureobservableoperator)
 - [RunnableBoundedObservableOperatorWithSideEffects](Observable.md#runnableboundedobservableoperatorwithsideeffects)
+- [RunnableBoundedPureObservableOperator](Observable.md#runnableboundedpureobservableoperator)
 - [Signature](Observable.md#signature)
 - [Type](Observable.md#type)
 
@@ -151,7 +152,7 @@ ___
 
 ### DeferredObservableBoundedObservableOperatorWithSideEffects
 
-Ƭ **DeferredObservableBoundedObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+Ƭ **DeferredObservableBoundedObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 #### Type parameters
 
@@ -162,13 +163,13 @@ ___
 
 #### Type declaration
 
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
 
 ##### Parameters
 
@@ -178,13 +179,13 @@ ___
 
 ##### Returns
 
-`TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+`TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ___
 
-### DeferredObservableOperator
+### MulticastObservableBoundedPureObservableOperator
 
-Ƭ **DeferredObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `never`
+Ƭ **MulticastObservableBoundedPureObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>
 
 #### Type parameters
 
@@ -195,7 +196,73 @@ ___
 
 #### Type declaration
 
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `never`
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\>
+
+___
+
+### ObservableOperatorWithSideEffects
+
+Ƭ **ObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+___
+
+### PureDeferredObservableOperator
+
+Ƭ **PureDeferredObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ##### Type parameters
 
@@ -211,13 +278,13 @@ ___
 
 ##### Returns
 
-`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `never`
+`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ___
 
-### MulticastObservableBoundedPureObservableOperator
+### PureObservableOperator
 
-Ƭ **MulticastObservableBoundedPureObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+Ƭ **PureObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
 
 #### Type parameters
 
@@ -228,13 +295,13 @@ ___
 
 #### Type declaration
 
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
 
 ##### Parameters
 
@@ -244,79 +311,13 @@ ___
 
 ##### Returns
 
-`TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-___
-
-### ObservableOperator
-
-Ƭ **ObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TIn`\> ? [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TOut`\> : `TObservableIn` extends [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TIn`\> ? [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TIn`\> ? [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TOut`\> : `TObservableIn` extends [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TIn`\> ? [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `TObservableIn` extends [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TIn`\> ? [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TOut`\> : `TObservableIn` extends [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TIn`\> ? [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\> : [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`\>
-
-___
-
-### ObservableOperatorWithSideEffects
-
-Ƭ **ObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TIn` |
-| `TOut` |
-
-#### Type declaration
-
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
-
-##### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `observable` | `TObservableIn` |
-
-##### Returns
-
-`TObservableIn` extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
+`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TIn`\> ? [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TOut`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TIn`\> ? [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
 
 ___
 
 ### RunnableBoundedObservableOperatorWithSideEffects
 
-Ƭ **RunnableBoundedObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
+Ƭ **RunnableBoundedObservableOperatorWithSideEffects**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 #### Type parameters
 
@@ -327,13 +328,13 @@ ___
 
 #### Type declaration
 
-▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
 
 ##### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TIn`\> |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
 
 ##### Parameters
 
@@ -343,7 +344,40 @@ ___
 
 ##### Returns
 
-`TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : [`ObservableWithSideEffectsLike`](../interfaces/types.ObservableWithSideEffectsLike.md)<`TOut`\>
+`TObservableIn` extends [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `never`
+
+___
+
+### RunnableBoundedPureObservableOperator
+
+Ƭ **RunnableBoundedPureObservableOperator**<`TIn`, `TOut`\>: <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TIn` |
+| `TOut` |
+
+#### Type declaration
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TIn`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TOut`\> : `TObservableIn` extends [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TIn`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TOut`\> : `TObservableIn` extends [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TIn`\> ? [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TOut`\> : `TObservableIn` extends [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TIn`\> ? [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TOut`\> : `never`
 
 ___
 
@@ -361,7 +395,7 @@ ___
 
 ### animate
 
-▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+▸ **animate**<`T`\>(`configs`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
 
@@ -377,7 +411,7 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
 
 ___
 
@@ -599,6 +633,222 @@ ___
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+| `i` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
 ▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
@@ -612,8 +862,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
@@ -633,9 +883,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
@@ -656,10 +906,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
@@ -681,11 +931,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
@@ -708,12 +958,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
@@ -737,13 +987,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
@@ -768,14 +1018,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
@@ -801,15 +1051,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
-| `i` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TI`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
+| `i` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
@@ -1031,7 +1281,7 @@ ___
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -1044,14 +1294,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -1065,15 +1315,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -1088,16 +1338,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -1113,17 +1363,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -1140,18 +1390,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -1169,19 +1419,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -1200,20 +1450,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -1233,19 +1483,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
-| `i` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TI`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
+| `i` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -1335,6 +1585,26 @@ ___
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\> |
+| `snd` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
 ▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
@@ -1347,9 +1617,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+| `fst` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `snd` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -1368,32 +1638,12 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `fst` | [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\> |
-| `snd` | [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`T`\> |
-| `...tail` | readonly [`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`T`\>[] |
+| `snd` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
-
-▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fst` | [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\> |
-| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
-
-#### Returns
-
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
 
 ___
 
@@ -1401,7 +1651,7 @@ ___
 
 ### backpressureStrategy
 
-▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
+▸ **backpressureStrategy**<`T`\>(`capacity`, `backpressureStrategy`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1418,13 +1668,13 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -1441,7 +1691,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly `T`[]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, readonly `T`[]\>
 
 ___
 
@@ -1492,7 +1742,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1508,9 +1758,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+[`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1526,9 +1776,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+[`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(): [`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1538,13 +1788,13 @@ ___
 
 #### Returns
 
-[`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+[`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(`shouldRetry`): [`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+▸ **retry**<`T`\>(`shouldRetry`): [`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1560,7 +1810,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableOperator`](Observable.md#deferredobservableoperator)<`T`, `T`\>
+[`PureDeferredObservableOperator`](Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -1568,7 +1818,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **concatAll**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -1578,7 +1828,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -1632,11 +1882,29 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observables` | readonly [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>[] |
+| `observables` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+
+▸ **concatMany**<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
 
 ▸ **concatMany**<`T`\>(`observables`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
@@ -1668,7 +1936,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observables` | readonly [[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>] |
+| `observables` | readonly [[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>] |
 
 #### Returns
 
@@ -1701,7 +1969,7 @@ ___
 
 ### concatWith
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1718,7 +1986,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ▸ **concatWith**<`T`\>(`snd`, `...tail`): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -1739,7 +2007,7 @@ ___
 
 [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **concatWith**<`T`\>(`snd`, `...tail`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1753,6 +2021,25 @@ ___
 | :------ | :------ |
 | `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
 | `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -1770,8 +2057,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+| `snd` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -1781,7 +2068,7 @@ ___
 
 ### contains
 
-▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+▸ **contains**<`T`\>(`value`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -1799,7 +2086,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
@@ -1873,17 +2160,17 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
+▸ **currentTime**(): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -1894,7 +2181,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`ArrayBuffer`, `string`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
 
 ___
 
@@ -1912,7 +2199,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`Factory`](functions.md#factory)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\> |
+| `f` | [`Factory`](functions.md#factory)<[`ObservableLike`](types.md#observablelike)<`T`\>\> |
 
 #### Returns
 
@@ -1922,7 +2209,7 @@ ___
 
 ### delay
 
-▸ **delay**<`T`\>(`delay`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+▸ **delay**<`T`\>(`delay`, `options?`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\> : `never`
 
 #### Type parameters
 
@@ -1940,7 +2227,25 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+`fn`
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\> : `never`
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`, `TObservableIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> ? [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> : `TObservableIn` extends [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\> : `never`
 
 ___
 
@@ -1968,7 +2273,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1985,7 +2290,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -2007,17 +2312,17 @@ ___
 
 ### encodeUtf8
 
-▸ **encodeUtf8**(): [`ObservableOperator`](Observable.md#observableoperator)<`string`, `Uint8Array`\>
+▸ **encodeUtf8**(): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`string`, `Uint8Array`\>
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`string`, `Uint8Array`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`string`, `Uint8Array`\>
 
 ___
 
 ### endWith
 
-▸ **endWith**<`T`\>(`value`, `...values`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **endWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -2034,7 +2339,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -2078,7 +2383,7 @@ ___
 
 ### everySatisfy
 
-▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+▸ **everySatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -2094,13 +2399,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **exhaust**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2110,7 +2415,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -2139,7 +2444,7 @@ ___
 
 ### first
 
-▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+▸ **first**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
@@ -2149,13 +2454,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 
 ### firstAsync
 
-▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **firstAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2165,9 +2470,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
-▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2186,7 +2491,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 
@@ -2269,8 +2574,8 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TOut` | `TOut` |
-| `TObservableIn` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`unknown`, `TObservableIn`\> |
-| `TObservableOut` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TOut`, `TObservableOut`\> |
+| `TObservableIn` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`unknown`, `TObservableIn`\> |
+| `TObservableOut` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TOut`, `TObservableOut`\> |
 
 #### Parameters
 
@@ -2465,7 +2770,7 @@ ___
 
 ### ignoreElements
 
-▸ **ignoreElements**<`T`\>(): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`unknown`, `T`\>
+▸ **ignoreElements**<`T`\>(): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`unknown`, `T`\>
 
 #### Type parameters
 
@@ -2475,7 +2780,7 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`unknown`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`unknown`, `T`\>
 
 ___
 
@@ -2493,7 +2798,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `obs` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
 
 #### Returns
 
@@ -2515,7 +2820,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `obs` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
 
 #### Returns
 
@@ -2537,7 +2842,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `obs` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
 
 #### Returns
 
@@ -2559,7 +2864,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `obs` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
 
 #### Returns
 
@@ -2581,7 +2886,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `obs` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
+| `obs` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
 
 #### Returns
 
@@ -2591,7 +2896,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -2607,13 +2912,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`\>(`predicate`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -2630,13 +2935,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 ___
 
 ### last
 
-▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 #### Type parameters
 
@@ -2646,13 +2951,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
 
 ___
 
 ### lastAsync
 
-▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2662,9 +2967,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
-▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 #### Type parameters
 
@@ -2683,13 +2988,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -2706,13 +3011,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -2729,7 +3034,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, `TB`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
 
 ___
 
@@ -2755,6 +3060,26 @@ ___
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\> |
+| `snd` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
 ▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
@@ -2767,9 +3092,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `snd` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> |
-| `...tail` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+| `fst` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `snd` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -2795,7 +3120,7 @@ ___
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
 
-▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -2807,19 +3132,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fst` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
-| `snd` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>[] |
+| `fst` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
+| `snd` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **mergeAll**<`T`\>(`options?`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -2838,7 +3163,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -2862,6 +3187,24 @@ ___
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
+▸ **mergeMany**<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+
 ▸ **mergeMany**<`T`\>(`observables`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
@@ -2874,7 +3217,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observables` | readonly [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>[] |
+| `observables` | readonly [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
@@ -2898,7 +3241,7 @@ ___
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
 
-▸ **mergeMany**<`T`\>(`observables`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
+▸ **mergeMany**<`T`\>(`observables`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -2910,11 +3253,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observables` | readonly [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>[] |
+| `observables` | readonly [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>
 
 ___
 
@@ -2933,7 +3276,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -2946,6 +3289,25 @@ ___
 ___
 
 ### mergeWith
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
 
 ▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -3004,7 +3366,7 @@ ___
 
 [`Function1`](functions.md#function1)<[`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
-▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3016,12 +3378,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `snd` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\> |
-| `...tail` | readonly [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>[] |
+| `snd` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\> |
+| `...tail` | readonly [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>[] |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
@@ -3043,7 +3405,7 @@ ___
 
 ### noneSatisfy
 
-▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+▸ **noneSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -3059,13 +3421,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
 ### onSubscribe
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3081,9 +3443,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3099,9 +3461,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
-▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+▸ **onSubscribe**<`T`\>(`f`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3117,13 +3479,13 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, readonly [`T`, `T`]\>
 
 #### Type parameters
 
@@ -3133,13 +3495,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, readonly [`T`, `T`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, readonly [`T`, `T`]\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKey`]\>
 
 #### Type parameters
 
@@ -3156,9 +3518,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKey`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKey`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 #### Type parameters
 
@@ -3177,9 +3539,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 #### Type parameters
 
@@ -3200,13 +3562,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -3224,7 +3586,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `TAcc`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `TAcc`\>
 
 ___
 
@@ -3254,7 +3616,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `TAcc`\>
 
 #### Type parameters
 
@@ -3272,13 +3634,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `TAcc`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3295,13 +3657,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### someSatisfy
 
-▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+▸ **someSatisfy**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 #### Type parameters
 
@@ -3317,13 +3679,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>, `boolean`\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
 
 ___
 
 ### startWith
 
-▸ **startWith**<`T`\>(`value`, `...values`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **startWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3340,13 +3702,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### subscribe
 
-▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -3365,7 +3727,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`T`\>, [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 
@@ -3396,7 +3758,7 @@ ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+▸ **switchAll**<`T`\>(): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 #### Type parameters
 
@@ -3406,7 +3768,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\>, `T`\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>, `T`\>
 
 ___
 
@@ -3435,7 +3797,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3452,13 +3814,13 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3475,11 +3837,29 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
 ### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`T`, `T`\>
 
 ▸ **takeUntil**<`T`\>(`notifier`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`T`, `T`\>
 
@@ -3493,7 +3873,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `notifier` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`unknown`\> |
+| `notifier` | [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`unknown`\> |
 
 #### Returns
 
@@ -3535,29 +3915,11 @@ ___
 
 [`MulticastObservableBoundedPureObservableOperator`](Observable.md#multicastobservableboundedpureobservableoperator)<`T`, `T`\>
 
-▸ **takeUntil**<`T`\>(`notifier`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `notifier` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`unknown`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
-
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3575,7 +3937,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`T`, `T`\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -3628,7 +3990,7 @@ ___
 
 ### throws
 
-▸ **throws**<`T`\>(): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+▸ **throws**<`T`\>(): [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3638,9 +4000,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+[`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\>
 
-▸ **throws**<`T`\>(`options`): [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+▸ **throws**<`T`\>(`options`): [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3657,13 +4019,13 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>
+[`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\>
 
 ___
 
 ### toEventSource
 
-▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3673,9 +4035,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
-▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3694,7 +4056,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 
@@ -3732,7 +4094,7 @@ ___
 
 ### toReadonlyArrayAsync
 
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 #### Type parameters
 
@@ -3742,9 +4104,9 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<readonly `T`[]\>\>
 
-▸ **toReadonlyArrayAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+▸ **toReadonlyArrayAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 #### Type parameters
 
@@ -3763,7 +4125,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 ___
 
@@ -3792,6 +4154,28 @@ ___
 
 ### withLatestFrom
 
+▸ **withLatestFrom**<`TA`, `TB`, `T`, `TOther`\>(`other`, `selector`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `T` | `T` |
+| `TOther` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`, `TOther`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
+
+#### Returns
+
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, `T`\>
+
 ▸ **withLatestFrom**<`TA`, `TB`, `T`, `TOther`\>(`other`, `selector`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `T`\>
 
 #### Type parameters
@@ -3801,13 +4185,13 @@ ___
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `T` | `T` |
-| `TOther` | extends [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`, `TOther`\> |
+| `TOther` | extends [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`, `TOther`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `other` | [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
@@ -3828,14 +4212,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `other` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
 | `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
 
 #### Returns
 
 [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, `T`\>
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3854,28 +4238,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `other` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TB`, `T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 
@@ -4326,8 +4689,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
-| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
 
 #### Returns
 
@@ -4347,15 +4710,231 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
-| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
-| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
 
 #### Returns
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 ▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -4377,9 +4956,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -4403,9 +4982,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -4431,9 +5010,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -4461,9 +5040,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -4493,9 +5072,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -4527,7 +5106,7 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
@@ -4961,7 +5540,7 @@ ___
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -4974,14 +5553,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -4995,15 +5574,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -5018,16 +5597,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -5043,17 +5622,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -5070,18 +5649,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -5099,19 +5678,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -5130,20 +5709,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -5163,19 +5742,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
-| `i` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TI`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
+| `i` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
@@ -5397,6 +5976,222 @@ ___
 
 [`RunnableLike`](../interfaces/types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\> |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+| `i` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
 ▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
@@ -5410,8 +6205,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
@@ -5431,9 +6226,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
@@ -5454,10 +6249,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
@@ -5479,11 +6274,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
@@ -5506,12 +6301,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
@@ -5535,13 +6330,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
@@ -5566,14 +6361,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
@@ -5599,15 +6394,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TA`\> |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
-| `i` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TI`\> |
+| `a` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TA`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
+| `i` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
@@ -5829,7 +6624,7 @@ ___
 
 [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -5842,14 +6637,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -5863,15 +6658,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -5886,16 +6681,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -5911,17 +6706,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -5938,18 +6733,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -5967,19 +6762,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -5998,20 +6793,20 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -6031,25 +6826,25 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\> |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
-| `i` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TI`\> |
+| `a` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
+| `i` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
-[`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -6066,9 +6861,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -6087,9 +6882,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -6110,9 +6905,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -6135,9 +6930,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -6162,9 +6957,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -6191,9 +6986,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -6222,9 +7017,9 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -6255,7 +7050,7 @@ ___
 
 #### Returns
 
-[`ObservableOperator`](Observable.md#observableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ▸ **zipWith**<`TA`, `TB`\>(`b`): [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
 
@@ -6465,7 +7260,7 @@ ___
 
 [`ObservableOperatorWithSideEffects`](Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
 #### Type parameters
 
@@ -6482,9 +7277,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
 #### Type parameters
 
@@ -6503,9 +7298,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
 #### Type parameters
 
@@ -6526,9 +7321,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
 #### Type parameters
 
@@ -6551,9 +7346,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
 #### Type parameters
 
@@ -6578,9 +7373,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
 #### Type parameters
 
@@ -6607,9 +7402,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
 #### Type parameters
 
@@ -6638,9 +7433,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 #### Type parameters
 
@@ -6671,6 +7466,214 @@ ___
 
 #### Returns
 
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\> |
+| `c` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TC`\> |
+| `d` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TD`\> |
+| `e` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TE`\> |
+| `f` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TF`\> |
+| `g` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TG`\> |
+| `h` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TH`\> |
+| `i` | [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TI`\> |
+
+#### Returns
+
 [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
 
 ▸ **zipWith**<`TA`, `TB`\>(`b`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
@@ -6686,7 +7689,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
@@ -6706,8 +7709,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
@@ -6728,9 +7731,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
@@ -6752,10 +7755,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
@@ -6778,11 +7781,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
@@ -6806,12 +7809,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
@@ -6836,13 +7839,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
@@ -6868,14 +7871,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TB`\> |
-| `c` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TC`\> |
-| `d` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TD`\> |
-| `e` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TE`\> |
-| `f` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TF`\> |
-| `g` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TG`\> |
-| `h` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TH`\> |
-| `i` | [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TI`\> |
+| `b` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TB`\> |
+| `c` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TC`\> |
+| `d` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TD`\> |
+| `e` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TE`\> |
+| `f` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TF`\> |
+| `g` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TG`\> |
+| `h` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TH`\> |
+| `i` | [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
@@ -7089,7 +8092,7 @@ ___
 
 [`Function1`](functions.md#function1)<[`PureObservableLike`](../interfaces/types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>\>
 
 #### Type parameters
 
@@ -7102,13 +8105,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
 
 #### Type parameters
 
@@ -7122,14 +8125,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
 
 #### Type parameters
 
@@ -7144,15 +8147,15 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
 
 #### Type parameters
 
@@ -7168,16 +8171,16 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
 
 #### Type parameters
 
@@ -7194,17 +8197,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
 
 #### Type parameters
 
@@ -7222,18 +8225,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
 
 #### Type parameters
 
@@ -7252,19 +8255,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
 
 #### Type parameters
 
@@ -7284,18 +8287,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `b` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TB`\> |
-| `c` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TC`\> |
-| `d` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TD`\> |
-| `e` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TE`\> |
-| `f` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TF`\> |
-| `g` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TG`\> |
-| `h` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TH`\> |
-| `i` | [`ObservableLike`](../interfaces/types.ObservableLike.md)<`TI`\> |
+| `b` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TB`\> |
+| `c` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TC`\> |
+| `d` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TD`\> |
+| `e` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TE`\> |
+| `f` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TF`\> |
+| `g` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TG`\> |
+| `h` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TH`\> |
+| `i` | [`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TI`\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`TA`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+[`Function1`](functions.md#function1)<[`ObservableBaseLike`](../interfaces/types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
 
 ___
 

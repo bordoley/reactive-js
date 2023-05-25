@@ -52,7 +52,7 @@ ___
 
 ### compute
 
-▸ **compute**<`T`\>(`computation`, `options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+▸ **compute**<`T`\>(`computation`, `options?`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
 
@@ -70,7 +70,7 @@ ___
 
 #### Returns
 
-[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 ### concatAll
 
-▸ **concatAll**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+▸ **concatAll**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -88,13 +88,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### concatMap
 
-▸ **concatMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -107,17 +107,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 ___
 
 ### exhaust
 
-▸ **exhaust**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+▸ **exhaust**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -127,13 +127,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### exhaustMap
 
-▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+▸ **exhaustMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -146,17 +146,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 ___
 
 ### mergeAll
 
-▸ **mergeAll**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+▸ **mergeAll**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -175,13 +175,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### mergeMap
 
-▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+▸ **mergeMap**<`TA`, `TB`\>(`selector`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -194,7 +194,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -202,13 +202,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 ___
 
 ### switchAll
 
-▸ **switchAll**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+▸ **switchAll**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -218,13 +218,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 ___
 
 ### switchMap
 
-▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+▸ **switchMap**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -237,11 +237,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TB`\>\> |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`TA`\>, [`RunnableLike`](../interfaces/types.RunnableLike.md)<`TB`\>\>
 
 ___
 
@@ -249,7 +249,7 @@ ___
 
 ### run
 
-▸ **run**<`T`\>(`options?`): [`SideEffect1`](functions.md#sideeffect1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>
+▸ **run**<`T`\>(`options?`): [`SideEffect1`](functions.md#sideeffect1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -267,4 +267,4 @@ ___
 
 #### Returns
 
-[`SideEffect1`](functions.md#sideeffect1)<[`RunnableBaseLike`](../interfaces/types.RunnableBaseLike.md)<`T`\>\>
+[`SideEffect1`](functions.md#sideeffect1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>\>

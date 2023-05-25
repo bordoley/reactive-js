@@ -52,7 +52,8 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
-  ObservableLike,
+  ObservableBaseLike,
+  ObservableLike_isPure,
   ObservableLike_observe,
   ObserverLike,
   QueueableLike,
@@ -135,14 +136,19 @@ const QueuedEnumerator_create: <T>(
   );
 })();
 
-const Enumerable_zipMany = (observables: readonly EnumerableLike<unknown>[]) =>
+const Enumerable_zipMany = (
+  observables: readonly EnumerableLike<unknown>[],
+  config: {
+    readonly [ObservableLike_isPure]: boolean;
+  },
+) =>
   EnumerableBase_create(
     pipeLazy(
       observables,
       ReadonlyArray_map(Observable_enumerate()),
       Enumerator_zipMany,
     ),
-    Observable_allArePure(observables),
+    config,
   );
 
 const Observable_zipMany = /*@__PURE__*/ (() => {
@@ -241,7 +247,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
   );
 
   const onSubscribe =
-    (observables: readonly ObservableLike[]) =>
+    (observables: readonly ObservableBaseLike[]) =>
     (observer: ObserverLike<ReadonlyArray<unknown>>) => {
       const enumerators: EnumeratorLike[] = [];
 
@@ -274,19 +280,24 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
     };
 
   return (
-    observables: readonly ObservableLike<any>[],
-  ): ObservableLike<readonly any[]> => {
+    observables: readonly ObservableBaseLike<any>[],
+  ): ObservableBaseLike<readonly any[]> => {
     const isDeferred = Observable_allAreDeferred(observables);
     const isEnumerable = Observable_allAreEnumerable(observables);
+    const isPure = Observable_allArePure(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
-    return isEnumerable
-      ? Enumerable_zipMany(observables)
-      : isRunnable
-      ? Runnable_create(onSubscribe(observables))
-      : isDeferred
-      ? Observable_create(onSubscribe(observables))
-      : MulticastObservable_create(onSubscribe(observables));
+    const pureConfig = {
+      [ObservableLike_isPure]: isPure,
+    };
+
+    return isEnumerable && isRunnable && isDeferred
+      ? Enumerable_zipMany(observables, pureConfig)
+      : isRunnable && isDeferred
+      ? Runnable_create(onSubscribe(observables), pureConfig)
+      : isPure && !isEnumerable && !isRunnable && !isDeferred
+      ? MulticastObservable_create(onSubscribe(observables))
+      : Observable_create(onSubscribe(observables));
   };
 })();
 

@@ -6,6 +6,7 @@ import {
   DisposableLike,
   ObservableLike,
   ObservableLike_observe,
+  ObservableWithSideEffectsLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReplayObservableLike,
@@ -29,7 +30,7 @@ const Observable_share: Observable.Signature["share"] =
       readonly capacity?: number;
     },
   ) =>
-  (source: ObservableLike<T>) => {
+  (source: ObservableWithSideEffectsLike<T>) => {
     let multicasted: Optional<ReplayObservableLike<T>> = none;
 
     return createLazyMulticastObservable<T>(

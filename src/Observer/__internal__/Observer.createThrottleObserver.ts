@@ -40,9 +40,8 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike_isDisposed,
-  ObservableLike,
   ObservableLike_observe,
   ObserverLike,
   SinkLike_notify,
@@ -51,7 +50,7 @@ import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createThrottleObserver: <T>(
   delegate: ObserverLike<T>,
-  durationFunction: Function1<T, DeferredObservableLike>,
+  durationFunction: Function1<T, DeferredObservableBaseLike>,
   mode: "first" | "last" | "interval",
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
@@ -60,7 +59,7 @@ const Observer_createThrottleObserver: <T>(
     readonly [__ThrottleObserver_durationSubscription]: SerialDisposableLike;
     readonly [__ThrottleObserver_durationFunction]: Function1<
       T,
-      ObservableLike
+      DeferredObservableBaseLike
     >;
     readonly [__ThrottleObserver_mode]: "first" | "last" | "interval";
     readonly [__ThrottleObserver_onNotify]: SideEffect;
@@ -90,7 +89,7 @@ const Observer_createThrottleObserver: <T>(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
         delegate: ObserverLike<T>,
-        durationFunction: Function1<T, ObservableLike>,
+        durationFunction: Function1<T, DeferredObservableBaseLike>,
         mode: "first" | "last" | "interval",
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);

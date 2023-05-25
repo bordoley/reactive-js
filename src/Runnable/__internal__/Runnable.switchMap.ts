@@ -4,14 +4,9 @@ import { Function1, pipe } from "../../functions.js";
 import { RunnableLike } from "../../types.js";
 import Runnable_switchAll from "./Runnable.switchAll.js";
 
-const Runnable_switchMap: Runnable.Signature["switchMap"] = (<TA, TB>(
-    selector: Function1<TA, RunnableLike<TB>>,
-  ) =>
+const Runnable_switchMap: Runnable.Signature["switchMap"] =
+  <TA, TB>(selector: Function1<TA, RunnableLike<TB>>) =>
   (obs: RunnableLike<TA>) =>
-    pipe(
-      obs,
-      Observable_map(selector),
-      Runnable_switchAll<TB>(),
-    )) as Runnable.Signature["switchMap"];
+    pipe(obs, Observable_map(selector), Runnable_switchAll<TB>());
 
 export default Runnable_switchMap;

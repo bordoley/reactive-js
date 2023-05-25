@@ -195,7 +195,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\> |
+| `observable` | [`Optional`](functions.md#optional)<[`ObservableLike`](types.md#observablelike)<`T`\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -217,7 +217,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](../interfaces/types.ObservableLike.md)<`T`\>\>\> |
+| `factory` | [`Factory`](functions.md#factory)<[`Optional`](functions.md#optional)<[`ObservableLike`](types.md#observablelike)<`T`\>\>\> |
 | `deps` | readonly `unknown`[] |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
@@ -319,7 +319,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/types.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
+| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](types.md#observablelike)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

@@ -18,7 +18,7 @@
 
   ↳ **`DeferredObservableLike`**
 
-  ↳↳ [`RunnableLike`](types.RunnableLike.md)
+  ↳↳ [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)
 
 ## Table of contents
 

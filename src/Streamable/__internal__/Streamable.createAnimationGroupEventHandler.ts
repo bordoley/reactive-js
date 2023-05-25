@@ -50,7 +50,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReadonlyObjectMapLike,
-  RunnableLike,
+  RunnableWithSideEffectsLike,
   SchedulerLike,
   SinkLike_notify,
   StreamLike,
@@ -136,14 +136,14 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
           (event: TEvent) => {
             const observables: ReadonlyObjectMapLike<
               string,
-              RunnableLike<T>
+              RunnableWithSideEffectsLike<T>
             > = pipe(
               animationGroup,
               ReadonlyObjectMap_mapWithKey<
                 | Function1<TEvent, Animation<T> | readonly Animation<T>[]>
                 | Animation<T>
                 | readonly Animation<T>[],
-                RunnableLike<T>,
+                RunnableWithSideEffectsLike<T>,
                 string
               >((factory, key: string) =>
                 pipe(
@@ -164,9 +164,10 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
             const deferredAnimatedObservables = pipe(
               observables,
               ReadonlyObjectMap_values(),
-              Observable_map<RunnableLike<T>, DeferredObservableLike<T>>(
-                Observable_subscribeOn(animationScheduler),
-              ),
+              Observable_map<
+                RunnableWithSideEffectsLike<T>,
+                DeferredObservableLike<T>
+              >(Observable_subscribeOn(animationScheduler)),
               Observable_toReadonlyArray(),
             );
 

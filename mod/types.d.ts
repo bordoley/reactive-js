@@ -362,7 +362,7 @@ export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SinkLike<T
  * @noInheritDoc
  * @category Observable
  */
-export interface ObservableLike<T = unknown> {
+export interface ObservableBaseLike<T = unknown> {
     /**
      * Indicates if the `ObservableLike` is deferred, ie. cold.
      */
@@ -391,14 +391,14 @@ export interface ObservableLike<T = unknown> {
  * @noInheritDoc
  * @category Observable
  */
-export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
+export interface PureObservableLike<T = unknown> extends ObservableBaseLike<T> {
     [ObservableLike_isPure]: true;
 }
 /**
  * @noInheritDoc
  * @category Observable
  */
-export interface ObservableWithSideEffectsLike<T = unknown> extends ObservableLike<T> {
+export interface ObservableWithSideEffectsLike<T = unknown> extends ObservableBaseLike<T> {
     [ObservableLike_isPure]: false;
 }
 /**
@@ -414,7 +414,7 @@ export interface MulticastObservableLike<T = unknown> extends PureObservableLike
  * @noInheritDoc
  * @category Observable
  */
-export interface DeferredObservableBaseLike<T = unknown> extends ObservableLike<T> {
+export interface DeferredObservableBaseLike<T = unknown> extends ObservableBaseLike<T> {
     readonly [ObservableLike_isDeferred]: true;
 }
 /**
@@ -438,9 +438,15 @@ export interface RunnableBaseLike<T = unknown> extends DeferredObservableBaseLik
  * @noInheritDoc
  * @category Observable
  */
-export interface RunnableLike<T = unknown> extends RunnableBaseLike<T>, DeferredObservableLike<T> {
-    readonly [ObservableLike_isRunnable]: true;
+export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableBaseLike<T>, DeferredObservableLike<T> {
+    readonly [ObservableLike_isDeferred]: true;
     readonly [ObservableLike_isPure]: false;
+    readonly [ObservableLike_isRunnable]: true;
+}
+export interface RunnableLike<T = unknown> extends RunnableBaseLike<T>, PureObservableLike<T> {
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: true;
+    readonly [ObservableLike_isRunnable]: true;
 }
 /**
  * @noInheritDoc
@@ -448,8 +454,6 @@ export interface RunnableLike<T = unknown> extends RunnableBaseLike<T>, Deferred
  */
 export interface EnumerableBaseLike<T = unknown> extends RunnableBaseLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
-    readonly [ObservableLike_isDeferred]: true;
-    readonly [ObservableLike_isRunnable]: true;
     [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }
 /**
@@ -458,9 +462,10 @@ export interface EnumerableBaseLike<T = unknown> extends RunnableBaseLike<T> {
  * @noInheritDoc
  * @category Interactive
  */
-export interface EnumerableWithSideEffectsLike<T = unknown> extends EnumerableBaseLike<T>, RunnableLike<T> {
+export interface EnumerableWithSideEffectsLike<T = unknown> extends EnumerableBaseLike<T>, RunnableWithSideEffectsLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
     readonly [ObservableLike_isPure]: false;
+    readonly [ObservableLike_isRunnable]: true;
 }
 /**
  * An `EnumerableLike` that yields no side effects when enumerated
@@ -468,12 +473,11 @@ export interface EnumerableWithSideEffectsLike<T = unknown> extends EnumerableBa
  * @noInheritDoc
  * @category Interactive
  */
-export interface EnumerableLike<T = unknown> extends EnumerableBaseLike<T>, PureObservableLike<T> {
+export interface EnumerableLike<T = unknown> extends EnumerableBaseLike<T>, RunnableLike<T> {
     readonly [ObservableLike_isEnumerable]: true;
-    readonly [ObservableLike_isDeferred]: true;
     readonly [ObservableLike_isPure]: true;
-    readonly [ObservableLike_isRunnable]: true;
 }
+export type ObservableLike<T = unknown> = EnumerableLike<T> | EnumerableWithSideEffectsLike<T> | RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>;
 /**
  * A stateful ObservableLike resource.
  *
@@ -711,7 +715,7 @@ export interface FlowableContainerModule<C extends Container> extends ContainerM
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
-    toObservable<T>(): Function1<ContainerOf<C, T>, ObservableLike<T>>;
+    toObservable<T>(): Function1<ContainerOf<C, T>, ObservableBaseLike<T>>;
 }
 /**
  * @noInheritDoc

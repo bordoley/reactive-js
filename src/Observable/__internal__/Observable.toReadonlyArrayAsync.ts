@@ -9,6 +9,7 @@ import {
 } from "../../types.js";
 import Observable_buffer from "./Observable.buffer.js";
 import Observable_firstAsync from "./Observable.firstAsync.js";
+import Observable_isPure from "./Observable.isPure.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 
 const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsync"] =
@@ -20,15 +21,15 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       },
     ) =>
-    async (observable: ObservableLike<T>) => {
-      if (Observable_isRunnable(observable)) {
+    async (observable: ObservableLike<T>): Promise<ReadonlyArray<T>> => {
+      if (Observable_isRunnable(observable) && Observable_isPure(observable)) {
         // Add a microtask queue hop, so that the evaluation occurs asynchronously.
         await Promise.resolve();
         return pipe(observable, Observable_toReadonlyArray());
       } else {
         return await pipeAsync(
           observable,
-          Observable_buffer(),
+          Observable_buffer<T>(),
           Observable_firstAsync(schedulerOrNone as SchedulerLike, options),
           x => x ?? [],
         );

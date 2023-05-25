@@ -16,7 +16,7 @@ An `ObservableLike` that supports interactive enumeration.
 
 - [`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>
 
-- [`RunnableLike`](types.RunnableLike.md)<`T`\>
+- [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`T`\>
 
   ↳ **`EnumerableWithSideEffectsLike`**
 
@@ -26,6 +26,7 @@ An `ObservableLike` that supports interactive enumeration.
 
 - [[\_\_\_ObservableLike\_isEnumerable]](types.EnumerableWithSideEffectsLike.md#[___observablelike_isenumerable])
 - [[\_\_\_ObservableLike\_isPure]](types.EnumerableWithSideEffectsLike.md#[___observablelike_ispure])
+- [[\_\_\_ObservableLike\_isRunnable]](types.EnumerableWithSideEffectsLike.md#[___observablelike_isrunnable])
 
 ## Properties
 
@@ -47,4 +48,14 @@ Indicates if subscribing to the `ObservableLike` is free of side-effects
 
 #### Overrides
 
-[RunnableLike](types.RunnableLike.md).[[___ObservableLike_isPure]](types.RunnableLike.md#[___observablelike_ispure])
+[RunnableWithSideEffectsLike](types.RunnableWithSideEffectsLike.md).[[___ObservableLike_isPure]](types.RunnableWithSideEffectsLike.md#[___observablelike_ispure])
+
+___
+
+### [\_\_\_ObservableLike\_isRunnable]
+
+• `Readonly` **[\_\_\_ObservableLike\_isRunnable]**: ``true``
+
+#### Overrides
+
+[RunnableWithSideEffectsLike](types.RunnableWithSideEffectsLike.md).[[___ObservableLike_isRunnable]](types.RunnableWithSideEffectsLike.md#[___observablelike_isrunnable])

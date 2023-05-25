@@ -1,3 +1,4 @@
+import { __DEV__ } from "../../__internal__/constants.js";
 import { Mixin3, mix, props } from "../../__internal__/mixins.js";
 import {
   LiftedLike,
@@ -9,10 +10,11 @@ import {
   bindMethod,
   none,
   pipeUnsafe,
+  raiseWithDebugMessage,
   returns,
 } from "../../functions.js";
 import {
-  ObservableLike,
+  ObservableBaseLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
@@ -22,28 +24,30 @@ import {
 } from "../../types.js";
 
 const Observable_liftMixin: <TIn, TOut>() => Mixin3<
-  LiftedLike<ObservableLike<TIn>, ObserverLike> &
-    ObservableLike<TOut> & {
+  LiftedLike<ObservableBaseLike<TIn>, ObserverLike> &
+    ObservableBaseLike<TOut> & {
       [ObservableLike_isEnumerable]: false;
     },
-  ObservableLike<TIn>,
+  ObservableBaseLike<TIn>,
   readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   {
     readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isPure]: boolean;
     readonly [ObservableLike_isRunnable]: boolean;
   },
   unknown,
-  Pick<ObservableLike<TOut>, typeof ObservableLike_observe> & {
+  Pick<ObservableBaseLike<TOut>, typeof ObservableLike_observe> & {
     [ObservableLike_isEnumerable]: false;
   }
 > = /*@__PURE__*/ (<TIn, TOut>() => {
   type TProperties = {
-    [LiftedLike_source]: ObservableLike<TIn>;
+    [LiftedLike_source]: ObservableBaseLike<TIn>;
     [LiftedLike_operators]: readonly Function1<
       ObserverLike<any>,
       ObserverLike<any>
     >[];
     [ObservableLike_isDeferred]: boolean;
+    [ObservableLike_isPure]: boolean;
     [ObservableLike_isRunnable]: boolean;
   };
 
@@ -51,24 +55,42 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
     mix(
       function LiftedObservable(
         instance: TProperties &
-          ObservableLike<TOut> & {
+          ObservableBaseLike<TOut> & {
             [ObservableLike_isEnumerable]: false;
           },
-        source: ObservableLike<TIn>,
+        source: ObservableBaseLike<TIn>,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
         config: {
           readonly [ObservableLike_isDeferred]: boolean;
+          readonly [ObservableLike_isPure]: boolean;
           readonly [ObservableLike_isRunnable]: boolean;
         },
-      ): LiftedLike<ObservableLike<TIn>, ObserverLike> &
-        ObservableLike<TOut> & {
+      ): LiftedLike<ObservableBaseLike<TIn>, ObserverLike> &
+        ObservableBaseLike<TOut> & {
           [ObservableLike_isEnumerable]: false;
         } {
         instance[LiftedLike_source] = source;
         instance[LiftedLike_operators] = ops;
 
-        instance[ObservableLike_isDeferred] = config[ObservableLike_isDeferred];
-        instance[ObservableLike_isRunnable] = config[ObservableLike_isRunnable];
+        const configRunnable = config[ObservableLike_isRunnable] ?? false;
+        const configDeferred = config[ObservableLike_isDeferred] ?? false;
+        const configPure = config[ObservableLike_isPure] ?? false;
+
+        if (__DEV__) {
+          if (configRunnable && !configDeferred) {
+            raiseWithDebugMessage(
+              "Attempting to create a non-deferred, runnable observable, which is an illegal state",
+            );
+          } else if (!configDeferred && !configPure) {
+            raiseWithDebugMessage(
+              "Attempting to create a non-deferred, not-pure observable which is an illegal state",
+            );
+          }
+        }
+
+        instance[ObservableLike_isRunnable] = configRunnable;
+        instance[ObservableLike_isDeferred] = configDeferred;
+        instance[ObservableLike_isPure] = configPure;
 
         return instance;
       },
@@ -76,6 +98,7 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
         [LiftedLike_source]: none,
         [LiftedLike_operators]: none,
         [ObservableLike_isDeferred]: false,
+        [ObservableLike_isPure]: false,
         [ObservableLike_isRunnable]: false,
       }),
       {

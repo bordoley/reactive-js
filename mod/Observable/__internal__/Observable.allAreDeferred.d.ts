@@ -1,4 +1,4 @@
 import { TypePredicate } from "../../functions.js";
-import { DeferredObservableLike, ObservableLike } from "../../types.js";
-declare const Observable_allAreDeferred: TypePredicate<ReadonlyArray<ObservableLike>, ReadonlyArray<DeferredObservableLike>>;
+import { DeferredObservableBaseLike, ObservableBaseLike } from "../../types.js";
+declare const Observable_allAreDeferred: TypePredicate<ReadonlyArray<ObservableBaseLike>, ReadonlyArray<DeferredObservableBaseLike>>;
 export default Observable_allAreDeferred;

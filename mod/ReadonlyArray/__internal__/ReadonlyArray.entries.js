@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.entries.d.ts" />
 
-import Enumerable_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
 import { pipe } from "../../functions.js";
 const ReadonlyArray_entries = () => (arr) => {
@@ -10,6 +10,6 @@ const ReadonlyArray_entries = () => (arr) => {
             yield [i, arr[i]];
         }
     }
-    return Enumerable_create(() => pipe(ReadonlyArrayEntries(), Iterator_enumerate()), true);
+    return Enumerable_create(() => pipe(ReadonlyArrayEntries(), Iterator_enumerate()));
 };
 export default ReadonlyArray_entries;
