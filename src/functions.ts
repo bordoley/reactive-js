@@ -139,40 +139,7 @@ export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
  */
 export type Updater<T> = Function1<T, T>;
 
-/**
- * A function that always returns `false`.
- */
-export const alwaysFalse = (..._args: unknown[]) => false;
-
-/**
- * A function that always returns `true`.
- */
-export const alwaysTrue = (..._args: unknown[]) => true;
-
-/**
- * Returns an equality function that compares two readonly arrays for equality,
- * comparing their values using `valuesEquality`.
- */
-export const arrayEquality =
-  <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
-  (a: readonly T[], b: readonly T[]) =>
-    ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
-    a.every((v, i) => valuesEquality(b[i], v));
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const bind = <F extends Function>(f: F, thiz: unknown): F =>
-  f.bind(thiz);
-
-export const bindMethod = <
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  T extends Record<TKey, (...args: any[]) => any>,
-  TKey extends number | string | symbol,
->(
-  thiz: T,
-  key: TKey,
-): T[TKey] => bind<T[TKey]>(thiz[key], thiz);
-
-interface Call {
+interface FunctionsModule {
   call<TInstance, T>(f: () => T, self: TInstance): T;
 
   call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
@@ -183,19 +150,7 @@ interface Call {
     a: TA,
     b: TB,
   ): T;
-}
-export const call: Call["call"] = <T>(
-  f: (...args: readonly unknown[]) => T,
-  self: unknown,
-  ...args: readonly any[]
-) => f.call(self, ...args);
 
-export const composeUnsafe =
-  (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
-  source =>
-    pipeUnsafe(source, ...operators);
-
-interface Compose {
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
@@ -293,13 +248,7 @@ interface Compose {
     op11: Function1<J, K>,
     op12: Function1<K, L>,
   ): Function1<T, L>;
-}
-/**
- * Composes a series of unary functions.
- */
-export const compose: Compose["compose"] = composeUnsafe;
 
-interface ComposeLazy {
   composeLazy<T, A>(op1: Function1<T, A>): Function1<T, Factory<A>>;
   composeLazy<T, A, B>(
     op1: Function1<T, A>,
@@ -400,11 +349,764 @@ interface ComposeLazy {
     op11: Function1<J, K>,
     op12: Function1<K, L>,
   ): Function1<T, Factory<L>>;
+
+  newInstance<T>(Constructor: Constructor<T>): T;
+  newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
+  newInstance<T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
+  newInstance<T, TA, TB, TC>(
+    Constructor: Constructor3<TA, TB, TC, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+  ): T;
+  newInstance<T, TA, TB, TC, TD>(
+    Constructor: Constructor4<TA, TB, TC, TD, T>,
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+  ): T;
+
+  partial<TA, TB, TOut>(
+    b: TB,
+  ): Function1<Function2<TA, TB, TOut>, Function1<TA, TOut>>;
+  partial<TA, TB, TC, TOut>(
+    b: TB,
+    c: TC,
+  ): Function1<Function3<TA, TB, TC, TOut>, Function1<TA, TOut>>;
+  partial<TA, TB, TC, TD, TOut>(
+    b: TB,
+    c: TC,
+    d: TD,
+  ): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
+
+  pipe<T, A>(src: T, op1: Function1<T, A>): A;
+  pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
+  pipe<T, A, B, C>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): C;
+  pipe<T, A, B, C, D>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): D;
+  pipe<T, A, B, C, D, E>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): E;
+  pipe<T, A, B, C, D, E, F>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): F;
+  pipe<T, A, B, C, D, E, F, G>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): G;
+  pipe<T, A, B, C, D, E, F, G, H>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): H;
+  pipe<T, A, B, C, D, E, F, G, H, I>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): I;
+  pipe<T, A, B, C, D, E, F, G, H, I, J>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): J;
+  pipe<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): K;
+  pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): L;
+
+  pipeAsync<T, A>(src: T, op1: Function1<T, A | Promise<A>>): Promise<A>;
+  pipeAsync<T, A, B>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+  ): Promise<B>;
+  pipeAsync<T, A, B, C>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+  ): Promise<C>;
+  pipeAsync<T, A, B, C, D>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+  ): Promise<D>;
+  pipeAsync<T, A, B, C, D, E>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+  ): Promise<E>;
+  pipeAsync<T, A, B, C, D, E, F>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+  ): Promise<F>;
+  pipeAsync<T, A, B, C, D, E, F, G>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+  ): Promise<G>;
+  pipeAsync<T, A, B, C, D, E, F, G, H>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+  ): Promise<H>;
+  pipeAsync<T, A, B, C, D, E, F, G, H, I>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+  ): Promise<I>;
+  pipeAsync<T, A, B, C, D, E, F, G, H, I, J>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+  ): Promise<J>;
+  pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+    op11: Function1<J, K | Promise<K>>,
+  ): Promise<K>;
+  pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+    op11: Function1<J, K | Promise<K>>,
+    op12: Function1<K, L | Promise<L>>,
+  ): Promise<L>;
+
+  pipeLazy<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
+  pipeLazy<T, A, B>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Factory<B>;
+  pipeLazy<T, A, B, C>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): Factory<C>;
+  pipeLazy<T, A, B, C, D>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): Factory<D>;
+  pipeLazy<T, A, B, C, D, E>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): Factory<E>;
+  pipeLazy<T, A, B, C, D, E, F>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): Factory<F>;
+  pipeLazy<T, A, B, C, D, E, F, G>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): Factory<G>;
+  pipeLazy<T, A, B, C, D, E, F, G, H>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): Factory<H>;
+  pipeLazy<T, A, B, C, D, E, F, G, H, I>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): Factory<I>;
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): Factory<J>;
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): Factory<K>;
+  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: T,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): Factory<L>;
+
+  pipeLazyAsync<T, A>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+  ): Factory<Promise<A>>;
+  pipeLazyAsync<T, A, B>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+  ): Factory<Promise<B>>;
+  pipeLazyAsync<T, A, B, C>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+  ): Factory<Promise<C>>;
+  pipeLazyAsync<T, A, B, C, D>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+  ): Factory<Promise<D>>;
+  pipeLazyAsync<T, A, B, C, D, E>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+  ): Factory<Promise<E>>;
+  pipeLazyAsync<T, A, B, C, D, E, F>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+  ): Factory<Promise<F>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+  ): Factory<Promise<G>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G, H>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+  ): Factory<Promise<H>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+  ): Factory<Promise<I>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+  ): Factory<Promise<J>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+    op11: Function1<J, K | Promise<K>>,
+  ): Factory<Promise<K>>;
+  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: T,
+    op1: Function1<T, A | Promise<A>>,
+    op2: Function1<A, B | Promise<B>>,
+    op3: Function1<B, C | Promise<C>>,
+    op4: Function1<C, D | Promise<D>>,
+    op5: Function1<D, E | Promise<E>>,
+    op6: Function1<E, F | Promise<F>>,
+    op7: Function1<F, G | Promise<G>>,
+    op8: Function1<G, H | Promise<H>>,
+    op9: Function1<H, I | Promise<I>>,
+    op10: Function1<I, J | Promise<J>>,
+    op11: Function1<J, K | Promise<K>>,
+    op12: Function1<K, L | Promise<L>>,
+  ): Factory<Promise<L>>;
+
+  pipeSome<T, A>(src: Optional<T>, op1: Function1<T, A>): Optional<A>;
+  pipeSome<T, A, B>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Optional<B>;
+  pipeSome<T, A, B, C>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): Optional<C>;
+  pipeSome<T, A, B, C, D>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): Optional<D>;
+  pipeSome<T, A, B, C, D, E>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): Optional<E>;
+  pipeSome<T, A, B, C, D, E, F>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): Optional<F>;
+  pipeSome<T, A, B, C, D, E, F, G>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): Optional<G>;
+  pipeSome<T, A, B, C, D, E, F, G, H>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): Optional<H>;
+  pipeSome<T, A, B, C, D, E, F, G, H, I>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): Optional<I>;
+  pipeSome<T, A, B, C, D, E, F, G, H, I, J>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): Optional<J>;
+  pipeSome<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): Optional<K>;
+  pipeSome<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): Optional<L>;
+
+  pipeSomeLazy<T, A>(src: Optional<T>, op1: Function1<T, A>): Factory<A>;
+  pipeSomeLazy<T, A, B>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+  ): Factory<B>;
+  pipeSomeLazy<T, A, B, C>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+  ): Factory<C>;
+  pipeSomeLazy<T, A, B, C, D>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+  ): Factory<D>;
+  pipeSomeLazy<T, A, B, C, D, E>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+  ): Factory<E>;
+  pipeSomeLazy<T, A, B, C, D, E, F>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+  ): Factory<F>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+  ): Factory<G>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+  ): Factory<H>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+  ): Factory<I>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+  ): Factory<J>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+  ): Factory<K>;
+  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
+    src: Optional<T>,
+    op1: Function1<T, A>,
+    op2: Function1<A, B>,
+    op3: Function1<B, C>,
+    op4: Function1<C, D>,
+    op5: Function1<D, E>,
+    op6: Function1<E, F>,
+    op7: Function1<F, G>,
+    op8: Function1<G, H>,
+    op9: Function1<H, I>,
+    op10: Function1<I, J>,
+    op11: Function1<J, K>,
+    op12: Function1<K, L>,
+  ): Factory<L>;
 }
+
+type Signature = FunctionsModule;
+
+/**
+ * A function that always returns `false`.
+ */
+export const alwaysFalse = (..._args: unknown[]) => false;
+
+/**
+ * A function that always returns `true`.
+ */
+export const alwaysTrue = (..._args: unknown[]) => true;
+
+/**
+ * Returns an equality function that compares two readonly arrays for equality,
+ * comparing their values using `valuesEquality`.
+ */
+export const arrayEquality =
+  <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
+  (a: readonly T[], b: readonly T[]) =>
+    ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
+    a.every((v, i) => valuesEquality(b[i], v));
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const bind = <F extends Function>(f: F, thiz: unknown): F =>
+  f.bind(thiz);
+
+export const bindMethod = <
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends Record<TKey, (...args: any[]) => any>,
+  TKey extends number | string | symbol,
+>(
+  thiz: T,
+  key: TKey,
+): T[TKey] => bind<T[TKey]>(thiz[key], thiz);
+
+export const call: Signature["call"] = <T>(
+  f: (...args: readonly unknown[]) => T,
+  self: unknown,
+  ...args: readonly any[]
+) => f.call(self, ...args);
+
+export const composeUnsafe =
+  (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
+  source =>
+    pipeUnsafe(source, ...operators);
+
 /**
  * Composes a series of unary functions.
  */
-export const composeLazy: ComposeLazy["composeLazy"] =
+export const compose: Signature["compose"] = composeUnsafe;
+
+/**
+ * Composes a series of unary functions.
+ */
+export const composeLazy: Signature["composeLazy"] =
   (...operators: Function1<any, unknown>[]) =>
   (source: unknown) =>
   () =>
@@ -569,25 +1271,7 @@ export const lessThan =
  */
 export const negate = (v: boolean): boolean => !v;
 
-interface NewInstance {
-  newInstance<T>(Constructor: Constructor<T>): T;
-  newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
-  newInstance<T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
-  newInstance<T, TA, TB, TC>(
-    Constructor: Constructor3<TA, TB, TC, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-  ): T;
-  newInstance<T, TA, TB, TC, TD>(
-    Constructor: Constructor4<TA, TB, TC, TD, T>,
-    a: TA,
-    b: TB,
-    c: TC,
-    d: TD,
-  ): T;
-}
-export const newInstance: NewInstance["newInstance"] = (
+export const newInstance: Signature["newInstance"] = (
   Constructor: new (...args: readonly any[]) => unknown,
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
@@ -597,21 +1281,7 @@ export const newInstance: NewInstance["newInstance"] = (
  */
 export const none = undefined;
 
-interface Partial {
-  partial<TA, TB, TOut>(
-    b: TB,
-  ): Function1<Function2<TA, TB, TOut>, Function1<TA, TOut>>;
-  partial<TA, TB, TC, TOut>(
-    b: TB,
-    c: TC,
-  ): Function1<Function3<TA, TB, TC, TOut>, Function1<TA, TOut>>;
-  partial<TA, TB, TC, TD, TOut>(
-    b: TB,
-    c: TC,
-    d: TD,
-  ): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
-}
-export const partial: Partial["partial"] =
+export const partial: Signature["partial"] =
   (...args: readonly unknown[]) =>
   (f: (...args: readonly any[]) => unknown) =>
   (arg0: unknown) =>
@@ -633,235 +1303,12 @@ export const pipeUnsafe = (
   return acc;
 };
 
-interface Pipe {
-  pipe<T, A>(src: T, op1: Function1<T, A>): A;
-  pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
-  pipe<T, A, B, C>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-  ): C;
-  pipe<T, A, B, C, D>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-  ): D;
-  pipe<T, A, B, C, D, E>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-  ): E;
-  pipe<T, A, B, C, D, E, F>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-  ): F;
-  pipe<T, A, B, C, D, E, F, G>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-  ): G;
-  pipe<T, A, B, C, D, E, F, G, H>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-  ): H;
-  pipe<T, A, B, C, D, E, F, G, H, I>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-  ): I;
-  pipe<T, A, B, C, D, E, F, G, H, I, J>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-  ): J;
-  pipe<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-  ): K;
-  pipe<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-    op12: Function1<K, L>,
-  ): L;
-}
 /**
  * Pipes `source` through a series of unary functions.
  */
-export const pipe: Pipe["pipe"] = pipeUnsafe;
+export const pipe: Signature["pipe"] = pipeUnsafe;
 
-interface PipeAsync {
-  pipeAsync<T, A>(src: T, op1: Function1<T, A | Promise<A>>): Promise<A>;
-  pipeAsync<T, A, B>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-  ): Promise<B>;
-  pipeAsync<T, A, B, C>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-  ): Promise<C>;
-  pipeAsync<T, A, B, C, D>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-  ): Promise<D>;
-  pipeAsync<T, A, B, C, D, E>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-  ): Promise<E>;
-  pipeAsync<T, A, B, C, D, E, F>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-  ): Promise<F>;
-  pipeAsync<T, A, B, C, D, E, F, G>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-  ): Promise<G>;
-  pipeAsync<T, A, B, C, D, E, F, G, H>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-  ): Promise<H>;
-  pipeAsync<T, A, B, C, D, E, F, G, H, I>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-  ): Promise<I>;
-  pipeAsync<T, A, B, C, D, E, F, G, H, I, J>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-  ): Promise<J>;
-  pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-    op11: Function1<J, K | Promise<K>>,
-  ): Promise<K>;
-  pipeAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-    op11: Function1<J, K | Promise<K>>,
-    op12: Function1<K, L | Promise<L>>,
-  ): Promise<L>;
-}
-
-export const pipeAsync: PipeAsync["pipeAsync"] = async (
+export const pipeAsync: Signature["pipeAsync"] = async (
   source: unknown,
   ...operators: Function1<unknown, unknown | Promise<unknown>>[]
 ) => {
@@ -880,124 +1327,10 @@ export const pipeAsync: PipeAsync["pipeAsync"] = async (
   return acc;
 };
 
-interface PipeLazy {
-  pipeLazy<T, A>(src: T, op1: Function1<T, A>): Factory<A>;
-  pipeLazy<T, A, B>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-  ): Factory<B>;
-  pipeLazy<T, A, B, C>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-  ): Factory<C>;
-  pipeLazy<T, A, B, C, D>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-  ): Factory<D>;
-  pipeLazy<T, A, B, C, D, E>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-  ): Factory<E>;
-  pipeLazy<T, A, B, C, D, E, F>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-  ): Factory<F>;
-  pipeLazy<T, A, B, C, D, E, F, G>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-  ): Factory<G>;
-  pipeLazy<T, A, B, C, D, E, F, G, H>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-  ): Factory<H>;
-  pipeLazy<T, A, B, C, D, E, F, G, H, I>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-  ): Factory<I>;
-  pipeLazy<T, A, B, C, D, E, F, G, H, I, J>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-  ): Factory<J>;
-  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-  ): Factory<K>;
-  pipeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: T,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-    op12: Function1<K, L>,
-  ): Factory<L>;
-}
-
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
-export const pipeLazy: PipeLazy["pipeLazy"] =
+export const pipeLazy: Signature["pipeLazy"] =
   (
     source: unknown,
     ...operators: Function1<unknown, unknown>[]
@@ -1005,124 +1338,7 @@ export const pipeLazy: PipeLazy["pipeLazy"] =
   () =>
     pipeUnsafe(source, ...operators);
 
-interface PipeLazyAsync {
-  pipeLazyAsync<T, A>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-  ): Factory<Promise<A>>;
-  pipeLazyAsync<T, A, B>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-  ): Factory<Promise<B>>;
-  pipeLazyAsync<T, A, B, C>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-  ): Factory<Promise<C>>;
-  pipeLazyAsync<T, A, B, C, D>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-  ): Factory<Promise<D>>;
-  pipeLazyAsync<T, A, B, C, D, E>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-  ): Factory<Promise<E>>;
-  pipeLazyAsync<T, A, B, C, D, E, F>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-  ): Factory<Promise<F>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-  ): Factory<Promise<G>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G, H>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-  ): Factory<Promise<H>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-  ): Factory<Promise<I>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-  ): Factory<Promise<J>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-    op11: Function1<J, K | Promise<K>>,
-  ): Factory<Promise<K>>;
-  pipeLazyAsync<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: T,
-    op1: Function1<T, A | Promise<A>>,
-    op2: Function1<A, B | Promise<B>>,
-    op3: Function1<B, C | Promise<C>>,
-    op4: Function1<C, D | Promise<D>>,
-    op5: Function1<D, E | Promise<E>>,
-    op6: Function1<E, F | Promise<F>>,
-    op7: Function1<F, G | Promise<G>>,
-    op8: Function1<G, H | Promise<H>>,
-    op9: Function1<H, I | Promise<I>>,
-    op10: Function1<I, J | Promise<J>>,
-    op11: Function1<J, K | Promise<K>>,
-    op12: Function1<K, L | Promise<L>>,
-  ): Factory<Promise<L>>;
-}
-
-export const pipeLazyAsync: PipeLazyAsync["pipeLazyAsync"] =
+export const pipeLazyAsync: Signature["pipeLazyAsync"] =
   (
     source: unknown,
     ...operators: Function1<unknown, unknown | Promise<unknown>>[]
@@ -1143,245 +1359,19 @@ export const pipeLazyAsync: PipeLazyAsync["pipeLazyAsync"] =
     return acc;
   };
 
-interface PipeSome {
-  pipeSome<T, A>(src: Optional<T>, op1: Function1<T, A>): Optional<A>;
-  pipeSome<T, A, B>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-  ): Optional<B>;
-  pipeSome<T, A, B, C>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-  ): Optional<C>;
-  pipeSome<T, A, B, C, D>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-  ): Optional<D>;
-  pipeSome<T, A, B, C, D, E>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-  ): Optional<E>;
-  pipeSome<T, A, B, C, D, E, F>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-  ): Optional<F>;
-  pipeSome<T, A, B, C, D, E, F, G>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-  ): Optional<G>;
-  pipeSome<T, A, B, C, D, E, F, G, H>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-  ): Optional<H>;
-  pipeSome<T, A, B, C, D, E, F, G, H, I>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-  ): Optional<I>;
-  pipeSome<T, A, B, C, D, E, F, G, H, I, J>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-  ): Optional<J>;
-  pipeSome<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-  ): Optional<K>;
-  pipeSome<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-    op12: Function1<K, L>,
-  ): Optional<L>;
-}
 /**
  * Pipes `source` through a series of unary functions if it is not undefined.
  */
-export const pipeSome: PipeSome["pipeSome"] = (
+export const pipeSome: Signature["pipeSome"] = (
   source: Optional<unknown>,
   ...operators: Function1<unknown, unknown>[]
 ): Optional<unknown> =>
   isSome(source) ? pipeUnsafe(source, ...operators) : none;
 
-interface PipeSomeLazy {
-  pipeSomeLazy<T, A>(src: Optional<T>, op1: Function1<T, A>): Factory<A>;
-  pipeSomeLazy<T, A, B>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-  ): Factory<B>;
-  pipeSomeLazy<T, A, B, C>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-  ): Factory<C>;
-  pipeSomeLazy<T, A, B, C, D>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-  ): Factory<D>;
-  pipeSomeLazy<T, A, B, C, D, E>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-  ): Factory<E>;
-  pipeSomeLazy<T, A, B, C, D, E, F>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-  ): Factory<F>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-  ): Factory<G>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G, H>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-  ): Factory<H>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-  ): Factory<I>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-  ): Factory<J>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-  ): Factory<K>;
-  pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(
-    src: Optional<T>,
-    op1: Function1<T, A>,
-    op2: Function1<A, B>,
-    op3: Function1<B, C>,
-    op4: Function1<C, D>,
-    op5: Function1<D, E>,
-    op6: Function1<E, F>,
-    op7: Function1<F, G>,
-    op8: Function1<G, H>,
-    op9: Function1<H, I>,
-    op10: Function1<I, J>,
-    op11: Function1<J, K>,
-    op12: Function1<K, L>,
-  ): Factory<L>;
-}
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
  */
-export const pipeSomeLazy: PipeSomeLazy["pipeSomeLazy"] =
+export const pipeSomeLazy: Signature["pipeSomeLazy"] =
   (
     source: Optional,
     ...operators: Function1<unknown, unknown>[]
