@@ -128,6 +128,16 @@ export const newInstance = (Constructor, ...args) => new Constructor(...args);
  */
 export const none = undefined;
 export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
+export const pickUnsafe = (...keys) => 
+// eslint-disable-next-line @typescript-eslint/ban-types
+(value) => {
+    let result = value;
+    for (const key of keys) {
+        result = result[key];
+    }
+    return result;
+};
+export const pick = pickUnsafe;
 /**
  * Pipes `source` through a series of unary functions.
  */

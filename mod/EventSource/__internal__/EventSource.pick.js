@@ -1,7 +1,6 @@
 /// <reference types="./EventSource.pick.d.ts" />
 
-import Container_pick from "../../Container/__internal__/Container.pick.js";
+import { pickUnsafe } from "../../functions.js";
 import EventSource_map from "./EventSource.map.js";
-const EventSource_pick = 
-/*@__PURE__*/ Container_pick(EventSource_map);
+const EventSource_pick = (...keys) => EventSource_map(pickUnsafe(...keys));
 export default EventSource_pick;

@@ -80,6 +80,8 @@
 - [negate](functions.md#negate)
 - [newInstance](functions.md#newinstance)
 - [partial](functions.md#partial)
+- [pick](functions.md#pick)
+- [pickUnsafe](functions.md#pickunsafe)
 - [pipe](functions.md#pipe)
 - [pipeAsync](functions.md#pipeasync)
 - [pipeLazy](functions.md#pipelazy)
@@ -2586,6 +2588,101 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function4`](functions.md#function4)<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](functions.md#function1)<`TA`, `TOut`\>\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### pickUnsafe
+
+▸ **pickUnsafe**(`...keys`): (`value`: {}) => `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...keys` | (`string` \| `number` \| `symbol`)[] |
+
+#### Returns
+
+`fn`
+
+▸ (`value`): `any`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `Object` |
+
+##### Returns
+
+`any`
 
 ___
 

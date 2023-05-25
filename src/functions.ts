@@ -141,9 +141,7 @@ export type Updater<T> = Function1<T, T>;
 
 interface FunctionsModule {
   call<TInstance, T>(f: () => T, self: TInstance): T;
-
   call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
-
   call<TInstance, T, TA, TB>(
     f: (a: TA, b: TB) => T,
     self: TInstance,
@@ -379,6 +377,22 @@ interface FunctionsModule {
     c: TC,
     d: TD,
   ): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
+
+  pick<T, TKey extends keyof T>(key: TKey): Function1<T, T[TKey]>;
+  pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
+    keyA: TKeyA,
+    keyB: TKeyB,
+  ): Function1<T, T[TKeyA][TKeyB]>;
+  pick<
+    T,
+    TKeyA extends keyof T,
+    TKeyB extends keyof T[TKeyA],
+    TKeyC extends keyof T[TKeyA][TKeyB],
+  >(
+    keyA: TKeyA,
+    keyB: TKeyB,
+    keyC: TKeyC,
+  ): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
 
   pipe<T, A>(src: T, op1: Function1<T, A>): A;
   pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
@@ -1286,6 +1300,19 @@ export const partial: Signature["partial"] =
   (f: (...args: readonly any[]) => unknown) =>
   (arg0: unknown) =>
     f(arg0, ...args);
+
+export const pickUnsafe =
+  (...keys: (string | symbol | number)[]) =>
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  (value: {}) => {
+    let result: any = value;
+    for (const key of keys) {
+      result = result[key];
+    }
+    return result;
+  };
+
+export const pick: Signature["pick"] = pickUnsafe;
 
 /**
  * Pipes `source` through a series of unary functions.

@@ -96,6 +96,9 @@ interface FunctionsModule {
     partial<TA, TB, TOut>(b: TB): Function1<Function2<TA, TB, TOut>, Function1<TA, TOut>>;
     partial<TA, TB, TC, TOut>(b: TB, c: TC): Function1<Function3<TA, TB, TC, TOut>, Function1<TA, TOut>>;
     partial<TA, TB, TC, TD, TOut>(b: TB, c: TC, d: TD): Function1<Function4<TA, TB, TC, TD, TOut>, Function1<TA, TOut>>;
+    pick<T, TKey extends keyof T>(key: TKey): Function1<T, T[TKey]>;
+    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): Function1<T, T[TKeyA][TKeyB]>;
+    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
     pipe<T, A>(src: T, op1: Function1<T, A>): A;
     pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
     pipe<T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): C;
@@ -276,6 +279,8 @@ export declare const newInstance: Signature["newInstance"];
  */
 export declare const none: undefined;
 export declare const partial: Signature["partial"];
+export declare const pickUnsafe: (...keys: (string | symbol | number)[]) => (value: {}) => any;
+export declare const pick: Signature["pick"];
 /**
  * Pipes `source` through a series of unary functions.
  */
