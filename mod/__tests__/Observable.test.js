@@ -9,8 +9,12 @@ import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { alwaysTrue, arrayEquality, bindMethod, compose, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
-import { DispatcherLikeEvent_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
-testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+import { Container_type, DispatcherLikeEvent_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
+import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+testModule("Observable", ...RunnableContainerModuleTests({
+    ...Observable,
+    fromReadonlyArray: () => compose(Observable.fromReadonlyArray(), Observable.delay(1)),
+}), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);

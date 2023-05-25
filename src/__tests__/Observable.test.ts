@@ -47,10 +47,15 @@ import {
   returns,
 } from "../functions.js";
 import {
+  Container,
+  ContainerModule,
+  Container_T,
+  Container_type,
   DispatcherLikeEvent_completed,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
+  EnumerableContainerModule,
   PauseableLike_pause,
   PauseableLike_resume,
   PublisherLike_observerCount,
@@ -62,9 +67,19 @@ import {
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
+import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+
+interface RunnableContainer extends Container {
+  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+}
 
 testModule(
   "Observable",
+  ...RunnableContainerModuleTests<RunnableContainer>({
+    ...Observable,
+    fromReadonlyArray: () =>
+      compose(Observable.fromReadonlyArray(), Observable.delay(1)),
+  } as ContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
   describe(
     "backpressureStrategy",
     testAsync(
