@@ -11,7 +11,9 @@ import {
   arrayEquality,
   greaterThan,
   increment,
+  isSome,
   lessThan,
+  none,
   pipe,
   returns,
 } from "../../functions.js";
@@ -154,6 +156,21 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
           expectToThrowError(err),
         );
       }),
+    ),
+    describe(
+      "keepType",
+      test(
+        "only keeps non-none values",
+        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
+          pipe(
+            [1, none, 3],
+            fromReadonlyArray(ctx),
+            m.keepType(isSome),
+            toReadonlyArray(ctx),
+            expectArrayEquals([1, 3]),
+          ),
+        ),
+      ),
     ),
     describe(
       "map",
