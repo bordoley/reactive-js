@@ -1,5 +1,6 @@
 import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
+import IndexedCollection_toReadonlyArray from "../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import * as Observable from "../Observable.js";
 import {
   __bindMethod,
@@ -10,6 +11,7 @@ import {
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import {
   describe,
   expectArrayEquals,
@@ -66,6 +68,7 @@ import {
   PauseableLike_resume,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  ReplayObservableLike_buffer,
   RunnableLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -415,6 +418,63 @@ testModule(
       pipe(disposedTime, expectEquals(5));
     }),
   ),
+
+  describe(
+    "enqueue",
+    test("when backpressure exception is thrown", () => {
+      const vts = Scheduler.createVirtualTimeScheduler();
+      const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+      });
+
+      expectToThrow(
+        pipeLazy(
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.enqueue<number>(stream),
+          Observable.run(),
+        ),
+      );
+    }),
+    test("when completed successfully", () => {
+      const vts = Scheduler.createVirtualTimeScheduler();
+      const stream = Streamable.identity<number>()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: MAX_SAFE_INTEGER,
+        replay: MAX_SAFE_INTEGER,
+      });
+
+      let completed = false;
+
+      pipe(
+        stream,
+        EventSource.addEventHandler(ev => {
+          if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+          }
+        }),
+      );
+
+      pipe(
+        [1, 2, 2, 2, 2, 3, 3, 3, 4],
+        Observable.fromReadonlyArray(),
+        Observable.enqueue<number>(stream),
+        Observable.subscribe(vts),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(
+        stream[ReplayObservableLike_buffer],
+        IndexedCollection_toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]),
+      );
+
+      expectFalse(completed);
+    }),
+  ),
+
   describe(
     "firstAsync",
     testAsync("empty source", async () => {

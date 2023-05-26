@@ -1027,3 +1027,44 @@ export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContaine
      */
     fromEntries<T, TKey extends TKeyBase>(): Function1<EnumerableLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
 }
+export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends KeyedContainerModule<C, number> {
+    /** @category Transform */
+    enumerate<T>(options?: {
+        readonly start?: number;
+        readonly count?: number;
+    }): Function1<KeyedContainerOf<C, number, T>, EnumeratorLike<T>>;
+    /** @category Transform */
+    toIterable<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<KeyedContainerOf<C, number, T>, Iterable<T>>;
+    /** @category Transform */
+    toObservable<T>(): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
+        readonly count: number;
+    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
+        readonly count: number;
+        readonly start: number;
+    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
+    toObservable<T>(options: {
+        readonly start: number;
+    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
+    /** @category Transform */
+    toReadonlyArray<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<KeyedContainerOf<C, number, T>, ReadonlyArray<T>>;
+}
+export interface ConcreteIndexedKeyedContainer<C extends KeyedContainer<number>> extends ConcreteKeyedContainerModule<C, number>, IndexedKeyedContainer<C>, Omit<EnumerableContainerModule<C>, keyof ConcreteKeyedContainerModule<C> | "enumerate" | "toIterable" | "toObservable" | "toReadonlyArray"> {
+    /**
+     * @category Operator
+     */
+    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): Function1<KeyedContainerOf<C, number, TA>, KeyedContainerOf<C, number, TB>>;
+    fromIterable<T>(): Function1<Iterable<T>, KeyedContainerOf<C, number, T>>;
+    /**
+     * @category Operator
+     */
+    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB>;
+    keepType<TA, TB extends TA, TKey extends number>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+}

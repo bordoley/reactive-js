@@ -1,5 +1,4 @@
-import { Function1, TypePredicate } from "./functions.js";
-import { ConcreteKeyedContainerModule, ContainerOperator, Container_T, Container_type, EnumerableContainerModule, EnumerableLike, EnumeratorLike, KeyOf, KeyedContainer, KeyedContainerOperator, KeyedContainer_TKey } from "./types.js";
+import { ConcreteIndexedKeyedContainer, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -14,44 +13,7 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyArrayModule extends ConcreteKeyedContainerModule<Type>, Omit<EnumerableContainerModule<Type>, keyof ConcreteKeyedContainerModule<Type>> {
-    /** @category Transform */
-    enumerate<T>(options?: {
-        readonly start?: number;
-        readonly count?: number;
-    }): Function1<ReadonlyArray<T>, EnumeratorLike<T>>;
-    /**
-     * @category Operator
-     */
-    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): Function1<ReadonlyArray<TA>, ReadonlyArray<TB>>;
-    fromIterable<T>(): Function1<Iterable<T>, readonly T[]>;
-    /**
-     * @category Operator
-     */
-    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<Type, TA, TB>;
-    keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<Type, TKey, TA, TB>;
-    /** @category Transform */
-    toIterable<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, Iterable<T>>;
-    /** @category Transform */
-    toObservable<T>(): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly count: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly count: number;
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly start: number;
-    }): Function1<ReadonlyArray<T>, EnumerableLike<T>>;
-    /** @category Transform */
-    toReadonlyArray<T>(options?: {
-        readonly count?: number;
-        readonly start?: number;
-    }): Function1<ReadonlyArray<T>, ReadonlyArray<T>>;
+export interface ReadonlyArrayModule extends ConcreteIndexedKeyedContainer<Type> {
 }
 export type Signature = ReadonlyArrayModule;
 export declare const buffer: Signature["buffer"];

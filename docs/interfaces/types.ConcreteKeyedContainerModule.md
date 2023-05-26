@@ -17,9 +17,9 @@
 
   ↳ **`ConcreteKeyedContainerModule`**
 
-  ↳↳ [`ReadonlyArrayModule`](ReadonlyArray.ReadonlyArrayModule.md)
-
   ↳↳ [`ConcreteAssociativeKeyedContainerModule`](types.ConcreteAssociativeKeyedContainerModule.md)
+
+  ↳↳ [`ConcreteIndexedKeyedContainer`](types.ConcreteIndexedKeyedContainer.md)
 
 ## Table of contents
 

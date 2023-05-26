@@ -19,6 +19,8 @@
 
   ↳ [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)
 
+  ↳ [`IndexedKeyedContainer`](types.IndexedKeyedContainer.md)
+
 ## Table of contents
 
 ### Operator Methods

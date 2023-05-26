@@ -2,14 +2,16 @@
 
 import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
+import IndexedCollection_toReadonlyArray from "../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
+import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { alwaysTrue, arrayEquality, bindMethod, compose, identity, ignore, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
-import { Container_type, DispatcherLikeEvent_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { Container_type, DispatcherLikeEvent_completed, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
 testModule("Observable", ...RunnableContainerModuleTests({
     ...Observable,
@@ -143,6 +145,30 @@ testModule("Observable", ...RunnableContainerModuleTests({
     }));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(disposedTime, expectEquals(5));
+})), describe("enqueue", test("when backpressure exception is thrown", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+    });
+    expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.run()));
+}), test("when completed successfully", () => {
+    const vts = Scheduler.createVirtualTimeScheduler();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: MAX_SAFE_INTEGER,
+        replay: MAX_SAFE_INTEGER,
+    });
+    let completed = false;
+    pipe(stream, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+        }
+    }));
+    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.subscribe(vts));
+    vts[VirtualTimeSchedulerLike_run]();
+    pipe(stream[ReplayObservableLike_buffer], IndexedCollection_toReadonlyArray(), expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]));
+    expectFalse(completed);
 })), describe("firstAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectIsNone);
