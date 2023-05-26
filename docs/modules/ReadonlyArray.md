@@ -74,6 +74,7 @@
 - [reduce](ReadonlyArray.md#reduce)
 - [reduceWithKey](ReadonlyArray.md#reducewithkey)
 - [someSatisfy](ReadonlyArray.md#somesatisfy)
+- [toEventSource](ReadonlyArray.md#toeventsource)
 - [toIterable](ReadonlyArray.md#toiterable)
 - [toObservable](ReadonlyArray.md#toobservable)
 - [toReadonlyArray](ReadonlyArray.md#toreadonlyarray)
@@ -1619,6 +1620,30 @@ ___
 
 ___
 
+### toEventSource
+
+▸ **toEventSource**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], `Iterable`<`T`\>\>
@@ -1645,19 +1670,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1669,47 +1682,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-| `options.start` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.start` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

@@ -1,5 +1,6 @@
 import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
+import type { EnumerableContainer } from "./Observable.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -30,6 +31,7 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
+import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_toIterable from "./Observable/__internal__/Observable.toIterable.js";
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -37,21 +39,7 @@ import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js"
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { identityLazy } from "./functions.js";
-import {
-  Container,
-  Container_T,
-  Container_type,
-  EnumerableContainerModule,
-  EnumerableLike,
-} from "./types.js";
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableContainer extends Container {
-  readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
-}
+import { EnumerableContainerModule } from "./types.js";
 
 export type Type = EnumerableContainer;
 
@@ -101,6 +89,8 @@ export const startWith: Signature["startWith"] = Observable_startWith;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
+export const toEventSource: Signature["toEventSource"] =
+  Observable_toEventSource;
 export const toIterable: Signature["toIterable"] = Observable_toIterable;
 export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =

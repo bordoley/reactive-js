@@ -1,6 +1,6 @@
 import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
-import ReadonlyArray_toEventSource from "../ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
+import * as ReadonlyArray from "../ReadonlyArray.js";
 import { testModule } from "../__internal__/testing.js";
 import { isSome, pipe } from "../functions.js";
 import { DisposableLike_error, EventSourceLike } from "../types.js";
@@ -29,7 +29,7 @@ testModule(
   ContainerModuleTests(
     EventSource,
     () => Disposable.disposed,
-    <T>() => ReadonlyArray_toEventSource<T>(),
+    <T>() => ReadonlyArray.toEventSource<T>(),
     toReadonlyArray,
   ),
 );

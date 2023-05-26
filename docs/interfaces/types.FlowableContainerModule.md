@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [types](../modules/types.md) / FlowableContainerModule
 
-# Interface: FlowableContainerModule<C\>
+# Interface: FlowableContainerModule<C, CObservable\>
 
 [types](../modules/types.md).FlowableContainerModule
 
@@ -9,6 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](types.Container.md) |
+| `CObservable` | extends [`Type`](../modules/Observable.md#type) |
 
 ## Hierarchy
 
@@ -54,7 +55,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ObservableBaseLike`](types.ObservableBaseLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`\>\>
 
 #### Type parameters
 
@@ -64,4 +65,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ObservableBaseLike`](types.ObservableBaseLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`\>\>

@@ -1,12 +1,6 @@
+import type { RunnableContainer } from "./Observable.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableWithSideEffectsLike } from "./types.js";
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableContainer extends Container {
-    readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
-}
+import { QueueableLike, QueueableLike_backpressureStrategy, RunnableLike, RunnableWithSideEffectsLike } from "./types.js";
 export type Type = RunnableContainer;
 /**
  * @noInheritDoc

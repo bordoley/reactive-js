@@ -14,6 +14,27 @@ export type PureDeferredObservableOperator<TIn, TOut> = <TObservableIn extends D
 export interface ObservableContainer extends Container {
     readonly [Container_type]?: ObservableBaseLike<this[typeof Container_T]>;
 }
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableContainer extends Container {
+    readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
+}
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface RunnableContainer extends Container {
+    readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
+}
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableContainer extends Container {
+    readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
 export type Type = ObservableContainer;
 export declare namespace Animation {
     /**

@@ -16,7 +16,7 @@
 
 - [`IndexedKeyedContainer`](types.IndexedKeyedContainer.md)<`C`\>
 
-- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<`C`\>, keyof [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<`C`\> \| ``"enumerate"`` \| ``"toIterable"`` \| ``"toObservable"`` \| ``"toReadonlyArray"``\>
+- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<`C`\>, keyof [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)<`C`\> \| ``"enumerate"`` \| ``"toEventSource"`` \| ``"toIterable"`` \| ``"toObservable"`` \| ``"toReadonlyArray"``\>
 
   ↳ **`ConcreteIndexedKeyedContainer`**
 
@@ -77,6 +77,7 @@
 - [last](types.ConcreteIndexedKeyedContainer.md#last)
 - [noneSatisfy](types.ConcreteIndexedKeyedContainer.md#nonesatisfy)
 - [someSatisfy](types.ConcreteIndexedKeyedContainer.md#somesatisfy)
+- [toEventSource](types.ConcreteIndexedKeyedContainer.md#toeventsource)
 - [toIterable](types.ConcreteIndexedKeyedContainer.md#toiterable)
 - [toObservable](types.ConcreteIndexedKeyedContainer.md#toobservable)
 - [toReadonlyArray](types.ConcreteIndexedKeyedContainer.md#toreadonlyarray)
@@ -1712,6 +1713,34 @@ Omit.someSatisfy
 
 ___
 
+### toEventSource
+
+▸ **toEventSource**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Inherited from
+
+[IndexedKeyedContainer](types.IndexedKeyedContainer.md).[toEventSource](types.IndexedKeyedContainer.md#toeventsource)
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, `Iterable`<`T`\>\>
@@ -1742,23 +1771,7 @@ ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[IndexedKeyedContainer](types.IndexedKeyedContainer.md).[toObservable](types.IndexedKeyedContainer.md#toobservable)
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1770,55 +1783,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[IndexedKeyedContainer](types.IndexedKeyedContainer.md).[toObservable](types.IndexedKeyedContainer.md#toobservable)
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.count` | `number` |
-| `options.start` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[IndexedKeyedContainer](types.IndexedKeyedContainer.md).[toObservable](types.IndexedKeyedContainer.md#toobservable)
-
-▸ **toObservable**<`T`\>(`options`): [`Function1`](../modules/functions.md#function1)<[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `number`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.start` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
 
 #### Returns
 

@@ -1,3 +1,4 @@
+import type { RunnableContainer } from "./Observable.js";
 import { Runnable_compute } from "./Observable/__internal__/Observable.compute.js";
 import Runnable_run from "./Observable/__internal__/Observable.run.js";
 import Runnable_concatAll from "./Runnable/__internal__/Runnable.concatAll.js";
@@ -10,22 +11,11 @@ import Runnable_switchAll from "./Runnable/__internal__/Runnable.switchAll.js";
 import Runnable_switchMap from "./Runnable/__internal__/Runnable.switchMap.js";
 import { Factory, Function1, SideEffect1 } from "./functions.js";
 import {
-  Container,
-  Container_T,
-  Container_type,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   RunnableLike,
   RunnableWithSideEffectsLike,
 } from "./types.js";
-
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface RunnableContainer extends Container {
-  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
-}
 
 export type Type = RunnableContainer;
 

@@ -1,12 +1,11 @@
 import AsyncIterable_flow from "./AsyncIterable/__internal__/AsyncIterable.flow.js";
 import AsyncIterable_toObservable from "./AsyncIterable/__internal__/AsyncIterable.toObservable.js";
-import { Function1 } from "./functions.js";
+import type { DeferredObservableContainer } from "./Observable.js";
 import {
   Container,
   ContainerModule,
   Container_T,
   Container_type,
-  DeferredObservableLike,
   FlowableContainerModule,
 } from "./types.js";
 
@@ -26,9 +25,10 @@ export type Type = AsyncIterableContainer;
  */
 export interface AsyncIterableModule
   // FIXME: Implement the ContainerModule apis
-  extends Omit<FlowableContainerModule<Type>, keyof ContainerModule<Type>> {
-  toObservable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
-}
+  extends Omit<
+    FlowableContainerModule<Type, DeferredObservableContainer>,
+    keyof ContainerModule<Type>
+  > {}
 
 export type Signature = AsyncIterableModule;
 

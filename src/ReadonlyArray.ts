@@ -40,6 +40,7 @@ import ReadonlyArray_startWith from "./ReadonlyArray/__internal__/ReadonlyArray.
 import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.takeFirst.js";
 import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
 import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
+import ReadonlyArray_toEventSource from "./ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import ReadonlyArray_toIterable from "./ReadonlyArray/__internal__/ReadonlyArray.toIterable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
@@ -130,6 +131,8 @@ export const startWith: Signature["startWith"] = ReadonlyArray_startWith;
 export const takeFirst: Signature["takeFirst"] = ReadonlyArray_takeFirst;
 export const takeLast: Signature["takeLast"] = ReadonlyArray_takeLast;
 export const takeWhile: Signature["takeWhile"] = ReadonlyArray_takeWhile;
+export const toEventSource: Signature["toEventSource"] =
+  ReadonlyArray_toEventSource;
 export const toIterable: Signature["toIterable"] = ReadonlyArray_toIterable;
 export const toObservable: Signature["toObservable"] =
   ReadonlyArray_toObservable;

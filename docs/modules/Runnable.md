@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Container Interfaces
-
-- [RunnableContainer](../interfaces/Runnable.RunnableContainer.md)
-
 ### Module Interfaces
 
 - [RunnableModule](../interfaces/Runnable.RunnableModule.md)
@@ -46,7 +42,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`RunnableContainer`](../interfaces/Runnable.RunnableContainer.md)
+Ƭ **Type**: [`RunnableContainer`](../interfaces/Observable.RunnableContainer.md)
 
 ## Constructor Functions
 

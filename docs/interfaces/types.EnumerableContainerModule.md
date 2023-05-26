@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`FlowableContainerModule`](types.FlowableContainerModule.md)<`C`\>
+- [`FlowableContainerModule`](types.FlowableContainerModule.md)<`C`, [`Type`](../modules/Enumerable.md#type)\>
 
   ↳ **`EnumerableContainerModule`**
 
@@ -51,8 +51,8 @@
 - [noneSatisfy](types.EnumerableContainerModule.md#nonesatisfy)
 - [reduce](types.EnumerableContainerModule.md#reduce)
 - [someSatisfy](types.EnumerableContainerModule.md#somesatisfy)
+- [toEventSource](types.EnumerableContainerModule.md#toeventsource)
 - [toIterable](types.EnumerableContainerModule.md#toiterable)
-- [toObservable](types.EnumerableContainerModule.md#toobservable)
 - [toReadonlyArray](types.EnumerableContainerModule.md#toreadonlyarray)
 
 ## Constructor Methods
@@ -957,6 +957,22 @@ ___
 
 ___
 
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
@@ -972,26 +988,6 @@ Converts the Container to a `IterableLike`.
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Iterable`<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EnumerableLike`](types.EnumerableLike.md)<`T`\>\>
-
-#### Overrides
-
-[FlowableContainerModule](types.FlowableContainerModule.md).[toObservable](types.FlowableContainerModule.md#toobservable)
 
 ___
 

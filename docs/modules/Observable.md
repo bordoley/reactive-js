@@ -10,7 +10,10 @@
 
 ### Container Interfaces
 
+- [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
+- [EnumerableContainer](../interfaces/Observable.EnumerableContainer.md)
 - [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
+- [RunnableContainer](../interfaces/Observable.RunnableContainer.md)
 
 ### Module Interfaces
 

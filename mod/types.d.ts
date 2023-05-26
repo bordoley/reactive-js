@@ -1,3 +1,5 @@
+import type * as Enumerable from "./Enumerable.js";
+import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
@@ -710,18 +712,18 @@ export interface ContainerModule<C extends Container> {
  * @noInheritDoc
  *  @category Module
  */
-export interface FlowableContainerModule<C extends Container> extends ContainerModule<C> {
+export interface FlowableContainerModule<C extends Container, CObservable extends Observable.Type> extends ContainerModule<C> {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
-    toObservable<T>(): Function1<ContainerOf<C, T>, ObservableBaseLike<T>>;
+    toObservable<T>(): Function1<ContainerOf<C, T>, ContainerOf<CObservable, T>>;
 }
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface EnumerableContainerModule<C extends Container> extends FlowableContainerModule<C> {
+export interface EnumerableContainerModule<C extends Container> extends FlowableContainerModule<C, Enumerable.Type> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -828,15 +830,15 @@ export interface EnumerableContainerModule<C extends Container> extends Flowable
      */
     startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
     /**
+     * @category Transform
+     */
+    toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
+    /**
      * Converts the Container to a `IterableLike`.
      *
      * @category Transform
      */
     toIterable<T>(): Function1<ContainerOf<C, T>, Iterable<T>>;
-    /**
-     * @category Transform
-     */
-    toObservable<T>(): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
     /**
      * Converts the Container to a `ReadonlyArrayContainer`.
      *
@@ -1034,21 +1036,19 @@ export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends
         readonly count?: number;
     }): Function1<KeyedContainerOf<C, number, T>, EnumeratorLike<T>>;
     /** @category Transform */
+    toEventSource<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
+    }): Function1<KeyedContainerOf<C, number, T>, EventSourceLike<T>>;
+    /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<KeyedContainerOf<C, number, T>, Iterable<T>>;
     /** @category Transform */
-    toObservable<T>(): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly count: number;
-    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly count: number;
-        readonly start: number;
-    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
-    toObservable<T>(options: {
-        readonly start: number;
+    toObservable<T>(options?: {
+        readonly count?: number;
+        readonly start?: number;
     }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
     /** @category Transform */
     toReadonlyArray<T>(options?: {
@@ -1056,7 +1056,7 @@ export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends
         readonly start?: number;
     }): Function1<KeyedContainerOf<C, number, T>, ReadonlyArray<T>>;
 }
-export interface ConcreteIndexedKeyedContainer<C extends KeyedContainer<number>> extends ConcreteKeyedContainerModule<C, number>, IndexedKeyedContainer<C>, Omit<EnumerableContainerModule<C>, keyof ConcreteKeyedContainerModule<C> | "enumerate" | "toIterable" | "toObservable" | "toReadonlyArray"> {
+export interface ConcreteIndexedKeyedContainer<C extends KeyedContainer<number>> extends ConcreteKeyedContainerModule<C, number>, IndexedKeyedContainer<C>, Omit<EnumerableContainerModule<C>, keyof ConcreteKeyedContainerModule<C> | "enumerate" | "toEventSource" | "toIterable" | "toObservable" | "toReadonlyArray"> {
     /**
      * @category Operator
      */

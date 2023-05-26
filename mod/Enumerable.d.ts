@@ -1,11 +1,5 @@
-import { Container, Container_T, Container_type, EnumerableContainerModule, EnumerableLike } from "./types.js";
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface EnumerableContainer extends Container {
-    readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
-}
+import type { EnumerableContainer } from "./Observable.js";
+import { EnumerableContainerModule } from "./types.js";
 export type Type = EnumerableContainer;
 /**
  * @noInheritDoc
@@ -49,6 +43,7 @@ export declare const startWith: Signature["startWith"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeWhile: Signature["takeWhile"];
+export declare const toEventSource: Signature["toEventSource"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];

@@ -12,17 +12,19 @@
 
   ↳ [`DisposableContainer`](Disposable.DisposableContainer.md)
 
-  ↳ [`EnumerableContainer`](Enumerable.EnumerableContainer.md)
-
   ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)
 
   ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
 
+  ↳ [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)
+
+  ↳ [`RunnableContainer`](Observable.RunnableContainer.md)
+
+  ↳ [`EnumerableContainer`](Observable.EnumerableContainer.md)
+
   ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
 
   ↳ [`PromiseContainer`](Promise.PromiseContainer.md)
-
-  ↳ [`RunnableContainer`](Runnable.RunnableContainer.md)
 
   ↳ [`StoreContainer`](Store.StoreContainer.md)
 
