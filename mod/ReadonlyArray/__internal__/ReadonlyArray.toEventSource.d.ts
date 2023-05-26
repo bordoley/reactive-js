@@ -1,4 +1,5 @@
-import { Function1 } from "../../functions.js";
-import { EventSourceLike } from "../../types.js";
-declare const ReadonlyArray_toEventSource: <T>() => Function1<ReadonlyArray<T>, EventSourceLike<T>>;
+declare const ReadonlyArray_toEventSource: <T>(options?: {
+    readonly count?: number;
+    readonly start?: number;
+}) => import("../../functions.js").Function1<readonly T[], import("../../types.js").EventSourceLike<T>>;
 export default ReadonlyArray_toEventSource;

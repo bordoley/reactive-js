@@ -127,15 +127,16 @@ ___
 
 ### empty
 
-▸ **empty**<`T`\>(): readonly `T`[]
+▸ **empty**<`T`, `TKey`\>(): readonly `T`[]
 
 Return an Container that emits no items.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
 
 #### Returns
 

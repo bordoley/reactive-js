@@ -27,29 +27,9 @@
 
 ### Constructor Methods
 
-- [empty](types.ConcreteAssociativeKeyedContainerModule.md#empty)
 - [fromEntries](types.ConcreteAssociativeKeyedContainerModule.md#fromentries)
 
 ## Constructor Methods
-
-### empty
-
-▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
-
-Return an Container that emits no items.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = `NonNullable`<`C`[typeof `__KeyedContainer_TKey`]\> |
-
-#### Returns
-
-[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
-
-___
 
 ### fromEntries
 

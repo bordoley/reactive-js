@@ -17,5 +17,5 @@ const toReadonlyArray = () => (eventSource) => {
     }
     return result;
 };
-testModule("EventSource", ContainerModuleTests(EventSource, () => Disposable.disposed, ReadonlyArray_toEventSource, toReadonlyArray));
+testModule("EventSource", ContainerModuleTests(EventSource, () => Disposable.disposed, () => ReadonlyArray_toEventSource(), toReadonlyArray));
 ((_) => { })(EventSource);

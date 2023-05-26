@@ -1,22 +1,10 @@
-import EventSource_create from "../../EventSource/__internal__/EventSource.create.js";
-import { Function1 } from "../../functions.js";
-import {
-  DisposableLike_dispose,
-  EventSourceLike,
-  SinkLike_notify,
-} from "../../types.js";
+import Iterable_toEventSource from "../../Iterable/__internal__/Iterable.toEventSource.js";
+import { compose } from "../../functions.js";
+import ReadonlyArray_toIterable from "./ReadonlyArray.toIterable.js";
 
-const ReadonlyArray_toEventSource: <T>() => Function1<
-  ReadonlyArray<T>,
-  EventSourceLike<T>
-> =
-  <T>() =>
-  (arr: ReadonlyArray<T>) =>
-    EventSource_create<T>(listener => {
-      for (let i = 0; i < arr.length; i++) {
-        listener[SinkLike_notify](arr[i]);
-      }
-      listener[DisposableLike_dispose]();
-    });
+const ReadonlyArray_toEventSource = <T>(options?: {
+  readonly count?: number;
+  readonly start?: number;
+}) => compose(ReadonlyArray_toIterable<T>(options), Iterable_toEventSource());
 
 export default ReadonlyArray_toEventSource;

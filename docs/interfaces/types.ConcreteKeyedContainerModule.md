@@ -23,6 +23,10 @@
 
 ## Table of contents
 
+### Constructor Methods
+
+- [empty](types.ConcreteKeyedContainerModule.md#empty)
+
 ### Operator Methods
 
 - [keep](types.ConcreteKeyedContainerModule.md#keep)
@@ -30,6 +34,27 @@
 - [keepWithKey](types.ConcreteKeyedContainerModule.md#keepwithkey)
 - [map](types.ConcreteKeyedContainerModule.md#map)
 - [mapWithKey](types.ConcreteKeyedContainerModule.md#mapwithkey)
+
+## Constructor Methods
+
+### empty
+
+▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = `NonNullable`<`C`[typeof `__KeyedContainer_TKey`]\> |
+
+#### Returns
+
+[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
+
+___
 
 ## Operator Methods
 

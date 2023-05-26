@@ -5,27 +5,21 @@ import { Container, ContainerOf } from "../../types.js";
 import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 const ReadonlyArray_toContainer =
-  <C extends Container, O extends unknown = unknown>(
+  <C extends Container>(
     factory: <T>(
       values: readonly T[],
       start: number,
       count: number,
-      options?: O,
     ) => ContainerOf<C, T>,
   ) =>
-  <T>(
-    options?: O & {
-      readonly start?: number;
-      readonly count?: number;
-    },
-  ): Function1<ReadonlyArray<T>, ContainerOf<C, T>> =>
+  <T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<ReadonlyArray<T>, ContainerOf<C, T>> =>
   values => {
     const valuesLength = ReadonlyArray_getLength(values);
-    const {
-      start: startOption,
-      count: countOption = MAX_SAFE_INTEGER,
-      ...tail
-    } = options ?? {};
+    const { start: startOption, count: countOption = MAX_SAFE_INTEGER } =
+      options ?? {};
 
     const start =
       countOption >= 0
@@ -37,7 +31,7 @@ const ReadonlyArray_toContainer =
         ? clamp(0, countOption, valuesLength - start)
         : -min(abs(countOption), start + 1);
 
-    return factory(values, start, count, tail as O);
+    return factory(values, start, count);
   };
 
 export default ReadonlyArray_toContainer;

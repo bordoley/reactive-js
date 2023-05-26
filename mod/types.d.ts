@@ -931,6 +931,12 @@ export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends
  */
 export interface ConcreteKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
     /**
+     * Return an Container that emits no items.
+     *
+     * @category Constructor
+     */
+    empty<T, TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<C[typeof KeyedContainer_TKey]>>(): KeyedContainerOf<C, TKey, T>;
+    /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.
      *
@@ -1016,12 +1022,6 @@ export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyB
  * @category Module
  */
 export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends ConcreteKeyedContainerModule<C, TKeyBase>, AssociativeKeyedContainerModule<C, TKeyBase> {
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<T, TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<C[typeof KeyedContainer_TKey]>>(): KeyedContainerOf<C, TKey, T>;
     /**
      * @category Constructor
      */

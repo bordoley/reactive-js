@@ -29,7 +29,7 @@ testModule(
   ContainerModuleTests(
     EventSource,
     () => Disposable.disposed,
-    ReadonlyArray_toEventSource,
+    <T>() => ReadonlyArray_toEventSource<T>(),
     toReadonlyArray,
   ),
 );
