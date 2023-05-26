@@ -30,47 +30,52 @@ import {
 interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isPure]: true;
-      readonly [ObservableLike_isRunnable]: true;
-    },
+    config: Pick<
+      RunnableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
   ): RunnableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isPure]: false;
-      readonly [ObservableLike_isRunnable]: true;
-    },
+    config: Pick<
+      RunnableWithSideEffectsLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
   ): RunnableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isPure]: false;
-      readonly [ObservableLike_isRunnable]: false;
-    },
+    config: Pick<
+      DeferredObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
   ): DeferredObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
-    config: {
-      readonly [ObservableLike_isDeferred]: false;
-      readonly [ObservableLike_isPure]: true;
-      readonly [ObservableLike_isRunnable]: false;
-    },
+    config: Pick<
+      MulticastObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
   ): MulticastObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
-    config: {
-      readonly [ObservableLike_isDeferred]: boolean;
-      readonly [ObservableLike_isPure]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-    },
+    config: Pick<
+      ObservableBaseLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
   ): ObservableBaseLike<T>;
 }
 const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"] =

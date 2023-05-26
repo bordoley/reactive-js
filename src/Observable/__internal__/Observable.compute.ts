@@ -45,11 +45,13 @@ import {
 } from "../../functions.js";
 import {
   CollectionLike_count,
+  DeferredObservableBaseLike,
   DeferredObservableLike,
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
   KeyedCollectionLike_get,
+  ObservableBaseLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
@@ -244,11 +246,12 @@ class ComputeContext {
     observer: ObserverLike,
     runComputation: () => void,
     mode: EffectsMode,
-    config: {
-      readonly [ObservableLike_isDeferred]: boolean;
-      readonly [ObservableLike_isEnumerable]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-    },
+    config: Pick<
+      ObservableBaseLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isEnumerable
+      | typeof ObservableLike_isRunnable
+    >,
   ) {
     this[__ComputeContext_observer] = observer;
     this[__ComputeContext_runComputation] = runComputation;
@@ -404,34 +407,37 @@ export const assertCurrentContext = (): ComputeContext =>
 interface ObservableComputeWithConfig {
   computeWithConfig<T>(
     computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isEnumerable]: false;
-      readonly [ObservableLike_isRunnable]: true;
-      readonly [ObservableLike_isPure]: false;
-    },
+    config: Pick<
+      RunnableWithSideEffectsLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isEnumerable
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
     options?: { readonly mode?: "batched" | "combine-latest" },
   ): RunnableWithSideEffectsLike<T>;
   computeWithConfig<T>(
     computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isEnumerable]: false;
-      readonly [ObservableLike_isRunnable]: false;
-      readonly [ObservableLike_isPure]: false;
-    },
+    config: Pick<
+      DeferredObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isEnumerable
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
     options?: { readonly mode?: "batched" | "combine-latest" },
   ): DeferredObservableLike<T>;
 }
 const Observable_computeWithConfig: ObservableComputeWithConfig["computeWithConfig"] =
   (<T>(
     computation: Factory<T>,
-    config: {
-      readonly [ObservableLike_isDeferred]: true;
-      readonly [ObservableLike_isEnumerable]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-      readonly [ObservableLike_isPure]: false;
-    },
+    config: Pick<
+      DeferredObservableBaseLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isEnumerable
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
     { mode = "batched" }: { readonly mode?: "batched" | "combine-latest" } = {},
   ) =>
     Observable_createWithConfig<T>((observer: ObserverLike<T>) => {

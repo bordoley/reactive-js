@@ -46,6 +46,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  EnumerableBaseLike,
   EnumerableLike,
   EnumeratorLike,
   EnumeratorLike_current,
@@ -138,9 +139,7 @@ const QueuedEnumerator_create: <T>(
 
 const Enumerable_zipMany = (
   observables: readonly EnumerableLike<unknown>[],
-  config: {
-    readonly [ObservableLike_isPure]: boolean;
-  },
+  config: Pick<EnumerableBaseLike, typeof ObservableLike_isPure>,
 ) =>
   EnumerableBase_create(
     pipeLazy(

@@ -23,21 +23,15 @@ import {
 interface EnumerableBaseCreate {
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    config: {
-      [ObservableLike_isPure]: true;
-    },
+    config: Pick<EnumerableLike, typeof ObservableLike_isPure>,
   ): EnumerableLike<T>;
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    config: {
-      [ObservableLike_isPure]: false;
-    },
+    config: Pick<EnumerableWithSideEffectsLike, typeof ObservableLike_isPure>,
   ): EnumerableWithSideEffectsLike<T>;
   create<T>(
     enumerate: Factory<EnumeratorLike<T>>,
-    config: {
-      [ObservableLike_isPure]: boolean;
-    },
+    config: Pick<EnumerableBaseLike, typeof ObservableLike_isPure>,
   ): EnumerableBaseLike<T>;
 }
 
@@ -61,9 +55,7 @@ const EnumerableBase_create: EnumerableBaseCreate["create"] = /*@__PURE__*/ (<
         > &
           Mutable<TProperties>,
         enumerate: Factory<EnumeratorLike<T>>,
-        config: {
-          readonly [ObservableLike_isPure]: boolean;
-        },
+        config: Pick<EnumerableBaseLike, typeof ObservableLike_isPure>,
       ): EnumerableBaseLike<T> {
         instance[EnumerableLike_enumerate] = enumerate;
         instance[ObservableLike_isPure] = config[ObservableLike_isPure];

@@ -2,7 +2,7 @@ import type * as Observable from "../../Observable.js";
 import type * as Runnable from "../../Runnable.js";
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value } from "../../__internal__/symbols.js";
 import { Optional } from "../../functions.js";
-import { DisposableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike } from "../../types.js";
+import { DisposableLike, ObservableBaseLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, ObserverLike } from "../../types.js";
 type EffectsMode = "batched" | "combine-latest";
 declare const Memo = 1;
 declare const Await = 2;
@@ -52,11 +52,7 @@ declare class ComputeContext {
     private readonly [__ComputeContext_runComputation];
     private readonly [__ComputeContext_mode];
     private readonly [__ComputeContext_cleanup];
-    constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode, config: {
-        readonly [ObservableLike_isDeferred]: boolean;
-        readonly [ObservableLike_isEnumerable]: boolean;
-        readonly [ObservableLike_isRunnable]: boolean;
-    });
+    constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode, config: Pick<ObservableBaseLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isEnumerable | typeof ObservableLike_isRunnable>);
     [__ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
     [__ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
     [__ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;

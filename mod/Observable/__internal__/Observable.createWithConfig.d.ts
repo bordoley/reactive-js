@@ -1,31 +1,11 @@
 import { SideEffect1 } from "../../functions.js";
 import { DeferredObservableLike, MulticastObservableLike, ObservableBaseLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableLike, RunnableWithSideEffectsLike } from "../../types.js";
 interface ObservableCreateWithConfig {
-    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
-        readonly [ObservableLike_isDeferred]: true;
-        readonly [ObservableLike_isPure]: true;
-        readonly [ObservableLike_isRunnable]: true;
-    }): RunnableLike<T>;
-    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
-        readonly [ObservableLike_isDeferred]: true;
-        readonly [ObservableLike_isPure]: false;
-        readonly [ObservableLike_isRunnable]: true;
-    }): RunnableWithSideEffectsLike<T>;
-    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
-        readonly [ObservableLike_isDeferred]: true;
-        readonly [ObservableLike_isPure]: false;
-        readonly [ObservableLike_isRunnable]: false;
-    }): DeferredObservableLike<T>;
-    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
-        readonly [ObservableLike_isDeferred]: false;
-        readonly [ObservableLike_isPure]: true;
-        readonly [ObservableLike_isRunnable]: false;
-    }): MulticastObservableLike<T>;
-    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
-        readonly [ObservableLike_isDeferred]: boolean;
-        readonly [ObservableLike_isPure]: boolean;
-        readonly [ObservableLike_isRunnable]: boolean;
-    }): ObservableBaseLike<T>;
+    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<RunnableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>): RunnableLike<T>;
+    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>): RunnableWithSideEffectsLike<T>;
+    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<DeferredObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>): DeferredObservableLike<T>;
+    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<MulticastObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>): MulticastObservableLike<T>;
+    createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: Pick<ObservableBaseLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>): ObservableBaseLike<T>;
 }
 declare const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"];
 export default Observable_createWithConfig;

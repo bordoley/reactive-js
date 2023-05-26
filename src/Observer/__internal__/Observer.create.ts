@@ -17,10 +17,10 @@ import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_create: <T>(
   scheduler: SchedulerLike,
-  config: {
-    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [BufferLike_capacity]: number;
-  },
+  config: Pick<
+    QueueableLike,
+    typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+  >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   return createInstanceFactory(
     mix(
@@ -28,10 +28,10 @@ const Observer_create: <T>(
       function SubscribeObserver(
         instance: unknown,
         scheduler: SchedulerLike,
-        config: {
-          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
-        },
+        config: Pick<
+          QueueableLike,
+          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+        >,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);
         init(Observer_mixin(), instance, scheduler, config);

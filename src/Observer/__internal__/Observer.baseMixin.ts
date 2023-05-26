@@ -128,10 +128,10 @@ const Observer_baseMixin: <T>() => Mixin1<
           typeof DispatcherLike_complete | typeof QueueableLike_enqueue
         > &
           DisposableLike,
-        config: {
-          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
-        },
+        config: Pick<
+          QueueableLike,
+          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+        >,
       ): TObserverBaseMixin<T> {
         init(
           // FIXME: Change this to take a config

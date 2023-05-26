@@ -48,10 +48,10 @@ const Observer_mixin: <T>() => Mixin2<
         instance: DisposableLike &
           Pick<ObserverLike<T>, typeof SinkLike_notify>,
         scheduler: SchedulerLike,
-        config: {
-          readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
-        },
+        config: Pick<
+          QueueableLike,
+          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+        >,
       ): ObserverLike<T> {
         init(Scheduler_delegatingMixin, instance, scheduler);
         init(Observer_baseMixin<T>(), instance, config);

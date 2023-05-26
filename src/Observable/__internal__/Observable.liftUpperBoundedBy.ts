@@ -10,6 +10,7 @@ import {
 } from "../../__internal__/types.js";
 import { Function1, bindMethod, pipeUnsafe } from "../../functions.js";
 import {
+  DeferredObservableLike,
   ObservableBaseLike,
   ObservableLike,
   ObservableLike_isDeferred,
@@ -17,6 +18,8 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  RunnableLike,
+  RunnableWithSideEffectsLike,
 } from "../../types.js";
 import Observable_create from "./Observable.create.js";
 import Observable_liftMixin from "./Observable.liftMixin.js";
@@ -24,54 +27,70 @@ import Observable_liftMixin from "./Observable.liftMixin.js";
 const Observable_createLifted: <TA, TB>(
   obs: ObservableLike<TA>,
   ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-  config: {
-    readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isPure]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
-  },
+  config: Pick<
+    ObservableBaseLike,
+    | typeof ObservableLike_isDeferred
+    | typeof ObservableLike_isPure
+    | typeof ObservableLike_isRunnable
+  >,
 ) => ObservableBaseLike<TB> = /*@__PURE__*/ (() =>
   createInstanceFactory(Observable_liftMixin<unknown, unknown>()))();
 
 interface ObservableLiftUpperBoundedBy {
-  liftUpperBoundedBy(options: {
-    readonly [ObservableLike_isDeferred]: true;
-    readonly [ObservableLike_isPure]: true;
-    readonly [ObservableLike_isRunnable]: true;
-  }): <TA, TB>(
+  liftUpperBoundedBy(
+    options: Pick<
+      RunnableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => RunnableBoundedPureObservableOperator<TA, TB>;
 
-  liftUpperBoundedBy(options: {
-    readonly [ObservableLike_isDeferred]: true;
-    readonly [ObservableLike_isPure]: false;
-    readonly [ObservableLike_isRunnable]: true;
-  }): <TA, TB>(
+  liftUpperBoundedBy(
+    options: Pick<
+      RunnableWithSideEffectsLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
 
-  liftUpperBoundedBy(options: {
-    readonly [ObservableLike_isDeferred]: true;
-    readonly [ObservableLike_isPure]: false;
-    readonly [ObservableLike_isRunnable]: false;
-  }): <TA, TB>(
+  liftUpperBoundedBy(
+    options: Pick<
+      DeferredObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => DeferredObservableBoundedObservableOperatorWithSideEffects<TA, TB>;
 
-  liftUpperBoundedBy(options: {
-    readonly [ObservableLike_isDeferred]: boolean;
-    readonly [ObservableLike_isPure]: boolean;
-    readonly [ObservableLike_isRunnable]: boolean;
-  }): <TA, TB>(
+  liftUpperBoundedBy(
+    options: Pick<
+      ObservableBaseLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
   ) => Function1<ObservableBaseLike<TA>, ObservableBaseLike<TB>>;
 }
 
 const Observable_liftUpperBoundedBy: ObservableLiftUpperBoundedBy["liftUpperBoundedBy"] =
-  ((config: {
-      readonly [ObservableLike_isDeferred]: boolean;
-      readonly [ObservableLike_isPure]: boolean;
-      readonly [ObservableLike_isRunnable]: boolean;
-    }) =>
+  ((
+      config: Pick<
+        ObservableBaseLike,
+        | typeof ObservableLike_isDeferred
+        | typeof ObservableLike_isPure
+        | typeof ObservableLike_isRunnable
+      >,
+    ) =>
     <TA, TB>(operator: Function1<ObserverLike<TB>, ObserverLike<TA>>) =>
     (source: ObservableLike<TA>) => {
       const sourceSource = (source as any)[LiftedLike_source] ?? source;

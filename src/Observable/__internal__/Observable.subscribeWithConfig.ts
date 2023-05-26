@@ -11,10 +11,10 @@ import {
 const Observable_subscribeWithConfig =
   (
     scheduler: SchedulerLike,
-    config: {
-      [BufferLike_capacity]: number;
-      [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    },
+    config: Pick<
+      QueueableLike,
+      typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+    >,
   ) =>
   (observable: ObservableBaseLike) => {
     const observer = Observer_create(scheduler, config);

@@ -60,11 +60,12 @@ const Observable_liftMixin: <TIn, TOut>() => Mixin3<
           },
         source: ObservableBaseLike<TIn>,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-        config: {
-          readonly [ObservableLike_isDeferred]: boolean;
-          readonly [ObservableLike_isPure]: boolean;
-          readonly [ObservableLike_isRunnable]: boolean;
-        },
+        config: Pick<
+          ObservableBaseLike,
+          | typeof ObservableLike_isDeferred
+          | typeof ObservableLike_isPure
+          | typeof ObservableLike_isRunnable
+        >,
       ): LiftedLike<ObservableBaseLike<TIn>, ObserverLike> &
         ObservableBaseLike<TOut> & {
           [ObservableLike_isEnumerable]: false;
