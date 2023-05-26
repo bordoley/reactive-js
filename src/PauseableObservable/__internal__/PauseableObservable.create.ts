@@ -26,6 +26,7 @@ import {
 import { Function1, invoke, none, pipe } from "../../functions.js";
 import {
   DeferredObservableBaseLike,
+  DeferredObservableLike,
   DisposableLike,
   MulticastObservableLike,
   ObservableLike_isDeferred,
@@ -77,7 +78,7 @@ const PauseableObservable_create: <T>(
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): PauseableObservableLike<T> & DisposableLike {
-        const liftedOp = (mode: DeferredObservableBaseLike<boolean>) =>
+        const liftedOp = (mode: DeferredObservableLike<boolean>) =>
           Observable_create(observer => {
             const pauseableScheduler = pipe(
               observer,

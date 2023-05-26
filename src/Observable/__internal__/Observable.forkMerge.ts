@@ -1,8 +1,7 @@
 import type * as Observable from "../../Observable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import { invoke, pipe } from "../../functions.js";
+import { Function1, invoke, pipe } from "../../functions.js";
 import {
-  ContainerOperator,
   ObservableLike,
   ObservableLike_observe,
   ObservableWithSideEffectsLike,
@@ -13,7 +12,7 @@ import Observable_mergeMany from "./Observable.mergeMany.js";
 import Observable_share from "./Observable.share.js";
 
 const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
-    ...ops: readonly ContainerOperator<Observable.Type, TIn, TOut>[]
+    ...ops: readonly Function1<ObservableLike<TIn>, ObservableLike<TOut>>[]
   ) =>
   (obs: ObservableLike<TIn>) =>
     Observable_isPure(obs)

@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](types.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<`T`\>\> |
 
 #### Returns
 

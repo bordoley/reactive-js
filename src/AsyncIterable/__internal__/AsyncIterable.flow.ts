@@ -10,7 +10,7 @@ import {
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  ObservableLike,
+  MulticastObservableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -30,7 +30,7 @@ const AsyncIterable_flow: AsyncIterable.Signature["flow"] =
     },
   ) =>
   (iterable: AsyncIterable<T>) => {
-    const op = (modeObs: ObservableLike<boolean>) =>
+    const op = (modeObs: MulticastObservableLike<boolean>) =>
       Observable_create((observer: ObserverLike<T>) => {
         const iterator = iterable[Symbol.asyncIterator]();
         const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];

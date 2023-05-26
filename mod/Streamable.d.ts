@@ -2,7 +2,7 @@ import { Animation } from "./Observable.js";
 import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
 import type Streamable_createCache from "./Streamable/__internal__/Streamable.createCache.js";
 import { Equality, Factory, Function1, Optional, Updater } from "./functions.js";
-import { DeferredObservableBaseLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
+import { DeferredObservableBaseLike, DeferredObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReadonlyObjectMapLike, SchedulerLike, StreamLike, StreamableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Module
@@ -11,7 +11,7 @@ export interface StreamableModule {
     /**
      * @category Constructor
      */
-    create<TReq, T>(op: Function1<DeferredObservableBaseLike<TReq>, DeferredObservableBaseLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+    create<TReq, T>(op: Function1<DeferredObservableLike<TReq>, DeferredObservableBaseLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol | number, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
         readonly mode: "switching";
         readonly scheduler?: SchedulerLike;

@@ -48,7 +48,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](functions.md#function1)<[`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>\> |
+| `op` | [`Function1`](functions.md#function1)<[`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableBaseLike`](../interfaces/types.DeferredObservableBaseLike.md)<`T`\>\> |
 
 #### Returns
 

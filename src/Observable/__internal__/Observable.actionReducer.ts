@@ -3,14 +3,12 @@ import Optional_toObservable from "../../Optional/__internal__/Optional.toObserv
 import {
   Equality,
   Factory,
-  Function1,
   Reducer,
   invoke,
   pipe,
   returns,
 } from "../../functions.js";
 import {
-  DeferredObservableBaseLike,
   ObservableLike,
   ObservableLike_observe,
   ObserverLike,
@@ -25,17 +23,14 @@ const Observable_actionReducer =
     initialState: Factory<T>,
     options?: { readonly equality?: Equality<T> },
   ) =>
-  (obs: DeferredObservableBaseLike<TAction>) =>
+  (obs: ObservableLike<TAction>) =>
     Observable_create((observer: ObserverLike<T>) => {
       const acc = initialState();
       return pipe(
         obs,
         Observable_scan<TAction, T>(reducer, returns(acc)),
         Observable_mergeWith<T>(pipe(acc, Optional_toObservable())),
-        Observable_distinctUntilChanged<T>(options) as Function1<
-          ObservableLike<T>,
-          ObservableLike<T>
-        >,
+        Observable_distinctUntilChanged<T>(options),
         invoke(ObservableLike_observe, observer),
       );
     });

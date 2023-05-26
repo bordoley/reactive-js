@@ -18,6 +18,7 @@ import {
 } from "./functions.js";
 import {
   DeferredObservableBaseLike,
+  DeferredObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   ReadonlyObjectMapLike,
@@ -35,10 +36,7 @@ export interface StreamableModule {
    * @category Constructor
    */
   create<TReq, T>(
-    op: Function1<
-      DeferredObservableBaseLike<TReq>,
-      DeferredObservableBaseLike<T>
-    >,
+    op: Function1<DeferredObservableLike<TReq>, DeferredObservableBaseLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   createAnimationGroupEventHandler<

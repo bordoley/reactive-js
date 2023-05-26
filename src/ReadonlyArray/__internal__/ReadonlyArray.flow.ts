@@ -7,7 +7,7 @@ import {
   PauseableObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  RunnableBaseLike,
+  RunnableLike,
   SchedulerLike,
 } from "../../types.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray.toObservable.js";
@@ -32,7 +32,7 @@ const ReadonlyArray_flow: ReadonlyArray.Signature["flow"] = <T>(
     ),
     ((options?.delay ?? 0) > 0
       ? Observable_delay<T>(options?.delay ?? 0)
-      : identity) as Function1<RunnableBaseLike<T>, RunnableBaseLike<T>>,
+      : identity) as Function1<RunnableLike<T>, RunnableLike<T>>,
 
     Observable_flow(scheduler, options),
   );
