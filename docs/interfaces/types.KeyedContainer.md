@@ -18,6 +18,8 @@
 
   ↳↳ [`DictionaryContainer`](Dictionary.DictionaryContainer.md)
 
+  ↳↳ [`IndexedCollectionContainer`](IndexedCollection.IndexedCollectionContainer.md)
+
   ↳↳ [`ReadonlyArrayContainer`](ReadonlyArray.ReadonlyArrayContainer.md)
 
   ↳↳ [`ReadonlyMapContainer`](ReadonlyMap.ReadonlyMapContainer.md)

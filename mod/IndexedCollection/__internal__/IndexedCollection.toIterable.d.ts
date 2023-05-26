@@ -1,1 +1,3 @@
-export {};
+import type * as IndexedCollection from "./../../IndexedCollection.js";
+declare const IndexedCollection_toIterable: IndexedCollection.Signature["toIterable"];
+export default IndexedCollection_toIterable;

@@ -11,6 +11,7 @@ Reactive-JS
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)
 - [EventSource](modules/EventSource.md)
+- [IndexedCollection](modules/IndexedCollection.md)
 - [Observable](modules/Observable.md)
 - [Observable/effects](modules/Observable_effects.md)
 - [PauseableObservable](modules/PauseableObservable.md)

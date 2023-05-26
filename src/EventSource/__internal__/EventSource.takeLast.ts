@@ -3,9 +3,8 @@ import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js"
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import type * as EventSource from "../../EventSource.js";
-import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
+import IndexedCollection_toEventSource from "../../IndexedCollection/__internal__/IndexedCollection.toEventSource.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
-import ReadonlyArray_toEventSource from "../../ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import {
   createInstanceFactory,
@@ -61,8 +60,7 @@ const EventSource_takeLast: EventSource.Signature["takeLast"] =
               Disposable_onComplete(() => {
                 pipe(
                   instance[TakeLastLike_queue],
-                  IndexedCollection_toReadonlyArray<T>(),
-                  ReadonlyArray_toEventSource(),
+                  IndexedCollection_toEventSource<T>(),
                   invoke(EventSourceLike_addEventListener, delegate),
                 );
               }),

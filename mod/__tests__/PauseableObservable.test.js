@@ -2,14 +2,14 @@
 
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
-import ReadonlyArray_flow from "../ReadonlyArray/__internal__/ReadonlyArray.flow.js";
+import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
 import { DisposableLike_error, PauseableLike_resume, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
-const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray_flow(scheduler));
+const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
     const subscription = pipe(obs, Observable.forEach(x => {

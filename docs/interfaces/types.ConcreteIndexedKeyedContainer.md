@@ -20,6 +20,8 @@
 
   ↳ **`ConcreteIndexedKeyedContainer`**
 
+  ↳↳ [`IndexedCollectionModule`](IndexedCollection.IndexedCollectionModule.md)
+
   ↳↳ [`ReadonlyArrayModule`](ReadonlyArray.ReadonlyArrayModule.md)
 
 ## Table of contents

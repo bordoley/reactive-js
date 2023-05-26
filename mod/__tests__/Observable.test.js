@@ -2,7 +2,7 @@
 
 import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
-import IndexedCollection_toReadonlyArray from "../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
+import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
 import { __bindMethod, __do, __observe, __stream, } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
@@ -167,7 +167,7 @@ testModule("Observable", ...RunnableContainerModuleTests({
     }));
     pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.enqueue(stream), Observable.subscribe(vts));
     vts[VirtualTimeSchedulerLike_run]();
-    pipe(stream[ReplayObservableLike_buffer], IndexedCollection_toReadonlyArray(), expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]));
+    pipe(stream[ReplayObservableLike_buffer], IndexedCollection.toReadonlyArray(), expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]));
     expectFalse(completed);
 })), describe("firstAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());

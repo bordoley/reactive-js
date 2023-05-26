@@ -4,9 +4,8 @@ import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js"
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
+import IndexedCollection_toEventSource from "../../IndexedCollection/__internal__/IndexedCollection.toEventSource.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
-import ReadonlyArray_toEventSource from "../../ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { TakeLastLike_queue, } from "../../__internal__/types.js";
@@ -19,7 +18,7 @@ const EventSource_takeLast =
         init(Disposable_mixin, instance);
         instance[TakeLastLike_queue] = Queue_createIndexedQueue(takeLastCount, "drop-oldest");
         pipe(instance, Disposable_addTo(delegate), Disposable_onComplete(() => {
-            pipe(instance[TakeLastLike_queue], IndexedCollection_toReadonlyArray(), ReadonlyArray_toEventSource(), invoke(EventSourceLike_addEventListener, delegate));
+            pipe(instance[TakeLastLike_queue], IndexedCollection_toEventSource(), invoke(EventSourceLike_addEventListener, delegate));
         }));
         return instance;
     }, props({

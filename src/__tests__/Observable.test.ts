@@ -1,6 +1,6 @@
 import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
-import IndexedCollection_toReadonlyArray from "../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
+import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
 import {
   __bindMethod,
@@ -467,7 +467,7 @@ testModule(
 
       pipe(
         stream[ReplayObservableLike_buffer],
-        IndexedCollection_toReadonlyArray<number>(),
+        IndexedCollection.toReadonlyArray<number>(),
         expectArrayEquals([1, 2, 2, 2, 2, 3, 3, 3, 4]),
       );
 

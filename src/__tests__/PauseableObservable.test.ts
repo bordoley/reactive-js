@@ -1,6 +1,6 @@
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
-import ReadonlyArray_flow from "../ReadonlyArray/__internal__/ReadonlyArray.flow.js";
+import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import {
@@ -24,7 +24,7 @@ import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
 const fromReadonlyArray =
   <T>(scheduler: SchedulerLike) =>
   (arr: ReadonlyArray<T>): PauseableObservableLike<T> =>
-    pipe(arr, ReadonlyArray_flow(scheduler));
+    pipe(arr, ReadonlyArray.flow(scheduler));
 
 const toReadonlyArray =
   <T>(scheduler: VirtualTimeSchedulerLike) =>

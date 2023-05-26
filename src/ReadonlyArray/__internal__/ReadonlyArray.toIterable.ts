@@ -1,7 +1,8 @@
+import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
 import { newInstance } from "../../functions.js";
 import { Container, Container_T, Container_type } from "../../types.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
-import ReadonlyArray_toContainer from "./ReadonlyArray.toContainer.js";
+import ReadonlyArray_getLength from "./ReadonlyArray.getLength.js";
 
 interface IterableContainer extends Container {
   readonly [Container_type]?: Iterable<this[typeof Container_T]>;
@@ -35,11 +36,15 @@ class ReadonlyArrayIterable<T> {
 }
 
 const ReadonlyArray_toIterable: ReadonlyArray.Signature["toIterable"] =
-  /*@__PURE__*/ ReadonlyArray_toContainer<IterableContainer>(
+  /*@__PURE__*/ IndexedCollection_toContainer<
+    ReadonlyArray.Type,
+    IterableContainer
+  >(
     <T>(values: readonly T[], startIndex: number, count: number) =>
       startIndex === 0 && values.length === count
         ? values
         : newInstance(ReadonlyArrayIterable, values, startIndex, count),
+    ReadonlyArray_getLength,
   );
 
 export default ReadonlyArray_toIterable;

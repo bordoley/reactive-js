@@ -1,21 +1,44 @@
+import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
 import { newInstance } from "../../functions.js";
-import {
-  CollectionLike_count,
-  IndexedCollectionLike,
-  KeyedCollectionLike_get,
-} from "../../types.js";
+import { IndexedCollectionLike, KeyedCollectionLike_get } from "../../types.js";
+import type * as IndexedCollection from "./../../IndexedCollection.js";
+import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
-const IndexedCollection_toReadonlyArray =
-  <T>() =>
-  (queue: IndexedCollectionLike<T>) => {
-    const count = queue[CollectionLike_count];
-    const result = newInstance<Array<T>, number>(Array, count);
+import Collection_getCount from "./Collection.getCount.js";
 
-    for (let i = 0; i < count; i++) {
-      result[i] = queue[KeyedCollectionLike_get](i);
-    }
+const IndexedCollection_toReadonlyArray: IndexedCollection.Signature["toReadonlyArray"] =
+  /*@__PURE__*/ IndexedCollection_toContainer<
+    IndexedCollection.Type,
+    ReadonlyArray.Type
+  >(
+    <T>(
+      values: IndexedCollectionLike<T>,
+      startIndex: number,
+      count: number,
+    ) => {
+      const result = newInstance<Array<T>, number>(Array, count);
+      let resultIndex = 0;
 
-    return result;
-  };
+      let index = startIndex;
+      let cnt = count;
+
+      while (cnt > 0) {
+        result[resultIndex] = values[KeyedCollectionLike_get](index);
+        cnt--;
+        index++;
+        resultIndex++;
+      }
+
+      while (cnt < 0) {
+        result[resultIndex] = values[KeyedCollectionLike_get](index);
+        cnt++;
+        index--;
+        resultIndex++;
+      }
+
+      return result;
+    },
+    Collection_getCount,
+  );
 
 export default IndexedCollection_toReadonlyArray;

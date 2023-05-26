@@ -65,6 +65,7 @@
     "./Disposable": "./Disposable.js",
     "./Enumerable": "./Enumerable.js",
     "./EventSource": "./EventSource.js",
+    "./IndexedCollection": "./IndexedCollection.js",
     "./Observable": "./Observable.js",
     "./Observable/effects": "./Observable/effects.js",
     "./PauseableObservable": "./PauseableObservable.js",

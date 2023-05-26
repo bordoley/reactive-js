@@ -1,0 +1,22 @@
+import { ConcreteIndexedKeyedContainer, Container_T, Container_type, IndexedCollectionLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface IndexedCollectionContainer extends KeyedContainer {
+    readonly [Container_type]?: IndexedCollectionLike<this[typeof Container_T]>;
+    readonly [KeyedContainer_TKey]?: number;
+}
+export type Type = IndexedCollectionContainer;
+export type TKeyBase = number;
+/**
+ * @noInheritDoc
+ * @category Module
+ */
+export interface IndexedCollectionModule extends ConcreteIndexedKeyedContainer<Type> {
+}
+export type Signature = IndexedCollectionModule;
+export declare const enumerate: Signature["enumerate"];
+export declare const toIterable: Signature["toIterable"];
+export declare const toObservable: Signature["toObservable"];
+export declare const toReadonlyArray: Signature["toReadonlyArray"];
