@@ -260,7 +260,49 @@ testModule("Observable", ...RunnableContainerModuleTests({
 }), testAsync("it returns the last value", async () => {
     const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectEquals(3));
-})), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("merge", test("two arrays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray(), Observable.delay(1, { delayStart: true })), pipe([1, 4, 7], Observable.fromReadonlyArray(), Observable.delay(2, { delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy(Observable.merge(pipe([1, 4, 7], Observable.fromReadonlyArray(), Observable.delay(2)), pipe(Observable.throws(), Observable.delay(5))), Observable.run()), expectToThrow))), describe("retry", test("retrys the container on an exception", pipeLazy(Observable.concat(pipe(Observable.generate(increment, returns(0)), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(alwaysTrue), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable(), Observable.delay(1), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable(), Observable.delay(3, { delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+})), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("merge", test("validate output runtime type", () => {
+    const pureEnumerable = pipe([1, 2, 3], Observable.fromReadonlyArray());
+    const enumerableWithSideEffects = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach(ignore));
+    const pureRunnable = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(2));
+    const runnableWithSideEffects = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(2), Observable.forEach(ignore));
+    const deferred = pipe(() => Promise.resolve(1), Observable.fromAsyncFactory());
+    const multicast = Observable.createPublisher();
+    const merged1 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects, deferred, multicast);
+    pipe(merged1[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged1[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged1[ObservableLike_isPure], expectEquals(false));
+    pipe(merged1[ObservableLike_isRunnable], expectEquals(false));
+    const merged2 = Observable.merge(pureEnumerable, pureRunnable, multicast);
+    pipe(merged2[ObservableLike_isDeferred], expectEquals(false));
+    pipe(merged2[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged2[ObservableLike_isPure], expectEquals(true));
+    pipe(merged2[ObservableLike_isRunnable], expectEquals(false));
+    const merged3 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects, deferred);
+    pipe(merged3[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged3[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged3[ObservableLike_isPure], expectEquals(false));
+    pipe(merged3[ObservableLike_isRunnable], expectEquals(false));
+    const merged4 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects);
+    pipe(merged4[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged4[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged4[ObservableLike_isPure], expectEquals(false));
+    pipe(merged4[ObservableLike_isRunnable], expectEquals(true));
+    const merged5 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable);
+    pipe(merged5[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged5[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged5[ObservableLike_isPure], expectEquals(false));
+    pipe(merged5[ObservableLike_isRunnable], expectEquals(true));
+    const merged6 = Observable.merge(pureEnumerable, enumerableWithSideEffects);
+    pipe(merged6[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged6[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged6[ObservableLike_isPure], expectEquals(false));
+    pipe(merged6[ObservableLike_isRunnable], expectEquals(true));
+    const merged7 = Observable.merge(pureEnumerable, pureEnumerable);
+    pipe(merged7[ObservableLike_isDeferred], expectEquals(true));
+    pipe(merged7[ObservableLike_isEnumerable], expectEquals(false));
+    pipe(merged7[ObservableLike_isPure], expectEquals(true));
+    pipe(merged7[ObservableLike_isRunnable], expectEquals(true));
+}), test("two arrays", pipeLazy(Observable.merge(pipe([0, 2, 3, 5, 6], Observable.fromReadonlyArray(), Observable.delay(1, { delayStart: true })), pipe([1, 4, 7], Observable.fromReadonlyArray(), Observable.delay(2, { delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]))), test("when one source throws", pipeLazy(pipeLazy(Observable.merge(pipe([1, 4, 7], Observable.fromReadonlyArray(), Observable.delay(2)), pipe(Observable.throws(), Observable.delay(5))), Observable.run()), expectToThrow))), describe("retry", test("retrys the container on an exception", pipeLazy(Observable.concat(pipe(Observable.generate(increment, returns(0)), Observable.takeFirst({ count: 3 })), Observable.throws()), Observable.retry(alwaysTrue), Observable.takeFirst({ count: 6 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], ReadonlyArray.toObservable(), Observable.delay(1), Observable.takeUntil(pipe([1], ReadonlyArray.toObservable(), Observable.delay(3, { delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const disp = mockFn();
     const f = mockFn(disp);

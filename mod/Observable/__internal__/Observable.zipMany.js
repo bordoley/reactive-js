@@ -7,8 +7,6 @@ import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onCo
 import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDisposed.js";
 import EnumerableBase_create from "../../EnumerableBase/__internal__/EnumerableBase.create.js";
 import Enumerator_zipMany from "../../Enumerator/__internal__/Enumerator.zipMany.js";
-import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
-import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
@@ -17,16 +15,16 @@ import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/Readonl
 import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_someSatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
-import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe, pipeLazy, } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_isPure, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
+import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enumerate from "./Observable.enumerate.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
@@ -120,11 +118,11 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         };
         return isEnumerable && isRunnable && isDeferred
             ? Enumerable_zipMany(observables, pureConfig)
-            : isRunnable && isDeferred
-                ? Runnable_create(onSubscribe(observables), pureConfig)
-                : isPure && !isEnumerable && !isRunnable && !isDeferred
-                    ? MulticastObservable_create(onSubscribe(observables))
-                    : Observable_create(onSubscribe(observables));
+            : Observable_createWithConfig(onSubscribe(observables), {
+                [ObservableLike_isDeferred]: isDeferred || (!isDeferred && !isPure && !isRunnable),
+                [ObservableLike_isPure]: isPure,
+                [ObservableLike_isRunnable]: isRunnable,
+            });
     };
 })();
 export default Observable_zipMany;

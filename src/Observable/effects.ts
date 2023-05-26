@@ -37,6 +37,7 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   ObservableLike,
+  ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
   QueueableLike,
@@ -155,6 +156,11 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       );
     });
 
+  const createRunnable = (onSubscribe: SideEffect1<ObserverLike<unknown>>) =>
+    Runnable_create(onSubscribe, {
+      [ObservableLike_isPure]: false,
+    });
+
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
@@ -164,7 +170,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       false,
       deferSideEffect,
       observableConfig[ObservableLike_isRunnable]
-        ? Runnable_create
+        ? createRunnable
         : Observable_create,
       f,
       ...args,

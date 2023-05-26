@@ -1,12 +1,10 @@
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import Runnable_create from "../../Runnable/__internal__/Runnable.create.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -29,7 +27,9 @@ import {
   DisposableLike_dispose,
   ObservableBaseLike,
   ObservableLike,
+  ObservableLike_isDeferred,
   ObservableLike_isPure,
+  ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
   SinkLike_notify,
@@ -37,7 +37,7 @@ import {
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
-import Observable_create from "./Observable.create.js";
+import Observable_createWithConfig from "./Observable.createWithConfig.js";
 
 type LatestMode = 1 | 2;
 const zipMode = 2;
@@ -148,15 +148,12 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const isPure = Observable_allArePure(observables);
     const isRunnable = Observable_allAreRunnable(observables);
 
-    const pureConfig = {
+    return Observable_createWithConfig(onSubscribe, {
+      [ObservableLike_isDeferred]:
+        isDeferred || (!isDeferred && !isPure && !isRunnable),
       [ObservableLike_isPure]: isPure,
-    };
-
-    return isRunnable && isDeferred
-      ? Runnable_create(onSubscribe, pureConfig)
-      : isPure && !isRunnable && !isDeferred
-      ? MulticastObservable_create(onSubscribe)
-      : Observable_create(onSubscribe);
+      [ObservableLike_isRunnable]: isRunnable,
+    });
   };
 })();
 

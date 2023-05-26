@@ -6,7 +6,7 @@ import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import { __ComputeContext_awaitOrObserve, __ComputeContext_constant, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
 import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
-import { DisposableLike_dispose, ObservableLike_isRunnable, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, } from "../types.js";
+import { DisposableLike_dispose, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, } from "../types.js";
 import { assertCurrentContext } from "./__internal__/Observable.compute.js";
 import Observable_subscribe from "./__internal__/Observable.subscribe.js";
 export const __memo = (f, ...args) => {
@@ -34,12 +34,15 @@ export const __do = /*@__PURE__*/ (() => {
         };
         pipe(observer[SchedulerLike_schedule](callback), Disposable_addTo(observer));
     });
+    const createRunnable = (onSubscribe) => Runnable_create(onSubscribe, {
+        [ObservableLike_isPure]: false,
+    });
     return (f, ...args) => {
         const ctx = assertCurrentContext();
         const scheduler = ctx[__ComputeContext_observer];
         const observableConfig = ctx[__ComputeContext_observableConfig];
         const observable = ctx[__ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isRunnable]
-            ? Runnable_create
+            ? createRunnable
             : Observable_create, f, ...args);
         const subscribeOnScheduler = ctx[__ComputeContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[__ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);
