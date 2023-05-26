@@ -13,7 +13,7 @@ const Observable_create: Observable.Signature["create"] = <T>(
 ) =>
   Observable_createWithConfig(f, {
     [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
+    [ObservableLike_isPure]: false,
     [ObservableLike_isRunnable]: false,
   });
 

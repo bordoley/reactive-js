@@ -11,6 +11,7 @@ import {
   ObserverLike,
 } from "../../types.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_liftRunnableBoundedObservableOperatorWithSideEffects from "./Observable.liftRunnableBoundedObservableOperatorWithSideEffects.js";
 import Observable_liftRunnableBoundedPureObservableOperator from "./Observable.liftRunnableBoundedPureObservableOperator.js";
 
 interface ObservableLift {
@@ -44,10 +45,13 @@ const Observable_liftObservableOperator: ObservableLift["lift"] = (<TA, TB>(
     isPure,
   );
 
-  const liftObservable = Observable_liftRunnableBoundedPureObservableOperator<
-    TA,
-    TB
-  >(observerOperator);
+  const liftObservable = isPure
+    ? Observable_liftRunnableBoundedPureObservableOperator<TA, TB>(
+        observerOperator,
+      )
+    : Observable_liftRunnableBoundedObservableOperatorWithSideEffects<TA, TB>(
+        observerOperator,
+      );
 
   return (observable: ObservableLike<TA>) =>
     Observable_isEnumerable(observable)

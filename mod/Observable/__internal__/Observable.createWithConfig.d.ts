@@ -13,7 +13,7 @@ interface ObservableCreateWithConfig {
     }): RunnableWithSideEffectsLike<T>;
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {
         readonly [ObservableLike_isDeferred]: true;
-        readonly [ObservableLike_isPure]: true;
+        readonly [ObservableLike_isPure]: false;
         readonly [ObservableLike_isRunnable]: false;
     }): DeferredObservableLike<T>;
     createWithConfig<T>(f: SideEffect1<ObserverLike<T>>, config: {

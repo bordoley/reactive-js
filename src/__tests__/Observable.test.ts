@@ -34,6 +34,7 @@ import {
   arrayEquality,
   bindMethod,
   compose,
+  identity,
   ignore,
   increment,
   incrementBy,
@@ -57,6 +58,10 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
   EnumerableContainerModule,
+  ObservableLike_isDeferred,
+  ObservableLike_isEnumerable,
+  ObservableLike_isPure,
+  ObservableLike_isRunnable,
   PauseableLike_pause,
   PauseableLike_resume,
   PublisherLike_observerCount,
@@ -523,6 +528,66 @@ testModule(
 
   describe(
     "forEach",
+    test("validate return type with multicast observable input", () => {
+      const publisher = Observable.createPublisher<number>();
+      pipe(publisher[ObservableLike_isDeferred], expectEquals(false));
+      pipe(publisher[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(publisher[ObservableLike_isPure], expectEquals(true));
+      pipe(publisher[ObservableLike_isRunnable], expectEquals(false));
+
+      const lifted = pipe(publisher, Observable.forEach(identity));
+
+      pipe(lifted[ObservableLike_isDeferred], expectEquals(true));
+      pipe(lifted[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(lifted[ObservableLike_isPure], expectEquals(false));
+      pipe(lifted[ObservableLike_isRunnable], expectEquals(false));
+    }),
+    test("validate return type with deferred observable input", () => {
+      const src = Observable.create(_ => {});
+      pipe(src[ObservableLike_isDeferred], expectEquals(true));
+      pipe(src[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(src[ObservableLike_isPure], expectEquals(false));
+      pipe(src[ObservableLike_isRunnable], expectEquals(false));
+
+      const lifted = pipe(src, Observable.forEach(identity));
+
+      pipe(lifted[ObservableLike_isDeferred], expectEquals(true));
+      pipe(lifted[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(lifted[ObservableLike_isPure], expectEquals(false));
+      pipe(lifted[ObservableLike_isRunnable], expectEquals(false));
+    }),
+    test("validate return type with pure runnable input", () => {
+      const src = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
+      );
+      pipe(src[ObservableLike_isDeferred], expectEquals(true));
+      pipe(src[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(src[ObservableLike_isPure], expectEquals(true));
+      pipe(src[ObservableLike_isRunnable], expectEquals(true));
+
+      const lifted = pipe(src, Observable.forEach(identity));
+
+      pipe(lifted[ObservableLike_isDeferred], expectEquals(true));
+      pipe(lifted[ObservableLike_isEnumerable], expectEquals(false));
+      pipe(lifted[ObservableLike_isPure], expectEquals(false));
+      pipe(lifted[ObservableLike_isRunnable], expectEquals(true));
+    }),
+    test("validate return type with pure enumable input", () => {
+      const src = pipe([1, 2, 3], Observable.fromReadonlyArray());
+      pipe(src[ObservableLike_isDeferred], expectEquals(true));
+      pipe(src[ObservableLike_isEnumerable], expectEquals(true));
+      pipe(src[ObservableLike_isPure], expectEquals(true));
+      pipe(src[ObservableLike_isRunnable], expectEquals(true));
+
+      const lifted = pipe(src, Observable.forEach(identity));
+
+      pipe(lifted[ObservableLike_isDeferred], expectEquals(true));
+      pipe(lifted[ObservableLike_isEnumerable], expectEquals(true));
+      pipe(lifted[ObservableLike_isPure], expectEquals(false));
+      pipe(lifted[ObservableLike_isRunnable], expectEquals(true));
+    }),
     test("invokes the effect for each notified value", () => {
       const result: number[] = [];
 
