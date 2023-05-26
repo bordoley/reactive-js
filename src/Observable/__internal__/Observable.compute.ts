@@ -1,7 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import IndexedCollection_empty from "../../IndexedCollection/__internal__/IndexedCollection.empty.js";
 import type * as Observable from "../../Observable.js";
 import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
@@ -316,7 +316,7 @@ class ComputeContext {
 
       const buffer = Observable_isReplayObservable<T>(observable)
         ? observable[ReplayObservableLike_buffer]
-        : IndexedBufferCollection_empty<T>();
+        : IndexedCollection_empty<T>();
       const hasDefaultValue = buffer[CollectionLike_count] > 0;
       const defaultValue = hasDefaultValue
         ? buffer[KeyedCollectionLike_get](0)

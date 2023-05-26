@@ -10,8 +10,6 @@
 
   ↳ [`QueueableLike`](types.QueueableLike.md)
 
-  ↳ [`IndexedBufferCollectionLike`](types.IndexedBufferCollectionLike.md)
-
 ## Table of contents
 
 ### Properties

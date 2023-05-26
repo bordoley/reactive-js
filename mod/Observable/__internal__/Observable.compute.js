@@ -3,7 +3,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_disposed from "../../Disposable/__internal__/Disposable.disposed.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import IndexedBufferCollection_empty from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import IndexedCollection_empty from "../../IndexedCollection/__internal__/IndexedCollection.empty.js";
 import Observable_isReplayObservable from "../../Observable/__internal__/Observable.isReplayObservable.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __AwaitOrObserveEffect_hasValue, __AwaitOrObserveEffect_observable, __AwaitOrObserveEffect_subscription, __AwaitOrObserveEffect_value, __ComputeContext_awaitOrObserve, __ComputeContext_cleanup, __ComputeContext_constant, __ComputeContext_effects, __ComputeContext_index, __ComputeContext_memoOrUse, __ComputeContext_mode, __ComputeContext_observableConfig, __ComputeContext_observer, __ComputeContext_runComputation, __ComputeContext_scheduledComputationSubscription, __ComputeEffect_type, __ConstantEffect_args, __ConstantEffect_value, __MemoOrUsingEffect_args, __MemoOrUsingEffect_func, __MemoOrUsingEffect_value, } from "../../__internal__/symbols.js";
@@ -125,7 +125,7 @@ class ComputeContext {
             }), Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer), Disposable_onComplete(this[__ComputeContext_cleanup]));
             const buffer = Observable_isReplayObservable(observable)
                 ? observable[ReplayObservableLike_buffer]
-                : IndexedBufferCollection_empty();
+                : IndexedCollection_empty();
             const hasDefaultValue = buffer[CollectionLike_count] > 0;
             const defaultValue = hasDefaultValue
                 ? buffer[KeyedCollectionLike_get](0)

@@ -10,7 +10,7 @@ import {
 import * as Disposable from "../Disposable.js";
 import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
-import IndexedBufferCollection_empty from "../IndexedBufferCollection/__internal__/IndexedBufferCollection.empty.js";
+import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
 import Observable_isReplayObservable from "../Observable/__internal__/Observable.isReplayObservable.js";
 import {
@@ -158,7 +158,7 @@ export const useObserve: UseObserve["useObserve"] = <T>(
 
   const buffer = Observable_isReplayObservable<T>(observable)
     ? observable[ReplayObservableLike_buffer]
-    : IndexedBufferCollection_empty<T>();
+    : IndexedCollection.empty<T>();
   const defaultValue =
     buffer[CollectionLike_count] > 0
       ? buffer[KeyedCollectionLike_get](0)

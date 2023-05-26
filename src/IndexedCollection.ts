@@ -1,4 +1,6 @@
+import IndexedCollection_empty from "./IndexedCollection/__internal__/IndexedCollection.empty.js";
 import IndexedCollection_enumerate from "./IndexedCollection/__internal__/IndexedCollection.enumerate.js";
+import IndexedCollection_map from "./IndexedCollection/__internal__/IndexedCollection.map.js";
 import IndexedCollection_toIterable from "./IndexedCollection/__internal__/IndexedCollection.toIterable.js";
 import IndexedCollection_toObservable from "./IndexedCollection/__internal__/IndexedCollection.toObservable.js";
 import IndexedCollection_toReadonlyArray from "./IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
@@ -34,7 +36,9 @@ export interface IndexedCollectionModule
 
 export type Signature = IndexedCollectionModule;
 
+export const empty: Signature["empty"] = IndexedCollection_empty;
 export const enumerate: Signature["enumerate"] = IndexedCollection_enumerate;
+export const map: Signature["map"] = IndexedCollection_map;
 export const toIterable: Signature["toIterable"] = IndexedCollection_toIterable;
 export const toObservable: Signature["toObservable"] =
   IndexedCollection_toObservable;

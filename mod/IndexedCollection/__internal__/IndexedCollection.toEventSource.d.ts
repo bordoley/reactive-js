@@ -1,5 +1,3 @@
-declare const IndexedCollection_toEventSource: <T>(options?: {
-    readonly count?: number;
-    readonly start?: number;
-}) => import("../../functions.js").Function1<import("../../types.js").IndexedCollectionLike<T>, import("../../types.js").EventSourceLike<T>>;
+import type * as IndexedCollection from "./../../IndexedCollection.js";
+declare const IndexedCollection_toEventSource: IndexedCollection.Signature["toEventSource"];
 export default IndexedCollection_toEventSource;

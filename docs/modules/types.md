@@ -69,7 +69,6 @@
 - [BufferLike](../interfaces/types.BufferLike.md)
 - [DispatcherLike](../interfaces/types.DispatcherLike.md)
 - [DispatcherLikeEventMap](../interfaces/types.DispatcherLikeEventMap.md)
-- [IndexedBufferCollectionLike](../interfaces/types.IndexedBufferCollectionLike.md)
 - [QueueableLike](../interfaces/types.QueueableLike.md)
 
 ### Reactive Interfaces

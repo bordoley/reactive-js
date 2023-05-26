@@ -15,5 +15,3 @@
 - [`KeyedCollectionLike`](types.KeyedCollectionLike.md)<`number`, `T`\>
 
   ↳ **`IndexedCollectionLike`**
-
-  ↳↳ [`IndexedBufferCollectionLike`](types.IndexedBufferCollectionLike.md)

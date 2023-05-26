@@ -67,4 +67,4 @@ ___
 
 ### [\_\_\_ReplayObservableLike\_buffer]
 
-• `Readonly` **[\_\_\_ReplayObservableLike\_buffer]**: [`IndexedBufferCollectionLike`](types.IndexedBufferCollectionLike.md)<`T`\>
+• `Readonly` **[\_\_\_ReplayObservableLike\_buffer]**: [`IndexedCollectionLike`](types.IndexedCollectionLike.md)<`T`\>

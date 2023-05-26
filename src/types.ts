@@ -310,14 +310,6 @@ export interface QueueableLike<T = unknown> extends BufferLike {
 
 /**
  * @noInheritDoc
- * @category Queueing
- */
-export interface IndexedBufferCollectionLike<T = unknown>
-  extends BufferLike,
-    IndexedCollectionLike<T> {}
-
-/**
- * @noInheritDoc
  * @category Reactive
  */
 export interface SinkLike<T = unknown> extends DisposableLike {
@@ -705,7 +697,7 @@ export interface ReplayObservableLike<T = unknown>
   readonly [ObservableLike_isEnumerable]: false;
   readonly [ObservableLike_isRunnable]: false;
 
-  readonly [ReplayObservableLike_buffer]: IndexedBufferCollectionLike<T>;
+  readonly [ReplayObservableLike_buffer]: IndexedCollectionLike<T>;
 }
 
 /**

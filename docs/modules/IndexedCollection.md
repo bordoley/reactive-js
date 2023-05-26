@@ -18,6 +18,14 @@
 - [TKeyBase](IndexedCollection.md#tkeybase)
 - [Type](IndexedCollection.md#type)
 
+### Constructor Functions
+
+- [empty](IndexedCollection.md#empty)
+
+### Operator Functions
+
+- [map](IndexedCollection.md#map)
+
 ### Transform Functions
 
 - [enumerate](IndexedCollection.md#enumerate)
@@ -42,6 +50,64 @@ ___
 ### Type
 
 Ƭ **Type**: [`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md)
+
+## Constructor Functions
+
+### empty
+
+▸ **empty**<`T`, `TKey`\>(): [`IndexedCollectionLike`](../interfaces/types.IndexedCollectionLike.md)<`T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Returns
+
+[`IndexedCollectionLike`](../interfaces/types.IndexedCollectionLike.md)<`T`\>
+
+___
+
+## Operator Functions
+
+### map
+
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TKey`, `TA`, `TB`\>
+
+Returns a ContainerOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TKey`, `TA`, `TB`\>
+
+___
 
 ## Transform Functions
 

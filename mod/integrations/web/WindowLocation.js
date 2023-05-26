@@ -3,7 +3,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../Disposable.js";
 import * as EventSource from "../../EventSource.js";
-import IndexedBufferCollection_map from "../../IndexedBufferCollection/__internal__/IndexedBufferCollection.map.js";
+import * as IndexedCollection from "../../IndexedCollection.js";
 import * as Observable from "../../Observable.js";
 import * as Stream from "../../Stream.js";
 import Stream_delegatingMixin from "../../Stream/__internal__/Stream.delegatingMixin.js";
@@ -51,7 +51,7 @@ export const subscribe = /*@__PURE__*/ (() => {
     const createWindowLocationObservable = createInstanceFactory(mix(include(Stream_delegatingMixin(), Delegating_mixin()), function WindowLocationStream(instance, delegate) {
         init(Stream_delegatingMixin(), instance, delegate);
         init(Delegating_mixin(), instance, delegate);
-        instance[ReplayObservableLike_buffer] = pipe(delegate[ReplayObservableLike_buffer], IndexedBufferCollection_map(location => location.uri));
+        instance[ReplayObservableLike_buffer] = pipe(delegate[ReplayObservableLike_buffer], IndexedCollection.map(location => location.uri));
         instance[WindowLocationLike_canGoBack] = pipe(delegate, Observable.map(({ counter }) => counter > 0));
         return instance;
     }, props({

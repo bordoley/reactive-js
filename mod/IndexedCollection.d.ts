@@ -16,7 +16,9 @@ export type TKeyBase = number;
 export interface IndexedCollectionModule extends ConcreteIndexedKeyedContainer<Type> {
 }
 export type Signature = IndexedCollectionModule;
+export declare const empty: Signature["empty"];
 export declare const enumerate: Signature["enumerate"];
+export declare const map: Signature["map"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
