@@ -104,6 +104,19 @@ testModule(
   ),
   describe(
     "catchError",
+    test("when the source throws", () => {
+      const e1 = "e1";
+      let result: Optional<string> = none;
+      pipe(
+        Observable.throws({ raise: () => e1 }),
+        Observable.catchError<number>((e: Error) => {
+          result = e.message;
+        }),
+        Observable.toReadonlyArray(),
+      );
+
+      pipe(result, expectEquals<Optional<string>>(e1));
+    }),
     test("when the error handler throws an error", () => {
       const e1 = "e1";
       const e2 = "e2";

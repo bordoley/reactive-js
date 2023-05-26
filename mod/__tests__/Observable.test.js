@@ -20,7 +20,14 @@ testModule("Observable", ...RunnableContainerModuleTests({
             observer[QueueableLike_enqueue](i);
         }
     }), Observable.backpressureStrategy(1, "throw"), Observable.toReadonlyArrayAsync(scheduler)));
-}))), describe("catchError", test("when the error handler throws an error", () => {
+}))), describe("catchError", test("when the source throws", () => {
+    const e1 = "e1";
+    let result = none;
+    pipe(Observable.throws({ raise: () => e1 }), Observable.catchError((e) => {
+        result = e.message;
+    }), Observable.toReadonlyArray());
+    pipe(result, expectEquals(e1));
+}), test("when the error handler throws an error", () => {
     const e1 = "e1";
     const e2 = "e2";
     let result = none;

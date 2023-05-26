@@ -298,6 +298,7 @@ export type Animation<T = number> =
       : (Animation.KeyFrame | Animation.Spring | Animation.Frame) & {
           readonly selector: Function1<number, T>;
         });
+
 /**
  * @noInheritDoc
  * @category Module
