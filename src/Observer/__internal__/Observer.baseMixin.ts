@@ -23,7 +23,6 @@ import {
 } from "../../__internal__/types.js";
 import { Function2, call, pipe, returns, unsafeCast } from "../../functions.js";
 import {
-  BufferLike_capacity,
   CollectionLike_count,
   DispatcherLikeEventMap,
   DispatcherLikeEvent_capacityExceeded,
@@ -36,6 +35,7 @@ import {
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
   SchedulerLike,
   SchedulerLike_schedule,
@@ -52,7 +52,7 @@ const Observer_baseMixin: <T>() => Mixin1<
   TObserverBaseMixin<T>,
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [BufferLike_capacity]: number;
+    readonly [QueueableLike_capacity]: number;
   },
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
@@ -110,7 +110,7 @@ const Observer_baseMixin: <T>() => Mixin1<
           DisposableLike,
         {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
+          readonly [QueueableLike_capacity]: number;
         },
         TObserverBaseMixin<T>
       >,
@@ -130,14 +130,15 @@ const Observer_baseMixin: <T>() => Mixin1<
           DisposableLike,
         config: Pick<
           QueueableLike,
-          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_backpressureStrategy
         >,
       ): TObserverBaseMixin<T> {
         init(
           // FIXME: Change this to take a config
           Queue_indexedQueueMixin<T>(),
           instance,
-          config[BufferLike_capacity],
+          config[QueueableLike_capacity],
           config[QueueableLike_backpressureStrategy],
         );
 

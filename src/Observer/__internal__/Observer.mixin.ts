@@ -8,11 +8,11 @@ import {
 } from "../../__internal__/mixins.js";
 import { Function3, returns } from "../../functions.js";
 import {
-  BufferLike_capacity,
   DisposableLike,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SchedulerLike,
   SinkLike_notify,
 } from "../../types.js";
@@ -24,7 +24,7 @@ const Observer_mixin: <T>() => Mixin2<
   SchedulerLike,
   {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [BufferLike_capacity]: number;
+    readonly [QueueableLike_capacity]: number;
   },
   DisposableLike
 > = /*@__PURE__*/ (<T>() =>
@@ -35,7 +35,7 @@ const Observer_mixin: <T>() => Mixin2<
         ObserverLike,
         {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-          readonly [BufferLike_capacity]: number;
+          readonly [QueueableLike_capacity]: number;
         },
         ObserverLike<T>
       >,
@@ -50,7 +50,8 @@ const Observer_mixin: <T>() => Mixin2<
         scheduler: SchedulerLike,
         config: Pick<
           QueueableLike,
-          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
         init(Scheduler_delegatingMixin, instance, scheduler);

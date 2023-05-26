@@ -1,7 +1,7 @@
 import type * as Enumerable from "./Enumerable.js";
 import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
-import { __AssociativeCollectionLike_keys, __BufferLike_capacity, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_capacity, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
@@ -24,7 +24,7 @@ export declare const PublisherLike_observerCount: typeof __PublisherLike_observe
 export declare const StreamableLike_stream: typeof __StreamableLike_stream;
 export declare const StreamLike_scheduler: typeof __StreamLike_scheduler;
 export declare const StreamableLike_TStream: typeof __StreamableLike_TStream;
-export declare const BufferLike_capacity: typeof __BufferLike_capacity;
+export declare const QueueableLike_capacity: typeof __QueueableLike_capacity;
 export declare const DispatcherLikeEvent_ready: typeof __DispatcherLikeEvent_ready;
 export declare const DispatcherLikeEvent_capacityExceeded: typeof __DispatcherLikeEvent_capacityExceeded;
 export declare const DispatcherLikeEvent_completed: typeof __DispatcherLikeEvent_completed;
@@ -149,26 +149,20 @@ export interface DisposableLike {
     [DisposableLike_dispose](error?: Error): void;
 }
 /**
- * @noInheritDoc
- * @category Queueing
- */
-export interface BufferLike {
-    /**
-     * The number of items the queue is capable of efficiently buffering.
-     */
-    readonly [BufferLike_capacity]: number;
-}
-/**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  * @category Queueing
  */
-export interface QueueableLike<T = unknown> extends BufferLike {
+export interface QueueableLike<T = unknown> {
     /**
      * The back pressure strategy utilized by the queue when it is at capacity.
      */
     readonly [QueueableLike_backpressureStrategy]: "drop-latest" | "drop-oldest" | "overflow" | "throw";
+    /**
+     * The number of items the queue is capable of efficiently buffering.
+     */
+    readonly [QueueableLike_capacity]: number;
     /**
      * Enqueue an item onto the queue.
      *

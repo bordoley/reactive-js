@@ -27,16 +27,16 @@ import {
   unsafeCast,
 } from "../../functions.js";
 import {
-  BufferLike_capacity,
   CollectionLike_count,
   KeyedCollectionLike_get,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../types.js";
 
 class BackPressureError extends Error {
-  readonly [BufferLike_capacity]: number;
+  readonly [QueueableLike_capacity]: number;
   readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
 
   constructor(
@@ -44,7 +44,7 @@ class BackPressureError extends Error {
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
   ) {
     super();
-    this[BufferLike_capacity] = capacity;
+    this[QueueableLike_capacity] = capacity;
     this[QueueableLike_backpressureStrategy] = backpressureStrategy;
   }
 }
@@ -58,13 +58,13 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
     IndexedQueueLike<T>,
     | typeof QueueableLike_backpressureStrategy
     | typeof CollectionLike_count
-    | typeof BufferLike_capacity
+    | typeof QueueableLike_capacity
   >
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [CollectionLike_count]: number;
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly [BufferLike_capacity]: number;
+    readonly [QueueableLike_capacity]: number;
     [__IndexedQueueMixin_head]: number;
     [__IndexedQueueMixin_tail]: number;
     [__IndexedQueueMixin_capacityMask]: number;
@@ -154,20 +154,20 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
       function IndexedQueueMixin(
         instance: Omit<
           IndexedQueueLike<T>,
-          typeof CollectionLike_count | typeof BufferLike_capacity
+          typeof CollectionLike_count | typeof QueueableLike_capacity
         > &
           Mutable<TProperties>,
         capacity: number,
         backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
       ): IndexedQueueLike<T> {
         instance[QueueableLike_backpressureStrategy] = backpressureStrategy;
-        instance[BufferLike_capacity] = clampPositiveInteger(capacity);
+        instance[QueueableLike_capacity] = clampPositiveInteger(capacity);
         return instance;
       },
       props<TProperties>({
         [CollectionLike_count]: 0,
         [QueueableLike_backpressureStrategy]: "overflow",
-        [BufferLike_capacity]: MAX_SAFE_INTEGER,
+        [QueueableLike_capacity]: MAX_SAFE_INTEGER,
         [__IndexedQueueMixin_head]: 0,
         [__IndexedQueueMixin_tail]: 0,
         [__IndexedQueueMixin_capacityMask]: 0,
@@ -291,7 +291,7 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
           let count = this[CollectionLike_count];
-          const capacity = this[BufferLike_capacity];
+          const capacity = this[QueueableLike_capacity];
 
           if (backpressureStrategy === "drop-latest" && count >= capacity) {
             return false;
@@ -335,7 +335,7 @@ const Queue_indexedQueueMixin: <T>() => Mixin2<
 
           grow(this);
 
-          return this[CollectionLike_count] < this[BufferLike_capacity];
+          return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
       },
     ),

@@ -2,9 +2,9 @@ import { Mixin1, mix, props } from "../../__internal__/mixins.js";
 import { __DelegatingQueueableMixin_delegate } from "../../__internal__/symbols.js";
 import { none, returns, unsafeCast } from "../../functions.js";
 import {
-  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../types.js";
 
@@ -36,9 +36,11 @@ const Queueable_delegatingMixin: <T>() => Mixin1<
           ];
         },
 
-        get [BufferLike_capacity](): number {
+        get [QueueableLike_capacity](): number {
           unsafeCast<TProperties>(this);
-          return this[__DelegatingQueueableMixin_delegate][BufferLike_capacity];
+          return this[__DelegatingQueueableMixin_delegate][
+            QueueableLike_capacity
+          ];
         },
 
         [QueueableLike_enqueue](this: TProperties, v: T): boolean {

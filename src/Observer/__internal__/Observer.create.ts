@@ -7,10 +7,10 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  BufferLike_capacity,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SchedulerLike,
 } from "../../types.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -19,7 +19,7 @@ const Observer_create: <T>(
   scheduler: SchedulerLike,
   config: Pick<
     QueueableLike,
-    typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+    typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() => {
   return createInstanceFactory(
@@ -30,7 +30,8 @@ const Observer_create: <T>(
         scheduler: SchedulerLike,
         config: Pick<
           QueueableLike,
-          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
         init(Disposable_mixin, instance);

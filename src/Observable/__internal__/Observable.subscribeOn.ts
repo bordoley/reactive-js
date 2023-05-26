@@ -4,11 +4,11 @@ import type * as Observable from "../../Observable.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import { Factory, isFunction, pipe } from "../../functions.js";
 import {
-  BufferLike_capacity,
   DisposableLike,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SchedulerLike,
 } from "../../types.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";
@@ -36,8 +36,8 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
         observable,
         Observable_dispatchTo(observer),
         Observable_subscribeWithConfig(scheduler, {
-          [BufferLike_capacity]:
-            options?.capacity ?? observer[BufferLike_capacity],
+          [QueueableLike_capacity]:
+            options?.capacity ?? observer[QueueableLike_capacity],
           [QueueableLike_backpressureStrategy]:
             options?.backpressureStrategy ??
             observer[QueueableLike_backpressureStrategy],

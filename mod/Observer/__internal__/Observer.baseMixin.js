@@ -8,7 +8,7 @@ import { getPrototype, include, init, mix, props, } from "../../__internal__/mix
 import { __ObserverMixin_dispatchSubscription, __ObserverMixin_isCompleted, } from "../../__internal__/symbols.js";
 import { QueueLike_dequeue, } from "../../__internal__/types.js";
 import { call, pipe, returns, unsafeCast } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
+import { CollectionLike_count, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, SchedulerLike_schedule, SchedulerLike_yield, SinkLike_notify, } from "../../types.js";
 const Observer_baseMixin = /*@__PURE__*/ (() => {
     const scheduleDrainQueue = (observer) => {
         if (observer[__ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
@@ -35,7 +35,7 @@ const Observer_baseMixin = /*@__PURE__*/ (() => {
     return returns(mix(include(Queue_indexedQueueMixin(), EventSource_lazyInitPublisherMixin()), function ObserverMixin(instance, config) {
         init(
         // FIXME: Change this to take a config
-        Queue_indexedQueueMixin(), instance, config[BufferLike_capacity], config[QueueableLike_backpressureStrategy]);
+        Queue_indexedQueueMixin(), instance, config[QueueableLike_capacity], config[QueueableLike_backpressureStrategy]);
         init(EventSource_lazyInitPublisherMixin(), instance);
         return instance;
     }, props({

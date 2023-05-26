@@ -10,12 +10,12 @@ import {
   pipe,
 } from "../../functions.js";
 import {
-  BufferLike_capacity,
   DisposableLike,
   ObservableWithSideEffectsLike,
   PublisherLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   ReplayObservableLike,
   SchedulerLike,
   SinkLike_notify,
@@ -57,7 +57,7 @@ const Observable_multicastImpl =
       observable,
       Observable_forEach(bindMethod(publisher, SinkLike_notify)),
       Observable_subscribeWithConfig(scheduler, {
-        [BufferLike_capacity]: capacity,
+        [QueueableLike_capacity]: capacity,
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
       }),
       Disposable_bindTo(publisher),

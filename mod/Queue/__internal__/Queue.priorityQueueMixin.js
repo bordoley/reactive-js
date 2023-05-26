@@ -5,7 +5,7 @@ import { getPrototype, include, init, mix, props, } from "../../__internal__/mix
 import { __PriorityQueueImpl_comparator } from "../../__internal__/symbols.js";
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../__internal__/types.js";
 import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_enqueue, } from "../../types.js";
+import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../types.js";
 import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(Queue_indexedQueueMixin());
@@ -80,7 +80,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
         [QueueableLike_enqueue](item) {
             const backpressureStrategy = this[QueueableLike_backpressureStrategy];
             const count = this[CollectionLike_count];
-            const capacity = this[BufferLike_capacity];
+            const capacity = this[QueueableLike_capacity];
             if (backpressureStrategy === "drop-latest" && count >= capacity) {
                 return false;
             }

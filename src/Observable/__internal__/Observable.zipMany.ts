@@ -38,7 +38,6 @@ import {
   pipeLazy,
 } from "../../functions.js";
 import {
-  BufferLike_capacity,
   CollectionLike_count,
   DisposableLike,
   DisposableLike_dispose,
@@ -58,6 +57,7 @@ import {
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   QueueableLike_enqueue,
   SinkLike_notify,
 } from "../../types.js";
@@ -262,7 +262,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
         } else {
           const enumerator = pipe(
             QueuedEnumerator_create(
-              observer[BufferLike_capacity],
+              observer[QueueableLike_capacity],
               observer[QueueableLike_backpressureStrategy],
             ),
             Disposable_addTo(observer),

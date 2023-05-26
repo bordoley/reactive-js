@@ -2,9 +2,9 @@ import type * as Observable from "../../Observable.js";
 import Observer_createBackpressureObserver from "../../Observer/__internal__/Observer.createBackpressureStrategyObserver.js";
 import { partial, pipe } from "../../functions.js";
 import {
-  BufferLike_capacity,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../types.js";
 import Observable_liftRunnableBoundedPureObservableOperator from "./Observable.liftRunnableBoundedPureObservableOperator.js";
 
@@ -17,7 +17,7 @@ const Observable_backpressureStrategy: Observable.Signature["backpressureStrateg
       Observer_createBackpressureObserver<T>,
       partial({
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
-        [BufferLike_capacity]: capacity,
+        [QueueableLike_capacity]: capacity,
       }),
       Observable_liftRunnableBoundedPureObservableOperator<T, T>,
     );

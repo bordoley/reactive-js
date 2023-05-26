@@ -1,10 +1,10 @@
 import Observer_create from "../../Observer/__internal__/Observer.create.js";
 import {
-  BufferLike_capacity,
   ObservableBaseLike,
   ObservableLike_observe,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SchedulerLike,
 } from "../../types.js";
 
@@ -13,7 +13,7 @@ const Observable_subscribeWithConfig =
     scheduler: SchedulerLike,
     config: Pick<
       QueueableLike,
-      typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+      typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
     >,
   ) =>
   (observable: ObservableBaseLike) => {

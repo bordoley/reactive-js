@@ -12,10 +12,10 @@ import {
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
 import {
-  BufferLike_capacity,
   ObserverLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
   SinkLike_notify,
 } from "../../types.js";
 import Observer_mixin from "./Observer.mixin.js";
@@ -24,7 +24,7 @@ const Observer_createBackpressureObserver: <T>(
   delegate: ObserverLike<T>,
   config: Pick<
     QueueableLike,
-    typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+    typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
   >,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
@@ -39,7 +39,8 @@ const Observer_createBackpressureObserver: <T>(
         delegate: ObserverLike<T>,
         config: Pick<
           QueueableLike,
-          typeof BufferLike_capacity | typeof QueueableLike_backpressureStrategy
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_backpressureStrategy
         >,
       ): ObserverLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);

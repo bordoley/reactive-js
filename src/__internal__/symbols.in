@@ -1,5 +1,5 @@
 AssociativeCollectionLike_keys
-BufferLike_capacity
+QueueableLike_capacity
 CollectionLike_count
 Container_T
 Container_type

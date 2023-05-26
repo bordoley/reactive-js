@@ -14,17 +14,16 @@ An interface for types that support buffering items with backpressure.
 
 ## Hierarchy
 
-- [`BufferLike`](types.BufferLike.md)
+- **`QueueableLike`**
 
-  ↳ **`QueueableLike`**
-
-  ↳↳ [`DispatcherLike`](types.DispatcherLike.md)
+  ↳ [`DispatcherLike`](types.DispatcherLike.md)
 
 ## Table of contents
 
 ### Properties
 
 - [[\_\_\_QueueableLike\_backpressureStrategy]](types.QueueableLike.md#[___queueablelike_backpressurestrategy])
+- [[\_\_\_QueueableLike\_capacity]](types.QueueableLike.md#[___queueablelike_capacity])
 
 ### Methods
 
@@ -37,6 +36,14 @@ An interface for types that support buffering items with backpressure.
 • `Readonly` **[\_\_\_QueueableLike\_backpressureStrategy]**: ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"``
 
 The back pressure strategy utilized by the queue when it is at capacity.
+
+___
+
+### [\_\_\_QueueableLike\_capacity]
+
+• `Readonly` **[\_\_\_QueueableLike\_capacity]**: `number`
+
+The number of items the queue is capable of efficiently buffering.
 
 ## Methods
 

@@ -3,7 +3,6 @@ import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import {
   __AssociativeCollectionLike_keys,
-  __BufferLike_capacity,
   __CollectionLike_count,
   __Container_T,
   __Container_type,
@@ -35,6 +34,7 @@ import {
   __PauseableLike_resume,
   __PublisherLike_observerCount,
   __QueueableLike_backpressureStrategy,
+  __QueueableLike_capacity,
   __QueueableLike_enqueue,
   __ReplayObservableLike_buffer,
   __SchedulerLike_inContinuation,
@@ -105,8 +105,8 @@ export const StreamLike_scheduler: typeof __StreamLike_scheduler =
   __StreamLike_scheduler;
 export const StreamableLike_TStream: typeof __StreamableLike_TStream =
   __StreamableLike_TStream;
-export const BufferLike_capacity: typeof __BufferLike_capacity =
-  __BufferLike_capacity;
+export const QueueableLike_capacity: typeof __QueueableLike_capacity =
+  __QueueableLike_capacity;
 export const DispatcherLikeEvent_ready: typeof __DispatcherLikeEvent_ready =
   __DispatcherLikeEvent_ready;
 export const DispatcherLikeEvent_capacityExceeded: typeof __DispatcherLikeEvent_capacityExceeded =
@@ -273,23 +273,12 @@ export interface DisposableLike {
 }
 
 /**
- * @noInheritDoc
- * @category Queueing
- */
-export interface BufferLike {
-  /**
-   * The number of items the queue is capable of efficiently buffering.
-   */
-  readonly [BufferLike_capacity]: number;
-}
-
-/**
  * An interface for types that support buffering items with backpressure.
  *
  * @noInheritDoc
  * @category Queueing
  */
-export interface QueueableLike<T = unknown> extends BufferLike {
+export interface QueueableLike<T = unknown> {
   /**
    * The back pressure strategy utilized by the queue when it is at capacity.
    */
@@ -298,6 +287,11 @@ export interface QueueableLike<T = unknown> extends BufferLike {
     | "drop-oldest"
     | "overflow"
     | "throw";
+
+  /**
+   * The number of items the queue is capable of efficiently buffering.
+   */
+  readonly [QueueableLike_capacity]: number;
 
   /**
    * Enqueue an item onto the queue.

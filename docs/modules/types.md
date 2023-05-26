@@ -66,7 +66,6 @@
 
 ### Queueing Interfaces
 
-- [BufferLike](../interfaces/types.BufferLike.md)
 - [DispatcherLike](../interfaces/types.DispatcherLike.md)
 - [DispatcherLikeEventMap](../interfaces/types.DispatcherLikeEventMap.md)
 - [QueueableLike](../interfaces/types.QueueableLike.md)
@@ -112,7 +111,6 @@
 ### Variables
 
 - [AssociativeCollectionLike\_keys](types.md#associativecollectionlike_keys)
-- [BufferLike\_capacity](types.md#bufferlike_capacity)
 - [CollectionLike\_count](types.md#collectionlike_count)
 - [Container\_T](types.md#container_t)
 - [Container\_type](types.md#container_type)
@@ -144,6 +142,7 @@
 - [PauseableLike\_resume](types.md#pauseablelike_resume)
 - [PublisherLike\_observerCount](types.md#publisherlike_observercount)
 - [QueueableLike\_backpressureStrategy](types.md#queueablelike_backpressurestrategy)
+- [QueueableLike\_capacity](types.md#queueablelike_capacity)
 - [QueueableLike\_enqueue](types.md#queueablelike_enqueue)
 - [ReplayObservableLike\_buffer](types.md#replayobservablelike_buffer)
 - [SchedulerLike\_inContinuation](types.md#schedulerlike_incontinuation)
@@ -280,12 +279,6 @@ ___
 ### AssociativeCollectionLike\_keys
 
 • `Const` **AssociativeCollectionLike\_keys**: typeof `__AssociativeCollectionLike_keys`
-
-___
-
-### BufferLike\_capacity
-
-• `Const` **BufferLike\_capacity**: typeof `__BufferLike_capacity`
 
 ___
 
@@ -472,6 +465,12 @@ ___
 ### QueueableLike\_backpressureStrategy
 
 • `Const` **QueueableLike\_backpressureStrategy**: typeof `__QueueableLike_backpressureStrategy`
+
+___
+
+### QueueableLike\_capacity
+
+• `Const` **QueueableLike\_capacity**: typeof `__QueueableLike_capacity`
 
 ___
 

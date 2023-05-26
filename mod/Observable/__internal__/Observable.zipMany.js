@@ -19,7 +19,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
 import { bindMethod, compose, isTrue, none, pipe, pipeLazy, } from "../../functions.js";
-import { BufferLike_capacity, CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
+import { CollectionLike_count, DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, SinkLike_notify, } from "../../types.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allArePure from "./Observable.allArePure.js";
@@ -102,7 +102,7 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
                 enumerators.push(enumerator);
             }
             else {
-                const enumerator = pipe(QueuedEnumerator_create(observer[BufferLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer));
+                const enumerator = pipe(QueuedEnumerator_create(observer[QueueableLike_capacity], observer[QueueableLike_backpressureStrategy]), Disposable_addTo(observer));
                 enumerators.push(enumerator);
                 pipe(createZipObserver(observer, enumerators, enumerator), Disposable_addTo(observer), bindMethod(next, ObservableLike_observe));
             }
