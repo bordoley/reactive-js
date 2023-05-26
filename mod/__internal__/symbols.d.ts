@@ -273,8 +273,6 @@ export const __EnqueueObserver_queue: unique symbol;
 /** @type {unique symbol} */
 export const __Enumerator_private_current: unique symbol;
 /** @type {unique symbol} */
-export const __EnumerableEnumerator_continuationQueue: unique symbol;
-/** @type {unique symbol} */
 export const __EventPublisher_listeners: unique symbol;
 /** @type {unique symbol} */
 export const __HigherOrderObservable_currentRef: unique symbol;
@@ -338,10 +336,6 @@ export const __PauseableScheduler_taskIDCounter: unique symbol;
 export const __PriorityQueueImpl_comparator: unique symbol;
 /** @type {unique symbol} */
 export const __Publisher_observers: unique symbol;
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_values: unique symbol;
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_index: unique symbol;
 /** @type {unique symbol} */
 export const __ThrottleObserver_value: unique symbol;
 /** @type {unique symbol} */

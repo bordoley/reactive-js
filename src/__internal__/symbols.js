@@ -648,11 +648,6 @@ export const __Enumerator_private_current = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol(
-  "EnumerableEnumerator_continuationQueue",
-);
-
-/** @type {unique symbol} */
 export const __EventPublisher_listeners = /*@__PURE__*/ symbol(
   "EventPublisher_listeners",
 );
@@ -798,16 +793,6 @@ export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol(
 /** @type {unique symbol} */
 export const __Publisher_observers = /*@__PURE__*/ symbol(
   "Publisher_observers",
-);
-
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol(
-  "ReadonlyArrayEnumerator_values",
-);
-
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol(
-  "ReadonlyArrayEnumerator_index",
 );
 
 /** @type {unique symbol} */

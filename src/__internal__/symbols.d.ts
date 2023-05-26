@@ -272,8 +272,6 @@ export declare const __EnqueueObserver_queue: unique symbol;
 
 export declare const __Enumerator_private_current: unique symbol;
 
-export declare const __EnumerableEnumerator_continuationQueue: unique symbol;
-
 export declare const __EventPublisher_listeners: unique symbol;
 
 export declare const __HigherOrderObservable_currentRef: unique symbol;
@@ -337,10 +335,6 @@ export declare const __PauseableScheduler_taskIDCounter: unique symbol;
 export declare const __PriorityQueueImpl_comparator: unique symbol;
 
 export declare const __Publisher_observers: unique symbol;
-
-export declare const __ReadonlyArrayEnumerator_values: unique symbol;
-
-export declare const __ReadonlyArrayEnumerator_index: unique symbol;
 
 export declare const __ThrottleObserver_value: unique symbol;
 

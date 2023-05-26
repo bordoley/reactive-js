@@ -139,7 +139,6 @@ CreateObservable_effect
 DispatchedObservable_dispatcher
 EnqueueObserver_queue
 Enumerator_private_current
-EnumerableEnumerator_continuationQueue
 EventPublisher_listeners
 HigherOrderObservable_currentRef
 IteratorEnumerator_iterator
@@ -172,8 +171,6 @@ PauseableScheduler_resumedTime
 PauseableScheduler_taskIDCounter 
 PriorityQueueImpl_comparator 
 Publisher_observers
-ReadonlyArrayEnumerator_values
-ReadonlyArrayEnumerator_index
 ThrottleObserver_value
 ThrottleObserver_hasValue
 ThrottleObserver_durationSubscription

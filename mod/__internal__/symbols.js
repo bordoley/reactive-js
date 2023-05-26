@@ -282,8 +282,6 @@ export const __EnqueueObserver_queue = /*@__PURE__*/ symbol("EnqueueObserver_que
 /** @type {unique symbol} */
 export const __Enumerator_private_current = /*@__PURE__*/ symbol("Enumerator_private_current");
 /** @type {unique symbol} */
-export const __EnumerableEnumerator_continuationQueue = /*@__PURE__*/ symbol("EnumerableEnumerator_continuationQueue");
-/** @type {unique symbol} */
 export const __EventPublisher_listeners = /*@__PURE__*/ symbol("EventPublisher_listeners");
 /** @type {unique symbol} */
 export const __HigherOrderObservable_currentRef = /*@__PURE__*/ symbol("HigherOrderObservable_currentRef");
@@ -347,10 +345,6 @@ export const __PauseableScheduler_taskIDCounter = /*@__PURE__*/ symbol("Pauseabl
 export const __PriorityQueueImpl_comparator = /*@__PURE__*/ symbol("PriorityQueueImpl_comparator ");
 /** @type {unique symbol} */
 export const __Publisher_observers = /*@__PURE__*/ symbol("Publisher_observers");
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_values = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_values");
-/** @type {unique symbol} */
-export const __ReadonlyArrayEnumerator_index = /*@__PURE__*/ symbol("ReadonlyArrayEnumerator_index");
 /** @type {unique symbol} */
 export const __ThrottleObserver_value = /*@__PURE__*/ symbol("ThrottleObserver_value");
 /** @type {unique symbol} */
