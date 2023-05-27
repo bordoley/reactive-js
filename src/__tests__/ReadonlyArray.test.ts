@@ -7,7 +7,7 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { arrayEquality, pipe, pipeLazy, returns } from "../functions.js";
+import { arrayEquality, none, pipe, pipeLazy, returns } from "../functions.js";
 import EnumerableContainerModuleTests from "./fixtures/EnumerableContainerModuleTests.js";
 
 testModule(
@@ -28,6 +28,21 @@ testModule(
           ],
           arrayEquality(),
         ),
+      ),
+    ),
+  ),
+  describe(
+    "flatMapIterable",
+    test(
+      "maps the incoming value with the inline generator function",
+      pipeLazy(
+        [none, none],
+        ReadonlyArray.flatMapIterable(function* (_) {
+          yield 1;
+          yield 2;
+          yield 3;
+        }),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   ),

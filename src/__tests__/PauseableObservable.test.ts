@@ -6,15 +6,18 @@ import * as Streamable from "../Streamable.js";
 import {
   describe,
   expectArrayEquals,
+  expectTrue,
   test,
   testModule,
 } from "../__internal__/testing.js";
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
 import {
   DisposableLike_error,
+  PauseableLike_isPaused,
   PauseableLike_resume,
   PauseableObservableLike,
   SchedulerLike,
+  StoreLike_value,
   StreamableLike_stream,
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
@@ -76,6 +79,8 @@ testModule(
           capacity: 1,
         },
       );
+
+      expectTrue(src[PauseableLike_isPaused][StoreLike_value]);
 
       pipe(
         src,

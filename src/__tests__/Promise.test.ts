@@ -14,6 +14,25 @@ import { Optional, newInstance, pipe } from "../functions.js";
 testModule(
   "Promise",
   describe(
+    "addEventHandler",
+    testAsync("when the promise resolves", async () => {
+      const promise = Promise.resolve(1);
+
+      let result = 0;
+
+      pipe(
+        promise,
+        PromiseT.addEventHandler(x => {
+          result = x;
+        }),
+      );
+
+      await promise;
+
+      pipe(result, expectEquals(1));
+    }),
+  ),
+  describe(
     "toEventSource",
     testAsync("when the promise resolves", async () => {
       const promise = Promise.resolve(1);

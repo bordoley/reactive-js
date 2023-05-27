@@ -5,9 +5,9 @@ import * as PauseableObservable from "../PauseableObservable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
-import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
+import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../__internal__/testing.js";
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
-import { DisposableLike_error, PauseableLike_resume, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { DisposableLike_error, PauseableLike_isPaused, PauseableLike_resume, StoreLike_value, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ContainerModuleTests from "./fixtures/ContainerModuleTests.js";
 const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
@@ -30,6 +30,7 @@ testModule("PauseableObservable", ContainerModuleTests(PauseableObservable, Sche
         backpressureStrategy: "throw",
         capacity: 1,
     });
+    expectTrue(src[PauseableLike_isPaused][StoreLike_value]);
     pipe(src, PauseableObservable.sinkInto(dest), Observable.subscribe(scheduler));
     const result = [];
     pipe(dest, Observable.forEach(x => {

@@ -10,6 +10,7 @@ import {
   __stream,
 } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
+import * as Runnable from "../Runnable.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
@@ -54,6 +55,7 @@ import {
 import {
   ContainerModule,
   DispatcherLikeEvent_completed,
+  DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -100,6 +102,44 @@ testModule(
             ),
           );
         },
+      ),
+    ),
+    testAsync(
+      "with a drop latest backpressure strategy",
+      pipeLazyAsync(
+        Observable.create(observer => {
+          for (let i = 0; i < 10; i++) {
+            observer[QueueableLike_enqueue](i);
+          }
+          observer[DispatcherLike_complete]();
+        }),
+        Observable.backpressureStrategy(1, "drop-latest"),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([0]),
+      ),
+    ),
+    testAsync(
+      "with a drop-oldest latest backpressure strategy",
+      pipeLazyAsync(
+        Observable.create(observer => {
+          for (let i = 0; i < 10; i++) {
+            observer[QueueableLike_enqueue](i);
+          }
+          observer[DispatcherLike_complete]();
+        }),
+        Observable.backpressureStrategy(1, "drop-oldest"),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([9]),
+      ),
+    ),
+    test(
+      "it passes through notifications",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.backpressureStrategy(1, "drop-latest"),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3]),
       ),
     ),
   ),
@@ -892,6 +932,26 @@ testModule(
           Observable.run(),
         ),
         expectToThrow,
+      ),
+    ),
+  ),
+
+  describe(
+    "mergeAll",
+    test(
+      "with queueing",
+      pipeLazy(
+        [
+          pipe([1, 3, 5], Observable.fromReadonlyArray(), Observable.delay(3)),
+          pipe([2, 4, 6], Observable.fromReadonlyArray(), Observable.delay(3)),
+          pipe([9, 10], Observable.fromReadonlyArray(), Observable.delay(3)),
+        ],
+        Observable.fromReadonlyArray(),
+        Runnable.mergeAll<number>({
+          concurrency: 2,
+        }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
       ),
     ),
   ),

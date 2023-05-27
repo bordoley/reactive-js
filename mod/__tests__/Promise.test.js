@@ -5,7 +5,15 @@ import * as Observable from "../Observable.js";
 import * as PromiseT from "../Promise.js";
 import { describe, expectArrayEquals, expectEquals, expectPromiseToThrow, testAsync, testModule, } from "../__internal__/testing.js";
 import { newInstance, pipe } from "../functions.js";
-testModule("Promise", describe("toEventSource", testAsync("when the promise resolves", async () => {
+testModule("Promise", describe("addEventHandler", testAsync("when the promise resolves", async () => {
+    const promise = Promise.resolve(1);
+    let result = 0;
+    pipe(promise, PromiseT.addEventHandler(x => {
+        result = x;
+    }));
+    await promise;
+    pipe(result, expectEquals(1));
+})), describe("toEventSource", testAsync("when the promise resolves", async () => {
     const promise = Promise.resolve(1);
     const result = await pipe(promise, PromiseT.toEventSource(), EventSource.toReadonlyArrayAsync());
     pipe(result, expectArrayEquals([1]));
