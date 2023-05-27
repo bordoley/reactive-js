@@ -12,6 +12,7 @@
 
 - [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
 - [EnumerableContainer](../interfaces/Observable.EnumerableContainer.md)
+- [MulticastObservableContainer](../interfaces/Observable.MulticastObservableContainer.md)
 - [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
 - [RunnableContainer](../interfaces/Observable.RunnableContainer.md)
 

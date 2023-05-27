@@ -20,7 +20,7 @@
 
 ### [\_\_\_Container\_type]
 
-• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`ObservableBaseLike`](types.ObservableBaseLike.md)<`unknown`\>
+• `Optional` `Readonly` **[\_\_\_Container\_type]**: [`ObservableLike`](../modules/types.md#observablelike)<`unknown`\>
 
 #### Overrides
 

@@ -234,7 +234,7 @@ export type PureDeferredObservableOperator<TIn, TOut> = <
  * @category Container
  */
 export interface ObservableContainer extends Container {
-  readonly [Container_type]?: ObservableBaseLike<this[typeof Container_T]>;
+  readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 
 /**
@@ -259,6 +259,14 @@ export interface RunnableContainer extends Container {
  */
 export interface EnumerableContainer extends Container {
   readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface MulticastObservableContainer extends Container {
+  readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 
 export type Type = ObservableContainer;

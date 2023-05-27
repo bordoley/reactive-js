@@ -2,6 +2,7 @@ import * as Disposable from "../Disposable.js";
 import * as EventSource from "../EventSource.js";
 import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
+import { RunnableContainer } from "../Observable.js";
 import {
   __bindMethod,
   __do,
@@ -51,10 +52,7 @@ import {
   returns,
 } from "../functions.js";
 import {
-  Container,
   ContainerModule,
-  Container_T,
-  Container_type,
   DispatcherLikeEvent_completed,
   DisposableLike_dispose,
   DisposableLike_error,
@@ -69,7 +67,6 @@ import {
   PublisherLike_observerCount,
   QueueableLike_enqueue,
   ReplayObservableLike_buffer,
-  RunnableLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_notify,
@@ -77,10 +74,6 @@ import {
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
 import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
-
-interface RunnableContainer extends Container {
-  readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
-}
 
 testModule(
   "Observable",

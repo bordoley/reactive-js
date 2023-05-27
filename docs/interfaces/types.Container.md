@@ -22,6 +22,8 @@
 
   ↳ [`EnumerableContainer`](Observable.EnumerableContainer.md)
 
+  ↳ [`MulticastObservableContainer`](Observable.MulticastObservableContainer.md)
+
   ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
 
   ↳ [`PromiseContainer`](Promise.PromiseContainer.md)
