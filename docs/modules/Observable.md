@@ -88,7 +88,7 @@
 - [fromValue](Observable.md#fromvalue)
 - [generate](Observable.md#generate)
 - [ignoreElements](Observable.md#ignoreelements)
-- [isDeferredObservable](Observable.md#isdeferredobservable)
+- [isDeferred](Observable.md#isdeferred)
 - [isEnumerable](Observable.md#isenumerable)
 - [isMulticastObservable](Observable.md#ismulticastobservable)
 - [isPure](Observable.md#ispure)
@@ -2790,9 +2790,9 @@ ___
 
 ___
 
-### isDeferredObservable
+### isDeferred
 
-▸ **isDeferredObservable**<`T`\>(`obs`): obs is DeferredObservableBaseLike<T\>
+▸ **isDeferred**<`T`\>(`obs`): obs is DeferredObservableBaseLike<T\>
 
 #### Type parameters
 

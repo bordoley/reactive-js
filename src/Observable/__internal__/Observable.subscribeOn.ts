@@ -12,7 +12,7 @@ import {
   SchedulerLike,
 } from "../../types.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";
-import Observable_isDeferredObservable from "./Observable.isDeferredObservable.js";
+import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
@@ -23,7 +23,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     },
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> => {
-    const create = Observable_isDeferredObservable(observable)
+    const create = Observable_isDeferred(observable)
       ? Observable_create
       : MulticastObservable_create;
 

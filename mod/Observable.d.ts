@@ -262,7 +262,7 @@ export interface ObservableModule {
     fromValue<T>(): Function1<T, EnumerableLike<T>>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
-    isDeferredObservable<T>(obs: ObservableBaseLike<T>): obs is DeferredObservableBaseLike<T>;
+    isDeferred<T>(obs: ObservableBaseLike<T>): obs is DeferredObservableBaseLike<T>;
     isEnumerable<T>(obs: ObservableBaseLike<T>): obs is EnumerableBaseLike<T>;
     isMulticastObservable<T>(obs: ObservableBaseLike<T>): obs is MulticastObservableLike<T>;
     isPure<T>(obs: ObservableBaseLike<T>): obs is PureObservableLike<T>;
@@ -595,7 +595,7 @@ export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
 export declare const generate: Signature["generate"];
 export declare const ignoreElements: Signature["ignoreElements"];
-export declare const isDeferredObservable: Signature["isDeferredObservable"];
+export declare const isDeferred: Signature["isDeferred"];
 export declare const isEnumerable: Signature["isEnumerable"];
 export declare const isPure: Signature["isPure"];
 export declare const isRunnable: Signature["isRunnable"];

@@ -40,7 +40,7 @@ import Observable_fromFactory from "./Observable/__internal__/Observable.fromFac
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
-import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
+import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
 import Observable_isMulticastObservable from "./Observable/__internal__/Observable.isMulticastObservable.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
@@ -918,7 +918,7 @@ export interface ObservableModule {
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
-  isDeferredObservable<T>(
+  isDeferred<T>(
     obs: ObservableBaseLike<T>,
   ): obs is DeferredObservableBaseLike<T>;
 
@@ -2520,8 +2520,7 @@ export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const generate: Signature["generate"] = Observable_generate;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
-export const isDeferredObservable: Signature["isDeferredObservable"] =
-  Observable_isDeferredObservable;
+export const isDeferred: Signature["isDeferred"] = Observable_isDeferred;
 export const isEnumerable: Signature["isEnumerable"] = Observable_isEnumerable;
 export const isPure: Signature["isPure"] = Observable_isPure;
 export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;

@@ -42,7 +42,7 @@ import Observable_fromFactory from "./Observable/__internal__/Observable.fromFac
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
-import Observable_isDeferredObservable from "./Observable/__internal__/Observable.isDeferredObservable.js";
+import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
 import Observable_isMulticastObservable from "./Observable/__internal__/Observable.isMulticastObservable.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
@@ -141,7 +141,7 @@ export const fromReadonlyArray = ReadonlyArray_toObservable;
 export const fromValue = Observable_fromValue;
 export const generate = Observable_generate;
 export const ignoreElements = Observable_ignoreElements;
-export const isDeferredObservable = Observable_isDeferredObservable;
+export const isDeferred = Observable_isDeferred;
 export const isEnumerable = Observable_isEnumerable;
 export const isPure = Observable_isPure;
 export const isRunnable = Observable_isRunnable;

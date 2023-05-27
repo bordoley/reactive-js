@@ -6,10 +6,10 @@ import Observable_create from "../../Observable/__internal__/Observable.create.j
 import { isFunction, pipe } from "../../functions.js";
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../types.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";
-import Observable_isDeferredObservable from "./Observable.isDeferredObservable.js";
+import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_subscribeOn = ((schedulerOrFactory, options) => (observable) => {
-    const create = Observable_isDeferredObservable(observable)
+    const create = Observable_isDeferred(observable)
         ? Observable_create
         : MulticastObservable_create;
     return create(observer => {

@@ -13,17 +13,17 @@ const Observable_liftUpperBoundedBy = ((config) => (operator) => (source) => {
         operator,
         ...(source[LiftedLike_operators] ?? []),
     ];
-    const isDeferredObservable = config[ObservableLike_isDeferred] &&
+    const isDeferred = config[ObservableLike_isDeferred] &&
         sourceSource[ObservableLike_isDeferred];
     const isPure = config[ObservableLike_isPure] && sourceSource[ObservableLike_isPure];
     const isRunnable = config[ObservableLike_isRunnable] &&
         sourceSource[ObservableLike_isRunnable];
     const liftedConfig = {
-        [ObservableLike_isDeferred]: isDeferredObservable,
+        [ObservableLike_isDeferred]: isDeferred,
         [ObservableLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
     };
-    return !isDeferredObservable && !isPure && !isRunnable
+    return !isDeferred && !isPure && !isRunnable
         ? Observable_create(observer => {
             pipeUnsafe(observer, ...allFunctions, bindMethod(sourceSource, ObservableLike_observe));
         })
