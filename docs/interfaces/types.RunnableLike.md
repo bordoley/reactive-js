@@ -4,6 +4,8 @@
 
 [types](../modules/types.md).RunnableLike
 
+An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+
 ## Type parameters
 
 | Name | Type |

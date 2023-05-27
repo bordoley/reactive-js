@@ -626,6 +626,12 @@ export interface RunnableWithSideEffectsLike<T = unknown>
   readonly [ObservableLike_isRunnable]: true;
 }
 
+/**
+ * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+ *
+ * @noInheritDoc
+ * @category Observable
+ */
 export interface RunnableLike<T = unknown>
   extends RunnableBaseLike<T>,
     PureObservableLike<T> {
@@ -670,7 +676,10 @@ export interface EnumerableLike<T = unknown>
   readonly [ObservableLike_isEnumerable]: true;
   readonly [ObservableLike_isPure]: true;
 }
-
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
 export type ObservableLike<T = unknown> =
   | EnumerableLike<T>
   | EnumerableWithSideEffectsLike<T>
@@ -988,6 +997,10 @@ export interface ContainerModule<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface EventSourceContainerModule<C extends Container>
   extends ContainerModule<C> {
   addEventHandler<T>(
@@ -1548,6 +1561,10 @@ export interface ConcreteAssociativeKeyedContainerModule<
   >;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface IndexedKeyedContainer<C extends KeyedContainer<number>>
   extends KeyedContainerModule<C, number> {
   /** @category Transform */
@@ -1581,6 +1598,10 @@ export interface IndexedKeyedContainer<C extends KeyedContainer<number>>
   }): Function1<KeyedContainerOf<C, number, T>, ReadonlyArray<T>>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteIndexedKeyedContainer<C extends KeyedContainer<number>>
   extends ConcreteKeyedContainerModule<C, number>,
     IndexedKeyedContainer<C>,

@@ -433,6 +433,12 @@ export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableBaseLi
     readonly [ObservableLike_isPure]: false;
     readonly [ObservableLike_isRunnable]: true;
 }
+/**
+ * An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
+ *
+ * @noInheritDoc
+ * @category Observable
+ */
 export interface RunnableLike<T = unknown> extends RunnableBaseLike<T>, PureObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
     readonly [ObservableLike_isPure]: true;
@@ -467,6 +473,10 @@ export interface EnumerableLike<T = unknown> extends EnumerableBaseLike<T>, Runn
     readonly [ObservableLike_isEnumerable]: true;
     readonly [ObservableLike_isPure]: true;
 }
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
 export type ObservableLike<T = unknown> = EnumerableLike<T> | EnumerableWithSideEffectsLike<T> | RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>;
 /**
  * A stateful ObservableLike resource.
@@ -696,6 +706,10 @@ export interface ContainerModule<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface EventSourceContainerModule<C extends Container> extends ContainerModule<C> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
     /**
@@ -1006,6 +1020,10 @@ export interface ConcreteAssociativeKeyedContainerModule<C extends KeyedContaine
      */
     fromEntries<T, TKey extends TKeyBase>(): Function1<EnumerableLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends KeyedContainerModule<C, number> {
     /** @category Transform */
     enumerate<T>(options?: {
@@ -1033,6 +1051,10 @@ export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends
         readonly start?: number;
     }): Function1<KeyedContainerOf<C, number, T>, ReadonlyArray<T>>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteIndexedKeyedContainer<C extends KeyedContainer<number>> extends ConcreteKeyedContainerModule<C, number>, IndexedKeyedContainer<C>, Omit<EnumerableContainerModule<C>, keyof ConcreteKeyedContainerModule<C> | "enumerate" | "toEventSource" | "toIterable" | "toObservable" | "toReadonlyArray"> {
     /**
      * @category Operator

@@ -36,10 +36,13 @@
 
 - [AssociativeKeyedContainerModule](../interfaces/types.AssociativeKeyedContainerModule.md)
 - [ConcreteAssociativeKeyedContainerModule](../interfaces/types.ConcreteAssociativeKeyedContainerModule.md)
+- [ConcreteIndexedKeyedContainer](../interfaces/types.ConcreteIndexedKeyedContainer.md)
 - [ConcreteKeyedContainerModule](../interfaces/types.ConcreteKeyedContainerModule.md)
 - [ContainerModule](../interfaces/types.ContainerModule.md)
 - [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
+- [EventSourceContainerModule](../interfaces/types.EventSourceContainerModule.md)
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
+- [IndexedKeyedContainer](../interfaces/types.IndexedKeyedContainer.md)
 - [KeyedContainerModule](../interfaces/types.KeyedContainerModule.md)
 
 ### Observable Interfaces
@@ -55,14 +58,8 @@
 - [PureObservableLike](../interfaces/types.PureObservableLike.md)
 - [ReplayObservableLike](../interfaces/types.ReplayObservableLike.md)
 - [RunnableBaseLike](../interfaces/types.RunnableBaseLike.md)
-- [RunnableWithSideEffectsLike](../interfaces/types.RunnableWithSideEffectsLike.md)
-
-### Other Interfaces
-
-- [ConcreteIndexedKeyedContainer](../interfaces/types.ConcreteIndexedKeyedContainer.md)
-- [EventSourceContainerModule](../interfaces/types.EventSourceContainerModule.md)
-- [IndexedKeyedContainer](../interfaces/types.IndexedKeyedContainer.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
+- [RunnableWithSideEffectsLike](../interfaces/types.RunnableWithSideEffectsLike.md)
 
 ### Queueing Interfaces
 
@@ -104,7 +101,7 @@
 
 - [StreamOf](types.md#streamof)
 
-### Other Type Aliases
+### Observable Type Aliases
 
 - [ObservableLike](types.md#observablelike)
 
@@ -262,11 +259,13 @@ ___
 
 ___
 
-## Other Type Aliases
+## Observable Type Aliases
 
 ### ObservableLike
 
 Ƭ **ObservableLike**<`T`\>: [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\> \| [`EnumerableWithSideEffectsLike`](../interfaces/types.EnumerableWithSideEffectsLike.md)<`T`\> \| [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/types.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>
+
+**`No Inherit Doc`**
 
 #### Type parameters
 
