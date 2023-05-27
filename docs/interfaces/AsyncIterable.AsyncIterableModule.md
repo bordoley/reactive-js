@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- `Omit`<[`FlowableContainerModule`](types.FlowableContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type), [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)\>, keyof [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type)\>\>
+- `Pick`<[`FlowableContainerModule`](types.FlowableContainerModule.md)<[`Type`](../modules/AsyncIterable.md#type), [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)\>, ``"flow"`` \| ``"toObservable"``\>
 
   ↳ **`AsyncIterableModule`**

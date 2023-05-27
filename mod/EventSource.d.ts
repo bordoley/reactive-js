@@ -1,5 +1,5 @@
 import { SideEffect1 } from "./functions.js";
-import { Container, ContainerModule, Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceLike, MulticastingContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceContainerModule, EventSourceLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = EventSourceContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface EventSourceModule extends ContainerModule<Type>, MulticastingContainerModule<Type> {
+export interface EventSourceModule extends EventSourceContainerModule<Type> {
     /**
      * @category Constructor
      */

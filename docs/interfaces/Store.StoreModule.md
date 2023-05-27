@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/Store.md#type)\>
+- `Pick`<[`EventSourceContainerModule`](types.EventSourceContainerModule.md)<[`Type`](../modules/Store.md#type)\>, ``"addEventHandler"`` \| ``"toEventSource"`` \| ``"toObservable"`` \| ``"toReadonlyArrayAsync"``\>
 
   ↳ **`StoreModule`**
 

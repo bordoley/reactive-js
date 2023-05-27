@@ -10,6 +10,7 @@
 
 ### Container Interfaces
 
+- [DeferredObservableBaseContainer](../interfaces/Observable.DeferredObservableBaseContainer.md)
 - [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
 - [EnumerableContainer](../interfaces/Observable.EnumerableContainer.md)
 - [MulticastObservableContainer](../interfaces/Observable.MulticastObservableContainer.md)
@@ -127,6 +128,7 @@
 - [throws](Observable.md#throws)
 - [toEventSource](Observable.md#toeventsource)
 - [toIterable](Observable.md#toiterable)
+- [toObservable](Observable.md#toobservable)
 - [toReadonlyArray](Observable.md#toreadonlyarray)
 - [toReadonlyArrayAsync](Observable.md#toreadonlyarrayasync)
 - [withCurrentTime](Observable.md#withcurrenttime)
@@ -4077,6 +4079,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableBaseLike`](../interfaces/types.EnumerableBaseLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`ObservableLike`](types.md#observablelike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](types.md#observablelike)<`T`\>, [`ObservableLike`](types.md#observablelike)<`T`\>\>
 
 ___
 

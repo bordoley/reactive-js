@@ -18,6 +18,13 @@ export interface ObservableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
+export interface DeferredObservableBaseContainer extends Container {
+    readonly [Container_type]?: DeferredObservableBaseLike<this[typeof Container_T]>;
+}
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface DeferredObservableContainer extends Container {
     readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
@@ -378,6 +385,7 @@ export interface ObservableModule {
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
+    toObservable<T>(): Function1<ObservableLike<T>, ObservableLike<T>>;
     toReadonlyArray<T>(): Function1<RunnableBaseLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
@@ -631,6 +639,7 @@ export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toIterable: Signature["toIterable"];
+export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];

@@ -696,11 +696,23 @@ export interface ContainerModule<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
+export interface EventSourceContainerModule<C extends Container> extends ContainerModule<C> {
+    addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
+    /**
+     * @category Transform
+     */
+    toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
+    toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
+    /**
+     * @category Transform
+     */
+    toReadonlyArrayAsync<T>(): Function1<ContainerOf<C, T>, Promise<ReadonlyArray<T>>>;
+}
 /**
  * @noInheritDoc
  *  @category Module
  */
-export interface FlowableContainerModule<C extends Container, CObservable extends Observable.Type> extends ContainerModule<C> {
+export interface FlowableContainerModule<C extends Container, CObservable extends Observable.DeferredObservableBaseContainer> extends ContainerModule<C> {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -818,10 +830,6 @@ export interface EnumerableContainerModule<C extends Container> extends Flowable
      */
     startWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
     /**
-     * @category Transform
-     */
-    toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
-    /**
      * Converts the Container to a `IterableLike`.
      *
      * @category Transform
@@ -858,25 +866,6 @@ export interface EnumerableContainerModule<C extends Container> extends Flowable
     zipWith<TA, TB, TC, TD, TE, TF, TG>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
-}
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface MulticastingContainerModule<C extends Container> {
-    addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
-    /**
-     * @category Transform
-     */
-    toEventSource<T>(): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
-    /**
-     * @category Transform
-     */
-    toObservable<T>(): Function1<ContainerOf<C, T>, MulticastObservableLike<T>>;
-    /**
-     * @category Transform
-     */
-    toReadonlyArrayAsync<T>(): Function1<ContainerOf<C, T>, Promise<ReadonlyArray<T>>>;
 }
 /**
  * @noInheritDoc

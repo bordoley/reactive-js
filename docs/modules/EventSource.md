@@ -44,11 +44,11 @@
 ### Other Functions
 
 - [addEventHandler](EventSource.md#addeventhandler)
+- [toObservable](EventSource.md#toobservable)
 
 ### Transform Functions
 
 - [toEventSource](EventSource.md#toeventsource)
-- [toObservable](EventSource.md#toobservable)
 - [toReadonlyArrayAsync](EventSource.md#toreadonlyarrayasync)
 
 ## Type Aliases
@@ -558,6 +558,22 @@ ___
 
 ___
 
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
 ## Transform Functions
 
 ### toEventSource
@@ -573,22 +589,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

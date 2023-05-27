@@ -16,6 +16,8 @@
 
   ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
 
+  ↳ [`DeferredObservableBaseContainer`](Observable.DeferredObservableBaseContainer.md)
+
   ↳ [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)
 
   ↳ [`RunnableContainer`](Observable.RunnableContainer.md)

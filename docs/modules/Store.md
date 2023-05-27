@@ -21,11 +21,11 @@
 
 - [addEventHandler](Store.md#addeventhandler)
 - [create](Store.md#create)
+- [toObservable](Store.md#toobservable)
 
 ### Transform Functions
 
 - [toEventSource](Store.md#toeventsource)
-- [toObservable](Store.md#toobservable)
 - [toReadonlyArrayAsync](Store.md#toreadonlyarrayasync)
 
 ## Type Aliases
@@ -86,6 +86,22 @@ ___
 
 ___
 
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
+
+___
+
 ## Transform Functions
 
 ### toEventSource
@@ -101,22 +117,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/types.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

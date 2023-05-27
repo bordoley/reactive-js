@@ -6,7 +6,7 @@ import {
   Container,
   Container_T,
   Container_type,
-  MulticastingContainerModule,
+  EventSourceContainerModule,
 } from "./types.js";
 
 /**
@@ -23,7 +23,14 @@ export type Type = PromiseContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PromiseModule extends MulticastingContainerModule<Type> {}
+export interface PromiseModule
+  extends Pick<
+    EventSourceContainerModule<Type>,
+    | "addEventHandler"
+    | "toEventSource"
+    | "toObservable"
+    | "toReadonlyArrayAsync"
+  > {}
 
 export type Signature = PromiseModule;
 

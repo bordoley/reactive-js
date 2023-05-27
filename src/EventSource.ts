@@ -22,13 +22,12 @@ import EventSource_toReadonlyArrayAsync from "./EventSource/__internal__/EventSo
 import { SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
-  ContainerModule,
   Container_T,
   Container_type,
   EventListenerLike,
   EventPublisherLike,
+  EventSourceContainerModule,
   EventSourceLike,
-  MulticastingContainerModule,
 } from "./types.js";
 
 /**
@@ -45,9 +44,7 @@ export type Type = EventSourceContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface EventSourceModule
-  extends ContainerModule<Type>,
-    MulticastingContainerModule<Type> {
+export interface EventSourceModule extends EventSourceContainerModule<Type> {
   /**
    * @category Constructor
    */

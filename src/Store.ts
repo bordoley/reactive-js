@@ -8,7 +8,7 @@ import {
   Container_T,
   Container_type,
   DisposableLike,
-  MulticastingContainerModule,
+  EventSourceContainerModule,
   StoreLike,
   WritableStoreLike,
 } from "./types.js";
@@ -26,7 +26,14 @@ export type Type = StoreContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface StoreModule extends MulticastingContainerModule<Type> {
+export interface StoreModule
+  extends Pick<
+    EventSourceContainerModule<Type>,
+    | "addEventHandler"
+    | "toEventSource"
+    | "toObservable"
+    | "toReadonlyArrayAsync"
+  > {
   create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
 }
 

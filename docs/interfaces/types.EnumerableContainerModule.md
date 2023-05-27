@@ -51,7 +51,6 @@
 - [noneSatisfy](types.EnumerableContainerModule.md#nonesatisfy)
 - [reduce](types.EnumerableContainerModule.md#reduce)
 - [someSatisfy](types.EnumerableContainerModule.md#somesatisfy)
-- [toEventSource](types.EnumerableContainerModule.md#toeventsource)
 - [toIterable](types.EnumerableContainerModule.md#toiterable)
 - [toReadonlyArray](types.EnumerableContainerModule.md#toreadonlyarray)
 
@@ -954,22 +953,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `boolean`\>
-
-___
-
-### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 ___
 

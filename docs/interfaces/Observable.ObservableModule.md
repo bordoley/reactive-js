@@ -100,6 +100,7 @@
 - [throws](Observable.ObservableModule.md#throws)
 - [toEventSource](Observable.ObservableModule.md#toeventsource)
 - [toIterable](Observable.ObservableModule.md#toiterable)
+- [toObservable](Observable.ObservableModule.md#toobservable)
 - [toReadonlyArray](Observable.ObservableModule.md#toreadonlyarray)
 - [toReadonlyArrayAsync](Observable.ObservableModule.md#toreadonlyarrayasync)
 - [withCurrentTime](Observable.ObservableModule.md#withcurrenttime)
@@ -3795,6 +3796,22 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>, `Iterable`<`T`\>\>
+
+___
+
+### toObservable
+
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](../modules/types.md#observablelike)<`T`\>, [`ObservableLike`](../modules/types.md#observablelike)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](../modules/types.md#observablelike)<`T`\>, [`ObservableLike`](../modules/types.md#observablelike)<`T`\>\>
 
 ___
 

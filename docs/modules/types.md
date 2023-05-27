@@ -41,7 +41,6 @@
 - [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [KeyedContainerModule](../interfaces/types.KeyedContainerModule.md)
-- [MulticastingContainerModule](../interfaces/types.MulticastingContainerModule.md)
 
 ### Observable Interfaces
 
@@ -61,6 +60,7 @@
 ### Other Interfaces
 
 - [ConcreteIndexedKeyedContainer](../interfaces/types.ConcreteIndexedKeyedContainer.md)
+- [EventSourceContainerModule](../interfaces/types.EventSourceContainerModule.md)
 - [IndexedKeyedContainer](../interfaces/types.IndexedKeyedContainer.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 

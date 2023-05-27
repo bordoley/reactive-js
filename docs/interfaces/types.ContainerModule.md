@@ -14,9 +14,9 @@
 
 - **`ContainerModule`**
 
-  ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
-
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
+
+  ↳ [`EventSourceContainerModule`](types.EventSourceContainerModule.md)
 
   ↳ [`FlowableContainerModule`](types.FlowableContainerModule.md)
 

@@ -9,7 +9,7 @@
 | Name | Type |
 | :------ | :------ |
 | `C` | extends [`Container`](types.Container.md) |
-| `CObservable` | extends [`Type`](../modules/Observable.md#type) |
+| `CObservable` | extends [`DeferredObservableBaseContainer`](Observable.DeferredObservableBaseContainer.md) |
 
 ## Hierarchy
 

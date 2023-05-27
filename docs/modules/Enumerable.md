@@ -62,7 +62,6 @@
 - [noneSatisfy](Enumerable.md#nonesatisfy)
 - [reduce](Enumerable.md#reduce)
 - [someSatisfy](Enumerable.md#somesatisfy)
-- [toEventSource](Enumerable.md#toeventsource)
 - [toIterable](Enumerable.md#toiterable)
 - [toReadonlyArray](Enumerable.md#toreadonlyarray)
 
@@ -1387,22 +1386,6 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, `boolean`\>
-
-___
-
-### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 

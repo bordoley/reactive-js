@@ -32,7 +32,6 @@ import Observable_startWith from "./Observable/__internal__/Observable.startWith
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile.js";
-import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
 import Observable_toIterable from "./Observable/__internal__/Observable.toIterable.js";
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -75,7 +74,6 @@ export const startWith = Observable_startWith;
 export const takeFirst = Observable_takeFirst;
 export const takeLast = Observable_takeLast;
 export const takeWhile = Observable_takeWhile;
-export const toEventSource = Observable_toEventSource;
 export const toIterable = Observable_toIterable;
 export const toObservable = identityLazy;
 export const toReadonlyArray = Observable_toReadonlyArray;

@@ -105,6 +105,7 @@ import {
   SideEffect1,
   TypePredicate,
   Updater,
+  identityLazy,
 } from "./functions.js";
 import {
   Container,
@@ -235,6 +236,16 @@ export type PureDeferredObservableOperator<TIn, TOut> = <
  */
 export interface ObservableContainer extends Container {
   readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface DeferredObservableBaseContainer extends Container {
+  readonly [Container_type]?: DeferredObservableBaseLike<
+    this[typeof Container_T]
+  >;
 }
 
 /**
@@ -1195,6 +1206,8 @@ export interface ObservableModule {
   ): Function1<ObservableLike<T>, EventSourceLike<T>>;
 
   toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
+
+  toObservable<T>(): Function1<ObservableLike<T>, ObservableLike<T>>;
 
   toReadonlyArray<T>(): Function1<RunnableBaseLike<T>, ReadonlyArray<T>>;
 
@@ -2554,6 +2567,7 @@ export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
 export const toIterable: Signature["toIterable"] = Observable_toIterable;
+export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =

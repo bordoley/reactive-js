@@ -1,4 +1,4 @@
-import { Container, Container_T, Container_type, MulticastingContainerModule } from "./types.js";
+import { Container, Container_T, Container_type, EventSourceContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -11,7 +11,7 @@ export type Type = PromiseContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PromiseModule extends MulticastingContainerModule<Type> {
+export interface PromiseModule extends Pick<EventSourceContainerModule<Type>, "addEventHandler" | "toEventSource" | "toObservable" | "toReadonlyArrayAsync"> {
 }
 export type Signature = PromiseModule;
 export declare const addEventHandler: Signature["addEventHandler"];

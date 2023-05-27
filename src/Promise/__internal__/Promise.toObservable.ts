@@ -1,22 +1,9 @@
-import Disposable_toErrorHandler from "../../Disposable/__internal__/Disposable.toErrorHandler.js";
-import MulticastObservable_create from "../../MulticastObservable/__internal__/MulticastObservable.create.js";
+import EventSource_toObservable from "../../EventSource/__internal__/EventSource.toObservable.js";
 import type * as Promise from "../../Promise.js";
-import {
-  DispatcherLike_complete,
-  DisposableLike_isDisposed,
-  QueueableLike_enqueue,
-} from "../../types.js";
+import { compose } from "../../functions.js";
+import Promise_toEventSource from "./Promise.toEventSource.js";
 
-const Promise_toObservable: Promise.Signature["toObservable"] =
-  <T>() =>
-  (promise: PromiseLike<T>) =>
-    MulticastObservable_create<T>(observer => {
-      promise.then(next => {
-        if (!observer[DisposableLike_isDisposed]) {
-          observer[QueueableLike_enqueue](next);
-          observer[DispatcherLike_complete]();
-        }
-      }, Disposable_toErrorHandler(observer));
-    });
+const Promise_toObservable: Promise.Signature["toObservable"] = <T>() =>
+  compose(Promise_toEventSource<T>(), EventSource_toObservable());
 
 export default Promise_toObservable;

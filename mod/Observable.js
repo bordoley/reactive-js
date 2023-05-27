@@ -95,6 +95,7 @@ import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
 import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
+import { identityLazy, } from "./functions.js";
 import { Container_type, } from "./types.js";
 export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
@@ -184,6 +185,7 @@ export const throwIfEmpty = Observable_throwIfEmpty;
 export const throws = Observable_throws;
 export const toEventSource = Observable_toEventSource;
 export const toIterable = Observable_toIterable;
+export const toObservable = identityLazy;
 export const toReadonlyArray = Observable_toReadonlyArray;
 export const toReadonlyArrayAsync = Observable_toReadonlyArrayAsync;
 export const withCurrentTime = Observable_withCurrentTime;

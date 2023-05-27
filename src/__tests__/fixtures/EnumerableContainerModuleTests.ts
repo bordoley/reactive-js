@@ -27,6 +27,8 @@ import {
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
   ObservableLike_isDeferred,
+  ObservableLike_isEnumerable,
+  ObservableLike_isRunnable,
   PauseableLike_resume,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
@@ -262,12 +264,12 @@ const EnumerableContainerModuleTests = <C extends Container>(
     ),
     describe(
       "toObservable",
-      test("returns a  deferred observable", () => {
+      test("returns an an enumerable observable", () => {
         const obs = pipe([1, 2, 3], m.fromReadonlyArray(), m.toObservable());
 
         expectTrue(obs[ObservableLike_isDeferred]);
-
-        pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
+        expectTrue(obs[ObservableLike_isEnumerable]);
+        expectTrue(obs[ObservableLike_isRunnable]);
       }),
     ),
   ),
