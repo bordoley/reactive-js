@@ -1,5 +1,5 @@
 /// <reference types="./ReadonlyArray.fromOptional.d.ts" />
 
-import Optional_toReadonlyArray from "../../Optional/__internal__/Optional.toReadonlyArray.js";
-const ReadonlyArray_fromOptional = Optional_toReadonlyArray;
+import { isSome } from "../../functions.js";
+const ReadonlyArray_fromOptional = () => (optional) => isSome(optional) ? [optional] : [];
 export default ReadonlyArray_fromOptional;

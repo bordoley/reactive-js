@@ -13,6 +13,7 @@ import Observable_everySatisfy from "./Observable/__internal__/Observable.everyS
 import Observable_first from "./Observable/__internal__/Observable.first.js";
 import Observable_flow from "./Observable/__internal__/Observable.flow.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_fromOptional from "./Observable/__internal__/Observable.fromOptional.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
@@ -35,7 +36,6 @@ import Observable_toIterable from "./Observable/__internal__/Observable.toIterab
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { identityLazy } from "./functions.js";
 import { EnumerableContainerModule } from "./types.js";
@@ -66,7 +66,7 @@ export const first: Signature["first"] = Observable_first;
 export const flow: Signature["flow"] = Observable_flow;
 export const fromEnumerable: Signature["fromEnumerable"] = identityLazy;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
-export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
+export const fromOptional: Signature["fromOptional"] = Observable_fromOptional;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;

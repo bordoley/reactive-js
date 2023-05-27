@@ -3,7 +3,7 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { DecodeWithCharsetLike_textDecoder, DelegatingLike_delegate, } from "../../__internal__/types.js";
 import { invoke, newInstance, none, pipe } from "../../functions.js";
@@ -22,7 +22,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => createInst
     pipe(instance, Disposable_onComplete(() => {
         const data = textDecoder.decode();
         if (data.length > 0) {
-            pipe(data, Optional_toObservable(), invoke(ObservableLike_observe, delegate));
+            pipe(data, Observable_fromOptional(), invoke(ObservableLike_observe, delegate));
         }
         else {
             delegate[DisposableLike_dispose]();

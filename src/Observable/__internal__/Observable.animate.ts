@@ -1,6 +1,5 @@
 import type * as Observable from "../../Observable.js";
 import Observable_repeat from "../../Observable/__internal__/Observable.repeat.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import {
   Function1,
@@ -13,6 +12,7 @@ import { EnumerableLike, RunnableBaseLike } from "../../types.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_empty from "./Observable.empty.js";
+import Observable_fromOptional from "./Observable.fromOptional.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
 import Observable_map from "./Observable.map.js";
 import Observable_spring from "./Observable.spring.js";
@@ -38,7 +38,7 @@ const parseAnimationConfig = <T = number>(
     : config.type === "frame"
     ? pipe(
         config.value,
-        Optional_toObservable(),
+        Observable_fromOptional(),
         isSome(config.selector)
           ? Observable_map(config.selector)
           : (identity as Function1<EnumerableLike<number>, EnumerableLike<T>>),

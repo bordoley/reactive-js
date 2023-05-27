@@ -997,12 +997,50 @@ export interface ContainerModule<C extends Container> {
   ): ContainerOperator<C, T, T>;
 }
 
+export interface ConcreteContainerModule<C extends Container>
+  extends ContainerModule<C> {
+  /**
+   * Return an Container that emits no items.
+   *
+   * @category Constructor
+   */
+  empty<T>(): ContainerOf<C, T>;
+
+  /**
+   * @category Constructor
+   */
+  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromReadonlyArray<T>(options?: {
+    readonly start?: number;
+    readonly count?: number;
+  }): Function1<readonly T[], ContainerOf<C, T>>;
+
+  /**
+   * @category Constructor
+   */
+  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
+}
+
 /**
  * @noInheritDoc
  * @category Module
  */
 export interface EventSourceContainerModule<C extends Container>
-  extends ContainerModule<C> {
+  extends ConcreteContainerModule<C> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<ContainerOf<C, T>, DisposableLike>;
@@ -1030,7 +1068,7 @@ export interface EventSourceContainerModule<C extends Container>
 export interface FlowableContainerModule<
   C extends Container,
   CObservable extends Observable.DeferredObservableBaseContainer,
-> extends ContainerModule<C> {
+> extends ConcreteContainerModule<C> {
   flow<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1093,13 +1131,6 @@ export interface EnumerableContainerModule<C extends Container>
   ): Function1<ContainerOf<C, T>, boolean>;
 
   /**
-   * Return an Container that emits no items.
-   *
-   * @category Constructor
-   */
-  empty<T>(): ContainerOf<C, T>;
-
-  /**
    * @category Operator
    */
   endWith<T>(value: T, ...values: readonly T[]): ContainerOperator<C, T, T>;
@@ -1126,34 +1157,6 @@ export interface EnumerableContainerModule<C extends Container>
    * @category Transform
    */
   first<T>(): Function1<ContainerOf<C, T>, Optional<T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromEnumerable<T>(): Function1<EnumerableLike<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromFactory<T>(): Function1<Factory<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromOptional<T>(): Function1<Optional<T>, ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromReadonlyArray<T>(options?: {
-    readonly start?: number;
-    readonly count?: number;
-  }): Function1<readonly T[], ContainerOf<C, T>>;
-
-  /**
-   * @category Constructor
-   */
-  fromValue<T>(): Function1<T, ContainerOf<C, T>>;
 
   /**
    *

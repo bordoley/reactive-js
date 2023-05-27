@@ -1,5 +1,5 @@
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import {
   Equality,
   Factory,
@@ -29,7 +29,7 @@ const Observable_actionReducer =
       return pipe(
         obs,
         Observable_scan<TAction, T>(reducer, returns(acc)),
-        Observable_mergeWith<T>(pipe(acc, Optional_toObservable())),
+        Observable_mergeWith<T>(pipe(acc, Observable_fromOptional())),
         Observable_distinctUntilChanged<T>(options),
         invoke(ObservableLike_observe, observer),
       );

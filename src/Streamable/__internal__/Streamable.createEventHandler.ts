@@ -1,11 +1,11 @@
 import Observable_endWith from "../../Observable/__internal__/Observable.endWith.js";
 import Observable_exhaustMap from "../../Observable/__internal__/Observable.exhaustMap.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
 import Observable_mergeMap from "../../Observable/__internal__/Observable.mergeMap.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Observable_startWith from "../../Observable/__internal__/Observable.startWith.js";
 import Observable_switchMap from "../../Observable/__internal__/Observable.switchMap.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import type * as Streamable from "../../Streamable.js";
 import { Function1, compose, pipe } from "../../functions.js";
 import {
@@ -55,7 +55,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
               ),
               { ...options, concurrency: 1 },
             ),
-        Observable_mergeWith<boolean>(pipe(false, Optional_toObservable())),
+        Observable_mergeWith<boolean>(pipe(false, Observable_fromOptional())),
       ),
     );
   }) as Streamable.Signature["createEventHandler"];

@@ -16,9 +16,7 @@
 
   ↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
-  ↳ [`EventSourceContainerModule`](types.EventSourceContainerModule.md)
-
-  ↳ [`FlowableContainerModule`](types.FlowableContainerModule.md)
+  ↳ [`ConcreteContainerModule`](types.ConcreteContainerModule.md)
 
 ## Table of contents
 

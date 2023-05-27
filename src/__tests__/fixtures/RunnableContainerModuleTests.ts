@@ -21,14 +21,14 @@ import {
   returns,
 } from "../../functions.js";
 import {
+  ConcreteContainerModule,
   Container,
-  ContainerModule,
   EnumerableContainerModule,
 } from "../../types.js";
-import ContainerModuleTests from "./ContainerModuleTests.js";
+import ConcreteContainerModuleTests from "./ConcreteContainerModuleTests.js";
 
 const RunnableContainerModuleTests = <C extends Container>(
-  m: ContainerModule<C> &
+  m: ConcreteContainerModule<C> &
     Pick<
       EnumerableContainerModule<C>,
       | "concat"
@@ -37,7 +37,6 @@ const RunnableContainerModuleTests = <C extends Container>(
       | "endWith"
       | "everySatisfy"
       | "first"
-      | "fromReadonlyArray"
       | "last"
       | "noneSatisfy"
       | "reduce"
@@ -49,10 +48,9 @@ const RunnableContainerModuleTests = <C extends Container>(
       | "zipWith"
     >,
 ) => [
-  ContainerModuleTests(
+  ...ConcreteContainerModuleTests(
     m,
     () => Disposable.disposed,
-    <T>() => m.fromReadonlyArray<T>(),
     <T>() => m.toReadonlyArray<T>(),
   ),
   describe(

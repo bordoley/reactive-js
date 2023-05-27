@@ -5,10 +5,10 @@ import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js"
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
 import SerialDisposable_create from "../../Disposable/__internal__/SerialDisposable.create.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -126,7 +126,7 @@ const Observer_createThrottleObserver: <T>(
             ) {
               pipe(
                 instance[__ThrottleObserver_value],
-                Optional_toObservable(),
+                Observable_fromOptional(),
                 invoke(ObservableLike_observe, delegate),
               );
             }

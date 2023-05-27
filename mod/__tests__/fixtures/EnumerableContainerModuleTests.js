@@ -4,7 +4,7 @@ import * as Disposable from "../../Disposable.js";
 import * as Observable from "../../Observable.js";
 import * as Scheduler from "../../Scheduler.js";
 import { describe, expectArrayEquals, expectFalse, expectIsNone, expectToHaveBeenCalledTimes, expectTrue, mockFn, test, } from "../../__internal__/testing.js";
-import { arrayEquality, none, pipe, pipeLazy, returns, } from "../../functions.js";
+import { arrayEquality, pipe, pipeLazy, returns } from "../../functions.js";
 import { DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isRunnable, PauseableLike_resume, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../types.js";
 import RunnableContainerModuleTests from "./RunnableContainerModuleTests.js";
 const EnumerableContainerModuleTests = (m) => [
@@ -39,19 +39,7 @@ const EnumerableContainerModuleTests = (m) => [
             [2, 2],
         ], arrayEquality()));
         pipe(subscription[DisposableLike_isDisposed], expectTrue);
-    })), describe("fromFactory", test("it produces the factory result", pipeLazy(() => 1, m.fromFactory(), m.toReadonlyArray(), expectArrayEquals([1])))), describe("fromOptional", test("when none", pipeLazy(none, m.fromOptional(), m.toReadonlyArray(), expectArrayEquals([]))), test("when some", pipeLazy(1, m.fromOptional(), m.toReadonlyArray(), expectArrayEquals([1])))), describe("fromReadonlyArray", test("negative count with start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: -3, start: 4 }), m.toReadonlyArray(), expectArrayEquals([5, 4, 3]));
-    }), test("positive count with start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: 3, start: 4 }), m.toReadonlyArray(), expectArrayEquals([5, 6, 7]));
-    }), test("negative count exceeding bounds with start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: -100, start: 3 }), m.toReadonlyArray(), expectArrayEquals([4, 3, 2, 1]));
-    }), test("positive count exceeding bounds with start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: 100, start: 7 }), m.toReadonlyArray(), expectArrayEquals([8, 9]));
-    }), test("negative count without start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: -3 }), m.toReadonlyArray(), expectArrayEquals([9, 8, 7]));
-    }), test("positive count without start index", () => {
-        pipe([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray({ count: 3 }), m.toReadonlyArray(), expectArrayEquals([1, 2, 3]));
-    })), describe("fromValue", test("it produces the value", pipeLazy(none, m.fromValue(), m.toReadonlyArray(), expectArrayEquals([none])))), describe("toIterable", test("when the source completes without error", () => {
+    })), describe("toIterable", test("when the source completes without error", () => {
         const iter = pipe([0, 1, 2], m.fromReadonlyArray(), m.toIterable());
         pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
     })), describe("toObservable", test("returns an an enumerable observable", () => {

@@ -1,7 +1,9 @@
-import Optional_toReadonlyArray from "../../Optional/__internal__/Optional.toReadonlyArray.js";
+import { Optional, isSome } from "../../functions.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
 const ReadonlyArray_fromOptional: ReadonlyArray.Signature["fromOptional"] =
-  Optional_toReadonlyArray;
+  <T>() =>
+  (optional: Optional<T>) =>
+    isSome(optional) ? [optional] : [];
 
 export default ReadonlyArray_fromOptional;

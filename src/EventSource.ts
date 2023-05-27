@@ -4,6 +4,10 @@ import EventSource_create from "./EventSource/__internal__/EventSource.create.js
 import EventSource_createPublisher from "./EventSource/__internal__/EventSource.createPublisher.js";
 import EventSource_createRefCountedPublisher from "./EventSource/__internal__/EventSource.createRefCountedPublisher.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
+import EventSource_empty from "./EventSource/__internal__/EventSource.empty.js";
+import EventSource_fromFactory from "./EventSource/__internal__/EventSource.fromFactory.js";
+import EventSource_fromOptional from "./EventSource/__internal__/EventSource.fromOptional.js";
+import EventSource_fromValue from "./EventSource/__internal__/EventSource.fromValue.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
@@ -19,6 +23,8 @@ import EventSource_takeLast from "./EventSource/__internal__/EventSource.takeLas
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 import EventSource_toObservable from "./EventSource/__internal__/EventSource.toObservable.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__internal__/EventSource.toReadonlyArray.js";
+import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
+import ReadonlyArray_toEventSource from "./ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import { SideEffect1, identityLazy } from "./functions.js";
 import {
   Container,
@@ -87,6 +93,14 @@ export const createRefCountedPublisher: Signature["createRefCountedPublisher"] =
   EventSource_createRefCountedPublisher;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
+export const empty: Signature["empty"] = EventSource_empty;
+export const fromEnumerable: Signature["fromEnumerable"] =
+  Observable_toEventSource;
+export const fromFactory: Signature["fromFactory"] = EventSource_fromFactory;
+export const fromOptional: Signature["fromOptional"] = EventSource_fromOptional;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  ReadonlyArray_toEventSource;
+export const fromValue: Signature["fromValue"] = EventSource_fromValue;
 export const keep: Signature["keep"] = EventSource_keep;
 export const keepType: Signature["keepType"] = EventSource_keepType;
 export const map: Signature["map"] = EventSource_map;

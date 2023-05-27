@@ -1,4 +1,4 @@
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
 import {
   createInstanceFactory,
@@ -27,7 +27,7 @@ const Observer_createBufferObserver: <T>(
         const onComplete = (buffer: readonly T[]) => {
           pipe(
             buffer,
-            Optional_toObservable(),
+            Observable_fromOptional(),
             invoke(ObservableLike_observe, delegate),
           );
         };

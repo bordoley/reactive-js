@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- [`ContainerModule`](types.ContainerModule.md)<`C`\>
+- [`ConcreteContainerModule`](types.ConcreteContainerModule.md)<`C`\>
 
   ↳ **`FlowableContainerModule`**
 

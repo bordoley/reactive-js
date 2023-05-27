@@ -61,6 +61,10 @@
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 - [RunnableWithSideEffectsLike](../interfaces/types.RunnableWithSideEffectsLike.md)
 
+### Other Interfaces
+
+- [ConcreteContainerModule](../interfaces/types.ConcreteContainerModule.md)
+
 ### Queueing Interfaces
 
 - [DispatcherLike](../interfaces/types.DispatcherLike.md)

@@ -22,6 +22,12 @@
 - [create](EventSource.md#create)
 - [createPublisher](EventSource.md#createpublisher)
 - [createRefCountedPublisher](EventSource.md#createrefcountedpublisher)
+- [empty](EventSource.md#empty)
+- [fromEnumerable](EventSource.md#fromenumerable)
+- [fromFactory](EventSource.md#fromfactory)
+- [fromOptional](EventSource.md#fromoptional)
+- [fromReadonlyArray](EventSource.md#fromreadonlyarray)
+- [fromValue](EventSource.md#fromvalue)
 - [merge](EventSource.md#merge)
 - [mergeMany](EventSource.md#mergemany)
 
@@ -116,6 +122,112 @@ ___
 #### Returns
 
 [`EventPublisherLike`](../interfaces/types.EventPublisherLike.md)<`T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+
+___
+
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromOptional
+
+▸ **fromOptional**<`T`\>(): [`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Optional`](functions.md#optional)<`T`\>, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+| `options.start?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
 
 ___
 

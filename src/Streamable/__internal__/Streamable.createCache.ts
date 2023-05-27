@@ -5,9 +5,9 @@ import Disposable_onDisposed from "../../Disposable/__internal__/Disposable.onDi
 import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
 import Observable_createRefCountedPublisher from "../../Observable/__internal__/Observable.createRefCountedPublisher.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
 import ReadonlyMap_keys from "../../ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import ReadonlyObjectMap_forEachWithKey from "../../ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
@@ -238,7 +238,7 @@ const createCacheStream: <T>(
                               ],
                             ),
                           )
-                        : pipe(next, Optional_toObservable());
+                        : pipe(next, Observable_fromOptional());
                     },
                   )
                 : identity,

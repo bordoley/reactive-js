@@ -39,6 +39,7 @@ import {
   bindMethod,
   compose,
   identity,
+  identityLazy,
   ignore,
   increment,
   incrementBy,
@@ -53,7 +54,7 @@ import {
   returns,
 } from "../functions.js";
 import {
-  ContainerModule,
+  ConcreteContainerModule,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   DisposableLike_dispose,
@@ -81,9 +82,10 @@ testModule(
   "Observable",
   ...RunnableContainerModuleTests<RunnableContainer>({
     ...Observable,
-    fromReadonlyArray: () =>
-      compose(Observable.fromReadonlyArray(), Observable.delay(1)),
-  } as ContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
+    fromEnumerable: identityLazy,
+    fromReadonlyArray: <T>(config: any) =>
+      compose(Observable.fromReadonlyArray<T>(config), Observable.delay<T>(1)),
+  } as ConcreteContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
   describe(
     "backpressureStrategy",
     testAsync(

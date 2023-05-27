@@ -37,6 +37,7 @@ import Observable_forEach from "./Observable/__internal__/Observable.forEach.js"
 import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
+import Observable_fromOptional from "./Observable/__internal__/Observable.fromOptional.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_generate from "./Observable/__internal__/Observable.generate.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -91,7 +92,6 @@ import Observable_withLatestFrom from "./Observable/__internal__/Observable.with
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
 import Observable_zipWith from "./Observable/__internal__/Observable.zipWith.js";
-import Optional_toObservable from "./Optional/__internal__/Optional.toObservable.js";
 import ReadonlyArray_toObservable from "./ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Equality,
@@ -2513,7 +2513,7 @@ export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Iterable_toObservable;
-export const fromOptional: Signature["fromOptional"] = Optional_toObservable;
+export const fromOptional: Signature["fromOptional"] = Observable_fromOptional;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toObservable;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;

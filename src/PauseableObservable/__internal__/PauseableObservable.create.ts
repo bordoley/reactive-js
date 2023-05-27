@@ -4,11 +4,11 @@ import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
+import Observable_fromOptional from "../../Observable/__internal__/Observable.fromOptional.js";
 import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
 import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
-import Optional_toObservable from "../../Optional/__internal__/Optional.toObservable.js";
 import Scheduler_createPausableScheduler from "../../Scheduler/__internal__/Scheduler.createPausableScheduler.js";
 import Store_create from "../../Store/__internal__/Store.create.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
@@ -90,7 +90,7 @@ const PauseableObservable_create: <T>(
               mode,
               Observable_mergeWith<boolean>(
                 // Initialize to paused state
-                pipe(true, Optional_toObservable()),
+                pipe(true, Observable_fromOptional()),
               ),
               Observable_distinctUntilChanged<boolean>(),
               Observable_multicast(observer, {
