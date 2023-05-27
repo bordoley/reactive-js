@@ -34,20 +34,7 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../types.js";
-
-class BackPressureError extends Error {
-  readonly [QueueableLike_capacity]: number;
-  readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
-
-  constructor(
-    capacity: number,
-    backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],
-  ) {
-    super();
-    this[QueueableLike_capacity] = capacity;
-    this[QueueableLike_backpressureStrategy] = backpressureStrategy;
-  }
-}
+import BackPressureError from "./Queue.BackPressureError.js";
 
 const Queue_indexedQueueMixin: <T>() => Mixin2<
   IndexedQueueLike<T>,

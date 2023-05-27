@@ -697,7 +697,7 @@ testModule(
         pipe(result, expectArrayEquals([11, 12, 13]));
     }),
 
-    test("when the effect function throws", () => {
+    test("when the effect function throws with enumerable source", () => {
       const err = new Error();
       pipe(
         pipeLazy(
@@ -706,7 +706,23 @@ testModule(
           Observable.forEach(_ => {
             throw err;
           }),
-          Observable.run(),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
+
+    test("when the effect function throws with runnable source", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          Observable.fromReadonlyArray(),
+          Observable.delay(3),
+          Observable.forEach(_ => {
+            throw err;
+          }),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(err),
       );

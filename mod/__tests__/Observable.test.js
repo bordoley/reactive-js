@@ -266,11 +266,16 @@ testModule("Observable", ...RunnableContainerModuleTests({
         result.push(x + 10);
     }), Observable.run()),
         pipe(result, expectArrayEquals([11, 12, 13]));
-}), test("when the effect function throws", () => {
+}), test("when the effect function throws with enumerable source", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray(), Observable.forEach(_ => {
         throw err;
-    }), Observable.run()), expectToThrowError(err));
+    }), Observable.toReadonlyArray()), expectToThrowError(err));
+}), test("when the effect function throws with runnable source", () => {
+    const err = new Error();
+    pipe(pipeLazy([1, 1], Observable.fromReadonlyArray(), Observable.delay(3), Observable.forEach(_ => {
+        throw err;
+    }), Observable.toReadonlyArray()), expectToThrowError(err));
 })), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
     const result = await pipe(async () => {
         await Promise.resolve(1);

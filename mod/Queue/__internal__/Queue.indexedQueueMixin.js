@@ -7,15 +7,7 @@ import { __IndexedQueueMixin_capacityMask, __IndexedQueueMixin_head, __IndexedQu
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, QueueLike_head, StackLike_head, StackLike_pop, } from "../../__internal__/types.js";
 import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, unsafeCast, } from "../../functions.js";
 import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../types.js";
-class BackPressureError extends Error {
-    [QueueableLike_capacity];
-    [QueueableLike_backpressureStrategy];
-    constructor(capacity, backpressureStrategy) {
-        super();
-        this[QueueableLike_capacity] = capacity;
-        this[QueueableLike_backpressureStrategy] = backpressureStrategy;
-    }
-}
+import BackPressureError from "./Queue.BackPressureError.js";
 const Queue_indexedQueueMixin = /*@__PURE__*/ (() => {
     const copyArray = (src, head, tail, size) => {
         const capacity = src.length;

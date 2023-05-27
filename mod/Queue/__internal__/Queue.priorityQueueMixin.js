@@ -4,8 +4,9 @@ import { floor } from "../../__internal__/math.js";
 import { getPrototype, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __PriorityQueueImpl_comparator } from "../../__internal__/symbols.js";
 import { MutableKeyedCollectionLike_set, QueueLike_dequeue, StackLike_pop, } from "../../__internal__/types.js";
-import { call, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { call, newInstance, none, pipe, raiseError, returns, } from "../../functions.js";
 import { CollectionLike_count, KeyedCollectionLike_get, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../types.js";
+import BackPressureError from "./Queue.BackPressureError.js";
 import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
     const IndexedQueuePrototype = getPrototype(Queue_indexedQueueMixin());
@@ -89,7 +90,7 @@ const Queue_priorityQueueMixin = /*@__PURE__*/ (() => {
                 this[QueueLike_dequeue]();
             }
             else if (backpressureStrategy === "throw" && count >= capacity) {
-                raiseWithDebugMessage("attempting to enqueue a value to a queue that is full");
+                raiseError(newInstance(BackPressureError, capacity, backpressureStrategy));
             }
             const result = call(IndexedQueuePrototype[QueueableLike_enqueue], this, item);
             siftUp(this, item);

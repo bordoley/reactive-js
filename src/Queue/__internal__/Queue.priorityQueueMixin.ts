@@ -20,9 +20,10 @@ import {
   Comparator,
   Optional,
   call,
+  newInstance,
   none,
   pipe,
-  raiseWithDebugMessage,
+  raiseError,
   returns,
 } from "../../functions.js";
 import {
@@ -33,6 +34,7 @@ import {
   QueueableLike_capacity,
   QueueableLike_enqueue,
 } from "../../types.js";
+import BackPressureError from "./Queue.BackPressureError.js";
 import Queue_indexedQueueMixin from "./Queue.indexedQueueMixin.js";
 
 const Queue_priorityQueueMixin: <T>() => Mixin3<
@@ -165,8 +167,8 @@ const Queue_priorityQueueMixin: <T>() => Mixin3<
           ) {
             this[QueueLike_dequeue]();
           } else if (backpressureStrategy === "throw" && count >= capacity) {
-            raiseWithDebugMessage(
-              "attempting to enqueue a value to a queue that is full",
+            raiseError(
+              newInstance(BackPressureError, capacity, backpressureStrategy),
             );
           }
 

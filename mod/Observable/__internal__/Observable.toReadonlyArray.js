@@ -13,6 +13,9 @@ const Observable_toReadonlyArray = () => observable => {
         while (enumerator[EnumeratorLike_move]()) {
             result.push(enumerator[EnumeratorLike_current]);
         }
+        // bump the enumerator again to ensure it has completed.
+        // really only need to drive up unit test coverage
+        enumerator[EnumeratorLike_move]();
         enumerator[DisposableLike_dispose]();
         Disposable_raiseIfDisposedWithError(enumerator);
         return result;
