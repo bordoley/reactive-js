@@ -4,12 +4,6 @@
 
 [Disposable](../modules/Disposable.md).DisposableModule
 
-## Hierarchy
-
-- [`MulticastingContainerModule`](types.MulticastingContainerModule.md)<[`Type`](../modules/Disposable.md#type)\>
-
-  ↳ **`DisposableModule`**
-
 ## Table of contents
 
 ### Properties

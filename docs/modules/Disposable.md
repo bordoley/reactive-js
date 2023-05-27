@@ -21,10 +21,9 @@
 
 - [disposed](Disposable.md#disposed)
 
-### Other Functions
+### Functions
 
 - [add](Disposable.md#add)
-- [addEventHandler](Disposable.md#addeventhandler)
 - [addTo](Disposable.md#addto)
 - [bindTo](Disposable.md#bindto)
 - [create](Disposable.md#create)
@@ -37,12 +36,6 @@
 - [usingAsync](Disposable.md#usingasync)
 - [usingAsyncLazy](Disposable.md#usingasynclazy)
 - [usingLazy](Disposable.md#usinglazy)
-
-### Transform Functions
-
-- [toEventSource](Disposable.md#toeventsource)
-- [toObservable](Disposable.md#toobservable)
-- [toReadonlyArrayAsync](Disposable.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -62,7 +55,7 @@ ___
 
 • `Const` **disposed**: [`Signature`](Disposable.md#signature)[``"disposed"``]
 
-## Other Functions
+## Functions
 
 ### add
 
@@ -85,28 +78,6 @@ ___
 #### Returns
 
 [`Updater`](functions.md#updater)<`TDisposable`\>
-
-___
-
-### addEventHandler
-
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `handler` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 
@@ -531,53 +502,3 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
-
-___
-
-## Transform Functions
-
-### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>\>
-
-___
-
-### toObservable
-
-▸ **toObservable**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), [`MulticastObservableLike`](../interfaces/types.MulticastObservableLike.md)<`T`\>\>
-
-___
-
-### toReadonlyArrayAsync
-
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), `Promise`<readonly `T`[]\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DisposableLike`](../interfaces/types.DisposableLike.md), `Promise`<readonly `T`[]\>\>

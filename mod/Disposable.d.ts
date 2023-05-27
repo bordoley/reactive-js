@@ -1,5 +1,5 @@
 import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEffect1, Updater } from "./functions.js";
-import { Container, Container_type, DisposableLike, MulticastingContainerModule } from "./types.js";
+import { Container, Container_type, DisposableLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = DisposableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface DisposableModule extends MulticastingContainerModule<Type> {
+export interface DisposableModule {
     readonly disposed: DisposableLike;
     add<TDisposable extends DisposableLike>(child: DisposableLike, options?: {
         readonly ignoreChildErrors?: boolean;
@@ -45,7 +45,6 @@ export interface DisposableModule extends MulticastingContainerModule<Type> {
 }
 export type Signature = DisposableModule;
 export declare const add: Signature["add"];
-export declare const addEventHandler: Signature["addEventHandler"];
 export declare const addTo: Signature["addTo"];
 export declare const bindTo: Signature["bindTo"];
 export declare const create: Signature["create"];
@@ -55,9 +54,6 @@ export declare const onDisposed: Signature["onDisposed"];
 export declare const onError: Signature["onError"];
 export declare const toAbortSignal: Signature["toAbortSignal"];
 export declare const toErrorHandler: Signature["toErrorHandler"];
-export declare const toEventSource: Signature["toEventSource"];
-export declare const toObservable: Signature["toObservable"];
-export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const using: Signature["using"];
 export declare const usingAsync: Signature["usingAsync"];
 export declare const usingAsyncLazy: Signature["usingAsyncLazy"];

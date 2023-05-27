@@ -14,8 +14,6 @@
 
 - **`MulticastingContainerModule`**
 
-  ↳ [`DisposableModule`](Disposable.DisposableModule.md)
-
   ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
   ↳ [`PromiseModule`](Promise.PromiseModule.md)

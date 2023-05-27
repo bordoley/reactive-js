@@ -1,7 +1,6 @@
 /// <reference types="./Disposable.d.ts" />
 
 import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
-import Disposable_addEventHandler from "./Disposable/__internal__/Disposable.addEventHandler.js";
 import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
@@ -11,16 +10,12 @@ import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDispos
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
-import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
-import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
-import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
 import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import Disposable_usingAsyncLazy from "./Disposable/__internal__/Disposable.usingAsyncLazy.js";
 import Disposable_usingLazy from "./Disposable/__internal__/Disposable.usingLazy.js";
-import { Container_type, } from "./types.js";
+import { Container_type } from "./types.js";
 export const add = Disposable_add;
-export const addEventHandler = Disposable_addEventHandler;
 export const addTo = Disposable_addTo;
 export const bindTo = Disposable_bindTo;
 export const create = Disposable_create;
@@ -30,9 +25,6 @@ export const onDisposed = Disposable_onDisposed;
 export const onError = Disposable_onError;
 export const toAbortSignal = Disposable_toAbortSignal;
 export const toErrorHandler = Disposable_toErrorHandler;
-export const toEventSource = Disposable_toEventSource;
-export const toObservable = Disposable_toObservable;
-export const toReadonlyArrayAsync = Disposable_toReadonlyArrayAsync;
 export const using = Disposable_using;
 export const usingAsync = Disposable_usingAsync;
 export const usingAsyncLazy = Disposable_usingAsyncLazy;

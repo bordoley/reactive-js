@@ -1,5 +1,4 @@
 import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
-import Disposable_addEventHandler from "./Disposable/__internal__/Disposable.addEventHandler.js";
 import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
 import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
 import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
@@ -9,9 +8,6 @@ import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDispos
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
-import Disposable_toEventSource from "./Disposable/__internal__/Disposable.toEventSource.js";
-import Disposable_toObservable from "./Disposable/__internal__/Disposable.toObservable.js";
-import Disposable_toReadonlyArrayAsync from "./Disposable/__internal__/Disposable.toReadonlyArrayAsync.js";
 import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
 import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
 import Disposable_usingAsyncLazy from "./Disposable/__internal__/Disposable.usingAsyncLazy.js";
@@ -26,12 +22,7 @@ import {
   SideEffect1,
   Updater,
 } from "./functions.js";
-import {
-  Container,
-  Container_type,
-  DisposableLike,
-  MulticastingContainerModule,
-} from "./types.js";
+import { Container, Container_type, DisposableLike } from "./types.js";
 
 /**
  * @noInheritDoc
@@ -47,7 +38,7 @@ export type Type = DisposableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface DisposableModule extends MulticastingContainerModule<Type> {
+export interface DisposableModule {
   readonly disposed: DisposableLike;
 
   add<TDisposable extends DisposableLike>(
@@ -205,8 +196,6 @@ export interface DisposableModule extends MulticastingContainerModule<Type> {
 export type Signature = DisposableModule;
 
 export const add: Signature["add"] = Disposable_add;
-export const addEventHandler: Signature["addEventHandler"] =
-  Disposable_addEventHandler;
 export const addTo: Signature["addTo"] = Disposable_addTo;
 export const bindTo: Signature["bindTo"] = Disposable_bindTo;
 export const create: Signature["create"] = Disposable_create;
@@ -218,11 +207,6 @@ export const toAbortSignal: Signature["toAbortSignal"] =
   Disposable_toAbortSignal;
 export const toErrorHandler: Signature["toErrorHandler"] =
   Disposable_toErrorHandler;
-export const toEventSource: Signature["toEventSource"] =
-  Disposable_toEventSource;
-export const toObservable: Signature["toObservable"] = Disposable_toObservable;
-export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
-  Disposable_toReadonlyArrayAsync;
 export const using: Signature["using"] = Disposable_using;
 export const usingAsync: Signature["usingAsync"] = Disposable_usingAsync;
 export const usingAsyncLazy: Signature["usingAsyncLazy"] =
