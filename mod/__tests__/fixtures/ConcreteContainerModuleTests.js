@@ -1,13 +1,16 @@
 /// <reference types="./ConcreteContainerModuleTests.d.ts" />
 
 import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
 import { describe, expectArrayEquals, test, } from "../../__internal__/testing.js";
-import { none, pipe } from "../../functions.js";
+import { increment, none, pipe, returns } from "../../functions.js";
 import ContainerModuleTests from "./ContainerModuleTests.js";
 const ConcreteContainerModuleTests = (m, createCtx, toReadonlyArray) => [
     ContainerModuleTests(m, createCtx, () => m.fromReadonlyArray(), toReadonlyArray),
     describe("ConcreteContainerModule", describe("empty", test("returns an empty enumerator", Disposable.usingLazy(createCtx)(ctx => {
         pipe(m.empty(), toReadonlyArray(ctx), expectArrayEquals([]));
+    }))), describe("fromEnumerable", test("from generating enumerable", Disposable.usingLazy(createCtx)(ctx => {
+        pipe(Observable.generate(increment, returns(-1)), Observable.takeFirst({ count: 5 }), m.fromEnumerable(), toReadonlyArray(ctx), expectArrayEquals([0, 1, 2, 3, 4]));
     }))), describe("fromFactory", test("it produces the factory result", Disposable.usingLazy(createCtx)(ctx => {
         pipe(() => 1, m.fromFactory(), toReadonlyArray(ctx), expectArrayEquals([1]));
     }))), describe("fromOptional", test("when none", Disposable.usingLazy(createCtx)(ctx => {

@@ -1,10 +1,11 @@
 import * as Disposable from "../../Disposable.js";
+import * as Observable from "../../Observable.js";
 import {
   describe,
   expectArrayEquals,
   test,
 } from "../../__internal__/testing.js";
-import { Function1, none, pipe } from "../../functions.js";
+import { Function1, increment, none, pipe, returns } from "../../functions.js";
 import {
   ConcreteContainerModule,
   Container,
@@ -40,6 +41,21 @@ const ConcreteContainerModuleTests = <
             m.empty<number>(),
             toReadonlyArray(ctx),
             expectArrayEquals<number>([]),
+          );
+        }),
+      ),
+    ),
+    describe(
+      "fromEnumerable",
+      test(
+        "from generating enumerable",
+        Disposable.usingLazy(createCtx)(ctx => {
+          pipe(
+            Observable.generate<number>(increment, returns(-1)),
+            Observable.takeFirst<number>({ count: 5 }),
+            m.fromEnumerable(),
+            toReadonlyArray<number>(ctx),
+            expectArrayEquals([0, 1, 2, 3, 4]),
           );
         }),
       ),
