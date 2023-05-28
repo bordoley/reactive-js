@@ -1,10 +1,10 @@
 import * as ReadonlyObjectMap from "../ReadonlyObjectMap.js";
 import { testModule } from "../__internal__/testing.js";
-import ConcreteAssociativeKeyedContainerModuleTests from "./fixtures/ConcreteAssociativeKeyedContainerModuleTests.js";
+import AssociativeKeyedContainerModuleTests from "./fixtures/AssociativeKeyedContainerModuleTests.js";
 
 testModule(
   "ReadonlyObjectMap",
-  ConcreteAssociativeKeyedContainerModuleTests(
+  AssociativeKeyedContainerModuleTests(
     ReadonlyObjectMap.CreateModule<string>(),
   ),
 );

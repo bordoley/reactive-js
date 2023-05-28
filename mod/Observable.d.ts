@@ -200,6 +200,7 @@ export interface ObservableModule {
     contains<T>(value: T, options?: {
         readonly equality?: Equality<T>;
     }): Function1<RunnableLike<T>, boolean>;
+    count(): Function1<RunnableLike, number>;
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableLike<T>;
     createPublisher<T>(options?: {
         readonly replay?: number;
@@ -563,6 +564,7 @@ export declare const concatMany: Signature["concatMany"];
 export declare const concatMap: Signature["concatMap"];
 export declare const concatWith: Signature["concatWith"];
 export declare const contains: Signature["contains"];
+export declare const count: Signature["count"];
 export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];

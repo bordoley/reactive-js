@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyObjectMap.d.ts" />
 
+import Dictionary_toReadonlyObjectMap from "./Dictionary/__internal__/Dictionary.toReadonlyObjectMap.js";
 import ReadonlyMap_toReadonlyObjectMap from "./ReadonlyMap/__internal__/ReadonlyMap.toReadonlyObjectMap.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
@@ -24,30 +25,33 @@ import { Container_type, KeyedContainer_TKey, } from "./types.js";
  * @category Functor
  */
 export const CreateModule = () => ({
-    empty: ReadonlyObjectMap_empty,
-    entries: ReadonlyObjectMap_entries,
-    fromEntries: ReadonlyObjectMap_fromEntries,
-    forEach: ReadonlyObjectMap_forEach,
-    forEachWithKey: ReadonlyObjectMap_forEachWithKey,
-    fromReadonlyObjectMap: identityLazy,
-    keep: ReadonlyObjectMap_keep,
-    keepType: ReadonlyObjectMap_keepType,
-    keepWithKey: ReadonlyObjectMap_keepWithKey,
-    keys: ReadonlyObjectMap_keys,
-    keySet: ReadonlyObjectMap_keySet,
-    map: ReadonlyObjectMap_map,
-    mapWithKey: ReadonlyObjectMap_mapWithKey,
-    reduce: ReadonlyObjectMap_reduce,
-    reduceWithKey: ReadonlyObjectMap_reduceWithKey,
-    toDictionary: ReadonlyObjectMap_toDictionary,
-    toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
-    toReadonlyObjectMap: identityLazy,
-    values: ReadonlyObjectMap_values,
+    empty,
+    entries,
+    fromDictionary,
+    fromEntries,
+    forEach,
+    forEachWithKey,
+    fromReadonlyMap,
+    fromReadonlyObjectMap,
+    keep,
+    keepType,
+    keepWithKey,
+    keys,
+    keySet,
+    map,
+    mapWithKey,
+    reduce,
+    reduceWithKey,
+    toDictionary,
+    toReadonlyMap,
+    toReadonlyObjectMap,
+    values,
 });
 export const empty = ReadonlyObjectMap_empty;
 export const entries = ReadonlyObjectMap_entries;
 export const forEach = ReadonlyObjectMap_forEach;
 export const forEachWithKey = ReadonlyObjectMap_forEachWithKey;
+export const fromDictionary = Dictionary_toReadonlyObjectMap;
 export const fromEntries = ReadonlyObjectMap_fromEntries;
 export const fromReadonlyMap = ReadonlyMap_toReadonlyObjectMap;
 export const fromReadonlyObjectMap = identityLazy;

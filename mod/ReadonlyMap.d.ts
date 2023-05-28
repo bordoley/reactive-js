@@ -1,4 +1,4 @@
-import { ConcreteAssociativeKeyedContainerModule, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { AssociativeKeyedContainerModule, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -13,7 +13,7 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends ConcreteAssociativeKeyedContainerModule<TType, TKey> {
+export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends AssociativeKeyedContainerModule<TType, TKey> {
 }
 export type Signature = ReadonlyMapModule;
 /**
@@ -22,6 +22,7 @@ export type Signature = ReadonlyMapModule;
 export declare const CreateModule: <TKey extends {}>() => ReadonlyMapModule<Type<TKey>, TKey>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
+export declare const fromDictionary: Signature["fromDictionary"];
 export declare const fromEntries: Signature["fromEntries"];
 export declare const fromReadonlyMap: Signature["fromReadonlyMap"];
 export declare const forEach: Signature["forEach"];

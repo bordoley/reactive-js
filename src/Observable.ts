@@ -11,6 +11,7 @@ import Observable_concatMany from "./Observable/__internal__/Observable.concatMa
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
+import Observable_count from "./Observable/__internal__/Observable.count.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_createPublisher from "./Observable/__internal__/Observable.createPublisher.js";
 import Observable_createRefCountedPublisher from "./Observable/__internal__/Observable.createRefCountedPublisher.js";
@@ -780,6 +781,8 @@ export interface ObservableModule {
     value: T,
     options?: { readonly equality?: Equality<T> },
   ): Function1<RunnableLike<T>, boolean>;
+
+  count(): Function1<RunnableLike, number>;
 
   create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableLike<T>;
 
@@ -2480,6 +2483,7 @@ export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatMap: Signature["concatMap"] = Observable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const contains: Signature["contains"] = Observable_contains;
+export const count: Signature["count"] = Observable_count;
 export const create: Signature["create"] = Observable_create;
 export const createPublisher: Signature["createPublisher"] =
   Observable_createPublisher;

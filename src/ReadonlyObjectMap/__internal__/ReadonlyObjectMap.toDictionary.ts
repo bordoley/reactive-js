@@ -1,5 +1,9 @@
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import * as Obj from "../../__internal__/Object.js";
+import {
+  DelegatingLike,
+  DelegatingLike_delegate,
+} from "../../__internal__/types.js";
 import { Optional, newInstance, pipe } from "../../functions.js";
 import {
   AssociativeCollectionLike_keys,
@@ -12,21 +16,26 @@ import {
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 
 class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
-  implements DictionaryLike<TKey, T>
+  implements
+    DictionaryLike<TKey, T>,
+    DelegatingLike<ReadonlyObjectMapLike<TKey, T>>
 {
   readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
+  readonly [DelegatingLike_delegate]: ReadonlyObjectMapLike<TKey, T>;
 
-  constructor(readonly obj: ReadonlyObjectMapLike<TKey, T>) {
+  constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {
+    this[DelegatingLike_delegate] = delegate;
     this[AssociativeCollectionLike_keys] = pipe(
-      this.obj,
+      delegate,
       ReadonlyObjectMap_keys(),
     );
   }
 
   get [CollectionLike_count](): number {
     let cnt = 0;
-    for (const key in this.obj) {
-      if (Obj.hasOwn(this.obj, key)) {
+    const delegate = this[DelegatingLike_delegate];
+    for (const key in delegate) {
+      if (Obj.hasOwn(delegate, key)) {
         cnt++;
       }
     }
@@ -34,7 +43,7 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   }
 
   [KeyedCollectionLike_get](index: TKey): Optional<T> {
-    return this.obj[index];
+    return this[DelegatingLike_delegate][index];
   }
 }
 

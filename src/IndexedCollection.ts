@@ -5,10 +5,10 @@ import IndexedCollection_toIterable from "./IndexedCollection/__internal__/Index
 import IndexedCollection_toObservable from "./IndexedCollection/__internal__/IndexedCollection.toObservable.js";
 import IndexedCollection_toReadonlyArray from "./IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
 import {
-  ConcreteIndexedKeyedContainer,
   Container_T,
   Container_type,
   IndexedCollectionLike,
+  IndexedKeyedContainer,
   KeyedContainer,
   KeyedContainer_TKey,
 } from "./types.js";
@@ -31,8 +31,7 @@ export type TKeyBase = number;
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedCollectionModule
-  extends ConcreteIndexedKeyedContainer<Type> {}
+export interface IndexedCollectionModule extends IndexedKeyedContainer<Type> {}
 
 export type Signature = IndexedCollectionModule;
 

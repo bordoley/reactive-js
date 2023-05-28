@@ -1,8 +1,8 @@
 import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
-
 import {
   describe,
   expectArrayEquals,
@@ -12,7 +12,9 @@ import {
 import {
   Optional,
   arrayEquality,
+  isSome,
   none,
+  pick,
   pipe,
   pipeLazy,
   returns,
@@ -28,6 +30,20 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
 ) =>
   describe(
     "AssociativeKeyedContainerModuleTests",
+
+    describe(
+      "empty",
+      test(
+        "empty container count",
+        pipeLazy(
+          m.empty(),
+          m.toDictionary(),
+          pick(CollectionLike_count),
+          expectEquals(0),
+        ),
+      ),
+    ),
+
     describe(
       "entries",
       test(
@@ -80,6 +96,79 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
       }),
     ),
     describe(
+      "keep",
+      test(
+        "filters out entries by value",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "v"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.keep(value => value === "d"),
+          m.keys(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals(["c"]),
+        ),
+      ),
+      test(
+        "validate the count of the returned container",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "v"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.keep(value => value === "d"),
+          m.toDictionary(),
+          pick(CollectionLike_count),
+          expectEquals(1),
+        ),
+      ),
+    ),
+    describe(
+      "keepWithKey",
+      test(
+        "filters out entries by key",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "v"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.keepWithKey((_, key) => key === "c"),
+          m.values(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals(["d"]),
+        ),
+      ),
+    ),
+    describe(
+      "keepType",
+      test(
+        "filters null values",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", none],
+            ["e", "v"],
+          ],
+          ReadonlyArray.toObservable<[string, Optional<string>]>(),
+          m.fromEntries(),
+          m.keepType<Optional<string>, string, string>(isSome),
+          m.values(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals(["b", "v"]),
+        ),
+      ),
+    ),
+    describe(
       "keySet",
       test("returns a keyset with all the keys", () => {
         const keys = pipe(
@@ -91,6 +180,60 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
         pipe(keys.size, expectEquals(3));
         pipe(Array.from(keys), expectArrayEquals(["a", "c", "e"]));
       }),
+    ),
+    describe(
+      "map",
+      test(
+        "mapping every value to a number",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "f"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.map(_ => 1),
+          m.values(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([1, 1, 1]),
+        ),
+      ),
+      test(
+        "validate mapped count",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "f"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.map(_ => 1),
+          m.toDictionary(),
+          pick(CollectionLike_count),
+          expectEquals(3),
+        ),
+      ),
+    ),
+    describe(
+      "mapWithKey",
+      test(
+        "mapping every value to its key",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "f"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.mapWithKey((_, key) => key),
+          m.values(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals(["a", "c", "e"]),
+        ),
+      ),
     ),
     describe(
       "reduce",

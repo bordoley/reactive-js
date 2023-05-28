@@ -48,9 +48,9 @@ import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.val
 import ReadonlyArray_zip from "./ReadonlyArray/__internal__/ReadonlyArray.zip.js";
 import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zipWith.js";
 import {
-  ConcreteIndexedKeyedContainer,
   Container_T,
   Container_type,
+  IndexedKeyedContainer,
   KeyOf,
   KeyedContainer,
   KeyedContainer_TKey,
@@ -74,8 +74,7 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyArrayModule
-  extends ConcreteIndexedKeyedContainer<Type> {}
+export interface ReadonlyArrayModule extends IndexedKeyedContainer<Type> {}
 
 export type Signature = ReadonlyArrayModule;
 

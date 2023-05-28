@@ -13,6 +13,7 @@ import Observable_concatMany from "./Observable/__internal__/Observable.concatMa
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_contains from "./Observable/__internal__/Observable.contains.js";
+import Observable_count from "./Observable/__internal__/Observable.count.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_createPublisher from "./Observable/__internal__/Observable.createPublisher.js";
 import Observable_createRefCountedPublisher from "./Observable/__internal__/Observable.createRefCountedPublisher.js";
@@ -109,6 +110,7 @@ export const concatMany = Observable_concatMany;
 export const concatMap = Observable_concatMap;
 export const concatWith = Observable_concatWith;
 export const contains = Observable_contains;
+export const count = Observable_count;
 export const create = Observable_create;
 export const createPublisher = Observable_createPublisher;
 export const createRefCountedPublisher = Observable_createRefCountedPublisher;

@@ -13,6 +13,6 @@
 
 ## Hierarchy
 
-- [`ConcreteAssociativeKeyedContainerModule`](types.ConcreteAssociativeKeyedContainerModule.md)<`TType`, `TKey`\>
+- [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)<`TType`, `TKey`\>
 
   ↳ **`ReadonlyObjectMapModule`**

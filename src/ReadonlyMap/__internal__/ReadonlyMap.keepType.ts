@@ -2,7 +2,7 @@ import type * as ReadonlyMap from "../../ReadonlyMap.js";
 import { TypePredicate } from "../../functions.js";
 import ReadonlyMap_keep from "./ReadonlyMap.keep.js";
 
-const ReadonlyMap_keepType = (<
+const ReadonlyMap_keepType: ReadonlyMap.Signature["keepType"] = (<
   TA,
   TB extends TA,
   TKey extends ReadonlyMap.TKeyBase,

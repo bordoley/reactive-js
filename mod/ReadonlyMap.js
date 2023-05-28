@@ -1,5 +1,6 @@
 /// <reference types="./ReadonlyMap.d.ts" />
 
+import Dictionary_toReadonlyMap from "./Dictionary/__internal__/Dictionary.toReadonlyMap.js";
 import ReadonlyMap_empty from "./ReadonlyMap/__internal__/ReadonlyMap.empty.js";
 import ReadonlyMap_entries from "./ReadonlyMap/__internal__/ReadonlyMap.entries.js";
 import ReadonlyMap_forEach from "./ReadonlyMap/__internal__/ReadonlyMap.forEach.js";
@@ -24,29 +25,31 @@ import { Container_type, KeyedContainer_TKey, } from "./types.js";
  * @category Functor
  */
 export const CreateModule = () => ({
-    empty: ReadonlyMap_empty,
-    entries: ReadonlyMap_entries,
-    fromEntries: ReadonlyMap_fromEntries,
-    forEach: ReadonlyMap_forEach,
-    forEachWithKey: ReadonlyMap_forEachWithKey,
-    fromReadonlyMap: identityLazy,
-    fromReadonlyObjectMap: ReadonlyObjectMap_toReadonlyMap,
-    keep: ReadonlyMap_keep,
-    keepType: ReadonlyMap_keepType,
-    keepWithKey: ReadonlyMap_keepWithKey,
-    keys: ReadonlyMap_keys,
-    keySet: ReadonlyMap_keySet,
-    map: ReadonlyMap_map,
-    mapWithKey: ReadonlyMap_mapWithKey,
-    reduce: ReadonlyMap_reduce,
-    reduceWithKey: ReadonlyMap_reduceWithKey,
-    toDictionary: ReadonlyMap_toDictionary,
-    toReadonlyMap: identityLazy,
-    toReadonlyObjectMap: ReadonlyMap_toReadonlyObjectMap,
-    values: ReadonlyMap_values,
+    empty,
+    entries,
+    fromDictionary,
+    fromEntries,
+    forEach,
+    forEachWithKey,
+    fromReadonlyMap,
+    fromReadonlyObjectMap,
+    keep,
+    keepType,
+    keepWithKey,
+    keys,
+    keySet,
+    map,
+    mapWithKey,
+    reduce,
+    reduceWithKey,
+    toDictionary,
+    toReadonlyMap,
+    toReadonlyObjectMap,
+    values,
 });
 export const empty = ReadonlyMap_empty;
 export const entries = ReadonlyMap_entries;
+export const fromDictionary = Dictionary_toReadonlyMap;
 export const fromEntries = ReadonlyMap_fromEntries;
 export const fromReadonlyMap = identityLazy;
 export const forEach = ReadonlyMap_forEach;

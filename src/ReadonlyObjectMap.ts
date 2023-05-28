@@ -1,3 +1,4 @@
+import Dictionary_toReadonlyObjectMap from "./Dictionary/__internal__/Dictionary.toReadonlyObjectMap.js";
 import ReadonlyMap_toReadonlyObjectMap from "./ReadonlyMap/__internal__/ReadonlyMap.toReadonlyObjectMap.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
@@ -18,7 +19,7 @@ import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/Re
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import { identityLazy } from "./functions.js";
 import {
-  ConcreteAssociativeKeyedContainerModule,
+  AssociativeKeyedContainerModule,
   Container_T,
   Container_type,
   KeyOf,
@@ -55,7 +56,7 @@ export type TKeyBase = KeyOf<Type>;
 export interface ReadonlyObjectMapModule<
   TType extends Type = Type,
   TKey extends TKeyBase = TKeyBase,
-> extends ConcreteAssociativeKeyedContainerModule<TType, TKey> {}
+> extends AssociativeKeyedContainerModule<TType, TKey> {}
 
 export type Signature = ReadonlyObjectMapModule;
 
@@ -67,25 +68,27 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyObjectMapModule<
   TKey
 > =>
   ({
-    empty: ReadonlyObjectMap_empty,
-    entries: ReadonlyObjectMap_entries,
-    fromEntries: ReadonlyObjectMap_fromEntries,
-    forEach: ReadonlyObjectMap_forEach,
-    forEachWithKey: ReadonlyObjectMap_forEachWithKey,
-    fromReadonlyObjectMap: identityLazy as Signature["fromReadonlyObjectMap"],
-    keep: ReadonlyObjectMap_keep,
-    keepType: ReadonlyObjectMap_keepType,
-    keepWithKey: ReadonlyObjectMap_keepWithKey,
-    keys: ReadonlyObjectMap_keys,
-    keySet: ReadonlyObjectMap_keySet,
-    map: ReadonlyObjectMap_map,
-    mapWithKey: ReadonlyObjectMap_mapWithKey,
-    reduce: ReadonlyObjectMap_reduce,
-    reduceWithKey: ReadonlyObjectMap_reduceWithKey,
-    toDictionary: ReadonlyObjectMap_toDictionary,
-    toReadonlyMap: ReadonlyObjectMap_toReadonlyMap,
-    toReadonlyObjectMap: identityLazy,
-    values: ReadonlyObjectMap_values,
+    empty,
+    entries,
+    fromDictionary,
+    fromEntries,
+    forEach,
+    forEachWithKey,
+    fromReadonlyMap,
+    fromReadonlyObjectMap,
+    keep,
+    keepType,
+    keepWithKey,
+    keys,
+    keySet,
+    map,
+    mapWithKey,
+    reduce,
+    reduceWithKey,
+    toDictionary,
+    toReadonlyMap,
+    toReadonlyObjectMap,
+    values,
   } as ReadonlyObjectMapModule<Type<TKey>, TKey>);
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
@@ -93,6 +96,8 @@ export const entries: Signature["entries"] = ReadonlyObjectMap_entries;
 export const forEach: Signature["forEach"] = ReadonlyObjectMap_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyObjectMap_forEachWithKey;
+export const fromDictionary: Signature["fromDictionary"] =
+  Dictionary_toReadonlyObjectMap as Signature["fromDictionary"];
 export const fromEntries: Signature["fromEntries"] =
   ReadonlyObjectMap_fromEntries;
 export const fromReadonlyMap: Signature["fromReadonlyMap"] =

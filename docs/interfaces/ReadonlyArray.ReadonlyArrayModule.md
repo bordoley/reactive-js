@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`ConcreteIndexedKeyedContainer`](types.ConcreteIndexedKeyedContainer.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
+- [`IndexedKeyedContainer`](types.IndexedKeyedContainer.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
   ↳ **`ReadonlyArrayModule`**

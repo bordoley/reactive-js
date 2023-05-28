@@ -1,4 +1,4 @@
-import { ConcreteIndexedKeyedContainer, Container_T, Container_type, IndexedCollectionLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { Container_T, Container_type, IndexedCollectionLike, IndexedKeyedContainer, KeyedContainer, KeyedContainer_TKey } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -13,7 +13,7 @@ export type TKeyBase = number;
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedCollectionModule extends ConcreteIndexedKeyedContainer<Type> {
+export interface IndexedCollectionModule extends IndexedKeyedContainer<Type> {
 }
 export type Signature = IndexedCollectionModule;
 export declare const empty: Signature["empty"];

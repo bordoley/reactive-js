@@ -15,18 +15,25 @@
 
 - **`KeyedContainerModule`**
 
-  ↳ [`ConcreteKeyedContainerModule`](types.ConcreteKeyedContainerModule.md)
-
   ↳ [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)
 
   ↳ [`IndexedKeyedContainer`](types.IndexedKeyedContainer.md)
 
 ## Table of contents
 
+### Constructor Methods
+
+- [empty](types.KeyedContainerModule.md#empty)
+
 ### Operator Methods
 
 - [forEach](types.KeyedContainerModule.md#foreach)
 - [forEachWithKey](types.KeyedContainerModule.md#foreachwithkey)
+- [keep](types.KeyedContainerModule.md#keep)
+- [keepType](types.KeyedContainerModule.md#keeptype)
+- [keepWithKey](types.KeyedContainerModule.md#keepwithkey)
+- [map](types.KeyedContainerModule.md#map)
+- [mapWithKey](types.KeyedContainerModule.md#mapwithkey)
 
 ### Transform Methods
 
@@ -34,6 +41,27 @@
 - [reduce](types.KeyedContainerModule.md#reduce)
 - [reduceWithKey](types.KeyedContainerModule.md#reducewithkey)
 - [values](types.KeyedContainerModule.md#values)
+
+## Constructor Methods
+
+### empty
+
+▸ **empty**<`T`, `TKey`\>(): [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = `NonNullable`<`C`[typeof `__KeyedContainer_TKey`]\> |
+
+#### Returns
+
+[`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>
+
+___
 
 ## Operator Methods
 
@@ -86,6 +114,152 @@ value emitted by the source.
 #### Returns
 
 [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
+
+#### Returns
+
+[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+
+___
+
+### keepType
+
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
+
+#### Returns
+
+[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+
+___
+
+### keepWithKey
+
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](../modules/functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `T`, `T`\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+
+Returns a ContainerOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+
+___
+
+### mapWithKey
+
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
+
+Returns a ContainerOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedContainerOperator`](../modules/types.md#keyedcontaineroperator)<`C`, `TKey`, `TA`, `TB`\>
 
 ___
 

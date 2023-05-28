@@ -19,14 +19,21 @@
 
   ↳↳ [`DictionaryModule`](Dictionary.DictionaryModule.md)
 
-  ↳↳ [`ConcreteAssociativeKeyedContainerModule`](types.ConcreteAssociativeKeyedContainerModule.md)
+  ↳↳ [`ReadonlyMapModule`](ReadonlyMap.ReadonlyMapModule.md)
+
+  ↳↳ [`ReadonlyObjectMapModule`](ReadonlyObjectMap.ReadonlyObjectMapModule.md)
 
 ## Table of contents
 
 ### Constructor Methods
 
+- [fromEntries](types.AssociativeKeyedContainerModule.md#fromentries)
 - [fromReadonlyMap](types.AssociativeKeyedContainerModule.md#fromreadonlymap)
 - [fromReadonlyObjectMap](types.AssociativeKeyedContainerModule.md#fromreadonlyobjectmap)
+
+### Other Methods
+
+- [fromDictionary](types.AssociativeKeyedContainerModule.md#fromdictionary)
 
 ### Transform Methods
 
@@ -37,6 +44,23 @@
 - [toReadonlyObjectMap](types.AssociativeKeyedContainerModule.md#toreadonlyobjectmap)
 
 ## Constructor Methods
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+
+___
 
 ### fromReadonlyMap
 
@@ -69,6 +93,25 @@ ___
 #### Returns
 
 `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\> : `never`
+
+___
+
+## Other Methods
+
+### fromDictionary
+
+▸ **fromDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>, [`KeyedContainerOf`](../modules/types.md#keyedcontainerof)<`C`, `TKey`, `T`\>\>
 
 ___
 

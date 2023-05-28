@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- [`ConcreteIndexedKeyedContainer`](types.ConcreteIndexedKeyedContainer.md)<[`Type`](../modules/IndexedCollection.md#type)\>
+- [`IndexedKeyedContainer`](types.IndexedKeyedContainer.md)<[`Type`](../modules/IndexedCollection.md#type)\>
 
   ↳ **`IndexedCollectionModule`**

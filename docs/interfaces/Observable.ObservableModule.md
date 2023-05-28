@@ -29,6 +29,7 @@
 - [concatMap](Observable.ObservableModule.md#concatmap)
 - [concatWith](Observable.ObservableModule.md#concatwith)
 - [contains](Observable.ObservableModule.md#contains)
+- [count](Observable.ObservableModule.md#count)
 - [create](Observable.ObservableModule.md#create)
 - [createPublisher](Observable.ObservableModule.md#createpublisher)
 - [createRefCountedPublisher](Observable.ObservableModule.md#createrefcountedpublisher)
@@ -1810,6 +1811,16 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `boolean`\>
+
+___
+
+### count
+
+▸ **count**(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`unknown`\>, `number`\>
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`unknown`\>, `number`\>
 
 ___
 
