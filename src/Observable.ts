@@ -49,10 +49,12 @@ import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
+import Observable_keepWithKey from "./Observable/__internal__/Observable.keepWithKey.js";
 import Observable_last from "./Observable/__internal__/Observable.last.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
+import Observable_mapWithKey from "./Observable/__internal__/Observable.mapWithKey.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
@@ -65,6 +67,7 @@ import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubsc
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_reduceWithKey from "./Observable/__internal__/Observable.reduceWithKey.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
@@ -99,6 +102,7 @@ import {
   Factory,
   Function1,
   Function2,
+  Function3,
   Optional,
   Predicate,
   Reducer,
@@ -109,7 +113,6 @@ import {
   identityLazy,
 } from "./functions.js";
 import {
-  Container,
   Container_T,
   Container_type,
   DeferredObservableBaseLike,
@@ -121,6 +124,8 @@ import {
   EnumerableWithSideEffectsLike,
   EnumeratorLike,
   EventSourceLike,
+  IndexedContainer,
+  KeyOf,
   MulticastObservableLike,
   ObservableBaseLike,
   ObservableLike,
@@ -235,7 +240,7 @@ export type PureDeferredObservableOperator<TIn, TOut> = <
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableContainer extends Container {
+export interface ObservableContainer extends IndexedContainer {
   readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 
@@ -243,7 +248,7 @@ export interface ObservableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface DeferredObservableBaseContainer extends Container {
+export interface DeferredObservableBaseContainer extends IndexedContainer {
   readonly [Container_type]?: DeferredObservableBaseLike<
     this[typeof Container_T]
   >;
@@ -253,7 +258,7 @@ export interface DeferredObservableBaseContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface DeferredObservableContainer extends Container {
+export interface DeferredObservableContainer extends IndexedContainer {
   readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
 
@@ -261,7 +266,7 @@ export interface DeferredObservableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableContainer extends Container {
+export interface RunnableContainer extends IndexedContainer {
   readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 
@@ -269,7 +274,7 @@ export interface RunnableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface EnumerableContainer extends Container {
+export interface EnumerableContainer extends IndexedContainer {
   readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 
@@ -277,7 +282,7 @@ export interface EnumerableContainer extends Container {
  * @noInheritDoc
  * @category Container
  */
-export interface MulticastObservableContainer extends Container {
+export interface MulticastObservableContainer extends IndexedContainer {
   readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 
@@ -941,6 +946,13 @@ export interface ObservableModule {
     predicate: TypePredicate<TA, TB>,
   ): PureObservableOperator<TA, TB>;
 
+  keepWithKey<
+    T,
+    TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>,
+  >(
+    predicate: Function2<T, TKey, boolean>,
+  ): PureObservableOperator<T, T>;
+
   last<T>(): Function1<RunnableLike<T>, Optional<T>>;
 
   lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
@@ -953,6 +965,14 @@ export interface ObservableModule {
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
 
   map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
+
+  mapWithKey<
+    TA,
+    TB,
+    TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>,
+  >(
+    selector: Function2<TA, TKey, TB>,
+  ): PureObservableOperator<TA, TB>;
 
   mapTo<TA, TB>(value: TB): PureObservableOperator<TA, TB>;
 
@@ -1084,6 +1104,15 @@ export interface ObservableModule {
 
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<RunnableLike<T>, TAcc>;
+
+  reduceWithKey<
+    T,
+    TAcc,
+    TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>,
+  >(
+    reducer: Function3<TAcc, T, TKey, TAcc>,
     initialValue: Factory<TAcc>,
   ): Function1<RunnableLike<T>, TAcc>;
 
@@ -2532,9 +2561,11 @@ export const isMulticastObservable: Signature["isMulticastObservable"] =
   Observable_isMulticastObservable;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] = Observable_keepType;
+export const keepWithKey: Signature["keepWithKey"] = Observable_keepWithKey;
 export const last: Signature["last"] = Observable_last;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
+export const mapWithKey: Signature["mapWithKey"] = Observable_mapWithKey;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
@@ -2550,6 +2581,8 @@ export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Observable_reduce;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
+export const reduceWithKey: Signature["reduceWithKey"] =
+  Observable_reduceWithKey;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
 export const share: Signature["share"] = Observable_share;

@@ -3,17 +3,17 @@ import Promise_toEventSource from "./Promise/__internal__/Promise.toEventSource.
 import Promise_toObservable from "./Promise/__internal__/Promise.toObservable.js";
 import Promise_toReadonlyArrayAsync from "./Promise/__internal__/Promise.toReadonlyArrayAsync.js";
 import {
-  Container,
   Container_T,
   Container_type,
   EventSourceContainerModule,
+  IndexedContainer,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface PromiseContainer extends Container {
+export interface PromiseContainer extends IndexedContainer {
   readonly [Container_type]?: Promise<this[typeof Container_T]>;
 }
 

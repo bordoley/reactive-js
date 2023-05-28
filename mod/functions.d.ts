@@ -49,6 +49,9 @@ export type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
 export type SideEffect5<TA, TB, TC, TD, TE> = (a: TA, b: TB, c: TC, d: TD, e: TE) => void;
 export type SideEffect6<TA, TB, TC, TD, TE, TF> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => void;
 export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => void;
+export type Tuple2<TA, TB> = readonly [TA, TB];
+export type Tuple3<TA, TB, TC> = readonly [TA, TB, TC];
+export type Tuple4<TA, TB, TC, TD> = readonly [TA, TB, TC, TD];
 /**
  * A type guard function that performs a runtime check
  * guaranteeing `v` is of type `TB`.
@@ -171,6 +174,9 @@ interface FunctionsModule {
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>): Factory<J>;
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Factory<K>;
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Factory<L>;
+    tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
+    tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
+    tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
 }
 type Signature = FunctionsModule;
 /**
@@ -319,5 +325,6 @@ export declare const returns: <T>(v: T) => (..._args: unknown[]) => T;
  * The javascript strict equality function.
  */
 export declare const strictEquality: <T>(a: T, b: T) => boolean;
+export declare const tuple: Signature["tuple"];
 export declare function unsafeCast<T>(_v: unknown): asserts _v is T;
 export {};

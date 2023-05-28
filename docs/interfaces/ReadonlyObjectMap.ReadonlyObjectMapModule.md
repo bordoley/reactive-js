@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [ReadonlyObjectMap](../modules/ReadonlyObjectMap.md) / ReadonlyObjectMapModule
 
-# Interface: ReadonlyObjectMapModule<TType, TKey\>
+# Interface: ReadonlyObjectMapModule<TKey\>
 
 [ReadonlyObjectMap](../modules/ReadonlyObjectMap.md).ReadonlyObjectMapModule
 
@@ -8,11 +8,10 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TType` | extends [`Type`](../modules/ReadonlyObjectMap.md#type) = [`Type`](../modules/ReadonlyObjectMap.md#type) |
 | `TKey` | extends [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) = [`TKeyBase`](../modules/ReadonlyObjectMap.md#tkeybase) |
 
 ## Hierarchy
 
-- [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)<`TType`, `TKey`\>
+- [`AssociativeCollectionContainerModule`](types.AssociativeCollectionContainerModule.md)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`TKey`\>\>
 
   ↳ **`ReadonlyObjectMapModule`**

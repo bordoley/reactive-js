@@ -20,16 +20,16 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  AssociativeKeyedContainerModule,
+  AssociativeCollectionContainerModule,
   CollectionLike_count,
-  KeyedContainer,
+  Container,
 } from "../../types.js";
 
-const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
-  m: AssociativeKeyedContainerModule<C, string>,
+const AssociativeCollectionContainerModuleTests = <C extends Container<string>>(
+  m: AssociativeCollectionContainerModule<C>,
 ) =>
   describe(
-    "AssociativeKeyedContainerModuleTests",
+    "AssociativeContainerModuleTests",
 
     describe(
       "empty",
@@ -335,4 +335,4 @@ const AssociativeKeyedContainerModuleTests = <C extends KeyedContainer<string>>(
     ),
   );
 
-export default AssociativeKeyedContainerModuleTests;
+export default AssociativeCollectionContainerModuleTests;

@@ -46,7 +46,7 @@ export const __EventPublisherLike_listenerCount = /*@__PURE__*/ symbol("EventPub
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol("KeyedCollectionLike_get");
 /** @type {unique symbol} */
-export const __KeyedContainer_TKey = /*@__PURE__*/ symbol("KeyedContainer_TKey");
+export const __Container_TKey = /*@__PURE__*/ symbol("Container_TKey");
 /** @type {unique symbol} */
 export const __ObservableLike_observe = /*@__PURE__*/ symbol("ObservableLike_observe");
 /** @type {unique symbol} */

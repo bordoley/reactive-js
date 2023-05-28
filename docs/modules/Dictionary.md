@@ -21,6 +21,7 @@
 ### Constructor Functions
 
 - [empty](Dictionary.md#empty)
+- [fromDictionary](Dictionary.md#fromdictionary)
 - [fromEntries](Dictionary.md#fromentries)
 - [fromReadonlyMap](Dictionary.md#fromreadonlymap)
 - [fromReadonlyObjectMap](Dictionary.md#fromreadonlyobjectmap)
@@ -38,10 +39,6 @@
 - [keepWithKey](Dictionary.md#keepwithkey)
 - [map](Dictionary.md#map)
 - [mapWithKey](Dictionary.md#mapwithkey)
-
-### Other Functions
-
-- [fromDictionary](Dictionary.md#fromdictionary)
 
 ### Transform Functions
 
@@ -65,7 +62,7 @@ ___
 
 ### TKeyBase
 
-Ƭ **TKeyBase**: `NonNullable`<[`Type`](Dictionary.md#type)[typeof [`KeyedContainer_TKey`](types.md#keyedcontainer_tkey)]\>
+Ƭ **TKeyBase**: `NonNullable`<[`Type`](Dictionary.md#type)[typeof [`Container_TKey`](types.md#container_tkey)]\>
 
 ___
 
@@ -83,7 +80,7 @@ ___
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>
+▸ **empty**<`T`, `TKey`\>(): [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>
 
 Return an Container that emits no items.
 
@@ -96,13 +93,30 @@ Return an Container that emits no items.
 
 #### Returns
 
-[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>
+[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>
+
+___
+
+### fromDictionary
+
+▸ **fromDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
 
 ___
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
 
 #### Type parameters
 
@@ -113,13 +127,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
 
 ___
 
 ### fromReadonlyMap
 
-▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **fromReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
 
 #### Type parameters
 
@@ -130,13 +144,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\>
 
 ___
 
 ### fromReadonlyObjectMap
 
-▸ **fromReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\> : `never`
+▸ **fromReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\> : `never`
 
 #### Type parameters
 
@@ -147,7 +161,7 @@ ___
 
 #### Returns
 
-`TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\> : `never`
+`TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>\> : `never`
 
 ___
 
@@ -155,7 +169,7 @@ ___
 
 ### CreateModule
 
-▸ **CreateModule**<`TKey`\>(): [`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<[`Type`](Dictionary.md#type)<`TKey`\>, `TKey`\>
+▸ **CreateModule**<`TKey`\>(): [`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<`TKey`\>
 
 #### Type parameters
 
@@ -165,7 +179,7 @@ ___
 
 #### Returns
 
-[`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<[`Type`](Dictionary.md#type)<`TKey`\>, `TKey`\>
+[`DictionaryModule`](../interfaces/Dictionary.DictionaryModule.md)<`TKey`\>
 
 ___
 
@@ -173,7 +187,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -183,7 +197,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -193,15 +207,15 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
-Returns a KeyedContainerOperator that applies the side effect function to each
+Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -209,7 +223,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -219,13 +233,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -235,7 +249,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -245,13 +259,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
@@ -259,7 +273,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -269,13 +283,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -285,7 +299,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -295,13 +309,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -320,7 +334,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -330,13 +344,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -355,7 +369,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -365,26 +379,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](Dictionary.md#type)<`unknown`\>, `TKey`, `TA`, `TB`\>
-
-___
-
-## Other Functions
-
-### fromDictionary
-
-▸ **fromDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -392,24 +387,24 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<[`TKey`, `T`]\>\>
 
 ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
@@ -419,13 +414,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `unknown`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `unknown`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -435,13 +430,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `unknown`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TKey`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `unknown`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`TKey`\>\>
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -449,7 +444,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -460,13 +455,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `TAcc`\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `TAcc`\>
 
 ___
 
 ### reduceWithKey
 
-▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `TAcc`\>
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -474,7 +469,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends `Object` |
+| `TKey` | extends `Object` = {} |
 
 #### Parameters
 
@@ -485,13 +480,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `TAcc`\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `TAcc`\>
 
 ___
 
 ### toDictionary
 
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -502,13 +497,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>\>
 
 ___
 
 ### toReadonlyMap
 
-▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -519,13 +514,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
 ___
 
 ### toReadonlyObjectMap
 
-▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 #### Type parameters
 
@@ -536,20 +531,21 @@ ___
 
 #### Returns
 
-`TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+`TKey` extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`any`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+▸ **values**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`any`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`Object`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>

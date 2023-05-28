@@ -1,11 +1,10 @@
-import { Container_T, Container_type, IndexedKeyedContainer, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { Container_T, Container_type, IndexedCollectionContainerModule, IndexedContainer, KeyOf } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainer extends KeyedContainer {
+export interface ReadonlyArrayContainer extends IndexedContainer {
     readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: number;
 }
 export type Type = ReadonlyArrayContainer;
 export type TKeyBase = KeyOf<Type>;
@@ -13,7 +12,7 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyArrayModule extends IndexedKeyedContainer<Type> {
+export interface ReadonlyArrayModule extends IndexedCollectionContainerModule<Type> {
 }
 export type Signature = ReadonlyArrayModule;
 export declare const buffer: Signature["buffer"];

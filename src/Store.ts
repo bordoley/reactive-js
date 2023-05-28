@@ -4,11 +4,11 @@ import Store_create from "./Store/__internal__/Store.create.js";
 import Store_toObservable from "./Store/__internal__/Store.toObservable.js";
 import { identityLazy } from "./functions.js";
 import {
-  Container,
   Container_T,
   Container_type,
   DisposableLike,
   EventSourceContainerModule,
+  IndexedContainer,
   StoreLike,
   WritableStoreLike,
 } from "./types.js";
@@ -16,7 +16,7 @@ import {
 /**
  * @noInheritDoc
  */
-export interface StoreContainer extends Container {
+export interface StoreContainer extends IndexedContainer {
   readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
 }
 

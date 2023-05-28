@@ -1,10 +1,10 @@
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import { testModule } from "../__internal__/testing.js";
-import IndexedKeyedContainerModuleTests from "./fixtures/IndexedKeyedContainerModuleTests.js";
+import IndexedCollectionContainerModuleTests from "./fixtures/IndexedCollectionContainerModuleTests.js";
 
 testModule(
   "ReadonlyArray",
-  IndexedKeyedContainerModuleTests(ReadonlyArray),
+  IndexedCollectionContainerModuleTests(ReadonlyArray),
 );
 
 ((_: ReadonlyArray.Signature) => {})(ReadonlyArray);

@@ -19,26 +19,25 @@ import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js
 import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import { identityLazy } from "./functions.js";
 import {
-  AssociativeKeyedContainerModule,
+  AssociativeCollectionContainerModule,
+  Container,
   Container_T,
+  Container_TKey,
   Container_type,
   KeyOf,
-  KeyedContainer,
-  KeyedContainer_TKey,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyMapContainer<TKey = unknown>
-  extends KeyedContainer<TKey> {
+export interface ReadonlyMapContainer<TKey = unknown> extends Container<TKey> {
   readonly [Container_type]?: ReadonlyMap<
-    this[typeof KeyedContainer_TKey],
+    this[typeof Container_TKey],
     this[typeof Container_T]
   >;
 
-  readonly [KeyedContainer_TKey]?: TKey;
+  readonly [Container_TKey]?: TKey;
 }
 
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
@@ -49,20 +48,17 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyMapModule<
-  TType extends Type = Type,
-  TKey extends TKeyBase = TKeyBase,
-> extends AssociativeKeyedContainerModule<TType, TKey> {}
+export interface ReadonlyMapModule<TKey extends TKeyBase = TKeyBase>
+  extends AssociativeCollectionContainerModule<Type<TKey>> {}
 
 export type Signature = ReadonlyMapModule;
 
 /**
  * @category Functor
  */
-export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
-  Type<TKey>,
-  TKey
-> =>
+export const CreateModule = <
+  TKey extends TKeyBase,
+>(): ReadonlyMapModule<TKey> =>
   ({
     empty,
     entries,
@@ -85,7 +81,7 @@ export const CreateModule = <TKey extends TKeyBase>(): ReadonlyMapModule<
     toReadonlyMap,
     toReadonlyObjectMap,
     values,
-  } as ReadonlyMapModule<Type<TKey>, TKey>);
+  } as unknown as ReadonlyMapModule<TKey>);
 
 export const empty: Signature["empty"] = ReadonlyMap_empty;
 export const entries: Signature["entries"] = ReadonlyMap_entries;

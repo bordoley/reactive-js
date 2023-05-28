@@ -21,14 +21,14 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  ConcreteContainerModule,
-  Container,
+  ConcreteIndexedContainerModule,
   EnumerableContainerModule,
+  IndexedContainer,
 } from "../../types.js";
-import ConcreteContainerModuleTests from "./ConcreteContainerModuleTests.js";
+import ConcreteIndexedContainerModuleTests from "./ConcreteIndexedContainerModuleTests.js";
 
-const RunnableContainerModuleTests = <C extends Container>(
-  m: ConcreteContainerModule<C> &
+const RunnableContainerModuleTests = <C extends IndexedContainer>(
+  m: ConcreteIndexedContainerModule<C> &
     Pick<
       EnumerableContainerModule<C>,
       | "concat"
@@ -48,7 +48,7 @@ const RunnableContainerModuleTests = <C extends Container>(
       | "zipWith"
     >,
 ) => [
-  ...ConcreteContainerModuleTests(
+  ...ConcreteIndexedContainerModuleTests(
     m,
     () => Disposable.disposed,
     <T>() => m.toReadonlyArray<T>(),

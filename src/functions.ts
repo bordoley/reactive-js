@@ -126,6 +126,10 @@ export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (
   g: TG,
 ) => void;
 
+export type Tuple2<TA, TB> = readonly [TA, TB];
+export type Tuple3<TA, TB, TC> = readonly [TA, TB, TC];
+export type Tuple4<TA, TB, TC, TD> = readonly [TA, TB, TC, TD];
+
 /**
  * A type guard function that performs a runtime check
  * guaranteeing `v` is of type `TB`.
@@ -1064,6 +1068,10 @@ interface FunctionsModule {
     op11: Function1<J, K>,
     op12: Function1<K, L>,
   ): Factory<L>;
+
+  tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
+  tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
+  tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
 }
 
 type Signature = FunctionsModule;
@@ -1449,5 +1457,8 @@ export const returns =
  * The javascript strict equality function.
  */
 export const strictEquality = <T>(a: T, b: T) => a === b;
+
+export const tuple: Signature["tuple"] = ((...v: readonly unknown[]) =>
+  v) as Signature["tuple"];
 
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}

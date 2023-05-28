@@ -17,13 +17,16 @@ import Observable_fromOptional from "./Observable/__internal__/Observable.fromOp
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
+import Observable_keepWithKey from "./Observable/__internal__/Observable.keepWithKey.js";
 import Observable_last from "./Observable/__internal__/Observable.last.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
+import Observable_mapWithKey from "./Observable/__internal__/Observable.mapWithKey.js";
 import Observable_noneSatisfy from "./Observable/__internal__/Observable.noneSatisfy.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_reduceWithKey from "./Observable/__internal__/Observable.reduceWithKey.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
@@ -73,13 +76,17 @@ export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const keep: Signature["keep"] = Observable_keep;
 export const keepType: Signature["keepType"] =
   Observable_keepType as Signature["keepType"];
+export const keepWithKey: Signature["keepWithKey"] = Observable_keepWithKey;
 export const last: Signature["last"] = Observable_last;
 export const map: Signature["map"] = Observable_map;
 export const mapTo: Signature["mapTo"] = Observable_mapTo;
+export const mapWithKey: Signature["mapWithKey"] = Observable_mapWithKey;
 export const noneSatisfy: Signature["noneSatisfy"] = Observable_noneSatisfy;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Observable_reduce;
+export const reduceWithKey: Signature["reduceWithKey"] =
+  Observable_reduceWithKey;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;

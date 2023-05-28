@@ -223,4 +223,5 @@ export const returns = (v) => (..._args) => v;
  * The javascript strict equality function.
  */
 export const strictEquality = (a, b) => a === b;
+export const tuple = ((...v) => v);
 export function unsafeCast(_v) { }

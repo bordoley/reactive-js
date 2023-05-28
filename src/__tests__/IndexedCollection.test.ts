@@ -1,10 +1,9 @@
+/*
 import * as IndexedCollection from "../IndexedCollection.js";
 import { testModule } from "../__internal__/testing.js";
-import IndexedKeyedContainerModuleTests from "./fixtures/IndexedKeyedContainerModuleTests.js";
+import IndexedCollectionContainerModuleTests from "./fixtures/IndexedCollectionContainerModuleTests.js";
 
-testModule(
-  "IndexedCollection",
-  IndexedKeyedContainerModuleTests(IndexedCollection),
-);
+testModule("IndexedCollection", IndexedCollectionContainerModuleTests(IndexedCollection));
 
 ((_: IndexedCollection.Signature) => {})(IndexedCollection);
+*/

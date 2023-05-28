@@ -37,8 +37,10 @@
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
 - [keep](EventSource.md#keep)
 - [keepType](EventSource.md#keeptype)
+- [keepWithKey](EventSource.md#keepwithkey)
 - [map](EventSource.md#map)
 - [mapTo](EventSource.md#mapto)
+- [mapWithKey](EventSource.md#mapwithkey)
 - [pairwise](EventSource.md#pairwise)
 - [pick](EventSource.md#pick)
 - [scan](EventSource.md#scan)
@@ -127,15 +129,16 @@ ___
 
 ### empty
 
-▸ **empty**<`T`\>(): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
+▸ **empty**<`T`, `TKey`\>(): [`EventSourceLike`](../interfaces/types.EventSourceLike.md)<`T`\>
 
 Return an Container that emits no items.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
 
 #### Returns
 
@@ -281,7 +284,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[], `number`\>
 
 #### Type parameters
 
@@ -298,13 +301,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly `T`[], `number`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 Returns a ContainerOperator that emits all items emitted by the source that
 are distinct by comparison from the previous item.
@@ -324,22 +327,23 @@ are distinct by comparison from the previous item.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
 
 #### Parameters
 
@@ -349,20 +353,21 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` = `number` |
 
 #### Parameters
 
@@ -372,13 +377,39 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
+
+___
+
+### keepWithKey
+
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
+
+Returns a ContainerOperator that only emits items produced by the
+source that satisfy the specified predicate.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -393,10 +424,11 @@ TB - The inner type of the mapped container
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` = `number` |
 
 #### Parameters
 
@@ -406,13 +438,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `number`\>
 
 #### Type parameters
 
@@ -429,13 +461,48 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `number`\>
+
+___
+
+### mapWithKey
+
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
+
+Returns a ContainerOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly [`T`, `T`], `number`\>
 
 #### Type parameters
 
@@ -445,13 +512,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly [`T`, `T`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, readonly [`T`, `T`], `number`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`]\>
+▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`], `number`\>
 
 #### Type parameters
 
@@ -468,9 +535,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`], `number`\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`], `number`\>
 
 #### Type parameters
 
@@ -489,9 +556,9 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`], `number`\>
 
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`], `number`\>
 
 #### Type parameters
 
@@ -512,13 +579,13 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`], `number`\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `TAcc`, `number`\>
 
 Returns a Container that applies an accumulator function over the source,
 and emits each intermediate result.
@@ -539,13 +606,13 @@ and emits each intermediate result.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `TAcc`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `TAcc`, `number`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 Returns a Container that skips the first count items emitted by the source.
 
@@ -564,13 +631,13 @@ Returns a Container that skips the first count items emitted by the source.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 Returns a Container that only emits the first `count` values emitted by the source.
 
@@ -589,13 +656,13 @@ Returns a Container that only emits the first `count` values emitted by the sour
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 ___
 
 ### takeLast
 
-▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **takeLast**<`T`\>(`options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 Returns a Container that only emits the last `count` items emitted by the source.
 
@@ -614,13 +681,13 @@ Returns a Container that only emits the last `count` items emitted by the source
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 Returns a Container which emits values emitted by the source as long
 as each value satisfies the given predicate, and then completes as soon as
@@ -642,7 +709,7 @@ this predicate is not satisfied.
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `number`\>
 
 ___
 

@@ -7,16 +7,16 @@ import IndexedCollection_toReadonlyArray from "./IndexedCollection/__internal__/
 import {
   Container_T,
   Container_type,
+  IndexedCollectionContainerModule,
   IndexedCollectionLike,
-  IndexedKeyedContainer,
-  IndexedKeyedContainerModule,
+  IndexedContainer,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface IndexedCollectionContainer extends IndexedKeyedContainer {
+export interface IndexedCollectionContainer extends IndexedContainer {
   readonly [Container_type]?: IndexedCollectionLike<this[typeof Container_T]>;
 }
 
@@ -29,7 +29,7 @@ export type TKeyBase = number;
  * @category Module
  */
 export interface IndexedCollectionModule
-  extends IndexedKeyedContainerModule<Type> {}
+  extends IndexedCollectionContainerModule<Type> {}
 
 export type Signature = IndexedCollectionModule;
 

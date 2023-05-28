@@ -43,7 +43,7 @@ export const __EventPublisherLike_listenerCount: unique symbol;
 /** @type {unique symbol} */
 export const __KeyedCollectionLike_get: unique symbol;
 /** @type {unique symbol} */
-export const __KeyedContainer_TKey: unique symbol;
+export const __Container_TKey: unique symbol;
 /** @type {unique symbol} */
 export const __ObservableLike_observe: unique symbol;
 /** @type {unique symbol} */

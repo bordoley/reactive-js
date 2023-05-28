@@ -20,7 +20,7 @@ import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/Rea
 import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toReadonlyMap.js";
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.values.js";
 import { identityLazy } from "./functions.js";
-import { Container_type, KeyedContainer_TKey, } from "./types.js";
+import { Container_TKey, Container_type, } from "./types.js";
 /**
  * @category Functor
  */

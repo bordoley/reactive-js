@@ -20,7 +20,7 @@ EventSourceLike_addEventListener
 EventListenerLike_isErrorSafe
 EventPublisherLike_listenerCount
 KeyedCollectionLike_get
-KeyedContainer_TKey
+Container_TKey
 ObservableLike_observe
 ObservableLike_isDeferred
 ObservableLike_isEnumerable

@@ -10,8 +10,10 @@ import EventSource_fromOptional from "./EventSource/__internal__/EventSource.fro
 import EventSource_fromValue from "./EventSource/__internal__/EventSource.fromValue.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
+import EventSource_keepWithKey from "./EventSource/__internal__/EventSource.keepWithKey.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_mapTo from "./EventSource/__internal__/EventSource.mapTo.js";
+import EventSource_mapWithKey from "./EventSource/__internal__/EventSource.mapWithKey.js";
 import EventSource_merge from "./EventSource/__internal__/EventSource.merge.js";
 import EventSource_mergeMany from "./EventSource/__internal__/EventSource.mergeMany.js";
 import EventSource_pairwise from "./EventSource/__internal__/EventSource.pairwise.js";
@@ -27,20 +29,20 @@ import Observable_toEventSource from "./Observable/__internal__/Observable.toEve
 import ReadonlyArray_toEventSource from "./ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import { SideEffect1, identityLazy } from "./functions.js";
 import {
-  Container,
   Container_T,
   Container_type,
   EventListenerLike,
   EventPublisherLike,
   EventSourceContainerModule,
   EventSourceLike,
+  IndexedContainer,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface EventSourceContainer extends Container {
+export interface EventSourceContainer extends IndexedContainer {
   readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 
@@ -103,8 +105,10 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
 export const fromValue: Signature["fromValue"] = EventSource_fromValue;
 export const keep: Signature["keep"] = EventSource_keep;
 export const keepType: Signature["keepType"] = EventSource_keepType;
+export const keepWithKey: Signature["keepWithKey"] = EventSource_keepWithKey;
 export const map: Signature["map"] = EventSource_map;
 export const mapTo: Signature["mapTo"] = EventSource_mapTo;
+export const mapWithKey: Signature["mapWithKey"] = EventSource_mapWithKey;
 export const merge: Signature["merge"] = EventSource_merge;
 export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
 export const pairwise: Signature["pairwise"] = EventSource_pairwise;

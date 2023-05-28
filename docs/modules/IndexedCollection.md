@@ -76,7 +76,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -95,7 +95,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends `number` |
+| `TKey` | extends `number` = `number` |
 
 #### Parameters
 
@@ -105,7 +105,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TKey`, `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TA`, `TB`, `TKey`\>
 
 ___
 

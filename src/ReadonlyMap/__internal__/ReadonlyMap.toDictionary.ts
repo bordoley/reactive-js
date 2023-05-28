@@ -15,6 +15,7 @@ class ReadonlyMapDictionary<
 > implements DictionaryLike<TKey, T>
 {
   readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
+
   constructor(readonly map: ReadonlyMap<TKey, T>) {
     this[AssociativeCollectionLike_keys] = pipe(this.map, ReadonlyMap_keys());
   }

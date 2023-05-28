@@ -34,6 +34,9 @@
 - [SideEffect5](functions.md#sideeffect5)
 - [SideEffect6](functions.md#sideeffect6)
 - [SideEffect7](functions.md#sideeffect7)
+- [Tuple2](functions.md#tuple2)
+- [Tuple3](functions.md#tuple3)
+- [Tuple4](functions.md#tuple4)
 - [TypePredicate](functions.md#typepredicate)
 - [Updater](functions.md#updater)
 
@@ -94,6 +97,7 @@
 - [raiseWithDebugMessage](functions.md#raisewithdebugmessage)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
+- [tuple](functions.md#tuple)
 - [unsafeCast](functions.md#unsafecast)
 
 ## Type Aliases
@@ -860,6 +864,48 @@ ___
 ##### Returns
 
 `void`
+
+___
+
+### Tuple2
+
+Ƭ **Tuple2**<`TA`, `TB`\>: readonly [`TA`, `TB`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+___
+
+### Tuple3
+
+Ƭ **Tuple3**<`TA`, `TB`, `TC`\>: readonly [`TA`, `TB`, `TC`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+___
+
+### Tuple4
+
+Ƭ **Tuple4**<`TA`, `TB`, `TC`, `TD`\>: readonly [`TA`, `TB`, `TC`, `TD`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
 
 ___
 
@@ -5183,6 +5229,75 @@ The javascript strict equality function.
 #### Returns
 
 `boolean`
+
+___
+
+### tuple
+
+▸ **tuple**<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`): [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
 
 ___
 

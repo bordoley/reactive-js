@@ -24,7 +24,7 @@ import {
   EventSourceLike,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import ConcreteContainerModuleTests from "./fixtures/ConcreteContainerModuleTests.js";
+import ConcreteIndexedContainerModuleTests from "./fixtures/ConcreteIndexedContainerModuleTests.js";
 
 const toReadonlyArray =
   <T>() =>
@@ -46,7 +46,7 @@ const toReadonlyArray =
 
 testModule(
   "EventSource",
-  ...ConcreteContainerModuleTests(
+  ...ConcreteIndexedContainerModuleTests(
     EventSource,
     () => Disposable.disposed,
     toReadonlyArray,

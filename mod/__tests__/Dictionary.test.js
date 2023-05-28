@@ -2,6 +2,6 @@
 
 import * as Dictionary from "../Dictionary.js";
 import { testModule } from "../__internal__/testing.js";
-import AssociativeKeyedContainerModuleTests from "./fixtures/AssociativeKeyedContainerModuleTests.js";
-testModule("Dictionary", AssociativeKeyedContainerModuleTests(Dictionary.CreateModule()));
+import AssociativeCollectionContainerModuleTests from "./fixtures/AssociativeCollectionContainerModuleTests.js";
+testModule("Dictionary", AssociativeCollectionContainerModuleTests(Dictionary.CreateModule()));
 ((_) => { })(Dictionary);

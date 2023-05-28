@@ -8,12 +8,12 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](types.Container.md) |
+| `C` | extends [`IndexedContainer`](types.IndexedContainer.md) |
 | `CObservable` | extends [`DeferredObservableBaseContainer`](Observable.DeferredObservableBaseContainer.md) |
 
 ## Hierarchy
 
-- [`ConcreteContainerModule`](types.ConcreteContainerModule.md)<`C`\>
+- [`ConcreteIndexedContainerModule`](types.ConcreteIndexedContainerModule.md)<`C`\>
 
   ↳ **`FlowableContainerModule`**
 
@@ -30,7 +30,7 @@
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -49,13 +49,13 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`PauseableObservableLike`](types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](types.DisposableLike.md)\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`, [`KeyOf`](../modules/types.md#keyof)<`CObservable`\>\>\>
 
 #### Type parameters
 
@@ -65,4 +65,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`CObservable`, `T`, [`KeyOf`](../modules/types.md#keyof)<`CObservable`\>\>\>

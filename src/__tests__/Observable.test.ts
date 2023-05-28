@@ -54,7 +54,7 @@ import {
   returns,
 } from "../functions.js";
 import {
-  ConcreteContainerModule,
+  ConcreteIndexedContainerModule,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   DisposableLike_dispose,
@@ -85,7 +85,7 @@ testModule(
     fromEnumerable: identityLazy,
     fromReadonlyArray: <T>(config: any) =>
       compose(Observable.fromReadonlyArray<T>(config), Observable.delay<T>(1)),
-  } as ConcreteContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
+  } as ConcreteIndexedContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
   describe(
     "backpressureStrategy",
     testAsync(

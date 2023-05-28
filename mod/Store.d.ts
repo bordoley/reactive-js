@@ -1,8 +1,8 @@
-import { Container, Container_T, Container_type, DisposableLike, EventSourceContainerModule, StoreLike, WritableStoreLike } from "./types.js";
+import { Container_T, Container_type, DisposableLike, EventSourceContainerModule, IndexedContainer, StoreLike, WritableStoreLike } from "./types.js";
 /**
  * @noInheritDoc
  */
-export interface StoreContainer extends Container {
+export interface StoreContainer extends IndexedContainer {
     readonly [Container_type]?: StoreLike<this[typeof Container_T]>;
 }
 export type Type = StoreContainer;

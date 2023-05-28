@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainer`](types.KeyedContainer.md)<`TKey`\>
+- [`Container`](types.Container.md)<`TKey`\>
 
   ↳ **`ReadonlyMapContainer`**
 
@@ -20,10 +20,20 @@
 
 ### Properties
 
+- [[\_\_\_Container\_TKey]](ReadonlyMap.ReadonlyMapContainer.md#[___container_tkey])
 - [[\_\_\_Container\_type]](ReadonlyMap.ReadonlyMapContainer.md#[___container_type])
-- [[\_\_\_KeyedContainer\_TKey]](ReadonlyMap.ReadonlyMapContainer.md#[___keyedcontainer_tkey])
 
 ## Properties
+
+### [\_\_\_Container\_TKey]
+
+• `Optional` `Readonly` **[\_\_\_Container\_TKey]**: `TKey`
+
+#### Overrides
+
+[Container](types.Container.md).[[___Container_TKey]](types.Container.md#[___container_tkey])
+
+___
 
 ### [\_\_\_Container\_type]
 
@@ -31,14 +41,4 @@
 
 #### Overrides
 
-KeyedContainer.\_\_@\_\_\_Container\_type@24253
-
-___
-
-### [\_\_\_KeyedContainer\_TKey]
-
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `TKey`
-
-#### Overrides
-
-[KeyedContainer](types.KeyedContainer.md).[[___KeyedContainer_TKey]](types.KeyedContainer.md#[___keyedcontainer_tkey])
+[Container](types.Container.md).[[___Container_type]](types.Container.md#[___container_type])

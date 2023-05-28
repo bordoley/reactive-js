@@ -8,11 +8,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](types.Container.md) |
+| `C` | extends [`IndexedContainer`](types.IndexedContainer.md) |
 
 ## Hierarchy
 
-- [`ConcreteContainerModule`](types.ConcreteContainerModule.md)<`C`\>
+- [`ConcreteIndexedContainerModule`](types.ConcreteIndexedContainerModule.md)<`C`\>
 
   ↳ **`EventSourceContainerModule`**
 
@@ -34,7 +34,7 @@
 
 ### addEventHandler
 
-▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+▸ **addEventHandler**<`T`\>(`handler`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`DisposableLike`](types.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -50,13 +50,13 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`DisposableLike`](types.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`DisposableLike`](types.DisposableLike.md)\>
 
 ___
 
 ### toObservable
 
-▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+▸ **toObservable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -66,7 +66,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`T`\>\>
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 ### toEventSource
 
-▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -84,13 +84,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, [`EventSourceLike`](types.EventSourceLike.md)<`T`\>\>
 
 ___
 
 ### toReadonlyArrayAsync
 
-▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Promise`<readonly `T`[]\>\>
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `Promise`<readonly `T`[]\>\>
 
 #### Type parameters
 
@@ -100,4 +100,4 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`\>, `Promise`<readonly `T`[]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `Promise`<readonly `T`[]\>\>

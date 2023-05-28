@@ -1,25 +1,25 @@
-import { AssociativeKeyedContainerModule, Container_T, Container_type, DictionaryLike, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { AssociativeCollectionContainerModule, Container, Container_T, Container_TKey, Container_type, DictionaryLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface DictionaryContainer<TKey = unknown> extends KeyedContainer {
-    readonly [Container_type]?: DictionaryLike<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: TKey;
+export interface DictionaryContainer<TKey = unknown> extends Container<TKey> {
+    readonly [Container_type]?: DictionaryLike<this[typeof Container_TKey], this[typeof Container_T]>;
+    readonly [Container_TKey]?: TKey;
 }
 export type Type<TKey = unknown> = DictionaryContainer<TKey>;
-export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
+export type TKeyBase = NonNullable<Type[typeof Container_TKey]>;
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface DictionaryModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends AssociativeKeyedContainerModule<TType, TKey> {
+export interface DictionaryModule<TKey extends TKeyBase = TKeyBase> extends AssociativeCollectionContainerModule<Type<TKey>> {
 }
 export type Signature = DictionaryModule;
 /**
  * @category Functor
  */
-export declare const CreateModule: <TKey extends {}>() => DictionaryModule<Type<TKey>, TKey>;
+export declare const CreateModule: <TKey extends {}>() => DictionaryModule<TKey>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];

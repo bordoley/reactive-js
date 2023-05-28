@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Container`](types.Container.md)
+- [`IndexedContainer`](types.IndexedContainer.md)
 
   ↳ **`DeferredObservableContainer`**
 
@@ -24,4 +24,4 @@
 
 #### Overrides
 
-[Container](types.Container.md).[[___Container_type]](types.Container.md#[___container_type])
+IndexedContainer.\_\_@\_\_\_Container\_type@24293

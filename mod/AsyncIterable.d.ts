@@ -1,10 +1,10 @@
 import type { DeferredObservableContainer } from "./Observable.js";
-import { Container, Container_T, Container_type, FlowableContainerModule } from "./types.js";
+import { Container_T, Container_type, FlowableContainerModule, IndexedContainer } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface AsyncIterableContainer extends Container {
+export interface AsyncIterableContainer extends IndexedContainer {
     readonly [Container_type]?: AsyncIterable<this[typeof Container_T]>;
 }
 export type Type = AsyncIterableContainer;

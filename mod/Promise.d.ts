@@ -1,9 +1,9 @@
-import { Container, Container_T, Container_type, EventSourceContainerModule } from "./types.js";
+import { Container_T, Container_type, EventSourceContainerModule, IndexedContainer } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface PromiseContainer extends Container {
+export interface PromiseContainer extends IndexedContainer {
     readonly [Container_type]?: Promise<this[typeof Container_T]>;
 }
 export type Type = PromiseContainer;

@@ -13,13 +13,13 @@ import {
 } from "../../__internal__/testing.js";
 import { arrayEquality, pipe, pipeLazy, returns } from "../../functions.js";
 import {
-  Container,
   ContainerOf,
   DisposableLike_error,
   DisposableLike_isDisposed,
   EnumerableContainerModule,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
+  IndexedContainer,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isRunnable,
@@ -29,7 +29,7 @@ import {
 } from "../../types.js";
 import RunnableContainerModuleTests from "./RunnableContainerModuleTests.js";
 
-const EnumerableContainerModuleTests = <C extends Container>(
+const EnumerableContainerModuleTests = <C extends IndexedContainer>(
   m: EnumerableContainerModule<C>,
 ) => [
   ...RunnableContainerModuleTests(m),

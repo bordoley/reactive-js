@@ -1,7 +1,3 @@
-import {
-  IndexedKeyedContainerModule,
-  IndexedKeyedContainer,
-} from "../../types.js";
 import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyArray from "../../ReadonlyArray.js";
 import {
@@ -17,13 +13,17 @@ import {
   pipeLazy,
   returns,
 } from "../../functions.js";
+import {
+  IndexedCollectionContainerModule,
+  IndexedContainer,
+} from "../../types.js";
 import EnumerableContainerModuleTests from "./EnumerableContainerModuleTests.js";
 
-const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
-  m: IndexedKeyedContainerModule<C>,
+const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
+  m: IndexedCollectionContainerModule<C>,
 ) =>
   describe(
-    "IndexedKeyedContainerModuleTests",
+    "IndexedCollectionContainerModuleTests",
 
     ...EnumerableContainerModuleTests(ReadonlyArray),
     describe(
@@ -33,8 +33,8 @@ const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
         pipeLazy(
           ["b", "d"],
           m.fromReadonlyArray(),
-          m.entries(),
-          m.toReadonlyArray(),
+          m.entries<string, number>(),
+          Enumerable.toReadonlyArray<[number, string]>(),
           expectArrayEquals(
             [
               [0, "b"],
@@ -57,6 +57,7 @@ const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
             yield 2;
             yield 3;
           }),
+          m.toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
       ),
@@ -85,6 +86,7 @@ const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
           ["b", "d", "v"],
           m.fromReadonlyArray(),
           m.keepWithKey((_, key) => key === 1),
+          m.toReadonlyArray(),
           expectArrayEquals(["d"]),
         ),
       ),
@@ -97,6 +99,7 @@ const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
           ["b", "d", "f"],
           m.fromReadonlyArray(),
           m.mapWithKey((_, key) => key),
+          m.toReadonlyArray(),
           expectArrayEquals([0, 1, 2]),
         ),
       ),
@@ -119,4 +122,4 @@ const IndexedKeyedContainerModuleTests = <C extends IndexedKeyedContainer>(
     describe("values"),
   );
 
-export default IndexedKeyedContainerModuleTests;
+export default IndexedCollectionContainerModuleTests;

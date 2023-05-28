@@ -50,8 +50,8 @@ import ReadonlyArray_zipWith from "./ReadonlyArray/__internal__/ReadonlyArray.zi
 import {
   Container_T,
   Container_type,
-  IndexedKeyedContainer,
-  IndexedKeyedContainerModule,
+  IndexedCollectionContainerModule,
+  IndexedContainer,
   KeyOf,
 } from "./types.js";
 
@@ -59,7 +59,7 @@ import {
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyArrayContainer extends IndexedKeyedContainer {
+export interface ReadonlyArrayContainer extends IndexedContainer {
   readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
 }
 
@@ -72,7 +72,7 @@ export type TKeyBase = KeyOf<Type>;
  * @category Module
  */
 export interface ReadonlyArrayModule
-  extends IndexedKeyedContainerModule<Type> {}
+  extends IndexedCollectionContainerModule<Type> {}
 
 export type Signature = ReadonlyArrayModule;
 

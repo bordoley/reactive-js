@@ -19,48 +19,43 @@ import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toD
 import ReadonlyObjectMap_toDictionary from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.toDictionary.js";
 import { identityLazy } from "./functions.js";
 import {
-  AssociativeKeyedContainerModule,
+  AssociativeCollectionContainerModule,
+  Container,
   Container_T,
+  Container_TKey,
   Container_type,
   DictionaryLike,
-  KeyedContainer,
-  KeyedContainer_TKey,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface DictionaryContainer<TKey = unknown> extends KeyedContainer {
+export interface DictionaryContainer<TKey = unknown> extends Container<TKey> {
   readonly [Container_type]?: DictionaryLike<
-    this[typeof KeyedContainer_TKey],
+    this[typeof Container_TKey],
     this[typeof Container_T]
   >;
 
-  readonly [KeyedContainer_TKey]?: TKey;
+  readonly [Container_TKey]?: TKey;
 }
 
 export type Type<TKey = unknown> = DictionaryContainer<TKey>;
-export type TKeyBase = NonNullable<Type[typeof KeyedContainer_TKey]>;
+export type TKeyBase = NonNullable<Type[typeof Container_TKey]>;
 
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface DictionaryModule<
-  TType extends Type = Type,
-  TKey extends TKeyBase = TKeyBase,
-> extends AssociativeKeyedContainerModule<TType, TKey> {}
+export interface DictionaryModule<TKey extends TKeyBase = TKeyBase>
+  extends AssociativeCollectionContainerModule<Type<TKey>> {}
 
 export type Signature = DictionaryModule;
 
 /**
  * @category Functor
  */
-export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<
-  Type<TKey>,
-  TKey
-> =>
+export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<TKey> =>
   ({
     empty,
     entries,
@@ -83,7 +78,7 @@ export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<
     toReadonlyMap,
     toReadonlyObjectMap,
     values,
-  } as DictionaryModule<Type<TKey>, TKey>);
+  } as unknown as DictionaryModule<TKey>);
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;

@@ -1,7 +1,7 @@
 import type * as Enumerable from "./Enumerable.js";
 import type * as Observable from "./Observable.js";
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
-import { __AssociativeCollectionLike_keys, __CollectionLike_count, __Container_T, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __KeyedContainer_TKey, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_capacity, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
+import { __AssociativeCollectionLike_keys, __CollectionLike_count, __Container_T, __Container_TKey, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_capacity, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, TypePredicate } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
@@ -13,7 +13,7 @@ export declare const EnumeratorLike_hasCurrent: typeof __EnumeratorLike_hasCurre
 export declare const EnumeratorLike_isCompleted: typeof __EnumeratorLike_isCompleted;
 export declare const EnumeratorLike_move: typeof __EnumeratorLike_move;
 export declare const KeyedCollectionLike_get: typeof __KeyedCollectionLike_get;
-export declare const KeyedContainer_TKey: typeof __KeyedContainer_TKey;
+export declare const Container_TKey: typeof __Container_TKey;
 export declare const ReplayObservableLike_buffer: typeof __ReplayObservableLike_buffer;
 export declare const ObservableLike_isDeferred: typeof __ObservableLike_isDeferred;
 export declare const ObservableLike_isEnumerable: typeof __ObservableLike_isEnumerable;
@@ -557,59 +557,99 @@ export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamab
  * @noInheritDoc
  * @category Container
  */
-export interface Container {
+export interface Container<TKey = unknown> {
     readonly [Container_T]?: unknown;
     readonly [Container_type]?: unknown;
+    readonly [Container_TKey]?: TKey;
 }
 /**
  * @category Container
  */
-export type ContainerOf<C extends Container, T> = C extends {
+export type KeyOf<C extends Container> = NonNullable<C[typeof Container_TKey]>;
+/**
+ * @category Container
+ */
+export type ContainerOf<C extends Container, T, TKey extends KeyOf<C> = KeyOf<C>> = C extends {
     readonly [Container_type]?: unknown;
 } ? NonNullable<(C & {
     readonly [Container_T]: T;
-})[typeof Container_type]> : {
-    readonly _C: C;
-    readonly _T: () => T;
-};
-/**
- * @category Container
- */
-export type ContainerOperator<C extends Container, TA, TB> = Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
-/**
- * @noInheritDoc
- * @category Container
- */
-export interface KeyedContainer<TKey = unknown> extends Container {
-    readonly [KeyedContainer_TKey]?: TKey;
-}
-/**
- * @category Container
- */
-export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
-    readonly [Container_type]?: unknown;
-} ? NonNullable<(C & {
-    readonly [Container_T]: T;
-    readonly [KeyedContainer_TKey]: TKey;
+    readonly [Container_TKey]: TKey;
 })[typeof Container_type]> : {
     readonly _C: C;
     readonly _T: () => T;
     readonly _TKey: () => TKey;
 };
 /**
- * @category Container
- */
-export type KeyOf<C extends KeyedContainer> = NonNullable<C[typeof KeyedContainer_TKey]>;
-/**
  * Utility type for a generic operator function that transforms a Container's inner value type.
  * @category Container
  */
-export type KeyedContainerOperator<C extends KeyedContainer, TKey, TA, TB> = Function1<KeyedContainerOf<C, TKey, TA>, KeyedContainerOf<C, TKey, TB>>;
+export type ContainerOperator<C extends Container, TA, TB, TKey extends KeyOf<C> = KeyOf<C>> = Function1<ContainerOf<C, TA, TKey>, ContainerOf<C, TB, TKey>>;
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface IndexedContainer extends Container<number> {
+}
 /**
  * @noInheritDoc
  * @category Module
  */
 export interface ContainerModule<C extends Container> {
+    /**
+     * Returns a ContainerOperator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
+     * @category Operator
+     */
+    keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Predicate<T>): ContainerOperator<C, T, T, TKey>;
+    /**
+     *
+     * @category Operator
+     */
+    keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
+    /**
+     * Returns a ContainerOperator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
+     * @category Operator
+     */
+    keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): ContainerOperator<C, T, T, TKey>;
+    /**
+     * Returns a ContainerOperator that applies the `selector` function to each
+     * value emitted by the source.
+     *
+     * @param selector - A pure map function that is applied each value emitted by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     *
+     * @category Operator
+     */
+    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function1<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
+    /**
+     * Returns a ContainerOperator that applies the `selector` function to each
+     * value emitted by the source.
+     *
+     * @param selector - A pure map function that is applied each value emitted by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     *
+     * @category Operator
+     */
+    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
+}
+export interface ConcreteContainerModule<C extends Container> extends ContainerModule<C> {
+    /**
+     * Return an Container that emits no items.
+     *
+     * @category Constructor
+     */
+    empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): ContainerOf<C, T, TKey>;
+}
+/**
+ * @noInheritDoc
+ * @category Module
+ */
+export interface IndexedContainerModule<C extends IndexedContainer> extends ContainerModule<C> {
     /** @category Operator */
     buffer<T>(options?: {
         count?: number;
@@ -623,28 +663,6 @@ export interface ContainerModule<C extends Container> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): ContainerOperator<C, T, T>;
-    /**
-     * Returns a ContainerOperator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keep<T>(predicate: Predicate<T>): ContainerOperator<C, T, T>;
-    /**
-     * @category Operator
-     */
-    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB>;
-    /**
-     * Returns a ContainerOperator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    map<TA, TB>(selector: Function1<TA, TB>): ContainerOperator<C, TA, TB>;
     /**
      * @category Operator
      */
@@ -706,13 +724,7 @@ export interface ContainerModule<C extends Container> {
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
-export interface ConcreteContainerModule<C extends Container> extends ContainerModule<C> {
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<T>(): ContainerOf<C, T>;
+export interface ConcreteIndexedContainerModule<C extends IndexedContainer> extends IndexedContainerModule<C>, ConcreteContainerModule<C> {
     /**
      * @category Constructor
      */
@@ -741,7 +753,7 @@ export interface ConcreteContainerModule<C extends Container> extends ContainerM
  * @noInheritDoc
  * @category Module
  */
-export interface EventSourceContainerModule<C extends Container> extends ConcreteContainerModule<C> {
+export interface EventSourceContainerModule<C extends IndexedContainer> extends ConcreteIndexedContainerModule<C> {
     addEventHandler<T>(handler: SideEffect1<T>): Function1<ContainerOf<C, T>, DisposableLike>;
     /**
      * @category Transform
@@ -757,7 +769,7 @@ export interface EventSourceContainerModule<C extends Container> extends Concret
  * @noInheritDoc
  *  @category Module
  */
-export interface FlowableContainerModule<C extends Container, CObservable extends Observable.DeferredObservableBaseContainer> extends ConcreteContainerModule<C> {
+export interface FlowableContainerModule<C extends IndexedContainer, CObservable extends Observable.DeferredObservableBaseContainer> extends ConcreteIndexedContainerModule<C> {
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -768,7 +780,7 @@ export interface FlowableContainerModule<C extends Container, CObservable extend
  * @noInheritDoc
  * @category Module
  */
-export interface EnumerableContainerModule<C extends Container> extends FlowableContainerModule<C, Enumerable.Type> {
+export interface EnumerableContainerModule<C extends IndexedContainer> extends FlowableContainerModule<C, Enumerable.Type> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -832,6 +844,10 @@ export interface EnumerableContainerModule<C extends Container> extends Flowable
      */
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
     /**
+     * @category Transform
+     */
+    reduceWithKey<T, TAcc>(reducer: Function3<TAcc, T, number, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
+    /**
      * @category Operator
      */
     repeat<T>(): ContainerOperator<C, T, T>;
@@ -883,172 +899,115 @@ export interface EnumerableContainerModule<C extends Container> extends Flowable
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface KeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> {
-    /**
-     * Return an Container that emits no items.
-     *
-     * @category Constructor
-     */
-    empty<T, TKey extends NonNullable<C[typeof KeyedContainer_TKey]> = NonNullable<C[typeof KeyedContainer_TKey]>>(): KeyedContainerOf<C, TKey, T>;
+export interface CollectionContainerModule<C extends Container> extends ConcreteContainerModule<C> {
     /**
      * @category Transform
      */
-    entries<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, EnumerableLike<[TKey, T]>>;
+    entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<ContainerOf<C, T, TKey>, EnumerableLike<[TKey, T]>>;
     /**
      * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
      *
      * @category Operator
      */
-    forEach<T, TKey extends TKeyBase>(effect: SideEffect1<T>): KeyedContainerOperator<C, TKey, T, T>;
+    forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect1<T>): ContainerOperator<C, T, T, TKey>;
     /**
-     * Returns a KeyedContainerOperator that applies the side effect function to each
+     * Returns a ContainerOperator that applies the side effect function to each
      * value emitted by the source.
      *
      * @category Operator
      */
-    forEachWithKey<T, TKey extends TKeyBase>(effect: SideEffect2<T, TKey>): KeyedContainerOperator<C, TKey, T, T>;
-    /**
-     * Returns a ContainerOperator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keep<T, TKey extends TKeyBase>(predicate: Predicate<T>): KeyedContainerOperator<C, TKey, T, T>;
-    /**
-     *
-     * @category Operator
-     */
-    keepType<TA, TB extends TA, TKey extends TKeyBase>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
-    /**
-     * Returns a ContainerOperator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keepWithKey<T, TKey extends TKeyBase>(predicate: Function2<T, TKey, boolean>): KeyedContainerOperator<C, TKey, T, T>;
-    /**
-     * Returns a ContainerOperator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    map<TA, TB, TKey extends TKeyBase>(selector: Function1<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
-    /**
-     * Returns a ContainerOperator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    mapWithKey<TA, TB, TKey extends TKeyBase>(selector: Function2<TA, TKey, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+    forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect2<T, TKey>): ContainerOperator<C, T, T, TKey>;
     /**
      * @category Transform
      */
-    reduce<T, TAcc, TKey extends TKeyBase>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
     /**
      * @category Transform
      */
-    reduceWithKey<T, TAcc, TKey extends TKeyBase>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedContainerOf<C, TKey, T>, TAcc>;
+    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
     /**
      *
      * @category Transform
      */
-    values<T>(): Function1<KeyedContainerOf<C, any, T>, EnumerableLike<T>>;
+    values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<ContainerOf<C, T, TKey>, EnumerableLike<T>>;
 }
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface AssociativeKeyedContainerModule<C extends KeyedContainer, TKeyBase extends KeyOf<C> = KeyOf<C>> extends KeyedContainerModule<C, TKeyBase> {
-    fromDictionary<T, TKey extends TKeyBase>(): Function1<DictionaryLike<TKey, T>, KeyedContainerOf<C, TKey, T>>;
-    /**
-     * @category Constructor
-     */
-    fromEntries<T, TKey extends TKeyBase>(): Function1<EnumerableLike<[TKey, T]>, KeyedContainerOf<C, TKey, T>>;
-    /**
-     * @category Constructor
-     */
-    fromReadonlyMap<T, TKey extends TKeyBase>(): Function1<ReadonlyMap<TKey, T>, KeyedContainerOf<C, TKey, T>>;
-    /**
-     * @category Constructor
-     */
-    fromReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<ReadonlyObjectMapLike<TKey, T>, KeyedContainerOf<C, TKey, T>> : never;
-    /**
-     *
-     * @category Transform
-     */
-    keys<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, EnumerableLike<TKey>>;
-    /**
-     *
-     * @category Transform
-     */
-    keySet<TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, unknown>, ReadonlySet<TKey>>;
-    /**
-     *
-     * @category Transform
-     */
-    toDictionary<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, DictionaryLike<TKey, T>>;
-    /**
-     *
-     * @category Transform
-     */
-    toReadonlyMap<T, TKey extends TKeyBase>(): Function1<KeyedContainerOf<C, TKey, T>, ReadonlyMap<TKey, T>>;
-    /**
-     *
-     * @category Transform
-     */
-    toReadonlyObjectMap<T, TKey extends TKeyBase>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<KeyedContainerOf<C, TKey, T>, ReadonlyObjectMapLike<TKey, T>> : never;
-}
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface IndexedKeyedContainer<C extends KeyedContainer<number>> extends KeyedContainerModule<C, number>, Omit<EnumerableContainerModule<C>, keyof KeyedContainerModule<C> | "enumerate" | "toEventSource" | "toIterable" | "toObservable" | "toReadonlyArray"> {
+export interface IndexedCollectionContainerModule<C extends IndexedContainer> extends CollectionContainerModule<C>, Omit<EnumerableContainerModule<C>, "reduce" | "reduceWithKey"> {
     /** @category Transform */
     enumerate<T>(options?: {
         readonly start?: number;
         readonly count?: number;
-    }): Function1<KeyedContainerOf<C, number, T>, EnumeratorLike<T>>;
+    }): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
     /**
      * @category Operator
      */
-    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): Function1<KeyedContainerOf<C, number, TA>, KeyedContainerOf<C, number, TB>>;
-    fromIterable<T>(): Function1<Iterable<T>, KeyedContainerOf<C, number, T>>;
-    /**
-     * @category Operator
-     */
-    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB>;
-    keepType<TA, TB extends TA, TKey extends number>(predicate: TypePredicate<TA, TB>): KeyedContainerOperator<C, TKey, TA, TB>;
+    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+    fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
     /** @category Transform */
     toEventSource<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<KeyedContainerOf<C, number, T>, EventSourceLike<T>>;
+    }): Function1<ContainerOf<C, T>, EventSourceLike<T>>;
     /** @category Transform */
     toIterable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<KeyedContainerOf<C, number, T>, Iterable<T>>;
+    }): Function1<ContainerOf<C, T>, Iterable<T>>;
     /** @category Transform */
     toObservable<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<KeyedContainerOf<C, number, T>, EnumerableLike<T>>;
+    }): Function1<ContainerOf<C, T>, EnumerableLike<T>>;
     /** @category Transform */
     toReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;
-    }): Function1<KeyedContainerOf<C, number, T>, ReadonlyArray<T>>;
+    }): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
+}
+export interface AssociativeCollectionContainerModule<C extends Container> extends CollectionContainerModule<C>, ConcreteContainerModule<C> {
+    /**
+     * @category Constructor
+     */
+    fromDictionary<T, TKey extends KeyOf<C>>(): Function1<DictionaryLike<TKey, T>, ContainerOf<C, T, TKey>>;
+    /**
+     * @category Constructor
+     */
+    fromEntries<T, TKey extends KeyOf<C>>(): Function1<EnumerableLike<[TKey, T]>, ContainerOf<C, T, TKey>>;
+    /**
+     * @category Constructor
+     */
+    fromReadonlyMap<T, TKey extends KeyOf<C>>(): Function1<ReadonlyMap<TKey, T>, ContainerOf<C, T, TKey>>;
+    /**
+     * @category Constructor
+     */
+    fromReadonlyObjectMap<T, TKey extends KeyOf<C>>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<ReadonlyObjectMapLike<TKey, T>, ContainerOf<C, T, TKey>> : never;
+    /**
+     *
+     * @category Transform
+     */
+    keys<TKey extends KeyOf<C>>(): Function1<ContainerOf<C, unknown, TKey>, EnumerableLike<TKey>>;
+    /**
+     *
+     * @category Transform
+     */
+    keySet<TKey extends KeyOf<C>>(): Function1<ContainerOf<C, unknown, TKey>, ReadonlySet<TKey>>;
+    /**
+     *
+     * @category Transform
+     */
+    toDictionary<T, TKey extends KeyOf<C>>(): Function1<ContainerOf<C, T, TKey>, DictionaryLike<TKey, T>>;
+    /**
+     *
+     * @category Transform
+     */
+    toReadonlyMap<T, TKey extends KeyOf<C>>(): Function1<ContainerOf<C, T, TKey>, ReadonlyMap<TKey, T>>;
+    /**
+     *
+     * @category Transform
+     */
+    toReadonlyObjectMap<T, TKey extends KeyOf<C>>(): TKey extends KeyOf<ReadonlyObjectMap.Type> ? Function1<ContainerOf<C, T, TKey>, ReadonlyObjectMapLike<TKey, T>> : never;
 }

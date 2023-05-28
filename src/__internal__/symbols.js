@@ -105,9 +105,7 @@ export const __KeyedCollectionLike_get = /*@__PURE__*/ symbol(
 );
 
 /** @type {unique symbol} */
-export const __KeyedContainer_TKey = /*@__PURE__*/ symbol(
-  "KeyedContainer_TKey",
-);
+export const __Container_TKey = /*@__PURE__*/ symbol("Container_TKey");
 
 /** @type {unique symbol} */
 export const __ObservableLike_observe = /*@__PURE__*/ symbol(

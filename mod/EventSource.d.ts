@@ -1,10 +1,10 @@
 import { SideEffect1 } from "./functions.js";
-import { Container, Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceContainerModule, EventSourceLike } from "./types.js";
+import { Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceContainerModule, EventSourceLike, IndexedContainer } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface EventSourceContainer extends Container {
+export interface EventSourceContainer extends IndexedContainer {
     readonly [Container_type]?: EventSourceLike<this[typeof Container_T]>;
 }
 export type Type = EventSourceContainer;
@@ -49,8 +49,10 @@ export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromValue: Signature["fromValue"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
+export declare const keepWithKey: Signature["keepWithKey"];
 export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
+export declare const mapWithKey: Signature["mapWithKey"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
 export declare const pairwise: Signature["pairwise"];

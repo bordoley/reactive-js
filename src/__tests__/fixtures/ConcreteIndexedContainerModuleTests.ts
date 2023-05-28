@@ -7,24 +7,24 @@ import {
 } from "../../__internal__/testing.js";
 import { Function1, increment, none, pipe, returns } from "../../functions.js";
 import {
-  ConcreteContainerModule,
-  Container,
+  ConcreteIndexedContainerModule,
   ContainerOf,
   DisposableLike,
+  IndexedContainer,
 } from "../../types.js";
-import ContainerModuleTests from "./ContainerModuleTests.js";
+import IndexedContainerModuleTests from "./IndexedContainerModuleTests.js";
 
-const ConcreteContainerModuleTests = <
-  C extends Container,
+const ConcreteIndexedContainerModuleTests = <
+  C extends IndexedContainer,
   TCtx extends DisposableLike,
 >(
-  m: ConcreteContainerModule<C>,
+  m: ConcreteIndexedContainerModule<C>,
   createCtx: () => TCtx,
   toReadonlyArray: <T>(
     ctx: TCtx,
   ) => Function1<ContainerOf<C, T>, ReadonlyArray<T>>,
 ) => [
-  ContainerModuleTests(
+  IndexedContainerModuleTests(
     m,
     createCtx,
     <T>() => m.fromReadonlyArray<T>(),
@@ -185,4 +185,4 @@ const ConcreteContainerModuleTests = <
   ),
 ];
 
-export default ConcreteContainerModuleTests;
+export default ConcreteIndexedContainerModuleTests;

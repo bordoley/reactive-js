@@ -1,47 +1,44 @@
 [Reactive-JS](../README.md) / [types](../modules/types.md) / Container
 
-# Interface: Container
+# Interface: Container<TKey\>
 
 [types](../modules/types.md).Container
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | `unknown` |
 
 ## Hierarchy
 
 - **`Container`**
 
-  ↳ [`AsyncIterableContainer`](AsyncIterable.AsyncIterableContainer.md)
+  ↳ [`DictionaryContainer`](Dictionary.DictionaryContainer.md)
 
   ↳ [`DisposableContainer`](Disposable.DisposableContainer.md)
 
-  ↳ [`EventSourceContainer`](EventSource.EventSourceContainer.md)
+  ↳ [`ReadonlyMapContainer`](ReadonlyMap.ReadonlyMapContainer.md)
 
-  ↳ [`ObservableContainer`](Observable.ObservableContainer.md)
+  ↳ [`ReadonlyObjectMapContainer`](ReadonlyObjectMap.ReadonlyObjectMapContainer.md)
 
-  ↳ [`DeferredObservableBaseContainer`](Observable.DeferredObservableBaseContainer.md)
-
-  ↳ [`DeferredObservableContainer`](Observable.DeferredObservableContainer.md)
-
-  ↳ [`RunnableContainer`](Observable.RunnableContainer.md)
-
-  ↳ [`EnumerableContainer`](Observable.EnumerableContainer.md)
-
-  ↳ [`MulticastObservableContainer`](Observable.MulticastObservableContainer.md)
-
-  ↳ [`PauseableObservableContainer`](PauseableObservable.PauseableObservableContainer.md)
-
-  ↳ [`PromiseContainer`](Promise.PromiseContainer.md)
-
-  ↳ [`StoreContainer`](Store.StoreContainer.md)
-
-  ↳ [`KeyedContainer`](types.KeyedContainer.md)
+  ↳ [`IndexedContainer`](types.IndexedContainer.md)
 
 ## Table of contents
 
 ### Properties
 
+- [[\_\_\_Container\_TKey]](types.Container.md#[___container_tkey])
 - [[\_\_\_Container\_T]](types.Container.md#[___container_t])
 - [[\_\_\_Container\_type]](types.Container.md#[___container_type])
 
 ## Properties
+
+### [\_\_\_Container\_TKey]
+
+• `Optional` `Readonly` **[\_\_\_Container\_TKey]**: `TKey`
+
+___
 
 ### [\_\_\_Container\_T]
 

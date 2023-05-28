@@ -1,5 +1,5 @@
-import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container, Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, MulticastObservableLike, ObservableBaseLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "./types.js";
+import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
+import { Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, IndexedContainer, KeyOf, MulticastObservableLike, ObservableBaseLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "./types.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends EnumerableWithSideEffectsLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : never;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableBaseLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableBaseLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type RunnableBoundedPureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : never;
@@ -11,42 +11,42 @@ export type PureDeferredObservableOperator<TIn, TOut> = <TObservableIn extends D
  * @noInheritDoc
  * @category Container
  */
-export interface ObservableContainer extends Container {
+export interface ObservableContainer extends IndexedContainer {
     readonly [Container_type]?: ObservableLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface DeferredObservableBaseContainer extends Container {
+export interface DeferredObservableBaseContainer extends IndexedContainer {
     readonly [Container_type]?: DeferredObservableBaseLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface DeferredObservableContainer extends Container {
+export interface DeferredObservableContainer extends IndexedContainer {
     readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface RunnableContainer extends Container {
+export interface RunnableContainer extends IndexedContainer {
     readonly [Container_type]?: RunnableLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface EnumerableContainer extends Container {
+export interface EnumerableContainer extends IndexedContainer {
     readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface MulticastObservableContainer extends Container {
+export interface MulticastObservableContainer extends IndexedContainer {
     readonly [Container_type]?: MulticastObservableLike<this[typeof Container_T]>;
 }
 export type Type = ObservableContainer;
@@ -270,6 +270,7 @@ export interface ObservableModule {
     isRunnable<T>(obs: ObservableBaseLike<T>): obs is RunnableBaseLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
     keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): PureObservableOperator<TA, TB>;
+    keepWithKey<T, TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>>(predicate: Function2<T, TKey, boolean>): PureObservableOperator<T, T>;
     last<T>(): Function1<RunnableLike<T>, Optional<T>>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
@@ -277,6 +278,7 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
+    mapWithKey<TA, TB, TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>>(selector: Function2<TA, TKey, TB>): PureObservableOperator<TA, TB>;
     mapTo<TA, TB>(value: TB): PureObservableOperator<TA, TB>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     merge<T>(fst: RunnableBaseLike<T>, snd: RunnableBaseLike<T>, ...tail: readonly RunnableBaseLike<T>[]): RunnableWithSideEffectsLike<T>;
@@ -321,6 +323,7 @@ export interface ObservableModule {
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): PureObservableOperator<T, T[TKeyA][TKeyB]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): PureObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
+    reduceWithKey<T, TAcc, TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
     /**
      * @category Operator
      */
@@ -604,9 +607,11 @@ export declare const isRunnable: Signature["isRunnable"];
 export declare const isMulticastObservable: Signature["isMulticastObservable"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
+export declare const keepWithKey: Signature["keepWithKey"];
 export declare const last: Signature["last"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
+export declare const mapWithKey: Signature["mapWithKey"];
 export declare const mapTo: Signature["mapTo"];
 export declare const merge: Signature["merge"];
 export declare const mergeAll: Signature["mergeAll"];
@@ -622,6 +627,7 @@ export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const reduceWithKey: Signature["reduceWithKey"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const share: Signature["share"];

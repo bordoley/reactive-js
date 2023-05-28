@@ -2,8 +2,10 @@ import PauseableObservable_buffer from "./PauseableObservable/__internal__/Pause
 import PauseableObservable_distinctUntilChanged from "./PauseableObservable/__internal__/PauseableObservable.distinctUntilChanged.js";
 import PauseableObservable_keep from "./PauseableObservable/__internal__/PauseableObservable.keep.js";
 import PauseableObservable_keepType from "./PauseableObservable/__internal__/PauseableObservable.keepType.js";
+import PauseableObservable_keepWithKey from "./PauseableObservable/__internal__/PauseableObservable.keepWithKey.js";
 import PauseableObservable_map from "./PauseableObservable/__internal__/PauseableObservable.map.js";
 import PauseableObservable_mapTo from "./PauseableObservable/__internal__/PauseableObservable.mapTo.js";
+import PauseableObservable_mapWithKey from "./PauseableObservable/__internal__/PauseableObservable.mapWithKey.js";
 import PauseableObservable_pairwise from "./PauseableObservable/__internal__/PauseableObservable.pairwise.js";
 import PauseableObservable_pick from "./PauseableObservable/__internal__/PauseableObservable.pick.js";
 import PauseableObservable_scan from "./PauseableObservable/__internal__/PauseableObservable.scan.js";
@@ -14,12 +16,12 @@ import PauseableObservable_takeLast from "./PauseableObservable/__internal__/Pau
 import PauseableObservable_takeWhile from "./PauseableObservable/__internal__/PauseableObservable.takeWhile.js";
 import { Function1 } from "./functions.js";
 import {
-  Container,
-  ContainerModule,
   Container_T,
   Container_type,
   DeferredObservableLike,
   DispatcherLike,
+  IndexedContainer,
+  IndexedContainerModule,
   PauseableObservableLike,
 } from "./types.js";
 
@@ -27,7 +29,7 @@ import {
  * @noInheritDoc
  * @category Container
  */
-export interface PauseableObservableContainer extends Container {
+export interface PauseableObservableContainer extends IndexedContainer {
   readonly [Container_type]?: PauseableObservableLike<this[typeof Container_T]>;
 }
 
@@ -37,7 +39,8 @@ export type Type = PauseableObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PauseableObservableModule extends ContainerModule<Type> {
+export interface PauseableObservableModule
+  extends IndexedContainerModule<Type> {
   sinkInto<T>(
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
@@ -50,8 +53,12 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   PauseableObservable_distinctUntilChanged;
 export const keep: Signature["keep"] = PauseableObservable_keep;
 export const keepType: Signature["keepType"] = PauseableObservable_keepType;
+export const keepWithKey: Signature["keepWithKey"] =
+  PauseableObservable_keepWithKey;
 export const map: Signature["map"] = PauseableObservable_map;
 export const mapTo: Signature["mapTo"] = PauseableObservable_mapTo;
+export const mapWithKey: Signature["mapWithKey"] =
+  PauseableObservable_mapWithKey;
 export const pairwise: Signature["pairwise"] = PauseableObservable_pairwise;
 export const pick: Signature["pick"] = PauseableObservable_pick;
 export const scan: Signature["scan"] = PauseableObservable_scan;

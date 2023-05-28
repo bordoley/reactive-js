@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`ContainerModule`](types.ContainerModule.md)<[`Type`](../modules/PauseableObservable.md#type)\>
+- [`IndexedContainerModule`](types.IndexedContainerModule.md)<[`Type`](../modules/PauseableObservable.md#type)\>
 
   ↳ **`PauseableObservableModule`**
 

@@ -1,6 +1,6 @@
 [Reactive-JS](../README.md) / [Dictionary](../modules/Dictionary.md) / DictionaryModule
 
-# Interface: DictionaryModule<TType, TKey\>
+# Interface: DictionaryModule<TKey\>
 
 [Dictionary](../modules/Dictionary.md).DictionaryModule
 
@@ -8,11 +8,10 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TType` | extends [`Type`](../modules/Dictionary.md#type) = [`Type`](../modules/Dictionary.md#type) |
 | `TKey` | extends [`TKeyBase`](../modules/Dictionary.md#tkeybase) = [`TKeyBase`](../modules/Dictionary.md#tkeybase) |
 
 ## Hierarchy
 
-- [`AssociativeKeyedContainerModule`](types.AssociativeKeyedContainerModule.md)<`TType`, `TKey`\>
+- [`AssociativeCollectionContainerModule`](types.AssociativeCollectionContainerModule.md)<[`Type`](../modules/Dictionary.md#type)<`TKey`\>\>
 
   ↳ **`DictionaryModule`**

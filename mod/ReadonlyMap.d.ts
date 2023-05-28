@@ -1,11 +1,11 @@
-import { AssociativeKeyedContainerModule, Container_T, Container_type, KeyOf, KeyedContainer, KeyedContainer_TKey } from "./types.js";
+import { AssociativeCollectionContainerModule, Container, Container_T, Container_TKey, Container_type, KeyOf } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface ReadonlyMapContainer<TKey = unknown> extends KeyedContainer<TKey> {
-    readonly [Container_type]?: ReadonlyMap<this[typeof KeyedContainer_TKey], this[typeof Container_T]>;
-    readonly [KeyedContainer_TKey]?: TKey;
+export interface ReadonlyMapContainer<TKey = unknown> extends Container<TKey> {
+    readonly [Container_type]?: ReadonlyMap<this[typeof Container_TKey], this[typeof Container_T]>;
+    readonly [Container_TKey]?: TKey;
 }
 export type Type<TKey = unknown> = ReadonlyMapContainer<TKey>;
 export type TKeyBase = KeyOf<Type>;
@@ -13,13 +13,13 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyMapModule<TType extends Type = Type, TKey extends TKeyBase = TKeyBase> extends AssociativeKeyedContainerModule<TType, TKey> {
+export interface ReadonlyMapModule<TKey extends TKeyBase = TKeyBase> extends AssociativeCollectionContainerModule<Type<TKey>> {
 }
 export type Signature = ReadonlyMapModule;
 /**
  * @category Functor
  */
-export declare const CreateModule: <TKey extends {}>() => ReadonlyMapModule<Type<TKey>, TKey>;
+export declare const CreateModule: <TKey extends {}>() => ReadonlyMapModule<TKey>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const fromDictionary: Signature["fromDictionary"];

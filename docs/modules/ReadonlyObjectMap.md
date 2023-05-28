@@ -21,6 +21,7 @@
 ### Constructor Functions
 
 - [empty](ReadonlyObjectMap.md#empty)
+- [fromDictionary](ReadonlyObjectMap.md#fromdictionary)
 - [fromEntries](ReadonlyObjectMap.md#fromentries)
 - [fromReadonlyMap](ReadonlyObjectMap.md#fromreadonlymap)
 - [fromReadonlyObjectMap](ReadonlyObjectMap.md#fromreadonlyobjectmap)
@@ -38,10 +39,6 @@
 - [keepWithKey](ReadonlyObjectMap.md#keepwithkey)
 - [map](ReadonlyObjectMap.md#map)
 - [mapWithKey](ReadonlyObjectMap.md#mapwithkey)
-
-### Other Functions
-
-- [fromDictionary](ReadonlyObjectMap.md#fromdictionary)
 
 ### Transform Functions
 
@@ -92,11 +89,28 @@ Return an Container that emits no items.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> = `NonNullable`<`undefined` \| `string` \| `number` \| `symbol`\> |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
 [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>
+
+___
+
+### fromDictionary
+
+▸ **fromDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
 
 ___
 
@@ -109,7 +123,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -126,7 +140,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -143,7 +157,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -155,7 +169,7 @@ ___
 
 ### CreateModule
 
-▸ **CreateModule**<`TKey`\>(): [`ReadonlyObjectMapModule`](../interfaces/ReadonlyObjectMap.ReadonlyObjectMapModule.md)<[`Type`](ReadonlyObjectMap.md#type)<`TKey`\>, `TKey`\>
+▸ **CreateModule**<`TKey`\>(): [`ReadonlyObjectMapModule`](../interfaces/ReadonlyObjectMap.ReadonlyObjectMapModule.md)<`TKey`\>
 
 #### Type parameters
 
@@ -165,7 +179,7 @@ ___
 
 #### Returns
 
-[`ReadonlyObjectMapModule`](../interfaces/ReadonlyObjectMap.ReadonlyObjectMapModule.md)<[`Type`](ReadonlyObjectMap.md#type)<`TKey`\>, `TKey`\>
+[`ReadonlyObjectMapModule`](../interfaces/ReadonlyObjectMap.ReadonlyObjectMapModule.md)<`TKey`\>
 
 ___
 
@@ -173,7 +187,7 @@ ___
 
 ### forEach
 
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+▸ **forEach**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
@@ -183,7 +197,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -193,15 +207,15 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### forEachWithKey
 
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
-Returns a KeyedContainerOperator that applies the side effect function to each
+Returns a ContainerOperator that applies the side effect function to each
 value emitted by the source.
 
 #### Type parameters
@@ -209,7 +223,7 @@ value emitted by the source.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -219,13 +233,13 @@ value emitted by the source.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -235,7 +249,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -245,13 +259,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### keepType
 
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
+▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
@@ -259,7 +273,7 @@ ___
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -269,13 +283,13 @@ ___
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 ___
 
 ### keepWithKey
 
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 Returns a ContainerOperator that only emits items produced by the
 source that satisfy the specified predicate.
@@ -285,7 +299,7 @@ source that satisfy the specified predicate.
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -295,13 +309,13 @@ source that satisfy the specified predicate.
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `T`, `T`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -320,7 +334,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -330,13 +344,13 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 ___
 
 ### mapWithKey
 
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
+▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -355,7 +369,7 @@ TB - The inner type of the mapped container
 | :------ | :------ |
 | `TA` | `TA` |
 | `TB` | `TB` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -365,26 +379,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedContainerOperator`](types.md#keyedcontaineroperator)<[`Type`](ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>, `TKey`, `TA`, `TB`\>
-
-___
-
-## Other Functions
-
-### fromDictionary
-
-▸ **fromDictionary**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/types.DictionaryLike.md)<`TKey`, `T`\>, [`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -399,7 +394,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -415,7 +410,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -431,7 +426,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -449,7 +444,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -474,7 +469,7 @@ ___
 | :------ | :------ |
 | `T` | `T` |
 | `TAcc` | `TAcc` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Parameters
 
@@ -498,7 +493,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -515,7 +510,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -532,7 +527,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `T` | `T` |
-| `TKey` | extends [`TKeyBase`](ReadonlyObjectMap.md#tkeybase) |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
@@ -542,14 +537,15 @@ ___
 
 ### values
 
-▸ **values**<`T`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`any`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+▸ **values**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`any`, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](types.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`EnumerableLike`](../interfaces/types.EnumerableLike.md)<`T`\>\>

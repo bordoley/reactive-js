@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`KeyedContainer`](types.KeyedContainer.md)
+- [`IndexedContainer`](types.IndexedContainer.md)
 
   ↳ **`ReadonlyArrayContainer`**
 
@@ -15,7 +15,6 @@
 ### Properties
 
 - [[\_\_\_Container\_type]](ReadonlyArray.ReadonlyArrayContainer.md#[___container_type])
-- [[\_\_\_KeyedContainer\_TKey]](ReadonlyArray.ReadonlyArrayContainer.md#[___keyedcontainer_tkey])
 
 ## Properties
 
@@ -25,14 +24,4 @@
 
 #### Overrides
 
-KeyedContainer.\_\_@\_\_\_Container\_type@24253
-
-___
-
-### [\_\_\_KeyedContainer\_TKey]
-
-• `Optional` `Readonly` **[\_\_\_KeyedContainer\_TKey]**: `number`
-
-#### Overrides
-
-[KeyedContainer](types.KeyedContainer.md).[[___KeyedContainer_TKey]](types.KeyedContainer.md#[___keyedcontainer_tkey])
+IndexedContainer.\_\_@\_\_\_Container\_type@24293

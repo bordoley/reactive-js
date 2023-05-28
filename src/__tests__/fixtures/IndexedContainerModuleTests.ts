@@ -18,14 +18,17 @@ import {
   returns,
 } from "../../functions.js";
 import {
-  Container,
-  ContainerModule,
   ContainerOf,
   DisposableLike,
+  IndexedContainer,
+  IndexedContainerModule,
 } from "../../types.js";
 
-const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
-  m: ContainerModule<C>,
+const IndexedContainerModuleTests = <
+  C extends IndexedContainer,
+  TCtx extends DisposableLike,
+>(
+  m: IndexedContainerModule<C>,
   createCtx: () => TCtx,
   fromReadonlyArray: <T>(
     ctx: TCtx,
@@ -612,4 +615,4 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
     ),
   );
 
-export default ContainerModuleTests;
+export default IndexedContainerModuleTests;

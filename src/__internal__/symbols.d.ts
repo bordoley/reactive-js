@@ -42,7 +42,7 @@ export declare const __EventPublisherLike_listenerCount: unique symbol;
 
 export declare const __KeyedCollectionLike_get: unique symbol;
 
-export declare const __KeyedContainer_TKey: unique symbol;
+export declare const __Container_TKey: unique symbol;
 
 export declare const __ObservableLike_observe: unique symbol;
 

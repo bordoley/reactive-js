@@ -6,7 +6,7 @@ import IndexedCollection_map from "./IndexedCollection/__internal__/IndexedColle
 import IndexedCollection_toIterable from "./IndexedCollection/__internal__/IndexedCollection.toIterable.js";
 import IndexedCollection_toObservable from "./IndexedCollection/__internal__/IndexedCollection.toObservable.js";
 import IndexedCollection_toReadonlyArray from "./IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
-import { Container_type, KeyedContainer_TKey, } from "./types.js";
+import { Container_type, } from "./types.js";
 export const empty = IndexedCollection_empty;
 export const enumerate = IndexedCollection_enumerate;
 export const map = IndexedCollection_map;
