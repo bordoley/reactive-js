@@ -9,18 +9,15 @@ import {
   Container_type,
   IndexedCollectionLike,
   IndexedKeyedContainer,
-  KeyedContainer,
-  KeyedContainer_TKey,
+  IndexedKeyedContainerModule,
 } from "./types.js";
 
 /**
  * @noInheritDoc
  * @category Container
  */
-export interface IndexedCollectionContainer extends KeyedContainer {
+export interface IndexedCollectionContainer extends IndexedKeyedContainer {
   readonly [Container_type]?: IndexedCollectionLike<this[typeof Container_T]>;
-
-  readonly [KeyedContainer_TKey]?: number;
 }
 
 export type Type = IndexedCollectionContainer;
@@ -31,7 +28,8 @@ export type TKeyBase = number;
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedCollectionModule extends IndexedKeyedContainer<Type> {}
+export interface IndexedCollectionModule
+  extends IndexedKeyedContainerModule<Type> {}
 
 export type Signature = IndexedCollectionModule;
 

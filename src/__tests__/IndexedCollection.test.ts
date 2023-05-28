@@ -1,9 +1,10 @@
-//import * as IndexedCollection from "../IndexedCollection.js";
+import * as IndexedCollection from "../IndexedCollection.js";
 import { testModule } from "../__internal__/testing.js";
+import IndexedKeyedContainerModuleTests from "./fixtures/IndexedKeyedContainerModuleTests.js";
 
 testModule(
   "IndexedCollection",
-  //AssociativeKeyedContainerModuleTests(IndexedCollection.CreateModule<string>()),
+  IndexedKeyedContainerModuleTests(IndexedCollection),
 );
 
-//((_: IndexedCollection.Signature) => {})(IndexedCollection);
+((_: IndexedCollection.Signature) => {})(IndexedCollection);

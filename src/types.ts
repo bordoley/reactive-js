@@ -830,6 +830,12 @@ export interface KeyedContainer<TKey = unknown> extends Container {
 }
 
 /**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface IndexedKeyedContainer extends KeyedContainer<number> {}
+
+/**
  * @category Container
  */
 export type KeyedContainerOf<C extends KeyedContainer, TKey, T> = C extends {
@@ -1554,7 +1560,7 @@ export interface AssociativeKeyedContainerModule<
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedKeyedContainer<C extends KeyedContainer<number>>
+export interface IndexedKeyedContainerModule<C extends IndexedKeyedContainer>
   extends KeyedContainerModule<C, number>,
     Omit<
       EnumerableContainerModule<C>,
