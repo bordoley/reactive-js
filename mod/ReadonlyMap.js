@@ -12,6 +12,7 @@ import ReadonlyMap_keepWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.keep
 import ReadonlyMap_keySet from "./ReadonlyMap/__internal__/ReadonlyMap.keySet.js";
 import ReadonlyMap_keys from "./ReadonlyMap/__internal__/ReadonlyMap.keys.js";
 import ReadonlyMap_map from "./ReadonlyMap/__internal__/ReadonlyMap.map.js";
+import ReadonlyMap_mapTo from "./ReadonlyMap/__internal__/ReadonlyMap.mapTo.js";
 import ReadonlyMap_mapWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.mapWithKey.js";
 import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
 import ReadonlyMap_reduceWithKey from "./ReadonlyMap/__internal__/ReadonlyMap.reduceWithKey.js";
@@ -61,6 +62,7 @@ export const keepWithKey = ReadonlyMap_keepWithKey;
 export const keys = ReadonlyMap_keys;
 export const keySet = ReadonlyMap_keySet;
 export const map = ReadonlyMap_map;
+export const mapTo = ReadonlyMap_mapTo;
 export const mapWithKey = ReadonlyMap_mapWithKey;
 export const reduce = ReadonlyMap_reduce;
 export const reduceWithKey = ReadonlyMap_reduceWithKey;

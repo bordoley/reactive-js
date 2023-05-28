@@ -11,6 +11,7 @@ import ReadonlyObjectMap_keepWithKey from "./ReadonlyObjectMap/__internal__/Read
 import ReadonlyObjectMap_keySet from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keySet.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
 import ReadonlyObjectMap_map from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
+import ReadonlyObjectMap_mapTo from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapTo.js";
 import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
@@ -108,6 +109,7 @@ export const keepWithKey: Signature["keepWithKey"] =
 export const keys: Signature["keys"] = ReadonlyObjectMap_keys;
 export const keySet: Signature["keySet"] = ReadonlyObjectMap_keySet;
 export const map: Signature["map"] = ReadonlyObjectMap_map;
+export const mapTo: Signature["mapTo"] = ReadonlyObjectMap_mapTo;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyObjectMap_mapWithKey;
 export const reduce: Signature["reduce"] = ReadonlyObjectMap_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =

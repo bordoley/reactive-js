@@ -38,6 +38,7 @@
 - [keepType](ReadonlyObjectMap.md#keeptype)
 - [keepWithKey](ReadonlyObjectMap.md#keepwithkey)
 - [map](ReadonlyObjectMap.md#map)
+- [mapTo](ReadonlyObjectMap.md#mapto)
 - [mapWithKey](ReadonlyObjectMap.md#mapwithkey)
 
 ### Transform Functions
@@ -345,6 +346,29 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\>\>
 
 ___
 

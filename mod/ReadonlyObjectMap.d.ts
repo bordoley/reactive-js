@@ -34,6 +34,7 @@ export declare const keepWithKey: Signature["keepWithKey"];
 export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];
+export declare const mapTo: Signature["mapTo"];
 export declare const mapWithKey: Signature["mapWithKey"];
 export declare const reduce: Signature["reduce"];
 export declare const reduceWithKey: Signature["reduceWithKey"];

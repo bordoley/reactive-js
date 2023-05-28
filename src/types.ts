@@ -889,6 +889,11 @@ export interface ContainerModule<C extends Container> {
   ): ContainerOperator<C, TA, TB, TKey>;
 
   /**
+   * @category Operator
+   */
+  mapTo<TA, TB>(value: TB): ContainerOperator<C, TA, TB>;
+
+  /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
    *
@@ -959,11 +964,6 @@ export interface IndexedContainerModule<C extends IndexedContainer>
   distinctUntilChanged<T>(options?: {
     readonly equality?: Equality<T>;
   }): ContainerOperator<C, T, T>;
-
-  /**
-   * @category Operator
-   */
-  mapTo<TA, TB>(value: TB): ContainerOperator<C, TA, TB>;
 
   /**
    * @category Operator
@@ -1439,6 +1439,16 @@ export interface IndexedCollectionContainerModule<C extends IndexedContainer>
   flatMapIterable<TA, TB>(
     selector: Function1<TA, Iterable<TB>>,
   ): Function1<ContainerOf<C, TA>, ContainerOf<C, TB>>;
+
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly count?: number;
+      readonly start?: number;
+    },
+  ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
 
   fromIterable<T>(): Function1<Iterable<T>, ContainerOf<C, T>>;
 

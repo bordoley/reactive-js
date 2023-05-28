@@ -11,6 +11,7 @@ import Dictionary_keepWithKey from "./Dictionary/__internal__/Dictionary.keepWit
 import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_map from "./Dictionary/__internal__/Dictionary.map.js";
+import Dictionary_mapTo from "./Dictionary/__internal__/Dictionary.mapTo.js";
 import Dictionary_mapWithKey from "./Dictionary/__internal__/Dictionary.mapWithKey.js";
 import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
 import Dictionary_reduceWithKey from "./Dictionary/__internal__/Dictionary.reduceWithKey.js";
@@ -61,6 +62,7 @@ export const keepWithKey = Dictionary_keepWithKey;
 export const keys = Dictionary_keys;
 export const keySet = Dictionary_keySet;
 export const map = Dictionary_map;
+export const mapTo = Dictionary_mapTo;
 export const mapWithKey = Dictionary_mapWithKey;
 export const reduce = Dictionary_reduce;
 export const reduceWithKey = Dictionary_reduceWithKey;

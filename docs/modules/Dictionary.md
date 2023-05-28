@@ -38,6 +38,7 @@
 - [keepType](Dictionary.md#keeptype)
 - [keepWithKey](Dictionary.md#keepwithkey)
 - [map](Dictionary.md#map)
+- [mapTo](Dictionary.md#mapto)
 - [mapWithKey](Dictionary.md#mapwithkey)
 
 ### Transform Functions
@@ -345,6 +346,29 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, {}\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, {}\>
 
 ___
 

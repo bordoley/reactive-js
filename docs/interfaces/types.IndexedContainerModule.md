@@ -26,7 +26,6 @@
 
 - [buffer](types.IndexedContainerModule.md#buffer)
 - [distinctUntilChanged](types.IndexedContainerModule.md#distinctuntilchanged)
-- [mapTo](types.IndexedContainerModule.md#mapto)
 - [pairwise](types.IndexedContainerModule.md#pairwise)
 - [pick](types.IndexedContainerModule.md#pick)
 - [scan](types.IndexedContainerModule.md#scan)
@@ -83,29 +82,6 @@ are distinct by comparison from the previous item.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
 
 ___
 

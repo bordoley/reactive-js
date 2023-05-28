@@ -26,6 +26,7 @@
 - [keepType](types.ContainerModule.md#keeptype)
 - [keepWithKey](types.ContainerModule.md#keepwithkey)
 - [map](types.ContainerModule.md#map)
+- [mapTo](types.ContainerModule.md#mapto)
 - [mapWithKey](types.ContainerModule.md#mapwithkey)
 
 ## Operator Methods
@@ -138,6 +139,29 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
+
+___
+
+### mapTo
+
+▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `TB` |
+
+#### Returns
+
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
 
 ___
 
