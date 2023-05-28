@@ -38,7 +38,7 @@ An `ObservableLike` that supports being subscribed to on a VirtualTimeScheduler.
 
 #### Overrides
 
-RunnableBaseLike.\_\_@\_\_\_ObservableLike\_isDeferred@24471
+RunnableBaseLike.\_\_@\_\_\_ObservableLike\_isDeferred@24467
 
 ___
 

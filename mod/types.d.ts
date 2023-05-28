@@ -641,6 +641,20 @@ export interface ContainerModule<C extends Container> {
  * @noInheritDoc
  * @category Module
  */
+export interface ReduceableContainerModule<C extends Container> {
+    /**
+     * @category Transform
+     */
+    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
+    /**
+     * @category Transform
+     */
+    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
+}
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteContainerModule<C extends Container> extends ContainerModule<C> {
     /**
      * Return an Container that emits no items.
@@ -788,7 +802,7 @@ export interface FlowableContainerModule<C extends IndexedContainer, CObservable
  * @noInheritDoc
  * @category Module
  */
-export interface EnumerableContainerModule<C extends IndexedContainer> extends FlowableContainerModule<C, Enumerable.Type> {
+export interface EnumerableContainerModule<C extends IndexedContainer> extends FlowableContainerModule<C, Enumerable.Type>, ReduceableContainerModule<C> {
     /**
      * Returns a Container which emits all values from each source sequentially.
      *
@@ -848,14 +862,6 @@ export interface EnumerableContainerModule<C extends IndexedContainer> extends F
      */
     noneSatisfy<T>(predicate: Predicate<T>): Function1<ContainerOf<C, T>, boolean>;
     /**
-     * @category Transform
-     */
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
-    /**
-     * @category Transform
-     */
-    reduceWithKey<T, TAcc>(reducer: Function3<TAcc, T, number, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T>, TAcc>;
-    /**
      * @category Operator
      */
     repeat<T>(): ContainerOperator<C, T, T>;
@@ -911,7 +917,7 @@ export interface EnumerableContainerModule<C extends IndexedContainer> extends F
  * @noInheritDoc
  * @category Module
  */
-export interface CollectionContainerModule<C extends Container> extends ConcreteContainerModule<C> {
+export interface CollectionContainerModule<C extends Container> extends ConcreteContainerModule<C>, ReduceableContainerModule<C> {
     /**
      * @category Transform
      */
@@ -931,14 +937,6 @@ export interface CollectionContainerModule<C extends Container> extends Concrete
      */
     forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect2<T, TKey>): ContainerOperator<C, T, T, TKey>;
     /**
-     * @category Transform
-     */
-    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
-    /**
-     * @category Transform
-     */
-    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
-    /**
      *
      * @category Transform
      */
@@ -948,7 +946,7 @@ export interface CollectionContainerModule<C extends Container> extends Concrete
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedCollectionContainerModule<C extends IndexedContainer> extends CollectionContainerModule<C>, Omit<EnumerableContainerModule<C>, "reduce" | "reduceWithKey"> {
+export interface IndexedCollectionContainerModule<C extends IndexedContainer> extends CollectionContainerModule<C>, EnumerableContainerModule<C> {
     /** @category Transform */
     enumerate<T>(options?: {
         readonly start?: number;

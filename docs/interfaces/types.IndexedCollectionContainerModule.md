@@ -14,7 +14,7 @@
 
 - [`CollectionContainerModule`](types.CollectionContainerModule.md)<`C`\>
 
-- `Omit`<[`EnumerableContainerModule`](types.EnumerableContainerModule.md)<`C`\>, ``"reduce"`` \| ``"reduceWithKey"``\>
+- [`EnumerableContainerModule`](types.EnumerableContainerModule.md)<`C`\>
 
   ↳ **`IndexedCollectionContainerModule`**
 
@@ -109,7 +109,7 @@ ___
 
 #### Overrides
 
-Omit.enumerate
+[EnumerableContainerModule](types.EnumerableContainerModule.md).[enumerate](types.EnumerableContainerModule.md#enumerate)
 
 ___
 
@@ -161,7 +161,7 @@ ___
 
 #### Overrides
 
-Omit.toIterable
+[EnumerableContainerModule](types.EnumerableContainerModule.md).[toIterable](types.EnumerableContainerModule.md#toiterable)
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 #### Overrides
 
-Omit.toObservable
+EnumerableContainerModule.toObservable
 
 ___
 
@@ -217,4 +217,4 @@ ___
 
 #### Overrides
 
-Omit.toReadonlyArray
+[EnumerableContainerModule](types.EnumerableContainerModule.md).[toReadonlyArray](types.EnumerableContainerModule.md#toreadonlyarray)

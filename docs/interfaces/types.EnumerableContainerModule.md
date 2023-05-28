@@ -14,9 +14,13 @@
 
 - [`FlowableContainerModule`](types.FlowableContainerModule.md)<`C`, [`Type`](../modules/Enumerable.md#type)\>
 
+- [`ReduceableContainerModule`](types.ReduceableContainerModule.md)<`C`\>
+
   ↳ **`EnumerableContainerModule`**
 
   ↳↳ [`EnumerableModule`](Enumerable.EnumerableModule.md)
+
+  ↳↳ [`IndexedCollectionContainerModule`](types.IndexedCollectionContainerModule.md)
 
 ## Table of contents
 
@@ -43,8 +47,6 @@
 - [first](types.EnumerableContainerModule.md#first)
 - [last](types.EnumerableContainerModule.md#last)
 - [noneSatisfy](types.EnumerableContainerModule.md#nonesatisfy)
-- [reduce](types.EnumerableContainerModule.md#reduce)
-- [reduceWithKey](types.EnumerableContainerModule.md#reducewithkey)
 - [someSatisfy](types.EnumerableContainerModule.md#somesatisfy)
 - [toIterable](types.EnumerableContainerModule.md#toiterable)
 - [toReadonlyArray](types.EnumerableContainerModule.md#toreadonlyarray)
@@ -796,54 +798,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `boolean`\>
-
-___
-
-### reduce
-
-▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `TAcc`\>
-
-___
-
-### reduceWithKey
-
-▸ **reduceWithKey**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Function3`](../modules/functions.md#function3)<`TAcc`, `T`, `number`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>, `TAcc`\>
 
 ___
 

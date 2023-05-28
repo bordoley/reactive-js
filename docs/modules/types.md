@@ -44,6 +44,7 @@
 - [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [IndexedCollectionContainerModule](../interfaces/types.IndexedCollectionContainerModule.md)
 - [IndexedContainerModule](../interfaces/types.IndexedContainerModule.md)
+- [ReduceableContainerModule](../interfaces/types.ReduceableContainerModule.md)
 
 ### Observable Interfaces
 
