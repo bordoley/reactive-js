@@ -637,6 +637,10 @@ export interface ContainerModule<C extends Container> {
      */
     mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteContainerModule<C extends Container> extends ContainerModule<C> {
     /**
      * Return an Container that emits no items.
@@ -724,6 +728,10 @@ export interface IndexedContainerModule<C extends IndexedContainer> extends Cont
         readonly inclusive?: boolean;
     }): ContainerOperator<C, T, T>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteIndexedContainerModule<C extends IndexedContainer> extends IndexedContainerModule<C>, ConcreteContainerModule<C> {
     /**
      * @category Constructor
@@ -899,6 +907,10 @@ export interface EnumerableContainerModule<C extends IndexedContainer> extends F
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
     zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(b: ContainerOf<C, TB>, c: ContainerOf<C, TC>, d: ContainerOf<C, TD>, e: ContainerOf<C, TE>, f: ContainerOf<C, TF>, g: ContainerOf<C, TG>, h: ContainerOf<C, TH>, i: ContainerOf<C, TI>): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface CollectionContainerModule<C extends Container> extends ConcreteContainerModule<C> {
     /**
      * @category Transform
@@ -968,6 +980,10 @@ export interface IndexedCollectionContainerModule<C extends IndexedContainer> ex
         readonly start?: number;
     }): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface AssociativeCollectionContainerModule<C extends Container> extends CollectionContainerModule<C>, ConcreteContainerModule<C> {
     /**
      * @category Constructor

@@ -903,6 +903,10 @@ export interface ContainerModule<C extends Container> {
   ): ContainerOperator<C, TA, TB, TKey>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteContainerModule<C extends Container>
   extends ContainerModule<C> {
   /**
@@ -1019,6 +1023,10 @@ export interface IndexedContainerModule<C extends IndexedContainer>
   ): ContainerOperator<C, T, T>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface ConcreteIndexedContainerModule<C extends IndexedContainer>
   extends IndexedContainerModule<C>,
     ConcreteContainerModule<C> {
@@ -1360,6 +1368,10 @@ export interface EnumerableContainerModule<C extends IndexedContainer>
   ): ContainerOperator<C, TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface CollectionContainerModule<C extends Container>
   extends ConcreteContainerModule<C> {
   /**
@@ -1463,6 +1475,10 @@ export interface IndexedCollectionContainerModule<C extends IndexedContainer>
   }): Function1<ContainerOf<C, T>, ReadonlyArray<T>>;
 }
 
+/**
+ * @noInheritDoc
+ * @category Module
+ */
 export interface AssociativeCollectionContainerModule<C extends Container>
   extends CollectionContainerModule<C>,
     ConcreteContainerModule<C> {

@@ -34,6 +34,10 @@
 
 ### Module Interfaces
 
+- [AssociativeCollectionContainerModule](../interfaces/types.AssociativeCollectionContainerModule.md)
+- [CollectionContainerModule](../interfaces/types.CollectionContainerModule.md)
+- [ConcreteContainerModule](../interfaces/types.ConcreteContainerModule.md)
+- [ConcreteIndexedContainerModule](../interfaces/types.ConcreteIndexedContainerModule.md)
 - [ContainerModule](../interfaces/types.ContainerModule.md)
 - [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
 - [EventSourceContainerModule](../interfaces/types.EventSourceContainerModule.md)
@@ -56,13 +60,6 @@
 - [RunnableBaseLike](../interfaces/types.RunnableBaseLike.md)
 - [RunnableLike](../interfaces/types.RunnableLike.md)
 - [RunnableWithSideEffectsLike](../interfaces/types.RunnableWithSideEffectsLike.md)
-
-### Other Interfaces
-
-- [AssociativeCollectionContainerModule](../interfaces/types.AssociativeCollectionContainerModule.md)
-- [CollectionContainerModule](../interfaces/types.CollectionContainerModule.md)
-- [ConcreteContainerModule](../interfaces/types.ConcreteContainerModule.md)
-- [ConcreteIndexedContainerModule](../interfaces/types.ConcreteIndexedContainerModule.md)
 
 ### Queueing Interfaces
 
