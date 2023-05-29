@@ -72,6 +72,7 @@ export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<TKey> =>
     keys,
     keySet,
     map,
+    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,

@@ -6,11 +6,7 @@ import {
   isOdd,
   returns,
 } from "@reactive-js/core/functions";
-import * as Enumerable from "@reactive-js/core/Enumerable";
-import * as ReadonlyArray from "@reactive-js/core/ReadonlyArray";
 import * as Observable from "@reactive-js/core/Observable";
-import * as Types from "@reactive-js/core/types";
-import { Container } from "@reactive-js/core/types";
 
 /**
  * A function that returns the result of summing
@@ -34,47 +30,61 @@ export const createArray = (n: number): ReadonlyArray<number> => {
   return src;
 };
 
-const createMapPerfTest = <C extends Container>(
-  name: string,
-  m: Types.EnumerableContainerModule<C>,
-) =>
-  benchmarkTest(name, async (src: readonly number[]) =>
-    pipeLazy(src, m.fromReadonlyArray(), m.map(increment), m.toReadonlyArray()),
-  );
-
 export const map = (n: number) =>
   benchmarkGroup(
     `map ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createMapPerfTest<Enumerable.Type>("Enumerable", Enumerable),
-    createMapPerfTest<ReadonlyArray.Type>("readonlyArray", ReadonlyArray),
+    benchmarkTest("Enumerable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.map(increment),
+        Observable.toReadonlyArray(),
+      ),
+    ),
+    benchmarkTest("Runnable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.delay(0),
+        Observable.map(increment),
+        Observable.toReadonlyArray(),
+      ),
+    ),
     benchmarkTest("array methods", async src => {
       return () => src.map(increment);
     }),
-  );
-
-const createFilterMapFusionPerfTest = <C extends Container>(
-  name: string,
-  m: Types.EnumerableContainerModule<C>,
-) =>
-  benchmarkTest(name, async (src: readonly number[]) =>
-    pipeLazy(
-      src,
-      m.fromReadonlyArray(),
-      m.map(increment),
-      m.keep(isOdd),
-      m.map(increment),
-      m.map(increment),
-      m.keep(isEven),
-      m.toReadonlyArray(),
-    ),
   );
 
 export const filterMapFusion = (n: number) =>
   benchmarkGroup(
     `filter -> map -> fusion with ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapFusionPerfTest("Enumerable", Enumerable),
+    benchmarkTest("Enumerable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.map(increment),
+        Observable.keep(isOdd),
+        Observable.map(increment),
+        Observable.map(increment),
+        Observable.keep(isEven),
+        Observable.toReadonlyArray(),
+      ),
+    ),
+    benchmarkTest("Runnable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.delay(0),
+        Observable.map(increment),
+        Observable.keep(isOdd),
+        Observable.map(increment),
+        Observable.map(increment),
+        Observable.keep(isEven),
+        Observable.toReadonlyArray(),
+      ),
+    ),
     benchmarkTest(
       "array methods",
       async src => () =>
@@ -88,25 +98,29 @@ export const filterMapFusion = (n: number) =>
     ),
   );
 
-const createFilterMapReducePerfTest = <C extends Container>(
-  name: string,
-  m: Types.EnumerableContainerModule<C>,
-) =>
-  benchmarkTest(name, async (src: readonly number[]) =>
-    pipeLazy(
-      src,
-      m.fromReadonlyArray(),
-      m.keep(isEven),
-      m.map(increment),
-      m.toReadonlyArray(),
-    ),
-  );
-
 export const filterMapReduce = (n: number) =>
   benchmarkGroup(
     `filter -> map -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createFilterMapReducePerfTest("Enumerable", Enumerable),
+    benchmarkTest("Enumerable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.keep(isEven),
+        Observable.map(increment),
+        Observable.toReadonlyArray(),
+      ),
+    ),
+    benchmarkTest("Runnable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.delay(0),
+        Observable.keep(isEven),
+        Observable.map(increment),
+        Observable.toReadonlyArray(),
+      ),
+    ),
     benchmarkTest(
       "array methods",
       async src => () => src.filter(isEven).map(increment),
@@ -121,24 +135,27 @@ export const filterMapReduce = (n: number) =>
     }),
   );
 
-const createScanReducePerfTest = <C extends Container>(
-  name: string,
-  m: Types.EnumerableContainerModule<C>,
-) =>
-  benchmarkTest(name, async (src: readonly number[]) =>
-    pipeLazy(
-      src,
-      m.fromReadonlyArray(),
-      m.scan(sum, returns(0)),
-      m.toReadonlyArray(),
-    ),
-  );
-
 export const scanReduce = (n: number) =>
   benchmarkGroup(
     `scan -> reduce ${n} integers`,
     pipeLazy<number, readonly number[]>(n, createArray),
-    createScanReducePerfTest("Enumerable", Enumerable),
+    benchmarkTest("Enumerable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.scan(sum, returns(0)),
+        Observable.toReadonlyArray(),
+      ),
+    ),
+    benchmarkTest("Runnable", async (src: readonly number[]) =>
+      pipeLazy(
+        src,
+        Observable.fromReadonlyArray(),
+        Observable.delay(0),
+        Observable.scan(sum, returns(0)),
+        Observable.toReadonlyArray(),
+      ),
+    ),
     benchmarkTest("most", async src => {
       const { scan } = await import("@most/core");
       const { reduce } = await import("./most/reduce.js");
@@ -160,10 +177,12 @@ export const every = (n: number) =>
         Observable.everySatisfy(i => i < 0),
       ),
     ),
-    benchmarkTest("readonlyArray", async src =>
+    benchmarkTest("Runnable", async src =>
       pipeLazy(
         src,
-        ReadonlyArray.everySatisfy(i => i < 0),
+        Observable.fromReadonlyArray(),
+        Observable.delay<number>(0),
+        Observable.everySatisfy(i => i < 0),
       ),
     ),
     benchmarkTest("array methods", async src => () => src.every(i => i < 0)),

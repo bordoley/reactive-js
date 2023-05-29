@@ -8,7 +8,7 @@ import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../__internal__/testing.js";
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
 import { DisposableLike_error, PauseableLike_isPaused, PauseableLike_resume, StoreLike_value, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
-import IndexedContainerModuleTests from "./fixtures/IndexedContainerModuleTests.js";
+import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
@@ -23,7 +23,7 @@ const toReadonlyArray = (scheduler) => (obs) => {
     }
     return result;
 };
-testModule("PauseableObservable", IndexedContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
+testModule("PauseableObservable", ...ReactiveContainerModuleTests(PauseableObservable, Scheduler.createVirtualTimeScheduler, fromReadonlyArray, toReadonlyArray), describe("sinkInto", test("sinking a pauseable observable into a stream with backpressure", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
     const src = pipe(Observable.generate(increment, returns(-1)), Observable.delay(1, { delayStart: true }), Observable.flow(scheduler), PauseableObservable.takeFirst({ count: 5 }));
     const dest = Streamable.identity()[StreamableLike_stream](scheduler, {

@@ -1,125 +1,144 @@
-import * as Enumerable from "../../Enumerable.js";
-import * as ReadonlyArray from "../../ReadonlyArray.js";
+import * as Observable from "../../Observable.js";
 import {
   describe,
   expectArrayEquals,
-  expectEquals,
   test,
 } from "../../__internal__/testing.js";
-import {
-  arrayEquality,
-  none,
-  pipe,
-  pipeLazy,
-  returns,
-} from "../../functions.js";
+import { increment, none, pipeLazy, returns } from "../../functions.js";
 import {
   IndexedCollectionContainerModule,
   IndexedContainer,
 } from "../../types.js";
-import EnumerableContainerModuleTests from "./EnumerableContainerModuleTests.js";
+import CollectionContainerModuleTests from "./CollectionContainerModuleTests.js";
 
 const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
   m: IndexedCollectionContainerModule<C>,
-) =>
+) => [
+  ...CollectionContainerModuleTests(m, <T>() => m.fromReadonlyArray<T>()),
   describe(
     "IndexedCollectionContainerModuleTests",
 
-    ...EnumerableContainerModuleTests(ReadonlyArray),
     describe(
-      "entries",
+      "fromEnumerable",
       test(
-        "enumerates all entries",
-        pipeLazy(
-          ["b", "d"],
-          m.fromReadonlyArray(),
-          m.entries<string, number>(),
-          Enumerable.toReadonlyArray<[number, string]>(),
-          expectArrayEquals(
-            [
-              [0, "b"],
-              [1, "d"],
-            ],
-            arrayEquality(),
-          ),
-        ),
-      ),
-    ),
-    describe(
-      "flatMapIterable",
-      test(
-        "maps the incoming value with the inline generator function",
-        pipeLazy(
-          [none, none],
-          m.fromReadonlyArray(),
-          m.flatMapIterable(function* (_) {
-            yield 1;
-            yield 2;
-            yield 3;
-          }),
-          m.toReadonlyArray(),
-          expectArrayEquals([1, 2, 3, 1, 2, 3]),
-        ),
-      ),
-    ),
-    describe(
-      "forEachWithKey",
-      test("iterate and imperatively sum the keys", () => {
-        let result = 0;
+        "from generating enumerable",
 
-        pipe(
-          ["b", "d", "v"],
-          m.fromReadonlyArray(),
-          m.forEachWithKey((_, key) => {
-            result = result + key;
-          }),
-        );
+        pipeLazy(
+          Observable.generate<number>(increment, returns(-1)),
+          Observable.takeFirst<number>({ count: 5 }),
+          m.fromEnumerable(),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([0, 1, 2, 3, 4]),
+        ),
+      ),
+    ),
+    describe(
+      "fromFactory",
+      test(
+        "it produces the factory result",
 
-        pipe(result, expectEquals(3));
-      }),
-    ),
-    describe(
-      "keepWithKey",
-      test(
-        "filters out entries by key",
         pipeLazy(
-          ["b", "d", "v"],
-          m.fromReadonlyArray(),
-          m.keepWithKey((_, key) => key === 1),
+          () => 1,
+          m.fromFactory<number>(),
           m.toReadonlyArray(),
-          expectArrayEquals(["d"]),
+          expectArrayEquals([1]),
         ),
       ),
     ),
     describe(
-      "mapWithKey",
+      "fromOptional",
       test(
-        "mapping every value to its key",
+        "when none",
+
         pipeLazy(
-          ["b", "d", "f"],
-          m.fromReadonlyArray(),
-          m.mapWithKey((_, key) => key),
+          none,
+          m.fromOptional(),
+          m.toReadonlyArray<never>(),
+          expectArrayEquals([]),
+        ),
+      ),
+      test(
+        "when some",
+
+        pipeLazy(
+          1,
+          m.fromOptional(),
+          m.toReadonlyArray<number>(),
+          expectArrayEquals([1]),
+        ),
+      ),
+    ),
+    describe(
+      "fromReadonlyArray",
+      test(
+        "negative count with start index",
+
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: -3, start: 4 }),
           m.toReadonlyArray(),
-          expectArrayEquals([0, 1, 2]),
+          expectArrayEquals([5, 4, 3]),
+        ),
+      ),
+      test(
+        "positive count with start index",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: 3, start: 4 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([5, 6, 7]),
+        ),
+      ),
+      test(
+        "negative count exceeding bounds with start index",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: -100, start: 3 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([4, 3, 2, 1]),
+        ),
+      ),
+      test(
+        "positive count exceeding bounds with start index",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: 100, start: 7 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([8, 9]),
+        ),
+      ),
+      test(
+        "negative count without start index",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: -3 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([9, 8, 7]),
+        ),
+      ),
+      test(
+        "positive count without start index",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          m.fromReadonlyArray({ count: 3 }),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
         ),
       ),
     ),
     describe(
-      "reduceWithKey",
+      "fromValue",
       test(
-        "summing the keys",
+        "it produces the value",
         pipeLazy(
-          ["a", "B", "c"],
-          m.fromReadonlyArray(),
-          m.reduceWithKey(
-            (acc: number, _: string, key: number) => acc + key,
-            returns(0),
-          ),
-          expectEquals(3),
+          none,
+          m.fromValue(),
+          m.toReadonlyArray(),
+          expectArrayEquals([none]),
         ),
       ),
     ),
-    describe("values"),
-  );
+  ),
+];
 
 export default IndexedCollectionContainerModuleTests;

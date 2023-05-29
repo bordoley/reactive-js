@@ -22,7 +22,7 @@ import {
   VirtualTimeSchedulerLike,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import IndexedContainerModuleTests from "./fixtures/IndexedContainerModuleTests.js";
+import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 
 const fromReadonlyArray =
   <T>(scheduler: SchedulerLike) =>
@@ -54,7 +54,7 @@ const toReadonlyArray =
 
 testModule(
   "PauseableObservable",
-  IndexedContainerModuleTests(
+  ...ReactiveContainerModuleTests(
     PauseableObservable,
     Scheduler.createVirtualTimeScheduler,
     fromReadonlyArray,

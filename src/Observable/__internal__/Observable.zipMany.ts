@@ -9,10 +9,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Queue_indexedQueueMixin from "../../Queue/__internal__/Queue.indexedQueueMixin.js";
-import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_someSatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -67,7 +66,10 @@ import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enumerate from "./Observable.enumerate.js";
+import Observable_everySatisfy from "./Observable.everySatisfy.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_map from "./Observable.map.js";
+import Observable_someSatisfy from "./Observable.someSatisfy.js";
 
 interface QueuedEnumeratorLike<T = unknown>
   extends EnumeratorLike<T>,
@@ -152,11 +154,12 @@ const Enumerable_zipMany = (
 
 const Observable_zipMany = /*@__PURE__*/ (() => {
   const shouldEmit = compose(
-    ReadonlyArray_map(
+    ReadonlyArray_toObservable(),
+    Observable_map(
       (x: EnumeratorLike) =>
         x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move](),
     ),
-    ReadonlyArray_everySatisfy(isTrue),
+    Observable_everySatisfy(isTrue),
   );
 
   const Enumerator_getCurrent = <T>(enumerator: EnumeratorLike<T>): T =>
@@ -170,7 +173,8 @@ const Observable_zipMany = /*@__PURE__*/ (() => {
   const shouldComplete = /*@__PURE__*/ (() =>
     compose(
       ReadonlyArray_forEach(Enumerator_move<EnumeratorLike>()),
-      ReadonlyArray_someSatisfy(x => x[EnumeratorLike_isCompleted]),
+      ReadonlyArray_toObservable(),
+      Observable_someSatisfy(x => x[EnumeratorLike_isCompleted]),
     ))();
 
   type TProperties = {

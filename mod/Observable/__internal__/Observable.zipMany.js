@@ -11,10 +11,9 @@ import Observer_assertState from "../../Observer/__internal__/Observer.assertSta
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import Observer_mixin from "../../Observer/__internal__/Observer.mixin.js";
 import Queue_indexedQueueMixin from "../../Queue/__internal__/Queue.indexedQueueMixin.js";
-import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
 import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_someSatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.someSatisfy.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { __ZipObserver_queuedEnumerator } from "../../__internal__/symbols.js";
 import { DelegatingLike_delegate, QueueLike_dequeue, ZipLike_enumerators, } from "../../__internal__/types.js";
@@ -26,7 +25,10 @@ import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_enumerate from "./Observable.enumerate.js";
+import Observable_everySatisfy from "./Observable.everySatisfy.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_map from "./Observable.map.js";
+import Observable_someSatisfy from "./Observable.someSatisfy.js";
 const QueuedEnumerator_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(Disposable_mixin, Queue_indexedQueueMixin()), function QueuedEnumerator(instance, capacity, backpressureStrategy) {
         init(Disposable_mixin, instance);
@@ -58,10 +60,10 @@ const QueuedEnumerator_create = /*@__PURE__*/ (() => {
 })();
 const Enumerable_zipMany = (observables, config) => EnumerableBase_create(pipeLazy(observables, ReadonlyArray_map(Observable_enumerate()), Enumerator_zipMany), config);
 const Observable_zipMany = /*@__PURE__*/ (() => {
-    const shouldEmit = compose(ReadonlyArray_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), ReadonlyArray_everySatisfy(isTrue));
+    const shouldEmit = compose(ReadonlyArray_toObservable(), Observable_map((x) => x[EnumeratorLike_hasCurrent] || x[EnumeratorLike_move]()), Observable_everySatisfy(isTrue));
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
     const Enumerator_move = () => (enumerator) => enumerator[EnumeratorLike_move]();
-    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_someSatisfy(x => x[EnumeratorLike_isCompleted])))();
+    const shouldComplete = /*@__PURE__*/ (() => compose(ReadonlyArray_forEach(Enumerator_move()), ReadonlyArray_toObservable(), Observable_someSatisfy(x => x[EnumeratorLike_isCompleted])))();
     const createZipObserver = createInstanceFactory(mix(include(Disposable_mixin, Observer_mixin(), Delegating_mixin()), function ZipObserver(instance, delegate, enumerators, queuedEnumerator) {
         init(Disposable_mixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);

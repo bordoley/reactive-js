@@ -11,7 +11,7 @@ export type Type = PromiseContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PromiseModule extends Pick<EventSourceContainerModule<Type>, "addEventHandler" | "toEventSource" | "toObservable" | "toReadonlyArrayAsync"> {
+export interface PromiseModule extends EventSourceContainerModule<Type> {
 }
 export type Signature = PromiseModule;
 export declare const addEventHandler: Signature["addEventHandler"];

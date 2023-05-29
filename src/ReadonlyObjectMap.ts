@@ -34,7 +34,7 @@ import {
  * @category Container
  */
 export interface ReadonlyObjectMapContainer<
-  TKey extends symbol | number | string = symbol | number | string,
+  TKey extends symbol | string = symbol | string,
 > extends Container {
   readonly [Container_type]?: ReadonlyObjectMapLike<
     NonNullable<this[typeof Container_TKey]>,
@@ -44,9 +44,8 @@ export interface ReadonlyObjectMapContainer<
   readonly [Container_TKey]?: TKey;
 }
 
-export type Type<
-  TKey extends symbol | number | string = symbol | number | string,
-> = ReadonlyObjectMapContainer<TKey>;
+export type Type<TKey extends symbol | string = symbol | string> =
+  ReadonlyObjectMapContainer<TKey>;
 
 export type TKeyBase = KeyOf<Type>;
 
@@ -80,6 +79,7 @@ export const CreateModule = <
     keys,
     keySet,
     map,
+    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,

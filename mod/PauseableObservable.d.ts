@@ -1,5 +1,5 @@
 import { Function1 } from "./functions.js";
-import { Container_T, Container_type, DeferredObservableLike, DispatcherLike, IndexedContainer, IndexedContainerModule, PauseableObservableLike } from "./types.js";
+import { Container_T, Container_type, DeferredObservableLike, DispatcherLike, IndexedContainer, PauseableObservableLike, ReactiveContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = PauseableObservableContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface PauseableObservableModule extends IndexedContainerModule<Type> {
+export interface PauseableObservableModule extends ReactiveContainerModule<Type> {
     sinkInto<T>(sink: DispatcherLike<T>): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;
 }
 export type Signature = PauseableObservableModule;

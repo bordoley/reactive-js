@@ -4,7 +4,7 @@ import AssociativeCollectionContainerModuleTests from "./fixtures/AssociativeCol
 
 testModule(
   "ReadonlyObjectMap",
-  AssociativeCollectionContainerModuleTests(
+  ...AssociativeCollectionContainerModuleTests(
     ReadonlyObjectMap.CreateModule<string>(),
   ),
 );

@@ -6,6 +6,6 @@
 
 ## Hierarchy
 
-- `Pick`<[`EventSourceContainerModule`](types.EventSourceContainerModule.md)<[`Type`](../modules/Promise.md#type)\>, ``"addEventHandler"`` \| ``"toEventSource"`` \| ``"toObservable"`` \| ``"toReadonlyArrayAsync"``\>
+- [`EventSourceContainerModule`](types.EventSourceContainerModule.md)<[`Type`](../modules/Promise.md#type)\>
 
   ↳ **`PromiseModule`**

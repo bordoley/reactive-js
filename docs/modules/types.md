@@ -36,15 +36,10 @@
 
 - [AssociativeCollectionContainerModule](../interfaces/types.AssociativeCollectionContainerModule.md)
 - [CollectionContainerModule](../interfaces/types.CollectionContainerModule.md)
-- [ConcreteContainerModule](../interfaces/types.ConcreteContainerModule.md)
-- [ConcreteIndexedContainerModule](../interfaces/types.ConcreteIndexedContainerModule.md)
 - [ContainerModule](../interfaces/types.ContainerModule.md)
-- [EnumerableContainerModule](../interfaces/types.EnumerableContainerModule.md)
 - [EventSourceContainerModule](../interfaces/types.EventSourceContainerModule.md)
-- [FlowableContainerModule](../interfaces/types.FlowableContainerModule.md)
 - [IndexedCollectionContainerModule](../interfaces/types.IndexedCollectionContainerModule.md)
-- [IndexedContainerModule](../interfaces/types.IndexedContainerModule.md)
-- [ReduceableContainerModule](../interfaces/types.ReduceableContainerModule.md)
+- [ReactiveContainerModule](../interfaces/types.ReactiveContainerModule.md)
 
 ### Observable Interfaces
 
@@ -167,7 +162,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `symbol` \| `number` \| `string` = `string` |
+| `TKey` | extends `symbol` \| `string` = `string` |
 | `T` | `unknown` |
 
 ___

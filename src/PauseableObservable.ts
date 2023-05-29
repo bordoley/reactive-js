@@ -21,8 +21,8 @@ import {
   DeferredObservableLike,
   DispatcherLike,
   IndexedContainer,
-  IndexedContainerModule,
   PauseableObservableLike,
+  ReactiveContainerModule,
 } from "./types.js";
 
 /**
@@ -40,7 +40,7 @@ export type Type = PauseableObservableContainer;
  * @category Module
  */
 export interface PauseableObservableModule
-  extends IndexedContainerModule<Type> {
+  extends ReactiveContainerModule<Type> {
   sinkInto<T>(
     sink: DispatcherLike<T>,
   ): Function1<PauseableObservableLike<T>, DeferredObservableLike<void>>;

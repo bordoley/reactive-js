@@ -215,14 +215,15 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `number`\>
+▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` = `number` |
 
 #### Parameters
 
@@ -232,7 +233,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `number`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -273,7 +274,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly [`T`, `T`], `number`\>
+▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, `number`\>
 
 #### Type parameters
 
@@ -283,7 +284,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, readonly [`T`, `T`], `number`\>
+[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, `number`\>
 
 ___
 

@@ -59,9 +59,9 @@ const ScrollApp = () => {
 
   const animationGroup = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<boolean, number, number>(
-        [
-          direction =>
+      Streamable.createAnimationGroupEventHandler<boolean, string, number>(
+        {
+          spring: direction =>
             direction
               ? [
                   {
@@ -91,14 +91,14 @@ const ScrollApp = () => {
                     to: 0,
                   },
                 ],
-        ],
+        },
         { mode: "switching", scheduler: animationScheduler },
       ),
     [],
   );
   const { enqueue } = useDispatcher(animationGroup);
 
-  const springAnimation = animationGroup?.[KeyedCollectionLike_get](0);
+  const springAnimation = animationGroup?.[KeyedCollectionLike_get]("spring");
 
   const publishedAnimation = useDisposable(EventSource.createPublisher, []);
 

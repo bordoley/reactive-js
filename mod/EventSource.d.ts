@@ -1,5 +1,5 @@
 import { SideEffect1 } from "./functions.js";
-import { Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceContainerModule, EventSourceLike, IndexedContainer } from "./types.js";
+import { Container_T, Container_type, EventListenerLike, EventPublisherLike, EventSourceContainerModule, EventSourceLike, IndexedContainer, ReactiveContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,7 +12,7 @@ export type Type = EventSourceContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface EventSourceModule extends EventSourceContainerModule<Type> {
+export interface EventSourceModule extends EventSourceContainerModule<Type>, ReactiveContainerModule<Type> {
     /**
      * @category Constructor
      */
@@ -41,12 +41,6 @@ export declare const create: Signature["create"];
 export declare const createPublisher: Signature["createPublisher"];
 export declare const createRefCountedPublisher: Signature["createRefCountedPublisher"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
-export declare const empty: Signature["empty"];
-export declare const fromEnumerable: Signature["fromEnumerable"];
-export declare const fromFactory: Signature["fromFactory"];
-export declare const fromOptional: Signature["fromOptional"];
-export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
-export declare const fromValue: Signature["fromValue"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const keepWithKey: Signature["keepWithKey"];

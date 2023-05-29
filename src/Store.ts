@@ -26,14 +26,7 @@ export type Type = StoreContainer;
  * @noInheritDoc
  * @category Module
  */
-export interface StoreModule
-  extends Pick<
-    EventSourceContainerModule<Type>,
-    | "addEventHandler"
-    | "toEventSource"
-    | "toObservable"
-    | "toReadonlyArrayAsync"
-  > {
+export interface StoreModule extends EventSourceContainerModule<Type> {
   create<T>(initialValue: T): WritableStoreLike<T> & DisposableLike;
 }
 

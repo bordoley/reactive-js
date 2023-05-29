@@ -12,11 +12,13 @@
 
 ## Hierarchy
 
-- [`ConcreteIndexedContainerModule`](types.ConcreteIndexedContainerModule.md)<`C`\>
+- **`EventSourceContainerModule`**
 
-  ↳ **`EventSourceContainerModule`**
+  ↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
 
-  ↳↳ [`EventSourceModule`](EventSource.EventSourceModule.md)
+  ↳ [`PromiseModule`](Promise.PromiseModule.md)
+
+  ↳ [`StoreModule`](Store.StoreModule.md)
 
 ## Table of contents
 

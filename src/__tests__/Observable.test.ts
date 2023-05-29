@@ -1,8 +1,8 @@
 import * as Disposable from "../Disposable.js";
+import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
 import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
-import { RunnableContainer } from "../Observable.js";
 import {
   __bindMethod,
   __do,
@@ -34,12 +34,13 @@ import {
 } from "../__internal__/testing.js";
 import {
   Optional,
+  alwaysFalse,
   alwaysTrue,
   arrayEquality,
   bindMethod,
   compose,
+  greaterThan,
   identity,
-  identityLazy,
   ignore,
   increment,
   incrementBy,
@@ -54,13 +55,14 @@ import {
   returns,
 } from "../functions.js";
 import {
-  ConcreteIndexedContainerModule,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  EnumerableContainerModule,
+  EnumerableLike,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
@@ -69,6 +71,7 @@ import {
   PauseableLike_resume,
   PublisherLike_observerCount,
   QueueableLike_enqueue,
+  ReactiveContainerModule,
   ReplayObservableLike_buffer,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -76,16 +79,16 @@ import {
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import RunnableContainerModuleTests from "./fixtures/RunnableContainerModuleTests.js";
+import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 
 testModule(
   "Observable",
-  ...RunnableContainerModuleTests<RunnableContainer>({
-    ...Observable,
-    fromEnumerable: identityLazy,
-    fromReadonlyArray: <T>(config: any) =>
-      compose(Observable.fromReadonlyArray<T>(config), Observable.delay<T>(1)),
-  } as ConcreteIndexedContainerModule<RunnableContainer> & Pick<EnumerableContainerModule<RunnableContainer>, "concat" | "contains" | "concatWith" | "endWith" | "everySatisfy" | "first" | "fromReadonlyArray" | "last" | "noneSatisfy" | "reduce" | "repeat" | "someSatisfy" | "startWith" | "toReadonlyArray" | "zip" | "zipWith">),
+  ...ReactiveContainerModuleTests(
+    Observable as ReactiveContainerModule<Observable.EnumerableContainer>,
+    () => Disposable.disposed,
+    <T>() => ReadonlyArray.toObservable<T>(),
+    <T>() => ReadonlyArray.fromEnumerable<T>(),
+  ),
   describe(
     "backpressureStrategy",
     testAsync(
@@ -229,6 +232,96 @@ testModule(
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }),
+  ),
+  describe(
+    "concat",
+    test(
+      "concats the input containers in order",
+      pipeLazy(
+        Observable.concat(
+          pipe([1, 2, 3], Observable.fromReadonlyArray()),
+          pipe([4, 5, 6], Observable.fromReadonlyArray()),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+  ),
+  describe(
+    "concatWith",
+    test(
+      "concats two containers together",
+      pipeLazy(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4]),
+      ),
+    ),
+  ),
+  describe(
+    "contains",
+    describe(
+      "strict equality comparator",
+      test(
+        "source is empty",
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1),
+          expectEquals(false),
+        ),
+      ),
+      test(
+        "source contains value",
+        pipeLazy(
+          [0, 1, 2],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1),
+          expectEquals(true),
+        ),
+      ),
+      test(
+        "source does not contain value",
+        pipeLazy(
+          [2, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1),
+          expectEquals(false),
+        ),
+      ),
+    ),
+    describe(
+      "custom equality comparator",
+      test(
+        "source is empty",
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1, { equality: (a, b) => a === b }),
+          expectEquals(false),
+        ),
+      ),
+      test(
+        "source contains value",
+        pipeLazy(
+          [0, 1, 2],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1, { equality: (a, b) => a === b }),
+          expectEquals(true),
+        ),
+      ),
+      test(
+        "source does not contain value",
+        pipeLazy(
+          [2, 3, 4],
+          Observable.fromReadonlyArray(),
+          Observable.contains(1, { equality: (a, b) => a === b }),
+          expectEquals(false),
+        ),
+      ),
+    ),
   ),
   describe(
     "createPublisher",
@@ -436,6 +529,12 @@ testModule(
   ),
   describe(
     "empty",
+    test("returns an empty enumerator", () => {
+      const enumerator = pipe(Observable.empty(), Observable.enumerate());
+
+      expectFalse(enumerator[EnumeratorLike_move]());
+      expectTrue(enumerator[DisposableLike_isDisposed]);
+    }),
     test("with delay", () => {
       let disposedTime = -1;
       const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -453,7 +552,19 @@ testModule(
       pipe(disposedTime, expectEquals(5));
     }),
   ),
-
+  describe(
+    "endWith",
+    test(
+      "appends the additional values to the end of the container",
+      pipeLazy(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.endWith(2, 3, 4),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4]),
+      ),
+    ),
+  ),
   describe(
     "enqueue",
     test("when backpressure exception is thrown", () => {
@@ -509,7 +620,80 @@ testModule(
       expectFalse(completed);
     }),
   ),
+  describe(
+    "enumerate",
+    test(
+      "with higher order observable and no delay",
+      pipeLazy(
+        Observable.generate<EnumerableLike<number>>(
+          _ => pipe(1, Observable.fromValue()),
+          returns(Observable.empty<number>()),
+        ),
+        Observable.takeFirst<EnumerableLike<number>>({ count: 100 }),
+        Enumerable.concatAll(),
+        Observable.takeFirst({ count: 10 }),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),
+      ),
+    ),
+    test("calling move on a completed Enumerator", () => {
+      const enumerator = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.enumerate(),
+      );
 
+      while (enumerator[EnumeratorLike_move]()) {}
+
+      expectFalse(enumerator[EnumeratorLike_hasCurrent]);
+      expectTrue(enumerator[DisposableLike_isDisposed]);
+      expectIsNone(enumerator[DisposableLike_error]);
+
+      expectFalse(enumerator[EnumeratorLike_move]());
+    }),
+  ),
+  describe(
+    "everySatisfy",
+    test(
+      "source is empty",
+      pipeLazy(
+        [],
+        Observable.fromReadonlyArray(),
+        Observable.everySatisfy(alwaysFalse),
+        expectEquals(true),
+      ),
+    ),
+    test(
+      "source values pass predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.everySatisfy(alwaysTrue),
+        expectEquals(true),
+      ),
+    ),
+    test(
+      "source values fail predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.everySatisfy(alwaysFalse),
+        expectEquals(false),
+      ),
+    ),
+  ),
+  describe(
+    "first",
+    test(
+      "returns the first item in the src",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.first(),
+        expectEquals<Optional<number>>(1),
+      ),
+    ),
+  ),
   describe(
     "firstAsync",
     testAsync("empty source", async () => {
@@ -612,6 +796,48 @@ testModule(
             [1, 0],
             [2, 1],
             [5, 2],
+          ],
+          arrayEquality(),
+        ),
+      );
+
+      pipe(subscription[DisposableLike_isDisposed], expectTrue);
+    }),
+    test("flow a generating source", () => {
+      const scheduler = Scheduler.createVirtualTimeScheduler();
+
+      const flowed = pipe(
+        [0, 1, 2],
+        Observable.fromReadonlyArray(),
+        Observable.flow(scheduler),
+        Disposable.addTo(scheduler),
+      );
+
+      scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
+        delay: 2,
+      });
+
+      const f = mockFn();
+      const subscription = pipe(
+        flowed,
+        Observable.withCurrentTime((time, v) => [time, v]),
+        Observable.forEach(([time, v]: [number, any]) => {
+          f(time, v);
+        }),
+        Observable.subscribe(scheduler),
+        Disposable.addTo(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(f, expectToHaveBeenCalledTimes(3));
+      pipe(
+        f.calls as [][],
+        expectArrayEquals(
+          [
+            [2, 0],
+            [2, 1],
+            [2, 2],
           ],
           arrayEquality(),
         ),
@@ -815,7 +1041,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "merge",
     test("validate output runtime type", () => {
@@ -953,7 +1178,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "mergeAll",
     test(
@@ -973,7 +1197,101 @@ testModule(
       ),
     ),
   ),
-
+  describe(
+    "last",
+    test("empty source", () => {
+      const result = pipe(
+        [],
+        Observable.fromReadonlyArray(),
+        Observable.last(),
+      );
+      pipe(result, expectIsNone);
+    }),
+    test("it returns the last value", () => {
+      const result = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.last(),
+      );
+      pipe(result, expectEquals<Optional<number>>(3));
+    }),
+    test("it returns the last value when delayed", () => {
+      const result = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay<number>(3),
+        Observable.last(),
+      );
+      pipe(result, expectEquals<Optional<number>>(3));
+    }),
+  ),
+  describe(
+    "noneSatisfy",
+    test(
+      "no values satisfy the predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.noneSatisfy(greaterThan(5)),
+        expectTrue,
+      ),
+    ),
+    test(
+      "empty input",
+      pipeLazy(
+        [],
+        Observable.fromReadonlyArray(),
+        Observable.noneSatisfy(greaterThan(5)),
+        expectTrue,
+      ),
+    ),
+    test(
+      "some satisfy",
+      pipeLazy(
+        [1, 2, 30, 4, 3],
+        Observable.fromReadonlyArray(),
+        Observable.noneSatisfy(greaterThan(5)),
+        expectFalse,
+      ),
+    ),
+  ),
+  describe(
+    "repeat",
+    test(
+      "when repeating a finite amount of times.",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.repeat<number>(3),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
+      "when repeating with a predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.repeat<number>(lessThan(1)),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+    test("when the repeat function throws", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          Observable.fromReadonlyArray(),
+          Observable.repeat(_ => {
+            throw err;
+          }),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
+  ),
   describe(
     "retry",
     test(
@@ -993,7 +1311,41 @@ testModule(
       ),
     ),
   ),
-
+  describe(
+    "someSatisfy",
+    test(
+      "some satisfies predicate",
+      pipeLazy(
+        [1, 2, 30, 4],
+        Observable.fromReadonlyArray(),
+        Observable.someSatisfy(greaterThan(5)),
+        expectTrue,
+      ),
+    ),
+    test(
+      "some satisfies predicate with delay",
+      pipeLazy(
+        [1, 2, 30, 4],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
+        Observable.someSatisfy(greaterThan(5)),
+        expectTrue,
+      ),
+    ),
+  ),
+  describe(
+    "startWith",
+    test(
+      "appends the additional values to the start of the container",
+      pipeLazy(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.startWith(2, 3, 4),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 3, 4, 0, 1]),
+      ),
+    ),
+  ),
   describe(
     "takeUntil",
     test(
@@ -1225,6 +1577,18 @@ testModule(
     ),
   ),
   describe(
+    "toIterable",
+    test("when the source completes without error", () => {
+      const iter = pipe(
+        [0, 1, 2],
+        Observable.fromReadonlyArray(),
+        Observable.toIterable(),
+      );
+
+      pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
+    }),
+  ),
+  describe(
     "withLatestFrom",
     test(
       "when source and latest are interlaced",
@@ -1284,6 +1648,45 @@ testModule(
 
   describe(
     "zip",
+    test(
+      "when all inputs are the same length",
+      pipeLazy(
+        Observable.zip(
+          pipe([1, 2, 3, 4, 5], Observable.fromReadonlyArray()),
+          pipe([5, 4, 3, 2, 1], Observable.fromReadonlyArray()),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals<readonly [number, number]>(
+          [
+            [1, 5],
+            [2, 4],
+            [3, 3],
+            [4, 2],
+            [5, 1],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
+    test(
+      "when inputs are different length",
+      pipeLazy(
+        Observable.zip(
+          pipe([1, 2, 3], Observable.fromReadonlyArray()),
+          pipe([5, 4, 3, 2, 1], Observable.fromReadonlyArray()),
+          pipe([1, 2, 3, 4], Observable.fromReadonlyArray()),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals<readonly [number, number, number]>(
+          [
+            [1, 5, 1],
+            [2, 4, 2],
+            [3, 3, 3],
+          ],
+          arrayEquality(),
+        ),
+      ),
+    ),
     test(
       "with synchronous and non-synchronous sources",
       pipeLazy(
@@ -1352,6 +1755,28 @@ testModule(
         Observable.map<readonly [number, number], number>(([a, b]) => a + b),
         Observable.toReadonlyArray(),
         expectArrayEquals([2, 5, 8, 11]),
+      ),
+    ),
+  ),
+  describe(
+    "zipWith",
+    test(
+      "when inputs are different lengths",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.zipWith<number, number>(
+          pipe([1, 2, 3, 4], Observable.fromReadonlyArray<number>()),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals<readonly [number, number]>(
+          [
+            [1, 1],
+            [2, 2],
+            [3, 3],
+          ],
+          arrayEquality(),
+        ),
       ),
     ),
   ),

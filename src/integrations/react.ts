@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import * as Disposable from "../Disposable.js";
-import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
 import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
@@ -300,7 +299,7 @@ export const useEnumerate: UseEnumerate["useEnumerate"] = <T>(
   const enumerable = isFunction(enumerableOrFactory)
     ? useMemo(enumerableOrFactory, depsOrNone)
     : enumerableOrFactory;
-  return useDisposable(pipeSomeLazy(enumerable, Enumerable.enumerate()), [
+  return useDisposable(pipeSomeLazy(enumerable, Observable.enumerate()), [
     enumerable,
   ]);
 };

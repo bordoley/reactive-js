@@ -2,6 +2,7 @@ import type * as PauseableObservable from "../../PauseableObservable.js";
 import { Function2, Tuple2, none, pipe, tuple } from "../../functions.js";
 import { PauseableObservableLike } from "../../types.js";
 import PauseableObservable_keep from "./PauseableObservable.keep.js";
+import PauseableObservable_pick from "./PauseableObservable.pick.js";
 import PauseableObservable_scan from "./PauseableObservable.scan.js";
 
 const PauseableObservable_keepWithKey: PauseableObservable.Signature["keepWithKey"] =
@@ -16,6 +17,7 @@ const PauseableObservable_keepWithKey: PauseableObservable.Signature["keepWithKe
         PauseableObservable_keep(([cnt, v]: Tuple2<number, T>) =>
           predicate(v, cnt),
         ),
+        PauseableObservable_pick(1),
       )) as PauseableObservable.Signature["keepWithKey"];
 
 export default PauseableObservable_keepWithKey;

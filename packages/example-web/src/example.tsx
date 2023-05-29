@@ -30,6 +30,7 @@ import {
   pipeLazy,
   pipeSome,
   returns,
+  Tuple2,
 } from "@reactive-js/core/functions";
 import * as Streamable from "@reactive-js/core/Streamable";
 import {
@@ -44,7 +45,6 @@ import {
   StoreLike_value,
 } from "@reactive-js/core/types";
 import * as Dictionary from "@reactive-js/core/Dictionary";
-import * as Enumerable from "@reactive-js/core/Enumerable";
 import {
   __await,
   __bindMethod,
@@ -102,9 +102,9 @@ const AnimationGroup = () => {
 
   const animationStream = useStream(
     () =>
-      Streamable.createAnimationGroupEventHandler<number, number>(
-        [
-          {
+      Streamable.createAnimationGroupEventHandler<string, number>(
+        {
+          a: {
             type: "loop",
             count: 2,
             animation: [
@@ -113,12 +113,12 @@ const AnimationGroup = () => {
               { type: "keyframe", duration: 500, from: 1, to: 0 },
             ],
           },
-          [
+          b: [
             { type: "keyframe", duration: 500, from: 0, to: 1 },
             { type: "delay", duration: 250 },
             { type: "spring", stiffness: 0.01, damping: 0.1, from: 1, to: 0 },
           ],
-        ],
+        },
         { mode: "blocking", scheduler: animationScheduler },
       ),
     [animationScheduler],
@@ -133,10 +133,12 @@ const AnimationGroup = () => {
         {pipeSome(
           animationStream,
           Dictionary.entries(),
-          Enumerable.map(([key, animation]) => (
-            <AnimatedBox key={key} animation={animation} />
-          )),
-          Enumerable.toReadonlyArray(),
+          Observable.map(
+            ([key, animation]: Tuple2<string, EventSourceLike<number>>) => (
+              <AnimatedBox key={key} animation={animation} />
+            ),
+          ),
+          Observable.toReadonlyArray(),
         )}
       </div>
       <div>
@@ -282,11 +284,11 @@ const RxComponent = createComponent(
     ) =>
       Streamable.createAnimationGroupEventHandler<
         "animate" | "cancel",
-        number,
+        string,
         CSSStyleMapLike
       >(
-        [
-          ev =>
+        {
+          a: ev =>
             ev === "animate"
               ? [
                   {
@@ -314,7 +316,7 @@ const RxComponent = createComponent(
                   },
                 ]
               : [],
-        ],
+        },
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 
@@ -366,7 +368,7 @@ const RxComponent = createComponent(
       );
 
       const animatedDivRef = __animate(
-        animationGroupEventHandler[KeyedCollectionLike_get](0)!,
+        animationGroupEventHandler[KeyedCollectionLike_get]("a")!,
       );
 
       return (

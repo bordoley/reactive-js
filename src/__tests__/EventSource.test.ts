@@ -24,7 +24,7 @@ import {
   EventSourceLike,
   VirtualTimeSchedulerLike_run,
 } from "../types.js";
-import ConcreteIndexedContainerModuleTests from "./fixtures/ConcreteIndexedContainerModuleTests.js";
+import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 
 const toReadonlyArray =
   <T>() =>
@@ -46,9 +46,10 @@ const toReadonlyArray =
 
 testModule(
   "EventSource",
-  ...ConcreteIndexedContainerModuleTests(
+  ...ReactiveContainerModuleTests(
     EventSource,
     () => Disposable.disposed,
+    <T>() => ReadonlyArray.toEventSource<T>(),
     toReadonlyArray,
   ),
   describe(
@@ -57,7 +58,7 @@ testModule(
       "when the event listener throws an error when the source completes with a tail value",
       pipeLazy(
         [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        EventSource.fromReadonlyArray(),
+        ReadonlyArray.toEventSource(),
         EventSource.buffer({ count: 2 }),
         EventSource.addEventHandler(x => (x.length !== 2 ? raise() : ignore())),
         pick(DisposableLike_error),

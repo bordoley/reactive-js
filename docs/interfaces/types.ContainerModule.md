@@ -14,9 +14,9 @@
 
 - **`ContainerModule`**
 
-  ↳ [`ConcreteContainerModule`](types.ConcreteContainerModule.md)
+  ↳ [`ReactiveContainerModule`](types.ReactiveContainerModule.md)
 
-  ↳ [`IndexedContainerModule`](types.IndexedContainerModule.md)
+  ↳ [`CollectionContainerModule`](types.CollectionContainerModule.md)
 
 ## Table of contents
 
@@ -144,14 +144,15 @@ ___
 
 ### mapTo
 
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
+▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
 
 #### Parameters
 
@@ -161,7 +162,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, [`KeyOf`](../modules/types.md#keyof)<`C`\>\>
+[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
 
 ___
 

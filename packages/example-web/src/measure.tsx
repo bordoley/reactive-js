@@ -39,11 +39,11 @@ const Measure = () => {
           prevWidth?: number;
           width: number;
         },
-        number,
+        string,
         number
       >(
-        [
-          ({ prevWidth, width }) =>
+        {
+          a: ({ prevWidth, width }) =>
             isSome(prevWidth)
               ? {
                   type: "spring",
@@ -55,14 +55,14 @@ const Measure = () => {
                   type: "frame",
                   value: width,
                 },
-        ],
+        },
         { mode: "switching", scheduler: animationScheduler },
       ),
     [],
     { capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
-  const animation = animationGroup?.[KeyedCollectionLike_get](0);
+  const animation = animationGroup?.[KeyedCollectionLike_get]("a");
 
   const { enqueue } = useDispatcher(animationGroup);
 

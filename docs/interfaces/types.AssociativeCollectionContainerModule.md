@@ -14,8 +14,6 @@
 
 - [`CollectionContainerModule`](types.CollectionContainerModule.md)<`C`\>
 
-- [`ConcreteContainerModule`](types.ConcreteContainerModule.md)<`C`\>
-
   ↳ **`AssociativeCollectionContainerModule`**
 
   ↳↳ [`DictionaryModule`](Dictionary.DictionaryModule.md)
@@ -35,10 +33,6 @@
 
 ### Transform Methods
 
-- [keySet](types.AssociativeCollectionContainerModule.md#keyset)
-- [keys](types.AssociativeCollectionContainerModule.md#keys)
-- [toDictionary](types.AssociativeCollectionContainerModule.md#todictionary)
-- [toReadonlyMap](types.AssociativeCollectionContainerModule.md#toreadonlymap)
 - [toReadonlyObjectMap](types.AssociativeCollectionContainerModule.md#toreadonlyobjectmap)
 
 ## Constructor Methods
@@ -62,7 +56,7 @@ ___
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\>
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\>
 
 #### Type parameters
 
@@ -73,7 +67,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\>
 
 ___
 
@@ -96,7 +90,7 @@ ___
 
 ### fromReadonlyObjectMap
 
-▸ **fromReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\> : `never`
+▸ **fromReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\> : `never`
 
 #### Type parameters
 
@@ -107,81 +101,15 @@ ___
 
 #### Returns
 
-`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\> : `never`
+`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>, [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>\> : `never`
 
 ___
 
 ## Transform Methods
 
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
-
-___
-
-### keys
-
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
-
-___
-
-### toDictionary
-
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
-
-___
-
-### toReadonlyMap
-
-▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
-
-___
-
 ### toReadonlyObjectMap
 
-▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+▸ **toReadonlyObjectMap**<`T`, `TKey`\>(): `TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
 
 #### Type parameters
 
@@ -192,4 +120,4 @@ ___
 
 #### Returns
 
-`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `number` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`
+`TKey` extends [`KeyOf`](../modules/types.md#keyof)<[`Type`](../modules/ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> ? [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`ReadonlyObjectMapLike`](../modules/types.md#readonlyobjectmaplike)<`TKey`, `T`\>\> : `never`

@@ -12,9 +12,7 @@
 
 ## Hierarchy
 
-- [`ConcreteContainerModule`](types.ConcreteContainerModule.md)<`C`\>
-
-- [`ReduceableContainerModule`](types.ReduceableContainerModule.md)<`C`\>
+- [`ContainerModule`](types.ContainerModule.md)<`C`\>
 
   ↳ **`CollectionContainerModule`**
 
@@ -24,6 +22,10 @@
 
 ## Table of contents
 
+### Constructor Methods
+
+- [empty](types.CollectionContainerModule.md#empty)
+
 ### Operator Methods
 
 - [forEach](types.CollectionContainerModule.md#foreach)
@@ -32,7 +34,34 @@
 ### Transform Methods
 
 - [entries](types.CollectionContainerModule.md#entries)
+- [keySet](types.CollectionContainerModule.md#keyset)
+- [keys](types.CollectionContainerModule.md#keys)
+- [reduce](types.CollectionContainerModule.md#reduce)
+- [reduceWithKey](types.CollectionContainerModule.md#reducewithkey)
+- [toDictionary](types.CollectionContainerModule.md#todictionary)
+- [toReadonlyMap](types.CollectionContainerModule.md#toreadonlymap)
 - [values](types.CollectionContainerModule.md#values)
+
+## Constructor Methods
+
+### empty
+
+▸ **empty**<`T`, `TKey`\>(): [`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>
+
+Return an Container that emits no items.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+
+#### Returns
+
+[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>
+
+___
 
 ## Operator Methods
 
@@ -92,7 +121,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -103,7 +132,123 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`TKey`, `T`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### keySet
+
+▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
+
+___
+
+### keys
+
+▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](types.EnumerableLike.md)<`TKey`\>\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `TAcc`\>
+
+___
+
+### reduceWithKey
+
+▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TAcc` | `TAcc` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Function3`](../modules/functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `TAcc`\>
+
+___
+
+### toDictionary
+
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](types.DictionaryLike.md)<`TKey`, `T`\>\>
+
+___
+
+### toReadonlyMap
+
+▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/types.md#containerof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
 ___
 

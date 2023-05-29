@@ -1,15 +1,17 @@
-import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
-import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { compose, isTrue } from "../../functions.js";
 import { EnumerableLike, ObservableBaseLike } from "../../types.js";
+import Observable_everySatisfy from "./Observable.everySatisfy.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
+import Observable_map from "./Observable.map.js";
 
 const Observable_allAreEnumerable: <T = unknown>(
   observables: readonly ObservableBaseLike<T>[],
 ) => observables is ReadonlyArray<EnumerableLike<T>> = /*@__PURE__*/ (() =>
   compose(
-    ReadonlyArray_map(Observable_isEnumerable),
-    ReadonlyArray_everySatisfy(isTrue),
+    ReadonlyArray_toObservable(),
+    Observable_map<ObservableBaseLike, boolean>(Observable_isEnumerable),
+    Observable_everySatisfy(isTrue),
   ))() as <T = unknown>(
   observables: readonly ObservableBaseLike<T>[],
 ) => observables is ReadonlyArray<EnumerableLike<T>>;

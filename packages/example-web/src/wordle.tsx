@@ -122,11 +122,11 @@ export const Wordle = () => {
     () =>
       Streamable.createAnimationGroupEventHandler<
         boolean,
-        number,
+        string,
         { direction: boolean; value: number }
       >(
-        [
-          (direction: boolean) => ({
+        {
+          a: (direction: boolean) => ({
             type: "spring",
             stiffness: 0.0005,
             damping: 0.0026,
@@ -135,13 +135,13 @@ export const Wordle = () => {
             to: 180 * items.length,
             selector: value => ({ direction, value }),
           }),
-        ],
+        },
         { mode: "blocking", scheduler: animationScheduler },
       ),
     [animationScheduler],
   );
 
-  const animation = animationGroup?.[KeyedCollectionLike_get](0);
+  const animation = animationGroup?.[KeyedCollectionLike_get]("a");
   const { enqueue } = useDispatcher(animationGroup);
   const isAnimationRunning = useObserve(animationGroup) ?? false;
 

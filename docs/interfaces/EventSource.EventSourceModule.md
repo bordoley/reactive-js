@@ -8,6 +8,8 @@
 
 - [`EventSourceContainerModule`](types.EventSourceContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
 
+- [`ReactiveContainerModule`](types.ReactiveContainerModule.md)<[`Type`](../modules/EventSource.md#type)\>
+
   ↳ **`EventSourceModule`**
 
 ## Table of contents

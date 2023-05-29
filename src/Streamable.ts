@@ -39,11 +39,7 @@ export interface StreamableModule {
     op: Function1<DeferredObservableLike<TReq>, DeferredObservableBaseLike<T>>,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
-  createAnimationGroupEventHandler<
-    TEvent,
-    TKey extends string | symbol | number,
-    T,
-  >(
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -56,11 +52,7 @@ export interface StreamableModule {
       typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
     >
   >;
-  createAnimationGroupEventHandler<
-    TEvent,
-    TKey extends string | symbol | number,
-    T,
-  >(
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -73,11 +65,7 @@ export interface StreamableModule {
       typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
     >
   >;
-  createAnimationGroupEventHandler<
-    TEvent,
-    TKey extends string | symbol | number,
-    T,
-  >(
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Function1<TEvent, Animation<T> | readonly Animation<T>[]>
@@ -96,7 +84,7 @@ export interface StreamableModule {
     >
   >;
 
-  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]
@@ -109,7 +97,7 @@ export interface StreamableModule {
       typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
     >
   >;
-  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]
@@ -122,7 +110,7 @@ export interface StreamableModule {
       typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
     >
   >;
-  createAnimationGroupEventHandler<TKey extends string | symbol | number, T>(
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       Animation<T> | readonly Animation<T>[]

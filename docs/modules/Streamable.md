@@ -111,7 +111,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TEvent` | `TEvent` |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters
@@ -134,7 +134,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TEvent` | `TEvent` |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters
@@ -157,7 +157,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `TEvent` | `TEvent` |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters
@@ -181,7 +181,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters
@@ -203,7 +203,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters
@@ -225,7 +225,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `TKey` | extends `string` \| `number` \| `symbol` |
+| `TKey` | extends `string` \| `symbol` |
 | `T` | `T` |
 
 #### Parameters

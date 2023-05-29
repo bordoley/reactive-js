@@ -7,21 +7,19 @@ const Observable_generate: Observable.Signature["generate"] = <T>(
   generator: Updater<T>,
   initialValue: Factory<T>,
 ) => {
-  const generateEnumerator =
-    <T>(generator: Updater<T>, initialValue: Factory<T>) =>
-    () => {
-      const iter = function* () {
-        let acc = initialValue();
-        while (true) {
-          acc = generator(acc);
-          yield acc;
-        }
-      };
-
-      return pipe(iter(), Iterable_enumerate());
+  const generateEnumerator = () => {
+    const iter = function* () {
+      let acc = initialValue();
+      while (true) {
+        acc = generator(acc);
+        yield acc;
+      }
     };
 
-  return Enumerable_create(generateEnumerator(generator, initialValue));
+    return pipe(iter(), Iterable_enumerate());
+  };
+
+  return Enumerable_create(generateEnumerator);
 };
 
 export default Observable_generate;

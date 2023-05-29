@@ -8,6 +8,7 @@ import "./Dictionary.test.js";
 import "./Disposable.test.js";
 import "./Enumerable.test.js";
 import "./EventSource.test.js";
+import "./IndexedCollection.test.js";
 import "./Observable.test.js";
 import "./PauseableObservable.test.js";
 import "./Promise.test.js";

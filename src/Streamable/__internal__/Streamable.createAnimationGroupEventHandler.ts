@@ -72,7 +72,7 @@ export type AnimationGroupEventHandlerLike<
 
 export const Streamable_createAnimationGroupEventHandlerStream: <
   TEvent,
-  TKey extends string | number | symbol,
+  TKey extends string | symbol,
   T,
 >(
   animationGroup: ReadonlyObjectMapLike<
@@ -96,7 +96,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
 ) => StreamOf<AnimationGroupEventHandlerLike<TEvent, TKey, T>> &
   DisposableLike = /*@__PURE__*/ (<
   TEvent,
-  TKey extends string | symbol | number,
+  TKey extends string | symbol,
   T,
 >() => {
   type TProperties = {
@@ -227,7 +227,7 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
 })();
 
 const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createAnimationGroupEventHandler"] =
-  (<TEvent, TKey extends string | symbol | number, T>(
+  (<TEvent, TKey extends string | symbol, T>(
     animationGroup: ReadonlyObjectMapLike<
       TKey,
       | Function1<TEvent, Animation<T> | readonly Animation<T>[]>

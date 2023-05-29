@@ -84,6 +84,7 @@
 - [onSubscribe](Observable.ObservableModule.md#onsubscribe)
 - [pairwise](Observable.ObservableModule.md#pairwise)
 - [pick](Observable.ObservableModule.md#pick)
+- [range](Observable.ObservableModule.md#range)
 - [reduce](Observable.ObservableModule.md#reduce)
 - [reduceWithKey](Observable.ObservableModule.md#reducewithkey)
 - [run](Observable.ObservableModule.md#run)
@@ -103,10 +104,12 @@
 - [throwIfEmpty](Observable.ObservableModule.md#throwifempty)
 - [throws](Observable.ObservableModule.md#throws)
 - [toEventSource](Observable.ObservableModule.md#toeventsource)
+- [toIndexedCollection](Observable.ObservableModule.md#toindexedcollection)
 - [toIterable](Observable.ObservableModule.md#toiterable)
 - [toObservable](Observable.ObservableModule.md#toobservable)
 - [toReadonlyArray](Observable.ObservableModule.md#toreadonlyarray)
 - [toReadonlyArrayAsync](Observable.ObservableModule.md#toreadonlyarrayasync)
+- [toReadonlySet](Observable.ObservableModule.md#toreadonlyset)
 - [withCurrentTime](Observable.ObservableModule.md#withcurrenttime)
 - [withLatestFrom](Observable.ObservableModule.md#withlatestfrom)
 - [zip](Observable.ObservableModule.md#zip)
@@ -3350,6 +3353,24 @@ ___
 
 ___
 
+### range
+
+▸ **range**(`start`, `options?`): [`EnumerableLike`](types.EnumerableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`EnumerableLike`](types.EnumerableLike.md)<`number`\>
+
+___
+
 ### reduce
 
 ▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `TAcc`\>
@@ -3869,6 +3890,22 @@ ___
 
 ___
 
+### toIndexedCollection
+
+▸ **toIndexedCollection**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>, [`IndexedCollectionLike`](types.IndexedCollectionLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>, [`IndexedCollectionLike`](types.IndexedCollectionLike.md)<`T`\>\>
+
+___
+
 ### toIterable
 
 ▸ **toIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableBaseLike`](types.EnumerableBaseLike.md)<`T`\>, `Iterable`<`T`\>\>
@@ -3951,6 +3988,22 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](../modules/types.md#observablelike)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+___
+
+### toReadonlySet
+
+▸ **toReadonlySet**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>, `ReadonlySet`<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableBaseLike`](types.RunnableBaseLike.md)<`T`\>, `ReadonlySet`<`T`\>\>
 
 ___
 

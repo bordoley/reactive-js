@@ -75,6 +75,7 @@ export const CreateModule = <
     keys,
     keySet,
     map,
+    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,

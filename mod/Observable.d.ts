@@ -1,5 +1,5 @@
 import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
-import { Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, IndexedContainer, KeyOf, MulticastObservableLike, ObservableBaseLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "./types.js";
+import { Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, IndexedCollectionLike, IndexedContainer, KeyOf, MulticastObservableLike, ObservableBaseLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "./types.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends EnumerableWithSideEffectsLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : never;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableBaseLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableBaseLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type RunnableBoundedPureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : never;
@@ -322,6 +322,9 @@ export interface ObservableModule {
     pick<T, TKey extends keyof T>(key: TKey): PureObservableOperator<T, T[TKey]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): PureObservableOperator<T, T[TKeyA][TKeyB]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): PureObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
+    range(start: number, options?: {
+        readonly count?: number;
+    }): EnumerableLike<number>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
     reduceWithKey<T, TAcc, TKey extends KeyOf<ObservableContainer> = KeyOf<ObservableContainer>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
     /**
@@ -388,6 +391,7 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
+    toIndexedCollection<T>(): Function1<RunnableBaseLike<T>, IndexedCollectionLike<T>>;
     toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
     toObservable<T>(): Function1<ObservableLike<T>, ObservableLike<T>>;
     toReadonlyArray<T>(): Function1<RunnableBaseLike<T>, ReadonlyArray<T>>;
@@ -396,6 +400,7 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+    toReadonlySet<T>(): Function1<RunnableBaseLike<T>, ReadonlySet<T>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
     withLatestFrom<TA, TB, T, TOther extends ObservableBaseLike<TB>>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableBoundedPureObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T, TOther extends ObservableBaseLike<TB>>(other: RunnableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): RunnableBoundedObservableOperatorWithSideEffects<TA, T>;
@@ -627,6 +632,7 @@ export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const range: Signature["range"];
 export declare const reduceWithKey: Signature["reduceWithKey"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
@@ -646,10 +652,12 @@ export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
 export declare const toEventSource: Signature["toEventSource"];
+export declare const toIndexedCollection: Signature["toIndexedCollection"];
 export declare const toIterable: Signature["toIterable"];
 export declare const toObservable: Signature["toObservable"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
+export declare const toReadonlySet: Signature["toReadonlySet"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zip: Signature["zip"];

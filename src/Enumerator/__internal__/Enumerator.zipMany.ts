@@ -1,8 +1,9 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import ReadonlyArray_everySatisfy from "../../ReadonlyArray/__internal__/ReadonlyArray.everySatisfy.js";
+import Observable_everySatisfy from "../../Observable/__internal__/Observable.everySatisfy.js";
 import ReadonlyArray_forEach from "../../ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import {
   createInstanceFactory,
   include,
@@ -33,7 +34,11 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
     enumerator[EnumeratorLike_hasCurrent];
 
   const allHaveCurrent = (enumerators: readonly EnumeratorLike[]) =>
-    pipe(enumerators, ReadonlyArray_everySatisfy(Enumerator_hasCurrent));
+    pipe(
+      enumerators,
+      ReadonlyArray_toObservable(),
+      Observable_everySatisfy(Enumerator_hasCurrent),
+    );
 
   const moveAll = (enumerators: readonly EnumeratorLike[]) => {
     for (const enumerator of enumerators) {

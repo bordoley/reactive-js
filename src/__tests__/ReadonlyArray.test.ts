@@ -4,7 +4,7 @@ import IndexedCollectionContainerModuleTests from "./fixtures/IndexedCollectionC
 
 testModule(
   "ReadonlyArray",
-  IndexedCollectionContainerModuleTests(ReadonlyArray),
+  ...IndexedCollectionContainerModuleTests(ReadonlyArray),
 );
 
 ((_: ReadonlyArray.Signature) => {})(ReadonlyArray);

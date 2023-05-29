@@ -8,7 +8,7 @@ import * as Scheduler from "../Scheduler.js";
 import { describe, expectArrayEquals, expectIsSome, test, testModule, } from "../__internal__/testing.js";
 import { compose, ignore, isSome, pick, pipe, pipeLazy, raise, } from "../functions.js";
 import { DisposableLike_error, VirtualTimeSchedulerLike_run, } from "../types.js";
-import ConcreteIndexedContainerModuleTests from "./fixtures/ConcreteIndexedContainerModuleTests.js";
+import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 const toReadonlyArray = () => (eventSource) => {
     const result = [];
     const subscription = pipe(eventSource, EventSource.addEventHandler(v => {
@@ -19,7 +19,7 @@ const toReadonlyArray = () => (eventSource) => {
     }
     return result;
 };
-testModule("EventSource", ...ConcreteIndexedContainerModuleTests(EventSource, () => Disposable.disposed, toReadonlyArray), describe("buffer", test("when the event listener throws an error when the source completes with a tail value", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], EventSource.fromReadonlyArray(), EventSource.buffer({ count: 2 }), EventSource.addEventHandler(x => (x.length !== 2 ? raise() : ignore())), pick(DisposableLike_error), expectIsSome))), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("merge", test("with source that have different delays", () => {
+testModule("EventSource", ...ReactiveContainerModuleTests(EventSource, () => Disposable.disposed, () => ReadonlyArray.toEventSource(), toReadonlyArray), describe("buffer", test("when the event listener throws an error when the source completes with a tail value", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], ReadonlyArray.toEventSource(), EventSource.buffer({ count: 2 }), EventSource.addEventHandler(x => (x.length !== 2 ? raise() : ignore())), pick(DisposableLike_error), expectIsSome))), describe("create", test("when the setup function throws", pipeLazy(EventSource.create(_ => raise()), EventSource.addEventHandler(ignore), pick(DisposableLike_error), expectIsSome))), describe("merge", test("with source that have different delays", () => {
     const vts = Scheduler.createVirtualTimeScheduler();
     const result = [];
     const [ev1, ev2, ev3] = pipe([

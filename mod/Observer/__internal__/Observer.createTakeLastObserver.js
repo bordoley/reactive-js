@@ -2,9 +2,8 @@
 
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
 import Disposable_onComplete from "../../Disposable/__internal__/Disposable.onComplete.js";
-import IndexedCollection_toReadonlyArray from "../../IndexedCollection/__internal__/IndexedCollection.toReadonlyArray.js";
+import IndexedCollection_toObservable from "../../IndexedCollection/__internal__/IndexedCollection.toObservable.js";
 import Queue_createIndexedQueue from "../../Queue/__internal__/Queue.createIndexedQueue.js";
-import ReadonlyArray_toObservable from "../../ReadonlyArray/__internal__/ReadonlyArray.toObservable.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { TakeLastLike_queue, } from "../../__internal__/types.js";
 import { invoke, none, pipe } from "../../functions.js";
@@ -16,7 +15,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => createInstanceFacto
     Observer_mixin_initFromDelegate(instance, delegate);
     instance[TakeLastLike_queue] = Queue_createIndexedQueue(takeLastCount, "drop-oldest");
     pipe(instance, Disposable_onComplete(() => {
-        pipe(instance[TakeLastLike_queue], IndexedCollection_toReadonlyArray(), ReadonlyArray_toObservable(), invoke(ObservableLike_observe, delegate));
+        pipe(instance[TakeLastLike_queue], IndexedCollection_toObservable(), invoke(ObservableLike_observe, delegate));
     }));
     return instance;
 }, props({

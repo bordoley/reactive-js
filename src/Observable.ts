@@ -66,6 +66,7 @@ import Observable_noneSatisfy from "./Observable/__internal__/Observable.noneSat
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_pick from "./Observable/__internal__/Observable.pick.js";
+import Observable_range from "./Observable/__internal__/Observable.range.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_reduceWithKey from "./Observable/__internal__/Observable.reduceWithKey.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
@@ -88,9 +89,11 @@ import Observable_throttle from "./Observable/__internal__/Observable.throttle.j
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
 import Observable_toEventSource from "./Observable/__internal__/Observable.toEventSource.js";
+import Observable_toIndexedCollection from "./Observable/__internal__/Observable.toIndexedCollection.js";
 import Observable_toIterable from "./Observable/__internal__/Observable.toIterable.js";
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
 import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observable.toReadonlyArrayAsync.js";
+import Observable_toReadonlySet from "./Observable/__internal__/Observable.toReadonlySet.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zip from "./Observable/__internal__/Observable.zip.js";
@@ -124,6 +127,7 @@ import {
   EnumerableWithSideEffectsLike,
   EnumeratorLike,
   EventSourceLike,
+  IndexedCollectionLike,
   IndexedContainer,
   KeyOf,
   MulticastObservableLike,
@@ -1102,6 +1106,11 @@ export interface ObservableModule {
     keyC: TKeyC,
   ): PureObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
 
+  range(
+    start: number,
+    options?: { readonly count?: number },
+  ): EnumerableLike<number>;
+
   reduce<T, TAcc>(
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -1237,6 +1246,11 @@ export interface ObservableModule {
     },
   ): Function1<ObservableLike<T>, EventSourceLike<T>>;
 
+  toIndexedCollection<T>(): Function1<
+    RunnableBaseLike<T>,
+    IndexedCollectionLike<T>
+  >;
+
   toIterable<T>(): Function1<EnumerableBaseLike<T>, Iterable<T>>;
 
   toObservable<T>(): Function1<ObservableLike<T>, ObservableLike<T>>;
@@ -1254,6 +1268,8 @@ export interface ObservableModule {
       readonly capacity?: number;
     },
   ): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+
+  toReadonlySet<T>(): Function1<RunnableBaseLike<T>, ReadonlySet<T>>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
@@ -2581,6 +2597,7 @@ export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Observable_reduce;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
+export const range: Signature["range"] = Observable_range;
 export const reduceWithKey: Signature["reduceWithKey"] =
   Observable_reduceWithKey;
 export const repeat: Signature["repeat"] = Observable_repeat;
@@ -2602,12 +2619,16 @@ export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
 export const toEventSource: Signature["toEventSource"] =
   Observable_toEventSource;
+export const toIndexedCollection: Signature["toIndexedCollection"] =
+  Observable_toIndexedCollection;
 export const toIterable: Signature["toIterable"] = Observable_toIterable;
 export const toObservable: Signature["toObservable"] = identityLazy;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   Observable_toReadonlyArray;
 export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
   Observable_toReadonlyArrayAsync;
+export const toReadonlySet: Signature["toReadonlySet"] =
+  Observable_toReadonlySet;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =

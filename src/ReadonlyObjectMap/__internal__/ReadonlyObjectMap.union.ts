@@ -2,7 +2,7 @@ import * as Obj from "../../__internal__/Object.js";
 import { isNone } from "../../functions.js";
 import { ReadonlyObjectMapLike } from "../../types.js";
 
-const ReadonlyObjectMap_union = <TKey extends string | symbol | number, T>(
+const ReadonlyObjectMap_union = <TKey extends string | symbol, T>(
   m1: ReadonlyObjectMapLike<TKey, T>,
   m2: ReadonlyObjectMapLike<TKey, T>,
 ): ReadonlyObjectMapLike<TKey, T> => {
