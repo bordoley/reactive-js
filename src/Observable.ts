@@ -894,12 +894,24 @@ export interface ObservableModule {
       ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>>
       : TObservableOut extends PureObservableLike<TOut>
       ? Function1<TObservableIn, MulticastObservableLike<TOut>>
-      : Function1<TObservableIn, DeferredObservableLike<TOut>>
-    : TObservableIn extends PureObservableLike
+      : TObservableOut extends DeferredObservableBaseLike<TOut>
+      ? Function1<TObservableIn, DeferredObservableLike<TOut>>
+      : never
+    : TObservableIn extends RunnableWithSideEffectsLike
+    ? TObservableOut extends RunnableBaseLike<TOut>
+      ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>>
+      : TObservableOut extends PureObservableLike<TOut>
+      ? Function1<TObservableIn, MulticastObservableLike<TOut>>
+      : TObservableOut extends DeferredObservableBaseLike<TOut>
+      ? Function1<TObservableIn, DeferredObservableLike<TOut>>
+      : never
+    : TObservableIn extends DeferredObservableLike
+    ? Function1<TObservableIn, DeferredObservableLike<TOut>>
+    : TObservableIn extends MulticastObservableLike
     ? TObservableOut extends PureObservableLike<TOut>
       ? Function1<TObservableIn, MulticastObservableLike<TOut>>
       : Function1<TObservableIn, DeferredObservableLike<TOut>>
-    : Function1<TObservableIn, DeferredObservableLike<TOut>>;
+    : never;
 
   fromAsyncFactory<T>(): Function1<
     Function1<AbortSignal, Promise<T>>,

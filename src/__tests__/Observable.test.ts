@@ -57,6 +57,7 @@ import {
   returns,
 } from "../functions.js";
 import {
+  DeferredObservableBaseLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
   DisposableLike_dispose,
@@ -65,6 +66,8 @@ import {
   EnumerableLike,
   EnumeratorLike_hasCurrent,
   EnumeratorLike_move,
+  MulticastObservableLike,
+  ObservableBaseLike,
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
@@ -75,6 +78,7 @@ import {
   QueueableLike_enqueue,
   ReactiveContainerModule,
   ReplayObservableLike_buffer,
+  RunnableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
@@ -1057,7 +1061,7 @@ testModule(
   describe(
     "fork merge",
     test("with pure src and inner runnables with side-effects", () => {
-      const obs = pipe(
+      const obs: RunnableWithSideEffectsLike<number> = pipe(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
         Observable.forkMerge<
@@ -1080,6 +1084,92 @@ testModule(
       expectTrue(obs[ObservableLike_isRunnable]);
       expectFalse(obs[ObservableLike_isPure]);
       expectFalse(obs[ObservableLike_isEnumerable]);
+    }),
+    test("runnable with effects src and pure inner runnables", () => {
+      const obs: RunnableWithSideEffectsLike<number> = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forEach(ignore),
+        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+      );
+
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectFalse(obs[ObservableLike_isPure]);
+      expectFalse(obs[ObservableLike_isEnumerable]);
+    }),
+    test("with pure runnable src and pure inner runnables", () => {
+      const obs: RunnableLike<number> = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+      );
+
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectTrue(obs[ObservableLike_isPure]);
+      expectFalse(obs[ObservableLike_isEnumerable]);
+    }),
+    test("with multicast src and pure inner transforms", () => {
+      const forked: MulticastObservableLike = pipe(
+        Observable.createPublisher(),
+        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+      );
+
+      expectFalse(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectTrue(forked[ObservableLike_isPure]);
+      expectFalse(forked[ObservableLike_isEnumerable]);
+    }),
+    test("with multicast src and deferred inner transforms", () => {
+      const forked = pipe(
+        Observable.createPublisher(),
+        Observable.forkMerge<
+          number,
+          MulticastObservableLike,
+          ObservableBaseLike<number>
+        >(
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          Observable.mapTo(2),
+        ),
+      );
+
+      expectTrue(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectFalse(forked[ObservableLike_isPure]);
+      expectFalse(forked[ObservableLike_isEnumerable]);
+    }),
+    test("with runnable pure src and deferred transforms", () => {
+      const forked = pipe(
+        [],
+        Observable.fromReadonlyArray(),
+        Observable.forkMerge<
+          number,
+          EnumerableLike<number>,
+          DeferredObservableBaseLike<number>
+        >(
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          Observable.mapTo(2),
+        ),
+      );
+
+      expectTrue(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectFalse(forked[ObservableLike_isPure]);
+      expectFalse(forked[ObservableLike_isEnumerable]);
     }),
     testAsync("src with side-effects is only subscribed to once", async () => {
       const sideEffect = mockFn();
