@@ -6,7 +6,6 @@ import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import ReadonlyArray_enumerate from "../../ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
 import ReadonlyArray_getLength from "../../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import ReadonlyArray_isEmpty from "../../ReadonlyArray/__internal__/ReadonlyArray.isEmpty.js";
 import ReadonlyArray_map from "../../ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import { bindMethod, invoke, pipe, pipeLazy } from "../../functions.js";
 import {
@@ -25,6 +24,7 @@ import Observable_allAreEnumerable from "./Observable.allAreEnumerable.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
+import Observable_empty from "./Observable.empty.js";
 
 const Observable_concatMany: Observable.Signature["concatMany"] =
   /*@__PURE__*/ (<T>() => {
@@ -51,14 +51,10 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       observables: readonly ObservableLike<T>[],
     ): ObservableBaseLike<T> => {
       const onSubscribe = (observer: ObserverLike<T>) => {
-        if (!ReadonlyArray_isEmpty(observables)) {
-          pipe(
-            createConcatObserver(observer, observables, 1),
-            bindMethod(observables[0], ObservableLike_observe),
-          );
-        } else {
-          observer[DisposableLike_dispose]();
-        }
+        pipe(
+          createConcatObserver(observer, observables, 1),
+          bindMethod(observables[0], ObservableLike_observe),
+        );
       };
 
       const isEnumerable = Observable_allAreEnumerable<T>(observables);
@@ -66,7 +62,9 @@ const Observable_concatMany: Observable.Signature["concatMany"] =
       const isRunnable = Observable_allAreRunnable(observables);
       const isPure = Observable_allArePure(observables);
 
-      return isEnumerable
+      return observables.length === 0
+        ? Observable_empty()
+        : isEnumerable
         ? EnumerableBase_create(
             pipeLazy(
               observables,

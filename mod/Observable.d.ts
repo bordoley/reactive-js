@@ -244,7 +244,7 @@ export interface ObservableModule {
         readonly capacity?: number;
     }): Function1<RunnableBaseLike<T>, PauseableObservableLike<T> & DisposableLike>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
-    forkMerge<TOut, TObservableIn extends ObservableBaseLike, TObservableOut extends ObservableBaseLike<TOut>>(fst: Function1<TObservableIn, TObservableOut>, snd: Function1<TObservableIn, TObservableOut>, ...tail: readonly Function1<TObservableIn, TObservableOut>[]): TObservableIn extends PureObservableLike ? TObservableOut extends PureObservableLike<TOut> ? Function1<TObservableIn, MulticastObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>>;
+    forkMerge<TOut, TObservableIn extends ObservableBaseLike, TObservableOut extends ObservableBaseLike<TOut>>(fst: Function1<TObservableIn, TObservableOut>, snd: Function1<TObservableIn, TObservableOut>, ...tail: readonly Function1<TObservableIn, TObservableOut>[]): TObservableIn extends RunnableLike ? TObservableOut extends RunnableLike<TOut> ? Function1<TObservableIn, RunnableLike<TOut>> : TObservableOut extends RunnableBaseLike<TOut> ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>> : TObservableOut extends PureObservableLike<TOut> ? Function1<TObservableIn, MulticastObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>> : TObservableIn extends PureObservableLike ? TObservableOut extends PureObservableLike<TOut> ? Function1<TObservableIn, MulticastObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>> : Function1<TObservableIn, DeferredObservableLike<TOut>>;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
     fromFactory<T>(): Function1<Factory<T>, EnumerableLike<T>>;
     fromIterable<T>(): Function1<Iterable<T>, EnumerableWithSideEffectsLike<T>>;
@@ -333,7 +333,7 @@ export interface ObservableModule {
     /**
      * @category Operator
      */
-    retry<T>(shouldRetry: (count: number, error: Error) => boolean): PureDeferredObservableOperator<T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureDeferredObservableOperator<T, T>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;

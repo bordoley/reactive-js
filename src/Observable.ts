@@ -887,7 +887,15 @@ export interface ObservableModule {
     fst: Function1<TObservableIn, TObservableOut>,
     snd: Function1<TObservableIn, TObservableOut>,
     ...tail: readonly Function1<TObservableIn, TObservableOut>[]
-  ): TObservableIn extends PureObservableLike
+  ): TObservableIn extends RunnableLike
+    ? TObservableOut extends RunnableLike<TOut>
+      ? Function1<TObservableIn, RunnableLike<TOut>>
+      : TObservableOut extends RunnableBaseLike<TOut>
+      ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>>
+      : TObservableOut extends PureObservableLike<TOut>
+      ? Function1<TObservableIn, MulticastObservableLike<TOut>>
+      : Function1<TObservableIn, DeferredObservableLike<TOut>>
+    : TObservableIn extends PureObservableLike
     ? TObservableOut extends PureObservableLike<TOut>
       ? Function1<TObservableIn, MulticastObservableLike<TOut>>
       : Function1<TObservableIn, DeferredObservableLike<TOut>>
@@ -1107,7 +1115,7 @@ export interface ObservableModule {
    * @category Operator
    */
   retry<T>(
-    shouldRetry: (count: number, error: Error) => boolean,
+    shouldRetry?: (count: number, error: Error) => boolean,
   ): PureDeferredObservableOperator<T, T>;
 
   run<T>(options?: {

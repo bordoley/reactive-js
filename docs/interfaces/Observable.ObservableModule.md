@@ -1521,7 +1521,7 @@ ___
 
 ### retry
 
-▸ **retry**<`T`\>(`shouldRetry`): [`PureDeferredObservableOperator`](../modules/Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+▸ **retry**<`T`\>(`shouldRetry?`): [`PureDeferredObservableOperator`](../modules/Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -1533,7 +1533,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `shouldRetry` | (`count`: `number`, `error`: `Error`) => `boolean` |
+| `shouldRetry?` | (`count`: `number`, `error`: `Error`) => `boolean` |
 
 #### Returns
 
@@ -2304,7 +2304,7 @@ ___
 
 ### forkMerge
 
-▸ **forkMerge**<`TOut`, `TObservableIn`, `TObservableOut`\>(`fst`, `snd`, `...tail`): `TObservableIn` extends [`PureObservableLike`](types.PureObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\>
+▸ **forkMerge**<`TOut`, `TObservableIn`, `TObservableOut`\>(`fst`, `snd`, `...tail`): `TObservableIn` extends [`RunnableLike`](types.RunnableLike.md)<`unknown`\> ? `TObservableOut` extends [`RunnableLike`](types.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableLike`](types.RunnableLike.md)<`TOut`\>\> : `TObservableOut` extends [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : `TObservableIn` extends [`PureObservableLike`](types.PureObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\>
 
 #### Type parameters
 
@@ -2324,7 +2324,7 @@ ___
 
 #### Returns
 
-`TObservableIn` extends [`PureObservableLike`](types.PureObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\>
+`TObservableIn` extends [`RunnableLike`](types.RunnableLike.md)<`unknown`\> ? `TObservableOut` extends [`RunnableLike`](types.RunnableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableLike`](types.RunnableLike.md)<`TOut`\>\> : `TObservableOut` extends [`RunnableBaseLike`](types.RunnableBaseLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`TOut`\>\> : `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : `TObservableIn` extends [`PureObservableLike`](types.PureObservableLike.md)<`unknown`\> ? `TObservableOut` extends [`PureObservableLike`](types.PureObservableLike.md)<`TOut`\> ? [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`MulticastObservableLike`](types.MulticastObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\> : [`Function1`](../modules/functions.md#function1)<`TObservableIn`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<`TOut`\>\>
 
 ___
 

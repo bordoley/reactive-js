@@ -50,6 +50,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeAsync,
   pipeLazy,
   pipeLazyAsync,
   raise,
@@ -74,6 +75,7 @@ import {
   QueueableLike_enqueue,
   ReactiveContainerModule,
   ReplayObservableLike_buffer,
+  RunnableWithSideEffectsLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SinkLike_notify,
@@ -245,6 +247,44 @@ testModule(
         ),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+    test(
+      "concats the input containers in order, when sources have delay",
+      pipeLazy(
+        Observable.concat(
+          pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1)),
+          pipe([4, 5, 6], Observable.fromReadonlyArray(), Observable.delay(4)),
+        ),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+  ),
+  describe(
+    "concatMany",
+    test(
+      "concating an empty array returns the empty observable",
+      pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())),
+    ),
+  ),
+  describe(
+    "concatMap",
+    testAsync(
+      "maps each value to a container and flattens",
+      pipeLazyAsync(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.delay(0),
+        Observable.concatMap(
+          pipeLazy(
+            [1, 2, 3],
+            Observable.fromReadonlyArray(),
+            Observable.delay(2),
+          ),
+        ),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
   ),
@@ -518,7 +558,35 @@ testModule(
         [1, 2, 2, 2, 2, 3, 3, 3, 4],
         Observable.fromReadonlyArray(),
         Observable.dispatchTo<number>(stream),
-        Observable.run(),
+        Observable.toReadonlyArray(),
+      );
+
+      expectTrue(completed);
+    }),
+    test("when completed successfully from delayed source", () => {
+      const vts = Scheduler.createVirtualTimeScheduler();
+      const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+      });
+
+      let completed = false;
+
+      pipe(
+        stream,
+        EventSource.addEventHandler(ev => {
+          if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+          }
+        }),
+      );
+
+      pipe(
+        [1, 2, 2, 2, 2, 3, 3, 3, 4],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
+        Observable.dispatchTo<number>(stream),
+        Observable.toReadonlyArray(),
       );
 
       expectTrue(completed);
@@ -670,10 +738,30 @@ testModule(
       ),
     ),
     test(
+      "delayed source values pass predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
+        Observable.everySatisfy(alwaysTrue),
+        expectEquals(true),
+      ),
+    ),
+    test(
       "source values fail predicate",
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
+        Observable.everySatisfy(alwaysFalse),
+        expectEquals(false),
+      ),
+    ),
+    test(
+      "delayed source values fail predicate",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
         Observable.everySatisfy(alwaysFalse),
         expectEquals(false),
       ),
@@ -966,7 +1054,54 @@ testModule(
       );
     }),
   ),
+  describe(
+    "fork merge",
+    test("with pure src and inner runnables with side-effects", () => {
+      const obs = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forkMerge<
+          number,
+          EnumerableLike<number>,
+          RunnableWithSideEffectsLike<number>
+        >(
+          Observable.flatMapIterable(_ => [1, 2]),
+          Observable.flatMapIterable(_ => [3, 4]),
+        ),
+      );
 
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2, 3, 4, 3, 4, 3, 4]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectFalse(obs[ObservableLike_isPure]);
+      expectFalse(obs[ObservableLike_isEnumerable]);
+    }),
+    testAsync("src with side-effects is only subscribed to once", async () => {
+      const sideEffect = mockFn();
+      const src = pipe(
+        0,
+        Observable.fromValue(),
+        Observable.forEach(sideEffect),
+      );
+
+      await pipeAsync(
+        src,
+        Observable.forkMerge(
+          Observable.flatMapIterable(_ => [1, 2, 3]),
+          Observable.flatMapIterable(_ => [4, 5, 6]),
+        ),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      );
+
+      pipe(sideEffect, expectToHaveBeenCalledTimes(1));
+    }),
+  ),
   describe(
     "fromAsyncFactory",
     testAsync("when promise resolves", async () => {
@@ -1236,6 +1371,21 @@ testModule(
     }),
   ),
   describe(
+    "mergeMap",
+    testAsync(
+      "without delay, merge all observables as they are produced",
+      pipeLazyAsync(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.mergeMap<number, number>(x =>
+          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+        ),
+        Observable.toReadonlyArrayAsync(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
+  ),
+  describe(
     "noneSatisfy",
     test(
       "no values satisfy the predicate",
@@ -1267,6 +1417,17 @@ testModule(
   ),
   describe(
     "repeat",
+    test(
+      "when repeating forever.",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.repeat<number>(),
+        Observable.takeFirst<number>({ count: 8 }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]),
+      ),
+    ),
     test(
       "when repeating a finite amount of times.",
       pipeLazy(
@@ -1352,6 +1513,22 @@ testModule(
           Observable.throws(),
         ),
         Observable.retry(alwaysTrue),
+        Observable.takeFirst<number>({ count: 6 }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
+      "retrys with the default predicate",
+      pipeLazy(
+        Observable.concat(
+          pipe(
+            Observable.generate(increment, returns(0)),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          Observable.throws(),
+        ),
+        Observable.retry(),
         Observable.takeFirst<number>({ count: 6 }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
@@ -1473,7 +1650,22 @@ testModule(
       pipe(f, expectToHaveBeenCalledTimes(1));
     }),
   ),
-
+  describe(
+    "reduce",
+    test(
+      "summing all values from delayed source",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(3),
+        Observable.reduce<number, number>(
+          (acc, next) => acc + next,
+          returns(0),
+        ),
+        expectEquals(6),
+      ),
+    ),
+  ),
   describe(
     "share",
     test("shared observable zipped with itself", () => {
@@ -1498,7 +1690,21 @@ testModule(
       pipe(result, expectArrayEquals([2, 4, 6]));
     }),
   ),
-
+  describe(
+    "switchMap",
+    testAsync(
+      "concating arrays",
+      pipeLazyAsync(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.switchMap<number, number>(_ =>
+          pipe([1, 2, 3], Observable.fromReadonlyArray()),
+        ),
+        Observable.toReadonlyArrayAsync(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
   describe(
     "throttle",
     test(
@@ -1547,7 +1753,7 @@ testModule(
           [],
           Observable.fromReadonlyArray(),
           Observable.throwIfEmpty(() => error),
-          Observable.run(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -1576,7 +1782,7 @@ testModule(
           Observable.throwIfEmpty(() => {
             throw error;
           }),
-          Observable.run(),
+          Observable.toReadonlyArray(),
         ),
         expectToThrowError(error),
       );
@@ -1646,6 +1852,33 @@ testModule(
 
       pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
     }),
+  ),
+  describe(
+    "toReadonlyArrayAsync",
+    testAsync(
+      "with pure delayed source",
+      pipeLazyAsync(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(3),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "toReadonlySet",
+    test(
+      "with delayed source",
+      pipeLazy(
+        [1, 2, 1, 3, 2, 6, 5, 3, 6],
+        Observable.fromReadonlyArray(),
+        Observable.delay(2),
+        Observable.toReadonlySet<number>(),
+        x => Array.from(x).sort(),
+        expectArrayEquals([1, 2, 3, 5, 6]),
+      ),
+    ),
   ),
   describe(
     "withLatestFrom",

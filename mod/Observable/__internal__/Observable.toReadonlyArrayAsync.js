@@ -4,10 +4,9 @@ import Observable_toReadonlyArray from "../../Observable/__internal__/Observable
 import { pipe, pipeAsync } from "../../functions.js";
 import Observable_buffer from "./Observable.buffer.js";
 import Observable_firstAsync from "./Observable.firstAsync.js";
-import Observable_isPure from "./Observable.isPure.js";
 import Observable_isRunnable from "./Observable.isRunnable.js";
 const Observable_toReadonlyArrayAsync = (schedulerOrNone, options) => async (observable) => {
-    if (Observable_isRunnable(observable) && Observable_isPure(observable)) {
+    if (Observable_isRunnable(observable)) {
         // Add a microtask queue hop, so that the evaluation occurs asynchronously.
         await Promise.resolve();
         return pipe(observable, Observable_toReadonlyArray());

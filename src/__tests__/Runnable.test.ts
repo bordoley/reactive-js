@@ -118,7 +118,6 @@ testModule(
       );
     }),
   ),
-
   describe(
     "concatMap",
     test(
@@ -138,7 +137,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "exhaust",
     test(
@@ -160,7 +158,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "exhaustMap",
     test(
@@ -180,7 +177,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "mergeMap",
     test(
@@ -196,7 +192,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "switchAll",
     test(
@@ -209,7 +204,6 @@ testModule(
       ),
     ),
   ),
-
   describe(
     "switchMap",
     test(
@@ -228,10 +222,6 @@ testModule(
         expectArrayEquals([3, 3, 3]),
       ),
     ),
-  ),
-
-  describe(
-    "switchMap",
     test(
       "overlapping notification",
       pipeLazy(
