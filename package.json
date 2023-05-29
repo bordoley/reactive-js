@@ -48,6 +48,13 @@
     "typescript": "4.9.4"
   },
   "jest": {
+    "collectCoverageFrom": [
+      "./src/**/*.ts",
+      "!**/__tests__/**",
+      "!./src/integrations/*.ts",
+      "!./src/integrations/react/**/*.ts",
+      "!./src/integrations/web/**/*.ts"
+    ],
     "extensionsToTreatAsEsm": [
       ".ts"
     ],
