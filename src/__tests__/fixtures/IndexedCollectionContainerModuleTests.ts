@@ -1,4 +1,5 @@
 import * as Observable from "../../Observable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import {
   describe,
   expectArrayEquals,
@@ -36,7 +37,6 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
       "fromFactory",
       test(
         "it produces the factory result",
-
         pipeLazy(
           () => 1,
           m.fromFactory<number>(),
@@ -46,10 +46,21 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
       ),
     ),
     describe(
+      "fromIterable",
+      test(
+        "sourced from array",
+        pipeLazy(
+          [1, 2, 3],
+          m.fromIterable(),
+          m.toReadonlyArray(),
+          expectArrayEquals([1, 2, 3]),
+        ),
+      ),
+    ),
+    describe(
       "fromOptional",
       test(
         "when none",
-
         pipeLazy(
           none,
           m.fromOptional(),
@@ -59,7 +70,6 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
       ),
       test(
         "when some",
-
         pipeLazy(
           1,
           m.fromOptional(),
@@ -135,6 +145,45 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
           m.fromValue(),
           m.toReadonlyArray(),
           expectArrayEquals([none]),
+        ),
+      ),
+    ),
+    describe(
+      "toIterable",
+      test(
+        "full array",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toIterable(),
+          ReadonlyArray.fromIterable(),
+          expectArrayEquals([2, 3, 4, 5]),
+        ),
+      ),
+      test(
+        "with start index and positive count",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toIterable({
+            start: 1,
+            count: 2,
+          }),
+          ReadonlyArray.fromIterable(),
+          expectArrayEquals([3, 4]),
+        ),
+      ),
+      test(
+        "with start index and negative count",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toIterable({
+            start: 3,
+            count: -2,
+          }),
+          ReadonlyArray.fromIterable(),
+          expectArrayEquals([5, 4]),
         ),
       ),
     ),
