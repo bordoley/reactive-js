@@ -2,7 +2,7 @@
 
 import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import Observable_run from "../../Observable/__internal__/Observable.run.js";
-import { pipe } from "../../functions.js";
+import { bind, pipe } from "../../functions.js";
 import { DisposableLike_dispose, EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../types.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_isEnumerable from "./Observable.isEnumerable.js";
@@ -22,9 +22,7 @@ const Observable_toReadonlyArray = () => observable => {
     }
     else {
         const result = [];
-        pipe(observable, Observable_forEach((next) => {
-            result.push(next);
-        }), Observable_run());
+        pipe(observable, Observable_forEach(bind(Array.prototype.push, result)), Observable_run());
         return result;
     }
 };

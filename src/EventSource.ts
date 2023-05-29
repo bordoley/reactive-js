@@ -6,10 +6,8 @@ import EventSource_createRefCountedPublisher from "./EventSource/__internal__/Ev
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_keepType from "./EventSource/__internal__/EventSource.keepType.js";
-import EventSource_keepWithKey from "./EventSource/__internal__/EventSource.keepWithKey.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_mapTo from "./EventSource/__internal__/EventSource.mapTo.js";
-import EventSource_mapWithKey from "./EventSource/__internal__/EventSource.mapWithKey.js";
 import EventSource_merge from "./EventSource/__internal__/EventSource.merge.js";
 import EventSource_mergeMany from "./EventSource/__internal__/EventSource.mergeMany.js";
 import EventSource_pairwise from "./EventSource/__internal__/EventSource.pairwise.js";
@@ -94,10 +92,8 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
 export const keep: Signature["keep"] = EventSource_keep;
 export const keepType: Signature["keepType"] = EventSource_keepType;
-export const keepWithKey: Signature["keepWithKey"] = EventSource_keepWithKey;
 export const map: Signature["map"] = EventSource_map;
 export const mapTo: Signature["mapTo"] = EventSource_mapTo;
-export const mapWithKey: Signature["mapWithKey"] = EventSource_mapWithKey;
 export const merge: Signature["merge"] = EventSource_merge;
 export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
 export const pairwise: Signature["pairwise"] = EventSource_pairwise;

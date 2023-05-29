@@ -105,6 +105,21 @@ const CollectionContainerModuleTests = <C extends Container>(
       }),
     ),
     describe(
+      "keepWithKey",
+      test(
+        "filters out entries by key",
+
+        pipeLazy(
+          ["b", "d", "v"],
+          fromReadonlyArray(),
+          m.keepWithKey((_, key) => key === 1),
+          m.values(),
+          Observable.toReadonlyArray(),
+          expectArrayEquals(["d"]),
+        ),
+      ),
+    ),
+    describe(
       "keySet",
       test("returns a keyset with all the keys", () => {
         const keys = pipe(
@@ -116,6 +131,21 @@ const CollectionContainerModuleTests = <C extends Container>(
         pipe(keys.size, expectEquals(3));
         pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));
       }),
+    ),
+    describe(
+      "mapWithKey",
+      test(
+        "mapping every value to its key",
+
+        pipeLazy(
+          ["b", "d", "f"],
+          fromReadonlyArray(),
+          m.mapWithKey<string, number, number>((_, key) => key),
+          m.values(),
+          Observable.toReadonlyArray(),
+          expectArrayEquals([0, 1, 2]),
+        ),
+      ),
     ),
     describe(
       "reduce",

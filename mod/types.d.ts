@@ -606,13 +606,6 @@ export interface ContainerModule<C extends Container> {
      */
     keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
     /**
-     * Returns a ContainerOperator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): ContainerOperator<C, T, T, TKey>;
-    /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
      *
@@ -627,17 +620,6 @@ export interface ContainerModule<C extends Container> {
      * @category Operator
      */
     mapTo<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(value: TB): ContainerOperator<C, TA, TB, TKey>;
-    /**
-     * Returns a ContainerOperator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
 }
 /**
  * @noInheritDoc
@@ -743,6 +725,24 @@ export interface CollectionContainerModule<C extends Container> extends Containe
      * @category Operator
      */
     forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect2<T, TKey>): ContainerOperator<C, T, T, TKey>;
+    /**
+     * Returns a ContainerOperator that only emits items produced by the
+     * source that satisfy the specified predicate.
+     *
+     * @category Operator
+     */
+    keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): ContainerOperator<C, T, T, TKey>;
+    /**
+     * Returns a ContainerOperator that applies the `selector` function to each
+     * value emitted by the source.
+     *
+     * @param selector - A pure map function that is applied each value emitted by the source
+     * @typeparam TA - The inner type of the source container
+     * @typeparam TB - The inner type of the mapped container
+     *
+     * @category Operator
+     */
+    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
     /**
      * @category Transform
      */

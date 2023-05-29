@@ -37,6 +37,7 @@ import {
   alwaysFalse,
   alwaysTrue,
   arrayEquality,
+  bind,
   bindMethod,
   compose,
   greaterThan,
@@ -338,9 +339,7 @@ testModule(
       const result: number[] = [];
       pipe(
         publisher,
-        Observable.forEach((x: number) => {
-          result.push(x);
-        }),
+        Observable.forEach(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 
@@ -371,9 +370,7 @@ testModule(
 
       const publisherSubscription = pipe(
         publisher,
-        Observable.forEach<number>(v => {
-          result.push(v);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 
@@ -742,6 +739,21 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
+    test(
+      "maps the incoming value with the inline generator function, with delayed source",
+      pipeLazy(
+        [none, none],
+        Observable.fromReadonlyArray(),
+        Observable.delay(2),
+        Observable.flatMapIterable(function* (_) {
+          yield 1;
+          yield 2;
+          yield 3;
+        }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
   ),
 
   describe(
@@ -1000,9 +1012,7 @@ testModule(
         Observable.fromIterable(),
         Observable.delay(2),
         Observable.withCurrentTime(t => t),
-        Observable.forEach<number>(x => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.run(),
       );
       pipe(result, expectArrayEquals([0, 2, 4, 6]));
@@ -1268,10 +1278,32 @@ testModule(
       ),
     ),
     test(
+      "when repeating a finite amount of times, with delayed source.",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(1),
+        Observable.repeat<number>(3),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
       "when repeating with a predicate",
       pipeLazy(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
+        Observable.repeat<number>(lessThan(1)),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+    test(
+      "when repeating with a predicate with delayed source",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.delay(2),
         Observable.repeat<number>(lessThan(1)),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -1283,6 +1315,21 @@ testModule(
         pipeLazy(
           [1, 1],
           Observable.fromReadonlyArray(),
+          Observable.repeat(_ => {
+            throw err;
+          }),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrowError(err),
+      );
+    }),
+    test("when the repeat function throws with delayed source", () => {
+      const err = new Error();
+      pipe(
+        pipeLazy(
+          [1, 1],
+          Observable.fromReadonlyArray(),
+          Observable.delay(3),
           Observable.repeat(_ => {
             throw err;
           }),
@@ -1443,9 +1490,7 @@ testModule(
       pipe(
         Observable.zip(shared, shared),
         Observable.map<[number, number], number>(([a, b]) => a + b),
-        Observable.forEach<number>(x => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 
@@ -1575,6 +1620,20 @@ testModule(
         expectArrayEquals([1]),
       ),
     ),
+  ),
+  describe(
+    "toEventSource",
+    test("when the source completes without error", () => {
+      const result: number[] = [];
+      pipe(
+        [0, 1, 2],
+        Observable.fromReadonlyArray(),
+        Observable.toEventSource(),
+        EventSource.addEventHandler(bind(Array.prototype.push, result)),
+      );
+
+      pipe(result, expectArrayEquals([0, 1, 2]));
+    }),
   ),
   describe(
     "toIterable",

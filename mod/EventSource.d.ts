@@ -43,10 +43,8 @@ export declare const createRefCountedPublisher: Signature["createRefCountedPubli
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
-export declare const keepWithKey: Signature["keepWithKey"];
 export declare const map: Signature["map"];
 export declare const mapTo: Signature["mapTo"];
-export declare const mapWithKey: Signature["mapWithKey"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
 export declare const pairwise: Signature["pairwise"];

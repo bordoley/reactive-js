@@ -23,10 +23,8 @@
 - [distinctUntilChanged](PauseableObservable.md#distinctuntilchanged)
 - [keep](PauseableObservable.md#keep)
 - [keepType](PauseableObservable.md#keeptype)
-- [keepWithKey](PauseableObservable.md#keepwithkey)
 - [map](PauseableObservable.md#map)
 - [mapTo](PauseableObservable.md#mapto)
-- [mapWithKey](PauseableObservable.md#mapwithkey)
 - [pairwise](PauseableObservable.md#pairwise)
 - [pick](PauseableObservable.md#pick)
 - [scan](PauseableObservable.md#scan)
@@ -152,32 +150,6 @@ ___
 
 ___
 
-### keepWithKey
-
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that only emits items produced by the
-source that satisfy the specified predicate.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `T`, `T`, `TKey`\>
-
-___
-
 ### map
 
 ▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `TKey`\>
@@ -230,41 +202,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-### mapWithKey
-
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`PauseableObservableContainer`](../interfaces/PauseableObservable.PauseableObservableContainer.md), `TA`, `TB`, `TKey`\>
-
-Returns a ContainerOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
 
 #### Returns
 

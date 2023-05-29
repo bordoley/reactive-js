@@ -81,21 +81,6 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
       ),
     ),
     describe(
-      "keepWithKey",
-      test(
-        "filters out entries by key",
-        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
-          pipe(
-            ["b", "d", "v"],
-            fromReadonlyArray(ctx),
-            m.keepWithKey((_, key) => key === 1),
-            toReadonlyArray(ctx),
-            expectArrayEquals(["d"]),
-          ),
-        ),
-      ),
-    ),
-    describe(
       "map",
       test(
         "maps every value",
@@ -139,23 +124,6 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
             m.mapTo(2),
             toReadonlyArray(ctx),
             expectArrayEquals([2, 2, 2]),
-          ),
-        ),
-      ),
-    ),
-
-    describe(
-      "mapWithKey",
-      test(
-        "mapping every value to its key",
-        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
-          pipe(
-            ["b", "d", "f"],
-            fromReadonlyArray(ctx),
-            m.mapWithKey<string, number, number>((_, key) => key),
-            x => x,
-            toReadonlyArray(ctx),
-            expectArrayEquals([0, 1, 2]),
           ),
         ),
       ),

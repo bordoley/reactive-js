@@ -25,11 +25,11 @@ const CollectionContainerModuleTests = (m, fromReadonlyArray) => [
             result = result + key;
         }));
         pipe(result, expectEquals(3));
-    })), describe("keySet", test("returns a keyset with all the keys", () => {
+    })), describe("keepWithKey", test("filters out entries by key", pipeLazy(["b", "d", "v"], fromReadonlyArray(), m.keepWithKey((_, key) => key === 1), m.values(), Observable.toReadonlyArray(), expectArrayEquals(["d"])))), describe("keySet", test("returns a keyset with all the keys", () => {
         const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keySet());
         pipe(keys.size, expectEquals(3));
         pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));
-    })), describe("reduce", test("summing all values", pipeLazy([1, 2, 3], fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("reduceWithKey", test("summing the keys", pipeLazy(["a", "B", "c"], fromReadonlyArray(), m.reduceWithKey((acc, _, key) => acc + key, returns(0)), expectEquals(3)))), describe("toDictionary", test("count", () => {
+    })), describe("mapWithKey", test("mapping every value to its key", pipeLazy(["b", "d", "f"], fromReadonlyArray(), m.mapWithKey((_, key) => key), m.values(), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2])))), describe("reduce", test("summing all values", pipeLazy([1, 2, 3], fromReadonlyArray(), m.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("reduceWithKey", test("summing the keys", pipeLazy(["a", "B", "c"], fromReadonlyArray(), m.reduceWithKey((acc, _, key) => acc + key, returns(0)), expectEquals(3)))), describe("toDictionary", test("count", () => {
         const dict = pipe(["b", none, "v"], fromReadonlyArray(), m.toDictionary());
         expectEquals(3)(dict[CollectionLike_count]);
     }), test("get values", () => {

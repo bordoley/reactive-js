@@ -13,6 +13,7 @@ import {
 import {
   SideEffect,
   arrayEquality,
+  bind,
   bindMethod,
   none,
   pipe,
@@ -46,9 +47,7 @@ testModule(
 
       pipe(
         stateStream,
-        Observable.forEach((x: number) => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 

@@ -31,10 +31,8 @@
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
 - [keep](EventSource.md#keep)
 - [keepType](EventSource.md#keeptype)
-- [keepWithKey](EventSource.md#keepwithkey)
 - [map](EventSource.md#map)
 - [mapTo](EventSource.md#mapto)
-- [mapWithKey](EventSource.md#mapwithkey)
 - [pairwise](EventSource.md#pairwise)
 - [pick](EventSource.md#pick)
 - [scan](EventSource.md#scan)
@@ -268,32 +266,6 @@ ___
 
 ___
 
-### keepWithKey
-
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that only emits items produced by the
-source that satisfy the specified predicate.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`, `TKey`\>
-
-___
-
 ### map
 
 ▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
@@ -346,41 +318,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-### mapWithKey
-
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-Returns a ContainerOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
 
 #### Returns
 

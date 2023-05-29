@@ -11,6 +11,7 @@ import {
   testModule,
 } from "../__internal__/testing.js";
 import {
+  bind,
   compose,
   ignore,
   isSome,
@@ -32,9 +33,7 @@ const toReadonlyArray =
     const result: T[] = [];
     const subscription = pipe(
       eventSource,
-      EventSource.addEventHandler(v => {
-        result.push(v);
-      }),
+      EventSource.addEventHandler(bind(Array.prototype.push, result)),
     );
 
     if (isSome(subscription[DisposableLike_error])) {
@@ -102,7 +101,7 @@ testModule(
 
       pipe(
         EventSource.merge(ev1, ev2, ev3),
-        EventSource.addEventHandler(x => result.push(x)),
+        EventSource.addEventHandler(bind(Array.prototype.push, result)),
       );
 
       vts[VirtualTimeSchedulerLike_run]();

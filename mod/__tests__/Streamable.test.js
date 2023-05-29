@@ -7,7 +7,7 @@ import * as ReadonlyObjectMap from "../ReadonlyObjectMap.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
-import { arrayEquality, bindMethod, none, pipe, returns, } from "../functions.js";
+import { arrayEquality, bind, bindMethod, none, pipe, returns, } from "../functions.js";
 import { DispatcherLike_complete, DisposableLike_dispose, KeyedCollectionLike_get, QueueableLike_enqueue, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -17,9 +17,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     stateStream[QueueableLike_enqueue](returns(3));
     stateStream[DispatcherLike_complete]();
     let result = [];
-    pipe(stateStream, Observable.forEach((x) => {
-        result.push(x);
-    }), Observable.subscribe(scheduler));
+    pipe(stateStream, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3]));
 })), describe("createInMemoryCache", test("it publishes none on subscribe when the key is missing", () => {

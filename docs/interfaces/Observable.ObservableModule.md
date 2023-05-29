@@ -68,12 +68,10 @@
 - [isRunnable](Observable.ObservableModule.md#isrunnable)
 - [keep](Observable.ObservableModule.md#keep)
 - [keepType](Observable.ObservableModule.md#keeptype)
-- [keepWithKey](Observable.ObservableModule.md#keepwithkey)
 - [last](Observable.ObservableModule.md#last)
 - [lastAsync](Observable.ObservableModule.md#lastasync)
 - [map](Observable.ObservableModule.md#map)
 - [mapTo](Observable.ObservableModule.md#mapto)
-- [mapWithKey](Observable.ObservableModule.md#mapwithkey)
 - [merge](Observable.ObservableModule.md#merge)
 - [mergeAll](Observable.ObservableModule.md#mergeall)
 - [mergeMany](Observable.ObservableModule.md#mergemany)
@@ -86,7 +84,6 @@
 - [pick](Observable.ObservableModule.md#pick)
 - [range](Observable.ObservableModule.md#range)
 - [reduce](Observable.ObservableModule.md#reduce)
-- [reduceWithKey](Observable.ObservableModule.md#reducewithkey)
 - [run](Observable.ObservableModule.md#run)
 - [scan](Observable.ObservableModule.md#scan)
 - [skipFirst](Observable.ObservableModule.md#skipfirst)
@@ -2679,29 +2676,6 @@ ___
 
 ___
 
-### keepWithKey
-
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, `T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](../modules/functions.md#function2)<`T`, `TKey`, `boolean`\> |
-
-#### Returns
-
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, `T`\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -2794,30 +2768,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `value` | `TB` |
-
-#### Returns
-
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-___
-
-### mapWithKey
-
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> |
 
 #### Returns
 
@@ -3387,31 +3337,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `TAcc`\>
-
-___
-
-### reduceWithKey
-
-▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, `TAcc`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TAcc` | `TAcc` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Function3`](../modules/functions.md#function3)<`TAcc`, `T`, `TKey`, `TAcc`\> |
 | `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
 
 #### Returns

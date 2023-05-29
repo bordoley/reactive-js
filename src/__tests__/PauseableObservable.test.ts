@@ -10,7 +10,14 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
+import {
+  bind,
+  increment,
+  isSome,
+  pipe,
+  raiseError,
+  returns,
+} from "../functions.js";
 import {
   DisposableLike_error,
   PauseableLike_isPaused,
@@ -35,9 +42,7 @@ const toReadonlyArray =
     const result: T[] = [];
     const subscription = pipe(
       obs,
-      Observable.forEach<T>(x => {
-        result.push(x);
-      }),
+      Observable.forEach<T>(bind(Array.prototype.push, result)),
       Observable.subscribe(scheduler),
     );
 
@@ -91,9 +96,7 @@ testModule(
       const result: number[] = [];
       pipe(
         dest,
-        Observable.forEach<number>(x => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 

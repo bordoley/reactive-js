@@ -1,7 +1,7 @@
 import Disposable_raiseIfDisposedWithError from "../../Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import type * as Observable from "../../Observable.js";
 import Observable_run from "../../Observable/__internal__/Observable.run.js";
-import { Function1, pipe } from "../../functions.js";
+import { Function1, bind, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EnumerableLike_enumerate,
@@ -36,9 +36,7 @@ const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =
 
       pipe(
         observable,
-        Observable_forEach((next: T) => {
-          result.push(next);
-        }),
+        Observable_forEach(bind(Array.prototype.push, result)),
         Observable_run(),
       );
 

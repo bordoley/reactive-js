@@ -9,6 +9,7 @@ import {
 } from "../__internal__/testing.js";
 import {
   Optional,
+  bind,
   increment,
   isSome,
   none,
@@ -44,9 +45,7 @@ testModule(
           return result1 + result2 + result3;
         }),
         Observable.takeLast<number>(),
-        Observable.forEach((x: number) => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.run(),
       );
 
@@ -75,9 +74,7 @@ testModule(
           { mode: "combine-latest" },
         ),
         Observable.keepType<Optional<number>, number>(isSome),
-        Observable.forEach((x: number) => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.run(),
       );
 
@@ -109,9 +106,7 @@ testModule(
           }
           return v;
         }),
-        Observable.forEach((x: number) => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.run(),
       );
 

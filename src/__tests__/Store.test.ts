@@ -7,7 +7,7 @@ import {
   test,
   testModule,
 } from "../__internal__/testing.js";
-import { identity, increment, pipe, returns } from "../functions.js";
+import { bind, identity, increment, pipe, returns } from "../functions.js";
 import { StoreLike_value, VirtualTimeSchedulerLike_run } from "../types.js";
 
 testModule(
@@ -23,9 +23,7 @@ testModule(
         store,
         Store.toObservable(),
         Observable.withCurrentTime(identity),
-        Observable.forEach<number>(x => {
-          result.push(x);
-        }),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
 

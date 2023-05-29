@@ -6,15 +6,13 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../__internal__/testing.js";
-import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
+import { bind, increment, isSome, pipe, raiseError, returns, } from "../functions.js";
 import { DisposableLike_error, PauseableLike_isPaused, PauseableLike_resume, StoreLike_value, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.toObservable(), Observable.flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
-    const subscription = pipe(obs, Observable.forEach(x => {
-        result.push(x);
-    }), Observable.subscribe(scheduler));
+    const subscription = pipe(obs, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
     obs[PauseableLike_resume]();
     scheduler[VirtualTimeSchedulerLike_run]();
     const error = subscription[DisposableLike_error];
@@ -33,9 +31,7 @@ testModule("PauseableObservable", ...ReactiveContainerModuleTests(PauseableObser
     expectTrue(src[PauseableLike_isPaused][StoreLike_value]);
     pipe(src, PauseableObservable.sinkInto(dest), Observable.subscribe(scheduler));
     const result = [];
-    pipe(dest, Observable.forEach(x => {
-        result.push(x);
-    }), Observable.subscribe(scheduler));
+    pipe(dest, Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([0, 1, 2, 3, 4]));
 })));

@@ -4,7 +4,7 @@ import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
 import { describe, expectArrayEquals, test, testModule, } from "../__internal__/testing.js";
-import { increment, isSome, none, pipe, pipeLazy, returns, } from "../functions.js";
+import { bind, increment, isSome, none, pipe, pipeLazy, returns, } from "../functions.js";
 testModule("Runnable", describe("compute", test("batch mode", () => {
     const result = [];
     pipe(Runnable.compute(() => {
@@ -16,9 +16,7 @@ testModule("Runnable", describe("compute", test("batch mode", () => {
         const obs3 = __memo(fromValueWithDelay, 30, 7);
         const result3 = __await(obs3);
         return result1 + result2 + result3;
-    }), Observable.takeLast(), Observable.forEach((x) => {
-        result.push(x);
-    }), Observable.run());
+    }), Observable.takeLast(), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([22]));
 }), test("combined-latest mode", () => {
     const result = [];
@@ -28,9 +26,7 @@ testModule("Runnable", describe("compute", test("batch mode", () => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), Observable.keepType(isSome), Observable.forEach((x) => {
-        result.push(x);
-    }), Observable.run());
+    }, { mode: "combine-latest" }), Observable.keepType(isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("conditional hooks", () => {
     const result = [];
@@ -43,9 +39,7 @@ testModule("Runnable", describe("compute", test("batch mode", () => {
             return __await(src2);
         }
         return v;
-    }), Observable.forEach((x) => {
-        result.push(x);
-    }), Observable.run());
+    }), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([
         101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
     ]));
