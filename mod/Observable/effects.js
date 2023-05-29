@@ -5,7 +5,7 @@ import Observable_create from "../Observable/__internal__/Observable.create.js";
 import Runnable_create from "../Runnable/__internal__/Runnable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import { __ComputeContext_awaitOrObserve, __ComputeContext_constant, __ComputeContext_memoOrUse, __ComputeContext_observableConfig, __ComputeContext_observer, } from "../__internal__/symbols.js";
-import { bind, bindMethod, isSome, none, pipe, } from "../functions.js";
+import { bindMethod, isSome, none, pipe, } from "../functions.js";
 import { DisposableLike_dispose, ObservableLike_isPure, ObservableLike_isRunnable, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, } from "../types.js";
 import { assertCurrentContext } from "./__internal__/Observable.compute.js";
 import Observable_subscribe from "./__internal__/Observable.subscribe.js";
@@ -76,7 +76,5 @@ export const __state = /*@__PURE__*/ (() => {
         return __stream(streamable, options);
     };
 })();
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const __bind = (f, thiz) => __memo(bind, f, thiz);
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const __bindMethod = (thiz, key) => __memo(bindMethod, thiz, key);

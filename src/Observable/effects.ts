@@ -27,7 +27,6 @@ import {
   SideEffect5,
   SideEffect6,
   Updater,
-  bind,
   bindMethod,
   isSome,
   none,
@@ -305,10 +304,6 @@ export const __state = /*@__PURE__*/ (() => {
     return __stream(streamable, options) as StreamLike<Updater<T>, T>;
   };
 })();
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const __bind = <F extends Function>(f: F, thiz: unknown): F =>
-  __memo(bind, f, thiz);
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const __bindMethod = <

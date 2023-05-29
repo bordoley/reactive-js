@@ -7,7 +7,6 @@
 ### Functions
 
 - [\_\_await](Observable_effects.md#__await)
-- [\_\_bind](Observable_effects.md#__bind)
 - [\_\_bindMethod](Observable_effects.md#__bindmethod)
 - [\_\_constant](Observable_effects.md#__constant)
 - [\_\_currentScheduler](Observable_effects.md#__currentscheduler)
@@ -39,29 +38,6 @@
 #### Returns
 
 `T`
-
-___
-
-### \_\_bind
-
-▸ **__bind**<`F`\>(`f`, `thiz`): `F`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `F` | extends `Function` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `f` | `F` |
-| `thiz` | `unknown` |
-
-#### Returns
-
-`F`
 
 ___
 

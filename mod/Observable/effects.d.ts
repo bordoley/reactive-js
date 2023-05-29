@@ -46,6 +46,5 @@ export declare const __state: <T>(initialState: () => T, options?: {
     readonly scheduler?: SchedulerLike | undefined;
     readonly capacity?: number | undefined;
 }) => StreamLike<Updater<T>, T>;
-export declare const __bind: <F extends Function>(f: F, thiz: unknown) => F;
 export declare const __bindMethod: <T extends { [K in TKey]: (...args: any[]) => any; }, TKey extends string | number | symbol, TFunction extends T[TKey]>(thiz: T, key: TKey) => TFunction;
 export {};
