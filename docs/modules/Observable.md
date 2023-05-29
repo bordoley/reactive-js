@@ -10,7 +10,6 @@
 
 ### Container Interfaces
 
-- [DeferredObservableBaseContainer](../interfaces/Observable.DeferredObservableBaseContainer.md)
 - [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
 - [EnumerableContainer](../interfaces/Observable.EnumerableContainer.md)
 - [MulticastObservableContainer](../interfaces/Observable.MulticastObservableContainer.md)

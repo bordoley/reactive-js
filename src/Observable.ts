@@ -247,16 +247,6 @@ export interface ObservableContainer extends IndexedContainer {
  * @noInheritDoc
  * @category Container
  */
-export interface DeferredObservableBaseContainer extends IndexedContainer {
-  readonly [Container_type]?: DeferredObservableBaseLike<
-    this[typeof Container_T]
-  >;
-}
-
-/**
- * @noInheritDoc
- * @category Container
- */
 export interface DeferredObservableContainer extends IndexedContainer {
   readonly [Container_type]?: DeferredObservableLike<this[typeof Container_T]>;
 }
