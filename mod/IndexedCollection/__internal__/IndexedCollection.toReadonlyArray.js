@@ -1,12 +1,13 @@
 /// <reference types="./IndexedCollection.toReadonlyArray.d.ts" />
 
 import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
+import { abs } from "../../__internal__/math.js";
 import { newInstance } from "../../functions.js";
 import { KeyedCollectionLike_get } from "../../types.js";
 import Collection_getCount from "./Collection.getCount.js";
 const IndexedCollection_toReadonlyArray = 
 /*@__PURE__*/ IndexedCollection_toContainer((values, startIndex, count) => {
-    const result = newInstance(Array, count);
+    const result = newInstance(Array, abs(count));
     let resultIndex = 0;
     let index = startIndex;
     let cnt = count;

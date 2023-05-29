@@ -39,10 +39,6 @@
 - [mapTo](ReadonlyArray.md#mapto)
 - [mapWithKey](ReadonlyArray.md#mapwithkey)
 
-### Other Functions
-
-- [flow](ReadonlyArray.md#flow)
-
 ### Transform Functions
 
 - [entries](ReadonlyArray.md#entries)
@@ -424,35 +420,6 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-## Other Functions
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 

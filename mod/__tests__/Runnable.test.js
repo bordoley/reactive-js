@@ -49,7 +49,7 @@ testModule("Runnable", describe("compute", test("batch mode", () => {
     pipe(result, expectArrayEquals([
         101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
     ]));
-})), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+})), describe("concatMap", test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Runnable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(2))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
     pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1)),
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),

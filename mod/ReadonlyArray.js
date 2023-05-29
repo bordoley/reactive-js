@@ -4,7 +4,6 @@ import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toR
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_fromFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromFactory.js";
@@ -33,7 +32,6 @@ import { Container_type, } from "./types.js";
 export const empty = ReadonlyArray_empty;
 export const entries = ReadonlyArray_entries;
 export const enumerate = ReadonlyArray_enumerate;
-export const flow = ReadonlyArray_flow;
 export const forEach = ReadonlyArray_forEach;
 export const forEachWithKey = ReadonlyArray_forEachWithKey;
 export const fromEnumerable = Observable_toReadonlyArray;

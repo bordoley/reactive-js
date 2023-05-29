@@ -18,7 +18,6 @@ export type Signature = ReadonlyArrayModule;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const enumerate: Signature["enumerate"];
-export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
 export declare const forEachWithKey: Signature["forEachWithKey"];
 export declare const fromEnumerable: Signature["fromEnumerable"];

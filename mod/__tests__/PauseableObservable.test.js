@@ -9,7 +9,7 @@ import { describe, expectArrayEquals, expectTrue, test, testModule, } from "../_
 import { increment, isSome, pipe, raiseError, returns } from "../functions.js";
 import { DisposableLike_error, PauseableLike_isPaused, PauseableLike_resume, StoreLike_value, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
-const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.flow(scheduler));
+const fromReadonlyArray = (scheduler) => (arr) => pipe(arr, ReadonlyArray.toObservable(), Observable.flow(scheduler));
 const toReadonlyArray = (scheduler) => (obs) => {
     const result = [];
     const subscription = pipe(obs, Observable.forEach(x => {

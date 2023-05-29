@@ -3,10 +3,12 @@ import * as ReadonlyArray from "../../ReadonlyArray.js";
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   test,
 } from "../../__internal__/testing.js";
-import { increment, none, pipeLazy, returns } from "../../functions.js";
+import { increment, none, pick, pipeLazy, returns } from "../../functions.js";
 import {
+  CollectionLike_count,
   IndexedCollectionContainerModule,
   IndexedContainer,
 } from "../../types.js";
@@ -149,6 +151,19 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
       ),
     ),
     describe(
+      "toIndexedCollection",
+      test(
+        "with sub-range, validate count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          m.fromReadonlyArray(),
+          m.toIndexedCollection({ count: 2, start: 1 }),
+          pick(CollectionLike_count),
+          expectEquals(2),
+        ),
+      ),
+    ),
+    describe(
       "toIterable",
       test(
         "full array",
@@ -183,6 +198,42 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
             count: -2,
           }),
           ReadonlyArray.fromIterable(),
+          expectArrayEquals([5, 4]),
+        ),
+      ),
+    ),
+    describe(
+      "toReadonlyArray",
+      test(
+        "full array",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toReadonlyArray(),
+          expectArrayEquals([2, 3, 4, 5]),
+        ),
+      ),
+      test(
+        "with start index and positive count",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toReadonlyArray({
+            start: 1,
+            count: 2,
+          }),
+          expectArrayEquals([3, 4]),
+        ),
+      ),
+      test(
+        "with start index and negative count",
+        pipeLazy(
+          [2, 3, 4, 5],
+          m.fromReadonlyArray(),
+          m.toReadonlyArray({
+            start: 3,
+            count: -2,
+          }),
           expectArrayEquals([5, 4]),
         ),
       ),

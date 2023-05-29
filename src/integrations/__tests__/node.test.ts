@@ -48,7 +48,8 @@ testModule(
 
         await pipe(
           ["abc", "defg", "xyz"],
-          ReadonlyArray.flow(scheduler),
+          ReadonlyArray.toObservable(),
+          Observable.flow(scheduler),
           Disposable.addTo(scheduler),
           PauseableObservable.keep(x => x !== "xyz"),
           PauseableObservable.map(bindMethod(encoder, "encode")),
@@ -77,7 +78,8 @@ testModule(
 
         const promise = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.flow(scheduler),
+          ReadonlyArray.toObservable(),
+          Observable.flow(scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
           Observable.lastAsync(scheduler),
@@ -111,7 +113,8 @@ testModule(
 
         await pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
-          ReadonlyArray.flow(scheduler),
+          ReadonlyArray.toObservable(),
+          Observable.flow(scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(compressionPipeline),
           Observable.lastAsync(scheduler),

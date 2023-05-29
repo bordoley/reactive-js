@@ -1,7 +1,6 @@
 import IndexedCollection_empty from "./IndexedCollection/__internal__/IndexedCollection.empty.js";
 import IndexedCollection_entries from "./IndexedCollection/__internal__/IndexedCollection.entries.js";
 import IndexedCollection_enumerate from "./IndexedCollection/__internal__/IndexedCollection.enumerate.js";
-import IndexedCollection_flow from "./IndexedCollection/__internal__/IndexedCollection.flow.js";
 import IndexedCollection_forEach from "./IndexedCollection/__internal__/IndexedCollection.forEach.js";
 import IndexedCollection_forEachWithKey from "./IndexedCollection/__internal__/IndexedCollection.forEachWithKey.js";
 import IndexedCollection_fromFactory from "./IndexedCollection/__internal__/IndexedCollection.fromFactory.js";
@@ -60,7 +59,6 @@ export type Signature = IndexedCollectionModule;
 export const empty: Signature["empty"] = IndexedCollection_empty;
 export const entries: Signature["entries"] = IndexedCollection_entries;
 export const enumerate: Signature["enumerate"] = IndexedCollection_enumerate;
-export const flow: Signature["flow"] = IndexedCollection_flow;
 export const forEach: Signature["forEach"] = IndexedCollection_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   IndexedCollection_forEachWithKey;

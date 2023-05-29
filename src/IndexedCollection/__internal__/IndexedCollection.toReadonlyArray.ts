@@ -1,4 +1,5 @@
 import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
+import { abs } from "../../__internal__/math.js";
 import { newInstance } from "../../functions.js";
 import { IndexedCollectionLike, KeyedCollectionLike_get } from "../../types.js";
 import type * as IndexedCollection from "./../../IndexedCollection.js";
@@ -16,7 +17,7 @@ const IndexedCollection_toReadonlyArray: IndexedCollection.Signature["toReadonly
       startIndex: number,
       count: number,
     ) => {
-      const result = newInstance<Array<T>, number>(Array, count);
+      const result = newInstance<Array<T>, number>(Array, abs(count));
       let resultIndex = 0;
 
       let index = startIndex;

@@ -39,10 +39,6 @@
 - [mapTo](IndexedCollection.md#mapto)
 - [mapWithKey](IndexedCollection.md#mapwithkey)
 
-### Other Functions
-
-- [flow](IndexedCollection.md#flow)
-
 ### Transform Functions
 
 - [entries](IndexedCollection.md#entries)
@@ -424,35 +420,6 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/IndexedCollection.IndexedCollectionContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-## Other Functions
-
-### flow
-
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/types.IndexedCollectionLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.count?` | `number` |
-| `options.start?` | `number` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/types.IndexedCollectionLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/types.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/types.DisposableLike.md)\>
 
 ___
 

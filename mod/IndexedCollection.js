@@ -3,7 +3,6 @@
 import IndexedCollection_empty from "./IndexedCollection/__internal__/IndexedCollection.empty.js";
 import IndexedCollection_entries from "./IndexedCollection/__internal__/IndexedCollection.entries.js";
 import IndexedCollection_enumerate from "./IndexedCollection/__internal__/IndexedCollection.enumerate.js";
-import IndexedCollection_flow from "./IndexedCollection/__internal__/IndexedCollection.flow.js";
 import IndexedCollection_forEach from "./IndexedCollection/__internal__/IndexedCollection.forEach.js";
 import IndexedCollection_forEachWithKey from "./IndexedCollection/__internal__/IndexedCollection.forEachWithKey.js";
 import IndexedCollection_fromFactory from "./IndexedCollection/__internal__/IndexedCollection.fromFactory.js";
@@ -34,7 +33,6 @@ import { Container_type, } from "./types.js";
 export const empty = IndexedCollection_empty;
 export const entries = IndexedCollection_entries;
 export const enumerate = IndexedCollection_enumerate;
-export const flow = IndexedCollection_flow;
 export const forEach = IndexedCollection_forEach;
 export const forEachWithKey = IndexedCollection_forEachWithKey;
 export const fromEnumerable = Observable_toIndexedCollection;

@@ -2,7 +2,6 @@ import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toR
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
-import ReadonlyArray_flow from "./ReadonlyArray/__internal__/ReadonlyArray.flow.js";
 import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
 import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_fromFactory from "./ReadonlyArray/__internal__/ReadonlyArray.fromFactory.js";
@@ -59,7 +58,6 @@ export type Signature = ReadonlyArrayModule;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
 export const enumerate: Signature["enumerate"] = ReadonlyArray_enumerate;
-export const flow: Signature["flow"] = ReadonlyArray_flow;
 export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
 export const forEachWithKey: Signature["forEachWithKey"] =
   ReadonlyArray_forEachWithKey;

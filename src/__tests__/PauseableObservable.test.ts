@@ -27,7 +27,7 @@ import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTest
 const fromReadonlyArray =
   <T>(scheduler: SchedulerLike) =>
   (arr: ReadonlyArray<T>): PauseableObservableLike<T> =>
-    pipe(arr, ReadonlyArray.flow(scheduler));
+    pipe(arr, ReadonlyArray.toObservable(), Observable.flow(scheduler));
 
 const toReadonlyArray =
   <T>(scheduler: VirtualTimeSchedulerLike) =>

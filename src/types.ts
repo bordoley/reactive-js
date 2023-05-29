@@ -1125,16 +1125,6 @@ export interface IndexedCollectionContainerModule<C extends IndexedContainer>
     readonly count?: number;
   }): Function1<ContainerOf<C, T>, EnumeratorLike<T>>;
 
-  flow<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly count?: number;
-      readonly start?: number;
-    },
-  ): Function1<ContainerOf<C, T>, PauseableObservableLike<T> & DisposableLike>;
-
   /**
    * @category Constructor
    */

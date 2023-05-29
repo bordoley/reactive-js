@@ -125,6 +125,26 @@ testModule(
   ),
 
   describe(
+    "concatMap",
+    test(
+      "maps each value to a container and flattens",
+      pipeLazy(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Runnable.concatMap(
+          pipeLazy(
+            [1, 2, 3],
+            Observable.fromReadonlyArray(),
+            Observable.delay(2),
+          ),
+        ),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+
+  describe(
     "exhaust",
     test(
       "when the initial observable never disposes",

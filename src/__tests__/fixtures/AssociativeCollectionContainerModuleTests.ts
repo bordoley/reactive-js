@@ -1,3 +1,8 @@
+import * as Dictionary from "../../Dictionary.js";
+import * as Observable from "../../Observable.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
+import * as ReadonlyMap from "../../ReadonlyMap.js";
+import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 import {
   describe,
   expectArrayEquals,
@@ -5,26 +10,21 @@ import {
   test,
 } from "../../__internal__/testing.js";
 import {
-  pipeLazy,
-  pick,
-  arrayEquality,
-  pipe,
-  none,
   Optional,
-  isSome,
-  returns,
   Tuple2,
+  arrayEquality,
+  isSome,
+  none,
+  pick,
+  pipe,
+  pipeLazy,
+  returns,
 } from "../../functions.js";
 import {
   AssociativeCollectionContainerModule,
   CollectionLike_count,
   Container,
 } from "../../types.js";
-import * as Dictionary from "../../Dictionary.js";
-import * as Observable from "../../Observable.js";
-import * as ReadonlyArray from "../../ReadonlyArray.js";
-import * as ReadonlyMap from "../../ReadonlyMap.js";
-import * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
 const AssociativeCollectionContainerModuleTests = <C extends Container<string>>(
   m: AssociativeCollectionContainerModule<C>,
@@ -212,6 +212,25 @@ const AssociativeCollectionContainerModuleTests = <C extends Container<string>>(
           m.toDictionary(),
           pick(CollectionLike_count),
           expectEquals(3),
+        ),
+      ),
+    ),
+    describe(
+      "mapTo",
+      test(
+        "maps every value in the source to v",
+        pipeLazy(
+          [
+            ["a", "b"],
+            ["c", "d"],
+            ["e", "f"],
+          ],
+          ReadonlyArray.toObservable<[string, string]>(),
+          m.fromEntries(),
+          m.mapTo(2),
+          m.values(),
+          Observable.toReadonlyArray(),
+          expectArrayEquals([2, 2, 2]),
         ),
       ),
     ),
