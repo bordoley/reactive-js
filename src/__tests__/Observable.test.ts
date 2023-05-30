@@ -6,8 +6,10 @@ import * as IndexedCollection from "../IndexedCollection.js";
 import * as Observable from "../Observable.js";
 import {
   __bindMethod,
+  __constant,
   __do,
   __observe,
+  __state,
   __stream,
 } from "../Observable/effects.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
@@ -272,6 +274,27 @@ testModule(
       );
 
       pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }),
+    testAsync("__state", async () => {
+      const result = await pipe(
+        Observable.compute(() => {
+          const initialState = __constant((): number => 0);
+          const state = __state(initialState);
+          const push = __bindMethod(state, QueueableLike_enqueue);
+          const result = __observe(state) ?? -1;
+
+          if (result > -1) {
+            __do(push, () => result + 1);
+          }
+
+          return result;
+        }),
+        Observable.takeFirst({ count: 10 }),
+        Observable.buffer(),
+        Observable.lastAsync<readonly number[]>(),
+      );
+
+      pipe(result ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
     }),
   ),
   describe(
