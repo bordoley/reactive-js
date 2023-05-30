@@ -379,3 +379,5 @@ export type MixinPrototype<TPrototype> = {
 export const getPrototype = <TPrototype>(
   mixin: MixinPrototype<TPrototype>,
 ): TPrototype => mixin[__Object_prototype];
+
+export function unsafeCast<T>(_v: unknown): asserts _v is T {}

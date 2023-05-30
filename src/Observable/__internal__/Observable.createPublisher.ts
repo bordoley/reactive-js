@@ -11,17 +11,11 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { __Publisher_observers } from "../../__internal__/symbols.js";
 import { IndexedQueueLike } from "../../__internal__/types.js";
-import {
-  error,
-  isSome,
-  newInstance,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../functions.js";
+import { error, isSome, newInstance, none, pipe } from "../../functions.js";
 import {
   CollectionLike_count,
   DispatcherLike_complete,

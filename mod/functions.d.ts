@@ -357,5 +357,4 @@ export declare const returns: <T>(v: T) => (..._args: unknown[]) => T;
  */
 export declare const strictEquality: <T>(a: T, b: T) => boolean;
 export declare const tuple: Signature["tuple"];
-export declare function unsafeCast<T>(_v: unknown): asserts _v is T;
 export {};

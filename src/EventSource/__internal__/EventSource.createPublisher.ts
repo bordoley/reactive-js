@@ -10,9 +10,10 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import { __EventPublisher_listeners } from "../../__internal__/symbols.js";
-import { error, newInstance, none, pipe, unsafeCast } from "../../functions.js";
+import { error, newInstance, none, pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,

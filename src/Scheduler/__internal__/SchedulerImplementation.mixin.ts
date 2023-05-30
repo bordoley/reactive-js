@@ -9,6 +9,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   __SchedulerImplementationLike_runContinuation as SchedulerImplementationLike_runContinuation,
@@ -36,7 +37,6 @@ import {
   none,
   pipe,
   raiseWithDebugMessage,
-  unsafeCast,
 } from "../../functions.js";
 import {
   CollectionLike_count,

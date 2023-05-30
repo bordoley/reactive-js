@@ -10,8 +10,9 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
-import { none, unsafeCast } from "../../functions.js";
+import { none } from "../../functions.js";
 import {
   DisposableLike,
   SinkLike_notify,

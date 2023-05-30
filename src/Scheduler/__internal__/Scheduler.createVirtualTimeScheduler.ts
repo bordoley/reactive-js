@@ -12,6 +12,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   __VirtualTimeScheduler_maxMicroTaskTicks,
@@ -27,7 +28,7 @@ import {
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
 } from "../../__internal__/types.js";
-import { isSome, unsafeCast } from "../../functions.js";
+import { isSome } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

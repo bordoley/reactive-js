@@ -1492,5 +1492,3 @@ export const strictEquality = <T>(a: T, b: T) => a === b;
 
 export const tuple: Signature["tuple"] = ((...v: readonly unknown[]) =>
   v) as Signature["tuple"];
-
-export function unsafeCast<T>(_v: unknown): asserts _v is T {}

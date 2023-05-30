@@ -9,12 +9,13 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { pipe, unsafeCast } from "../../functions.js";
+import { pipe } from "../../functions.js";
 import {
   DisposableLike_dispose,
   EventListenerLike_isErrorSafe,

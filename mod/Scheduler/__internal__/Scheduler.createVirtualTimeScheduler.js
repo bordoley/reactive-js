@@ -4,10 +4,10 @@ import MutableEnumerator_mixin from "../../Enumerator/__internal__/MutableEnumer
 import Queue_priorityQueueMixin from "../../Queue/__internal__/Queue.priorityQueueMixin.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { __VirtualTimeScheduler_maxMicroTaskTicks, __VirtualTimeScheduler_microTaskTicks, __VirtualTimeScheduler_taskIDCount, } from "../../__internal__/symbols.js";
 import { QueueLike_dequeue, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../../__internal__/types.js";
-import { isSome, unsafeCast } from "../../functions.js";
+import { isSome } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, QueueableLike_enqueue, SchedulerLike_now, VirtualTimeSchedulerLike_run, } from "../../types.js";
 import { SchedulerImplementationLike_runContinuation, SchedulerImplementationLike_scheduleContinuation, SchedulerImplementationLike_shouldYield, SchedulerImplementation_mixin, } from "./SchedulerImplementation.mixin.js";
 const comparator = (a, b) => {

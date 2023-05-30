@@ -8,6 +8,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   CountingLike,
@@ -15,7 +16,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Function1, unsafeCast } from "../../functions.js";
+import { Function1 } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,

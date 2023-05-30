@@ -12,6 +12,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   CountingLike,
@@ -31,7 +32,6 @@ import {
   none,
   partial,
   pipe,
-  unsafeCast,
 } from "../../functions.js";
 import {
   DeferredObservableBaseLike,

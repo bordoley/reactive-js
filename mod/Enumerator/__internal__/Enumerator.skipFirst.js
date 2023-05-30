@@ -3,9 +3,8 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
 import { max } from "../../__internal__/math.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CountingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
-import { unsafeCast } from "../../functions.js";
 import { DisposableLike_isDisposed, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 const Enumerator_skipFirst = /*@__PURE__*/ (() => {
     const createSkipFirstEnumerator = createInstanceFactory(mix(include(Delegating_mixin(), Disposable_delegatingMixin), function SkipFirstEnumerator(instance, delegate, skipCount) {

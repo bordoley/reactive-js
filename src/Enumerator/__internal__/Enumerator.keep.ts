@@ -8,6 +8,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -15,14 +16,7 @@ import {
   PredicatedLike,
   PredicatedLike_predicate,
 } from "../../__internal__/types.js";
-import {
-  Function1,
-  Predicate,
-  error,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../functions.js";
+import { Function1, Predicate, error, none, pipe } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

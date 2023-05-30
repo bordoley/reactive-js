@@ -1,7 +1,6 @@
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_add from "../../Disposable/__internal__/Disposable.add.js";
 import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-
 import {
   Mutable,
   createInstanceFactory,
@@ -9,6 +8,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -16,7 +16,7 @@ import {
   HigherOrderEnumeratorLike,
   HigherOrderEnumerator_inner,
 } from "../../__internal__/types.js";
-import { Function1, none, pipe, returns, unsafeCast } from "../../functions.js";
+import { Function1, none, pipe, returns } from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,

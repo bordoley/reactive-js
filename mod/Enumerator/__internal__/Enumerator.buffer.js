@@ -2,9 +2,9 @@
 
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import Disposable_delegatingMixin from "../../Disposable/__internal__/Disposable.delegatingMixin.js";
-import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
+import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { BufferingLike_buffer, BufferingLike_count, DelegatingLike_delegate, } from "../../__internal__/types.js";
-import { none, unsafeCast } from "../../functions.js";
+import { none } from "../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../types.js";
 const Enumerator_buffer = 
 /*@__PURE__*/ (() => {

@@ -1,13 +1,7 @@
 import Disposable_addTo from "../../Disposable/__internal__/Disposable.addTo.js";
-import { Mixin1, mix, props } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { __DelegatingSchedulerImplementationMixin_delegate } from "../../__internal__/symbols.js";
-import {
-  Function2,
-  SideEffect1,
-  none,
-  pipe,
-  unsafeCast,
-} from "../../functions.js";
+import { Function2, SideEffect1, none, pipe } from "../../functions.js";
 import {
   DisposableLike,
   SchedulerLike,

@@ -102,7 +102,6 @@
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
 - [tuple](functions.md#tuple)
-- [unsafeCast](functions.md#unsafecast)
 
 ## Type Aliases
 
@@ -5376,25 +5375,3 @@ ___
 #### Returns
 
 [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
-
-___
-
-### unsafeCast
-
-▸ **unsafeCast**<`T`\>(`_v`): asserts \_v is T
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `_v` | `unknown` |
-
-#### Returns
-
-asserts \_v is T

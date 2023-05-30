@@ -1,8 +1,8 @@
 /// <reference types="./Disposable.delegatingMixin.d.ts" />
 
-import { mix, props } from "../../__internal__/mixins.js";
+import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { __DelegatingDisposableMixin_delegate } from "../../__internal__/symbols.js";
-import { none, pipe, unsafeCast, } from "../../functions.js";
+import { none, pipe } from "../../functions.js";
 import { DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../types.js";
 import Disposable_onDisposed from "./Disposable.onDisposed.js";
 const Disposable_delegatingMixin = 

@@ -224,4 +224,3 @@ export const returns = (v) => (..._args) => v;
  */
 export const strictEquality = (a, b) => a === b;
 export const tuple = ((...v) => v);
-export function unsafeCast(_v) { }

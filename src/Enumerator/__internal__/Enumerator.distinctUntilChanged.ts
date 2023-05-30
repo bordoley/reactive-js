@@ -8,6 +8,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -24,7 +25,6 @@ import {
   none,
   pipe,
   strictEquality,
-  unsafeCast,
 } from "../../functions.js";
 import {
   DisposableLike,

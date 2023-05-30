@@ -7,6 +7,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   BufferingLike,
@@ -15,7 +16,7 @@ import {
   DelegatingLike,
   DelegatingLike_delegate,
 } from "../../__internal__/types.js";
-import { Function1, none, unsafeCast } from "../../functions.js";
+import { Function1, none } from "../../functions.js";
 import {
   DisposableLike,
   EnumeratorLike,

@@ -1,6 +1,12 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
-import { Mixin2, Mutable, mix, props } from "../../__internal__/mixins.js";
+import {
+  Mixin2,
+  Mutable,
+  mix,
+  props,
+  unsafeCast,
+} from "../../__internal__/mixins.js";
 import {
   __IndexedQueueMixin_capacityMask,
   __IndexedQueueMixin_head,
@@ -24,7 +30,6 @@ import {
   raiseError,
   raiseWithDebugMessage,
   returns,
-  unsafeCast,
 } from "../../functions.js";
 import {
   CollectionLike_count,

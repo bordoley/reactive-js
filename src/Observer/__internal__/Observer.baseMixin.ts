@@ -12,6 +12,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   __ObserverMixin_dispatchSubscription,
@@ -21,7 +22,7 @@ import {
   IndexedQueueLike,
   QueueLike_dequeue,
 } from "../../__internal__/types.js";
-import { Function2, call, pipe, returns, unsafeCast } from "../../functions.js";
+import { Function2, call, pipe, returns } from "../../functions.js";
 import {
   CollectionLike_count,
   DispatcherLikeEventMap,

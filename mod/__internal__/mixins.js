@@ -78,3 +78,4 @@ export const props = (o) => {
     return o;
 };
 export const getPrototype = (mixin) => mixin[__Object_prototype];
+export function unsafeCast(_v) { }

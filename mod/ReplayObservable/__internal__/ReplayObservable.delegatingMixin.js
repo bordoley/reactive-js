@@ -1,8 +1,8 @@
 /// <reference types="./ReplayObservable.delegatingMixin.d.ts" />
 
-import { mix, props } from "../../__internal__/mixins.js";
+import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { __DelegatingReplayObservableMixin_delegate } from "../../__internal__/symbols.js";
-import { none, returns, unsafeCast } from "../../functions.js";
+import { none, returns } from "../../functions.js";
 import { ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, } from "../../types.js";
 const ReplayObservable_delegatingMixin = /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingReplayObservableMixin(instance, delegate) {

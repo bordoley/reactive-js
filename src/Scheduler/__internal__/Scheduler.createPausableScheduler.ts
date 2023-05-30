@@ -16,6 +16,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   __PauseableScheduler_delayed,
@@ -45,7 +46,6 @@ import {
   isNone,
   isSome,
   none,
-  unsafeCast,
 } from "../../functions.js";
 import {
   DisposableLike,

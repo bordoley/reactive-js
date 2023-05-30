@@ -22,6 +22,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -35,7 +36,6 @@ import {
   isSome,
   pipe,
   returns,
-  unsafeCast,
 } from "../../functions.js";
 import {
   AssociativeCollectionLike_keys,

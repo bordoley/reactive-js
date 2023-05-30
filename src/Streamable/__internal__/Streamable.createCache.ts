@@ -23,6 +23,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -42,7 +43,6 @@ import {
   isSome,
   none,
   pipe,
-  unsafeCast,
 } from "../../functions.js";
 import {
   AssociativeCollectionLike,

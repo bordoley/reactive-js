@@ -7,6 +7,7 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../__internal__/mixins.js";
 import {
   DelegatingLike,
@@ -15,7 +16,7 @@ import {
   LiftedLike_operators,
   LiftedLike_source,
 } from "../../__internal__/types.js";
-import { Function1, unsafeCast } from "../../functions.js";
+import { Function1 } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
   ObservableLike_isPure,

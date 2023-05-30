@@ -1,6 +1,6 @@
-import { Mixin1, mix, props } from "../../__internal__/mixins.js";
+import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { __DelegatingReplayObservableMixin_delegate } from "../../__internal__/symbols.js";
-import { none, returns, unsafeCast } from "../../functions.js";
+import { none, returns } from "../../functions.js";
 import {
   ObservableLike_isDeferred,
   ObservableLike_isEnumerable,
