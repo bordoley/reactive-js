@@ -1,10 +1,12 @@
 import {
   Optional,
+  Tuple2,
   compose,
   isSome,
   pipeLazy,
   pipeSome,
   pipeSomeLazy,
+  tuple,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
 import * as Observable from "@reactive-js/core/Observable";
@@ -90,12 +92,12 @@ const Measure = () => {
           DeferredObservableBaseLike<number>
         >(
           compose(
-            Observable.withLatestFrom<number, number, [number, number]>(
+            Observable.withLatestFrom<number, number, Tuple2<number, number>>(
               pipeSome(animation, EventSource.toObservable()) ??
                 Observable.never<number>(),
-              (boxWidth, currentWidth) => [boxWidth, currentWidth],
+              tuple,
             ),
-            Observable.forEach<[number, number]>(([boxWidth, currentWidth]) => {
+            Observable.forEach<Tuple2<number, number>>(([boxWidth, currentWidth]) => {
               if (currentWidth > 0) {
                 enqueue({ width: boxWidth });
               }
