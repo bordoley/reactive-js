@@ -21,7 +21,11 @@ const IntersectionApp = () => {
     pipeSomeLazy(
       endOfPageRef,
       WebElement.intersectionEventSource(document),
-      Containers.pick<EventSource.Type, IntersectionObserverEntry, "isIntersecting">({map: EventSource.map }, "isIntersecting"),
+      Containers.pick<
+        EventSource.Type,
+        IntersectionObserverEntry,
+        "isIntersecting"
+      >({ map: EventSource.map }, "isIntersecting"),
       EventSource.keep(isTrue),
       EventSource.addEventHandler(pipeLazy(incrementBy(10), updateCount)),
     ),

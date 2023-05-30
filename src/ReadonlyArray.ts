@@ -1,4 +1,6 @@
 import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
+import ReadonlyArray_buffer from "./ReadonlyArray/__internal__/ReadonlyArray.buffer.js";
+import ReadonlyArray_distinctUntilChanged from "./ReadonlyArray/__internal__/ReadonlyArray.distinctUntilChanged.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_enumerate from "./ReadonlyArray/__internal__/ReadonlyArray.enumerate.js";
@@ -14,8 +16,14 @@ import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.key
 import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
+import ReadonlyArray_pairwise from "./ReadonlyArray/__internal__/ReadonlyArray.pairwise.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
 import ReadonlyArray_reduceWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.reduceWithKey.js";
+import ReadonlyArray_scan from "./ReadonlyArray/__internal__/ReadonlyArray.scan.js";
+import ReadonlyArray_skipFirst from "./ReadonlyArray/__internal__/ReadonlyArray.skipFirst.js";
+import ReadonlyArray_takeFirst from "./ReadonlyArray/__internal__/ReadonlyArray.takeFirst.js";
+import ReadonlyArray_takeLast from "./ReadonlyArray/__internal__/ReadonlyArray.takeLast.js";
+import ReadonlyArray_takeWhile from "./ReadonlyArray/__internal__/ReadonlyArray.takeWhile.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__internal__/ReadonlyArray.toDictionary.js";
 import ReadonlyArray_toEventSource from "./ReadonlyArray/__internal__/ReadonlyArray.toEventSource.js";
 import ReadonlyArray_toIndexedCollection from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexedCollection.js";
@@ -30,6 +38,7 @@ import {
   IndexedCollectionContainerModule,
   IndexedContainer,
   KeyOf,
+  ReactiveContainerModule,
 } from "./types.js";
 
 /**
@@ -49,10 +58,14 @@ export type TKeyBase = KeyOf<Type>;
  * @category Module
  */
 export interface ReadonlyArrayModule
-  extends IndexedCollectionContainerModule<Type> {}
+  extends IndexedCollectionContainerModule<Type>,
+    ReactiveContainerModule<Type> {}
 
 export type Signature = ReadonlyArrayModule;
 
+export const buffer: Signature["buffer"] = ReadonlyArray_buffer;
+export const distinctUntilChanged: Signature["distinctUntilChanged"] =
+  ReadonlyArray_distinctUntilChanged;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
 export const enumerate: Signature["enumerate"] = ReadonlyArray_enumerate;
@@ -74,10 +87,16 @@ export const keepWithKey: Signature["keepWithKey"] = ReadonlyArray_keepWithKey;
 export const keys: Signature["keys"] = ReadonlyArray_keys;
 export const keySet: Signature["keySet"] = ReadonlyArray_keySet;
 export const map: Signature["map"] = ReadonlyArray_map;
+export const pairwise: Signature["pairwise"] = ReadonlyArray_pairwise;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyArray_mapWithKey;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =
   ReadonlyArray_reduceWithKey;
+export const scan: Signature["scan"] = ReadonlyArray_scan;
+export const skipFirst: Signature["skipFirst"] = ReadonlyArray_skipFirst;
+export const takeFirst: Signature["takeFirst"] = ReadonlyArray_takeFirst;
+export const takeLast: Signature["takeLast"] = ReadonlyArray_takeLast;
+export const takeWhile: Signature["takeWhile"] = ReadonlyArray_takeWhile;
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
 export const toEventSource: Signature["toEventSource"] =

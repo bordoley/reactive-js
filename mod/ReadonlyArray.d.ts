@@ -1,4 +1,4 @@
-import { Container_T, Container_type, IndexedCollectionContainerModule, IndexedContainer, KeyOf } from "./types.js";
+import { Container_T, Container_type, IndexedCollectionContainerModule, IndexedContainer, KeyOf, ReactiveContainerModule } from "./types.js";
 /**
  * @noInheritDoc
  * @category Container
@@ -12,9 +12,11 @@ export type TKeyBase = KeyOf<Type>;
  * @noInheritDoc
  * @category Module
  */
-export interface ReadonlyArrayModule extends IndexedCollectionContainerModule<Type> {
+export interface ReadonlyArrayModule extends IndexedCollectionContainerModule<Type>, ReactiveContainerModule<Type> {
 }
 export type Signature = ReadonlyArrayModule;
+export declare const buffer: Signature["buffer"];
+export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const enumerate: Signature["enumerate"];
@@ -31,9 +33,15 @@ export declare const keepWithKey: Signature["keepWithKey"];
 export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];
+export declare const pairwise: Signature["pairwise"];
 export declare const mapWithKey: Signature["mapWithKey"];
 export declare const reduce: Signature["reduce"];
 export declare const reduceWithKey: Signature["reduceWithKey"];
+export declare const scan: Signature["scan"];
+export declare const skipFirst: Signature["skipFirst"];
+export declare const takeFirst: Signature["takeFirst"];
+export declare const takeLast: Signature["takeLast"];
+export declare const takeWhile: Signature["takeWhile"];
 export declare const toDictionary: Signature["toDictionary"];
 export declare const toEventSource: Signature["toEventSource"];
 export declare const toIndexedCollection: Signature["toIndexedCollection"];

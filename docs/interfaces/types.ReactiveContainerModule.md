@@ -20,6 +20,8 @@
 
   ↳↳ [`PauseableObservableModule`](PauseableObservable.PauseableObservableModule.md)
 
+  ↳↳ [`ReadonlyArrayModule`](ReadonlyArray.ReadonlyArrayModule.md)
+
 ## Table of contents
 
 ### Operator Methods

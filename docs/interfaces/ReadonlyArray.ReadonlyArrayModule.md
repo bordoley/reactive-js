@@ -8,4 +8,6 @@
 
 - [`IndexedCollectionContainerModule`](types.IndexedCollectionContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
 
+- [`ReactiveContainerModule`](types.ReactiveContainerModule.md)<[`Type`](../modules/ReadonlyArray.md#type)\>
+
   ↳ **`ReadonlyArrayModule`**
