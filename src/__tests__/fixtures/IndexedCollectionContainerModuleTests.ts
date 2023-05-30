@@ -4,13 +4,22 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectToThrow,
   test,
 } from "../../__internal__/testing.js";
-import { increment, none, pick, pipeLazy, returns } from "../../functions.js";
+import {
+  increment,
+  invoke,
+  none,
+  pick,
+  pipeLazy,
+  returns,
+} from "../../functions.js";
 import {
   CollectionLike_count,
   IndexedCollectionContainerModule,
   IndexedContainer,
+  KeyedCollectionLike_get,
 } from "../../types.js";
 import CollectionContainerModuleTests from "./CollectionContainerModuleTests.js";
 
@@ -160,6 +169,18 @@ const IndexedCollectionContainerModuleTests = <C extends IndexedContainer>(
           m.toIndexedCollection({ count: 2, start: 1 }),
           pick(CollectionLike_count),
           expectEquals(2),
+        ),
+      ),
+      test(
+        "pulling an out of bound index value",
+        pipeLazy(
+          pipeLazy(
+            [1, 2, 3, 4],
+            m.fromReadonlyArray(),
+            m.toIndexedCollection({ count: 2, start: 1 }),
+            invoke(KeyedCollectionLike_get, 10),
+          ),
+          expectToThrow,
         ),
       ),
     ),

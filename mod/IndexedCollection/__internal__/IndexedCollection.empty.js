@@ -1,12 +1,8 @@
 /// <reference types="./IndexedCollection.empty.d.ts" />
 
-import { raiseWithDebugMessage } from "../../functions.js";
-import { CollectionLike_count, KeyedCollectionLike_get, } from "../../types.js";
-const _empty = {
-    [CollectionLike_count]: 0,
-    [KeyedCollectionLike_get](_) {
-        return raiseWithDebugMessage("buffer is empty");
-    },
-};
+import ReadonlyArray_empty from "../../ReadonlyArray/__internal__/ReadonlyArray.empty.js";
+import ReadonlyArray_toIndexedCollection from "../../ReadonlyArray/__internal__/ReadonlyArray.toIndexedCollection.js";
+import { pipe } from "../../functions.js";
+const _empty = /*@__PURE__*/ (() => pipe(ReadonlyArray_empty(), ReadonlyArray_toIndexedCollection()))();
 const IndexedCollection_empty = () => _empty;
 export default IndexedCollection_empty;

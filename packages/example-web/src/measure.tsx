@@ -19,7 +19,11 @@ import * as EventSource from "@reactive-js/core/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
 import * as Streamable from "@reactive-js/core/Streamable";
-import { DeferredObservableBaseLike, KeyedCollectionLike_get, MulticastObservableLike } from "@reactive-js/core/types";
+import {
+  DeferredObservableBaseLike,
+  KeyedCollectionLike_get,
+  MulticastObservableLike,
+} from "@reactive-js/core/types";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import * as Store from "@reactive-js/core/Store";
@@ -80,7 +84,11 @@ const Measure = () => {
           equality: (a, b) => a.width === b.width,
         }),
         Observable.pick<Rect, "width">("width"),
-        Observable.forkMerge<number, MulticastObservableLike<number>, DeferredObservableBaseLike<number>>(
+        Observable.forkMerge<
+          number,
+          MulticastObservableLike<number>,
+          DeferredObservableBaseLike<number>
+        >(
           compose(
             Observable.withLatestFrom<number, number, [number, number]>(
               pipeSome(animation, EventSource.toObservable()) ??
@@ -93,7 +101,6 @@ const Measure = () => {
               }
             }),
             Observable.ignoreElements(),
-            
           ),
           Observable.throttle(50, { mode: "interval" }),
         ),
