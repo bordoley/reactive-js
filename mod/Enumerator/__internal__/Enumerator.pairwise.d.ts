@@ -1,4 +1,4 @@
-import { Function1 } from "../../functions.js";
+import { Function1, Tuple2 } from "../../functions.js";
 import { EnumeratorLike } from "../../types.js";
-declare const Enumerator_pairwise: <T>() => Function1<EnumeratorLike<T>, EnumeratorLike<readonly [T, T]>>;
+declare const Enumerator_pairwise: <T>() => Function1<EnumeratorLike<T>, EnumeratorLike<Tuple2<T, T>>>;
 export default Enumerator_pairwise;

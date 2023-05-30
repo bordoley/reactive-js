@@ -1,6 +1,6 @@
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Iterator_enumerate from "../../Iterator/__internal__/Iterator.enumerate.js";
-import { pipe } from "../../functions.js";
+import { Tuple2, pipe } from "../../functions.js";
 import {
   CollectionLike_count,
   IndexedCollectionLike,
@@ -12,7 +12,7 @@ const IndexedCollection_entries: IndexedCollection.Signature["entries"] =
   <T, TKey extends IndexedCollection.TKeyBase = IndexedCollection.TKeyBase>() =>
   (indexed: IndexedCollectionLike<T>) => {
     const count = indexed[CollectionLike_count];
-    function* IndexedCollectionEntries(): Iterator<[TKey, T]> {
+    function* IndexedCollectionEntries(): Iterator<Tuple2<TKey, T>> {
       for (let i = 0; i < count; i++) {
         yield [i as TKey, indexed[KeyedCollectionLike_get](i)];
       }

@@ -13,7 +13,7 @@ import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, compose, greaterThan, identity, ignore, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, compose, greaterThan, identity, ignore, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../functions.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Disposable.disposed, () => ReadonlyArray.toObservable(), () => ReadonlyArray.fromEnumerable()), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
@@ -59,7 +59,12 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
         result = e["cause"];
     }), Observable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
-})), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1)), Observable.delay(2), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0)), Observable.delay(3), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality())))), describe("compute", testAsync("__stream", async () => {
+})), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1)), Observable.delay(2), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0)), Observable.delay(3), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([
+    [3, 2],
+    [5, 2],
+    [5, 4],
+    [7, 4],
+], arrayEquality())))), describe("compute", testAsync("__stream", async () => {
     const result = await pipe(Observable.compute(() => {
         const stream = __stream(Streamable.identity());
         const push = __bindMethod(stream, QueueableLike_enqueue);
@@ -263,7 +268,7 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
         delay: 2,
     });
     const f = mockFn();
-    const subscription = pipe(flowed, Observable.withCurrentTime((time, v) => [time, v]), Observable.forEach(([time, v]) => {
+    const subscription = pipe(flowed, Observable.withCurrentTime(tuple), Observable.forEach(([time, v]) => {
         f(time, v);
     }), Observable.subscribe(scheduler), Disposable.addTo(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
@@ -525,7 +530,7 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
 })), describe("toIterable", test("when the source completes without error", () => {
     const iter = pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toIterable());
     pipe(Array.from(iter), expectArrayEquals([0, 1, 2]));
-})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(3), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3])))), describe("toReadonlySet", test("with delayed source", pipeLazy([1, 2, 1, 3, 2, 6, 5, 3, 6], Observable.fromReadonlyArray(), Observable.delay(2), Observable.toReadonlySet(), x => Array.from(x).sort(), expectArrayEquals([1, 2, 3, 5, 6])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(2)), (a, b) => [a, b]), Observable.toReadonlyArray(), expectArrayEquals([
+})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(3), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3])))), describe("toReadonlySet", test("with delayed source", pipeLazy([1, 2, 1, 3, 2, 6, 5, 3, 6], Observable.fromReadonlyArray(), Observable.delay(2), Observable.toReadonlySet(), x => Array.from(x).sort(), expectArrayEquals([1, 2, 3, 5, 6])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(2)), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([
     [0, 0],
     [1, 0],
     [2, 1],

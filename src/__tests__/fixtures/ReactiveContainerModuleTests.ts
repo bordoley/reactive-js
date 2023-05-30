@@ -7,6 +7,7 @@ import {
 } from "../../__internal__/testing.js";
 import {
   Function1,
+  Tuple2,
   alwaysTrue,
   arrayEquality,
   lessThan,
@@ -133,8 +134,8 @@ const ReactiveContainerModuleTests = <
             [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             fromReadonlyArray(ctx),
             m.pairwise<number>(),
-            toReadonlyArray<readonly [number, number]>(ctx),
-            expectArrayEquals<readonly [number, number]>(
+            toReadonlyArray<Tuple2<number, number>>(ctx),
+            expectArrayEquals<Tuple2<number, number>>(
               [
                 [0, 1],
                 [1, 2],
@@ -159,7 +160,7 @@ const ReactiveContainerModuleTests = <
             fromReadonlyArray(ctx),
             m.pairwise<number>(),
             toReadonlyArray(ctx),
-            expectArrayEquals<readonly [number, number]>([], arrayEquality()),
+            expectArrayEquals<Tuple2<number, number>>([], arrayEquality()),
           ),
         ),
       ),

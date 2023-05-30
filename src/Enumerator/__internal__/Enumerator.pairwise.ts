@@ -15,7 +15,7 @@ import {
   PairwiseLike_hasPrev,
   PairwiseLike_prev,
 } from "../../__internal__/types.js";
-import { Function1, none, returns } from "../../functions.js";
+import { Function1, Tuple2, none, returns } from "../../functions.js";
 import {
   EnumeratorLike,
   EnumeratorLike_current,
@@ -29,7 +29,7 @@ import MutableEnumerator_mixin, {
 
 const Enumerator_pairwise: <T>() => Function1<
   EnumeratorLike<T>,
-  EnumeratorLike<readonly [T, T]>
+  EnumeratorLike<Tuple2<T, T>>
 > = /*@__PURE__*/ (<T>() =>
   returns(
     createInstanceFactory(
@@ -41,13 +41,13 @@ const Enumerator_pairwise: <T>() => Function1<
         ),
         function PairwiseEnumerator(
           instance: Pick<
-            EnumeratorLike<readonly [T, T]>,
+            EnumeratorLike<Tuple2<T, T>>,
             typeof EnumeratorLike_move
           > &
             PairwiseLike<T>,
           delegate: EnumeratorLike<T>,
-        ): EnumeratorLike<readonly [T, T]> {
-          init(MutableEnumerator_mixin<readonly [T, T]>(), instance);
+        ): EnumeratorLike<Tuple2<T, T>> {
+          init(MutableEnumerator_mixin<Tuple2<T, T>>(), instance);
           init(Delegating_mixin(), instance, delegate);
           init(Disposable_delegatingMixin, instance, delegate);
 
@@ -60,7 +60,7 @@ const Enumerator_pairwise: <T>() => Function1<
         {
           [EnumeratorLike_move](
             this: PairwiseLike<T> &
-              MutableEnumeratorLike<readonly [T, T]> &
+              MutableEnumeratorLike<Tuple2<T, T>> &
               DelegatingLike<EnumeratorLike<T>>,
           ): boolean {
             if (this[MutableEnumeratorLike_reset]()) {

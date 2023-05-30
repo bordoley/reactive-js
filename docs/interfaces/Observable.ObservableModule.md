@@ -141,7 +141,7 @@ ___
 
 ### combineLatest
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -159,9 +159,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -181,9 +181,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -205,9 +205,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -231,9 +231,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -259,9 +259,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -289,9 +289,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -321,9 +321,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -355,9 +355,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -375,9 +375,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -397,9 +397,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -421,9 +421,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -447,9 +447,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -475,9 +475,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -505,9 +505,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -537,9 +537,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -571,9 +571,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -591,9 +591,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -613,9 +613,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -637,9 +637,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -663,9 +663,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -691,9 +691,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -721,9 +721,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -753,9 +753,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -787,9 +787,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -807,9 +807,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -829,9 +829,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -853,9 +853,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -879,9 +879,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -907,9 +907,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -937,9 +937,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -969,9 +969,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -1003,9 +1003,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -1023,9 +1023,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -1045,9 +1045,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -1069,9 +1069,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -1095,9 +1095,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -1123,9 +1123,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -1153,9 +1153,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -1185,9 +1185,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -1219,7 +1219,7 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ___
 
@@ -3151,7 +3151,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, readonly [`T`, `T`]\>
+▸ **pairwise**<`T`\>(): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -3161,7 +3161,7 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, readonly [`T`, `T`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 ___
 
@@ -3886,16 +3886,15 @@ ___
 
 ### withLatestFrom
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`, `TOther`\>(`other`, `selector`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, `T`\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `T` | `T` |
-| `TOther` | extends [`ObservableBaseLike`](types.ObservableBaseLike.md)<`TB`, `TOther`\> |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
 
 #### Parameters
 
@@ -3908,16 +3907,15 @@ ___
 
 [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, `T`\>
 
-▸ **withLatestFrom**<`TA`, `TB`, `T`, `TOther`\>(`other`, `selector`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `T`\>
+▸ **withLatestFrom**<`TA`, `TB`, `T`\>(`other`, `selector`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `T`\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `T` | `T` |
-| `TOther` | extends [`ObservableBaseLike`](types.ObservableBaseLike.md)<`TB`, `TOther`\> |
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
 
 #### Parameters
 
@@ -3976,7 +3974,7 @@ ___
 
 ### zip
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -3994,9 +3992,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -4016,9 +4014,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -4040,9 +4038,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -4066,9 +4064,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -4094,9 +4092,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -4124,9 +4122,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -4156,9 +4154,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](types.EnumerableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -4190,9 +4188,9 @@ ___
 
 #### Returns
 
-[`EnumerableLike`](types.EnumerableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`EnumerableLike`](types.EnumerableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -4210,9 +4208,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -4232,9 +4230,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -4256,9 +4254,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -4282,9 +4280,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -4310,9 +4308,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -4340,9 +4338,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -4372,9 +4370,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -4406,9 +4404,9 @@ ___
 
 #### Returns
 
-[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`EnumerableWithSideEffectsLike`](types.EnumerableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -4426,9 +4424,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -4448,9 +4446,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -4472,9 +4470,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -4498,9 +4496,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -4526,9 +4524,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -4556,9 +4554,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -4588,9 +4586,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -4622,9 +4620,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -4642,9 +4640,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -4664,9 +4662,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -4688,9 +4686,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -4714,9 +4712,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -4742,9 +4740,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -4772,9 +4770,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -4804,9 +4802,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -4838,9 +4836,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -4858,9 +4856,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -4880,9 +4878,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -4904,9 +4902,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -4930,9 +4928,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -4958,9 +4956,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -4988,9 +4986,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5020,9 +5018,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5054,9 +5052,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5074,9 +5072,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5096,9 +5094,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5120,9 +5118,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -5146,9 +5144,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -5174,9 +5172,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -5204,9 +5202,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5236,9 +5234,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5270,9 +5268,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5290,9 +5288,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5312,9 +5310,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5336,9 +5334,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -5362,9 +5360,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -5390,9 +5388,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -5420,9 +5418,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5452,9 +5450,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5486,13 +5484,13 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ___
 
 ### zipLatest
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5510,9 +5508,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5532,9 +5530,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5556,9 +5554,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -5582,9 +5580,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -5610,9 +5608,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -5640,9 +5638,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5672,9 +5670,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5706,9 +5704,9 @@ ___
 
 #### Returns
 
-[`RunnableLike`](types.RunnableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableLike`](types.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5726,9 +5724,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5748,9 +5746,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5772,9 +5770,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -5798,9 +5796,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -5826,9 +5824,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -5856,9 +5854,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -5888,9 +5886,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -5922,9 +5920,9 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -5942,9 +5940,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -5964,9 +5962,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -5988,9 +5986,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -6014,9 +6012,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -6042,9 +6040,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -6072,9 +6070,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -6104,9 +6102,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -6138,9 +6136,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -6158,9 +6156,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -6180,9 +6178,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -6204,9 +6202,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -6230,9 +6228,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -6258,9 +6256,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -6288,9 +6286,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -6320,9 +6318,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -6354,9 +6352,9 @@ ___
 
 #### Returns
 
-[`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`]\>
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -6374,9 +6372,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -6396,9 +6394,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -6420,9 +6418,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -6446,9 +6444,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -6474,9 +6472,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -6504,9 +6502,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -6536,9 +6534,9 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -6570,13 +6568,13 @@ ___
 
 #### Returns
 
-[`ObservableBaseLike`](types.ObservableBaseLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableBaseLike`](types.ObservableBaseLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 ___
 
 ### zipWith
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -6593,9 +6591,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -6614,9 +6612,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -6637,9 +6635,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -6662,9 +6660,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -6689,9 +6687,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -6718,9 +6716,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -6749,9 +6747,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -6782,9 +6780,9 @@ ___
 
 #### Returns
 
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -6801,9 +6799,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -6822,9 +6820,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -6845,9 +6843,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -6870,9 +6868,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -6897,9 +6895,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -6926,9 +6924,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -6957,9 +6955,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -6990,9 +6988,9 @@ ___
 
 #### Returns
 
-[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`ObservableOperatorWithSideEffects`](../modules/Observable.md#observableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -7009,9 +7007,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -7030,9 +7028,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -7053,9 +7051,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -7078,9 +7076,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -7105,9 +7103,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -7134,9 +7132,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -7165,9 +7163,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -7198,9 +7196,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -7217,9 +7215,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -7238,9 +7236,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -7261,9 +7259,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -7286,9 +7284,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -7313,9 +7311,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -7342,9 +7340,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -7373,9 +7371,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -7406,9 +7404,9 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
 #### Type parameters
 
@@ -7425,9 +7423,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
 #### Type parameters
 
@@ -7446,9 +7444,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
 #### Type parameters
 
@@ -7469,9 +7467,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
 #### Type parameters
 
@@ -7494,9 +7492,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
 #### Type parameters
 
@@ -7521,9 +7519,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
 #### Type parameters
 
@@ -7550,9 +7548,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
 #### Type parameters
 
@@ -7581,9 +7579,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
 #### Type parameters
 
@@ -7614,9 +7612,9 @@ ___
 
 #### Returns
 
-[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>
+[`DeferredObservableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#deferredobservableboundedobservableoperatorwithsideeffects)<`TA`, [`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>\>
 
 #### Type parameters
 
@@ -7633,9 +7631,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
 
 #### Type parameters
 
@@ -7654,9 +7652,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
 
 #### Type parameters
 
@@ -7677,9 +7675,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
 #### Type parameters
 
@@ -7702,9 +7700,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
 #### Type parameters
 
@@ -7729,9 +7727,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
 #### Type parameters
 
@@ -7758,9 +7756,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
 #### Type parameters
 
@@ -7789,9 +7787,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
 
 #### Type parameters
 
@@ -7822,9 +7820,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`PureObservableLike`](types.PureObservableLike.md)<`TA`\>, [`MulticastObservableLike`](types.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>\>
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>\>
 
 #### Type parameters
 
@@ -7841,9 +7839,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
 
 #### Type parameters
 
@@ -7862,9 +7860,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
 
 #### Type parameters
 
@@ -7885,9 +7883,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
 #### Type parameters
 
@@ -7910,9 +7908,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
 #### Type parameters
 
@@ -7937,9 +7935,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
 #### Type parameters
 
@@ -7966,9 +7964,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
 #### Type parameters
 
@@ -7997,9 +7995,9 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
 
-▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
 
 #### Type parameters
 
@@ -8030,7 +8028,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]\>\>
+[`Function1`](../modules/functions.md#function1)<[`ObservableBaseLike`](types.ObservableBaseLike.md)<`TA`\>, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
 
 ___
 

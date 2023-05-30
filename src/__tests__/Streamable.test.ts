@@ -11,13 +11,16 @@ import {
   testModule,
 } from "../__internal__/testing.js";
 import {
+  Optional,
   SideEffect,
+  Tuple2,
   arrayEquality,
   bind,
   bindMethod,
   none,
   pipe,
   returns,
+  tuple,
 } from "../functions.js";
 import {
   DispatcherLike_complete,
@@ -65,7 +68,7 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result: [number, number][] = [];
+      const result: Tuple2<number, Optional<number>>[] = [];
 
       pipe(
         [
@@ -74,21 +77,27 @@ testModule(
             () => {
               pipe(
                 cache[KeyedCollectionLike_get]("abc"),
-                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.withCurrentTime(tuple<number, number>),
                 Observable.forEach(bindMethod(result, "push")),
                 Observable.subscribe(scheduler),
               );
             },
           ],
         ],
-        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      pipe(result, expectArrayEquals([[2, none]], arrayEquality()));
+      pipe(
+        result,
+        expectArrayEquals<Tuple2<number, Optional>>(
+          [[2, none]],
+          arrayEquality(),
+        ),
+      );
     }),
     test("explicitly deleting a key", () => {
       const scheduler = Scheduler.createVirtualTimeScheduler();
@@ -97,7 +106,7 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result: [number, number][] = [];
+      const result: Tuple2<number, Optional<number>>[] = [];
 
       pipe(
         [
@@ -120,7 +129,7 @@ testModule(
             () => {
               pipe(
                 cache[KeyedCollectionLike_get]("abc"),
-                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.withCurrentTime(tuple<number, number>),
                 Observable.forEach(bindMethod(result, "push")),
                 Observable.subscribe(scheduler),
               );
@@ -141,7 +150,7 @@ testModule(
             },
           ],
         ],
-        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
@@ -150,7 +159,7 @@ testModule(
 
       pipe(
         result,
-        expectArrayEquals(
+        expectArrayEquals<Tuple2<number, Optional<number>>>(
           [
             [2, none],
             [3, 2],
@@ -167,18 +176,18 @@ testModule(
         StreamableLike_stream
       ](scheduler);
 
-      const result1: [number, number][] = [];
+      const result1: Tuple2<number, Optional<number>>[] = [];
       const abcSubscription1 = pipe(
         cache[KeyedCollectionLike_get]("abc"),
-        Observable.withCurrentTime((time, value) => [time, value]),
+        Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );
 
-      const result2: [number, number][] = [];
+      const result2: Tuple2<number, Optional<number>>[] = [];
       let abcSubscription2 = Disposable.disposed;
 
-      const result3: [number, number][] = [];
+      const result3: Tuple2<number, Optional<number>>[] = [];
       let abcSubscription3 = Disposable.disposed;
 
       pipe(
@@ -194,7 +203,9 @@ testModule(
             () => {
               abcSubscription2 = pipe(
                 cache[KeyedCollectionLike_get]("abc"),
-                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.withCurrentTime<number, Tuple2<number, number>>(
+                  tuple,
+                ),
                 Observable.forEach(bindMethod(result2, "push")),
                 Observable.subscribe(scheduler),
               );
@@ -242,7 +253,9 @@ testModule(
             () => {
               abcSubscription3 = pipe(
                 cache[KeyedCollectionLike_get]("abc"),
-                Observable.withCurrentTime((time, value) => [time, value]),
+                Observable.withCurrentTime<number, Tuple2<number, number>>(
+                  tuple,
+                ),
                 Observable.forEach(bindMethod(result3, "push")),
                 Observable.subscribe(scheduler),
               );
@@ -265,8 +278,7 @@ testModule(
             },
           ],
         ],
-
-        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
@@ -275,7 +287,7 @@ testModule(
 
       pipe(
         result1,
-        expectArrayEquals(
+        expectArrayEquals<Tuple2<number, Optional<number>>>(
           [
             [0, none],
             [1, 1],
@@ -288,7 +300,7 @@ testModule(
 
       pipe(
         result2,
-        expectArrayEquals(
+        expectArrayEquals<Tuple2<number, Optional<number>>>(
           [
             [2, 1],
             [3, 2],
@@ -297,7 +309,13 @@ testModule(
         ),
       );
 
-      pipe(result3, expectArrayEquals([[8, 3]], arrayEquality()));
+      pipe(
+        result3,
+        expectArrayEquals<Tuple2<number, Optional<number>>>(
+          [[8, 3]],
+          arrayEquality(),
+        ),
+      );
     }),
   ),
   describe(
@@ -328,10 +346,12 @@ testModule(
         capacity: 1,
       })[StreamableLike_stream](scheduler);
 
-      const result1: [number, number][] = [];
+      const result1: Tuple2<number, Optional<number>>[] = [];
       pipe(
         cache[KeyedCollectionLike_get]("abc"),
-        Observable.withCurrentTime((time, value) => [time, value]),
+        Observable.withCurrentTime<number, Tuple2<number, Optional<number>>>(
+          tuple,
+        ),
         Observable.forEach(bindMethod(result1, "push")),
         Observable.subscribe(scheduler),
       );
@@ -346,7 +366,7 @@ testModule(
           ],
         ],
 
-        ReadonlyArray.forEach(([time, f]: [number, SideEffect]) => {
+        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
@@ -355,7 +375,7 @@ testModule(
 
       pipe(
         result1,
-        expectArrayEquals(
+        expectArrayEquals<Tuple2<number, Optional<number>>>(
           [
             [0, 1],
             [2, 4],

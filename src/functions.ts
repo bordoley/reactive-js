@@ -131,6 +131,36 @@ export type Tuple3<TA, TB, TC> = readonly [TA, TB, TC];
 export type Tuple4<TA, TB, TC, TD> = readonly [TA, TB, TC, TD];
 export type Tuple5<TA, TB, TC, TD, TE> = readonly [TA, TB, TC, TD, TE];
 export type Tuple6<TA, TB, TC, TD, TE, TF> = readonly [TA, TB, TC, TD, TE, TF];
+export type Tuple7<TA, TB, TC, TD, TE, TF, TG> = readonly [
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF,
+  TG,
+];
+export type Tuple8<TA, TB, TC, TD, TE, TF, TG, TH> = readonly [
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF,
+  TG,
+  TH,
+];
+export type Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI> = readonly [
+  TA,
+  TB,
+  TC,
+  TD,
+  TE,
+  TF,
+  TG,
+  TH,
+  TI,
+];
 
 /**
  * A type guard function that performs a runtime check

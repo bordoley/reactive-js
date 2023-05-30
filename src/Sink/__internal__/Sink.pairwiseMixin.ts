@@ -14,12 +14,12 @@ import {
   PairwiseLike_hasPrev,
   PairwiseLike_prev,
 } from "../../__internal__/types.js";
-import { none, returns } from "../../functions.js";
+import { Tuple2, none, returns } from "../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../types.js";
 
 const Sink_pairwiseMixin: <T>() => Mixin1<
   SinkLike<T>,
-  SinkLike<readonly [T, T]>,
+  SinkLike<Tuple2<T, T>>,
   unknown,
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() =>
@@ -28,7 +28,7 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
       include(Disposable_delegatingMixin, Delegating_mixin()),
       function PairwiseSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> & PairwiseLike<T>,
-        delegate: SinkLike<readonly [T, T]>,
+        delegate: SinkLike<Tuple2<T, T>>,
       ): SinkLike<T> {
         init(Disposable_delegatingMixin, instance, delegate);
         init(Delegating_mixin(), instance, delegate);
@@ -42,7 +42,7 @@ const Sink_pairwiseMixin: <T>() => Mixin1<
       {
         [SinkLike_notify](
           this: PairwiseLike<T> &
-            DelegatingLike<SinkLike<readonly [T, T]>> &
+            DelegatingLike<SinkLike<Tuple2<T, T>>> &
             SinkLike<T>,
           next: T,
         ) {

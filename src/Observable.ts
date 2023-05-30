@@ -104,6 +104,14 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
+  Tuple2,
+  Tuple3,
+  Tuple4,
+  Tuple5,
+  Tuple6,
+  Tuple7,
+  Tuple8,
+  Tuple9,
   Updater,
   identityLazy,
 } from "./functions.js";
@@ -393,25 +401,25 @@ export interface ObservableModule {
   combineLatest<TA, TB>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
-  ): RunnableLike<readonly [TA, TB]>;
+  ): RunnableLike<Tuple2<TA, TB>>;
   combineLatest<TA, TB, TC>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
-  ): RunnableLike<readonly [TA, TB, TC]>;
+  ): RunnableLike<Tuple3<TA, TB, TC>>;
   combineLatest<TA, TB, TC, TD>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
-  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableLike<Tuple4<TA, TB, TC, TD>>;
   combineLatest<TA, TB, TC, TD, TE>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
   combineLatest<TA, TB, TC, TD, TE, TF>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -419,7 +427,7 @@ export interface ObservableModule {
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -428,7 +436,7 @@ export interface ObservableModule {
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -438,7 +446,7 @@ export interface ObservableModule {
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -449,30 +457,30 @@ export interface ObservableModule {
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
     i: RunnableLike<TI>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   combineLatest<TA, TB>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB]>;
+  ): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
   combineLatest<TA, TB, TC>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC]>;
+  ): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
   combineLatest<TA, TB, TC, TD>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
   combineLatest<TA, TB, TC, TD, TE>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
   combineLatest<TA, TB, TC, TD, TE, TF>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -480,7 +488,7 @@ export interface ObservableModule {
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -489,7 +497,7 @@ export interface ObservableModule {
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -499,7 +507,7 @@ export interface ObservableModule {
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -510,30 +518,30 @@ export interface ObservableModule {
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
     i: RunnableBaseLike<TI>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   combineLatest<TA, TB>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
-  ): DeferredObservableLike<readonly [TA, TB]>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   combineLatest<TA, TB, TC>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
-  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   combineLatest<TA, TB, TC, TD>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   combineLatest<TA, TB, TC, TD, TE>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   combineLatest<TA, TB, TC, TD, TE, TF>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -541,7 +549,7 @@ export interface ObservableModule {
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -550,7 +558,7 @@ export interface ObservableModule {
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -560,7 +568,7 @@ export interface ObservableModule {
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -571,30 +579,30 @@ export interface ObservableModule {
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
     i: DeferredObservableBaseLike<TI>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   combineLatest<TA, TB>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
-  ): MulticastObservableLike<readonly [TA, TB]>;
+  ): MulticastObservableLike<Tuple2<TA, TB>>;
   combineLatest<TA, TB, TC>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
-  ): MulticastObservableLike<readonly [TA, TB, TC]>;
+  ): MulticastObservableLike<Tuple3<TA, TB, TC>>;
   combineLatest<TA, TB, TC, TD>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD]>;
+  ): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
   combineLatest<TA, TB, TC, TD, TE>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   combineLatest<TA, TB, TC, TD, TE, TF>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -602,7 +610,7 @@ export interface ObservableModule {
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -611,7 +619,7 @@ export interface ObservableModule {
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -621,7 +629,7 @@ export interface ObservableModule {
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -632,30 +640,30 @@ export interface ObservableModule {
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
     i: PureObservableLike<TI>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   combineLatest<TA, TB>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
-  ): DeferredObservableLike<readonly [TA, TB]>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   combineLatest<TA, TB, TC>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
-  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   combineLatest<TA, TB, TC, TD>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   combineLatest<TA, TB, TC, TD, TE>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   combineLatest<TA, TB, TC, TD, TE, TF>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -663,7 +671,7 @@ export interface ObservableModule {
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -672,7 +680,7 @@ export interface ObservableModule {
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -682,7 +690,7 @@ export interface ObservableModule {
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -693,7 +701,7 @@ export interface ObservableModule {
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
     i: ObservableBaseLike<TI>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   /**
    * @category Constructor
@@ -1084,7 +1092,7 @@ export interface ObservableModule {
     f: SideEffect,
   ): RunnableBoundedObservableOperatorWithSideEffects<T, T>;
 
-  pairwise<T>(): PureObservableOperator<T, readonly [T, T]>;
+  pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
 
   pick<T, TKey extends keyof T>(key: TKey): PureObservableOperator<T, T[TKey]>;
   pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
@@ -1262,11 +1270,11 @@ export interface ObservableModule {
     selector: Function2<number, TA, TB>,
   ): RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
 
-  withLatestFrom<TA, TB, T, TOther extends ObservableBaseLike<TB>>(
+  withLatestFrom<TA, TB, T>(
     other: RunnableLike<TB>,
     selector: Function2<TA, TB, T>,
   ): RunnableBoundedPureObservableOperator<TA, T>;
-  withLatestFrom<TA, TB, T, TOther extends ObservableBaseLike<TB>>(
+  withLatestFrom<TA, TB, T>(
     other: RunnableWithSideEffectsLike<TB>,
     selector: Function2<TA, TB, T>,
   ): RunnableBoundedObservableOperatorWithSideEffects<TA, T>;
@@ -1282,25 +1290,25 @@ export interface ObservableModule {
   zip<TA, TB>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
-  ): EnumerableLike<readonly [TA, TB]>;
+  ): EnumerableLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
-  ): EnumerableLike<readonly [TA, TB, TC]>;
+  ): EnumerableLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
     d: EnumerableLike<TD>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD]>;
+  ): EnumerableLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
     d: EnumerableLike<TD>,
     e: EnumerableLike<TE>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): EnumerableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
@@ -1308,7 +1316,7 @@ export interface ObservableModule {
     d: EnumerableLike<TD>,
     e: EnumerableLike<TE>,
     f: EnumerableLike<TF>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): EnumerableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
@@ -1317,7 +1325,7 @@ export interface ObservableModule {
     e: EnumerableLike<TE>,
     f: EnumerableLike<TF>,
     g: EnumerableLike<TG>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): EnumerableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
@@ -1327,7 +1335,7 @@ export interface ObservableModule {
     f: EnumerableLike<TF>,
     g: EnumerableLike<TG>,
     h: EnumerableLike<TH>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): EnumerableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: EnumerableLike<TA>,
     b: EnumerableLike<TB>,
@@ -1338,30 +1346,30 @@ export interface ObservableModule {
     g: EnumerableLike<TG>,
     h: EnumerableLike<TH>,
     i: EnumerableLike<TI>,
-  ): EnumerableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): EnumerableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB]>;
+  ): EnumerableWithSideEffectsLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC]>;
+  ): EnumerableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
     d: EnumerableBaseLike<TD>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC, TD]>;
+  ): EnumerableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
     d: EnumerableBaseLike<TD>,
     e: EnumerableBaseLike<TE>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE]>;
+  ): EnumerableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
@@ -1369,7 +1377,7 @@ export interface ObservableModule {
     d: EnumerableBaseLike<TD>,
     e: EnumerableBaseLike<TE>,
     f: EnumerableBaseLike<TF>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): EnumerableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
@@ -1378,7 +1386,7 @@ export interface ObservableModule {
     e: EnumerableBaseLike<TE>,
     f: EnumerableBaseLike<TF>,
     g: EnumerableBaseLike<TG>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): EnumerableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
@@ -1388,7 +1396,7 @@ export interface ObservableModule {
     f: EnumerableBaseLike<TF>,
     g: EnumerableBaseLike<TG>,
     h: EnumerableBaseLike<TH>,
-  ): EnumerableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): EnumerableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: EnumerableBaseLike<TA>,
     b: EnumerableBaseLike<TB>,
@@ -1399,32 +1407,30 @@ export interface ObservableModule {
     g: EnumerableBaseLike<TG>,
     h: EnumerableBaseLike<TH>,
     i: EnumerableBaseLike<TI>,
-  ): EnumerableWithSideEffectsLike<
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
-  >;
+  ): EnumerableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
-  ): RunnableLike<readonly [TA, TB]>;
+  ): RunnableLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
-  ): RunnableLike<readonly [TA, TB, TC]>;
+  ): RunnableLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
-  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1432,7 +1438,7 @@ export interface ObservableModule {
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1441,7 +1447,7 @@ export interface ObservableModule {
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1451,7 +1457,7 @@ export interface ObservableModule {
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1462,30 +1468,30 @@ export interface ObservableModule {
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
     i: RunnableLike<TI>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB]>;
+  ): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC]>;
+  ): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1493,7 +1499,7 @@ export interface ObservableModule {
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1502,7 +1508,7 @@ export interface ObservableModule {
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1512,7 +1518,7 @@ export interface ObservableModule {
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1523,30 +1529,30 @@ export interface ObservableModule {
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
     i: RunnableBaseLike<TI>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
-  ): DeferredObservableLike<readonly [TA, TB]>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
-  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1554,7 +1560,7 @@ export interface ObservableModule {
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1563,7 +1569,7 @@ export interface ObservableModule {
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1573,7 +1579,7 @@ export interface ObservableModule {
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1584,30 +1590,30 @@ export interface ObservableModule {
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
     i: DeferredObservableBaseLike<TI>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
-  ): MulticastObservableLike<readonly [TA, TB]>;
+  ): MulticastObservableLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
-  ): MulticastObservableLike<readonly [TA, TB, TC]>;
+  ): MulticastObservableLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD]>;
+  ): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1615,7 +1621,7 @@ export interface ObservableModule {
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1624,7 +1630,7 @@ export interface ObservableModule {
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1634,7 +1640,7 @@ export interface ObservableModule {
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1645,30 +1651,30 @@ export interface ObservableModule {
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
     i: PureObservableLike<TI>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zip<TA, TB>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
-  ): DeferredObservableLike<readonly [TA, TB]>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   zip<TA, TB, TC>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
-  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   zip<TA, TB, TC, TD>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   zip<TA, TB, TC, TD, TE>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zip<TA, TB, TC, TD, TE, TF>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1676,7 +1682,7 @@ export interface ObservableModule {
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zip<TA, TB, TC, TD, TE, TF, TG>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1685,7 +1691,7 @@ export interface ObservableModule {
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1695,7 +1701,7 @@ export interface ObservableModule {
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zip<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1706,30 +1712,30 @@ export interface ObservableModule {
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
     i: ObservableBaseLike<TI>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
-  ): RunnableLike<readonly [TA, TB]>;
+  ): RunnableLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
-  ): RunnableLike<readonly [TA, TB, TC]>;
+  ): RunnableLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
-  ): RunnableLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1737,7 +1743,7 @@ export interface ObservableModule {
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1746,7 +1752,7 @@ export interface ObservableModule {
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1756,7 +1762,7 @@ export interface ObservableModule {
     f: RunnableLike<TF>,
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableLike<TA>,
     b: RunnableLike<TB>,
@@ -1767,30 +1773,30 @@ export interface ObservableModule {
     g: RunnableLike<TG>,
     h: RunnableLike<TH>,
     i: RunnableLike<TI>,
-  ): RunnableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB]>;
+  ): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC]>;
+  ): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD]>;
+  ): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1798,7 +1804,7 @@ export interface ObservableModule {
     d: RunnableBaseLike<TD>,
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1807,7 +1813,7 @@ export interface ObservableModule {
     e: RunnableBaseLike<TE>,
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1817,7 +1823,7 @@ export interface ObservableModule {
     f: RunnableBaseLike<TF>,
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: RunnableBaseLike<TA>,
     b: RunnableBaseLike<TB>,
@@ -1828,30 +1834,30 @@ export interface ObservableModule {
     g: RunnableBaseLike<TG>,
     h: RunnableBaseLike<TH>,
     i: RunnableBaseLike<TI>,
-  ): RunnableWithSideEffectsLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
-  ): DeferredObservableLike<readonly [TA, TB]>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
-  ): DeferredObservableLike<readonly [TA, TB, TC]>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD]>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1859,7 +1865,7 @@ export interface ObservableModule {
     d: DeferredObservableBaseLike<TD>,
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1868,7 +1874,7 @@ export interface ObservableModule {
     e: DeferredObservableBaseLike<TE>,
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1878,7 +1884,7 @@ export interface ObservableModule {
     f: DeferredObservableBaseLike<TF>,
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: DeferredObservableBaseLike<TA>,
     b: DeferredObservableBaseLike<TB>,
@@ -1889,30 +1895,30 @@ export interface ObservableModule {
     g: DeferredObservableBaseLike<TG>,
     h: DeferredObservableBaseLike<TH>,
     i: DeferredObservableBaseLike<TI>,
-  ): DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
-  ): MulticastObservableLike<readonly [TA, TB]>;
+  ): MulticastObservableLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
-  ): MulticastObservableLike<readonly [TA, TB, TC]>;
+  ): MulticastObservableLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD]>;
+  ): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>;
+  ): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1920,7 +1926,7 @@ export interface ObservableModule {
     d: PureObservableLike<TD>,
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1929,7 +1935,7 @@ export interface ObservableModule {
     e: PureObservableLike<TE>,
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1939,7 +1945,7 @@ export interface ObservableModule {
     f: PureObservableLike<TF>,
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: PureObservableLike<TA>,
     b: PureObservableLike<TB>,
@@ -1950,30 +1956,30 @@ export interface ObservableModule {
     g: PureObservableLike<TG>,
     h: PureObservableLike<TH>,
     i: PureObservableLike<TI>,
-  ): MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipLatest<TA, TB>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
-  ): ObservableBaseLike<readonly [TA, TB]>;
+  ): ObservableBaseLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
-  ): ObservableBaseLike<readonly [TA, TB, TC]>;
+  ): ObservableBaseLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD]>;
+  ): ObservableBaseLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD, TE]>;
+  ): ObservableBaseLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1981,7 +1987,7 @@ export interface ObservableModule {
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD, TE, TF]>;
+  ): ObservableBaseLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1990,7 +1996,7 @@ export interface ObservableModule {
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): ObservableBaseLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -2000,7 +2006,7 @@ export interface ObservableModule {
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): ObservableBaseLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -2011,33 +2017,33 @@ export interface ObservableModule {
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
     i: ObservableBaseLike<TI>,
-  ): ObservableBaseLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): ObservableBaseLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipWith<TA, TB>(
     b: EnumerableLike<TB>,
-  ): PureObservableOperator<TA, readonly [TA, TB]>;
+  ): PureObservableOperator<TA, Tuple2<TA, TB>>;
   zipWith<TA, TB, TC>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC]>;
+  ): PureObservableOperator<TA, Tuple3<TA, TB, TC>>;
   zipWith<TA, TB, TC, TD>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
     d: EnumerableLike<TD>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD]>;
+  ): PureObservableOperator<TA, Tuple4<TA, TB, TC, TD>>;
   zipWith<TA, TB, TC, TD, TE>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
     d: EnumerableLike<TD>,
     e: EnumerableLike<TE>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD, TE]>;
+  ): PureObservableOperator<TA, Tuple5<TA, TB, TC, TD, TE>>;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
     d: EnumerableLike<TD>,
     e: EnumerableLike<TE>,
     f: EnumerableLike<TF>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF]>;
+  ): PureObservableOperator<TA, Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
@@ -2045,7 +2051,7 @@ export interface ObservableModule {
     e: EnumerableLike<TE>,
     f: EnumerableLike<TF>,
     g: EnumerableLike<TG>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG]>;
+  ): PureObservableOperator<TA, Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
@@ -2054,7 +2060,7 @@ export interface ObservableModule {
     f: EnumerableLike<TF>,
     g: EnumerableLike<TG>,
     h: EnumerableLike<TH>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH]>;
+  ): PureObservableOperator<TA, Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
@@ -2064,33 +2070,33 @@ export interface ObservableModule {
     g: EnumerableLike<TG>,
     h: EnumerableLike<TH>,
     i: EnumerableLike<TI>,
-  ): PureObservableOperator<TA, readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>;
+  ): PureObservableOperator<TA, Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipWith<TA, TB>(
     b: EnumerableBaseLike<TB>,
-  ): ObservableOperatorWithSideEffects<TA, readonly [TA, TB]>;
+  ): ObservableOperatorWithSideEffects<TA, Tuple2<TA, TB>>;
   zipWith<TA, TB, TC>(
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
-  ): ObservableOperatorWithSideEffects<TA, readonly [TA, TB, TC]>;
+  ): ObservableOperatorWithSideEffects<TA, Tuple3<TA, TB, TC>>;
   zipWith<TA, TB, TC, TD>(
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
     d: EnumerableBaseLike<TD>,
-  ): ObservableOperatorWithSideEffects<TA, readonly [TA, TB, TC, TD]>;
+  ): ObservableOperatorWithSideEffects<TA, Tuple4<TA, TB, TC, TD>>;
   zipWith<TA, TB, TC, TD, TE>(
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
     d: EnumerableBaseLike<TD>,
     e: EnumerableBaseLike<TE>,
-  ): ObservableOperatorWithSideEffects<TA, readonly [TA, TB, TC, TD, TE]>;
+  ): ObservableOperatorWithSideEffects<TA, Tuple5<TA, TB, TC, TD, TE>>;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
     d: EnumerableBaseLike<TD>,
     e: EnumerableBaseLike<TE>,
     f: EnumerableBaseLike<TF>,
-  ): ObservableOperatorWithSideEffects<TA, readonly [TA, TB, TC, TD, TE, TF]>;
+  ): ObservableOperatorWithSideEffects<TA, Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: EnumerableBaseLike<TB>,
     c: EnumerableBaseLike<TC>,
@@ -2098,10 +2104,7 @@ export interface ObservableModule {
     e: EnumerableBaseLike<TE>,
     f: EnumerableBaseLike<TF>,
     g: EnumerableBaseLike<TG>,
-  ): ObservableOperatorWithSideEffects<
-    TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG]
-  >;
+  ): ObservableOperatorWithSideEffects<TA, Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: EnumerableLike<TB>,
     c: EnumerableLike<TC>,
@@ -2112,7 +2115,7 @@ export interface ObservableModule {
     h: EnumerableLike<TH>,
   ): ObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+    Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: EnumerableLike<TB>,
@@ -2125,37 +2128,34 @@ export interface ObservableModule {
     i: EnumerableLike<TI>,
   ): ObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+    Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>
   >;
 
   zipWith<TA, TB>(
     b: RunnableLike<TB>,
-  ): RunnableBoundedPureObservableOperator<TA, readonly [TA, TB]>;
+  ): RunnableBoundedPureObservableOperator<TA, Tuple2<TA, TB>>;
   zipWith<TA, TB, TC>(
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
-  ): RunnableBoundedPureObservableOperator<TA, readonly [TA, TB, TC]>;
+  ): RunnableBoundedPureObservableOperator<TA, Tuple3<TA, TB, TC>>;
   zipWith<TA, TB, TC, TD>(
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
-  ): RunnableBoundedPureObservableOperator<TA, readonly [TA, TB, TC, TD]>;
+  ): RunnableBoundedPureObservableOperator<TA, Tuple4<TA, TB, TC, TD>>;
   zipWith<TA, TB, TC, TD, TE>(
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
-  ): RunnableBoundedPureObservableOperator<TA, readonly [TA, TB, TC, TD, TE]>;
+  ): RunnableBoundedPureObservableOperator<TA, Tuple5<TA, TB, TC, TD, TE>>;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
     d: RunnableLike<TD>,
     e: RunnableLike<TE>,
     f: RunnableLike<TF>,
-  ): RunnableBoundedPureObservableOperator<
-    TA,
-    readonly [TA, TB, TC, TD, TE, TF]
-  >;
+  ): RunnableBoundedPureObservableOperator<TA, Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: RunnableLike<TB>,
     c: RunnableLike<TC>,
@@ -2165,7 +2165,7 @@ export interface ObservableModule {
     g: RunnableLike<TG>,
   ): RunnableBoundedPureObservableOperator<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG]
+    Tuple7<TA, TB, TC, TD, TE, TF, TG>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: RunnableLike<TB>,
@@ -2177,7 +2177,7 @@ export interface ObservableModule {
     h: RunnableLike<TH>,
   ): RunnableBoundedPureObservableOperator<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+    Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: RunnableLike<TB>,
@@ -2190,26 +2190,23 @@ export interface ObservableModule {
     i: RunnableLike<TI>,
   ): RunnableBoundedPureObservableOperator<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+    Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>
   >;
 
   zipWith<TA, TB>(
     b: RunnableBaseLike<TB>,
-  ): RunnableBoundedObservableOperatorWithSideEffects<TA, readonly [TA, TB]>;
+  ): RunnableBoundedObservableOperatorWithSideEffects<TA, Tuple2<TA, TB>>;
   zipWith<TA, TB, TC>(
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
-  ): RunnableBoundedObservableOperatorWithSideEffects<
-    TA,
-    readonly [TA, TB, TC]
-  >;
+  ): RunnableBoundedObservableOperatorWithSideEffects<TA, Tuple3<TA, TB, TC>>;
   zipWith<TA, TB, TC, TD>(
     b: RunnableBaseLike<TB>,
     c: RunnableBaseLike<TC>,
     d: RunnableBaseLike<TD>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD]
+    Tuple4<TA, TB, TC, TD>
   >;
   zipWith<TA, TB, TC, TD, TE>(
     b: RunnableBaseLike<TB>,
@@ -2218,7 +2215,7 @@ export interface ObservableModule {
     e: RunnableBaseLike<TE>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE]
+    Tuple5<TA, TB, TC, TD, TE>
   >;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: RunnableBaseLike<TB>,
@@ -2228,7 +2225,7 @@ export interface ObservableModule {
     f: RunnableBaseLike<TF>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF]
+    Tuple6<TA, TB, TC, TD, TE, TF>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: RunnableBaseLike<TB>,
@@ -2239,7 +2236,7 @@ export interface ObservableModule {
     g: RunnableBaseLike<TG>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG]
+    Tuple7<TA, TB, TC, TD, TE, TF, TG>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: RunnableBaseLike<TB>,
@@ -2251,7 +2248,7 @@ export interface ObservableModule {
     h: RunnableBaseLike<TH>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+    Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: RunnableBaseLike<TB>,
@@ -2264,21 +2261,21 @@ export interface ObservableModule {
     i: RunnableBaseLike<TI>,
   ): RunnableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+    Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>
   >;
 
   zipWith<TA, TB>(
     b: DeferredObservableBaseLike<TB>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB]
+    Tuple2<TA, TB>
   >;
   zipWith<TA, TB, TC>(
     b: DeferredObservableBaseLike<TB>,
     c: DeferredObservableBaseLike<TC>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC]
+    Tuple3<TA, TB, TC>
   >;
   zipWith<TA, TB, TC, TD>(
     b: DeferredObservableBaseLike<TB>,
@@ -2286,7 +2283,7 @@ export interface ObservableModule {
     d: DeferredObservableBaseLike<TD>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD]
+    Tuple4<TA, TB, TC, TD>
   >;
   zipWith<TA, TB, TC, TD, TE>(
     b: DeferredObservableBaseLike<TB>,
@@ -2295,7 +2292,7 @@ export interface ObservableModule {
     e: DeferredObservableBaseLike<TE>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE]
+    Tuple5<TA, TB, TC, TD, TE>
   >;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: DeferredObservableBaseLike<TB>,
@@ -2305,7 +2302,7 @@ export interface ObservableModule {
     f: DeferredObservableBaseLike<TF>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF]
+    Tuple6<TA, TB, TC, TD, TE, TF>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: DeferredObservableBaseLike<TB>,
@@ -2316,7 +2313,7 @@ export interface ObservableModule {
     g: DeferredObservableBaseLike<TG>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG]
+    Tuple7<TA, TB, TC, TD, TE, TF, TG>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: DeferredObservableBaseLike<TB>,
@@ -2328,7 +2325,7 @@ export interface ObservableModule {
     h: DeferredObservableBaseLike<TH>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH]
+    Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: DeferredObservableBaseLike<TB>,
@@ -2341,21 +2338,18 @@ export interface ObservableModule {
     i: DeferredObservableBaseLike<TI>,
   ): DeferredObservableBoundedObservableOperatorWithSideEffects<
     TA,
-    readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]
+    Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>
   >;
 
   zipWith<TA, TB>(
     b: PureObservableLike<TB>,
-  ): Function1<
-    PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB]>
-  >;
+  ): Function1<PureObservableLike<TA>, MulticastObservableLike<Tuple2<TA, TB>>>;
   zipWith<TA, TB, TC>(
     b: PureObservableLike<TB>,
     c: PureObservableLike<TC>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC]>
+    MulticastObservableLike<Tuple3<TA, TB, TC>>
   >;
   zipWith<TA, TB, TC, TD>(
     b: PureObservableLike<TB>,
@@ -2363,7 +2357,7 @@ export interface ObservableModule {
     d: PureObservableLike<TD>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD]>
+    MulticastObservableLike<Tuple4<TA, TB, TC, TD>>
   >;
   zipWith<TA, TB, TC, TD, TE>(
     b: PureObservableLike<TB>,
@@ -2372,7 +2366,7 @@ export interface ObservableModule {
     e: PureObservableLike<TE>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD, TE]>
+    MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: PureObservableLike<TB>,
@@ -2382,7 +2376,7 @@ export interface ObservableModule {
     f: PureObservableLike<TF>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF]>
+    MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: PureObservableLike<TB>,
@@ -2393,7 +2387,7 @@ export interface ObservableModule {
     g: PureObservableLike<TG>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>
+    MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: PureObservableLike<TB>,
@@ -2405,7 +2399,7 @@ export interface ObservableModule {
     h: PureObservableLike<TH>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>
+    MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: PureObservableLike<TB>,
@@ -2418,21 +2412,18 @@ export interface ObservableModule {
     i: PureObservableLike<TI>,
   ): Function1<
     PureObservableLike<TA>,
-    MulticastObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>
+    MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>
   >;
 
   zipWith<TA, TB>(
     b: ObservableBaseLike<TB>,
-  ): Function1<
-    ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB]>
-  >;
+  ): Function1<ObservableBaseLike<TA>, DeferredObservableLike<Tuple2<TA, TB>>>;
   zipWith<TA, TB, TC>(
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC]>
+    DeferredObservableLike<Tuple3<TA, TB, TC>>
   >;
   zipWith<TA, TB, TC, TD>(
     b: ObservableBaseLike<TB>,
@@ -2440,7 +2431,7 @@ export interface ObservableModule {
     d: ObservableBaseLike<TD>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD]>
+    DeferredObservableLike<Tuple4<TA, TB, TC, TD>>
   >;
   zipWith<TA, TB, TC, TD, TE>(
     b: ObservableBaseLike<TB>,
@@ -2449,7 +2440,7 @@ export interface ObservableModule {
     e: ObservableBaseLike<TE>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD, TE]>
+    DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF>(
     b: ObservableBaseLike<TB>,
@@ -2459,7 +2450,7 @@ export interface ObservableModule {
     f: ObservableBaseLike<TF>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF]>
+    DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG>(
     b: ObservableBaseLike<TB>,
@@ -2470,7 +2461,7 @@ export interface ObservableModule {
     g: ObservableBaseLike<TG>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG]>
+    DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH>(
     b: ObservableBaseLike<TB>,
@@ -2482,7 +2473,7 @@ export interface ObservableModule {
     h: ObservableBaseLike<TH>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH]>
+    DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>
   >;
   zipWith<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     b: ObservableBaseLike<TB>,
@@ -2495,7 +2486,7 @@ export interface ObservableModule {
     i: ObservableBaseLike<TI>,
   ): Function1<
     ObservableBaseLike<TA>,
-    DeferredObservableLike<readonly [TA, TB, TC, TD, TE, TF, TG, TH, TI]>
+    DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>
   >;
 }
 

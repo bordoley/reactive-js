@@ -35,6 +35,8 @@ import {
 } from "../__internal__/testing.js";
 import {
   Optional,
+  Tuple2,
+  Tuple3,
   alwaysFalse,
   alwaysTrue,
   arrayEquality,
@@ -56,6 +58,7 @@ import {
   pipeLazyAsync,
   raise,
   returns,
+  tuple,
 } from "../functions.js";
 import {
   DeferredObservableBaseLike,
@@ -237,9 +240,14 @@ testModule(
             Observable.takeFirst({ count: 2 }),
           ),
         ),
-        Observable.toReadonlyArray<readonly [number, number]>(),
-        expectArrayEquals(
-          [[3, 2] as readonly [number, number], [5, 2], [5, 4], [7, 4]],
+        Observable.toReadonlyArray<Tuple2<number, number>>(),
+        expectArrayEquals<Tuple2<number, number>>(
+          [
+            [3, 2],
+            [5, 2],
+            [5, 4],
+            [7, 4],
+          ],
           arrayEquality(),
         ),
       ),
@@ -960,8 +968,8 @@ testModule(
       const f = mockFn();
       const subscription = pipe(
         flowed,
-        Observable.withCurrentTime((time, v) => [time, v]),
-        Observable.forEach(([time, v]: [number, any]) => {
+        Observable.withCurrentTime<unknown, Tuple2<number, any>>(tuple),
+        Observable.forEach(([time, v]: Tuple2<number, any>) => {
           f(time, v);
         }),
         Observable.subscribe(scheduler),
@@ -1835,7 +1843,7 @@ testModule(
       let result: number[] = [];
       pipe(
         Observable.zip(shared, shared),
-        Observable.map<[number, number], number>(([a, b]) => a + b),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
         Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
@@ -2046,12 +2054,12 @@ testModule(
           pipe(
             [0, 1, 2, 3],
             Observable.fromReadonlyArray(),
-            Observable.delay(2),
+            Observable.delay<number>(2),
           ),
-          (a: number, b: number): [number, number] => [a, b],
+          tuple<number, number>,
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals(
+        expectArrayEquals<Tuple2<number, number>>(
           [
             [0, 0],
             [1, 0],
@@ -2102,7 +2110,7 @@ testModule(
           pipe([5, 4, 3, 2, 1], Observable.fromReadonlyArray()),
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals<readonly [number, number]>(
+        expectArrayEquals<Tuple2<number, number>>(
           [
             [1, 5],
             [2, 4],
@@ -2123,7 +2131,7 @@ testModule(
           pipe([1, 2, 3, 4], Observable.fromReadonlyArray()),
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals<readonly [number, number, number]>(
+        expectArrayEquals<Tuple3<number, number, number>>(
           [
             [1, 5, 1],
             [2, 4, 2],
@@ -2145,7 +2153,7 @@ testModule(
             Observable.delay(1),
           ),
         ),
-        Observable.toReadonlyArray<readonly [number, number, number]>(),
+        Observable.toReadonlyArray<Tuple3<number, number, number>>(),
         expectArrayEquals(
           [[1, 2, 3] as readonly number[], [2, 3, 4]],
           arrayEquality(),
@@ -2159,7 +2167,7 @@ testModule(
           pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(1)),
           pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.delay(5)),
         ),
-        Observable.toReadonlyArray<readonly [number, number]>(),
+        Observable.toReadonlyArray<Tuple2<number, number>>(),
         expectArrayEquals(
           [[1, 1] as readonly number[], [2, 2], [3, 3]],
           arrayEquality(),
@@ -2174,7 +2182,7 @@ testModule(
             Observable.throws(),
             pipe([1, 2, 3], Observable.fromReadonlyArray()),
           ),
-          Observable.map<readonly [unknown, number], number>(([, b]) => b),
+          Observable.map<Tuple2<unknown, number>, number>(([, b]) => b),
           Observable.run(),
         ),
         expectToThrow,
@@ -2198,7 +2206,7 @@ testModule(
             Observable.delay(2, { delayStart: true }),
           ),
         ),
-        Observable.map<readonly [number, number], number>(([a, b]) => a + b),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
         Observable.toReadonlyArray(),
         expectArrayEquals([2, 5, 8, 11]),
       ),
@@ -2215,7 +2223,7 @@ testModule(
           pipe([1, 2, 3, 4], Observable.fromReadonlyArray<number>()),
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals<readonly [number, number]>(
+        expectArrayEquals<Tuple2<number, number>>(
           [
             [1, 1],
             [2, 2],

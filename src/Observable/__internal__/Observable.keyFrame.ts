@@ -2,6 +2,7 @@ import { MAX_VALUE } from "../../__internal__/constants.js";
 import { min } from "../../__internal__/math.js";
 import {
   Function1,
+  Tuple2,
   identity,
   isNotEqualTo,
   pipe,
@@ -23,14 +24,14 @@ const Observable_keyFrame = (
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<number, [number, number]>(([startTime, _], now) => {
+    Observable_scan<number, Tuple2<number, number>>(([startTime, _], now) => {
       startTime = min(now, startTime);
 
       const elapsed = now - startTime;
       const next = elapsed > duration ? 1 : easing(elapsed / duration);
       return [startTime, next];
     }, returns([MAX_VALUE, 0])),
-    Observable_pick<[unknown, number], 1>(1),
+    Observable_pick<Tuple2<unknown, number>, 1>(1),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

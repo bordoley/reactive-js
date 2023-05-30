@@ -6,19 +6,20 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { Tuple2 } from "../../functions.js";
 import { ObserverLike } from "../../types.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 import Observer_mixin from "./Observer.mixin.js";
 
 const Observer_createPairwiseObserver: <T>(
-  delegate: ObserverLike<readonly [T, T]>,
+  delegate: ObserverLike<Tuple2<T, T>>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
       include(Observer_mixin<T>(), Sink_pairwiseMixin()),
       function PairwiseObserver(
         instance: unknown,
-        delegate: ObserverLike<readonly [T, T]>,
+        delegate: ObserverLike<Tuple2<T, T>>,
       ): ObserverLike<T> {
         init(Sink_pairwiseMixin<T>(), instance, delegate);
         init(Observer_mixin(), instance, delegate, delegate);

@@ -39,6 +39,9 @@
 - [Tuple4](functions.md#tuple4)
 - [Tuple5](functions.md#tuple5)
 - [Tuple6](functions.md#tuple6)
+- [Tuple7](functions.md#tuple7)
+- [Tuple8](functions.md#tuple8)
+- [Tuple9](functions.md#tuple9)
 - [TypePredicate](functions.md#typepredicate)
 - [Updater](functions.md#updater)
 
@@ -940,6 +943,63 @@ ___
 | `TD` |
 | `TE` |
 | `TF` |
+
+___
+
+### Tuple7
+
+Ƭ **Tuple7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+___
+
+### Tuple8
+
+Ƭ **Tuple8**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+___
+
+### Tuple9
+
+Ƭ **Tuple9**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
 
 ___
 

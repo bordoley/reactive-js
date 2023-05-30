@@ -1,7 +1,7 @@
 import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
 import { MAX_VALUE } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
-import { isNotEqualTo, pipe, returns } from "../../functions.js";
+import { Tuple3, isNotEqualTo, pipe, returns } from "../../functions.js";
 import { RunnableWithSideEffectsLike } from "../../types.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_scan from "./Observable.scan.js";
@@ -18,7 +18,7 @@ const Observable_spring = (options?: {
 
   return pipe(
     Observable_currentTime(),
-    Observable_scan<number, readonly [number, number, number]>(
+    Observable_scan<number, Tuple3<number, number, number>>(
       ([lastTime, last, value], now) => {
         lastTime = min(now, lastTime);
 
@@ -39,7 +39,7 @@ const Observable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<[number, number, number], 2>(2),
+    Observable_pick<Tuple3<number, number, number>, 2>(2),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

@@ -33,6 +33,7 @@ import {
   Function1,
   Optional,
   SideEffect1,
+  Tuple2,
   bindMethod,
   compose,
   identity,
@@ -186,13 +187,13 @@ const createCacheStream: <T>(
                     string,
                     Function1<Optional<T>, Optional<T>>
                   >,
-                ): [
+                ): Tuple2<
                   ReadonlyObjectMapLike<
                     string,
                     Function1<Optional<T>, Optional<T>>
                   >,
-                  ReadonlyObjectMapLike<string, Optional<T>>,
-                ] => [
+                  ReadonlyObjectMapLike<string, Optional<T>>
+                > => [
                   updaters,
                   pipe(
                     updaters,
@@ -205,13 +206,13 @@ const createCacheStream: <T>(
               isSome(persistentStore)
                 ? Observable_concatMap(
                     (
-                      next: [
+                      next: Tuple2<
                         ReadonlyObjectMapLike<
                           string,
                           Function1<Optional<T>, Optional<T>>
                         >,
-                        ReadonlyObjectMapLike<string, Optional<T>>,
-                      ],
+                        ReadonlyObjectMapLike<string, Optional<T>>
+                      >,
                     ) => {
                       const [updaters, values] = next;
                       const keys = pipe(
@@ -243,13 +244,13 @@ const createCacheStream: <T>(
                   )
                 : identity,
               Observable_map(
-                ([updaters, values]: [
+                ([updaters, values]: Tuple2<
                   ReadonlyObjectMapLike<
                     string,
                     Function1<Optional<T>, Optional<T>>
                   >,
-                  ReadonlyObjectMapLike<string, Optional<T>>,
-                ]) =>
+                  ReadonlyObjectMapLike<string, Optional<T>>
+                >) =>
                   pipe(
                     updaters,
                     ReadonlyObjectMap_mapWithKey(

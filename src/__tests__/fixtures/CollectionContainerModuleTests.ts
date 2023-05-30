@@ -11,6 +11,7 @@ import {
 import {
   Function1,
   Optional,
+  Tuple2,
   arrayEquality,
   compose,
   none,
@@ -61,8 +62,8 @@ const CollectionContainerModuleTests = <C extends Container>(
 
           fromReadonlyArray(),
           m.entries<string, number>(),
-          Observable.toReadonlyArray<[number, string]>(),
-          expectArrayEquals(
+          Observable.toReadonlyArray(),
+          expectArrayEquals<Tuple2<number, string>>(
             [
               [0, "b"],
               [1, "d"],

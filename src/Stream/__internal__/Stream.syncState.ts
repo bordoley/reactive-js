@@ -6,7 +6,7 @@ import Observable_subscribe from "../../Observable/__internal__/Observable.subsc
 import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
 import Observable_throttle from "../../Observable/__internal__/Observable.throttle.js";
 import type * as Stream from "../../Stream.js";
-import { Updater, compose, identity, pipe } from "../../functions.js";
+import { Tuple2, Updater, compose, identity, pipe } from "../../functions.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -41,7 +41,7 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
             ? Observable_throttle(throttleDuration)
             : identity<ObservableLike<T>>,
           Observable_pairwise(),
-          Observable_concatMap<readonly [T, T], Updater<T>>(
+          Observable_concatMap<Tuple2<T, T>, Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
           ),
         ),
