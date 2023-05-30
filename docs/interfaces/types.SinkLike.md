@@ -32,6 +32,8 @@
 
 ▸ **[___SinkLike_notify]**(`event`): `void`
 
+Notifies the sink of the next notification produced by the source.
+
 #### Parameters
 
 | Name | Type |

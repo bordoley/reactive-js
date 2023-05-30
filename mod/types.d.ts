@@ -50,33 +50,6 @@ export declare const SinkLike_notify: typeof __SinkLike_notify;
 export declare const StoreLike_value: typeof __StoreLike_value;
 export declare const VirtualTimeSchedulerLike_run: typeof __VirtualTimeSchedulerLike_run;
 /**
- * An interactive mutable enumerator that can be used to iterate
- * over an underlying source of data.
- *
- * @noInheritDoc
- * @category Interactive
- */
-export interface EnumeratorLike<T = unknown> extends DisposableLike {
-    /**
-     * Indicates if the `EnumeratorLike` is completed.
-     */
-    readonly [EnumeratorLike_isCompleted]: boolean;
-    /**
-     * Returns the element if present.
-     */
-    readonly [EnumeratorLike_current]: T;
-    /**
-     * Indicates if the `EnumeratorLike` has a current value.
-     */
-    readonly [EnumeratorLike_hasCurrent]: boolean;
-    /**
-     * Advances the enumerator to the next value, if present.
-     *
-     * @returns true if successful, otherwise false.
-     */
-    [EnumeratorLike_move](): boolean;
-}
-/**
  * @noInheritDoc
  * @category Collection
  */
@@ -174,6 +147,11 @@ export interface QueueableLike<T = unknown> {
  * @category Reactive
  */
 export interface SinkLike<T = unknown> extends DisposableLike {
+    /**
+     * Notifies the sink of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
     [SinkLike_notify](event: T): void;
 }
 /**
@@ -335,6 +313,33 @@ export interface VirtualTimeSchedulerLike extends SchedulerLike, DisposableLike 
      * enqueued continuations, at which time the scheduler will auto dispose.
      */
     [VirtualTimeSchedulerLike_run](): void;
+}
+/**
+ * An interactive mutable enumerator that can be used to iterate
+ * over an underlying source of data.
+ *
+ * @noInheritDoc
+ * @category Interactive
+ */
+export interface EnumeratorLike<T = unknown> extends DisposableLike {
+    /**
+     * Indicates if the `EnumeratorLike` is completed.
+     */
+    readonly [EnumeratorLike_isCompleted]: boolean;
+    /**
+     * Returns the element if present.
+     */
+    readonly [EnumeratorLike_current]: T;
+    /**
+     * Indicates if the `EnumeratorLike` has a current value.
+     */
+    readonly [EnumeratorLike_hasCurrent]: boolean;
+    /**
+     * Advances the enumerator to the next value, if present.
+     *
+     * @returns true if successful, otherwise false.
+     */
+    [EnumeratorLike_move](): boolean;
 }
 /**
  * A consumer of push-based notifications.
