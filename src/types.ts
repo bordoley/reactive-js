@@ -61,7 +61,6 @@ import {
   SideEffect1,
   SideEffect2,
   Tuple2,
-  TypePredicate,
 } from "./functions.js";
 
 export const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys =
@@ -856,14 +855,6 @@ export interface ContainerModule<C extends Container> {
   ): ContainerOperator<C, T, T, TKey>;
 
   /**
-   *
-   * @category Operator
-   */
-  keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(
-    predicate: TypePredicate<TA, TB>,
-  ): ContainerOperator<C, TA, TB, TKey>;
-
-  /**
    * Returns a ContainerOperator that applies the `selector` function to each
    * value emitted by the source.
    *
@@ -875,13 +866,6 @@ export interface ContainerModule<C extends Container> {
    */
   map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
     selector: Function1<TA, TB>,
-  ): ContainerOperator<C, TA, TB, TKey>;
-
-  /**
-   * @category Operator
-   */
-  mapTo<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
-    value: TB,
   ): ContainerOperator<C, TA, TB, TKey>;
 }
 
@@ -910,25 +894,6 @@ export interface ReactiveContainerModule<C extends IndexedContainer>
    * @category Operator
    */
   pairwise<T>(): ContainerOperator<C, T, Tuple2<T, T>>;
-
-  /**
-   * @category Operator
-   */
-  pick<T, TKey extends keyof T>(key: TKey): ContainerOperator<C, T, T[TKey]>;
-  pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
-    keyA: TKeyA,
-    keyB: TKeyB,
-  ): ContainerOperator<C, T, T[TKeyA][TKeyB]>;
-  pick<
-    T,
-    TKeyA extends keyof T,
-    TKeyB extends keyof T[TKeyA],
-    TKeyC extends keyof T[TKeyA][TKeyB],
-  >(
-    keyA: TKeyA,
-    keyB: TKeyB,
-    keyC: TKeyC,
-  ): ContainerOperator<C, T, T[TKeyA][TKeyB][TKeyC]>;
 
   /**
    * Returns a Container that applies an accumulator function over the source,

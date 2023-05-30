@@ -66,11 +66,9 @@
 - [isPure](Observable.ObservableModule.md#ispure)
 - [isRunnable](Observable.ObservableModule.md#isrunnable)
 - [keep](Observable.ObservableModule.md#keep)
-- [keepType](Observable.ObservableModule.md#keeptype)
 - [last](Observable.ObservableModule.md#last)
 - [lastAsync](Observable.ObservableModule.md#lastasync)
 - [map](Observable.ObservableModule.md#map)
-- [mapTo](Observable.ObservableModule.md#mapto)
 - [merge](Observable.ObservableModule.md#merge)
 - [mergeAll](Observable.ObservableModule.md#mergeall)
 - [mergeMany](Observable.ObservableModule.md#mergemany)
@@ -2630,29 +2628,6 @@ ___
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](types.RunnableLike.md)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>
@@ -2722,29 +2697,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`PureObservableOperator`](../modules/Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

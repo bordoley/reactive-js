@@ -7,6 +7,7 @@ Reactive-JS
 ### Modules
 
 - [AsyncIterable](modules/AsyncIterable.md)
+- [Containers](modules/Containers.md)
 - [Dictionary](modules/Dictionary.md)
 - [Disposable](modules/Disposable.md)
 - [Enumerable](modules/Enumerable.md)

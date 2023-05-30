@@ -4,12 +4,10 @@ import Dictionary_forEach from "./Dictionary/__internal__/Dictionary.forEach.js"
 import Dictionary_forEachWithKey from "./Dictionary/__internal__/Dictionary.forEachWithKey.js";
 import Dictionary_fromEntries from "./Dictionary/__internal__/Dictionary.fromEntries.js";
 import Dictionary_keep from "./Dictionary/__internal__/Dictionary.keep.js";
-import Dictionary_keepType from "./Dictionary/__internal__/Dictionary.keepType.js";
 import Dictionary_keepWithKey from "./Dictionary/__internal__/Dictionary.keepWithKey.js";
 import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_map from "./Dictionary/__internal__/Dictionary.map.js";
-import Dictionary_mapTo from "./Dictionary/__internal__/Dictionary.mapTo.js";
 import Dictionary_mapWithKey from "./Dictionary/__internal__/Dictionary.mapWithKey.js";
 import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
 import Dictionary_reduceWithKey from "./Dictionary/__internal__/Dictionary.reduceWithKey.js";
@@ -67,12 +65,10 @@ export const CreateModule = <TKey extends TKeyBase>(): DictionaryModule<TKey> =>
     fromReadonlyMap,
     fromReadonlyObjectMap,
     keep,
-    keepType,
     keepWithKey,
     keys,
     keySet,
     map,
-    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,
@@ -94,12 +90,10 @@ export const fromReadonlyMap: Signature["fromReadonlyMap"] =
 export const fromReadonlyObjectMap: Signature["fromReadonlyObjectMap"] =
   ReadonlyObjectMap_toDictionary as Signature["fromReadonlyObjectMap"];
 export const keep: Signature["keep"] = Dictionary_keep;
-export const keepType: Signature["keepType"] = Dictionary_keepType;
 export const keepWithKey: Signature["keepWithKey"] = Dictionary_keepWithKey;
 export const keys: Signature["keys"] = Dictionary_keys;
 export const keySet: Signature["keySet"] = Dictionary_keySet;
 export const map: Signature["map"] = Dictionary_map;
-export const mapTo: Signature["mapTo"] = Dictionary_mapTo;
 export const mapWithKey: Signature["mapWithKey"] = Dictionary_mapWithKey;
 export const reduce: Signature["reduce"] = Dictionary_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =

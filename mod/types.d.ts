@@ -1,6 +1,6 @@
 import type * as ReadonlyObjectMap from "./ReadonlyObjectMap.js";
 import { __AssociativeCollectionLike_keys, __CollectionLike_count, __Container_T, __Container_TKey, __Container_type, __DispatcherLikeEvent_capacityExceeded, __DispatcherLikeEvent_completed, __DispatcherLikeEvent_ready, __DispatcherLike_complete, __DisposableLike_add, __DisposableLike_dispose, __DisposableLike_error, __DisposableLike_isDisposed, __EnumerableLike_enumerate, __EnumeratorLike_current, __EnumeratorLike_hasCurrent, __EnumeratorLike_isCompleted, __EnumeratorLike_move, __EventListenerLike_isErrorSafe, __EventPublisherLike_listenerCount, __EventSourceLike_addEventListener, __KeyedCollectionLike_get, __ObservableLike_isDeferred, __ObservableLike_isEnumerable, __ObservableLike_isPure, __ObservableLike_isRunnable, __ObservableLike_observe, __PauseableLike_isPaused, __PauseableLike_pause, __PauseableLike_resume, __PublisherLike_observerCount, __QueueableLike_backpressureStrategy, __QueueableLike_capacity, __QueueableLike_enqueue, __ReplayObservableLike_buffer, __SchedulerLike_inContinuation, __SchedulerLike_maxYieldInterval, __SchedulerLike_now, __SchedulerLike_requestYield, __SchedulerLike_schedule, __SchedulerLike_shouldYield, __SchedulerLike_yield, __SinkLike_notify, __StoreLike_value, __StreamLike_scheduler, __StreamableLike_TStream, __StreamableLike_stream, __VirtualTimeSchedulerLike_run } from "./__internal__/symbols.js";
-import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, Tuple2, TypePredicate } from "./functions.js";
+import { Equality, Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, Tuple2 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: typeof __AssociativeCollectionLike_keys;
 export declare const CollectionLike_count: typeof __CollectionLike_count;
 export declare const Container_T: typeof __Container_T;
@@ -601,11 +601,6 @@ export interface ContainerModule<C extends Container> {
      */
     keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Predicate<T>): ContainerOperator<C, T, T, TKey>;
     /**
-     *
-     * @category Operator
-     */
-    keepType<TA, TB extends TA, TKey extends KeyOf<C> = KeyOf<C>>(predicate: TypePredicate<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
-    /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
      *
@@ -616,10 +611,6 @@ export interface ContainerModule<C extends Container> {
      * @category Operator
      */
     map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function1<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
-    /**
-     * @category Operator
-     */
-    mapTo<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(value: TB): ContainerOperator<C, TA, TB, TKey>;
 }
 /**
  * @noInheritDoc
@@ -643,12 +634,6 @@ export interface ReactiveContainerModule<C extends IndexedContainer> extends Con
      * @category Operator
      */
     pairwise<T>(): ContainerOperator<C, T, Tuple2<T, T>>;
-    /**
-     * @category Operator
-     */
-    pick<T, TKey extends keyof T>(key: TKey): ContainerOperator<C, T, T[TKey]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): ContainerOperator<C, T, T[TKeyA][TKeyB]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): ContainerOperator<C, T, T[TKeyA][TKeyB][TKeyC]>;
     /**
      * Returns a Container that applies an accumulator function over the source,
      * and emits each intermediate result.

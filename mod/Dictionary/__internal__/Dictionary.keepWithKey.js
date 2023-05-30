@@ -1,7 +1,8 @@
 /// <reference types="./Dictionary.keepWithKey.d.ts" />
 
+import * as Containers from "../../Containers.js";
 import Observable_count from "../../Observable/__internal__/Observable.count.js";
-import Observable_keepType from "../../Observable/__internal__/Observable.keepType.js";
+import Observable_keep from "../../Observable/__internal__/Observable.keep.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import { DelegatingLike_delegate, PredicatedLike_predicate, } from "../../__internal__/types.js";
 import { isSome, newInstance, none, pipe, } from "../../functions.js";
@@ -17,7 +18,9 @@ class KeepingDictionary {
         return pipe(this[DelegatingLike_delegate][AssociativeCollectionLike_keys], Observable_map((k) => {
             const v = this[KeyedCollectionLike_get](k);
             return isSome(v) && this[PredicatedLike_predicate](v, k) ? k : none;
-        }), Observable_keepType(isSome));
+        }), Containers.keepType({
+            keep: Observable_keep,
+        }, isSome));
     }
     get [CollectionLike_count]() {
         return pipe(this[AssociativeCollectionLike_keys], Observable_count());

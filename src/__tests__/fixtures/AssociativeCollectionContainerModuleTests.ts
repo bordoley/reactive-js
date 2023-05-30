@@ -13,7 +13,6 @@ import {
   Optional,
   Tuple2,
   arrayEquality,
-  isSome,
   none,
   pick,
   pipe,
@@ -149,25 +148,6 @@ const AssociativeCollectionContainerModuleTests = <C extends Container<string>>(
       ),
     ),
     describe(
-      "keepType",
-      test(
-        "filters null values",
-        pipeLazy(
-          [
-            ["a", "b"],
-            ["c", none],
-            ["e", "v"],
-          ],
-          ReadonlyArray.toObservable<[string, Optional<string>]>(),
-          m.fromEntries(),
-          m.keepType<Optional<string>, string, string>(isSome),
-          m.values(),
-          Observable.toReadonlyArray(),
-          expectArrayEquals(["b", "v"]),
-        ),
-      ),
-    ),
-    describe(
       "keySet",
       test("returns a keyset with all the keys", () => {
         const keys = pipe(
@@ -212,25 +192,6 @@ const AssociativeCollectionContainerModuleTests = <C extends Container<string>>(
           m.toDictionary(),
           pick(CollectionLike_count),
           expectEquals(3),
-        ),
-      ),
-    ),
-    describe(
-      "mapTo",
-      test(
-        "maps every value in the source to v",
-        pipeLazy(
-          [
-            ["a", "b"],
-            ["c", "d"],
-            ["e", "f"],
-          ],
-          ReadonlyArray.toObservable<[string, string]>(),
-          m.fromEntries(),
-          m.mapTo(2),
-          m.values(),
-          Observable.toReadonlyArray(),
-          expectArrayEquals([2, 2, 2]),
         ),
       ),
     ),

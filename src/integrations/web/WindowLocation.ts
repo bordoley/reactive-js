@@ -1,3 +1,4 @@
+import * as Containers from "../../Containers.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../Disposable.js";
 import * as EventSource from "../../EventSource.js";
@@ -225,7 +226,11 @@ export const subscribe: (
         ): void {
           pipe(
             this[DelegatingLike_delegate],
-            Observable.pick<TState, "uri">("uri"),
+
+            Containers.pick<Observable.Type, TState, "uri">(
+              { map: Observable.map },
+              "uri",
+            ),
             invoke(ObservableLike_observe, observer),
           );
         },

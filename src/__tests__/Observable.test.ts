@@ -1,3 +1,4 @@
+import * as Containers from "../Containers.js";
 import * as Disposable from "../Disposable.js";
 import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
@@ -1125,7 +1126,16 @@ testModule(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
         Observable.forEach(ignore),
-        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+        Observable.forkMerge(
+          Containers.mapTo<Observable.RunnableWithSideEffectsContainer, number>(
+            Observable,
+            1,
+          ),
+          Containers.mapTo<Observable.RunnableWithSideEffectsContainer, number>(
+            Observable,
+            2,
+          ),
+        ),
       );
 
       pipe(
@@ -1143,7 +1153,10 @@ testModule(
       const obs: RunnableLike<number> = pipe(
         [1, 2, 3],
         Observable.fromReadonlyArray(),
-        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+        Observable.forkMerge(
+          Containers.mapTo<Observable.RunnableContainer, number>(Observable, 1),
+          Containers.mapTo<Observable.RunnableContainer, number>(Observable, 2),
+        ),
       );
 
       pipe(
@@ -1160,7 +1173,16 @@ testModule(
     test("with multicast src and pure inner transforms", () => {
       const forked: MulticastObservableLike = pipe(
         Observable.createPublisher(),
-        Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)),
+        Observable.forkMerge(
+          Containers.mapTo<Observable.MulticastObservableContainer, number>(
+            Observable,
+            1,
+          ),
+          Containers.mapTo<Observable.MulticastObservableContainer, number>(
+            Observable,
+            2,
+          ),
+        ),
       );
 
       expectFalse(forked[ObservableLike_isDeferred]);
@@ -1178,7 +1200,10 @@ testModule(
         >(
           Observable.flatMapAsync(_ => Promise.resolve(1)),
           Observable.flatMapAsync(_ => Promise.resolve(1)),
-          Observable.mapTo(2),
+          Containers.mapTo<Observable.MulticastObservableContainer, number>(
+            Observable,
+            2,
+          ),
         ),
       );
 
@@ -1197,7 +1222,10 @@ testModule(
           DeferredObservableBaseLike<number>
         >(
           Observable.flatMapAsync(_ => Promise.resolve(1)),
-          Observable.mapTo(2),
+          Containers.mapTo<Observable.EnumerableContainer, number>(
+            Observable,
+            2,
+          ),
         ),
       );
 

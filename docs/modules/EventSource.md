@@ -30,11 +30,8 @@
 - [buffer](EventSource.md#buffer)
 - [distinctUntilChanged](EventSource.md#distinctuntilchanged)
 - [keep](EventSource.md#keep)
-- [keepType](EventSource.md#keeptype)
 - [map](EventSource.md#map)
-- [mapTo](EventSource.md#mapto)
 - [pairwise](EventSource.md#pairwise)
-- [pick](EventSource.md#pick)
 - [scan](EventSource.md#scan)
 - [skipFirst](EventSource.md#skipfirst)
 - [takeFirst](EventSource.md#takefirst)
@@ -242,30 +239,6 @@ source that satisfy the specified predicate.
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
 ### map
 
 ▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
@@ -301,30 +274,6 @@ TB - The inner type of the mapped container
 
 ___
 
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, `number`\>
@@ -338,73 +287,6 @@ ___
 #### Returns
 
 [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>, `number`\>
-
-___
-
-### pick
-
-▸ **pick**<`T`, `TKey`\>(`key`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`], `number`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `string` \| `number` \| `symbol` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `key` | `TKey` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKey`], `number`\>
-
-▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`], `number`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKeyA` | extends `string` \| `number` \| `symbol` |
-| `TKeyB` | extends `string` \| `number` \| `symbol` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `keyA` | `TKeyA` |
-| `keyB` | `TKeyB` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`], `number`\>
-
-▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`], `number`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKeyA` | extends `string` \| `number` \| `symbol` |
-| `TKeyB` | extends `string` \| `number` \| `symbol` |
-| `TKeyC` | extends `string` \| `number` \| `symbol` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `keyA` | `TKeyA` |
-| `keyB` | `TKeyB` |
-| `keyC` | `TKeyC` |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`EventSourceContainer`](../interfaces/EventSource.EventSourceContainer.md), `T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`], `number`\>
 
 ___
 

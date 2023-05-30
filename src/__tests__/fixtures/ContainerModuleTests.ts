@@ -5,14 +5,7 @@ import {
   expectToThrowError,
   test,
 } from "../../__internal__/testing.js";
-import {
-  Function1,
-  greaterThan,
-  increment,
-  isSome,
-  none,
-  pipe,
-} from "../../functions.js";
+import { Function1, greaterThan, increment, pipe } from "../../functions.js";
 import {
   Container,
   ContainerModule,
@@ -66,21 +59,6 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
       }),
     ),
     describe(
-      "keepType",
-      test(
-        "only keeps non-none values",
-        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
-          pipe(
-            [1, none, 3],
-            fromReadonlyArray(ctx),
-            m.keepType(isSome),
-            toReadonlyArray(ctx),
-            expectArrayEquals([1, 3]),
-          ),
-        ),
-      ),
-    ),
-    describe(
       "map",
       test(
         "maps every value",
@@ -112,21 +90,6 @@ const ContainerModuleTests = <C extends Container, TCtx extends DisposableLike>(
           expectToThrowError(err),
         );
       }),
-    ),
-    describe(
-      "mapTo",
-      test(
-        "maps every value in the source to v",
-        Disposable.usingLazy(createCtx)((ctx: TCtx) =>
-          pipe(
-            [1, 2, 3],
-            fromReadonlyArray<number>(ctx),
-            m.mapTo(2),
-            toReadonlyArray(ctx),
-            expectArrayEquals([2, 2, 2]),
-          ),
-        ),
-      ),
     ),
   );
 

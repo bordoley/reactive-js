@@ -6,12 +6,10 @@ import Dictionary_forEach from "./Dictionary/__internal__/Dictionary.forEach.js"
 import Dictionary_forEachWithKey from "./Dictionary/__internal__/Dictionary.forEachWithKey.js";
 import Dictionary_fromEntries from "./Dictionary/__internal__/Dictionary.fromEntries.js";
 import Dictionary_keep from "./Dictionary/__internal__/Dictionary.keep.js";
-import Dictionary_keepType from "./Dictionary/__internal__/Dictionary.keepType.js";
 import Dictionary_keepWithKey from "./Dictionary/__internal__/Dictionary.keepWithKey.js";
 import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
 import Dictionary_map from "./Dictionary/__internal__/Dictionary.map.js";
-import Dictionary_mapTo from "./Dictionary/__internal__/Dictionary.mapTo.js";
 import Dictionary_mapWithKey from "./Dictionary/__internal__/Dictionary.mapWithKey.js";
 import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
 import Dictionary_reduceWithKey from "./Dictionary/__internal__/Dictionary.reduceWithKey.js";
@@ -35,12 +33,10 @@ export const CreateModule = () => ({
     fromReadonlyMap,
     fromReadonlyObjectMap,
     keep,
-    keepType,
     keepWithKey,
     keys,
     keySet,
     map,
-    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,
@@ -58,12 +54,10 @@ export const fromEntries = Dictionary_fromEntries;
 export const fromReadonlyMap = ReadonlyMap_toDictionary;
 export const fromReadonlyObjectMap = ReadonlyObjectMap_toDictionary;
 export const keep = Dictionary_keep;
-export const keepType = Dictionary_keepType;
 export const keepWithKey = Dictionary_keepWithKey;
 export const keys = Dictionary_keys;
 export const keySet = Dictionary_keySet;
 export const map = Dictionary_map;
-export const mapTo = Dictionary_mapTo;
 export const mapWithKey = Dictionary_mapWithKey;
 export const reduce = Dictionary_reduce;
 export const reduceWithKey = Dictionary_reduceWithKey;

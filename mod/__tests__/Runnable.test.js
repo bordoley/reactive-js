@@ -1,5 +1,6 @@
 /// <reference types="./Runnable.test.d.ts" />
 
+import * as Containers from "../Containers.js";
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
@@ -26,7 +27,7 @@ testModule("Runnable", describe("compute", test("batch mode", () => {
         const v = __await(oneTwoThreeDelayed);
         const next = __memo(createOneTwoThree, v);
         return __await(next);
-    }, { mode: "combine-latest" }), Observable.keepType(isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    }, { mode: "combine-latest" }), Containers.keepType(Observable, isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
 }), test("conditional hooks", () => {
     const result = [];

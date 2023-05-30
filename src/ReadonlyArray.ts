@@ -9,12 +9,10 @@ import ReadonlyArray_fromIterable from "./ReadonlyArray/__internal__/ReadonlyArr
 import ReadonlyArray_fromOptional from "./ReadonlyArray/__internal__/ReadonlyArray.fromOptional.js";
 import ReadonlyArray_fromValue from "./ReadonlyArray/__internal__/ReadonlyArray.fromValue.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
-import ReadonlyArray_keepType from "./ReadonlyArray/__internal__/ReadonlyArray.keepType.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
 import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";
 import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_mapTo from "./ReadonlyArray/__internal__/ReadonlyArray.mapTo.js";
 import ReadonlyArray_mapWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.mapWithKey.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
 import ReadonlyArray_reduceWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.reduceWithKey.js";
@@ -72,12 +70,10 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 export const fromValue: Signature["fromValue"] = ReadonlyArray_fromValue;
 export const keep: Signature["keep"] = ReadonlyArray_keep;
-export const keepType: Signature["keepType"] = ReadonlyArray_keepType;
 export const keepWithKey: Signature["keepWithKey"] = ReadonlyArray_keepWithKey;
 export const keys: Signature["keys"] = ReadonlyArray_keys;
 export const keySet: Signature["keySet"] = ReadonlyArray_keySet;
 export const map: Signature["map"] = ReadonlyArray_map;
-export const mapTo: Signature["mapTo"] = ReadonlyArray_mapTo;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyArray_mapWithKey;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =

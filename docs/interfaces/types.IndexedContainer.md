@@ -22,7 +22,11 @@
 
   ↳↳ [`RunnableContainer`](Observable.RunnableContainer.md)
 
+  ↳↳ [`RunnableWithSideEffectsContainer`](Observable.RunnableWithSideEffectsContainer.md)
+
   ↳↳ [`EnumerableContainer`](Observable.EnumerableContainer.md)
+
+  ↳↳ [`EnumerableWithSideEffectsContainer`](Observable.EnumerableWithSideEffectsContainer.md)
 
   ↳↳ [`MulticastObservableContainer`](Observable.MulticastObservableContainer.md)
 

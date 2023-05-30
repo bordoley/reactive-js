@@ -165,62 +165,6 @@ const ReactiveContainerModuleTests = <
       ),
     ),
     describe(
-      "pick",
-      test("with object and symbol keys", () => {
-        const keyA = Symbol();
-        const keyB = Symbol();
-
-        const obj = {
-          [keyA]: {
-            [keyB]: "value",
-          },
-        };
-
-        Disposable.using(createCtx)((ctx: TCtx) =>
-          pipe(
-            [obj],
-            fromReadonlyArray(ctx),
-            m.pick(keyA, keyB),
-            toReadonlyArray<string>(ctx),
-            expectArrayEquals<string>(["value"]),
-          ),
-        );
-      }),
-      test("with object and string keys", () => {
-        const obj = {
-          keyA: {
-            keyB: "value",
-          },
-        };
-        Disposable.using(createCtx)((ctx: TCtx) =>
-          pipe(
-            [obj],
-            fromReadonlyArray(ctx),
-            m.pick("keyA", "keyB"),
-            toReadonlyArray<string>(ctx),
-            expectArrayEquals<string>(["value"]),
-          ),
-        );
-      }),
-      test("with array", () => {
-        const obj: readonly [number, number, number, number, number, number] = [
-          1, 2, 3, 4, 5, 6,
-        ];
-
-        Disposable.using(createCtx)((ctx: TCtx) =>
-          pipe(
-            [obj],
-            fromReadonlyArray<
-              readonly [number, number, number, number, number, number]
-            >(ctx),
-            m.pick(3),
-            toReadonlyArray<number>(ctx),
-            expectArrayEquals<number>([4]),
-          ),
-        );
-      }),
-    ),
-    describe(
       "scan",
       test(
         "sums all the values in the array emitting intermediate values.",

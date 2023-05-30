@@ -23,9 +23,7 @@
 ### Operator Methods
 
 - [keep](types.ContainerModule.md#keep)
-- [keepType](types.ContainerModule.md#keeptype)
 - [map](types.ContainerModule.md#map)
-- [mapTo](types.ContainerModule.md#mapto)
 
 ## Operator Methods
 
@@ -52,30 +50,6 @@ source that satisfy the specified predicate.
 #### Returns
 
 [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `T`, `T`, `TKey`\>
-
-___
-
-### keepType
-
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](../modules/functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -107,30 +81,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](../modules/types.md#containeroperator)<`C`, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/types.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

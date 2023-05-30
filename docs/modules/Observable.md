@@ -12,9 +12,11 @@
 
 - [DeferredObservableContainer](../interfaces/Observable.DeferredObservableContainer.md)
 - [EnumerableContainer](../interfaces/Observable.EnumerableContainer.md)
+- [EnumerableWithSideEffectsContainer](../interfaces/Observable.EnumerableWithSideEffectsContainer.md)
 - [MulticastObservableContainer](../interfaces/Observable.MulticastObservableContainer.md)
 - [ObservableContainer](../interfaces/Observable.ObservableContainer.md)
 - [RunnableContainer](../interfaces/Observable.RunnableContainer.md)
+- [RunnableWithSideEffectsContainer](../interfaces/Observable.RunnableWithSideEffectsContainer.md)
 
 ### Module Interfaces
 
@@ -93,11 +95,9 @@
 - [isPure](Observable.md#ispure)
 - [isRunnable](Observable.md#isrunnable)
 - [keep](Observable.md#keep)
-- [keepType](Observable.md#keeptype)
 - [last](Observable.md#last)
 - [lastAsync](Observable.md#lastasync)
 - [map](Observable.md#map)
-- [mapTo](Observable.md#mapto)
 - [merge](Observable.md#merge)
 - [mergeAll](Observable.md#mergeall)
 - [mergeMany](Observable.md#mergemany)
@@ -2912,29 +2912,6 @@ ___
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`\>(`predicate`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-___
-
 ### last
 
 ▸ **last**<`T`\>(): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, [`Optional`](functions.md#optional)<`T`\>\>
@@ -3004,29 +2981,6 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`\>(`value`): [`PureObservableOperator`](Observable.md#pureobservableoperator)<`TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

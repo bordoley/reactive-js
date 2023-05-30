@@ -1,5 +1,6 @@
 /// <reference types="./WindowLocation.d.ts" />
 
+import * as Containers from "../../Containers.js";
 import Delegating_mixin from "../../Delegating/__internal__/Delegating.mixin.js";
 import * as Disposable from "../../Disposable.js";
 import * as EventSource from "../../EventSource.js";
@@ -78,7 +79,7 @@ export const subscribe = /*@__PURE__*/ (() => {
             history.back();
         },
         [ObservableLike_observe](observer) {
-            pipe(this[DelegatingLike_delegate], Observable.pick("uri"), invoke(ObservableLike_observe, observer));
+            pipe(this[DelegatingLike_delegate], Containers.pick({ map: Observable.map }, "uri"), invoke(ObservableLike_observe, observer));
         },
     }));
     let currentWindowLocationObservable = none;

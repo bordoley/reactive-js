@@ -33,10 +33,8 @@
 - [forEach](ReadonlyArray.md#foreach)
 - [forEachWithKey](ReadonlyArray.md#foreachwithkey)
 - [keep](ReadonlyArray.md#keep)
-- [keepType](ReadonlyArray.md#keeptype)
 - [keepWithKey](ReadonlyArray.md#keepwithkey)
 - [map](ReadonlyArray.md#map)
-- [mapTo](ReadonlyArray.md#mapto)
 - [mapWithKey](ReadonlyArray.md#mapwithkey)
 
 ### Transform Functions
@@ -279,30 +277,6 @@ source that satisfy the specified predicate.
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
 ### keepWithKey
 
 ▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
@@ -357,30 +331,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

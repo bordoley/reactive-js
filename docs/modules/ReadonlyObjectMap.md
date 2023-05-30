@@ -35,10 +35,8 @@
 - [forEach](ReadonlyObjectMap.md#foreach)
 - [forEachWithKey](ReadonlyObjectMap.md#foreachwithkey)
 - [keep](ReadonlyObjectMap.md#keep)
-- [keepType](ReadonlyObjectMap.md#keeptype)
 - [keepWithKey](ReadonlyObjectMap.md#keepwithkey)
 - [map](ReadonlyObjectMap.md#map)
-- [mapTo](ReadonlyObjectMap.md#mapto)
 - [mapWithKey](ReadonlyObjectMap.md#mapwithkey)
 
 ### Transform Functions
@@ -264,30 +262,6 @@ source that satisfy the specified predicate.
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
-
-___
-
 ### keepWithKey
 
 ▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `T`, `T`, `TKey`\>
@@ -342,30 +316,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> = [`KeyOf`](types.md#keyof)<[`Type`](ReadonlyObjectMap.md#type)<[`TKeyBase`](ReadonlyObjectMap.md#tkeybase)\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

@@ -1,6 +1,8 @@
+import * as Containers from "../../Containers.js";
 import type * as Dictionary from "../../Dictionary.js";
+import type * as Observable from "../../Observable.js";
 import Observable_count from "../../Observable/__internal__/Observable.count.js";
-import Observable_keepType from "../../Observable/__internal__/Observable.keepType.js";
+import Observable_keep from "../../Observable/__internal__/Observable.keep.js";
 import Observable_map from "../../Observable/__internal__/Observable.map.js";
 import {
   DelegatingLike,
@@ -44,7 +46,12 @@ class KeepingDictionary<T, TKey>
         const v = this[KeyedCollectionLike_get](k);
         return isSome(v) && this[PredicatedLike_predicate](v, k) ? k : none;
       }),
-      Observable_keepType<Optional<TKey>, TKey>(isSome),
+      Containers.keepType<Observable.EnumerableContainer, Optional<TKey>, TKey>(
+        {
+          keep: Observable_keep,
+        },
+        isSome,
+      ),
     );
   }
 

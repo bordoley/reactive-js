@@ -8,12 +8,10 @@ import IndexedCollection_fromIterable from "./IndexedCollection/__internal__/Ind
 import IndexedCollection_fromOptional from "./IndexedCollection/__internal__/IndexedCollection.fromOptional.js";
 import IndexedCollection_fromValue from "./IndexedCollection/__internal__/IndexedCollection.fromValue.js";
 import IndexedCollection_keep from "./IndexedCollection/__internal__/IndexedCollection.keep.js";
-import IndexedCollection_keepType from "./IndexedCollection/__internal__/IndexedCollection.keepType.js";
 import IndexedCollection_keepWithKey from "./IndexedCollection/__internal__/IndexedCollection.keepWithKey.js";
 import IndexedCollection_keySet from "./IndexedCollection/__internal__/IndexedCollection.keySet.js";
 import IndexedCollection_keys from "./IndexedCollection/__internal__/IndexedCollection.keys.js";
 import IndexedCollection_map from "./IndexedCollection/__internal__/IndexedCollection.map.js";
-import IndexedCollection_mapTo from "./IndexedCollection/__internal__/IndexedCollection.mapTo.js";
 import IndexedCollection_mapWithKey from "./IndexedCollection/__internal__/IndexedCollection.mapWithKey.js";
 import IndexedCollection_reduce from "./IndexedCollection/__internal__/IndexedCollection.reduce.js";
 import IndexedCollection_reduceWithKey from "./IndexedCollection/__internal__/IndexedCollection.reduceWithKey.js";
@@ -74,14 +72,12 @@ export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   ReadonlyArray_toIndexedCollection;
 export const fromValue: Signature["fromValue"] = IndexedCollection_fromValue;
 export const keep: Signature["keep"] = IndexedCollection_keep;
-export const keepType: Signature["keepType"] = IndexedCollection_keepType;
 export const keepWithKey: Signature["keepWithKey"] =
   IndexedCollection_keepWithKey;
 export const keys: Signature["keys"] = IndexedCollection_keys;
 export const keySet: Signature["keySet"] = IndexedCollection_keySet;
 export const map: Signature["map"] = IndexedCollection_map;
 export const mapWithKey: Signature["mapWithKey"] = IndexedCollection_mapWithKey;
-export const mapTo: Signature["mapTo"] = IndexedCollection_mapTo;
 export const reduce: Signature["reduce"] = IndexedCollection_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =
   IndexedCollection_reduceWithKey;

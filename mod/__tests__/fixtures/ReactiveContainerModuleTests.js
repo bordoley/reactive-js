@@ -30,28 +30,7 @@ const ReactiveContainerModuleTests = (m, createCtx, fromReadonlyArray, toReadonl
         [6, 7],
         [7, 8],
         [8, 9],
-    ], arrayEquality())))), test("when the input only provides 1 value", Disposable.usingLazy(createCtx)((ctx) => pipe([0], fromReadonlyArray(ctx), m.pairwise(), toReadonlyArray(ctx), expectArrayEquals([], arrayEquality()))))), describe("pick", test("with object and symbol keys", () => {
-        const keyA = Symbol();
-        const keyB = Symbol();
-        const obj = {
-            [keyA]: {
-                [keyB]: "value",
-            },
-        };
-        Disposable.using(createCtx)((ctx) => pipe([obj], fromReadonlyArray(ctx), m.pick(keyA, keyB), toReadonlyArray(ctx), expectArrayEquals(["value"])));
-    }), test("with object and string keys", () => {
-        const obj = {
-            keyA: {
-                keyB: "value",
-            },
-        };
-        Disposable.using(createCtx)((ctx) => pipe([obj], fromReadonlyArray(ctx), m.pick("keyA", "keyB"), toReadonlyArray(ctx), expectArrayEquals(["value"])));
-    }), test("with array", () => {
-        const obj = [
-            1, 2, 3, 4, 5, 6,
-        ];
-        Disposable.using(createCtx)((ctx) => pipe([obj], fromReadonlyArray(ctx), m.pick(3), toReadonlyArray(ctx), expectArrayEquals([4])));
-    })), describe("scan", test("sums all the values in the array emitting intermediate values.", Disposable.usingLazy(createCtx)((ctx) => pipe([1, 1, 1], fromReadonlyArray(ctx), m.scan((a, b) => a + b, returns(0)), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3])))), test("throws when the scan function throws", () => {
+    ], arrayEquality())))), test("when the input only provides 1 value", Disposable.usingLazy(createCtx)((ctx) => pipe([0], fromReadonlyArray(ctx), m.pairwise(), toReadonlyArray(ctx), expectArrayEquals([], arrayEquality()))))), describe("scan", test("sums all the values in the array emitting intermediate values.", Disposable.usingLazy(createCtx)((ctx) => pipe([1, 1, 1], fromReadonlyArray(ctx), m.scan((a, b) => a + b, returns(0)), toReadonlyArray(ctx), expectArrayEquals([1, 2, 3])))), test("throws when the scan function throws", () => {
         const err = new Error();
         const scanner = (_acc, _next) => {
             throw err;

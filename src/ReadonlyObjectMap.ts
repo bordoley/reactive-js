@@ -6,12 +6,10 @@ import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__internal__/Readonly
 import ReadonlyObjectMap_forEachWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEachWithKey.js";
 import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromEntries.js";
 import ReadonlyObjectMap_keep from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keep.js";
-import ReadonlyObjectMap_keepType from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepType.js";
 import ReadonlyObjectMap_keepWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keepWithKey.js";
 import ReadonlyObjectMap_keySet from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keySet.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.keys.js";
 import ReadonlyObjectMap_map from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.map.js";
-import ReadonlyObjectMap_mapTo from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapTo.js";
 import ReadonlyObjectMap_mapWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.mapWithKey.js";
 import ReadonlyObjectMap_reduce from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduce.js";
 import ReadonlyObjectMap_reduceWithKey from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.reduceWithKey.js";
@@ -74,12 +72,10 @@ export const CreateModule = <
     fromReadonlyMap,
     fromReadonlyObjectMap,
     keep,
-    keepType,
     keepWithKey,
     keys,
     keySet,
     map,
-    mapTo,
     mapWithKey,
     reduce,
     reduceWithKey,
@@ -103,13 +99,11 @@ export const fromReadonlyMap: Signature["fromReadonlyMap"] =
 export const fromReadonlyObjectMap: Signature["fromReadonlyObjectMap"] =
   identityLazy as Signature["fromReadonlyObjectMap"];
 export const keep: Signature["keep"] = ReadonlyObjectMap_keep;
-export const keepType: Signature["keepType"] = ReadonlyObjectMap_keepType;
 export const keepWithKey: Signature["keepWithKey"] =
   ReadonlyObjectMap_keepWithKey;
 export const keys: Signature["keys"] = ReadonlyObjectMap_keys;
 export const keySet: Signature["keySet"] = ReadonlyObjectMap_keySet;
 export const map: Signature["map"] = ReadonlyObjectMap_map;
-export const mapTo: Signature["mapTo"] = ReadonlyObjectMap_mapTo;
 export const mapWithKey: Signature["mapWithKey"] = ReadonlyObjectMap_mapWithKey;
 export const reduce: Signature["reduce"] = ReadonlyObjectMap_reduce;
 export const reduceWithKey: Signature["reduceWithKey"] =

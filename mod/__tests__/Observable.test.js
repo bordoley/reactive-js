@@ -1,5 +1,6 @@
 /// <reference types="./Observable.test.d.ts" />
 
+import * as Containers from "../Containers.js";
 import * as Disposable from "../Disposable.js";
 import * as Enumerable from "../Enumerable.js";
 import * as EventSource from "../EventSource.js";
@@ -341,33 +342,33 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
     expectFalse(obs[ObservableLike_isPure]);
     expectFalse(obs[ObservableLike_isEnumerable]);
 }), test("runnable with effects src and pure inner runnables", () => {
-    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)));
+    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forEach(ignore), Observable.forkMerge(Containers.mapTo(Observable, 1), Containers.mapTo(Observable, 2)));
     pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2]));
     expectTrue(obs[ObservableLike_isDeferred]);
     expectTrue(obs[ObservableLike_isRunnable]);
     expectFalse(obs[ObservableLike_isPure]);
     expectFalse(obs[ObservableLike_isEnumerable]);
 }), test("with pure runnable src and pure inner runnables", () => {
-    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)));
+    const obs = pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.forkMerge(Containers.mapTo(Observable, 1), Containers.mapTo(Observable, 2)));
     pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2]));
     expectTrue(obs[ObservableLike_isDeferred]);
     expectTrue(obs[ObservableLike_isRunnable]);
     expectTrue(obs[ObservableLike_isPure]);
     expectFalse(obs[ObservableLike_isEnumerable]);
 }), test("with multicast src and pure inner transforms", () => {
-    const forked = pipe(Observable.createPublisher(), Observable.forkMerge(Observable.mapTo(1), Observable.mapTo(2)));
+    const forked = pipe(Observable.createPublisher(), Observable.forkMerge(Containers.mapTo(Observable, 1), Containers.mapTo(Observable, 2)));
     expectFalse(forked[ObservableLike_isDeferred]);
     expectFalse(forked[ObservableLike_isRunnable]);
     expectTrue(forked[ObservableLike_isPure]);
     expectFalse(forked[ObservableLike_isEnumerable]);
 }), test("with multicast src and deferred inner transforms", () => {
-    const forked = pipe(Observable.createPublisher(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.mapTo(2)));
+    const forked = pipe(Observable.createPublisher(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.flatMapAsync(_ => Promise.resolve(1)), Containers.mapTo(Observable, 2)));
     expectTrue(forked[ObservableLike_isDeferred]);
     expectFalse(forked[ObservableLike_isRunnable]);
     expectFalse(forked[ObservableLike_isPure]);
     expectFalse(forked[ObservableLike_isEnumerable]);
 }), test("with runnable pure src and deferred transforms", () => {
-    const forked = pipe([], Observable.fromReadonlyArray(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.mapTo(2)));
+    const forked = pipe([], Observable.fromReadonlyArray(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Containers.mapTo(Observable, 2)));
     expectTrue(forked[ObservableLike_isDeferred]);
     expectFalse(forked[ObservableLike_isRunnable]);
     expectFalse(forked[ObservableLike_isPure]);

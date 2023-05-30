@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, TypePredicate, Updater } from "./functions.js";
+import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Updater } from "./functions.js";
 import { Container_T, Container_type, DeferredObservableBaseLike, DeferredObservableLike, DispatcherLike, DisposableLike, EnumerableBaseLike, EnumerableLike, EnumerableWithSideEffectsLike, EnumeratorLike, EventSourceLike, IndexedCollectionLike, IndexedContainer, MulticastObservableLike, ObservableBaseLike, ObservableLike, ObservableWithSideEffectsLike, ObserverLike, PauseableObservableLike, PublisherLike, PureObservableLike, QueueableLike, QueueableLike_backpressureStrategy, ReplayObservableLike, RunnableBaseLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "./types.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableLike<TIn> ? EnumerableLike<TOut> : TObservableIn extends EnumerableWithSideEffectsLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : never;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableBaseLike<TIn>>(observable: TObservableIn) => TObservableIn extends EnumerableBaseLike<TIn> ? EnumerableWithSideEffectsLike<TOut> : TObservableIn extends RunnableBaseLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
@@ -32,8 +32,22 @@ export interface RunnableContainer extends IndexedContainer {
  * @noInheritDoc
  * @category Container
  */
+export interface RunnableWithSideEffectsContainer extends IndexedContainer {
+    readonly [Container_type]?: RunnableWithSideEffectsLike<this[typeof Container_T]>;
+}
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface EnumerableContainer extends IndexedContainer {
     readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableWithSideEffectsContainer extends IndexedContainer {
+    readonly [Container_type]?: EnumerableWithSideEffectsLike<this[typeof Container_T]>;
 }
 /**
  * @noInheritDoc
@@ -261,7 +275,6 @@ export interface ObservableModule {
     isPure<T>(obs: ObservableBaseLike<T>): obs is PureObservableLike<T>;
     isRunnable<T>(obs: ObservableBaseLike<T>): obs is RunnableBaseLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
-    keepType<TA, TB extends TA>(predicate: TypePredicate<TA, TB>): PureObservableOperator<TA, TB>;
     last<T>(): Function1<RunnableLike<T>, Optional<T>>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
@@ -269,7 +282,6 @@ export interface ObservableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
-    mapTo<TA, TB>(value: TB): PureObservableOperator<TA, TB>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     merge<T>(fst: RunnableBaseLike<T>, snd: RunnableBaseLike<T>, ...tail: readonly RunnableBaseLike<T>[]): RunnableWithSideEffectsLike<T>;
     merge<T>(fst: DeferredObservableBaseLike<T>, snd: DeferredObservableBaseLike<T>, ...tail: readonly DeferredObservableBaseLike<T>[]): DeferredObservableLike<T>;
@@ -599,11 +611,9 @@ export declare const isEnumerable: Signature["isEnumerable"];
 export declare const isPure: Signature["isPure"];
 export declare const isRunnable: Signature["isRunnable"];
 export declare const keep: Signature["keep"];
-export declare const keepType: Signature["keepType"];
 export declare const last: Signature["last"];
 export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
-export declare const mapTo: Signature["mapTo"];
 export declare const merge: Signature["merge"];
 export declare const mergeAll: Signature["mergeAll"];
 export declare const mergeMany: Signature["mergeMany"];

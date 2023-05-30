@@ -61,6 +61,7 @@
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./types": "./types.js",
     "./AsyncIterable": "./AsyncIterable.js",
+    "./Containers": "./Containers.js",
     "./Dictionary": "./Dictionary.js",
     "./Disposable": "./Disposable.js",
     "./Enumerable": "./Enumerable.js",

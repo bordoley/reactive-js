@@ -35,10 +35,8 @@
 - [forEach](Dictionary.md#foreach)
 - [forEachWithKey](Dictionary.md#foreachwithkey)
 - [keep](Dictionary.md#keep)
-- [keepType](Dictionary.md#keeptype)
 - [keepWithKey](Dictionary.md#keepwithkey)
 - [map](Dictionary.md#map)
-- [mapTo](Dictionary.md#mapto)
 - [mapWithKey](Dictionary.md#mapwithkey)
 
 ### Transform Functions
@@ -264,30 +262,6 @@ source that satisfy the specified predicate.
 
 ___
 
-### keepType
-
-▸ **keepType**<`TA`, `TB`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = {} |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`TypePredicate`](functions.md#typepredicate)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
-
-___
-
 ### keepWithKey
 
 ▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `T`, `T`, `TKey`\>
@@ -342,30 +316,6 @@ TB - The inner type of the mapped container
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
-
-___
-
-### mapTo
-
-▸ **mapTo**<`TA`, `TB`, `TKey`\>(`value`): [`ContainerOperator`](types.md#containeroperator)<[`Type`](Dictionary.md#type)<{}\>, `TA`, `TB`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = {} |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `TB` |
 
 #### Returns
 

@@ -1,3 +1,4 @@
+import * as Containers from "../Containers.js";
 import * as Observable from "../Observable.js";
 import { __await, __constant, __memo } from "../Observable/effects.js";
 import * as Runnable from "../Runnable.js";
@@ -73,7 +74,11 @@ testModule(
           },
           { mode: "combine-latest" },
         ),
-        Observable.keepType<Optional<number>, number>(isSome),
+        Containers.keepType<
+          Observable.RunnableWithSideEffectsContainer,
+          Optional<number>,
+          number
+        >(Observable, isSome),
         Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.run(),
       );

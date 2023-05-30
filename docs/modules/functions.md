@@ -37,6 +37,8 @@
 - [Tuple2](functions.md#tuple2)
 - [Tuple3](functions.md#tuple3)
 - [Tuple4](functions.md#tuple4)
+- [Tuple5](functions.md#tuple5)
+- [Tuple6](functions.md#tuple6)
 - [TypePredicate](functions.md#typepredicate)
 - [Updater](functions.md#updater)
 
@@ -905,6 +907,39 @@ ___
 | `TB` |
 | `TC` |
 | `TD` |
+
+___
+
+### Tuple5
+
+Ƭ **Tuple5**<`TA`, `TB`, `TC`, `TD`, `TE`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+___
+
+### Tuple6
+
+Ƭ **Tuple6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
 
 ___
 

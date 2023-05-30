@@ -47,11 +47,9 @@ import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnum
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
-import Observable_keepType from "./Observable/__internal__/Observable.keepType.js";
 import Observable_last from "./Observable/__internal__/Observable.last.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
-import Observable_mapTo from "./Observable/__internal__/Observable.mapTo.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
@@ -106,7 +104,6 @@ import {
   Reducer,
   SideEffect,
   SideEffect1,
-  TypePredicate,
   Updater,
   identityLazy,
 } from "./functions.js";
@@ -262,8 +259,28 @@ export interface RunnableContainer extends IndexedContainer {
  * @noInheritDoc
  * @category Container
  */
+export interface RunnableWithSideEffectsContainer extends IndexedContainer {
+  readonly [Container_type]?: RunnableWithSideEffectsLike<
+    this[typeof Container_T]
+  >;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
 export interface EnumerableContainer extends IndexedContainer {
   readonly [Container_type]?: EnumerableLike<this[typeof Container_T]>;
+}
+
+/**
+ * @noInheritDoc
+ * @category Container
+ */
+export interface EnumerableWithSideEffectsContainer extends IndexedContainer {
+  readonly [Container_type]?: EnumerableWithSideEffectsLike<
+    this[typeof Container_T]
+  >;
 }
 
 /**
@@ -946,10 +963,6 @@ export interface ObservableModule {
 
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
 
-  keepType<TA, TB extends TA>(
-    predicate: TypePredicate<TA, TB>,
-  ): PureObservableOperator<TA, TB>;
-
   last<T>(): Function1<RunnableLike<T>, Optional<T>>;
 
   lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
@@ -962,8 +975,6 @@ export interface ObservableModule {
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
 
   map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
-
-  mapTo<TA, TB>(value: TB): PureObservableOperator<TA, TB>;
 
   merge<T>(
     fst: RunnableLike<T>,
@@ -2550,11 +2561,9 @@ export const isEnumerable: Signature["isEnumerable"] = Observable_isEnumerable;
 export const isPure: Signature["isPure"] = Observable_isPure;
 export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
-export const keepType: Signature["keepType"] = Observable_keepType;
 export const last: Signature["last"] = Observable_last;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
-export const mapTo: Signature["mapTo"] = Observable_mapTo;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
 export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
