@@ -52,10 +52,10 @@ export const __using = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[__ComputeContext_memoOrUse](true, f, ...args);
 };
-export function __currentScheduler() {
+export const __currentScheduler = () => {
     const ctx = assertCurrentContext();
     return ctx[__ComputeContext_observer];
-}
+};
 export const __stream = /*@__PURE__*/ (() => {
     const streamOnSchedulerFactory = (streamable, scheduler, replay, capacity, backpressureStrategy) => streamable[StreamableLike_stream](scheduler, {
         replay,

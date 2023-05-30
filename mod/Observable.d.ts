@@ -321,9 +321,6 @@ export interface ObservableModule {
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): RunnableBoundedObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: SideEffect): RunnableBoundedObservableOperatorWithSideEffects<T, T>;
     pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
-    pick<T, TKey extends keyof T>(key: TKey): PureObservableOperator<T, T[TKey]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): PureObservableOperator<T, T[TKeyA][TKeyB]>;
-    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): PureObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
     range(start: number, options?: {
         readonly count?: number;
     }): EnumerableLike<number>;
@@ -624,7 +621,6 @@ export declare const never: Signature["never"];
 export declare const noneSatisfy: Signature["noneSatisfy"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
-export declare const pick: Signature["pick"];
 export declare const reduce: Signature["reduce"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];

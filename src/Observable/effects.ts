@@ -231,10 +231,10 @@ export const __using: __Using["__using"] = <T extends DisposableLike>(
   return ctx[__ComputeContext_memoOrUse](true, f, ...args);
 };
 
-export function __currentScheduler(): SchedulerLike {
+export const __currentScheduler = (): SchedulerLike => {
   const ctx = assertCurrentContext();
   return ctx[__ComputeContext_observer];
-}
+};
 
 export const __stream = /*@__PURE__*/ (() => {
   const streamOnSchedulerFactory = <TStreamable extends StreamableLike>(

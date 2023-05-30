@@ -60,7 +60,6 @@ import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_noneSatisfy from "./Observable/__internal__/Observable.noneSatisfy.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
-import Observable_pick from "./Observable/__internal__/Observable.pick.js";
 import Observable_range from "./Observable/__internal__/Observable.range.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
@@ -1093,22 +1092,6 @@ export interface ObservableModule {
   ): RunnableBoundedObservableOperatorWithSideEffects<T, T>;
 
   pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
-
-  pick<T, TKey extends keyof T>(key: TKey): PureObservableOperator<T, T[TKey]>;
-  pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(
-    keyA: TKeyA,
-    keyB: TKeyB,
-  ): PureObservableOperator<T, T[TKeyA][TKeyB]>;
-  pick<
-    T,
-    TKeyA extends keyof T,
-    TKeyB extends keyof T[TKeyA],
-    TKeyC extends keyof T[TKeyA][TKeyB],
-  >(
-    keyA: TKeyA,
-    keyB: TKeyB,
-    keyC: TKeyC,
-  ): PureObservableOperator<T, T[TKeyA][TKeyB][TKeyC]>;
 
   range(
     start: number,
@@ -2565,7 +2548,6 @@ export const never: Signature["never"] = Observable_never;
 export const noneSatisfy: Signature["noneSatisfy"] = Observable_noneSatisfy;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
-export const pick: Signature["pick"] = Observable_pick;
 export const reduce: Signature["reduce"] = Observable_reduce;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;

@@ -33,7 +33,7 @@ interface __Using {
     __using<TA, TB, TC, TD, TE, TF, T extends DisposableLike>(fn: Function6<TA, TB, TC, TD, TE, TF, T>, a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): T;
 }
 export declare const __using: __Using["__using"];
-export declare function __currentScheduler(): SchedulerLike;
+export declare const __currentScheduler: () => SchedulerLike;
 export declare const __stream: <TStreamable extends StreamableLike<unknown, unknown, StreamLike<unknown, unknown>>>(streamable: TStreamable, { replay, backpressureStrategy, capacity, scheduler, }?: {
     readonly replay?: number | undefined;
     readonly scheduler?: SchedulerLike | undefined;

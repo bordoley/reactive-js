@@ -1,10 +1,11 @@
 /// <reference types="./Observable.spring.d.ts" />
 
-import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
+import * as Containers from "../../Containers.js";
 import { MAX_VALUE } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
 import { isNotEqualTo, pipe, returns } from "../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
+import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 const Observable_spring = (options) => {
@@ -23,7 +24,7 @@ const Observable_spring = (options) => {
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
         return [now, value, newValue];
-    }, returns([MAX_VALUE, 0, 0])), Observable_pick(2), Observable_takeWhile(isNotEqualTo(1), {
+    }, returns([MAX_VALUE, 0, 0])), Containers.pick({ map: Observable_map }, 2), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };

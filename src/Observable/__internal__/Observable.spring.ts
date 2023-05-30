@@ -1,9 +1,11 @@
-import Observable_pick from "../../Observable/__internal__/Observable.pick.js";
+import * as Containers from "../../Containers.js";
+import type * as Observable from "../../Observable.js";
 import { MAX_VALUE } from "../../__internal__/constants.js";
 import { abs, clamp, min } from "../../__internal__/math.js";
 import { Tuple3, isNotEqualTo, pipe, returns } from "../../functions.js";
 import { RunnableWithSideEffectsLike } from "../../types.js";
 import Observable_currentTime from "./Observable.currentTime.js";
+import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
 import Observable_takeWhile from "./Observable.takeWhile.js";
 
@@ -39,7 +41,11 @@ const Observable_spring = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    Observable_pick<Tuple3<number, number, number>, 2>(2),
+    Containers.pick<
+      Observable.RunnableWithSideEffectsContainer,
+      Tuple3<number, number, number>,
+      2
+    >({ map: Observable_map }, 2),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

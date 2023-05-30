@@ -97,11 +97,13 @@ const Measure = () => {
                 Observable.never<number>(),
               tuple,
             ),
-            Observable.forEach<Tuple2<number, number>>(([boxWidth, currentWidth]) => {
-              if (currentWidth > 0) {
-                enqueue({ width: boxWidth });
-              }
-            }),
+            Observable.forEach<Tuple2<number, number>>(
+              ([boxWidth, currentWidth]) => {
+                if (currentWidth > 0) {
+                  enqueue({ width: boxWidth });
+                }
+              },
+            ),
             Observable.ignoreElements(),
           ),
           Observable.throttle(50, { mode: "interval" }),
