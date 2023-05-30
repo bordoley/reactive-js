@@ -46,7 +46,6 @@ import Observable_generate from "./Observable/__internal__/Observable.generate.j
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isEnumerable from "./Observable/__internal__/Observable.isEnumerable.js";
-import Observable_isMulticastObservable from "./Observable/__internal__/Observable.isMulticastObservable.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
@@ -150,7 +149,6 @@ export const isDeferred = Observable_isDeferred;
 export const isEnumerable = Observable_isEnumerable;
 export const isPure = Observable_isPure;
 export const isRunnable = Observable_isRunnable;
-export const isMulticastObservable = Observable_isMulticastObservable;
 export const keep = Observable_keep;
 export const keepType = Observable_keepType;
 export const last = Observable_last;

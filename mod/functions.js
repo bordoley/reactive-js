@@ -20,7 +20,7 @@ export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => Read
 export const bind = (f, thiz) => f.bind(thiz);
 export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
-export const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
+const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
 /**
  * Composes a series of unary functions.
  */

@@ -258,7 +258,6 @@ export interface ObservableModule {
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
     isDeferred<T>(obs: ObservableBaseLike<T>): obs is DeferredObservableBaseLike<T>;
     isEnumerable<T>(obs: ObservableBaseLike<T>): obs is EnumerableBaseLike<T>;
-    isMulticastObservable<T>(obs: ObservableBaseLike<T>): obs is MulticastObservableLike<T>;
     isPure<T>(obs: ObservableBaseLike<T>): obs is PureObservableLike<T>;
     isRunnable<T>(obs: ObservableBaseLike<T>): obs is RunnableBaseLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
@@ -599,7 +598,6 @@ export declare const isDeferred: Signature["isDeferred"];
 export declare const isEnumerable: Signature["isEnumerable"];
 export declare const isPure: Signature["isPure"];
 export declare const isRunnable: Signature["isRunnable"];
-export declare const isMulticastObservable: Signature["isMulticastObservable"];
 export declare const keep: Signature["keep"];
 export declare const keepType: Signature["keepType"];
 export declare const last: Signature["last"];

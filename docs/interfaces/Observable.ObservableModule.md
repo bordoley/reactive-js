@@ -63,7 +63,6 @@
 - [ignoreElements](Observable.ObservableModule.md#ignoreelements)
 - [isDeferred](Observable.ObservableModule.md#isdeferred)
 - [isEnumerable](Observable.ObservableModule.md#isenumerable)
-- [isMulticastObservable](Observable.ObservableModule.md#ismulticastobservable)
 - [isPure](Observable.ObservableModule.md#ispure)
 - [isRunnable](Observable.ObservableModule.md#isrunnable)
 - [keep](Observable.ObservableModule.md#keep)
@@ -2562,28 +2561,6 @@ ___
 #### Returns
 
 obs is EnumerableBaseLike<T\>
-
-___
-
-### isMulticastObservable
-
-▸ **isMulticastObservable**<`T`\>(`obs`): obs is MulticastObservableLike<T\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obs` | [`ObservableBaseLike`](types.ObservableBaseLike.md)<`T`\> |
-
-#### Returns
-
-obs is MulticastObservableLike<T\>
 
 ___
 

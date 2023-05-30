@@ -13,7 +13,7 @@ import * as Streamable from "../Streamable.js";
 import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../__internal__/testing.js";
 import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, compose, greaterThan, identity, ignore, increment, incrementBy, isEven, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, } from "../functions.js";
-import { DispatcherLikeEvent_completed, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
+import { DispatcherLikeEvent_completed, DispatcherLike_complete, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, EnumeratorLike_hasCurrent, EnumeratorLike_move, ObservableLike_isDeferred, ObservableLike_isEnumerable, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_pause, PauseableLike_resume, PublisherLike_observerCount, QueueableLike_enqueue, ReplayObservableLike_buffer, SchedulerLike_now, SchedulerLike_schedule, SinkLike_notify, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../types.js";
 import ReactiveContainerModuleTests from "./fixtures/ReactiveContainerModuleTests.js";
 testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Disposable.disposed, () => ReadonlyArray.toObservable(), () => ReadonlyArray.fromEnumerable()), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
@@ -46,7 +46,17 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
         throw e2;
     }), Observable.catchError(e => {
         result = e["cause"];
-    }), Observable.run());
+    }), Observable.toReadonlyArray());
+    pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
+}), test("when the error handler throws an error from a delayed source", () => {
+    const e1 = "e1";
+    const e2 = "e2";
+    let result = none;
+    pipe(Observable.throws({ raise: () => e1 }), Observable.delay(1), Observable.catchError(_ => {
+        throw e2;
+    }), Observable.catchError(e => {
+        result = e["cause"];
+    }), Observable.toReadonlyArray());
     pipe(result, ReadonlyArray.map(x => x.message), expectArrayEquals(["e2", "e1"]));
 })), describe("combineLatest", test("combineLatest", pipeLazy(Observable.combineLatest(pipe(Observable.generate(incrementBy(2), returns(1)), Observable.delay(2), Observable.takeFirst({ count: 3 })), pipe(Observable.generate(incrementBy(2), returns(0)), Observable.delay(3), Observable.takeFirst({ count: 2 }))), Observable.toReadonlyArray(), expectArrayEquals([[3, 2], [5, 2], [5, 4], [7, 4]], arrayEquality())))), describe("compute", testAsync("__stream", async () => {
     const result = await pipe(Observable.compute(() => {
@@ -73,6 +83,13 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
     const sub1 = pipe(publisher, Observable.subscribe(scheduler));
     pipe(publisher[PublisherLike_observerCount], expectEquals(1));
     const sub2 = pipe(publisher, Observable.subscribe(scheduler));
+    pipe(publisher[PublisherLike_observerCount], expectEquals(2));
+    const sub3 = pipe(Observable.create(observer => {
+        publisher[ObservableLike_observe](observer);
+        publisher[ObservableLike_observe](observer);
+    }), Observable.subscribe(scheduler));
+    pipe(publisher[PublisherLike_observerCount], expectEquals(3));
+    sub3[DisposableLike_dispose]();
     pipe(publisher[PublisherLike_observerCount], expectEquals(2));
     sub1[DisposableLike_dispose]();
     pipe(publisher[PublisherLike_observerCount], expectEquals(1));
@@ -402,7 +419,7 @@ testModule("Observable", ...ReactiveContainerModuleTests(Observable, () => Dispo
     pipe(merged2[ObservableLike_isEnumerable], expectEquals(false));
     pipe(merged2[ObservableLike_isPure], expectEquals(true));
     pipe(merged2[ObservableLike_isRunnable], expectEquals(false));
-    const merged3 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects, deferred);
+    const merged3 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects, deferred, Observable.never());
     pipe(merged3[ObservableLike_isDeferred], expectEquals(true));
     pipe(merged3[ObservableLike_isEnumerable], expectEquals(false));
     pipe(merged3[ObservableLike_isPure], expectEquals(false));

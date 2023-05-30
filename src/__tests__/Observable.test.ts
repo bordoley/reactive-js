@@ -72,6 +72,7 @@ import {
   ObservableLike_isEnumerable,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
+  ObservableLike_observe,
   PauseableLike_pause,
   PauseableLike_resume,
   PublisherLike_observerCount,
@@ -184,7 +185,31 @@ testModule(
         Observable.catchError<number>(e => {
           result = e["cause"];
         }),
-        Observable.run(),
+        Observable.toReadonlyArray(),
+      );
+
+      pipe(
+        result as ReadonlyArray<Error>,
+        ReadonlyArray.map(x => x.message),
+        expectArrayEquals(["e2", "e1"]),
+      );
+    }),
+    test("when the error handler throws an error from a delayed source", () => {
+      const e1 = "e1";
+      const e2 = "e2";
+
+      let result: Optional<unknown> = none;
+
+      pipe(
+        Observable.throws({ raise: () => e1 }),
+        Observable.delay(1),
+        Observable.catchError(_ => {
+          throw e2;
+        }),
+        Observable.catchError<number>(e => {
+          result = e["cause"];
+        }),
+        Observable.toReadonlyArray(),
       );
 
       pipe(
@@ -400,6 +425,16 @@ testModule(
       const sub1 = pipe(publisher, Observable.subscribe(scheduler));
       pipe(publisher[PublisherLike_observerCount], expectEquals(1));
       const sub2 = pipe(publisher, Observable.subscribe(scheduler));
+      pipe(publisher[PublisherLike_observerCount], expectEquals(2));
+      const sub3 = pipe(
+        Observable.create(observer => {
+          publisher[ObservableLike_observe](observer);
+          publisher[ObservableLike_observe](observer);
+        }),
+        Observable.subscribe(scheduler),
+      );
+      pipe(publisher[PublisherLike_observerCount], expectEquals(3));
+      sub3[DisposableLike_dispose]();
       pipe(publisher[PublisherLike_observerCount], expectEquals(2));
       sub1[DisposableLike_dispose]();
       pipe(publisher[PublisherLike_observerCount], expectEquals(1));
@@ -1329,6 +1364,7 @@ testModule(
         pureRunnable,
         runnableWithSideEffects,
         deferred,
+        Observable.never(),
       );
 
       pipe(merged3[ObservableLike_isDeferred], expectEquals(true));

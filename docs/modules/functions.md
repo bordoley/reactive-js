@@ -54,7 +54,6 @@
 - [call](functions.md#call)
 - [compose](functions.md#compose)
 - [composeLazy](functions.md#composelazy)
-- [composeUnsafe](functions.md#composeunsafe)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
@@ -1916,22 +1915,6 @@ Composes a series of unary functions.
 #### Returns
 
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`L`\>\>
-
-___
-
-### composeUnsafe
-
-▸ **composeUnsafe**(`...operators`): [`Function1`](functions.md#function1)<`any`, `unknown`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...operators` | [`Function1`](functions.md#function1)<`any`, `unknown`\>[] |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`any`, `unknown`\>
 
 ___
 

@@ -1115,7 +1115,7 @@ export const call: Signature["call"] = <T>(
   ...args: readonly any[]
 ) => f.call(self, ...args);
 
-export const composeUnsafe =
+const composeUnsafe =
   (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
   source =>
     pipeUnsafe(source, ...operators);

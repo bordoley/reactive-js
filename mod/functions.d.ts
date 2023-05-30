@@ -195,7 +195,6 @@ export declare const arrayEquality: <T>(valuesEquality?: Equality<T>) => Equalit
 export declare const bind: <F extends Function>(f: F, thiz: unknown) => F;
 export declare const bindMethod: <T extends Record<TKey, (...args: any[]) => any>, TKey extends string | number | symbol>(thiz: T, key: TKey) => T[TKey];
 export declare const call: Signature["call"];
-export declare const composeUnsafe: (...operators: Function1<any, unknown>[]) => Function1<any, unknown>;
 /**
  * Composes a series of unary functions.
  */
