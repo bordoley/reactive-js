@@ -1,7 +1,7 @@
 import Stream_syncState from "./Stream/__internal__/Stream.syncState.js";
 import { Function1, Function2, Updater } from "./functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -15,8 +15,8 @@ import {
  */
 export interface StreamModule {
   syncState<T>(
-    onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
-    onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
+    onInit: Function1<T, DeferredObservableBaseLike<Updater<T>>>,
+    onChange: Function2<T, T, DeferredObservableBaseLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
       readonly capacity?: number;

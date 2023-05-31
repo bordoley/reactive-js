@@ -1,11 +1,11 @@
 import { Function1, Function2, Updater } from "./functions.js";
-import { DeferredObservableLike, DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "./types.js";
+import { DeferredObservableBaseLike, DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SchedulerLike, StreamLike } from "./types.js";
 /**
  * @noInheritDoc
  * @category Module
  */
 export interface StreamModule {
-    syncState<T>(onInit: Function1<T, DeferredObservableLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>, options?: {
+    syncState<T>(onInit: Function1<T, DeferredObservableBaseLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableBaseLike<Updater<T>>>, options?: {
         readonly throttleDuration?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

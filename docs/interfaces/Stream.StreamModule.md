@@ -26,8 +26,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `onInit` | [`Function1`](../modules/functions.md#function1)<`T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
-| `onChange` | [`Function2`](../modules/functions.md#function2)<`T`, `T`, [`DeferredObservableLike`](types.DeferredObservableLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
+| `onInit` | [`Function1`](../modules/functions.md#function1)<`T`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
+| `onChange` | [`Function2`](../modules/functions.md#function2)<`T`, `T`, [`DeferredObservableBaseLike`](types.DeferredObservableBaseLike.md)<[`Updater`](../modules/functions.md#updater)<`T`\>\>\> |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |

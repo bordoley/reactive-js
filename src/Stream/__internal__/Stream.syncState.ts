@@ -8,7 +8,7 @@ import Observable_throttle from "../../Observable/__internal__/Observable.thrott
 import type * as Stream from "../../Stream.js";
 import { Tuple2, Updater, compose, identity, pipe } from "../../functions.js";
 import {
-  DeferredObservableLike,
+  DeferredObservableBaseLike,
   ObservableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
@@ -18,8 +18,11 @@ import {
 } from "../../types.js";
 
 const Stream_syncState: Stream.Signature["syncState"] = <T>(
-  onInit: (initialValue: T) => DeferredObservableLike<Updater<T>>,
-  onChange: (oldValue: T, newValue: T) => DeferredObservableLike<Updater<T>>,
+  onInit: (initialValue: T) => DeferredObservableBaseLike<Updater<T>>,
+  onChange: (
+    oldValue: T,
+    newValue: T,
+  ) => DeferredObservableBaseLike<Updater<T>>,
   options?: {
     readonly throttleDuration?: number;
     readonly capacity?: number;
