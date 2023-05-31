@@ -30,8 +30,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         },
     }));
 })();
-export const get = 
-/*@__PURE__*/ (() => {
+export const get = /*@__PURE__*/ (() => {
     const schedulerCache = newInstance(Map);
     return (priority = unstable_NormalPriority) => schedulerCache.get(priority) ??
         (() => {

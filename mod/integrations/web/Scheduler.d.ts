@@ -1,1 +1,6 @@
-export declare const createAnimationFrameScheduler: import("../../functions.js").Function1<import("../../types.js").SchedulerLike, import("../../types.js").SchedulerLike & import("../../types.js").DisposableLike>;
+import { DisposableLike, SchedulerLike } from "../../types.js";
+export interface WebScheduler {
+    createAnimationFrameScheduler(hostScheduler: SchedulerLike): SchedulerLike & DisposableLike;
+}
+export type Signature = WebScheduler;
+export declare const createAnimationFrameScheduler: Signature["createAnimationFrameScheduler"];

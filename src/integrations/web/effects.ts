@@ -26,6 +26,19 @@ import {
 } from "../../types.js";
 import { CSSStyleMapLike } from "../web.js";
 
+interface WebEffectsModule {
+  __animate(
+    animation: EventSourceLike<CSSStyleMapLike>,
+  ): SideEffect1<Optional<HTMLElement | null>>;
+
+  __animate<T>(
+    animation: EventSourceLike<T>,
+    selector: (ev: T) => CSSStyleMapLike,
+  ): SideEffect1<Optional<HTMLElement | null>>;
+}
+
+type Signature = WebEffectsModule;
+
 const returnsNone = returns(none);
 const makeRefSetter =
   (
@@ -56,17 +69,7 @@ const animateHtmlElement = <T>(
       )
     : Disposable.disposed;
 
-interface Animate {
-  __animate(
-    animation: EventSourceLike<CSSStyleMapLike>,
-  ): SideEffect1<Optional<HTMLElement | null>>;
-
-  __animate<T>(
-    animation: EventSourceLike<T>,
-    selector: (ev: T) => CSSStyleMapLike,
-  ): SideEffect1<Optional<HTMLElement | null>>;
-}
-export const __animate: Animate["__animate"] = (
+export const __animate: Signature["__animate"] = (
   animation: EventSourceLike,
   selector?: (ev: unknown) => CSSStyleMapLike,
 ): SideEffect1<Optional<HTMLElement | null>> => {

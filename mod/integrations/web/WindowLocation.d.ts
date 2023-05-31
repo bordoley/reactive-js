@@ -1,3 +1,8 @@
 import { DisposableLike, SchedulerLike } from "../../types.js";
 import { WindowLocationLike } from "../web.js";
-export declare const subscribe: (scheduler: SchedulerLike) => WindowLocationLike & DisposableLike;
+interface WebWindowLocationModule {
+    subscribe(scheduler: SchedulerLike): WindowLocationLike & DisposableLike;
+}
+type Signature = WebWindowLocationModule;
+export declare const subscribe: Signature["subscribe"];
+export {};

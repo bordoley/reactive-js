@@ -16,6 +16,23 @@ import {
   SchedulerLike,
 } from "../types.js";
 
+interface SvelteModule {
+  subscribe<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<
+    ObservableLike<T>,
+    {
+      subscribe(callback: (next: Optional<T>) => void): Factory<void>;
+    }
+  >;
+}
+
+type Signature = SvelteModule;
+
 class ObservableSvelteStore<T> {
   constructor(
     private readonly observable: ObservableLike<T>,
@@ -41,18 +58,13 @@ class ObservableSvelteStore<T> {
   }
 }
 
-export const subscribe =
-  <T>(
+export const subscribe: Signature["subscribe"] =
+  (
     scheduler: SchedulerLike,
     options: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     } = {},
-  ): Function1<
-    ObservableLike<T>,
-    {
-      subscribe(callback: (next: Optional<T>) => void): Factory<void>;
-    }
-  > =>
+  ) =>
   obs =>
     newInstance(ObservableSvelteStore, obs, scheduler, options);

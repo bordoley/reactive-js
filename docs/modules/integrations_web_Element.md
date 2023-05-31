@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-- [ElementModule](../interfaces/integrations_web_Element.ElementModule.md)
+- [WebElementModule](../interfaces/integrations_web_Element.WebElementModule.md)
 
 ### Type Aliases
 
@@ -27,7 +27,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`ElementModule`](../interfaces/integrations_web_Element.ElementModule.md)
+Ƭ **Signature**: [`WebElementModule`](../interfaces/integrations_web_Element.WebElementModule.md)
 
 ## Functions
 

@@ -1050,9 +1050,7 @@ Computes a new value of type `T` from the previous value of type `T`.
 
 ### none
 
-• `Const` **none**: `undefined`
-
-An alias for undefined.
+• `Const` **none**: `Signature`[``"none"``]
 
 ## Functions
 
@@ -1076,7 +1074,7 @@ ___
 
 ### alwaysTrue
 
-▸ **alwaysTrue**(`..._args`): `boolean`
+▸ **alwaysTrue**(`..._args`): ``true``
 
 A function that always returns `true`.
 
@@ -1088,7 +1086,7 @@ A function that always returns `true`.
 
 #### Returns
 
-`boolean`
+``true``
 
 ___
 
@@ -1261,8 +1259,6 @@ Composes a series of unary functions.
 
 ▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, `B`\>
 
-Composes a series of unary functions.
-
 #### Type parameters
 
 | Name |
@@ -1283,8 +1279,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `B`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, `C`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1308,8 +1302,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `C`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)<`T`, `D`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1335,8 +1327,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `D`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)<`T`, `E`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1364,8 +1354,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `E`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)<`T`, `F`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1395,8 +1383,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `F`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)<`T`, `G`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1428,8 +1414,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `G`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)<`T`, `H`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1463,8 +1447,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `H`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)<`T`, `I`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1500,8 +1482,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `I`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)<`T`, `J`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1539,8 +1519,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `J`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)<`T`, `K`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1580,8 +1558,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `K`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)<`T`, `L`\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1628,8 +1604,6 @@ ___
 
 ▸ **composeLazy**<`T`, `A`\>(`op1`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`A`\>\>
 
-Composes a series of unary functions.
-
 #### Type parameters
 
 | Name |
@@ -1648,8 +1622,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`A`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`B`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1671,8 +1643,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`B`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`C`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1696,8 +1666,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`C`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`D`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1723,8 +1691,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`D`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`E`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1752,8 +1718,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`E`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`F`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1783,8 +1747,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`F`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`G`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1816,8 +1778,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`G`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`H`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1851,8 +1811,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`H`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`I`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1888,8 +1846,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`I`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`J`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1927,8 +1883,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`J`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`K`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1968,8 +1922,6 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`K`\>\>
 
 ▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)<`T`, [`Factory`](functions.md#factory)<`L`\>\>
-
-Composes a series of unary functions.
 
 #### Type parameters
 
@@ -2082,7 +2034,7 @@ ___
 
 ### greaterThan
 
-▸ **greaterThan**(`v`): (`x`: `number`) => `boolean`
+▸ **greaterThan**(`v`): [`Predicate`](functions.md#predicate)<`number`\>
 
 #### Parameters
 
@@ -2092,19 +2044,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`x`): `boolean`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-
-##### Returns
-
-`boolean`
+[`Predicate`](functions.md#predicate)<`number`\>
 
 ___
 
@@ -2136,7 +2076,7 @@ ___
 
 ### identityLazy
 
-▸ **identityLazy**<`T`\>(): [`Function1`](functions.md#function1)<`T`, `T`\>
+▸ **identityLazy**<`T`\>(): [`Updater`](functions.md#updater)<`T`\>
 
 #### Type parameters
 
@@ -2146,7 +2086,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`T`, `T`\>
+[`Updater`](functions.md#updater)<`T`\>
 
 ___
 
@@ -2260,15 +2200,13 @@ ___
 
 ### isEven
 
-▸ **isEven**(`x`): `boolean`
-
-Returns `true` if `x` is an even number, otherwise `false`.
+▸ **isEven**(`a`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `x` | `number` |
+| `a` | `number` |
 
 #### Returns
 
@@ -2390,15 +2328,13 @@ ___
 
 ### isOdd
 
-▸ **isOdd**(`x`): `boolean`
-
-Returns `true` if `x` is an odd number, otherwise `false`.
+▸ **isOdd**(`a`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `x` | `number` |
+| `a` | `number` |
 
 #### Returns
 
@@ -2430,7 +2366,7 @@ ___
 
 ### isSome
 
-▸ **isSome**<`T`\>(`option`): option is T
+▸ **isSome**<`T`\>(`v`): v is T
 
 Returns true if `option` is not `none`.
 
@@ -2444,27 +2380,27 @@ Returns true if `option` is not `none`.
 
 | Name | Type |
 | :------ | :------ |
-| `option` | [`Optional`](functions.md#optional)<`T`\> |
+| `v` | [`Optional`](functions.md#optional)<`T`\> |
 
 #### Returns
 
-option is T
+v is T
 
 ___
 
 ### isString
 
-▸ **isString**(`s`): s is string
+▸ **isString**(`o`): o is string
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `s` | `unknown` |
+| `o` | `unknown` |
 
 #### Returns
 
-s is string
+o is string
 
 ___
 
@@ -2486,7 +2422,7 @@ ___
 
 ### lessThan
 
-▸ **lessThan**(`v`): (`x`: `number`) => `boolean`
+▸ **lessThan**(`v`): [`Predicate`](functions.md#predicate)<`number`\>
 
 #### Parameters
 
@@ -2496,19 +2432,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`x`): `boolean`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-
-##### Returns
-
-`boolean`
+[`Predicate`](functions.md#predicate)<`number`\>
 
 ___
 
@@ -2783,7 +2707,13 @@ ___
 
 ### pickUnsafe
 
-▸ **pickUnsafe**(`...keys`): (`value`: {}) => `any`
+▸ **pickUnsafe**<`T`\>(`...keys`): [`Function1`](functions.md#function1)<{}, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 
@@ -2793,19 +2723,7 @@ ___
 
 #### Returns
 
-`fn`
-
-▸ (`value`): `any`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `Object` |
-
-##### Returns
-
-`any`
+[`Function1`](functions.md#function1)<{}, `T`\>
 
 ___
 
@@ -2835,8 +2753,6 @@ Pipes `source` through a series of unary functions.
 
 ▸ **pipe**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `B`
 
-Pipes `source` through a series of unary functions.
-
 #### Type parameters
 
 | Name |
@@ -2858,8 +2774,6 @@ Pipes `source` through a series of unary functions.
 `B`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `C`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2884,8 +2798,6 @@ Pipes `source` through a series of unary functions.
 `C`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `D`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2912,8 +2824,6 @@ Pipes `source` through a series of unary functions.
 `D`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `E`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2942,8 +2852,6 @@ Pipes `source` through a series of unary functions.
 `E`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `F`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2974,8 +2882,6 @@ Pipes `source` through a series of unary functions.
 `F`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `G`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3008,8 +2914,6 @@ Pipes `source` through a series of unary functions.
 `G`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `H`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3044,8 +2948,6 @@ Pipes `source` through a series of unary functions.
 `H`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `I`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3082,8 +2984,6 @@ Pipes `source` through a series of unary functions.
 `I`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `J`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3122,8 +3022,6 @@ Pipes `source` through a series of unary functions.
 `J`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `K`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3164,8 +3062,6 @@ Pipes `source` through a series of unary functions.
 `K`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `L`
-
-Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -5163,9 +5059,15 @@ ___
 
 ### pipeUnsafe
 
-▸ **pipeUnsafe**(`source`, `...operators`): `unknown`
+▸ **pipeUnsafe**<`T`\>(`source`, `...operators`): `T`
 
 Pipes `source` through a series of unary functions.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 
@@ -5176,7 +5078,7 @@ Pipes `source` through a series of unary functions.
 
 #### Returns
 
-`unknown`
+`T`
 
 ___
 
@@ -5271,6 +5173,8 @@ Returns a function that takes an arbitrary number of arguments and always return
 `fn`
 
 ▸ (`..._args`): `T`
+
+Returns a function that takes an arbitrary number of arguments and always returns `v`.
 
 ##### Parameters
 

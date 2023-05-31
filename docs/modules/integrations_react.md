@@ -6,7 +6,6 @@
 
 ### Hook Functions
 
-- [useDispatcher](integrations_react.md#usedispatcher)
 - [useDisposable](integrations_react.md#usedisposable)
 - [useEnumerate](integrations_react.md#useenumerate)
 - [useEnumerator](integrations_react.md#useenumerator)
@@ -18,35 +17,9 @@
 ### Other Functions
 
 - [createComponent](integrations_react.md#createcomponent)
+- [useDispatcher](integrations_react.md#usedispatcher)
 
 ## Hook Functions
-
-### useDispatcher
-
-▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TReq` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`TReq`\>\> |
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `complete` | [`SideEffect`](functions.md#sideeffect) |
-| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
-
-___
 
 ### useDisposable
 
@@ -328,3 +301,30 @@ ___
 #### Returns
 
 `ComponentType`<`TProps`\>
+
+___
+
+### useDispatcher
+
+▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/types.DispatcherLike.md)<`TReq`\>\> |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `complete` | [`SideEffect`](functions.md#sideeffect) |
+| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |

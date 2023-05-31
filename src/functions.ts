@@ -176,6 +176,39 @@ export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 export type Updater<T> = Function1<T, T>;
 
 interface FunctionsModule {
+  /**
+   * An alias for undefined.
+   */
+  readonly none: undefined;
+
+  /**
+   * A function that always returns `false`.
+   */
+  alwaysFalse(..._args: unknown[]): boolean;
+
+  /**
+   * A function that always returns `true`.
+   */
+  alwaysTrue(..._args: unknown[]): true;
+
+  /**
+   * Returns an equality function that compares two readonly arrays for equality,
+   * comparing their values using `valuesEquality`.
+   */
+  arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  bind<F extends Function>(f: F, thiz: unknown): F;
+
+  bindMethod<
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    T extends Record<TKey, (...args: any[]) => any>,
+    TKey extends number | string | symbol,
+  >(
+    thiz: T,
+    key: TKey,
+  ): T[TKey];
+
   call<TInstance, T>(f: () => T, self: TInstance): T;
   call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
   call<TInstance, T, TA, TB>(
@@ -185,6 +218,9 @@ interface FunctionsModule {
     b: TB,
   ): T;
 
+  /**
+   * Composes a series of unary functions.
+   */
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
@@ -384,6 +420,123 @@ interface FunctionsModule {
     op12: Function1<K, L>,
   ): Function1<T, Factory<L>>;
 
+  /**
+   * An updater function that returns the result of decrementing `x`.
+   */
+  decrement(x: number): number;
+
+  /**
+   * Returns a function that decrements a number `x` by the value `decr`.
+   */
+  decrementBy(decr: number): Updater<number>;
+
+  error(message?: unknown): Error;
+  errorWithDebugMessage(message: string): Error;
+
+  greaterThan(v: number): Predicate<number>;
+
+  /**
+   * The identity function.
+   *
+   * @returns `v`
+   */
+  identity<T>(v: T): T;
+
+  identityLazy<T>(): Updater<T>;
+
+  /**
+   * A function that always returns `undefined`.
+   */
+  ignore(..._args: unknown[]): void;
+
+  /**
+   * An updater function that returns the result of incrementing `x`.
+   */
+  increment(x: number): number;
+
+  /**
+   * Enables invoking a method on an object as a unary function within
+   * a pipeline operation.
+   *
+   * @param method
+   * @param args
+   * @returns
+   */
+  invoke<
+    T extends Record<TKey, (...args: any[]) => any>,
+    TKey extends number | string | symbol,
+  >(
+    method: TKey,
+    ...args: Parameters<T[TKey]>
+  ): Function1<T, ReturnType<T[TKey]>>;
+
+  /**
+   * Returns a function that increments a number `x` by the value `incr`.
+   */
+  incrementBy(incr: number): Updater<number>;
+
+  /**
+   * Returns a predicate function comparing its argument to `b` using the
+   * provided `equality` function.
+   */
+  isEqualTo<T>(
+    b: T,
+    options?: {
+      readonly equality?: Equality<T>;
+    },
+  ): Predicate<T>;
+
+  /**
+   * Returns `true` if `x` is an even number, otherwise `false`.
+   */
+  readonly isEven: Predicate<number>;
+
+  isFalse(v: boolean): v is false;
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  isFunction(f: unknown): f is Function;
+
+  /**
+   * Returns true if `option` is `none`.
+   */
+  isNone<T>(option: Optional<T>): option is undefined;
+
+  isNotEqualTo<T>(
+    b: T,
+    options?: {
+      readonly equality?: Equality<T> | undefined;
+    },
+  ): Predicate<T>;
+
+  isNumber(n: unknown): n is number;
+
+  /**
+   * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
+   */
+  readonly isOdd: Predicate<number>;
+
+  isObject(o: unknown): o is object;
+
+  isPromise(v: unknown): v is Promise<unknown>;
+
+  isReadonlyArray<T = unknown>(o: unknown): o is readonly T[];
+
+  isString(o: unknown): o is string;
+
+  /**
+   * Returns true if `option` is not `none`.
+   */
+  isSome<T>(v: Optional<T>): v is T;
+
+  isTrue(v: boolean): v is true;
+
+  lessThan(v: number): Predicate<number>;
+
+  /**
+   * Applies logical negation to the value `v`.
+   */
+  negate(v: boolean): boolean;
+
   newInstance<T>(Constructor: Constructor<T>): T;
   newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
   newInstance<T, TA, TB>(Constructor: Constructor2<TA, TB, T>, a: TA, b: TB): T;
@@ -430,6 +583,14 @@ interface FunctionsModule {
     keyC: TKeyC,
   ): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
 
+  pickUnsafe<T = unknown>(
+    ...keys: (string | symbol | number)[]
+  ): // eslint-disable-next-line @typescript-eslint/ban-types
+  Function1<{}, T>;
+
+  /**
+   * Pipes `source` through a series of unary functions.
+   */
   pipe<T, A>(src: T, op1: Function1<T, A>): A;
   pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
   pipe<T, A, B, C>(
@@ -1101,6 +1262,33 @@ interface FunctionsModule {
     op12: Function1<K, L>,
   ): Factory<L>;
 
+  /**
+   * Pipes `source` through a series of unary functions.
+   */
+  pipeUnsafe<T = unknown>(
+    source: unknown,
+    ...operators: Function1<any, any>[]
+  ): T;
+
+  raise<T>(e?: unknown): T;
+
+  raiseError<T>(e: Error): T;
+
+  /**
+   * Throws a javascript error using the provided message.
+   */
+  raiseWithDebugMessage<T>(message: string): T;
+
+  /**
+   * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+   */
+  returns<T>(v: T): (..._args: unknown[]) => T;
+
+  /**
+   * The javascript strict equality function.
+   */
+  strictEquality<T>(a: T, b: T): boolean;
+
   tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
   tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
   tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
@@ -1108,38 +1296,30 @@ interface FunctionsModule {
 
 type Signature = FunctionsModule;
 
-/**
- * A function that always returns `false`.
- */
-export const alwaysFalse = (..._args: unknown[]) => false;
+export const alwaysFalse: Signature["alwaysFalse"] = (..._args: unknown[]) =>
+  false;
 
-/**
- * A function that always returns `true`.
- */
-export const alwaysTrue = (..._args: unknown[]) => true;
+export const alwaysTrue: Signature["alwaysTrue"] = (..._args: unknown[]) =>
+  true;
 
-/**
- * Returns an equality function that compares two readonly arrays for equality,
- * comparing their values using `valuesEquality`.
- */
-export const arrayEquality =
+export const arrayEquality: Signature["arrayEquality"] =
   <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
   (a: readonly T[], b: readonly T[]) =>
     ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
     a.every((v, i) => valuesEquality(b[i], v));
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const bind = <F extends Function>(f: F, thiz: unknown): F =>
+export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
   f.bind(thiz);
 
-export const bindMethod = <
+export const bindMethod: Signature["bindMethod"] = <
   // eslint-disable-next-line @typescript-eslint/ban-types
   T extends Record<TKey, (...args: any[]) => any>,
   TKey extends number | string | symbol,
 >(
   thiz: T,
   key: TKey,
-): T[TKey] => bind<T[TKey]>(thiz[key], thiz);
+) => bind<T[TKey]>(thiz[key], thiz);
 
 export const call: Signature["call"] = <T>(
   f: (...args: readonly unknown[]) => T,
@@ -1152,87 +1332,46 @@ const composeUnsafe =
   source =>
     pipeUnsafe(source, ...operators);
 
-/**
- * Composes a series of unary functions.
- */
 export const compose: Signature["compose"] = composeUnsafe;
 
-/**
- * Composes a series of unary functions.
- */
 export const composeLazy: Signature["composeLazy"] =
   (...operators: Function1<any, unknown>[]) =>
   (source: unknown) =>
   () =>
     pipeUnsafe(source, ...operators);
 
-/**
- * An updater function that returns the result of decrementing `x`.
- */
-export const decrement = (x: number) => x - 1;
+export const decrement: Signature["decrement"] = (x: number) => x - 1;
 
-/**
- * Returns a function that decrements a number `x` by the value `decr`.
- */
-export const decrementBy =
-  (decr: number): Updater<number> =>
-  (x: number) =>
+export const decrementBy: Signature["decrementBy"] =
+  (decr: number) => (x: number) =>
     x - decr;
 
-/**
- * The identity function.
- *
- * @returns `v`
- */
-export const identity = <T>(v: T): T => v;
+export const identity: Signature["identity"] = <T>(v: T) => v;
 
-export const identityLazy = <T>(): Function1<T, T> => identity;
+export const identityLazy: Signature["identityLazy"] = () => identity;
 
-/**
- * A function that always returns `undefined`.
- */
-export const ignore = (..._args: unknown[]): void => {};
+export const ignore: Signature["ignore"] = (..._args: unknown[]): void => {};
 
-/**
- * An updater function that returns the result of incrementing `x`.
- */
-export const increment = (x: number) => x + 1;
+export const increment: Signature["increment"] = (x: number) => x + 1;
 
-/**
- * Returns a function that increments a number `x` by the value `incr`.
- */
-export const incrementBy =
-  (incr: number): Updater<number> =>
-  (x: number) =>
+export const incrementBy: Signature["incrementBy"] =
+  (incr: number) => (x: number) =>
     x + incr;
 
-/**
- * Enables invoking a method on an object as a unary function within
- * a pipeline operation.
- *
- * @param method
- * @param args
- * @returns
- */
-export const invoke =
+export const invoke: Signature["invoke"] =
   <
     T extends Record<TKey, (...args: any[]) => any>,
     TKey extends number | string | symbol,
   >(
     method: TKey,
     ...args: Parameters<T[TKey]>
-  ): Function1<T, ReturnType<T[TKey]>> =>
+  ) =>
   (obj: T) =>
     obj[method](...args);
 
-export const isReadonlyArray: <T = unknown>(o: unknown) => o is readonly T[] =
-  Array.isArray;
+export const isReadonlyArray: Signature["isReadonlyArray"] = Array.isArray;
 
-/**
- * Returns a predicate function comparing its argument to `b` using the
- * provided `equality` function.
- */
-export const isEqualTo = /*@__PURE__*/ (() => {
+export const isEqualTo: Signature["isEqualTo"] = /*@__PURE__*/ (() => {
   const isStrictlyEqualTo =
     <T>(b: T): Predicate<T> =>
     a =>
@@ -1251,7 +1390,7 @@ export const isEqualTo = /*@__PURE__*/ (() => {
   };
 })();
 
-export const isNotEqualTo = /*@__PURE__*/ (() => {
+export const isNotEqualTo: Signature["isNotEqualTo"] = /*@__PURE__*/ (() => {
   const isStrictlyNotEqualTo =
     <T>(b: T): Predicate<T> =>
     a =>
@@ -1270,70 +1409,54 @@ export const isNotEqualTo = /*@__PURE__*/ (() => {
   };
 })();
 
-/**
- * Returns `true` if `x` is an even number, otherwise `false`.
- */
+export const isEven: Signature["isEven"] = (x: number) => x % 2 === 0;
 
-export const isEven = (x: number): boolean => x % 2 === 0;
+export const isFalse: Signature["isFalse"] = (v: boolean): v is false => !v;
 
-export const isFalse = (v: boolean): v is false => !v;
+export const isFunction: Signature["isFunction"] = (
+  f: unknown,
+): // eslint-disable-next-line @typescript-eslint/ban-types
+f is Function => typeof f === "function" || f instanceof Function;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const isFunction = (f: unknown): f is Function =>
-  typeof f === "function" || f instanceof Function;
+export const isNumber: Signature["isNumber"] = (n: unknown): n is number =>
+  typeof n === "number";
 
-export const isNumber = (n: unknown): n is number => typeof n === "number";
+export const isObject: Signature["isObject"] = (o: unknown): o is object =>
+  typeof o === "object";
 
-export const isObject = (o: unknown): o is object => typeof o === "object";
-
-export const isString = (s: unknown): s is string =>
+export const isString: Signature["isString"] = (s: unknown): s is string =>
   typeof s === "string" || s instanceof String;
 
-/**
- * Returns `true` if `x` is an odd number, otherwise `false`.
- */
-export const isOdd = (x: number): boolean => x % 2 !== 0;
+export const isOdd: Signature["isOdd"] = (x: number) => x % 2 !== 0;
 
-/**
- * Returns true if `option` is `none`.
- */
-export const isNone = <T>(option: Optional<T>): option is undefined =>
-  option === none;
+export const isNone: Signature["isNone"] = <T>(
+  option: Optional<T>,
+): option is undefined => option === none;
 
-const isPromise = (v: unknown): v is Promise<any> =>
+const isPromise: Signature["isPromise"] = (v: unknown): v is Promise<unknown> =>
   v instanceof Promise || Promise.resolve(v) === v;
 
-/**
- * Returns true if `option` is not `none`.
- */
-export const isSome = <T>(option: Optional<T>): option is T => option !== none;
+export const isSome: Signature["isSome"] = <T>(
+  option: Optional<T>,
+): option is T => option !== none;
 
-export const isTrue = (v: boolean): v is true => v;
+export const isTrue: Signature["isTrue"] = (v: boolean): v is true => v;
 
-export const greaterThan =
-  (v: number) =>
-  (x: number): boolean =>
+export const greaterThan: Signature["greaterThan"] =
+  (v: number) => (x: number) =>
     x > v;
 
-export const lessThan =
-  (v: number) =>
-  (x: number): boolean =>
-    x < v;
+export const lessThan: Signature["lessThan"] = (v: number) => (x: number) =>
+  x < v;
 
-/**
- * Applies logical negation to the value `v`.
- */
-export const negate = (v: boolean): boolean => !v;
+export const negate: Signature["negate"] = (v: boolean) => !v;
 
 export const newInstance: Signature["newInstance"] = (
   Constructor: new (...args: readonly any[]) => unknown,
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
 
-/**
- * An alias for undefined.
- */
-export const none = undefined;
+export const none: Signature["none"] = undefined;
 
 export const partial: Signature["partial"] =
   (...args: readonly unknown[]) =>
@@ -1341,7 +1464,7 @@ export const partial: Signature["partial"] =
   (arg0: unknown) =>
     f(arg0, ...args);
 
-export const pickUnsafe =
+export const pickUnsafe: Signature["pickUnsafe"] =
   (...keys: (string | symbol | number)[]) =>
   // eslint-disable-next-line @typescript-eslint/ban-types
   (value: {}) => {
@@ -1354,10 +1477,7 @@ export const pickUnsafe =
 
 export const pick: Signature["pick"] = pickUnsafe;
 
-/**
- * Pipes `source` through a series of unary functions.
- */
-export const pipeUnsafe = (
+export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   source: unknown,
   ...operators: Function1<any, any>[]
 ): unknown => {
@@ -1368,11 +1488,8 @@ export const pipeUnsafe = (
   }
 
   return acc;
-};
+}) as Signature["pipeUnsafe"];
 
-/**
- * Pipes `source` through a series of unary functions.
- */
 export const pipe: Signature["pipe"] = pipeUnsafe;
 
 export const pipeAsync: Signature["pipeAsync"] = async (
@@ -1446,7 +1563,7 @@ export const pipeSomeLazy: Signature["pipeSomeLazy"] =
   () =>
     isSome(source) ? pipeUnsafe(source, ...operators) : none;
 
-export const error = (message?: unknown): Error => {
+export const error: Signature["error"] = (message?: unknown) => {
   const messageIsString = isString(message);
   const messageIsError = message instanceof Error;
   const errorMessage = messageIsString ? message : "";
@@ -1462,33 +1579,27 @@ export const error = (message?: unknown): Error => {
     : newInstance(Error, errorMessage, errorCause);
 };
 
-export const errorWithDebugMessage = (message: string): Error =>
-  error(__DEV__ ? message : none);
+export const errorWithDebugMessage: Signature["errorWithDebugMessage"] = (
+  message: string,
+) => error(__DEV__ ? message : none);
 
-export const raiseError = <T>(e: Error): T => {
+export const raiseError: Signature["raiseError"] = (e: Error) => {
   throw e;
 };
 
-/**
- * Throws a javascript error using the provided message.
- */
-export const raiseWithDebugMessage = <T>(message: string): T =>
-  raiseError(error(__DEV__ ? message : none));
+export const raiseWithDebugMessage: Signature["raiseWithDebugMessage"] = (
+  message: string,
+) => raiseError(error(__DEV__ ? message : none));
 
-export const raise = <T>(e?: unknown): T => raiseError(error(e));
+export const raise: Signature["raise"] = (e?: unknown) => raiseError(error(e));
 
-/**
- * Returns a function that takes an arbitrary number of arguments and always returns `v`.
- */
-export const returns =
-  <T>(v: T): ((..._args: unknown[]) => T) =>
+export const returns: Signature["returns"] =
+  <T>(v: T) =>
   (..._args: unknown[]) =>
     v;
 
-/**
- * The javascript strict equality function.
- */
-export const strictEquality = <T>(a: T, b: T) => a === b;
+export const strictEquality: Signature["strictEquality"] = <T>(a: T, b: T) =>
+  a === b;
 
 export const tuple: Signature["tuple"] = ((...v: readonly unknown[]) =>
   v) as Signature["tuple"];

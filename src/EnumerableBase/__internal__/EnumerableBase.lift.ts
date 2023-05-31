@@ -83,7 +83,7 @@ const createLiftedEnumerable: <TIn, TOut>(
           return pipeUnsafe(
             this[LiftedLike_source][EnumerableLike_enumerate](),
             ...this[__LiftedEnumerable_ops],
-          ) as EnumeratorLike<TOut>;
+          );
         },
       },
     ),

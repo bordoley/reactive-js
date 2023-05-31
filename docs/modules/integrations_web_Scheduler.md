@@ -4,21 +4,35 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [WebScheduler](../interfaces/integrations_web_Scheduler.WebScheduler.md)
+
+### Type Aliases
+
+- [Signature](integrations_web_Scheduler.md#signature)
+
 ### Functions
 
 - [createAnimationFrameScheduler](integrations_web_Scheduler.md#createanimationframescheduler)
+
+## Type Aliases
+
+### Signature
+
+Ƭ **Signature**: [`WebScheduler`](../interfaces/integrations_web_Scheduler.WebScheduler.md)
 
 ## Functions
 
 ### createAnimationFrameScheduler
 
-▸ **createAnimationFrameScheduler**(`a`): [`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
+▸ **createAnimationFrameScheduler**(`hostScheduler`): [`SchedulerLike`](../interfaces/types.SchedulerLike.md) & [`DisposableLike`](../interfaces/types.DisposableLike.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `a` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
+| `hostScheduler` | [`SchedulerLike`](../interfaces/types.SchedulerLike.md) |
 
 #### Returns
 

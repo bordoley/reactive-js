@@ -36,20 +36,104 @@ import {
 } from "../web.js";
 import * as WebElement from "../web/Element.js";
 
+interface ReactWebModule {
+  readonly WindowLocationProvider: React.FunctionComponent<{
+    windowLocation: WindowLocationLike;
+    children: React.ReactNode;
+  }>;
+
+  /**
+   * @category Hook
+   */
+  useAnimate<TElement extends HTMLElement>(
+    animation: Optional<EventSourceLike<CSSStyleMapLike>>,
+  ): React.Ref<TElement>;
+  useAnimate<TElement extends HTMLElement, T>(
+    animation: Optional<EventSourceLike<T>>,
+    selector: Function1<T, CSSStyleMapLike>,
+    deps: readonly unknown[],
+  ): React.Ref<TElement>;
+
+  /**
+   * @category Hook
+   */
+  useScroll<TElement extends HTMLElement>(
+    callback: SideEffect1<ScrollValue>,
+    deps: readonly unknown[],
+  ): React.Ref<TElement>;
+
+  /**
+   * @category Hook
+   */
+  useWindowLocation(): {
+    uri: Optional<WindowLocationURI>;
+    push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+    replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
+    canGoBack: boolean;
+    goBack: () => void;
+  };
+}
+
+type Signature = ReactWebModule;
+
 const WindowLocationContext = /*@__PURE__*/ createContext<WindowLocationLike>(
   none as unknown as WindowLocationLike,
 );
 
-/**
- * @category Hook
- */
-export const useWindowLocation = (): {
-  uri: Optional<WindowLocationURI>;
-  push: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
-  replace: SideEffect1<Updater<WindowLocationURI> | WindowLocationURI>;
-  canGoBack: boolean;
-  goBack: () => void;
-} => {
+export const useAnimate: Signature["useAnimate"] = <
+  TElement extends HTMLElement,
+  T,
+>(
+  animation: Optional<EventSourceLike<T>>,
+  selector?: Function1<T, CSSStyleMapLike>,
+  deps?: readonly unknown[],
+) => {
+  const ref = useRef<TElement>(null);
+
+  const memoizedSelector = isFunction(selector)
+    ? useCallback(selector, deps ?? [])
+    : (identity as Function1<T, CSSStyleMapLike>);
+
+  useDisposable(
+    pipeSomeLazy(
+      animation,
+      EventSource.addEventHandler(v => {
+        const element = ref.current;
+        if (element != null) {
+          pipe(
+            memoizedSelector(v),
+            ReadonlyObjectMap.forEachWithKey<string, keyof CSSStyleMapLike>(
+              (v, key) => {
+                element.style[key] = v ?? "";
+              },
+            ),
+          );
+        }
+      }),
+    ),
+    [animation, memoizedSelector],
+  );
+
+  return ref;
+};
+
+export const useScroll: Signature["useScroll"] = <TElement extends HTMLElement>(
+  callback: SideEffect1<ScrollValue>,
+  deps: readonly unknown[],
+) => {
+  const [element, setElement] = useState<Optional<TElement>>();
+
+  const memoizedCallback = useCallback(callback, deps);
+
+  useDisposable(
+    pipeSomeLazy(element, WebElement.addScrollHandler(memoizedCallback)),
+    [element, memoizedCallback],
+  );
+
+  return setElement as React.Ref<TElement>;
+};
+
+export const useWindowLocation: Signature["useWindowLocation"] = () => {
   const windowLocation = useContext(WindowLocationContext);
 
   const uri = useObserve(windowLocation);
@@ -98,10 +182,7 @@ export const useWindowLocation = (): {
   };
 };
 
-export const WindowLocationProvider: React.FunctionComponent<{
-  windowLocation: WindowLocationLike;
-  children: React.ReactNode;
-}> = ({
+export const WindowLocationProvider: Signature["WindowLocationProvider"] = ({
   windowLocation,
   children,
 }: {
@@ -115,74 +196,3 @@ export const WindowLocationProvider: React.FunctionComponent<{
     },
     children,
   );
-
-interface UseAnimate {
-  useAnimate<TElement extends HTMLElement>(
-    animation: Optional<EventSourceLike<CSSStyleMapLike>>,
-  ): React.Ref<TElement>;
-
-  useAnimate<TElement extends HTMLElement, T>(
-    animation: Optional<EventSourceLike<T>>,
-    selector: Function1<T, CSSStyleMapLike>,
-    deps: readonly unknown[],
-  ): React.Ref<TElement>;
-}
-
-/**
- * @category Hook
- */
-export const useAnimate: UseAnimate["useAnimate"] = <
-  TElement extends HTMLElement,
-  T,
->(
-  animation: Optional<EventSourceLike<T>>,
-  selector?: Function1<T, CSSStyleMapLike>,
-  deps?: readonly unknown[],
-): React.Ref<TElement> => {
-  const ref = useRef<TElement>(null);
-
-  const memoizedSelector = isFunction(selector)
-    ? useCallback(selector, deps ?? [])
-    : (identity as Function1<T, CSSStyleMapLike>);
-
-  useDisposable(
-    pipeSomeLazy(
-      animation,
-      EventSource.addEventHandler(v => {
-        const element = ref.current;
-        if (element != null) {
-          pipe(
-            memoizedSelector(v),
-            ReadonlyObjectMap.forEachWithKey<string, keyof CSSStyleMapLike>(
-              (v, key) => {
-                element.style[key] = v ?? "";
-              },
-            ),
-          );
-        }
-      }),
-    ),
-    [animation, memoizedSelector],
-  );
-
-  return ref;
-};
-
-/**
- * @category Hook
- */
-export const useScroll = <TElement extends HTMLElement>(
-  callback: SideEffect1<ScrollValue>,
-  deps: readonly unknown[],
-): React.Ref<TElement> => {
-  const [element, setElement] = useState<Optional<TElement>>();
-
-  const memoizedCallback = useCallback(callback, deps);
-
-  useDisposable(
-    pipeSomeLazy(element, WebElement.addScrollHandler(memoizedCallback)),
-    [element, memoizedCallback],
-  );
-
-  return setElement as React.Ref<TElement>;
-};

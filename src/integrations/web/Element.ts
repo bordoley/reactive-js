@@ -18,7 +18,7 @@ import Element_scrollEventSource from "./Element/__internal__/Element.scrollEven
 /**
  * @noInheritDoc
  */
-export interface ElementModule {
+export interface WebElementModule {
   addEventHandler<
     TEventTarget extends AbortSignal,
     K extends keyof AbortSignalEventMap,
@@ -1016,7 +1016,7 @@ export interface ElementModule {
   >;
 }
 
-export type Signature = ElementModule;
+export type Signature = WebElementModule;
 
 export const addEventHandler: Signature["addEventHandler"] =
   Element_addEventHandler;

@@ -24,6 +24,28 @@ import {
   SchedulerLike,
 } from "../../types.js";
 
+interface NodeStreamModule {
+  flow(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<
+    Factory<Readable> | Readable,
+    PauseableObservableLike<Uint8Array> & DisposableLike
+  >;
+
+  sinkInto(
+    factory: Writable | Factory<Writable>,
+  ): Function1<
+    PauseableObservableLike<Uint8Array>,
+    DeferredObservableLike<void>
+  >;
+}
+
+type Signature = NodeStreamModule;
+
 type NodeStream = Readable | Writable | Transform;
 
 const disposeStream = (stream: NodeStream) => () => {
@@ -68,17 +90,14 @@ const addToDisposable =
     return stream;
   };
 
-export const flow =
+export const flow: Signature["flow"] =
   (
     scheduler: SchedulerLike,
     options?: {
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): Function1<
-    Factory<Readable> | Readable,
-    PauseableObservableLike<Uint8Array> & DisposableLike
-  > =>
+  ) =>
   factory =>
     PauseableObservable_create(
       mode =>
@@ -125,7 +144,7 @@ export const flow =
       options,
     );
 
-export const sinkInto =
+export const sinkInto: Signature["sinkInto"] =
   (
     factory: Writable | Factory<Writable>,
   ): Function1<

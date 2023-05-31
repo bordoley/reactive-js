@@ -4,7 +4,7 @@ import { Rect, ScrollValue } from "../web.js";
 /**
  * @noInheritDoc
  */
-export interface ElementModule {
+export interface WebElementModule {
     addEventHandler<TEventTarget extends AbortSignal, K extends keyof AbortSignalEventMap>(eventName: K, eventHandler: SideEffect1<AbortSignalEventMap[K]>, options?: {
         passive?: boolean;
         capture?: boolean;
@@ -516,7 +516,7 @@ export interface ElementModule {
     resizeEventSource<TElement extends Element>(options?: ResizeObserverOptions): Function1<TElement, EventSourceLike<ResizeObserverEntry>>;
     scrollEventSource<TElement extends HTMLElement>(): Function1<TElement, EventSourceLike<ScrollValue>>;
 }
-export type Signature = ElementModule;
+export type Signature = WebElementModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const addResizeHandler: Signature["addResizeHandler"];
 export declare const addScrollHandler: Signature["addScrollHandler"];

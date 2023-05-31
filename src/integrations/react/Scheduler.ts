@@ -29,6 +29,12 @@ import {
   SchedulerLike_now,
 } from "../../types.js";
 
+interface ReactSchedulerModule {
+  get(priority?: 1 | 2 | 3 | 4 | 5): SchedulerLike;
+}
+
+type Signature = ReactSchedulerModule;
+
 const createReactScheduler = /*@__PURE__*/ (() => {
   type TProperties = {
     priority: 1 | 2 | 3 | 4 | 5;
@@ -92,15 +98,14 @@ const createReactScheduler = /*@__PURE__*/ (() => {
   );
 })();
 
-export const get: (priority?: 1 | 2 | 3 | 4 | 5) => SchedulerLike =
-  /*@__PURE__*/ (() => {
-    const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
-      newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
-    return (priority = unstable_NormalPriority) =>
-      schedulerCache.get(priority) ??
-      (() => {
-        const scheduler = createReactScheduler(priority);
-        schedulerCache.set(priority, scheduler);
-        return scheduler;
-      })();
-  })();
+export const get: Signature["get"] = /*@__PURE__*/ (() => {
+  const schedulerCache: Map<1 | 2 | 3 | 4 | 5, SchedulerLike> =
+    newInstance<Map<1 | 2 | 3 | 4 | 5, SchedulerLike>>(Map);
+  return (priority = unstable_NormalPriority) =>
+    schedulerCache.get(priority) ??
+    (() => {
+      const scheduler = createReactScheduler(priority);
+      schedulerCache.set(priority, scheduler);
+      return scheduler;
+    })();
+})();

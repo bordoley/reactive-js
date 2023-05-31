@@ -59,6 +59,12 @@ import {
 } from "../web.js";
 import * as Element from "./Element.js";
 
+interface WebWindowLocationModule {
+  subscribe(scheduler: SchedulerLike): WindowLocationLike & DisposableLike;
+}
+
+type Signature = WebWindowLocationModule;
+
 const { history, location } = window;
 
 const windowLocationPrototype = {
@@ -136,9 +142,7 @@ const createSyncToHistoryStream = (
     ),
   )[StreamableLike_stream](scheduler, options);
 
-export const subscribe: (
-  scheduler: SchedulerLike,
-) => WindowLocationLike & DisposableLike = /*@__PURE__*/ (() => {
+export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   const createWindowLocationObservable = createInstanceFactory(
     mix(
       include(Stream_delegatingMixin(), Delegating_mixin()),

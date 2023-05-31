@@ -10,7 +10,8 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../../_
 import { ContinuationSchedulerLike_schedule, DelegatingLike_delegate, QueueLike_dequeue, } from "../../../../__internal__/types.js";
 import { invoke, isSome, none, pipe, pipeLazy, } from "../../../../functions.js";
 import { CollectionLike_count, QueueableLike_enqueue, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../../types.js";
-const Scheduler_createAnimationFrameScheduler = /*@__PURE__*/ (() => {
+const Scheduler_createAnimationFrameScheduler = 
+/*@__PURE__*/ (() => {
     let rafQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
     let rafIsRunning = false;
     const rafCallback = () => {
