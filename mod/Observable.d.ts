@@ -352,6 +352,11 @@ export interface ObservableModule {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
     someSatisfy<T>(predicate: Predicate<T>): Function1<RunnableLike<T>, boolean>;
+    spring(options?: {
+        readonly stiffness?: number;
+        readonly damping?: number;
+        readonly precision?: number;
+    }): RunnableWithSideEffectsLike<number>;
     startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -630,6 +635,7 @@ export declare const retry: Signature["retry"];
 export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const someSatisfy: Signature["someSatisfy"];
+export declare const spring: Signature["spring"];
 export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];

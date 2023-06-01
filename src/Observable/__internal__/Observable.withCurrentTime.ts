@@ -1,7 +1,7 @@
 import type * as Observable from "../../Observable.js";
 import Observer_createWithCurrentTimeObserver from "../../Observer/__internal__/Observer.createWithCurrentTimeObserver.js";
 import { Function2, partial, pipe } from "../../functions.js";
-import Observable_liftRunnableBoundedObservableOperatorWithSideEffects from "./Observable.liftRunnableBoundedObservableOperatorWithSideEffects.js";
+import Observable_liftRunnableBoundedPureObservableOperator from "./Observable.liftRunnableBoundedPureObservableOperator.js";
 
 const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   TA,
@@ -12,7 +12,7 @@ const Observable_withCurrentTime: Observable.Signature["withCurrentTime"] = <
   pipe(
     Observer_createWithCurrentTimeObserver,
     partial(selector),
-    Observable_liftRunnableBoundedObservableOperatorWithSideEffects,
+    Observable_liftRunnableBoundedPureObservableOperator,
   );
 
 export default Observable_withCurrentTime;

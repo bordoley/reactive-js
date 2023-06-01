@@ -113,6 +113,7 @@
 - [scan](Observable.md#scan)
 - [skipFirst](Observable.md#skipfirst)
 - [someSatisfy](Observable.md#somesatisfy)
+- [spring](Observable.md#spring)
 - [startWith](Observable.md#startwith)
 - [subscribe](Observable.md#subscribe)
 - [subscribeOn](Observable.md#subscribeon)
@@ -3580,6 +3581,25 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>, `boolean`\>
+
+___
+
+### spring
+
+▸ **spring**(`options?`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
 
 ___
 

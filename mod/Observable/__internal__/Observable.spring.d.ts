@@ -1,7 +1,3 @@
-import { RunnableWithSideEffectsLike } from "../../types.js";
-declare const Observable_spring: (options?: {
-    readonly stiffness?: number;
-    readonly damping?: number;
-    readonly precision?: number;
-}) => RunnableWithSideEffectsLike<number>;
+import type * as Observable from "../../Observable.js";
+declare const Observable_spring: Observable.Signature["spring"];
 export default Observable_spring;

@@ -69,6 +69,7 @@ import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
+import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
@@ -809,7 +810,7 @@ export interface ObservableModule {
     readonly replay?: number;
   }): PublisherLike<T>;
 
-  currentTime(): RunnableWithSideEffectsLike<number>;
+  currentTime(): RunnableLike<number>;
 
   decodeWithCharset(options?: {
     readonly charset?: string;
@@ -1145,6 +1146,12 @@ export interface ObservableModule {
 
   someSatisfy<T>(predicate: Predicate<T>): Function1<RunnableLike<T>, boolean>;
 
+  spring(options?: {
+    readonly stiffness?: number;
+    readonly damping?: number;
+    readonly precision?: number;
+  }): RunnableLike<number>;
+
   startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
 
   subscribe<T>(
@@ -1251,7 +1258,7 @@ export interface ObservableModule {
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
-  ): RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
+  ): RunnableBoundedPureObservableOperator<TA, TB>;
 
   withLatestFrom<TA, TB, T>(
     other: RunnableLike<TB>,
@@ -2557,6 +2564,7 @@ export const retry: Signature["retry"] = Observable_retry;
 export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const someSatisfy: Signature["someSatisfy"] = Observable_someSatisfy;
+export const spring: Signature["spring"] = Observable_spring;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
