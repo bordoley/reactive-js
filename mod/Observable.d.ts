@@ -115,7 +115,7 @@ export interface ObservableModule {
     /**
      * @category Constructor
      */
-    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableWithSideEffectsLike<T>;
+    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
     /**
      * @category Operator
      */
@@ -215,7 +215,7 @@ export interface ObservableModule {
     createRefCountedPublisher<T>(options?: {
         readonly replay?: number;
     }): PublisherLike<T>;
-    currentTime(): RunnableWithSideEffectsLike<number>;
+    currentTime(): RunnableLike<number>;
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): PureObservableOperator<ArrayBuffer, string>;
@@ -356,7 +356,7 @@ export interface ObservableModule {
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-    }): RunnableWithSideEffectsLike<number>;
+    }): RunnableLike<number>;
     startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -404,7 +404,7 @@ export interface ObservableModule {
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlySet<T>(): Function1<RunnableBaseLike<T>, ReadonlySet<T>>;
-    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): RunnableBoundedObservableOperatorWithSideEffects<TA, TB>;
+    withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): RunnableBoundedPureObservableOperator<TA, TB>;
     withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): RunnableBoundedPureObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: RunnableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): RunnableBoundedObservableOperatorWithSideEffects<TA, T>;
     withLatestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableBoundedObservableOperatorWithSideEffects<TA, T>;

@@ -8,7 +8,7 @@ import {
   isSome,
   pipe,
 } from "../../functions.js";
-import { EnumerableLike, RunnableBaseLike } from "../../types.js";
+import { EnumerableLike, RunnableLike } from "../../types.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_delay from "./Observable.delay.js";
 import Observable_empty from "./Observable.empty.js";
@@ -24,7 +24,7 @@ const scale = (start: number, end: number) => (v: number) => {
 
 const parseAnimationConfig = <T = number>(
   config: Observable.Animation<T>,
-): RunnableBaseLike<T> =>
+): RunnableLike<T> =>
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),
@@ -50,7 +50,7 @@ const parseAnimationConfig = <T = number>(
         Observable_map(scale(config.from, config.to)),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as Observable.RunnableBoundedObservableOperatorWithSideEffects<
+          : (identity as Observable.RunnableBoundedPureObservableOperator<
               number,
               T
             >),

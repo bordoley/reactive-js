@@ -119,7 +119,7 @@
 
 ### animate
 
-▸ **animate**<`T`\>(`configs`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`T`\>
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](types.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -135,7 +135,7 @@
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`T`\>
+[`RunnableLike`](types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -1894,11 +1894,11 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`number`\>
+▸ **currentTime**(): [`RunnableLike`](types.RunnableLike.md)<`number`\>
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`number`\>
+[`RunnableLike`](types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -3302,7 +3302,7 @@ ___
 
 ### spring
 
-▸ **spring**(`options?`): [`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`number`\>
+▸ **spring**(`options?`): [`RunnableLike`](types.RunnableLike.md)<`number`\>
 
 #### Parameters
 
@@ -3315,7 +3315,7 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](types.RunnableWithSideEffectsLike.md)<`number`\>
+[`RunnableLike`](types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -3815,7 +3815,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `TB`\>
+▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -3832,7 +3832,7 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](../modules/Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `TB`\>
+[`RunnableBoundedPureObservableOperator`](../modules/Observable.md#runnableboundedpureobservableoperator)<`TA`, `TB`\>
 
 ___
 

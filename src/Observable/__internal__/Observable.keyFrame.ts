@@ -10,7 +10,7 @@ import {
   pipe,
   returns,
 } from "../../functions.js";
-import { RunnableWithSideEffectsLike } from "../../types.js";
+import { RunnableLike } from "../../types.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
@@ -21,7 +21,7 @@ const Observable_keyFrame = (
   options?: {
     readonly easing?: Function1<number, number>;
   },
-): RunnableWithSideEffectsLike<number> => {
+): RunnableLike<number> => {
   const { easing = identity } = options ?? {};
 
   return pipe(
@@ -33,11 +33,10 @@ const Observable_keyFrame = (
       const next = elapsed > duration ? 1 : easing(elapsed / duration);
       return [startTime, next];
     }, returns([MAX_VALUE, 0])),
-    Containers.pick<
-      Observable.RunnableWithSideEffectsContainer,
-      Tuple2<unknown, number>,
-      1
-    >({ map: Observable_map }, 1),
+    Containers.pick<Observable.RunnableContainer, Tuple2<unknown, number>, 1>(
+      { map: Observable_map },
+      1,
+    ),
     Observable_takeWhile(isNotEqualTo(1), {
       inclusive: true,
     }),

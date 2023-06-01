@@ -403,7 +403,7 @@ ___
 
 ### animate
 
-▸ **animate**<`T`\>(`configs`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -419,7 +419,7 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`T`\>
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`T`\>
 
 ___
 
@@ -2178,11 +2178,11 @@ ___
 
 ### currentTime
 
-▸ **currentTime**(): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
+▸ **currentTime**(): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -3586,7 +3586,7 @@ ___
 
 ### spring
 
-▸ **spring**(`options?`): [`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
+▸ **spring**(`options?`): [`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 #### Parameters
 
@@ -3599,7 +3599,7 @@ ___
 
 #### Returns
 
-[`RunnableWithSideEffectsLike`](../interfaces/types.RunnableWithSideEffectsLike.md)<`number`\>
+[`RunnableLike`](../interfaces/types.RunnableLike.md)<`number`\>
 
 ___
 
@@ -4099,7 +4099,7 @@ ___
 
 ### withCurrentTime
 
-▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `TB`\>
+▸ **withCurrentTime**<`TA`, `TB`\>(`selector`): [`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, `TB`\>
 
 #### Type parameters
 
@@ -4116,7 +4116,7 @@ ___
 
 #### Returns
 
-[`RunnableBoundedObservableOperatorWithSideEffects`](Observable.md#runnableboundedobservableoperatorwithsideeffects)<`TA`, `TB`\>
+[`RunnableBoundedPureObservableOperator`](Observable.md#runnableboundedpureobservableoperator)<`TA`, `TB`\>
 
 ___
 

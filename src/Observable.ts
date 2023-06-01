@@ -371,7 +371,7 @@ export interface ObservableModule {
    */
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
-  ): RunnableWithSideEffectsLike<T>;
+  ): RunnableLike<T>;
 
   /**
    * @category Operator
