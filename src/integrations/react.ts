@@ -22,6 +22,7 @@ import {
   isNone,
   isSome,
   none,
+  pipe,
   pipeSomeLazy,
   raiseError,
 } from "../functions.js";
@@ -228,6 +229,7 @@ export const useDisposable: Signature["useDisposable"] = <
   deps: readonly unknown[],
 ) => {
   const [disposable, setDisposable] = useState<Optional<TDisposable>>(none);
+  const [error, setError] = useState<Optional<Error>>(none);
 
   useEffect(() => {
     const disposable = factory();
@@ -236,11 +238,13 @@ export const useDisposable: Signature["useDisposable"] = <
       return;
     }
 
+    pipe(disposable, Disposable.onError(setError));
+
     setDisposable(disposable);
     return bindMethod(disposable, DisposableLike_dispose);
   }, [...deps, setDisposable]);
 
-  return disposable;
+  return isSome(error) ? raiseError(error) : disposable;
 };
 
 export const useEnumerate: Signature["useEnumerate"] = <T>(
