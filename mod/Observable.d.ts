@@ -340,6 +340,7 @@ export interface ObservableModule {
         readonly capacity?: number;
     }): SideEffect1<RunnableBaseLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureObservableOperator<T, TAcc>;
+    scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableBaseLike<TAcc>>, initialValue: Factory<TAcc>): Function1<ObservableBaseLike<T>, DeferredObservableLike<TAcc>>;
     /**
      * @category Transform
      */
@@ -497,14 +498,14 @@ export interface ObservableModule {
     zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
     zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
     zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>, i: PureObservableLike<TI>): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    zipLatest<TA, TB>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>): ObservableBaseLike<Tuple2<TA, TB>>;
-    zipLatest<TA, TB, TC>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>): ObservableBaseLike<Tuple3<TA, TB, TC>>;
-    zipLatest<TA, TB, TC, TD>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>): ObservableBaseLike<Tuple4<TA, TB, TC, TD>>;
-    zipLatest<TA, TB, TC, TD, TE>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>): ObservableBaseLike<Tuple5<TA, TB, TC, TD, TE>>;
-    zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>): ObservableBaseLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>): ObservableBaseLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>, h: ObservableBaseLike<TH>): ObservableBaseLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>, h: ObservableBaseLike<TH>, i: ObservableBaseLike<TI>): ObservableBaseLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    zipLatest<TA, TB>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>): DeferredObservableLike<Tuple2<TA, TB>>;
+    zipLatest<TA, TB, TC>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>): DeferredObservableLike<Tuple3<TA, TB, TC>>;
+    zipLatest<TA, TB, TC, TD>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
+    zipLatest<TA, TB, TC, TD, TE>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>, h: ObservableBaseLike<TH>): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableBaseLike<TA>, b: ObservableBaseLike<TB>, c: ObservableBaseLike<TC>, d: ObservableBaseLike<TD>, e: ObservableBaseLike<TE>, f: ObservableBaseLike<TF>, g: ObservableBaseLike<TG>, h: ObservableBaseLike<TH>, i: ObservableBaseLike<TI>): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
     zipWith<TA, TB>(b: EnumerableLike<TB>): PureObservableOperator<TA, Tuple2<TA, TB>>;
     zipWith<TA, TB, TC>(b: EnumerableLike<TB>, c: EnumerableLike<TC>): PureObservableOperator<TA, Tuple3<TA, TB, TC>>;
     zipWith<TA, TB, TC, TD>(b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): PureObservableOperator<TA, Tuple4<TA, TB, TC, TD>>;
@@ -629,6 +630,7 @@ export declare const pairwise: Signature["pairwise"];
 export declare const reduce: Signature["reduce"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const scanMany: Signature["scanMany"];
 export declare const range: Signature["range"];
 export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];

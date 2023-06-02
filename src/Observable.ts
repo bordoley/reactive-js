@@ -66,6 +66,7 @@ import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_scanMany from "./Observable/__internal__/Observable.scanMany.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_someSatisfy from "./Observable/__internal__/Observable.someSatisfy.js";
@@ -1128,6 +1129,11 @@ export interface ObservableModule {
     initialValue: Factory<TAcc>,
   ): PureObservableOperator<T, TAcc>;
 
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, DeferredObservableBaseLike<TAcc>>,
+    initialValue: Factory<TAcc>,
+  ): Function1<ObservableBaseLike<T>, DeferredObservableLike<TAcc>>;
+
   /**
    * @category Transform
    */
@@ -1951,25 +1957,25 @@ export interface ObservableModule {
   zipLatest<TA, TB>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
-  ): ObservableBaseLike<Tuple2<TA, TB>>;
+  ): DeferredObservableLike<Tuple2<TA, TB>>;
   zipLatest<TA, TB, TC>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
-  ): ObservableBaseLike<Tuple3<TA, TB, TC>>;
+  ): DeferredObservableLike<Tuple3<TA, TB, TC>>;
   zipLatest<TA, TB, TC, TD>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
-  ): ObservableBaseLike<Tuple4<TA, TB, TC, TD>>;
+  ): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
   zipLatest<TA, TB, TC, TD, TE>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
     c: ObservableBaseLike<TC>,
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
-  ): ObservableBaseLike<Tuple5<TA, TB, TC, TD, TE>>;
+  ): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
   zipLatest<TA, TB, TC, TD, TE, TF>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1977,7 +1983,7 @@ export interface ObservableModule {
     d: ObservableBaseLike<TD>,
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
-  ): ObservableBaseLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+  ): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1986,7 +1992,7 @@ export interface ObservableModule {
     e: ObservableBaseLike<TE>,
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
-  ): ObservableBaseLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+  ): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -1996,7 +2002,7 @@ export interface ObservableModule {
     f: ObservableBaseLike<TF>,
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
-  ): ObservableBaseLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+  ): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
   zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(
     a: ObservableBaseLike<TA>,
     b: ObservableBaseLike<TB>,
@@ -2007,7 +2013,7 @@ export interface ObservableModule {
     g: ObservableBaseLike<TG>,
     h: ObservableBaseLike<TH>,
     i: ObservableBaseLike<TI>,
-  ): ObservableBaseLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+  ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 
   zipWith<TA, TB>(
     b: EnumerableLike<TB>,
@@ -2558,6 +2564,7 @@ export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const reduce: Signature["reduce"] = Observable_reduce;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
+export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const range: Signature["range"] = Observable_range;
 export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;

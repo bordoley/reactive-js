@@ -29,6 +29,7 @@ import {
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import * as Store from "@reactive-js/core/Store";
+import * as Containers from "@reactive-js/core/Containers";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -85,7 +86,10 @@ const Measure = () => {
         Observable.distinctUntilChanged<Rect>({
           equality: (a, b) => a.width === b.width,
         }),
-        Observable.pick<Rect, "width">("width"),
+        Containers.pick<Observable.MulticastObservableContainer, Rect, "width">(
+          { map: Observable.map },
+          "width",
+        ),
         Observable.forkMerge<
           number,
           MulticastObservableLike<number>,
