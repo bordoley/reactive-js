@@ -18,6 +18,7 @@ import {
   call,
   decrement,
   decrementBy,
+  greaterThan,
   identity,
   increment,
   incrementBy,
@@ -34,9 +35,14 @@ import {
   isSome,
   isString,
   isTrue,
+  lessThan,
+  negate,
+  newInstance,
   none,
+  pick,
   pipe,
   pipeLazy,
+  returns,
 } from "../functions.js";
 
 testModule(
@@ -131,7 +137,7 @@ testModule(
         }
       }
 
-      const classInstance = new ClassWithMethod();
+      const classInstance = newInstance(ClassWithMethod);
       const boundMethod = bindMethod(classInstance, "testMethod");
 
       boundMethod();
@@ -165,6 +171,11 @@ testModule(
     ),
   ),
   describe(
+    "greaterThan",
+    testPredicateExpectingTrue(10, greaterThan(5)),
+    testPredicateExpectingFalse(10, greaterThan(100)),
+  ),
+  describe(
     "identity",
     test("returns the provided function", () => {
       const thiz = {};
@@ -196,7 +207,7 @@ testModule(
         }
       }
 
-      const instance = new TestClass();
+      const instance = newInstance(TestClass);
 
       pipe(instance, invoke("testMethod"));
       pipe(called, expectTrue);
@@ -212,8 +223,14 @@ testModule(
     ),
     describe(
       "withEqualityFunction",
-      testPredicateExpectingTrue([1], isEqualTo([1], { equality: arrayEquality() })),
-      testPredicateExpectingFalse([2], isEqualTo([1], { equality: arrayEquality() })),
+      testPredicateExpectingTrue(
+        [1],
+        isEqualTo([1], { equality: arrayEquality() }),
+      ),
+      testPredicateExpectingFalse(
+        [2],
+        isEqualTo([1], { equality: arrayEquality() }),
+      ),
     ),
   ),
   describe(
@@ -255,8 +272,14 @@ testModule(
     ),
     describe(
       "withEqualityFunction",
-      testPredicateExpectingFalse([1], isNotEqualTo([1], { equality: arrayEquality() })),
-      testPredicateExpectingTrue([2], isNotEqualTo([1], { equality: arrayEquality() })),
+      testPredicateExpectingFalse(
+        [1],
+        isNotEqualTo([1], { equality: arrayEquality() }),
+      ),
+      testPredicateExpectingTrue(
+        [2],
+        isNotEqualTo([1], { equality: arrayEquality() }),
+      ),
     ),
   ),
   describe(
@@ -271,7 +294,7 @@ testModule(
     testPredicateExpectingFalse(3, isObject),
     testPredicateExpectingTrue({}, isObject),
     testPredicateExpectingFalse("", isObject),
-    testPredicateExpectingTrue(new String(), isObject),
+    testPredicateExpectingTrue(newInstance(String), isObject),
     testPredicateExpectingFalse(() => {}, isObject),
   ),
   describe(
@@ -296,12 +319,49 @@ testModule(
     testPredicateExpectingFalse(3, isString),
     testPredicateExpectingFalse({}, isString),
     testPredicateExpectingTrue("", isString),
-    testPredicateExpectingTrue(new String(), isString),
+    testPredicateExpectingTrue(newInstance(String), isString),
     testPredicateExpectingFalse(() => {}, isString),
   ),
   describe(
     "isTrue",
     testPredicateExpectingFalse(false, isTrue),
     testPredicateExpectingTrue(true, isTrue),
+  ),
+  describe(
+    "lessThan",
+    testPredicateExpectingFalse(10, lessThan(5)),
+    testPredicateExpectingTrue(10, lessThan(100)),
+  ),
+  describe(
+    "negate",
+    testPredicateExpectingTrue(false, negate),
+    testPredicateExpectingFalse(true, negate),
+  ),
+  describe(
+    "pick",
+    test("with deeply nested object", () => {
+      const expected = "abc";
+
+      pipe(
+        {
+          a: {
+            b: {
+              c:  "abc"
+            },
+          },
+        },
+        pick("a", "b", "c"),
+        expectEquals(expected),
+      );
+    }),
+  ),
+  describe(
+    "returns",
+    test("allocated function always returns the input value", () => {
+      const result = {};
+      const f = returns(result);
+      pipe(f(), expectEquals(result));
+      pipe(f(1, 2, 3, 4, 5, 6), expectEquals(result));
+    }),
   ),
 );

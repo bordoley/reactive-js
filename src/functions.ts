@@ -1519,12 +1519,25 @@ export const partial: Signature["partial"] =
     f(arg0, ...args);
 
 export const pickUnsafe: Signature["pickUnsafe"] =
-  (...keys: (string | symbol | number)[]) =>
+  (
+    k1: string | symbol | number,
+    k2: Optional<string | symbol | number>,
+    k3: Optional<string | symbol | number>,
+    ...keys: (string | symbol | number)[]
+  ) =>
   // eslint-disable-next-line @typescript-eslint/ban-types
   (value: {}) => {
     let result: any = value;
-    for (const key of keys) {
-      result = result[key];
+
+    result = result[k1];
+    result = k2 !== none ? result[k2] : result;
+    result = k3 !== none ? result[k3] : result;
+
+    const length = keys.length;
+    if (length > 0) {
+      for (const key of keys) {
+        result = result[key];
+      }
     }
     return result;
   };
@@ -1667,7 +1680,7 @@ export const raise: Signature["raise"] = (e?: unknown) => raiseError(error(e));
 
 export const returns: Signature["returns"] =
   <T>(v: T) =>
-  (..._args: unknown[]) =>
+  () =>
     v;
 
 export const strictEquality: Signature["strictEquality"] = <T>(a: T, b: T) =>
