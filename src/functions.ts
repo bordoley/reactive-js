@@ -1,4 +1,3 @@
-import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __DEV__ } from "./__internal__/constants.js";
 
 export type Constructor<T> = new () => T;
@@ -1296,17 +1295,38 @@ interface FunctionsModule {
 
 type Signature = FunctionsModule;
 
-export const alwaysFalse: Signature["alwaysFalse"] = (..._args: unknown[]) =>
-  false;
+export const alwaysFalse: Signature["alwaysFalse"] = () => false;
 
-export const alwaysTrue: Signature["alwaysTrue"] = (..._args: unknown[]) =>
-  true;
+export const alwaysTrue: Signature["alwaysTrue"] = () => true;
 
-export const arrayEquality: Signature["arrayEquality"] =
-  <T>(valuesEquality: Equality<T> = strictEquality): Equality<readonly T[]> =>
-  (a: readonly T[], b: readonly T[]) =>
-    ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
-    a.every((v, i) => valuesEquality(b[i], v));
+const arrayStrictEquality = <T>(a: readonly T[], b: readonly T[]) => {
+  const { length } = a;
+
+  if (a === b) {
+    return true;
+  }
+
+  if (length !== b.length) {
+    return false;
+  }
+
+  for (let i = 0; i < length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export const arrayEquality: Signature["arrayEquality"] = <T>(
+  valuesEquality: Equality<T> = strictEquality,
+): Equality<readonly T[]> =>
+  valuesEquality === strictEquality
+    ? arrayStrictEquality
+    : (a: readonly T[], b: readonly T[]) =>
+        a === b ||
+        (a.length === b.length && a.every((v, i) => valuesEquality(b[i], v)));
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
@@ -1327,18 +1347,52 @@ export const call: Signature["call"] = <T>(
   ...args: readonly any[]
 ) => f.call(self, ...args);
 
-const composeUnsafe =
-  (...operators: Function1<any, unknown>[]): Function1<any, unknown> =>
+export const compose: Signature["compose"] = ((
+    op1: Function1<any, any>,
+    op2: Optional<Function1<any, any>>,
+    op3: Optional<Function1<any, any>>,
+    op4: Optional<Function1<any, any>>,
+    op5: Optional<Function1<any, any>>,
+    op6: Optional<Function1<any, any>>,
+    op7: Optional<Function1<any, any>>,
+    ...operators: Function1<any, unknown>[]
+  ): Function1<any, unknown> =>
   source =>
-    pipeUnsafe(source, ...operators);
+    pipeUnsafe(
+      source,
+      op1,
+      op2 as any,
+      op3 as any,
+      op4 as any,
+      op5 as any,
+      op6 as any,
+      op7 as any,
+      ...operators,
+    )) as Signature["compose"];
 
-export const compose: Signature["compose"] = composeUnsafe;
-
-export const composeLazy: Signature["composeLazy"] =
-  (...operators: Function1<any, unknown>[]) =>
+export const composeLazy: Signature["composeLazy"] = ((
+    op1: Function1<any, any>,
+    op2: Optional<Function1<any, any>>,
+    op3: Optional<Function1<any, any>>,
+    op4: Optional<Function1<any, any>>,
+    op5: Optional<Function1<any, any>>,
+    op6: Optional<Function1<any, any>>,
+    op7: Optional<Function1<any, any>>,
+    ...operators: Function1<any, unknown>[]
+  ) =>
   (source: unknown) =>
   () =>
-    pipeUnsafe(source, ...operators);
+    pipeUnsafe(
+      source,
+      op1,
+      op2 as any,
+      op3 as any,
+      op4 as any,
+      op5 as any,
+      op6 as any,
+      op7 as any,
+      ...operators,
+    )) as Signature["composeLazy"];
 
 export const decrement: Signature["decrement"] = (x: number) => x - 1;
 
@@ -1479,12 +1533,30 @@ export const pick: Signature["pick"] = pickUnsafe;
 
 export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   source: unknown,
+  op1: Optional<Function1<any, any>>,
+  op2: Optional<Function1<any, any>>,
+  op3: Optional<Function1<any, any>>,
+  op4: Optional<Function1<any, any>>,
+  op5: Optional<Function1<any, any>>,
+  op6: Optional<Function1<any, any>>,
+  op7: Optional<Function1<any, any>>,
   ...operators: Function1<any, any>[]
 ): unknown => {
   let acc = source;
-  const length = ReadonlyArray_getLength(operators);
-  for (let i = 0; i < length; i++) {
-    acc = operators[i](acc);
+  const { length } = operators;
+
+  acc = op1 !== none ? op1(acc) : acc;
+  acc = op2 !== none ? op2(acc) : acc;
+  acc = op3 !== none ? op3(acc) : acc;
+  acc = op4 !== none ? op4(acc) : acc;
+  acc = op5 !== none ? op5(acc) : acc;
+  acc = op6 !== none ? op6(acc) : acc;
+  acc = op7 !== none ? op7(acc) : acc;
+
+  if (length > 0) {
+    for (let i = 0; i < length; i++) {
+      acc = operators[i](acc);
+    }
   }
 
   return acc;
@@ -1497,7 +1569,7 @@ export const pipeAsync: Signature["pipeAsync"] = async (
   ...operators: Function1<unknown, unknown | Promise<unknown>>[]
 ) => {
   let acc = source;
-  const length = ReadonlyArray_getLength(operators);
+  const { length } = operators;
   for (let i = 0; i < length; i++) {
     const result = operators[i](acc);
 
@@ -1529,7 +1601,7 @@ export const pipeLazyAsync: Signature["pipeLazyAsync"] =
   ) =>
   async () => {
     let acc = source;
-    const length = ReadonlyArray_getLength(operators);
+    const { length } = operators;
     for (let i = 0; i < length; i++) {
       const result = operators[i](acc);
 

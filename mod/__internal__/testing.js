@@ -1,7 +1,6 @@
 /// <reference types="./testing.d.ts" />
 
-import ReadonlyArray_getLength from "../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
-import { arrayEquality, ignore, isNone, isSome, none, raise, strictEquality, } from "../functions.js";
+import { arrayEquality, ignore, isNone, isSome, none, pipeLazy, raise, strictEquality, } from "../functions.js";
 import { __DENO__ } from "./constants.js";
 export const DescribeType = 1;
 export const TestType = 2;
@@ -20,6 +19,8 @@ const createTest = (name, f) => ({
         f();
     },
 });
+export const testPredicateExpectingTrue = (input, predicate) => createTest(`returns true when input is ${input}`, pipeLazy(input, predicate, expectTrue));
+export const testPredicateExpectingFalse = (input, predicate) => createTest(`returns false when input is ${input}`, pipeLazy(input, predicate, expectFalse));
 export { createTest as test };
 export const testAsync = (name, f) => ({
     type: TestAsyncType,
@@ -75,10 +76,20 @@ export const expectEquals = (b, valueEquality = strictEquality) => (a) => {
         raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
     }
 };
-export const expectArrayEquals = (b, valueEquality = strictEquality) => (a) => {
-    const equals = arrayEquality(valueEquality);
+export const expectArrayEquals = (b, { valuesEquality, } = {
+    valuesEquality: strictEquality,
+}) => (a) => {
+    const equals = arrayEquality(valuesEquality);
     if (!equals(a, b)) {
         raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+    }
+};
+export const expectArrayNotEquals = (b, { valuesEquality, } = {
+    valuesEquality: strictEquality,
+}) => (a) => {
+    const equals = arrayEquality(valuesEquality);
+    if (equals(a, b)) {
+        raise(`expected ${JSON.stringify(b)}\n to not equal ${JSON.stringify(a)}`);
     }
 };
 export const expectTrue = (v) => {
@@ -111,8 +122,9 @@ export const mockFn = (retval) => {
     return cb;
 };
 export const expectToHaveBeenCalledTimes = (times) => (fn) => {
-    if (ReadonlyArray_getLength(fn.calls) !== times) {
-        raise(`expected fn to be called ${times} times, but was only called ${ReadonlyArray_getLength(fn.calls)} times.`);
+    const { length } = fn.calls;
+    if (length !== times) {
+        raise(`expected fn to be called ${times} times, but was only called ${length} times.`);
     }
 };
 export const expectPromiseToThrow = async (promise) => {

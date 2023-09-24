@@ -1,4 +1,4 @@
-import { Equality, Factory, Function1, Optional, SideEffect } from "../functions.js";
+import { Equality, Factory, Function1, Optional, Predicate, SideEffect } from "../functions.js";
 export declare const DescribeType = 1;
 export declare const TestType = 2;
 export declare const TestAsyncType = 3;
@@ -21,13 +21,20 @@ export type TestGroup = Describe | Test | TestAsync;
 declare const createDescribe: (name: string, ...tests: TestGroup[]) => Describe;
 export { createDescribe as describe };
 declare const createTest: (name: string, f: SideEffect) => Test;
+export declare const testPredicateExpectingTrue: <T>(input: T, predicate: Predicate<T>) => any;
+export declare const testPredicateExpectingFalse: <T>(input: T, predicate: Predicate<T>) => any;
 export { createTest as test };
 export declare const testAsync: (name: string, f: Factory<Promise<void>>) => TestAsync;
 export declare const expectToThrow: (f: SideEffect) => void;
 export declare const expectToThrowAsync: (f: Factory<Promise<unknown>>) => Promise<void>;
 export declare const expectToThrowError: (error: unknown) => (f: SideEffect) => void;
 export declare const expectEquals: <T>(b: T, valueEquality?: <T_1>(a: T_1, b: T_1) => boolean) => (a: T) => void;
-export declare const expectArrayEquals: <T>(b: readonly T[], valueEquality?: Equality<T>) => (a: readonly T[]) => void;
+export declare const expectArrayEquals: <T>(b: readonly T[], { valuesEquality, }?: {
+    valuesEquality: Equality<T>;
+}) => (a: readonly T[]) => void;
+export declare const expectArrayNotEquals: <T>(b: readonly T[], { valuesEquality, }?: {
+    valuesEquality: Equality<T>;
+}) => (a: readonly T[]) => void;
 export declare const expectTrue: (v: boolean) => void;
 export declare const expectFalse: (v: boolean) => void;
 export declare const expectIsNone: (v: Optional) => void;

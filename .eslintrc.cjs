@@ -16,7 +16,6 @@ module.exports = {
     "packages/*",
     "mod",
     "node_modules",
-    "symbols.in",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

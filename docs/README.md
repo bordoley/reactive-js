@@ -4,36 +4,5278 @@ Reactive-JS
 
 ## Table of contents
 
-### Modules
+### Type Aliases
 
-- [AsyncIterable](modules/AsyncIterable.md)
-- [Containers](modules/Containers.md)
-- [Dictionary](modules/Dictionary.md)
-- [Disposable](modules/Disposable.md)
-- [Enumerable](modules/Enumerable.md)
-- [EventSource](modules/EventSource.md)
-- [IndexedCollection](modules/IndexedCollection.md)
-- [Observable](modules/Observable.md)
-- [Observable/effects](modules/Observable_effects.md)
-- [PauseableObservable](modules/PauseableObservable.md)
-- [Promise](modules/Promise.md)
-- [ReadonlyArray](modules/ReadonlyArray.md)
-- [ReadonlyMap](modules/ReadonlyMap.md)
-- [ReadonlyObjectMap](modules/ReadonlyObjectMap.md)
-- [Runnable](modules/Runnable.md)
-- [Scheduler](modules/Scheduler.md)
-- [Store](modules/Store.md)
-- [Stream](modules/Stream.md)
-- [Streamable](modules/Streamable.md)
-- [functions](modules/functions.md)
-- [integrations/node/Stream](modules/integrations_node_Stream.md)
-- [integrations/react](modules/integrations_react.md)
-- [integrations/react/Scheduler](modules/integrations_react_Scheduler.md)
-- [integrations/react/web](modules/integrations_react_web.md)
-- [integrations/svelte](modules/integrations_svelte.md)
-- [integrations/web](modules/integrations_web.md)
-- [integrations/web/Element](modules/integrations_web_Element.md)
-- [integrations/web/Scheduler](modules/integrations_web_Scheduler.md)
-- [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
-- [integrations/web/effects](modules/integrations_web_effects.md)
-- [types](modules/types.md)
+- [Comparator](README.md#comparator)
+- [Constructor](README.md#constructor)
+- [Constructor1](README.md#constructor1)
+- [Constructor2](README.md#constructor2)
+- [Constructor3](README.md#constructor3)
+- [Constructor4](README.md#constructor4)
+- [Equality](README.md#equality)
+- [Factory](README.md#factory)
+- [Function1](README.md#function1)
+- [Function2](README.md#function2)
+- [Function3](README.md#function3)
+- [Function4](README.md#function4)
+- [Function5](README.md#function5)
+- [Function6](README.md#function6)
+- [Function7](README.md#function7)
+- [Function8](README.md#function8)
+- [Function9](README.md#function9)
+- [Optional](README.md#optional)
+- [Predicate](README.md#predicate)
+- [Reducer](README.md#reducer)
+- [SideEffect](README.md#sideeffect)
+- [SideEffect1](README.md#sideeffect1)
+- [SideEffect2](README.md#sideeffect2)
+- [SideEffect3](README.md#sideeffect3)
+- [SideEffect4](README.md#sideeffect4)
+- [SideEffect5](README.md#sideeffect5)
+- [SideEffect6](README.md#sideeffect6)
+- [SideEffect7](README.md#sideeffect7)
+- [Tuple2](README.md#tuple2)
+- [Tuple3](README.md#tuple3)
+- [Tuple4](README.md#tuple4)
+- [Tuple5](README.md#tuple5)
+- [Tuple6](README.md#tuple6)
+- [Tuple7](README.md#tuple7)
+- [Tuple8](README.md#tuple8)
+- [Tuple9](README.md#tuple9)
+- [TypePredicate](README.md#typepredicate)
+- [Updater](README.md#updater)
+
+### Variables
+
+- [none](README.md#none)
+
+### Functions
+
+- [alwaysFalse](README.md#alwaysfalse)
+- [alwaysTrue](README.md#alwaystrue)
+- [arrayEquality](README.md#arrayequality)
+- [bind](README.md#bind)
+- [bindMethod](README.md#bindmethod)
+- [call](README.md#call)
+- [compose](README.md#compose)
+- [composeLazy](README.md#composelazy)
+- [decrement](README.md#decrement)
+- [decrementBy](README.md#decrementby)
+- [error](README.md#error)
+- [errorWithDebugMessage](README.md#errorwithdebugmessage)
+- [greaterThan](README.md#greaterthan)
+- [identity](README.md#identity)
+- [identityLazy](README.md#identitylazy)
+- [ignore](README.md#ignore)
+- [increment](README.md#increment)
+- [incrementBy](README.md#incrementby)
+- [invoke](README.md#invoke)
+- [isEqualTo](README.md#isequalto)
+- [isEven](README.md#iseven)
+- [isFalse](README.md#isfalse)
+- [isFunction](README.md#isfunction)
+- [isNone](README.md#isnone)
+- [isNotEqualTo](README.md#isnotequalto)
+- [isNumber](README.md#isnumber)
+- [isObject](README.md#isobject)
+- [isOdd](README.md#isodd)
+- [isReadonlyArray](README.md#isreadonlyarray)
+- [isSome](README.md#issome)
+- [isString](README.md#isstring)
+- [isTrue](README.md#istrue)
+- [lessThan](README.md#lessthan)
+- [negate](README.md#negate)
+- [newInstance](README.md#newinstance)
+- [partial](README.md#partial)
+- [pick](README.md#pick)
+- [pickUnsafe](README.md#pickunsafe)
+- [pipe](README.md#pipe)
+- [pipeAsync](README.md#pipeasync)
+- [pipeLazy](README.md#pipelazy)
+- [pipeLazyAsync](README.md#pipelazyasync)
+- [pipeSome](README.md#pipesome)
+- [pipeSomeLazy](README.md#pipesomelazy)
+- [pipeUnsafe](README.md#pipeunsafe)
+- [raise](README.md#raise)
+- [raiseError](README.md#raiseerror)
+- [raiseWithDebugMessage](README.md#raisewithdebugmessage)
+- [returns](README.md#returns)
+- [strictEquality](README.md#strictequality)
+- [tuple](README.md#tuple)
+
+## Type Aliases
+
+### Comparator
+
+Ƭ **Comparator**<`T`\>: [`Function2`](README.md#function2)<`T`, `T`, `number`\>
+
+Compare two values to determine their relative ordering.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+___
+
+### Constructor
+
+Ƭ **Constructor**<`T`\>: () => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+• ()
+
+___
+
+### Constructor1
+
+Ƭ **Constructor1**<`TA`, `T`\>: (`a`: `TA`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Type declaration
+
+• (`a`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+___
+
+### Constructor2
+
+Ƭ **Constructor2**<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+___
+
+### Constructor3
+
+Ƭ **Constructor3**<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`, `c`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+___
+
+### Constructor4
+
+Ƭ **Constructor4**<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Type declaration
+
+• (`a`, `b`, `c`, `d`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+___
+
+### Equality
+
+Ƭ **Equality**<`T`\>: [`Function2`](README.md#function2)<`T`, `T`, `boolean`\>
+
+Compare two values for equality.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+___
+
+### Factory
+
+Ƭ **Factory**<`T`\>: () => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (): `T`
+
+##### Returns
+
+`T`
+
+___
+
+### Function1
+
+Ƭ **Function1**<`TA`, `T`\>: (`a`: `TA`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function2
+
+Ƭ **Function2**<`TA`, `TB`, `T`\>: (`a`: `TA`, `b`: `TB`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function3
+
+Ƭ **Function3**<`TA`, `TB`, `TC`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function4
+
+Ƭ **Function4**<`TA`, `TB`, `TC`, `TD`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function5
+
+Ƭ **Function5**<`TA`, `TB`, `TC`, `TD`, `TE`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function6
+
+Ƭ **Function6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function7
+
+Ƭ **Function7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`, `g`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function8
+
+Ƭ **Function8**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+| `h` | `TH` |
+
+##### Returns
+
+`T`
+
+___
+
+### Function9
+
+Ƭ **Function9**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`, `T`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`, `h`: `TH`, `i`: `TI`) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+| `T` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+| `h` | `TH` |
+| `i` | `TI` |
+
+##### Returns
+
+`T`
+
+___
+
+### Optional
+
+Ƭ **Optional**<`T`\>: `T` \| `undefined`
+
+Represents an unboxed value of type T or undefined.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+___
+
+### Predicate
+
+Ƭ **Predicate**<`T`\>: [`Function1`](README.md#function1)<`T`, `boolean`\>
+
+A one argument predicate function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+___
+
+### Reducer
+
+Ƭ **Reducer**<`T`, `TAcc`\>: [`Function2`](README.md#function2)<`TAcc`, `T`, `TAcc`\>
+
+A pure function that takes the current accumulator and next value,
+returning the next accumulated value.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+___
+
+### SideEffect
+
+Ƭ **SideEffect**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect1
+
+Ƭ **SideEffect1**<`TA`\>: (`a`: `TA`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+
+#### Type declaration
+
+▸ (`a`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect2
+
+Ƭ **SideEffect2**<`TA`, `TB`\>: (`a`: `TA`, `b`: `TB`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Type declaration
+
+▸ (`a`, `b`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect3
+
+Ƭ **SideEffect3**<`TA`, `TB`, `TC`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect4
+
+Ƭ **SideEffect4**<`TA`, `TB`, `TC`, `TD`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect5
+
+Ƭ **SideEffect5**<`TA`, `TB`, `TC`, `TD`, `TE`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect6
+
+Ƭ **SideEffect6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+
+##### Returns
+
+`void`
+
+___
+
+### SideEffect7
+
+Ƭ **SideEffect7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: (`a`: `TA`, `b`: `TB`, `c`: `TC`, `d`: `TD`, `e`: `TE`, `f`: `TF`, `g`: `TG`) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Type declaration
+
+▸ (`a`, `b`, `c`, `d`, `e`, `f`, `g`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+| `g` | `TG` |
+
+##### Returns
+
+`void`
+
+___
+
+### Tuple2
+
+Ƭ **Tuple2**<`TA`, `TB`\>: readonly [`TA`, `TB`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+___
+
+### Tuple3
+
+Ƭ **Tuple3**<`TA`, `TB`, `TC`\>: readonly [`TA`, `TB`, `TC`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+___
+
+### Tuple4
+
+Ƭ **Tuple4**<`TA`, `TB`, `TC`, `TD`\>: readonly [`TA`, `TB`, `TC`, `TD`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+___
+
+### Tuple5
+
+Ƭ **Tuple5**<`TA`, `TB`, `TC`, `TD`, `TE`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+___
+
+### Tuple6
+
+Ƭ **Tuple6**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+___
+
+### Tuple7
+
+Ƭ **Tuple7**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+___
+
+### Tuple8
+
+Ƭ **Tuple8**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+___
+
+### Tuple9
+
+Ƭ **Tuple9**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>: readonly [`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+___
+
+### TypePredicate
+
+Ƭ **TypePredicate**<`TA`, `TB`\>: (`v`: `TA`) => v is TB
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | extends `TA` |
+
+#### Type declaration
+
+▸ (`v`): v is TB
+
+A type guard function that performs a runtime check
+guaranteeing `v` is of type `TB`.
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `TA` |
+
+##### Returns
+
+v is TB
+
+`true` if v is an instance of type `TB`, otherwise false.
+
+___
+
+### Updater
+
+Ƭ **Updater**<`T`\>: [`Function1`](README.md#function1)<`T`, `T`\>
+
+Computes a new value of type `T` from the previous value of type `T`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+## Variables
+
+### none
+
+• `Const` **none**: `Signature`[``"none"``]
+
+## Functions
+
+### alwaysFalse
+
+▸ **alwaysFalse**(`..._args`): `boolean`
+
+A function that always returns `false`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `..._args` | `unknown`[] |
+
+#### Returns
+
+`boolean`
+
+___
+
+### alwaysTrue
+
+▸ **alwaysTrue**(`..._args`): ``true``
+
+A function that always returns `true`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `..._args` | `unknown`[] |
+
+#### Returns
+
+``true``
+
+___
+
+### arrayEquality
+
+▸ **arrayEquality**<`T`\>(`valuesEquality?`): [`Equality`](README.md#equality)<readonly `T`[]\>
+
+Returns an equality function that compares two readonly arrays for equality,
+comparing their values using `valuesEquality`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `valuesEquality?` | [`Equality`](README.md#equality)<`T`\> |
+
+#### Returns
+
+[`Equality`](README.md#equality)<readonly `T`[]\>
+
+___
+
+### bind
+
+▸ **bind**<`F`\>(`f`, `thiz`): `F`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `F` | extends `Function` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | `F` |
+| `thiz` | `unknown` |
+
+#### Returns
+
+`F`
+
+___
+
+### bindMethod
+
+▸ **bindMethod**<`T`, `TKey`\>(`thiz`, `key`): `T`[`TKey`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `thiz` | `T` |
+| `key` | `TKey` |
+
+#### Returns
+
+`T`[`TKey`]
+
+___
+
+### call
+
+▸ **call**<`TInstance`, `T`\>(`f`, `self`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | () => `T` |
+| `self` | `TInstance` |
+
+#### Returns
+
+`T`
+
+▸ **call**<`TInstance`, `T`, `TA`\>(`f`, `self`, `a`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+| `TA` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`) => `T` |
+| `self` | `TInstance` |
+| `a` | `TA` |
+
+#### Returns
+
+`T`
+
+▸ **call**<`TInstance`, `T`, `TA`, `TB`\>(`f`, `self`, `a`, `b`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TInstance` |
+| `T` |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | (`a`: `TA`, `b`: `TB`) => `T` |
+| `self` | `TInstance` |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+`T`
+
+___
+
+### compose
+
+▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](README.md#function1)<`T`, `B`\>
+
+Composes a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `B`\>
+
+▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](README.md#function1)<`T`, `B`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `B`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](README.md#function1)<`T`, `C`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `C`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](README.md#function1)<`T`, `D`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `D`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](README.md#function1)<`T`, `E`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `E`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](README.md#function1)<`T`, `F`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `F`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](README.md#function1)<`T`, `G`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `G`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](README.md#function1)<`T`, `H`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `H`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](README.md#function1)<`T`, `I`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `I`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](README.md#function1)<`T`, `J`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `J`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](README.md#function1)<`T`, `K`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `K`\>
+
+▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](README.md#function1)<`T`, `L`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `L`\>
+
+___
+
+### composeLazy
+
+▸ **composeLazy**<`T`, `A`\>(`op1`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`A`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`A`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`B`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`B`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`C`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`D`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`D`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`E`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`E`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`F`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`F`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`G`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`G`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`H`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`H`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`I`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`I`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`J`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`J`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`K`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`K`\>\>
+
+▸ **composeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`L`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, [`Factory`](README.md#factory)<`L`\>\>
+
+___
+
+### decrement
+
+▸ **decrement**(`x`): `number`
+
+An updater function that returns the result of decrementing `x`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+#### Returns
+
+`number`
+
+___
+
+### decrementBy
+
+▸ **decrementBy**(`decr`): [`Updater`](README.md#updater)<`number`\>
+
+Returns a function that decrements a number `x` by the value `decr`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `decr` | `number` |
+
+#### Returns
+
+[`Updater`](README.md#updater)<`number`\>
+
+___
+
+### error
+
+▸ **error**(`message?`): `Error`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message?` | `unknown` |
+
+#### Returns
+
+`Error`
+
+___
+
+### errorWithDebugMessage
+
+▸ **errorWithDebugMessage**(`message`): `Error`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+
+#### Returns
+
+`Error`
+
+___
+
+### greaterThan
+
+▸ **greaterThan**(`v`): [`Predicate`](README.md#predicate)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `number` |
+
+#### Returns
+
+[`Predicate`](README.md#predicate)<`number`\>
+
+___
+
+### identity
+
+▸ **identity**<`T`\>(`v`): `T`
+
+The identity function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+`T`
+
+`v`
+
+___
+
+### identityLazy
+
+▸ **identityLazy**<`T`\>(): [`Updater`](README.md#updater)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Updater`](README.md#updater)<`T`\>
+
+___
+
+### ignore
+
+▸ **ignore**(`..._args`): `void`
+
+A function that always returns `undefined`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `..._args` | `unknown`[] |
+
+#### Returns
+
+`void`
+
+___
+
+### increment
+
+▸ **increment**(`x`): `number`
+
+An updater function that returns the result of incrementing `x`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `x` | `number` |
+
+#### Returns
+
+`number`
+
+___
+
+### incrementBy
+
+▸ **incrementBy**(`incr`): [`Updater`](README.md#updater)<`number`\>
+
+Returns a function that increments a number `x` by the value `incr`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `incr` | `number` |
+
+#### Returns
+
+[`Updater`](README.md#updater)<`number`\>
+
+___
+
+### invoke
+
+▸ **invoke**<`T`, `TKey`\>(`method`, `...args`): [`Function1`](README.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
+
+Enables invoking a method on an object as a unary function within
+a pipeline operation.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Record`<`TKey`, (...`args`: `any`[]) => `any`\> |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | `TKey` |
+| `...args` | `Parameters`<`T`[`TKey`]\> |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `ReturnType`<`T`[`TKey`]\>\>
+
+___
+
+### isEqualTo
+
+▸ **isEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](README.md#predicate)<`T`\>
+
+Returns a predicate function comparing its argument to `b` using the
+provided `equality` function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](README.md#equality)<`T`\> |
+
+#### Returns
+
+[`Predicate`](README.md#predicate)<`T`\>
+
+___
+
+### isEven
+
+▸ **isEven**(`a`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `number` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isFalse
+
+▸ **isFalse**(`v`): v is false
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `boolean` |
+
+#### Returns
+
+v is false
+
+___
+
+### isFunction
+
+▸ **isFunction**(`f`): f is Function
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | `unknown` |
+
+#### Returns
+
+f is Function
+
+___
+
+### isNone
+
+▸ **isNone**<`T`\>(`option`): option is undefined
+
+Returns true if `option` is `none`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `option` | [`Optional`](README.md#optional)<`T`\> |
+
+#### Returns
+
+option is undefined
+
+___
+
+### isNotEqualTo
+
+▸ **isNotEqualTo**<`T`\>(`b`, `options?`): [`Predicate`](README.md#predicate)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `T` |
+| `options?` | `Object` |
+| `options.equality?` | [`Equality`](README.md#equality)<`T`\> |
+
+#### Returns
+
+[`Predicate`](README.md#predicate)<`T`\>
+
+___
+
+### isNumber
+
+▸ **isNumber**(`n`): n is number
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `unknown` |
+
+#### Returns
+
+n is number
+
+___
+
+### isObject
+
+▸ **isObject**(`o`): o is object
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `unknown` |
+
+#### Returns
+
+o is object
+
+___
+
+### isOdd
+
+▸ **isOdd**(`a`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `number` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isReadonlyArray
+
+▸ **isReadonlyArray**<`T`\>(`o`): o is readonly T[]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `unknown` |
+
+#### Returns
+
+o is readonly T[]
+
+___
+
+### isSome
+
+▸ **isSome**<`T`\>(`v`): v is T
+
+Returns true if `option` is not `none`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | [`Optional`](README.md#optional)<`T`\> |
+
+#### Returns
+
+v is T
+
+___
+
+### isString
+
+▸ **isString**(`o`): o is string
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `unknown` |
+
+#### Returns
+
+o is string
+
+___
+
+### isTrue
+
+▸ **isTrue**(`v`): v is true
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `boolean` |
+
+#### Returns
+
+v is true
+
+___
+
+### lessThan
+
+▸ **lessThan**(`v`): [`Predicate`](README.md#predicate)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `number` |
+
+#### Returns
+
+[`Predicate`](README.md#predicate)<`number`\>
+
+___
+
+### negate
+
+▸ **negate**(`v`): `boolean`
+
+Applies logical negation to the value `v`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `boolean` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### newInstance
+
+▸ **newInstance**<`T`\>(`Constructor`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor`](README.md#constructor)<`T`\> |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`T`, `TA`\>(`Constructor`, `a`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor1`](README.md#constructor1)<`TA`, `T`\> |
+| `a` | `TA` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`T`, `TA`, `TB`\>(`Constructor`, `a`, `b`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor2`](README.md#constructor2)<`TA`, `TB`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`T`, `TA`, `TB`, `TC`\>(`Constructor`, `a`, `b`, `c`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor3`](README.md#constructor3)<`TA`, `TB`, `TC`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+`T`
+
+▸ **newInstance**<`T`, `TA`, `TB`, `TC`, `TD`\>(`Constructor`, `a`, `b`, `c`, `d`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Constructor` | [`Constructor4`](README.md#constructor4)<`TA`, `TB`, `TC`, `TD`, `T`\> |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+#### Returns
+
+`T`
+
+___
+
+### partial
+
+▸ **partial**<`TA`, `TB`, `TOut`\>(`b`): [`Function1`](README.md#function1)<[`Function2`](README.md#function2)<`TA`, `TB`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `TB` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<[`Function2`](README.md#function2)<`TA`, `TB`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+▸ **partial**<`TA`, `TB`, `TC`, `TOut`\>(`b`, `c`): [`Function1`](README.md#function1)<[`Function3`](README.md#function3)<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<[`Function3`](README.md#function3)<`TA`, `TB`, `TC`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+▸ **partial**<`TA`, `TB`, `TC`, `TD`, `TOut`\>(`b`, `c`, `d`): [`Function1`](README.md#function1)<[`Function4`](README.md#function4)<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TOut` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<[`Function4`](README.md#function4)<`TA`, `TB`, `TC`, `TD`, `TOut`\>, [`Function1`](README.md#function1)<`TA`, `TOut`\>\>
+
+___
+
+### pick
+
+▸ **pick**<`T`, `TKey`\>(`key`): [`Function1`](README.md#function1)<`T`, `T`[`TKey`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `TKey` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `T`[`TKey`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Function1`](README.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Function1`](README.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+
+#### Returns
+
+[`Function1`](README.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+___
+
+### pickUnsafe
+
+▸ **pickUnsafe**<`T`\>(`...keys`): [`Function1`](README.md#function1)<{}, `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...keys` | (`string` \| `number` \| `symbol`)[] |
+
+#### Returns
+
+[`Function1`](README.md#function1)<{}, `T`\>
+
+___
+
+### pipe
+
+▸ **pipe**<`T`, `A`\>(`src`, `op1`): `A`
+
+Pipes `source` through a series of unary functions.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+`A`
+
+▸ **pipe**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `B`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+`B`
+
+▸ **pipe**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `C`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+`C`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `D`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+`D`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `E`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+`E`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `F`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+`F`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `G`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+`G`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `H`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+`H`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `I`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+`I`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `J`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+`J`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `K`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+`K`
+
+▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `L`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+`L`
+
+___
+
+### pipeAsync
+
+▸ **pipeAsync**<`T`, `A`\>(`src`, `op1`): `Promise`<`A`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+
+#### Returns
+
+`Promise`<`A`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `Promise`<`B`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+
+#### Returns
+
+`Promise`<`B`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `Promise`<`C`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+
+#### Returns
+
+`Promise`<`C`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `Promise`<`D`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+
+#### Returns
+
+`Promise`<`D`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `Promise`<`E`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+
+#### Returns
+
+`Promise`<`E`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `Promise`<`F`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+
+#### Returns
+
+`Promise`<`F`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `Promise`<`G`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+
+#### Returns
+
+`Promise`<`G`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `Promise`<`H`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+
+#### Returns
+
+`Promise`<`H`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `Promise`<`I`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+
+#### Returns
+
+`Promise`<`I`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `Promise`<`J`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+
+#### Returns
+
+`Promise`<`J`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `Promise`<`K`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+
+#### Returns
+
+`Promise`<`K`\>
+
+▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `Promise`<`L`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+
+#### Returns
+
+`Promise`<`L`\>
+
+___
+
+### pipeLazy
+
+▸ **pipeLazy**<`T`, `A`\>(`src`, `op1`): [`Factory`](README.md#factory)<`A`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`A`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](README.md#factory)<`B`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`B`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](README.md#factory)<`C`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`C`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](README.md#factory)<`D`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`D`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](README.md#factory)<`E`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`E`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](README.md#factory)<`F`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`F`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](README.md#factory)<`G`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`G`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](README.md#factory)<`H`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`H`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](README.md#factory)<`I`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`I`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](README.md#factory)<`J`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`J`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](README.md#factory)<`K`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`K`\>
+
+▸ **pipeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](README.md#factory)<`L`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`L`\>
+
+___
+
+### pipeLazyAsync
+
+▸ **pipeLazyAsync**<`T`, `A`\>(`src`, `op1`): [`Factory`](README.md#factory)<`Promise`<`A`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`A`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](README.md#factory)<`Promise`<`B`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`B`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](README.md#factory)<`Promise`<`C`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`C`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](README.md#factory)<`Promise`<`D`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`D`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](README.md#factory)<`Promise`<`E`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`E`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](README.md#factory)<`Promise`<`F`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`F`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](README.md#factory)<`Promise`<`G`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`G`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](README.md#factory)<`Promise`<`H`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`H`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](README.md#factory)<`Promise`<`I`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`I`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](README.md#factory)<`Promise`<`J`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`J`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](README.md#factory)<`Promise`<`K`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`K`\>\>
+
+▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](README.md#factory)<`Promise`<`L`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | `T` |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A` \| `Promise`<`A`\>\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B` \| `Promise`<`B`\>\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C` \| `Promise`<`C`\>\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D` \| `Promise`<`D`\>\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E` \| `Promise`<`E`\>\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F` \| `Promise`<`F`\>\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G` \| `Promise`<`G`\>\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H` \| `Promise`<`H`\>\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I` \| `Promise`<`I`\>\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J` \| `Promise`<`J`\>\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K` \| `Promise`<`K`\>\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L` \| `Promise`<`L`\>\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`Promise`<`L`\>\>
+
+___
+
+### pipeSome
+
+▸ **pipeSome**<`T`, `A`\>(`src`, `op1`): [`Optional`](README.md#optional)<`A`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`A`\>
+
+▸ **pipeSome**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Optional`](README.md#optional)<`B`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`B`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Optional`](README.md#optional)<`C`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`C`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Optional`](README.md#optional)<`D`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`D`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Optional`](README.md#optional)<`E`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`E`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Optional`](README.md#optional)<`F`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`F`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Optional`](README.md#optional)<`G`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`G`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Optional`](README.md#optional)<`H`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`H`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Optional`](README.md#optional)<`I`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`I`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Optional`](README.md#optional)<`J`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`J`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Optional`](README.md#optional)<`K`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`K`\>
+
+▸ **pipeSome**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Optional`](README.md#optional)<`L`\>
+
+Pipes `source` through a series of unary functions if it is not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Optional`](README.md#optional)<`L`\>
+
+___
+
+### pipeSomeLazy
+
+▸ **pipeSomeLazy**<`T`, `A`\>(`src`, `op1`): [`Factory`](README.md#factory)<`A`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`A`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](README.md#factory)<`B`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`B`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](README.md#factory)<`C`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`C`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](README.md#factory)<`D`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`D`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](README.md#factory)<`E`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`E`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](README.md#factory)<`F`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`F`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](README.md#factory)<`G`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`G`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](README.md#factory)<`H`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`H`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](README.md#factory)<`I`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`I`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](README.md#factory)<`J`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`J`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](README.md#factory)<`K`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`K`\>
+
+▸ **pipeSomeLazy**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](README.md#factory)<`L`\>
+
+Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `A` |
+| `B` |
+| `C` |
+| `D` |
+| `E` |
+| `F` |
+| `G` |
+| `H` |
+| `I` |
+| `J` |
+| `K` |
+| `L` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `src` | [`Optional`](README.md#optional)<`T`\> |
+| `op1` | [`Function1`](README.md#function1)<`T`, `A`\> |
+| `op2` | [`Function1`](README.md#function1)<`A`, `B`\> |
+| `op3` | [`Function1`](README.md#function1)<`B`, `C`\> |
+| `op4` | [`Function1`](README.md#function1)<`C`, `D`\> |
+| `op5` | [`Function1`](README.md#function1)<`D`, `E`\> |
+| `op6` | [`Function1`](README.md#function1)<`E`, `F`\> |
+| `op7` | [`Function1`](README.md#function1)<`F`, `G`\> |
+| `op8` | [`Function1`](README.md#function1)<`G`, `H`\> |
+| `op9` | [`Function1`](README.md#function1)<`H`, `I`\> |
+| `op10` | [`Function1`](README.md#function1)<`I`, `J`\> |
+| `op11` | [`Function1`](README.md#function1)<`J`, `K`\> |
+| `op12` | [`Function1`](README.md#function1)<`K`, `L`\> |
+
+#### Returns
+
+[`Factory`](README.md#factory)<`L`\>
+
+___
+
+### pipeUnsafe
+
+▸ **pipeUnsafe**<`T`\>(`source`, `...operators`): `T`
+
+Pipes `source` through a series of unary functions.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `source` | `unknown` |
+| `...operators` | [`Function1`](README.md#function1)<`any`, `any`\>[] |
+
+#### Returns
+
+`T`
+
+___
+
+### raise
+
+▸ **raise**<`T`\>(`e?`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e?` | `unknown` |
+
+#### Returns
+
+`T`
+
+___
+
+### raiseError
+
+▸ **raiseError**<`T`\>(`e`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e` | `Error` |
+
+#### Returns
+
+`T`
+
+___
+
+### raiseWithDebugMessage
+
+▸ **raiseWithDebugMessage**<`T`\>(`message`): `T`
+
+Throws a javascript error using the provided message.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+
+#### Returns
+
+`T`
+
+___
+
+### returns
+
+▸ **returns**<`T`\>(`v`): (...`_args`: `unknown`[]) => `T`
+
+Returns a function that takes an arbitrary number of arguments and always returns `v`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+`fn`
+
+▸ (`..._args`): `T`
+
+Returns a function that takes an arbitrary number of arguments and always returns `v`.
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `..._args` | `unknown`[] |
+
+##### Returns
+
+`T`
+
+___
+
+### strictEquality
+
+▸ **strictEquality**<`T`\>(`a`, `b`): `boolean`
+
+The javascript strict equality function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `T` |
+| `b` | `T` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### tuple
+
+▸ **tuple**<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](README.md#tuple2)<`TA`, `TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+
+#### Returns
+
+[`Tuple2`](README.md#tuple2)<`TA`, `TB`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Tuple3`](README.md#tuple3)<`TA`, `TB`, `TC`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Tuple3`](README.md#tuple3)<`TA`, `TB`, `TC`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`): [`Tuple4`](README.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+
+#### Returns
+
+[`Tuple4`](README.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>

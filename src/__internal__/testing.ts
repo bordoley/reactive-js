@@ -1,15 +1,16 @@
-import ReadonlyArray_getLength from "../ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import {
   Equality,
   Factory,
   Function1,
   Optional,
+  Predicate,
   SideEffect,
   arrayEquality,
   ignore,
   isNone,
   isSome,
   none,
+  pipeLazy,
   raise,
   strictEquality,
 } from "../functions.js";
@@ -55,6 +56,24 @@ const createTest = (name: string, f: SideEffect): Test => ({
     f();
   },
 });
+
+export const testPredicateExpectingTrue = <T>(
+  input: T,
+  predicate: Predicate<T>,
+): any =>
+  createTest(
+    `returns true when input is ${input}`,
+    pipeLazy(input, predicate, expectTrue),
+  );
+
+export const testPredicateExpectingFalse = <T>(
+  input: T,
+  predicate: Predicate<T>,
+): any =>
+  createTest(
+    `returns false when input is ${input}`,
+    pipeLazy(input, predicate, expectFalse),
+  );
 
 export { createTest as test };
 
@@ -126,11 +145,40 @@ export const expectEquals =
   };
 
 export const expectArrayEquals =
-  <T>(b: readonly T[], valueEquality: Equality<T> = strictEquality) =>
+  <T>(
+    b: readonly T[],
+    {
+      valuesEquality,
+    }: {
+      valuesEquality: Equality<T>;
+    } = {
+      valuesEquality: strictEquality,
+    },
+  ) =>
   (a: readonly T[]) => {
-    const equals = arrayEquality(valueEquality);
+    const equals = arrayEquality(valuesEquality);
     if (!equals(a, b)) {
       raise(`expected ${JSON.stringify(b)}\nreceieved: ${JSON.stringify(a)}`);
+    }
+  };
+
+export const expectArrayNotEquals =
+  <T>(
+    b: readonly T[],
+    {
+      valuesEquality,
+    }: {
+      valuesEquality: Equality<T>;
+    } = {
+      valuesEquality: strictEquality,
+    },
+  ) =>
+  (a: readonly T[]) => {
+    const equals = arrayEquality(valuesEquality);
+    if (equals(a, b)) {
+      raise(
+        `expected ${JSON.stringify(b)}\n to not equal ${JSON.stringify(a)}`,
+      );
     }
   };
 
@@ -176,11 +224,10 @@ export const mockFn = (retval?: unknown): MockFunction => {
 
 export const expectToHaveBeenCalledTimes =
   (times: number) => (fn: MockFunction) => {
-    if (ReadonlyArray_getLength(fn.calls) !== times) {
+    const { length } = fn.calls;
+    if (length !== times) {
       raise(
-        `expected fn to be called ${times} times, but was only called ${ReadonlyArray_getLength(
-          fn.calls,
-        )} times.`,
+        `expected fn to be called ${times} times, but was only called ${length} times.`,
       );
     }
   };

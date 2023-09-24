@@ -1,18 +1,33 @@
 /// <reference types="./functions.d.ts" />
 
-import ReadonlyArray_getLength from "./ReadonlyArray/__internal__/ReadonlyArray.getLength.js";
 import { __DEV__ } from "./__internal__/constants.js";
-export const alwaysFalse = (..._args) => false;
-export const alwaysTrue = (..._args) => true;
-export const arrayEquality = (valuesEquality = strictEquality) => (a, b) => ReadonlyArray_getLength(a) === ReadonlyArray_getLength(b) &&
-    a.every((v, i) => valuesEquality(b[i], v));
+export const alwaysFalse = () => false;
+export const alwaysTrue = () => true;
+const arrayStrictEquality = (a, b) => {
+    const { length } = a;
+    if (a === b) {
+        return true;
+    }
+    if (length !== b.length) {
+        return false;
+    }
+    for (let i = 0; i < length; i++) {
+        if (a[i] !== b[i]) {
+            return false;
+        }
+    }
+    return true;
+};
+export const arrayEquality = (valuesEquality = strictEquality) => valuesEquality === strictEquality
+    ? arrayStrictEquality
+    : (a, b) => a === b ||
+        (a.length === b.length && a.every((v, i) => valuesEquality(b[i], v)));
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const bind = (f, thiz) => f.bind(thiz);
 export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
-const composeUnsafe = (...operators) => source => pipeUnsafe(source, ...operators);
-export const compose = composeUnsafe;
-export const composeLazy = (...operators) => (source) => () => pipeUnsafe(source, ...operators);
+export const compose = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => source => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
+export const composeLazy = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => (source) => () => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
 export const decrement = (x) => x - 1;
 export const decrementBy = (decr) => (x) => x - decr;
 export const identity = (v) => v;
@@ -71,18 +86,27 @@ export const pickUnsafe = (...keys) =>
     return result;
 };
 export const pick = pickUnsafe;
-export const pipeUnsafe = ((source, ...operators) => {
+export const pipeUnsafe = ((source, op1, op2, op3, op4, op5, op6, op7, ...operators) => {
     let acc = source;
-    const length = ReadonlyArray_getLength(operators);
-    for (let i = 0; i < length; i++) {
-        acc = operators[i](acc);
+    const { length } = operators;
+    acc = op1 !== none ? op1(acc) : acc;
+    acc = op2 !== none ? op2(acc) : acc;
+    acc = op3 !== none ? op3(acc) : acc;
+    acc = op4 !== none ? op4(acc) : acc;
+    acc = op5 !== none ? op5(acc) : acc;
+    acc = op6 !== none ? op6(acc) : acc;
+    acc = op7 !== none ? op7(acc) : acc;
+    if (length > 0) {
+        for (let i = 0; i < length; i++) {
+            acc = operators[i](acc);
+        }
     }
     return acc;
 });
 export const pipe = pipeUnsafe;
 export const pipeAsync = async (source, ...operators) => {
     let acc = source;
-    const length = ReadonlyArray_getLength(operators);
+    const { length } = operators;
     for (let i = 0; i < length; i++) {
         const result = operators[i](acc);
         if (isPromise(result)) {
@@ -100,7 +124,7 @@ export const pipeAsync = async (source, ...operators) => {
 export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
 export const pipeLazyAsync = (source, ...operators) => async () => {
     let acc = source;
-    const length = ReadonlyArray_getLength(operators);
+    const { length } = operators;
     for (let i = 0; i < length; i++) {
         const result = operators[i](acc);
         if (isPromise(result)) {
