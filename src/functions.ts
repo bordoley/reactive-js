@@ -1645,7 +1645,7 @@ export const pipeSomeLazy: Signature["pipeSomeLazy"] =
     source: Optional,
     ...operators: Function1<unknown, unknown>[]
   ): Factory<unknown> =>
-  () =>
+  () => 
     isSome(source) ? pipeUnsafe(source, ...operators) : none;
 
 export const error: Signature["error"] = (message?: unknown) => {

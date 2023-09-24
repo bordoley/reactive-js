@@ -76,12 +76,18 @@ export const negate = (v) => !v;
 export const newInstance = (Constructor, ...args) => new Constructor(...args);
 export const none = undefined;
 export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
-export const pickUnsafe = (...keys) => 
+export const pickUnsafe = (k1, k2, k3, ...keys) => 
 // eslint-disable-next-line @typescript-eslint/ban-types
 (value) => {
     let result = value;
-    for (const key of keys) {
-        result = result[key];
+    result = result[k1];
+    result = k2 !== none ? result[k2] : result;
+    result = k3 !== none ? result[k3] : result;
+    const length = keys.length;
+    if (length > 0) {
+        for (const key of keys) {
+            result = result[key];
+        }
     }
     return result;
 };
@@ -163,6 +169,6 @@ export const raiseError = (e) => {
 };
 export const raiseWithDebugMessage = (message) => raiseError(error(__DEV__ ? message : none));
 export const raise = (e) => raiseError(error(e));
-export const returns = (v) => (..._args) => v;
+export const returns = (v) => () => v;
 export const strictEquality = (a, b) => a === b;
 export const tuple = ((...v) => v);

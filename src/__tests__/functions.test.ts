@@ -43,6 +43,7 @@ import {
   pipe,
   pipeLazy,
   returns,
+  tuple,
 } from "../functions.js";
 
 testModule(
@@ -346,7 +347,7 @@ testModule(
         {
           a: {
             b: {
-              c:  "abc"
+              c: "abc",
             },
           },
         },
@@ -363,5 +364,12 @@ testModule(
       pipe(f(), expectEquals(result));
       pipe(f(1, 2, 3, 4, 5, 6), expectEquals(result));
     }),
+  ),
+  describe(
+    "tuple",
+    test(
+      "returns a tuple of the provided values",
+      pipeLazy(tuple(1, 2, 3), expectArrayEquals([1, 2, 3])),
+    ),
   ),
 );
