@@ -10,9 +10,9 @@
 
   ↳ [`VirtualTimeSchedulerLike`](concurrent.VirtualTimeSchedulerLike.md)
 
-  ↳ [`SinkLike`](events.SinkLike.md)
-
   ↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
+
+  ↳ [`SinkLike`](rx.SinkLike.md)
 
   ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
 

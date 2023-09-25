@@ -4,30 +4,18 @@
 
 ## Table of contents
 
-### Interactive Interfaces
-
-- [StreamLike](../interfaces/rx.StreamLike.md)
-- [StreamableLike](../interfaces/rx.StreamableLike.md)
-
-### Observable Interfaces
-
-- [DeferredObservableLike](../interfaces/rx.DeferredObservableLike.md)
-- [ReplayObservableLike](../interfaces/rx.ReplayObservableLike.md)
-- [RunnableLike](../interfaces/rx.RunnableLike.md)
-
-### Other Interfaces
+### Interfaces
 
 - [DispatcherLike](../interfaces/rx.DispatcherLike.md)
 - [DispatcherLikeEventMap](../interfaces/rx.DispatcherLikeEventMap.md)
-- [MulticastObservableLike](../interfaces/rx.MulticastObservableLike.md)
-- [ObservableLike](../interfaces/rx.ObservableLike.md)
-- [ObserverLike](../interfaces/rx.ObserverLike.md)
-- [PauseableObservableLike](../interfaces/rx.PauseableObservableLike.md)
-- [PureObservableLike](../interfaces/rx.PureObservableLike.md)
-
-### Interactive Type Aliases
-
-- [StreamOf](rx.md#streamof)
+- [ErrorSafeEventListenerLike](../interfaces/rx.ErrorSafeEventListenerLike.md)
+- [EventListenerLike](../interfaces/rx.EventListenerLike.md)
+- [EventSourceLike](../interfaces/rx.EventSourceLike.md)
+- [PauseableLike](../interfaces/rx.PauseableLike.md)
+- [PublisherLike](../interfaces/rx.PublisherLike.md)
+- [SinkLike](../interfaces/rx.SinkLike.md)
+- [StoreLike](../interfaces/rx.StoreLike.md)
+- [WritableStoreLike](../interfaces/rx.WritableStoreLike.md)
 
 ### Variables
 
@@ -35,26 +23,14 @@
 - [DispatcherLikeEvent\_completed](rx.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](rx.md#dispatcherlikeevent_ready)
 - [DispatcherLike\_complete](rx.md#dispatcherlike_complete)
-- [ObservableLike\_isDeferred](rx.md#observablelike_isdeferred)
-- [ObservableLike\_isPure](rx.md#observablelike_ispure)
-- [ObservableLike\_isRunnable](rx.md#observablelike_isrunnable)
-- [ObservableLike\_observe](rx.md#observablelike_observe)
-- [ReplayObservableLike\_buffer](rx.md#replayobservablelike_buffer)
-- [StreamLike\_scheduler](rx.md#streamlike_scheduler)
-- [StreamableLike\_TStream](rx.md#streamablelike_tstream)
-- [StreamableLike\_stream](rx.md#streamablelike_stream)
-
-## Interactive Type Aliases
-
-### StreamOf
-
-Ƭ **StreamOf**<`TStreamable`\>: `NonNullable`<`TStreamable`[typeof [`StreamableLike_TStream`](rx.md#streamablelike_tstream)]\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TStreamable` | extends [`StreamableLike`](../interfaces/rx.StreamableLike.md) |
+- [EventListenerLike\_isErrorSafe](rx.md#eventlistenerlike_iserrorsafe)
+- [EventSourceLike\_addEventListener](rx.md#eventsourcelike_addeventlistener)
+- [PauseableLike\_isPaused](rx.md#pauseablelike_ispaused)
+- [PauseableLike\_pause](rx.md#pauseablelike_pause)
+- [PauseableLike\_resume](rx.md#pauseablelike_resume)
+- [PublisherLike\_listenerCount](rx.md#publisherlike_listenercount)
+- [SinkLike\_notify](rx.md#sinklike_notify)
+- [StoreLike\_value](rx.md#storelike_value)
 
 ## Variables
 
@@ -82,48 +58,48 @@ ___
 
 ___
 
-### ObservableLike\_isDeferred
+### EventListenerLike\_isErrorSafe
 
-• `Const` **ObservableLike\_isDeferred**: unique `symbol`
-
-___
-
-### ObservableLike\_isPure
-
-• `Const` **ObservableLike\_isPure**: unique `symbol`
+• `Const` **EventListenerLike\_isErrorSafe**: unique `symbol`
 
 ___
 
-### ObservableLike\_isRunnable
+### EventSourceLike\_addEventListener
 
-• `Const` **ObservableLike\_isRunnable**: unique `symbol`
-
-___
-
-### ObservableLike\_observe
-
-• `Const` **ObservableLike\_observe**: unique `symbol`
+• `Const` **EventSourceLike\_addEventListener**: unique `symbol`
 
 ___
 
-### ReplayObservableLike\_buffer
+### PauseableLike\_isPaused
 
-• `Const` **ReplayObservableLike\_buffer**: unique `symbol`
-
-___
-
-### StreamLike\_scheduler
-
-• `Const` **StreamLike\_scheduler**: unique `symbol`
+• `Const` **PauseableLike\_isPaused**: unique `symbol`
 
 ___
 
-### StreamableLike\_TStream
+### PauseableLike\_pause
 
-• `Const` **StreamableLike\_TStream**: unique `symbol`
+• `Const` **PauseableLike\_pause**: unique `symbol`
 
 ___
 
-### StreamableLike\_stream
+### PauseableLike\_resume
 
-• `Const` **StreamableLike\_stream**: unique `symbol`
+• `Const` **PauseableLike\_resume**: unique `symbol`
+
+___
+
+### PublisherLike\_listenerCount
+
+• `Const` **PublisherLike\_listenerCount**: unique `symbol`
+
+___
+
+### SinkLike\_notify
+
+• `Const` **SinkLike\_notify**: unique `symbol`
+
+___
+
+### StoreLike\_value
+
+• `Const` **StoreLike\_value**: unique `symbol`

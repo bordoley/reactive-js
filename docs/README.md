@@ -14,7 +14,6 @@ Reactive-JS
 - [collections/ReadonlyMap](modules/collections_ReadonlyMap.md)
 - [collections/ReadonlyObjectMap](modules/collections_ReadonlyObjectMap.md)
 - [concurrent](modules/concurrent.md)
-- [events](modules/events.md)
 - [functions](modules/functions.md)
 - [ix](modules/ix.md)
 - [rx](modules/rx.md)

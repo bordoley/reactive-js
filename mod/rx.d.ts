@@ -1,7 +1,56 @@
-import { IndexedCollectionLike } from "./collections.js";
-import { PauseableLike, SchedulerLike } from "./concurrent.js";
-import { EventSourceLike, SinkLike } from "./events.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
+import { DisposableLike, QueueableLike } from "./utils.js";
+export declare const SinkLike_notify: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> extends DisposableLike {
+    /**
+     * Notifies the sink of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [SinkLike_notify](event: T): void;
+}
+export declare const EventListenerLike_isErrorSafe: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface EventListenerLike<T = unknown> extends SinkLike<T> {
+    readonly [EventListenerLike_isErrorSafe]: boolean;
+}
+/**
+ * @noInheritDoc
+ */
+export interface ErrorSafeEventListenerLike<T = unknown> extends EventListenerLike<T> {
+    readonly [EventListenerLike_isErrorSafe]: true;
+}
+export declare const EventSourceLike_addEventListener: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface EventSourceLike<T = unknown> {
+    [EventSourceLike_addEventListener](listener: EventListenerLike<T>): void;
+}
+export declare const PublisherLike_listenerCount: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface PublisherLike<T = unknown> extends EventSourceLike<T>, ErrorSafeEventListenerLike<T> {
+    readonly [PublisherLike_listenerCount]: number;
+}
+export declare const StoreLike_value: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface StoreLike<T = unknown> extends EventSourceLike<T> {
+    readonly [StoreLike_value]: T;
+}
+/**
+ * @noInheritDoc
+ */
+export interface WritableStoreLike<T = unknown> extends StoreLike<T> {
+    [StoreLike_value]: T;
+}
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;
@@ -26,119 +75,23 @@ export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSour
      */
     [DispatcherLike_complete](): void;
 }
+export declare const PauseableLike_isPaused: unique symbol;
+export declare const PauseableLike_pause: unique symbol;
+export declare const PauseableLike_resume: unique symbol;
 /**
- * A consumer of push-based notifications.
- *
  * @noInheritDoc
  */
-export interface ObserverLike<T = unknown> extends DispatcherLike<T>, SinkLike<T>, SchedulerLike {
-}
-export declare const ObservableLike_isDeferred: unique symbol;
-export declare const ObservableLike_isPure: unique symbol;
-export declare const ObservableLike_isRunnable: unique symbol;
-export declare const ObservableLike_observe: unique symbol;
-export interface ObservableLike<T = unknown> {
+export interface PauseableLike {
     /**
-     * Indicates if the `ObservableLike` is deferred, ie. cold.
+     * Boolean flag indicating if the PauseableLike is currently paused or not.
      */
-    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [PauseableLike_isPaused]: StoreLike<boolean>;
     /**
-     * Indicates if subscribing to the `ObservableLike` is free of side-effects
+     * Imperatively pause the source.
      */
-    readonly [ObservableLike_isPure]: boolean;
+    [PauseableLike_pause](): void;
     /**
-     * Indicates if the `ObservableLike` supports being subscribed to
-     * on a VirtualTimeScheduler.
+     * Imperatively resume the source.
      */
-    readonly [ObservableLike_isRunnable]: boolean;
-    /**
-     * Subscribes the given `ObserverLike` to the `ObservableLike` source.
-     *
-     * @param observer - The observer.
-     */
-    [ObservableLike_observe](observer: ObserverLike<T>): void;
-}
-/**
- * @noInheritDoc
- */
-export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
-    [ObservableLike_isPure]: true;
-}
-/**
- * @noInheritDoc
- */
-export interface MulticastObservableLike<T = unknown> extends PureObservableLike<T> {
-    readonly [ObservableLike_isDeferred]: false;
-    readonly [ObservableLike_isRunnable]: false;
-}
-export declare const ReplayObservableLike_buffer: unique symbol;
-/**
- * A stateful ObservableLike resource.
- *
- * @noInheritDoc
- * @category Observable
- */
-export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
-    readonly [ReplayObservableLike_buffer]: IndexedCollectionLike<T>;
-}
-export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
-}
-export declare const StreamLike_scheduler: unique symbol;
-/**
- * Represents a duplex stream
- *
- * @noInheritDoc
- * @category Interactive
- */
-export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
-    readonly [StreamLike_scheduler]: SchedulerLike;
-}
-export declare const StreamableLike_TStream: unique symbol;
-export declare const StreamableLike_stream: unique symbol;
-/**
- * A container that supports bi-directional streaming.
- *
- * @typeparam TReq
- * @typeparam T
- * @typeparam TStream
- *
- * @noInheritDoc
- * @category Interactive
- */
-export interface StreamableLike<TReq = unknown, T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
-    readonly [StreamableLike_TStream]?: TStream;
-    /**
-     * Subscribe to the Streamable.
-     *
-     * @param scheduler - The scheduler to subscribe to the stream with.
-     * @param options
-     */
-    [StreamableLike_stream](scheduler: SchedulerLike, options?: {
-        /**
-         * The number of items to buffer for replay when an observer subscribes
-         * to the stream.
-         */
-        readonly replay?: number;
-        /**
-         * The capacity of the stream's request queue.
-         */
-        readonly capacity?: number;
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): TStream & DisposableLike;
-}
-/** @category Interactive */
-export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
-/**
- * @noInheritDoc
- * @category Observable
- */
-export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_isDeferred]: true;
-}
-/**
- * @noInheritDoc
- * @category Observable
- */
-export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
-    readonly [ObservableLike_isRunnable]: true;
+    [PauseableLike_resume](): void;
 }

@@ -17,13 +17,13 @@ be dispatched from any execution constext.
 
 - [`QueueableLike`](utils.QueueableLike.md)<`T`\>
 
-- [`EventSourceLike`](events.EventSourceLike.md)<[`DispatcherLikeEventMap`](rx.DispatcherLikeEventMap.md)[keyof [`DispatcherLikeEventMap`](rx.DispatcherLikeEventMap.md)]\>
+- [`EventSourceLike`](rx.EventSourceLike.md)<[`DispatcherLikeEventMap`](rx.DispatcherLikeEventMap.md)[keyof [`DispatcherLikeEventMap`](rx.DispatcherLikeEventMap.md)]\>
 
   ↳ **`DispatcherLike`**
 
-  ↳↳ [`ObserverLike`](rx.ObserverLike.md)
+  ↳↳ [`ObserverLike`](concurrent.ObserverLike.md)
 
-  ↳↳ [`StreamLike`](rx.StreamLike.md)
+  ↳↳ [`StreamLike`](concurrent.StreamLike.md)
 
 ## Table of contents
 
