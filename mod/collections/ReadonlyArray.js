@@ -3,8 +3,6 @@
 import { Container_type, } from "../collections.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
-import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
 import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";
@@ -20,8 +18,6 @@ import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__internal__/ReadonlyAr
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 export const empty = ReadonlyArray_empty;
 export const entries = ReadonlyArray_entries;
-export const forEach = ReadonlyArray_forEach;
-export const forEachWithKey = ReadonlyArray_forEachWithKey;
 export const keep = ReadonlyArray_keep;
 export const keepWithKey = ReadonlyArray_keepWithKey;
 export const keys = ReadonlyArray_keys;

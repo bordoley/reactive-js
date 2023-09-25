@@ -8,7 +8,3 @@ export const SerialDisposableLike_current = Symbol("SerialDisposableLike_current
 export const QueueableLike_backpressureStrategy = Symbol("QueueableLike_backpressureStrategy");
 export const QueueableLike_capacity = Symbol("QueueableLike_capacity");
 export const QueueableLike_enqueue = Symbol("QueueableLike_enqueue");
-export const EnumeratorLike_current = Symbol("EnumeratorLike_current");
-export const EnumeratorLike_hasCurrent = Symbol("EnumeratorLike_hasCurrent");
-export const EnumeratorLike_isCompleted = Symbol("EnumeratorLike_isCompleted");
-export const EnumeratorLike_move = Symbol("EnumeratorLike_move");

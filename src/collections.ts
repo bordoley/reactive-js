@@ -6,8 +6,6 @@ import type {
   Optional,
   Predicate,
   Reducer,
-  SideEffect1,
-  SideEffect2,
   Tuple2,
 } from "./functions.js";
 
@@ -132,26 +130,6 @@ export interface CollectionModule<C extends Container> {
     ContainerOf<C, T, TKey>,
     Iterator<Tuple2<TKey, T>>
   >;
-
-  /**
-   * Returns a ContainerOperator that applies the side effect function to each
-   * value emitted by the source.
-   *
-   * @category Operator
-   */
-  forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    effect: SideEffect1<T>,
-  ): ContainerOperator<C, T, T, TKey>;
-
-  /**
-   * Returns a ContainerOperator that applies the side effect function to each
-   * value emitted by the source.
-   *
-   * @category Operator
-   */
-  forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(
-    effect: SideEffect2<T, TKey>,
-  ): ContainerOperator<C, T, T, TKey>;
 
   /**
    * Returns a ContainerOperator that only emits items produced by the

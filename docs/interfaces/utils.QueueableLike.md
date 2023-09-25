@@ -12,6 +12,12 @@ An interface for types that support buffering items with backpressure.
 | :------ | :------ |
 | `T` | `unknown` |
 
+## Hierarchy
+
+- **`QueueableLike`**
+
+  ↳ [`DispatcherLike`](rx.DispatcherLike.md)
+
 ## Table of contents
 
 ### Properties

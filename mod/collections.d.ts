@@ -1,4 +1,4 @@
-import type { Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, SideEffect1, SideEffect2, Tuple2 } from "./functions.js";
+import type { Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, Tuple2 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: unique symbol;
 export declare const Container_T: unique symbol;
 export declare const Container_type: unique symbol;
@@ -85,20 +85,6 @@ export interface CollectionModule<C extends Container> {
      * @category Transform
      */
     entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<ContainerOf<C, T, TKey>, Iterator<Tuple2<TKey, T>>>;
-    /**
-     * Returns a ContainerOperator that applies the side effect function to each
-     * value emitted by the source.
-     *
-     * @category Operator
-     */
-    forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect1<T>): ContainerOperator<C, T, T, TKey>;
-    /**
-     * Returns a ContainerOperator that applies the side effect function to each
-     * value emitted by the source.
-     *
-     * @category Operator
-     */
-    forEachWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(effect: SideEffect2<T, TKey>): ContainerOperator<C, T, T, TKey>;
     /**
      * Returns a ContainerOperator that only emits items produced by the
      * source that satisfy the specified predicate.

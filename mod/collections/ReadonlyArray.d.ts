@@ -17,8 +17,6 @@ export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {
 export type Signature = ReadonlyArrayModule;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
-export declare const forEach: Signature["forEach"];
-export declare const forEachWithKey: Signature["forEachWithKey"];
 export declare const keep: Signature["keep"];
 export declare const keepWithKey: Signature["keepWithKey"];
 export declare const keys: Signature["keys"];

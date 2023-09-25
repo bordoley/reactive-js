@@ -8,9 +8,13 @@
 
 - **`DisposableLike`**
 
-  ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
+  ↳ [`VirtualTimeSchedulerLike`](concurrent.VirtualTimeSchedulerLike.md)
 
-  ↳ [`EnumeratorLike`](utils.EnumeratorLike.md)
+  ↳ [`SinkLike`](events.SinkLike.md)
+
+  ↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
+
+  ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
 
 ## Table of contents
 

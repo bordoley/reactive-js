@@ -7,8 +7,6 @@ import {
 } from "../collections.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
-import ReadonlyArray_forEach from "./ReadonlyArray/__internal__/ReadonlyArray.forEach.js";
-import ReadonlyArray_forEachWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.forEachWithKey.js";
 import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keepWithKey from "./ReadonlyArray/__internal__/ReadonlyArray.keepWithKey.js";
 import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";
@@ -44,9 +42,6 @@ export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {}
 export type Signature = ReadonlyArrayModule;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
-export const forEach: Signature["forEach"] = ReadonlyArray_forEach;
-export const forEachWithKey: Signature["forEachWithKey"] =
-  ReadonlyArray_forEachWithKey;
 export const keep: Signature["keep"] = ReadonlyArray_keep;
 export const keepWithKey: Signature["keepWithKey"] = ReadonlyArray_keepWithKey;
 export const keys: Signature["keys"] = ReadonlyArray_keys;

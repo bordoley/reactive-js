@@ -1,5 +1,5 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { Factory, invoke, isFunction, pipe } from "../../../functions.js";
+import { Factory, isFunction, pipe } from "../../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 
 const Disposable_usingImpl = (
@@ -18,7 +18,9 @@ const Disposable_usingImpl = (
   try {
     return f(...disposables);
   } finally {
-    pipe(disposables, ReadonlyArray.forEach(invoke(DisposableLike_dispose)));
+    for (const disposable of disposables) {
+      disposable[DisposableLike_dispose]();
+    }
   }
 };
 

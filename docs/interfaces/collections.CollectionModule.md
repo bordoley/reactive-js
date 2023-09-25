@@ -24,8 +24,6 @@
 
 ### Operator Methods
 
-- [forEach](collections.CollectionModule.md#foreach)
-- [forEachWithKey](collections.CollectionModule.md#foreachwithkey)
 - [keep](collections.CollectionModule.md#keep)
 - [keepWithKey](collections.CollectionModule.md#keepwithkey)
 - [map](collections.CollectionModule.md#map)
@@ -64,58 +62,6 @@ Return an Container that emits no items.
 ___
 
 ## Operator Methods
-
-### forEach
-
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](../modules/collections.md#containeroperator)<`C`, `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/collections.md#containeroperator)<`C`, `T`, `T`, `TKey`\>
-
-___
-
-### forEachWithKey
-
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](../modules/collections.md#containeroperator)<`C`, `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect2`](../modules/functions.md#sideeffect2)<`T`, `TKey`\> |
-
-#### Returns
-
-[`ContainerOperator`](../modules/collections.md#containeroperator)<`C`, `T`, `T`, `TKey`\>
-
-___
 
 ### keep
 

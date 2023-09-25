@@ -7,7 +7,6 @@
 ### Interfaces
 
 - [DisposableLike](../interfaces/utils.DisposableLike.md)
-- [EnumeratorLike](../interfaces/utils.EnumeratorLike.md)
 - [QueueableLike](../interfaces/utils.QueueableLike.md)
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
 
@@ -17,10 +16,6 @@
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
 - [DisposableLike\_isDisposed](utils.md#disposablelike_isdisposed)
-- [EnumeratorLike\_current](utils.md#enumeratorlike_current)
-- [EnumeratorLike\_hasCurrent](utils.md#enumeratorlike_hascurrent)
-- [EnumeratorLike\_isCompleted](utils.md#enumeratorlike_iscompleted)
-- [EnumeratorLike\_move](utils.md#enumeratorlike_move)
 - [QueueableLike\_backpressureStrategy](utils.md#queueablelike_backpressurestrategy)
 - [QueueableLike\_capacity](utils.md#queueablelike_capacity)
 - [QueueableLike\_enqueue](utils.md#queueablelike_enqueue)
@@ -49,30 +44,6 @@ ___
 ### DisposableLike\_isDisposed
 
 • `Const` **DisposableLike\_isDisposed**: unique `symbol`
-
-___
-
-### EnumeratorLike\_current
-
-• `Const` **EnumeratorLike\_current**: unique `symbol`
-
-___
-
-### EnumeratorLike\_hasCurrent
-
-• `Const` **EnumeratorLike\_hasCurrent**: unique `symbol`
-
-___
-
-### EnumeratorLike\_isCompleted
-
-• `Const` **EnumeratorLike\_isCompleted**: unique `symbol`
-
-___
-
-### EnumeratorLike\_move
-
-• `Const` **EnumeratorLike\_move**: unique `symbol`
 
 ___
 

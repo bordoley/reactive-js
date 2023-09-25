@@ -24,8 +24,6 @@
 
 ### Operator Functions
 
-- [forEach](collections_ReadonlyArray.md#foreach)
-- [forEachWithKey](collections_ReadonlyArray.md#foreachwithkey)
 - [keep](collections_ReadonlyArray.md#keep)
 - [keepWithKey](collections_ReadonlyArray.md#keepwithkey)
 - [map](collections_ReadonlyArray.md#map)
@@ -84,58 +82,6 @@ readonly `T`[]
 ___
 
 ## Operator Functions
-
-### forEach
-
-▸ **forEach**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect1`](functions.md#sideeffect1)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-___
-
-### forEachWithKey
-
-▸ **forEachWithKey**<`T`, `TKey`\>(`effect`): [`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that applies the side effect function to each
-value emitted by the source.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `effect` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
-
-#### Returns
-
-[`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-___
 
 ### keep
 
