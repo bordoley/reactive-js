@@ -16,39 +16,39 @@ import { DisposableLike } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Publisher_create from "../../Publisher/__internal__/Publisher.create.js";
 
-export const LazyInitEventMixin_eventPublisher = Symbol(
-  "LazyInitEventMixin_eventPublisher",
+export const LazyInitEventSourceMixin_publisher = Symbol(
+  "LazyInitEventSourceMixin_publisher",
 );
 
-export interface LazyInitEventSource<T> extends EventSourceLike<T> {
-  readonly [LazyInitEventMixin_eventPublisher]: Optional<EventListenerLike<T>>;
+export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
+  readonly [LazyInitEventSourceMixin_publisher]: Optional<EventListenerLike<T>>;
 }
 
-const EventSource_lazyInitPublisherMixin: <T>() => Mixin<
-  LazyInitEventSource<T> & DisposableLike,
+const EventSource_lazyInitMixin: <T>() => Mixin<
+  LazyInitEventSourceLike<T> & DisposableLike,
   DisposableLike
 > = /*@__PURE__*/ (<T>() => {
   type TProperties = {
-    [LazyInitEventMixin_eventPublisher]: Optional<PublisherLike<T>>;
+    [LazyInitEventSourceMixin_publisher]: Optional<PublisherLike<T>>;
   };
 
   return returns(
     mix<
       Function1<
         EventSourceLike<T> & TProperties & DisposableLike,
-        LazyInitEventSource<T> & DisposableLike
+        LazyInitEventSourceLike<T> & DisposableLike
       >,
       ReturnType<typeof props<TProperties>>,
       EventSourceLike<T>,
       DisposableLike
     >(
-      function LazyInitEventPublisher(
+      function LazyInitEventSourceMixin(
         instance: EventSourceLike<T> & TProperties & DisposableLike,
-      ): LazyInitEventSource<T> & DisposableLike {
+      ): LazyInitEventSourceLike<T> & DisposableLike {
         return instance;
       },
       props<TProperties>({
-        [LazyInitEventMixin_eventPublisher]: none,
+        [LazyInitEventSourceMixin_publisher]: none,
       }),
       {
         [EventSourceLike_addEventListener](
@@ -56,13 +56,13 @@ const EventSource_lazyInitPublisherMixin: <T>() => Mixin<
           listener: EventListenerLike<T>,
         ): void {
           const publisher =
-            this[LazyInitEventMixin_eventPublisher] ??
+            this[LazyInitEventSourceMixin_publisher] ??
             (() => {
               const publisher = pipe(
                 Publisher_create(),
                 Disposable.addTo(this),
               );
-              this[LazyInitEventMixin_eventPublisher] = publisher;
+              this[LazyInitEventSourceMixin_publisher] = publisher;
               return publisher;
             })();
 
@@ -73,4 +73,4 @@ const EventSource_lazyInitPublisherMixin: <T>() => Mixin<
   );
 })();
 
-export default EventSource_lazyInitPublisherMixin;
+export default EventSource_lazyInitMixin;
