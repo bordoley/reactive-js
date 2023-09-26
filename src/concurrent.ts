@@ -1,6 +1,12 @@
 import { IndexedCollectionLike } from "./collections.js";
 import { SideEffect1 } from "./functions.js";
-import { DispatcherLike, PauseableLike, SinkLike } from "./rx.js";
+import { EnumerableLike } from "./ix.js";
+import {
+  DispatcherLike,
+  EventSourceLike,
+  PauseableLike,
+  SinkLike,
+} from "./rx.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -265,3 +271,9 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
+
+export type Observableish<T> =
+  | ObservableLike<T>
+  | EnumerableLike<T>
+  | EventSourceLike<T>
+  | Iterable<T>;

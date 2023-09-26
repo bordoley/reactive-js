@@ -14,6 +14,8 @@
 
   ↳ [`SinkLike`](rx.SinkLike.md)
 
+  ↳ [`DelegatingDisposableLike`](utils.DelegatingDisposableLike.md)
+
   ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
 
 ## Table of contents

@@ -30,6 +30,10 @@
 
 - [StreamOf](concurrent.md#streamof)
 
+### Other Type Aliases
+
+- [Observableish](concurrent.md#observableish)
+
 ### Variables
 
 - [ObservableLike\_isDeferred](concurrent.md#observablelike_isdeferred)
@@ -60,6 +64,20 @@
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
+
+___
+
+## Other Type Aliases
+
+### Observableish
+
+Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 ## Variables
 

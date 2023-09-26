@@ -33,6 +33,16 @@ export interface DisposableLike {
   [DisposableLike_dispose](error?: Error): void;
 }
 
+export const DelegatingDisposableLike_delegate = Symbol(
+  "DelegatingDisposableLike_delegate",
+);
+
+export interface DelegatingDisposableLike<
+  TDisposable extends DisposableLike = DisposableLike,
+> extends DisposableLike {
+  readonly [DelegatingDisposableLike_delegate]: TDisposable;
+}
+
 export const SerialDisposableLike_current = Symbol(
   "SerialDisposableLike_current",
 );

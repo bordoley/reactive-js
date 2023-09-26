@@ -6,12 +6,14 @@
 
 ### Interfaces
 
+- [DelegatingDisposableLike](../interfaces/utils.DelegatingDisposableLike.md)
 - [DisposableLike](../interfaces/utils.DisposableLike.md)
 - [QueueableLike](../interfaces/utils.QueueableLike.md)
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
 
 ### Variables
 
+- [DelegatingDisposableLike\_delegate](utils.md#delegatingdisposablelike_delegate)
 - [DisposableLike\_add](utils.md#disposablelike_add)
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
@@ -22,6 +24,12 @@
 - [SerialDisposableLike\_current](utils.md#serialdisposablelike_current)
 
 ## Variables
+
+### DelegatingDisposableLike\_delegate
+
+• `Const` **DelegatingDisposableLike\_delegate**: unique `symbol`
+
+___
 
 ### DisposableLike\_add
 

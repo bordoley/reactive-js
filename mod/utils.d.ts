@@ -27,6 +27,10 @@ export interface DisposableLike {
      */
     [DisposableLike_dispose](error?: Error): void;
 }
+export declare const DelegatingDisposableLike_delegate: unique symbol;
+export interface DelegatingDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
+    readonly [DelegatingDisposableLike_delegate]: TDisposable;
+}
 export declare const SerialDisposableLike_current: unique symbol;
 export interface SerialDisposableLike<TDisposable extends DisposableLike = DisposableLike> extends DisposableLike {
     get [SerialDisposableLike_current](): TDisposable;
