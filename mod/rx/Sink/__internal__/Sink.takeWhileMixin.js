@@ -10,7 +10,7 @@ const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
 const Sink_takeWhileMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin()), function TakeWhileSinkMixin(instance, delegate, predicate, inclusive) {
     init(Disposable_delegatingMixin(), instance, delegate);
     instance[TakeWhileSinkMixin_predicate] = predicate;
-    instance[TakeWhileSinkMixin_inclusive] = inclusive;
+    instance[TakeWhileSinkMixin_inclusive] = inclusive ?? false;
     return instance;
 }, props({
     [TakeWhileSinkMixin_predicate]: none,

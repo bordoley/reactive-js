@@ -1,4 +1,4 @@
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import {
   Mixin2,
   include,
@@ -6,7 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { returns } from "../../../functions.js";
+import { Optional, returns } from "../../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../../rx.js";
 import {
   DelegatingDisposableLike,
@@ -17,14 +17,14 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 
 const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 
-export interface TProperties {
+interface TProperties {
   [TakeFirstSinkMixin_count]: number;
 }
 
 const Sink_takeFirstMixin: <T>() => Mixin2<
   SinkLike<T>,
   SinkLike<T>,
-  number,
+  Optional<number>,
   unknown,
   Pick<SinkLike<T>, typeof SinkLike_notify>
 > = /*@__PURE__*/ (<T>() =>
@@ -34,10 +34,12 @@ const Sink_takeFirstMixin: <T>() => Mixin2<
       function TakeFirstSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> & TProperties,
         delegate: SinkLike<T>,
-        takeCount: number,
+        takeCount: Optional<number>,
       ): SinkLike<T> {
         init(Disposable_delegatingMixin<SinkLike<T>>(), instance, delegate);
-        instance[TakeFirstSinkMixin_count] = takeCount;
+        instance[TakeFirstSinkMixin_count] = clampPositiveInteger(
+          takeCount ?? 1,
+        );
 
         if (takeCount === 0) {
           instance[DisposableLike_dispose]();

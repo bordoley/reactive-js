@@ -13,9 +13,6 @@ const EventSource_takeWhile =
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
-    return (predicate, options = {}) => {
-        const { inclusive = false } = options;
-        return pipe((createTakeWhileEventListener), partial(predicate, inclusive), EventSource_lift);
-    };
+    return (predicate, options = {}) => pipe((createTakeWhileEventListener), partial(predicate, options.inclusive), EventSource_lift);
 })();
 export default EventSource_takeWhile;

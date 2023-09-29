@@ -5,7 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { Predicate, partial, pipe } from "../../../functions.js";
+import { Optional, Predicate, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
@@ -19,7 +19,7 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
     const createTakeWhileEventListener: <T>(
       delegate: EventListenerLike<T>,
       predicate: Predicate<T>,
-      inclusive: boolean,
+      inclusive: Optional<boolean>,
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
@@ -31,7 +31,7 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
             >,
             delegate: EventListenerLike<T>,
             predicate: Predicate<T>,
-            inclusive: boolean,
+            inclusive: Optional<boolean>,
           ): EventListenerLike<T> {
             init(
               Sink_takeWhileMixin<T>(),
@@ -53,14 +53,12 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
     return <T>(
       predicate: Predicate<T>,
       options: { readonly inclusive?: boolean } = {},
-    ) => {
-      const { inclusive = false } = options;
-      return pipe(
+    ) =>
+      pipe(
         createTakeWhileEventListener<T>,
-        partial(predicate, inclusive),
+        partial(predicate, options.inclusive),
         EventSource_lift,
       );
-    };
   })();
 
 export default EventSource_takeWhile;

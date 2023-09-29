@@ -16,7 +16,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
 const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
 
-export interface TProperties<T> {
+interface TProperties<T> {
   [PairwiseSinkMixin_hasPrev]: boolean;
   [PairwiseSinkMixin_prev]: T;
 }

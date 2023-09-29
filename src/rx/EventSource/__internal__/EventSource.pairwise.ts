@@ -14,33 +14,31 @@ import type * as EventSource from "../../EventSource.js";
 import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
-const EventSource_pairwise: EventSource.Signature["pairwise"] =
-  /*@__PURE__*/ (() => {
-    const createPairwiseEventListener: <T>(
-      delegate: EventListenerLike<Tuple2<T, T>>,
-    ) => EventListenerLike<T> = (<T>() =>
-      createInstanceFactory(
-        mix(
-          include(Sink_pairwiseMixin()),
-          function PairwiseEventListener(
-            instance: Pick<
-              EventListenerLike<T>,
-              typeof EventListenerLike_isErrorSafe
-            >,
-            delegate: EventListenerLike<Tuple2<T, T>>,
-          ): EventListenerLike<T> {
-            init(Sink_pairwiseMixin<T>(), instance, delegate);
+const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<
+  T,
+>() => {
+  const createPairwiseEventListener = createInstanceFactory(
+    mix(
+      include(Sink_pairwiseMixin()),
+      function PairwiseEventListener(
+        instance: Pick<
+          EventListenerLike<T>,
+          typeof EventListenerLike_isErrorSafe
+        >,
+        delegate: EventListenerLike<Tuple2<T, T>>,
+      ): EventListenerLike<T> {
+        init(Sink_pairwiseMixin<T>(), instance, delegate);
 
-            return instance;
-          },
-          props({}),
-          {
-            [EventListenerLike_isErrorSafe]: false,
-          },
-        ),
-      ))();
+        return instance;
+      },
+      props({}),
+      {
+        [EventListenerLike_isErrorSafe]: false,
+      },
+    ),
+  );
 
-    return pipe(createPairwiseEventListener, EventSource_lift, returns);
-  })();
+  return pipe(createPairwiseEventListener, EventSource_lift, returns);
+})();
 
 export default EventSource_pairwise;

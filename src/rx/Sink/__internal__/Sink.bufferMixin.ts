@@ -1,3 +1,5 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   Mixin3,
   include,
@@ -5,7 +7,13 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { SideEffect1, none, pipe, returns } from "../../../functions.js";
+import {
+  Optional,
+  SideEffect1,
+  none,
+  pipe,
+  returns,
+} from "../../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -35,12 +43,14 @@ const Sink_bufferMixin: <T>() => Mixin3<
       function BufferSinkMixin(
         instance: Pick<SinkLike<T>, typeof SinkLike_notify> & TProps<T>,
         delegate: SinkLike<readonly T[]>,
-        count: number,
+        count: Optional<number>,
         onComplete: SideEffect1<readonly T[]>,
       ): SinkLike<T> {
         init(Disposable_mixin, instance, delegate);
         instance[BufferSinkMixin_delegate] = delegate;
-        instance[BufferSinkMixin_count] = count;
+        instance[BufferSinkMixin_count] = clampPositiveNonZeroInteger(
+          count ?? MAX_SAFE_INTEGER,
+        );
         instance[BufferSinkMixin_buffer] = [];
 
         pipe(

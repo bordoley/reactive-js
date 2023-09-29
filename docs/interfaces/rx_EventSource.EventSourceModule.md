@@ -16,6 +16,7 @@
 - [map](rx_EventSource.EventSourceModule.md#map)
 - [merge](rx_EventSource.EventSourceModule.md#merge)
 - [mergeMany](rx_EventSource.EventSourceModule.md#mergemany)
+- [mergeWith](rx_EventSource.EventSourceModule.md#mergewith)
 - [pairwise](rx_EventSource.EventSourceModule.md#pairwise)
 - [scan](rx_EventSource.EventSourceModule.md#scan)
 - [skipFirst](rx_EventSource.EventSourceModule.md#skipfirst)
@@ -138,7 +139,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`TB`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`TA`\>\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`TA`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`TB`\>\>
 
 #### Type parameters
 
@@ -155,7 +156,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`TB`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`TA`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`TA`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`TB`\>\>
 
 ___
 
@@ -202,6 +203,29 @@ ___
 #### Returns
 
 [`EventSourceLike`](rx.EventSourceLike.md)<`T`\>
+
+___
+
+### mergeWith
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EventSourceLike`](rx.EventSourceLike.md)<`T`\> |
+| `...tail` | readonly [`EventSourceLike`](rx.EventSourceLike.md)<`T`\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](rx.EventSourceLike.md)<`T`\>\>
 
 ___
 

@@ -1,7 +1,9 @@
 /// <reference types="./Sink.bufferMixin.d.ts" />
 
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
+import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { none, pipe, returns } from "../../../functions.js";
+import { none, pipe, returns, } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
@@ -12,7 +14,7 @@ const BufferSinkMixin_count = Symbol("BufferingLike_count");
 const Sink_bufferMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_mixin), function BufferSinkMixin(instance, delegate, count, onComplete) {
     init(Disposable_mixin, instance, delegate);
     instance[BufferSinkMixin_delegate] = delegate;
-    instance[BufferSinkMixin_count] = count;
+    instance[BufferSinkMixin_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
     instance[BufferSinkMixin_buffer] = [];
     pipe(instance, Disposable.addTo(delegate), Disposable.onComplete(() => {
         const { [BufferSinkMixin_buffer]: buffer } = instance;

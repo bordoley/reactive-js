@@ -17,6 +17,7 @@ import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__internal__/EventSource.merge.js";
 import EventSource_mergeMany from "./EventSource/__internal__/EventSource.mergeMany.js";
+import EventSource_mergeWith from "./EventSource/__internal__/EventSource.mergeWith.js";
 import EventSource_pairwise from "./EventSource/__internal__/EventSource.pairwise.js";
 import EventSource_scan from "./EventSource/__internal__/EventSource.scan.js";
 import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFirst.js";
@@ -44,7 +45,7 @@ export interface EventSourceModule {
 
   map<TA, TB>(
     selector: Function1<TA, TB>,
-  ): Function1<EventSourceLike<TB>, EventSourceLike<TA>>;
+  ): Function1<EventSourceLike<TA>, EventSourceLike<TB>>;
 
   merge<T>(
     fst: EventSourceLike<T>,
@@ -53,6 +54,11 @@ export interface EventSourceModule {
   ): EventSourceLike<T>;
 
   mergeMany<T>(eventSources: readonly EventSourceLike<T>[]): EventSourceLike<T>;
+
+  mergeWith<T>(
+    snd: EventSourceLike<T>,
+    ...tail: readonly EventSourceLike<T>[]
+  ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
 
   pairwise<T>(): Function1<EventSourceLike<T>, EventSourceLike<Tuple2<T, T>>>;
 
@@ -87,6 +93,7 @@ export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const merge: Signature["merge"] = EventSource_merge;
 export const mergeMany: Signature["mergeMany"] = EventSource_mergeMany;
+export const mergeWith: Signature["mergeWith"] = EventSource_mergeWith;
 export const pairwise: Signature["pairwise"] = EventSource_pairwise;
 export const scan: Signature["scan"] = EventSource_scan;
 export const skipFirst: Signature["skipFirst"] = EventSource_skipFirst;

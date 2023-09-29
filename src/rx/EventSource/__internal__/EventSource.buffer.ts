@@ -1,5 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
-import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -22,7 +20,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
   /*@__PURE__*/ (() => {
     const createBufferEventListener: <T>(
       delegate: EventListenerLike<readonly T[]>,
-      count: number,
+      count: Optional<number>,
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
@@ -33,7 +31,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
               typeof EventListenerLike_isErrorSafe
             >,
             delegate: EventListenerLike<readonly T[]>,
-            count: number,
+            count: Optional<number>,
           ): EventListenerLike<T> {
             const onComplete = (buffer: readonly T[]) => {
               let err: Optional<Error> = none;
@@ -58,9 +56,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
     return (options?: { count?: number }) =>
       pipe(
         createBufferEventListener,
-        partial(
-          clampPositiveNonZeroInteger(options?.count ?? MAX_SAFE_INTEGER),
-        ),
+        partial(options?.count),
         EventSource_lift,
       );
   })();

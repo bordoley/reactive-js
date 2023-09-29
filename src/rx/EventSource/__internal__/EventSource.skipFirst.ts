@@ -1,4 +1,3 @@
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import {
   createInstanceFactory,
   include,
@@ -6,7 +5,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { partial, pipe } from "../../../functions.js";
+import { Optional, partial, pipe } from "../../../functions.js";
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
@@ -19,7 +18,7 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
   /*@__PURE__*/ (() => {
     const createSkipFirstEventListener: <T>(
       delegate: EventListenerLike<T>,
-      count: number,
+      count: Optional<number>,
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
@@ -30,7 +29,7 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
               typeof EventListenerLike_isErrorSafe
             >,
             delegate: EventListenerLike<T>,
-            count: number,
+            count: Optional<number>,
           ): EventListenerLike<T> {
             init(Sink_skipFirstMixin<T>(), instance, delegate, count);
 
@@ -43,14 +42,12 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
         ),
       ))();
 
-    return <T>(options: { readonly count?: number } = {}) => {
-      const count = clampPositiveInteger(options.count ?? 1);
-      return pipe(
+    return <T>(options: { readonly count?: number } = {}) =>
+      pipe(
         createSkipFirstEventListener<T>,
-        partial(count),
+        partial(options.count),
         EventSource_lift,
       );
-    };
   })();
 
 export default EventSource_skipFirst;

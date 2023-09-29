@@ -1,6 +1,6 @@
 /// <reference types="./Sink.takeFirstMixin.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { returns } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
@@ -9,7 +9,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 const Sink_takeFirstMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin()), function TakeFirstSinkMixin(instance, delegate, takeCount) {
     init(Disposable_delegatingMixin(), instance, delegate);
-    instance[TakeFirstSinkMixin_count] = takeCount;
+    instance[TakeFirstSinkMixin_count] = clampPositiveInteger(takeCount ?? 1);
     if (takeCount === 0) {
         instance[DisposableLike_dispose]();
     }

@@ -1,6 +1,5 @@
 /// <reference types="./EventSource.skipFirst.d.ts" />
 
-import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, } from "../../../rx.js";
@@ -14,9 +13,6 @@ const EventSource_skipFirst =
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,
     })))();
-    return (options = {}) => {
-        const count = clampPositiveInteger(options.count ?? 1);
-        return pipe((createSkipFirstEventListener), partial(count), EventSource_lift);
-    };
+    return (options = {}) => pipe((createSkipFirstEventListener), partial(options.count), EventSource_lift);
 })();
 export default EventSource_skipFirst;

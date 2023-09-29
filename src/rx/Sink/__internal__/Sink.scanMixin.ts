@@ -17,7 +17,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
 
-export interface TProperties<T, TAcc> {
+interface TProperties<T, TAcc> {
   [ScanSinkMixin_acc]: TAcc;
   [ScanSinkMixin_reducer]: Reducer<T, TAcc>;
 }

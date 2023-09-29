@@ -15,7 +15,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 
 const KeepSinkMixin_predicate = Symbol("KeepSinkMixin_predicate");
 
-export interface TProperties<T> {
+interface TProperties<T> {
   [KeepSinkMixin_predicate]: Predicate<T>;
 }
 

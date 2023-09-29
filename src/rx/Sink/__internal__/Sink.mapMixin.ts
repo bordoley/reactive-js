@@ -15,7 +15,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 
 const MapSinkMixin_selector = Symbol("MapSinkMixin_selector");
 
-export interface TProperties<TA, TB> {
+interface TProperties<TA, TB> {
   [MapSinkMixin_selector]: Function1<TA, TB>;
 }
 

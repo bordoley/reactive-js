@@ -1,6 +1,6 @@
 /// <reference types="./Sink.skipFirstMixin.d.ts" />
 
-import { max } from "../../../__internal__/math.js";
+import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { returns } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
@@ -9,7 +9,7 @@ import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/D
 const SkipFirstSinkMixin_count = Symbol("SkipFirstSinkMixin_count");
 const Sink_skipFirstMixin = /*@__PURE__*/ (() => returns(mix(include(Disposable_delegatingMixin()), function SkipFirstSinkMixin(instance, delegate, skipCount) {
     init(Disposable_delegatingMixin(), instance, delegate);
-    instance[SkipFirstSinkMixin_count] = skipCount;
+    instance[SkipFirstSinkMixin_count] = clampPositiveInteger(skipCount ?? 1);
     return instance;
 }, props({
     [SkipFirstSinkMixin_count]: 0,
