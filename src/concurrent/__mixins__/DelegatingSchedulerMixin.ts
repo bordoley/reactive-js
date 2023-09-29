@@ -13,17 +13,17 @@ import { Function2, SideEffect1, none, pipe } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 
-const DelegatingSchedulerImplementationMixin: Mixin1<
+const DelegatingSchedulerMixin: Mixin1<
   SchedulerLike & DisposableLike,
   SchedulerLike,
   DisposableLike
 > = /*@__PURE__*/ (() => {
-  const DelegatingSchedulerImplementationMixin_delegate = Symbol(
-    "DelegatingSchedulerImplementationMixin_delegate",
+  const DelegatingSchedulerMixin_delegate = Symbol(
+    "DelegatingSchedulerMixin_delegate",
   );
 
   type TProperties = {
-    [DelegatingSchedulerImplementationMixin_delegate]: SchedulerLike;
+    [DelegatingSchedulerMixin_delegate]: SchedulerLike;
   };
 
   return mix<
@@ -36,50 +36,46 @@ const DelegatingSchedulerImplementationMixin: Mixin1<
     SchedulerLike,
     DisposableLike
   >(
-    function DelegatingSchedulerImplementationMixin(
+    function DelegatingSchedulerMixin(
       instance: SchedulerLike & TProperties & DisposableLike,
       delegate: SchedulerLike,
     ): SchedulerLike & DisposableLike {
-      instance[DelegatingSchedulerImplementationMixin_delegate] = delegate;
+      instance[DelegatingSchedulerMixin_delegate] = delegate;
 
       return instance;
     },
     props<TProperties>({
-      [DelegatingSchedulerImplementationMixin_delegate]: none,
+      [DelegatingSchedulerMixin_delegate]: none,
     }),
     {
       get [SchedulerLike_inContinuation]() {
         unsafeCast<TProperties>(this);
-        return this[DelegatingSchedulerImplementationMixin_delegate][
+        return this[DelegatingSchedulerMixin_delegate][
           SchedulerLike_inContinuation
         ];
       },
 
       get [SchedulerLike_maxYieldInterval]() {
         unsafeCast<TProperties>(this);
-        return this[DelegatingSchedulerImplementationMixin_delegate][
+        return this[DelegatingSchedulerMixin_delegate][
           SchedulerLike_maxYieldInterval
         ];
       },
 
       get [SchedulerLike_now]() {
         unsafeCast<TProperties>(this);
-        return this[DelegatingSchedulerImplementationMixin_delegate][
-          SchedulerLike_now
-        ];
+        return this[DelegatingSchedulerMixin_delegate][SchedulerLike_now];
       },
 
       get [SchedulerLike_shouldYield]() {
         unsafeCast<TProperties>(this);
-        return this[DelegatingSchedulerImplementationMixin_delegate][
+        return this[DelegatingSchedulerMixin_delegate][
           SchedulerLike_shouldYield
         ];
       },
 
       [SchedulerLike_requestYield](this: TProperties) {
-        this[DelegatingSchedulerImplementationMixin_delegate][
-          SchedulerLike_requestYield
-        ]();
+        this[DelegatingSchedulerMixin_delegate][SchedulerLike_requestYield]();
       },
 
       [SchedulerLike_schedule](
@@ -90,9 +86,10 @@ const DelegatingSchedulerImplementationMixin: Mixin1<
         },
       ): DisposableLike {
         return pipe(
-          this[DelegatingSchedulerImplementationMixin_delegate][
-            SchedulerLike_schedule
-          ](continuation, options),
+          this[DelegatingSchedulerMixin_delegate][SchedulerLike_schedule](
+            continuation,
+            options,
+          ),
           Disposable.addTo(this, { ignoreChildErrors: true }),
         );
       },
@@ -101,12 +98,10 @@ const DelegatingSchedulerImplementationMixin: Mixin1<
         this: TProperties & SchedulerLike & DisposableLike,
         delay?: number,
       ) {
-        this[DelegatingSchedulerImplementationMixin_delegate][
-          SchedulerLike_yield
-        ](delay);
+        this[DelegatingSchedulerMixin_delegate][SchedulerLike_yield](delay);
       },
     },
   );
 })();
 
-export default DelegatingSchedulerImplementationMixin;
+export default DelegatingSchedulerMixin;

@@ -157,18 +157,44 @@ export interface ObservableLike<T = unknown> {
   [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
 
+
 /**
  * @noInheritDoc
+ * @category Observable
  */
-export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
-  [ObservableLike_isPure]: true;
+export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: true;
 }
+
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isRunnable]: true;
+}
+
+export type Observableish<T> =
+  | ObservableLike<T>
+  | EnumerableLike<T>
+  | EventSourceLike<T>
+  | Iterable<T>;
+
+export type Pure<TObservable extends ObservableLike> = {
+  [ObservableLike_isPure]: true;
+} & TObservable;
+
+export type WithSideEffects<TObservable extends ObservableLike> = {
+  [ObservableLike_isPure]: false;
+} & TObservable;
 
 /**
  * @noInheritDoc
  */
 export interface MulticastObservableLike<T = unknown>
-  extends PureObservableLike<T> {
+  extends ObservableLike<T> {
+  readonly [ObservableLike_isPure]: true;
   readonly [ObservableLike_isDeferred]: false;
   readonly [ObservableLike_isRunnable]: false;
 }
@@ -255,28 +281,6 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
-
-/**
- * @noInheritDoc
- * @category Observable
- */
-export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
-  readonly [ObservableLike_isDeferred]: true;
-}
-
-/**
- * @noInheritDoc
- * @category Observable
- */
-export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
-  readonly [ObservableLike_isRunnable]: true;
-}
-
-export type Observableish<T> =
-  | ObservableLike<T>
-  | EnumerableLike<T>
-  | EventSourceLike<T>
-  | Iterable<T>;
 
 export const ContinuationLike_activeChild = Symbol(
   "ContinuationLike_activeChild",
