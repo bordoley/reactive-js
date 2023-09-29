@@ -17,6 +17,8 @@
 
 ### Other Interfaces
 
+- [ContinuationLike](../interfaces/concurrent.ContinuationLike.md)
+- [ContinuationSchedulerLike](../interfaces/concurrent.ContinuationSchedulerLike.md)
 - [MulticastObservableLike](../interfaces/concurrent.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/concurrent.ObservableLike.md)
 - [ObserverLike](../interfaces/concurrent.ObserverLike.md)
@@ -24,6 +26,7 @@
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
 - [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
+- [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/concurrent.VirtualTimeSchedulerLike.md)
 
 ### Interactive Type Aliases
@@ -36,6 +39,11 @@
 
 ### Variables
 
+- [ContinuationLike\_activeChild](concurrent.md#continuationlike_activechild)
+- [ContinuationLike\_parent](concurrent.md#continuationlike_parent)
+- [ContinuationLike\_run](concurrent.md#continuationlike_run)
+- [ContinuationLike\_scheduler](concurrent.md#continuationlike_scheduler)
+- [ContinuationSchedulerLike\_schedule](concurrent.md#continuationschedulerlike_schedule)
 - [ObservableLike\_isDeferred](concurrent.md#observablelike_isdeferred)
 - [ObservableLike\_isPure](concurrent.md#observablelike_ispure)
 - [ObservableLike\_isRunnable](concurrent.md#observablelike_isrunnable)
@@ -48,6 +56,9 @@
 - [SchedulerLike\_schedule](concurrent.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
 - [SchedulerLike\_yield](concurrent.md#schedulerlike_yield)
+- [SchedulerTaskLike\_continuation](concurrent.md#schedulertasklike_continuation)
+- [SchedulerTaskLike\_dueTime](concurrent.md#schedulertasklike_duetime)
+- [SchedulerTaskLike\_id](concurrent.md#schedulertasklike_id)
 - [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
 - [StreamableLike\_TStream](concurrent.md#streamablelike_tstream)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
@@ -80,6 +91,36 @@ ___
 | `T` |
 
 ## Variables
+
+### ContinuationLike\_activeChild
+
+• `Const` **ContinuationLike\_activeChild**: unique `symbol`
+
+___
+
+### ContinuationLike\_parent
+
+• `Const` **ContinuationLike\_parent**: unique `symbol`
+
+___
+
+### ContinuationLike\_run
+
+• `Const` **ContinuationLike\_run**: unique `symbol`
+
+___
+
+### ContinuationLike\_scheduler
+
+• `Const` **ContinuationLike\_scheduler**: unique `symbol`
+
+___
+
+### ContinuationSchedulerLike\_schedule
+
+• `Const` **ContinuationSchedulerLike\_schedule**: unique `symbol`
+
+___
 
 ### ObservableLike\_isDeferred
 
@@ -150,6 +191,24 @@ ___
 ### SchedulerLike\_yield
 
 • `Const` **SchedulerLike\_yield**: unique `symbol`
+
+___
+
+### SchedulerTaskLike\_continuation
+
+• `Const` **SchedulerTaskLike\_continuation**: unique `symbol`
+
+___
+
+### SchedulerTaskLike\_dueTime
+
+• `Const` **SchedulerTaskLike\_dueTime**: unique `symbol`
+
+___
+
+### SchedulerTaskLike\_id
+
+• `Const` **SchedulerTaskLike\_id**: unique `symbol`
 
 ___
 

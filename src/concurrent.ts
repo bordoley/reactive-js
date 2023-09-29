@@ -1,5 +1,5 @@
-import { IndexedCollectionLike } from "./collections.js";
-import { SideEffect1 } from "./functions.js";
+import { CollectionLike, IndexedCollectionLike } from "./collections.js";
+import { Optional, SideEffect1 } from "./functions.js";
 import { EnumerableLike } from "./ix.js";
 import {
   DispatcherLike,
@@ -277,3 +277,45 @@ export type Observableish<T> =
   | EnumerableLike<T>
   | EventSourceLike<T>
   | Iterable<T>;
+
+export const ContinuationLike_activeChild = Symbol(
+  "ContinuationLike_activeChild",
+);
+export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
+export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
+export const ContinuationLike_run = Symbol("ContinuationLike_run");
+
+export interface ContinuationLike
+  extends DisposableLike,
+    QueueableLike<ContinuationLike>,
+    CollectionLike {
+  readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
+  readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
+
+  [ContinuationLike_parent]: Optional<ContinuationLike>;
+
+  [ContinuationLike_run](): void;
+}
+
+export const ContinuationSchedulerLike_schedule = Symbol(
+  "ContinuationSchedulerLike_schedule",
+);
+
+export interface ContinuationSchedulerLike extends SchedulerLike {
+  [ContinuationSchedulerLike_schedule](
+    continuation: ContinuationLike,
+    options?: { readonly delay?: number },
+  ): void;
+}
+
+export const SchedulerTaskLike_continuation = Symbol(
+  "SchedulerTaskLike_continuation",
+);
+export const SchedulerTaskLike_dueTime = Symbol("SchedulerTaskLike_dueTime");
+export const SchedulerTaskLike_id = Symbol("SchedulerTaskLike_id");
+
+export interface SchedulerTaskLike {
+  readonly [SchedulerTaskLike_continuation]: ContinuationLike;
+  [SchedulerTaskLike_dueTime]: number;
+  [SchedulerTaskLike_id]: number;
+}

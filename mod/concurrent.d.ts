@@ -1,5 +1,5 @@
-import { IndexedCollectionLike } from "./collections.js";
-import { SideEffect1 } from "./functions.js";
+import { CollectionLike, IndexedCollectionLike } from "./collections.js";
+import { Optional, SideEffect1 } from "./functions.js";
 import { EnumerableLike } from "./ix.js";
 import { DispatcherLike, EventSourceLike, PauseableLike, SinkLike } from "./rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
@@ -203,3 +203,27 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
 }
 export type Observableish<T> = ObservableLike<T> | EnumerableLike<T> | EventSourceLike<T> | Iterable<T>;
+export declare const ContinuationLike_activeChild: unique symbol;
+export declare const ContinuationLike_scheduler: unique symbol;
+export declare const ContinuationLike_parent: unique symbol;
+export declare const ContinuationLike_run: unique symbol;
+export interface ContinuationLike extends DisposableLike, QueueableLike<ContinuationLike>, CollectionLike {
+    readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
+    readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
+    [ContinuationLike_parent]: Optional<ContinuationLike>;
+    [ContinuationLike_run](): void;
+}
+export declare const ContinuationSchedulerLike_schedule: unique symbol;
+export interface ContinuationSchedulerLike extends SchedulerLike {
+    [ContinuationSchedulerLike_schedule](continuation: ContinuationLike, options?: {
+        readonly delay?: number;
+    }): void;
+}
+export declare const SchedulerTaskLike_continuation: unique symbol;
+export declare const SchedulerTaskLike_dueTime: unique symbol;
+export declare const SchedulerTaskLike_id: unique symbol;
+export interface SchedulerTaskLike {
+    readonly [SchedulerTaskLike_continuation]: ContinuationLike;
+    [SchedulerTaskLike_dueTime]: number;
+    [SchedulerTaskLike_id]: number;
+}

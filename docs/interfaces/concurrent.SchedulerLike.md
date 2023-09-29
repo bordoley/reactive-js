@@ -17,6 +17,8 @@ cooperative multi-tasking.
 
   ↳ [`ObserverLike`](concurrent.ObserverLike.md)
 
+  ↳ [`ContinuationSchedulerLike`](concurrent.ContinuationSchedulerLike.md)
+
 ## Table of contents
 
 ### Properties
