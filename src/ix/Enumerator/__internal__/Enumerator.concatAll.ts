@@ -17,7 +17,7 @@ import {
 } from "../../../ix.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Enumerator_empty from "./Enumerator.empty.js";
 
 const ConcatAllEnumerator_inner = Symbol("ConcatAllEnumerator_inner");
@@ -35,13 +35,13 @@ const Enumerator_concatAll: <T>() => Function1<
   returns(
     createInstanceFactory(
       mix(
-        include(Disposable_mixin),
+        include(DisposableMixin),
         function ConcatAllEnumerator(
           instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
             TProperties<T>,
           delegate: EnumeratorLike<EnumeratorLike<T>>,
         ): EnumeratorLike<T> {
-          init(Disposable_mixin, instance);
+          init(DisposableMixin, instance);
 
           pipe(instance, Disposable.add(delegate));
 

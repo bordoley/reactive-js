@@ -15,3 +15,5 @@
 - [`KeyedCollectionLike`](collections.KeyedCollectionLike.md)<`number`, `T`\>
 
   ↳ **`IndexedCollectionLike`**
+
+  ↳↳ [`MutableIndexedCollectionLike`](collections.MutableIndexedCollectionLike.md)

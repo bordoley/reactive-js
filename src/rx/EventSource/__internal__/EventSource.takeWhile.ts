@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_takeWhileMixin from "../../Sink/__internal__/Sink.takeWhileMixin.js";
+import TakeWhileSinkMixin from "../../__mixins__/TakeWhileSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
@@ -23,7 +23,7 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_takeWhileMixin()),
+          include(TakeWhileSinkMixin()),
           function TakeWhileEventListener(
             instance: Pick<
               EventListenerLike<T>,
@@ -34,7 +34,7 @@ const EventSource_takeWhile: EventSource.Signature["takeWhile"] =
             inclusive: Optional<boolean>,
           ): EventListenerLike<T> {
             init(
-              Sink_takeWhileMixin<T>(),
+              TakeWhileSinkMixin<T>(),
               instance,
               delegate,
               predicate,

@@ -70,6 +70,12 @@ export interface DictionaryLike<TKey = unknown, T = unknown> extends Associative
  */
 export interface IndexedCollectionLike<T = unknown> extends KeyedCollectionLike<number, T> {
 }
+export declare const MutableKeyedCollectionLike_set: unique symbol;
+export interface MutableKeyedCollectionLike<TKey = unknown, T = unknown> extends KeyedCollectionLike<TKey, T> {
+    [MutableKeyedCollectionLike_set](key: TKey, value: T): T;
+}
+export interface MutableIndexedCollectionLike<T = unknown> extends IndexedCollectionLike<T>, MutableKeyedCollectionLike<number, T> {
+}
 /**
  * @noInheritDoc
  * @category Module

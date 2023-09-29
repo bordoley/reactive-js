@@ -21,7 +21,7 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Publisher from "../../Publisher.js";
 
 const Publisher_listeners = Symbol("Publisher_listeners");
@@ -34,7 +34,7 @@ const Publisher_create: Publisher.Signature["create"] = /*@__PURE__*/ (<
   };
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin),
+      include(DisposableMixin),
       function EventPublisher(
         instance: Pick<
           PublisherLike<T>,
@@ -45,7 +45,7 @@ const Publisher_create: Publisher.Signature["create"] = /*@__PURE__*/ (<
         > &
           Mutable<TProperties>,
       ): PublisherLike<T> {
-        init(Disposable_mixin, instance);
+        init(DisposableMixin, instance);
 
         instance[Publisher_listeners] =
           newInstance<Set<EventListenerLike>>(Set);

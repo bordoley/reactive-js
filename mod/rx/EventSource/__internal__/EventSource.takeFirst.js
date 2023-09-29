@@ -3,12 +3,12 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, } from "../../../rx.js";
-import Sink_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
+import TakeFirstSinkMixin from "../../__mixins__/TakeFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_takeFirst = 
 /*@__PURE__*/ (() => {
-    const createTakeFirstEventListener = (() => createInstanceFactory(mix(include(Sink_takeFirstMixin()), function TakeFirstEventListener(instance, delegate, count) {
-        init(Sink_takeFirstMixin(), instance, delegate, count);
+    const createTakeFirstEventListener = (() => createInstanceFactory(mix(include(TakeFirstSinkMixin()), function TakeFirstEventListener(instance, delegate, count) {
+        init(TakeFirstSinkMixin(), instance, delegate, count);
         return instance;
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,

@@ -5,12 +5,12 @@ import { none, pipe, returns } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Enumerator_empty from "./Enumerator.empty.js";
 const ConcatAllEnumerator_inner = Symbol("ConcatAllEnumerator_inner");
 const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
-const Enumerator_concatAll = /*@__PURE__*/ (() => returns(createInstanceFactory(mix(include(Disposable_mixin), function ConcatAllEnumerator(instance, delegate) {
-    init(Disposable_mixin, instance);
+const Enumerator_concatAll = /*@__PURE__*/ (() => returns(createInstanceFactory(mix(include(DisposableMixin), function ConcatAllEnumerator(instance, delegate) {
+    init(DisposableMixin, instance);
     pipe(instance, Disposable.add(delegate));
     instance[ConcatAllEnumerator_delegate] = delegate;
     instance[ConcatAllEnumerator_inner] = Enumerator_empty();

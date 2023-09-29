@@ -4,10 +4,10 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { none, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const CreateWithDelegateEnumerator_delegate = Symbol("CreateWithDelegateEnumerator_delegate");
-const Enumerator_createWithDelegate = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin), function CreateWithDelegateEnumerator(instance, delegate) {
-    init(Disposable_mixin, instance);
+const Enumerator_createWithDelegate = /*@__PURE__*/ (() => createInstanceFactory(mix(include(DisposableMixin), function CreateWithDelegateEnumerator(instance, delegate) {
+    init(DisposableMixin, instance);
     instance[CreateWithDelegateEnumerator_delegate] = delegate;
     // Prevent the delegate from disposing the instance even in the case of
     // errors, so a user can define alternative error handling behavior.

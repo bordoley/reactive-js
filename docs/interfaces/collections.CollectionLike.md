@@ -10,6 +10,8 @@
 
   ↳ [`KeyedCollectionLike`](collections.KeyedCollectionLike.md)
 
+  ↳ [`QueueCollectionLike`](utils.QueueCollectionLike.md)
+
 ## Table of contents
 
 ### Properties

@@ -5,14 +5,14 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { partial, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DelegatingDisposableLike_delegate, DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
-import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_takeFirst = /*@__PURE__*/ (() => {
     const TakeFirstEnumerator_count = Symbol("TakeFirstEnumerator_count");
-    const createTakeFirstEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_delegatingMixin()), function TakeFirstEnumerator(instance, delegate, takeCount) {
-        init(MutableEnumerator_mixin(), instance);
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createTakeFirstEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin(), DelegatingDisposableMixin()), function TakeFirstEnumerator(instance, delegate, takeCount) {
+        init(MutableEnumeratorMixin(), instance);
+        init(DelegatingDisposableMixin(), instance, delegate);
         instance[TakeFirstEnumerator_count] = clampPositiveInteger(takeCount ?? 1);
         if (takeCount === 0) {
             instance[DisposableLike_dispose]();

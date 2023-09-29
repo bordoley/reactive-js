@@ -16,12 +16,12 @@ import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
 } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_pairwise: Enumerable.Signature["pairwise"] = /*@__PURE__*/ (<
@@ -38,8 +38,8 @@ const Enumerable_pairwise: Enumerable.Signature["pairwise"] = /*@__PURE__*/ (<
   const createPairwiseEnumerator = createInstanceFactory(
     mix(
       include(
-        MutableEnumerator_mixin(),
-        Disposable_delegatingMixin<EnumeratorLike<T>>(),
+        MutableEnumeratorMixin(),
+        DelegatingDisposableMixin<EnumeratorLike<T>>(),
       ),
       function PairwiseEnumerator(
         instance: Pick<
@@ -49,9 +49,9 @@ const Enumerable_pairwise: Enumerable.Signature["pairwise"] = /*@__PURE__*/ (<
           TProperties<T>,
         delegate: EnumeratorLike<T>,
       ): EnumeratorLike<Tuple2<T, T>> {
-        init(MutableEnumerator_mixin<Tuple2<T, T>>(), instance);
+        init(MutableEnumeratorMixin<Tuple2<T, T>>(), instance);
         init(
-          Disposable_delegatingMixin<EnumeratorLike<T>>(),
+          DelegatingDisposableMixin<EnumeratorLike<T>>(),
           instance,
           delegate,
         );

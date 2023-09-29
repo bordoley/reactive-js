@@ -4,12 +4,20 @@
 
 ## Table of contents
 
+### Classes
+
+- [BackPressureError](../classes/utils.BackPressureError.md)
+
 ### Interfaces
 
 - [DelegatingDisposableLike](../interfaces/utils.DelegatingDisposableLike.md)
 - [DisposableLike](../interfaces/utils.DisposableLike.md)
+- [IndexedQueueLike](../interfaces/utils.IndexedQueueLike.md)
+- [QueueCollectionLike](../interfaces/utils.QueueCollectionLike.md)
+- [QueueLike](../interfaces/utils.QueueLike.md)
 - [QueueableLike](../interfaces/utils.QueueableLike.md)
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
+- [StackLike](../interfaces/utils.StackLike.md)
 
 ### Variables
 
@@ -18,10 +26,14 @@
 - [DisposableLike\_dispose](utils.md#disposablelike_dispose)
 - [DisposableLike\_error](utils.md#disposablelike_error)
 - [DisposableLike\_isDisposed](utils.md#disposablelike_isdisposed)
+- [QueueLike\_dequeue](utils.md#queuelike_dequeue)
+- [QueueLike\_head](utils.md#queuelike_head)
 - [QueueableLike\_backpressureStrategy](utils.md#queueablelike_backpressurestrategy)
 - [QueueableLike\_capacity](utils.md#queueablelike_capacity)
 - [QueueableLike\_enqueue](utils.md#queueablelike_enqueue)
 - [SerialDisposableLike\_current](utils.md#serialdisposablelike_current)
+- [StackLike\_head](utils.md#stacklike_head)
+- [StackLike\_pop](utils.md#stacklike_pop)
 
 ## Variables
 
@@ -55,6 +67,18 @@ ___
 
 ___
 
+### QueueLike\_dequeue
+
+• `Const` **QueueLike\_dequeue**: unique `symbol`
+
+___
+
+### QueueLike\_head
+
+• `Const` **QueueLike\_head**: unique `symbol`
+
+___
+
 ### QueueableLike\_backpressureStrategy
 
 • `Const` **QueueableLike\_backpressureStrategy**: unique `symbol`
@@ -76,3 +100,15 @@ ___
 ### SerialDisposableLike\_current
 
 • `Const` **SerialDisposableLike\_current**: unique `symbol`
+
+___
+
+### StackLike\_head
+
+• `Const` **StackLike\_head**: unique `symbol`
+
+___
+
+### StackLike\_pop
+
+• `Const` **StackLike\_pop**: unique `symbol`

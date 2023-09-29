@@ -13,12 +13,12 @@ import {
   WritableStoreLike,
 } from "../../../rx.js";
 import { DisposableLike } from "../../../utils.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import EventSource_lazyInitMixin, {
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import type * as WritableStore from "../../WritableStore.js";
+import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
-} from "../../EventSource/__internal__/EventSource.lazyInitMixin.js";
-import type * as WritableStore from "../../WritableStore.js";
+} from "../../__mixins__/LazyInitEventSourceMixin.js";
 
 const WritableStore_create: WritableStore.Signature["create"] = /*@__PURE__*/ (<
   T,
@@ -28,15 +28,15 @@ const WritableStore_create: WritableStore.Signature["create"] = /*@__PURE__*/ (<
   };
   return createInstanceFactory(
     mix(
-      include(EventSource_lazyInitMixin(), Disposable_mixin),
+      include(LazyInitEventSourceMixin(), DisposableMixin),
       function WritableStore(
         instance: {
           [StoreLike_value]: T;
         } & TProperties,
         initialValue: T,
       ): WritableStoreLike<T> & DisposableLike {
-        init(Disposable_mixin, instance);
-        init(EventSource_lazyInitMixin(), instance);
+        init(DisposableMixin, instance);
+        init(LazyInitEventSourceMixin(), instance);
 
         instance.v = initialValue;
 

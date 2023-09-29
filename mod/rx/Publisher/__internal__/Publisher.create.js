@@ -5,11 +5,11 @@ import { error, newInstance, none, pipe } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, PublisherLike_listenerCount, SinkLike_notify, } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const Publisher_listeners = Symbol("Publisher_listeners");
 const Publisher_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin), function EventPublisher(instance) {
-        init(Disposable_mixin, instance);
+    return createInstanceFactory(mix(include(DisposableMixin), function EventPublisher(instance) {
+        init(DisposableMixin, instance);
         instance[Publisher_listeners] =
             newInstance(Set);
         pipe(instance, Disposable.onDisposed(e => {

@@ -25,12 +25,12 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
@@ -48,7 +48,7 @@ const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
 
   const createTakeWhileEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin()),
+      include(MutableEnumeratorMixin(), DisposableMixin),
       function TakeWhileEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
           TProperties<T>,
@@ -56,8 +56,8 @@ const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
         predicate: Predicate<T>,
         inclusive: Optional<boolean>,
       ): EnumeratorLike<T> {
-        init(MutableEnumerator_mixin<T>(), instance);
-        init(Disposable_mixin, instance, delegate);
+        init(MutableEnumeratorMixin<T>(), instance);
+        init(DisposableMixin, instance, delegate);
 
         pipe(instance, Disposable.add(delegate));
 

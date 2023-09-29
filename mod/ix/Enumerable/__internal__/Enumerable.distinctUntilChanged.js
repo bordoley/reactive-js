@@ -5,7 +5,7 @@ import { error, none, partial, pipe, strictEquality, } from "../../../functions.
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
@@ -13,8 +13,8 @@ const Enumerable_distinctUntilChanged =
     const DistinctUntilChangedEnumerator_equality = Symbol("DistinctUntilChangedEnumerator_delegate");
     const DistinctUntilChangedEnumerator_prev = Symbol("DistinctUntilChangedEnumerator_prev");
     const DistinctUntilChangedEnumerator_hasValue = Symbol("DistinctUntilChangedEnumerator_hasValue");
-    const createDistinctUntilChangedEnumerator = createInstanceFactory(mix(include(Disposable_mixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
-        init(Disposable_mixin, instance);
+    const createDistinctUntilChangedEnumerator = createInstanceFactory(mix(include(DisposableMixin), function DistinctUntilChangedEnumerator(instance, delegate, equality) {
+        init(DisposableMixin, instance);
         pipe(instance, Disposable.add(delegate));
         instance[DistinctUntilChangedEnumerator_delegate] = delegate;
         instance[DistinctUntilChangedEnumerator_equality] =

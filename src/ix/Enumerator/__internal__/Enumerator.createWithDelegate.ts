@@ -16,7 +16,7 @@ import {
 } from "../../../ix.js";
 import { DisposableLike } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 
 const CreateWithDelegateEnumerator_delegate = Symbol(
   "CreateWithDelegateEnumerator_delegate",
@@ -31,13 +31,13 @@ const Enumerator_createWithDelegate: <T>(
 ) => EnumeratorLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(Disposable_mixin),
+      include(DisposableMixin),
       function CreateWithDelegateEnumerator(
         instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
           TProperties<T>,
         delegate: EnumeratorLike<T>,
       ): EnumeratorLike<T> {
-        init(Disposable_mixin, instance);
+        init(DisposableMixin, instance);
         instance[CreateWithDelegateEnumerator_delegate] = delegate;
 
         // Prevent the delegate from disposing the instance even in the case of

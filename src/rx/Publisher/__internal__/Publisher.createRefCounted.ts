@@ -21,7 +21,7 @@ import {
   DisposableLike_dispose,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Publisher from "../../Publisher.js";
 import Publisher_create from "./Publisher.create.js";
 
@@ -29,7 +29,7 @@ const Publisher_createRefCounted: Publisher.Signature["createRefCounted"] =
   /*@__PURE__*/ (<T>() => {
     const createRefCountedEventPublisherInstance = createInstanceFactory(
       mix(
-        include(Disposable_delegatingMixin<PublisherLike<T>>()),
+        include(DelegatingDisposableMixin<PublisherLike<T>>()),
         function RefCountedEventPublisher(
           instance: Pick<
             PublisherLike<T>,
@@ -41,7 +41,7 @@ const Publisher_createRefCounted: Publisher.Signature["createRefCounted"] =
           delegate: PublisherLike<T>,
         ): PublisherLike<T> {
           init(
-            Disposable_delegatingMixin<PublisherLike<T>>(),
+            DelegatingDisposableMixin<PublisherLike<T>>(),
             instance,
             delegate,
           );

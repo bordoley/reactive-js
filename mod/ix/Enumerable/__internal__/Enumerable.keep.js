@@ -4,14 +4,14 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { error, none, partial, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import Disposable_mixin from "../../../utils//Disposable/__internal__/Disposable.mixin.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_keep = /*@__PURE__*/ (() => {
     const KeepEnumerator_delegate = Symbol("KeepEnumerator_delegate");
     const KeepEnumerator_predicate = Symbol("KeepEnumerator_predicate");
-    const createKeepEnumerator = createInstanceFactory(mix(include(Disposable_mixin), function KeepEnumerator(instance, delegate, predicate) {
-        init(Disposable_mixin, instance);
+    const createKeepEnumerator = createInstanceFactory(mix(include(DisposableMixin), function KeepEnumerator(instance, delegate, predicate) {
+        init(DisposableMixin, instance);
         pipe(instance, Disposable.add(delegate));
         instance[KeepEnumerator_delegate] = delegate;
         instance[KeepEnumerator_predicate] = predicate;

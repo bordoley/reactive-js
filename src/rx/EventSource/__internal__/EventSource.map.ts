@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_mapMixin from "../../Sink/__internal__/Sink.mapMixin.js";
+import MapSinkMixin from "../../__mixins__/MapSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
@@ -21,7 +21,7 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
   ) => EventListenerLike<TA> = (<TA, TB>() =>
     createInstanceFactory(
       mix(
-        include(Sink_mapMixin()),
+        include(MapSinkMixin()),
         function MapEventListener(
           instance: Pick<
             EventListenerLike<TA>,
@@ -30,7 +30,7 @@ const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {
           delegate: EventListenerLike<TB>,
           selector: Function1<TA, TB>,
         ): EventListenerLike<TA> {
-          init(Sink_mapMixin<TA, TB>(), instance, delegate, selector);
+          init(MapSinkMixin<TA, TB>(), instance, delegate, selector);
 
           return instance;
         },

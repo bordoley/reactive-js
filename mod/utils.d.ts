@@ -1,3 +1,4 @@
+import { CollectionLike, MutableIndexedCollectionLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableLike_add: unique symbol;
 export declare const DisposableLike_dispose: unique symbol;
@@ -60,4 +61,25 @@ export interface QueueableLike<T = unknown> {
      * @returns `true` if the queue has additional remaining capacity otherwise `false`.
      */
     [QueueableLike_enqueue](req: T): boolean;
+}
+export declare const StackLike_head: unique symbol;
+export declare const StackLike_pop: unique symbol;
+export interface StackLike<T = unknown> extends QueueableLike<T> {
+    readonly [StackLike_head]: Optional<T>;
+    [StackLike_pop](): Optional<T>;
+}
+export declare const QueueLike_head: unique symbol;
+export declare const QueueLike_dequeue: unique symbol;
+export interface QueueLike<T = unknown> extends QueueableLike<T> {
+    readonly [QueueLike_head]: Optional<T>;
+    [QueueLike_dequeue](): Optional<T>;
+}
+export interface QueueCollectionLike<T = unknown> extends QueueLike<T>, CollectionLike {
+}
+export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedCollectionLike<T>, StackLike<T> {
+}
+export declare class BackPressureError extends Error {
+    readonly [QueueableLike_capacity]: number;
+    readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    constructor(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]);
 }

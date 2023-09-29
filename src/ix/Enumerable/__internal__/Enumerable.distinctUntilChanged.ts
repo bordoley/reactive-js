@@ -29,7 +29,7 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
@@ -57,14 +57,14 @@ const Enumerable_distinctUntilChanged: Enumerable.Signature["distinctUntilChange
 
     const createDistinctUntilChangedEnumerator = createInstanceFactory(
       mix(
-        include(Disposable_mixin),
+        include(DisposableMixin),
         function DistinctUntilChangedEnumerator(
           instance: Omit<EnumeratorLike<T>, keyof DisposableLike> &
             TProperties<T>,
           delegate: EnumeratorLike<T>,
           equality: Optional<Equality<T>>,
         ): EnumeratorLike<T> {
-          init(Disposable_mixin, instance);
+          init(DisposableMixin, instance);
 
           pipe(instance, Disposable.add(delegate));
 

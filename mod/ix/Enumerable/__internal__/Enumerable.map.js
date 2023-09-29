@@ -5,15 +5,15 @@ import { error, none, partial, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_map = /*@__PURE__*/ (() => {
     const MapEnumerator_delegate = Symbol("MapEnumerator_delegate");
     const MapEnumerator_selector = Symbol("MapEnumerator_selector");
-    const createMapEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_mixin), function MapEnumerator(instance, delegate, mapper) {
-        init(MutableEnumerator_mixin(), instance);
-        init(Disposable_mixin, instance);
+    const createMapEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin(), DisposableMixin), function MapEnumerator(instance, delegate, mapper) {
+        init(MutableEnumeratorMixin(), instance);
+        init(DisposableMixin, instance);
         pipe(instance, Disposable.add(delegate));
         instance[MapEnumerator_delegate] = delegate;
         instance[MapEnumerator_selector] = mapper;

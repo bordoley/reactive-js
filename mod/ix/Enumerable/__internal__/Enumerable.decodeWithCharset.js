@@ -5,16 +5,16 @@ import { error, newInstance, none, partial, pipe, } from "../../../functions.js"
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_decodeWithCharset = 
 /*@__PURE__*/ (() => {
     const DecodeWithCharsetEnumerator_delegate = Symbol("DecodeWithCharsetEnumerator_delegate");
     const DecodeWithCharsetEnumerator_textDecoder = Symbol("DecodeWithCharsetEnumerator_textDecoder");
-    const createDecodeWithCharsetEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_mixin), function DecodeWithCharsetEnumerator(instance, delegate, charset) {
-        init(MutableEnumerator_mixin(), instance);
-        init(Disposable_mixin, instance);
+    const createDecodeWithCharsetEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin(), DisposableMixin), function DecodeWithCharsetEnumerator(instance, delegate, charset) {
+        init(MutableEnumeratorMixin(), instance);
+        init(DisposableMixin, instance);
         pipe(instance, Disposable.add(delegate));
         const textDecoder = newInstance(TextDecoder, charset ?? "utf-8", {
             fatal: true,

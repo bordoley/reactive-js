@@ -3,10 +3,10 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, SinkLike_notify, } from "../../../rx.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const EventListener_createInternal = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(Disposable_mixin), function EventListener(instance, notify, isErrorSafe) {
-        init(Disposable_mixin, instance);
+    return createInstanceFactory(mix(include(DisposableMixin), function EventListener(instance, notify, isErrorSafe) {
+        init(DisposableMixin, instance);
         instance[SinkLike_notify] = notify;
         instance[EventListenerLike_isErrorSafe] = isErrorSafe;
         return instance;

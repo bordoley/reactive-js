@@ -5,12 +5,12 @@ import { pipe } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, PublisherLike_listenerCount, SinkLike_notify, } from "../../../rx.js";
 import { DelegatingDisposableLike_delegate, DisposableLike_dispose, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Publisher_create from "./Publisher.create.js";
 const Publisher_createRefCounted = 
 /*@__PURE__*/ (() => {
-    const createRefCountedEventPublisherInstance = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function RefCountedEventPublisher(instance, delegate) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createRefCountedEventPublisherInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function RefCountedEventPublisher(instance, delegate) {
+        init(DelegatingDisposableMixin(), instance, delegate);
         return instance;
     }, props({}), {
         [EventListenerLike_isErrorSafe]: true,

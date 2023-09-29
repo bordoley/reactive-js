@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_takeFirstMixin from "../../Sink/__internal__/Sink.takeFirstMixin.js";
+import TakeFirstSinkMixin from "../../__mixins__/TakeFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_takeFirst: EventSource.Signature["takeFirst"] =
@@ -22,7 +22,7 @@ const EventSource_takeFirst: EventSource.Signature["takeFirst"] =
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_takeFirstMixin()),
+          include(TakeFirstSinkMixin()),
           function TakeFirstEventListener(
             instance: Pick<
               EventListenerLike<T>,
@@ -31,7 +31,7 @@ const EventSource_takeFirst: EventSource.Signature["takeFirst"] =
             delegate: EventListenerLike<T>,
             count: Optional<number>,
           ): EventListenerLike<T> {
-            init(Sink_takeFirstMixin<T>(), instance, delegate, count);
+            init(TakeFirstSinkMixin<T>(), instance, delegate, count);
 
             return instance;
           },

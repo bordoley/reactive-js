@@ -22,12 +22,12 @@ import {
 } from "../../../ix.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
@@ -46,15 +46,15 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
 
     const createDecodeWithCharsetEnumerator = createInstanceFactory(
       mix(
-        include(MutableEnumerator_mixin(), Disposable_mixin),
+        include(MutableEnumeratorMixin(), DisposableMixin),
         function DecodeWithCharsetEnumerator(
           instance: Pick<EnumeratorLike<string>, typeof EnumeratorLike_move> &
             TProperties,
           delegate: EnumeratorLike<ArrayBuffer>,
           charset: Optional<string>,
         ): EnumeratorLike<string> {
-          init(MutableEnumerator_mixin<string>(), instance);
-          init(Disposable_mixin, instance);
+          init(MutableEnumeratorMixin<string>(), instance);
+          init(DisposableMixin, instance);
 
           pipe(instance, Disposable.add(delegate));
 

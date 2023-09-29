@@ -5,12 +5,12 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { partial, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DelegatingDisposableLike_delegate, DisposableLike_isDisposed, } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_skipFirst = /*@__PURE__*/ (() => {
     const SkipFirstEnumerator_count = Symbol("SkipFirstEnumerator_count");
-    const createSkipFirstEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function SkipFirstEnumerator(instance, delegate, skipCount) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createSkipFirstEnumerator = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function SkipFirstEnumerator(instance, delegate, skipCount) {
+        init(DelegatingDisposableMixin(), instance, delegate);
         instance[SkipFirstEnumerator_count] = clampPositiveInteger(skipCount ?? 1);
         return instance;
     }, props({

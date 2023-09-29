@@ -14,7 +14,7 @@ import {
   EventSourceLike_addEventListener,
   SinkLike_notify,
 } from "../../../rx.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as EventSource from "../../EventSource.js";
 
 const EventListener_createInternal: <T>(
@@ -28,7 +28,7 @@ const EventListener_createInternal: <T>(
 
   return createInstanceFactory(
     mix(
-      include(Disposable_mixin),
+      include(DisposableMixin),
       function EventListener(
         instance: Pick<
           EventListenerLike,
@@ -38,7 +38,7 @@ const EventListener_createInternal: <T>(
         notify: (this: EventListenerLike<T>, a: T) => void,
         isErrorSafe: boolean,
       ): EventListenerLike<T> {
-        init(Disposable_mixin, instance);
+        init(DisposableMixin, instance);
 
         instance[SinkLike_notify] = notify;
         instance[EventListenerLike_isErrorSafe] = isErrorSafe;

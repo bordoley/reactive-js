@@ -1,11 +1,11 @@
 /// <reference types="./SerialDisposable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, } from "../../../__internal__/mixins.js";
-import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import SerialDisposable_mixin from "./SerialDisposable.mixin.js";
-const SerialDisposable_create = /*@__PURE__*/ (() => createInstanceFactory(mix(include(Disposable_mixin, SerialDisposable_mixin()), function SerialDisposable(instance, initialValue) {
-    init(Disposable_mixin, instance);
-    init(SerialDisposable_mixin(), instance, initialValue);
+import DisposableMixin from "../../__mixins__/DisposableMixin.js";
+import SerialDisposableMixin from "../../__mixins__/SerialDisposableMixin.js";
+const SerialDisposable_create = /*@__PURE__*/ (() => createInstanceFactory(mix(include(DisposableMixin, SerialDisposableMixin()), function SerialDisposable(instance, initialValue) {
+    init(DisposableMixin, instance);
+    init(SerialDisposableMixin(), instance, initialValue);
     return instance;
 })))();
 export default SerialDisposable_create;

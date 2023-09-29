@@ -3,12 +3,12 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe, strictEquality } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, } from "../../../rx.js";
-import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
+import DistinctUntilChangedSinkMixin from "../../__mixins__/DistinctUntilChangedSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_distinctUntilChanged = 
 /*@__PURE__*/ (() => {
-    const createDistinctUntilChangedEventListener = (() => createInstanceFactory(mix(include(Sink_distinctUntilChangedMixin()), function distinctUntilChangedEventListener(instance, delegate, equality) {
-        init(Sink_distinctUntilChangedMixin(), instance, delegate, equality);
+    const createDistinctUntilChangedEventListener = (() => createInstanceFactory(mix(include(DistinctUntilChangedSinkMixin()), function distinctUntilChangedEventListener(instance, delegate, equality) {
+        init(DistinctUntilChangedSinkMixin(), instance, delegate, equality);
         return instance;
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,

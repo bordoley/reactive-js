@@ -20,6 +20,8 @@
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
 - [IndexedCollectionLike](../interfaces/collections.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/collections.KeyedCollectionLike.md)
+- [MutableIndexedCollectionLike](../interfaces/collections.MutableIndexedCollectionLike.md)
+- [MutableKeyedCollectionLike](../interfaces/collections.MutableKeyedCollectionLike.md)
 
 ### Container Type Aliases
 
@@ -39,6 +41,7 @@
 - [Container\_TKey](collections.md#container_tkey)
 - [Container\_type](collections.md#container_type)
 - [KeyedCollectionLike\_get](collections.md#keyedcollectionlike_get)
+- [MutableKeyedCollectionLike\_set](collections.md#mutablekeyedcollectionlike_set)
 
 ## Container Type Aliases
 
@@ -135,3 +138,9 @@ ___
 ### KeyedCollectionLike\_get
 
 • `Const` **KeyedCollectionLike\_get**: unique `symbol`
+
+___
+
+### MutableKeyedCollectionLike\_set
+
+• `Const` **MutableKeyedCollectionLike\_set**: unique `symbol`

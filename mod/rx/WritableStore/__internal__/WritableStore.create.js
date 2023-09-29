@@ -3,12 +3,12 @@
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { none } from "../../../functions.js";
 import { SinkLike_notify, StoreLike_value, } from "../../../rx.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import EventSource_lazyInitMixin, { LazyInitEventSourceMixin_publisher, } from "../../EventSource/__internal__/EventSource.lazyInitMixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../__mixins__/LazyInitEventSourceMixin.js";
 const WritableStore_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(EventSource_lazyInitMixin(), Disposable_mixin), function WritableStore(instance, initialValue) {
-        init(Disposable_mixin, instance);
-        init(EventSource_lazyInitMixin(), instance);
+    return createInstanceFactory(mix(include(LazyInitEventSourceMixin(), DisposableMixin), function WritableStore(instance, initialValue) {
+        init(DisposableMixin, instance);
+        init(LazyInitEventSourceMixin(), instance);
         instance.v = initialValue;
         return instance;
     }, props({

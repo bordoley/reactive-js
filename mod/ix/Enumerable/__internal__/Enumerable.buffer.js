@@ -6,13 +6,13 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { none, partial, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DelegatingDisposableLike_delegate, } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_buffer = /*@__PURE__*/ (() => {
     const BufferEnumerator_buffer = Symbol("BufferEnumerator_buffer");
     const BufferEnumerator_count = Symbol("BufferEnumerator_count");
-    const createBufferEnumerator = createInstanceFactory(mix(include(Disposable_delegatingMixin()), function BufferEnumerator(instance, delegate, count) {
-        init(Disposable_delegatingMixin(), instance, delegate);
+    const createBufferEnumerator = createInstanceFactory(mix(include(DelegatingDisposableMixin()), function BufferEnumerator(instance, delegate, count) {
+        init(DelegatingDisposableMixin(), instance, delegate);
         instance[BufferEnumerator_count] = clampPositiveNonZeroInteger(count ?? MAX_SAFE_INTEGER);
         return instance;
     }, props({

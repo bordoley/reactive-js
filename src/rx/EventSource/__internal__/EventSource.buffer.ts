@@ -13,7 +13,7 @@ import {
 } from "../../../rx.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_bufferMixin from "../../Sink/__internal__/Sink.bufferMixin.js";
+import BufferSinkMixin from "../../__mixins__/BufferSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_buffer: EventSource.Signature["buffer"] =
@@ -24,7 +24,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_bufferMixin()),
+          include(BufferSinkMixin()),
           function BufferEventListener(
             instance: Pick<
               EventListenerLike<T>,
@@ -42,7 +42,7 @@ const EventSource_buffer: EventSource.Signature["buffer"] =
               }
               delegate[DisposableLike_dispose](err);
             };
-            init(Sink_bufferMixin<T>(), instance, delegate, count, onComplete);
+            init(BufferSinkMixin<T>(), instance, delegate, count, onComplete);
 
             return instance;
           },

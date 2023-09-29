@@ -5,8 +5,8 @@ import {
   mix,
 } from "../../../__internal__/mixins.js";
 import { DisposableLike, SerialDisposableLike } from "../../../utils.js";
-import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
-import SerialDisposable_mixin from "./SerialDisposable.mixin.js";
+import DisposableMixin from "../../__mixins__/DisposableMixin.js";
+import SerialDisposableMixin from "../../__mixins__/SerialDisposableMixin.js";
 
 const SerialDisposable_create: <TDisposable extends DisposableLike>(
   initialValue: TDisposable,
@@ -15,13 +15,13 @@ const SerialDisposable_create: <TDisposable extends DisposableLike>(
 >() =>
   createInstanceFactory(
     mix(
-      include(Disposable_mixin, SerialDisposable_mixin<TDisposable>()),
+      include(DisposableMixin, SerialDisposableMixin<TDisposable>()),
       function SerialDisposable(
         instance: unknown,
         initialValue: TDisposable,
       ): SerialDisposableLike<TDisposable> {
-        init(Disposable_mixin, instance);
-        init(SerialDisposable_mixin<TDisposable>(), instance, initialValue);
+        init(DisposableMixin, instance);
+        init(SerialDisposableMixin<TDisposable>(), instance, initialValue);
         return instance;
       },
     ),

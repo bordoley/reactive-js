@@ -18,6 +18,10 @@ An interface for types that support buffering items with backpressure.
 
   ↳ [`DispatcherLike`](rx.DispatcherLike.md)
 
+  ↳ [`StackLike`](utils.StackLike.md)
+
+  ↳ [`QueueLike`](utils.QueueLike.md)
+
 ## Table of contents
 
 ### Properties

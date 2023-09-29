@@ -20,12 +20,12 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_takeFirst: Enumerable.Signature["takeFirst"] = /*@__PURE__*/ (<
@@ -40,8 +40,8 @@ const Enumerable_takeFirst: Enumerable.Signature["takeFirst"] = /*@__PURE__*/ (<
   const createTakeFirstEnumerator = createInstanceFactory(
     mix(
       include(
-        MutableEnumerator_mixin(),
-        Disposable_delegatingMixin<EnumeratorLike<T>>(),
+        MutableEnumeratorMixin(),
+        DelegatingDisposableMixin<EnumeratorLike<T>>(),
       ),
       function TakeFirstEnumerator(
         instance: Pick<EnumeratorLike<T>, typeof EnumeratorLike_move> &
@@ -49,9 +49,9 @@ const Enumerable_takeFirst: Enumerable.Signature["takeFirst"] = /*@__PURE__*/ (<
         delegate: EnumeratorLike<T>,
         takeCount: Optional<number>,
       ): EnumeratorLike<T> {
-        init(MutableEnumerator_mixin<T>(), instance);
+        init(MutableEnumeratorMixin<T>(), instance);
         init(
-          Disposable_delegatingMixin<EnumeratorLike<T>>(),
+          DelegatingDisposableMixin<EnumeratorLike<T>>(),
           instance,
           delegate,
         );

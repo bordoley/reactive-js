@@ -111,6 +111,19 @@ export interface DictionaryLike<TKey = unknown, T = unknown>
 export interface IndexedCollectionLike<T = unknown>
   extends KeyedCollectionLike<number, T> {}
 
+export const MutableKeyedCollectionLike_set = Symbol(
+  "MutableKeyedCollectionLike_set",
+);
+
+export interface MutableKeyedCollectionLike<TKey = unknown, T = unknown>
+  extends KeyedCollectionLike<TKey, T> {
+  [MutableKeyedCollectionLike_set](key: TKey, value: T): T;
+}
+
+export interface MutableIndexedCollectionLike<T = unknown>
+  extends IndexedCollectionLike<T>,
+    MutableKeyedCollectionLike<number, T> {}
+
 /**
  * @noInheritDoc
  * @category Module

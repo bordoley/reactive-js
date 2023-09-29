@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_pairwiseMixin from "../../Sink/__internal__/Sink.pairwiseMixin.js";
+import PairwiseSinkMixin from "../../__mixins__/PairwiseSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<
@@ -19,7 +19,7 @@ const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<
 >() => {
   const createPairwiseEventListener = createInstanceFactory(
     mix(
-      include(Sink_pairwiseMixin()),
+      include(PairwiseSinkMixin()),
       function PairwiseEventListener(
         instance: Pick<
           EventListenerLike<T>,
@@ -27,7 +27,7 @@ const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<
         >,
         delegate: EventListenerLike<Tuple2<T, T>>,
       ): EventListenerLike<T> {
-        init(Sink_pairwiseMixin<T>(), instance, delegate);
+        init(PairwiseSinkMixin<T>(), instance, delegate);
 
         return instance;
       },

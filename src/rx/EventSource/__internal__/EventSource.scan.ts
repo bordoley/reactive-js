@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_scanMixin from "../../Sink/__internal__/Sink.scanMixin.js";
+import ScanSinkMixin from "../../__mixins__/ScanSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_scan: EventSource.Signature["scan"] = /*@__PURE__*/ (() => {
@@ -22,7 +22,7 @@ const EventSource_scan: EventSource.Signature["scan"] = /*@__PURE__*/ (() => {
   ) => EventListenerLike<T> = (<T, TAcc>() =>
     createInstanceFactory(
       mix(
-        include(Sink_scanMixin()),
+        include(ScanSinkMixin()),
         function ScanEventListener(
           instance: Pick<
             EventListenerLike<T>,
@@ -33,7 +33,7 @@ const EventSource_scan: EventSource.Signature["scan"] = /*@__PURE__*/ (() => {
           initialValue: Factory<TAcc>,
         ): EventListenerLike<T> {
           init(
-            Sink_scanMixin<T, TAcc>(),
+            ScanSinkMixin<T, TAcc>(),
             instance,
             delegate,
             reducer,

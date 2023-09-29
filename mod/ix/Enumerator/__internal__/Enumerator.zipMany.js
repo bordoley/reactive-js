@@ -5,8 +5,8 @@ import { none, pipe } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "./MutableEnumerator.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 const ZipEnumerator_enumerators = Symbol("ZipEnumerator_enumerators");
 const Enumerator_zipMany = /*@__PURE__*/ (() => {
     const Enumerator_getCurrent = (enumerator) => enumerator[EnumeratorLike_current];
@@ -18,9 +18,9 @@ const Enumerator_zipMany = /*@__PURE__*/ (() => {
         }
         return allHaveCurrent(enumerators);
     };
-    return createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_mixin), function ZipEnumerator(instance, enumerators) {
-        init(Disposable_mixin, instance);
-        init(MutableEnumerator_mixin(), instance);
+    return createInstanceFactory(mix(include(MutableEnumeratorMixin(), DisposableMixin), function ZipEnumerator(instance, enumerators) {
+        init(DisposableMixin, instance);
+        init(MutableEnumeratorMixin(), instance);
         instance[ZipEnumerator_enumerators] = enumerators;
         for (const enumerator of enumerators) {
             pipe(instance, Disposable.add(enumerator));

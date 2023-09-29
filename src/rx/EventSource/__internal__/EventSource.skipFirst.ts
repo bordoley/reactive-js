@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_skipFirstMixin from "../../Sink/__internal__/Sink.skipFirstMixin.js";
+import SkipFirstSinkMixin from "../../__mixins__/SkipFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
@@ -22,7 +22,7 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_skipFirstMixin()),
+          include(SkipFirstSinkMixin()),
           function SkipFirstEventListener(
             instance: Pick<
               EventListenerLike<T>,
@@ -31,7 +31,7 @@ const EventSource_skipFirst: EventSource.Signature["skipFirst"] =
             delegate: EventListenerLike<T>,
             count: Optional<number>,
           ): EventListenerLike<T> {
-            init(Sink_skipFirstMixin<T>(), instance, delegate, count);
+            init(SkipFirstSinkMixin<T>(), instance, delegate, count);
 
             return instance;
           },

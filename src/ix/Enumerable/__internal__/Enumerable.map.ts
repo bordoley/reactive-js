@@ -18,12 +18,12 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_map: Enumerable.Signature["map"] = /*@__PURE__*/ (<
@@ -39,15 +39,15 @@ const Enumerable_map: Enumerable.Signature["map"] = /*@__PURE__*/ (<
   }
   const createMapEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin(), Disposable_mixin),
+      include(MutableEnumeratorMixin(), DisposableMixin),
       function MapEnumerator(
         instance: Pick<EnumeratorLike<TB>, typeof EnumeratorLike_move> &
           TProperties<TA, TB>,
         delegate: EnumeratorLike<TA>,
         mapper: Function1<TA, TB>,
       ): EnumeratorLike<TB> {
-        init(MutableEnumerator_mixin<TB>(), instance);
-        init(Disposable_mixin, instance);
+        init(MutableEnumeratorMixin<TB>(), instance);
+        init(DisposableMixin, instance);
 
         pipe(instance, Disposable.add(delegate));
 

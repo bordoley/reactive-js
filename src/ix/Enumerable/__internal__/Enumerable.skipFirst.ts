@@ -22,7 +22,7 @@ import {
   DisposableLike,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
@@ -37,14 +37,14 @@ const Enumerable_skipFirst: Enumerable.Signature["skipFirst"] = /*@__PURE__*/ (<
 
   const createSkipFirstEnumerator = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin<EnumeratorLike<T>>()),
+      include(DelegatingDisposableMixin<EnumeratorLike<T>>()),
       function SkipFirstEnumerator(
         instance: Omit<EnumeratorLike<T>, keyof DisposableLike> & TProperties,
         delegate: EnumeratorLike<T>,
         skipCount: Optional<number>,
       ): EnumeratorLike<T> {
         init(
-          Disposable_delegatingMixin<EnumeratorLike<T>>(),
+          DelegatingDisposableMixin<EnumeratorLike<T>>(),
           instance,
           delegate,
         );

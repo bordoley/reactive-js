@@ -3,11 +3,11 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { partial, pipe } from "../../../functions.js";
 import { EventListenerLike_isErrorSafe, } from "../../../rx.js";
-import Sink_keepMixin from "../../Sink/__internal__/Sink.keepMixin.js";
+import KeepSinkMixin from "../../__mixins__/KeepSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_keep = /*@__PURE__*/ (() => {
-    const createKeepEventListener = (() => createInstanceFactory(mix(include(Sink_keepMixin()), function KeepEventListener(instance, delegate, predicate) {
-        init(Sink_keepMixin(), instance, delegate, predicate);
+    const createKeepEventListener = (() => createInstanceFactory(mix(include(KeepSinkMixin()), function KeepEventListener(instance, delegate, predicate) {
+        init(KeepSinkMixin(), instance, delegate, predicate);
         return instance;
     }, props({}), {
         [EventListenerLike_isErrorSafe]: false,

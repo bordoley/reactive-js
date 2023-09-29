@@ -21,6 +21,8 @@
 
   ↳↳ [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)
 
+  ↳↳ [`MutableKeyedCollectionLike`](collections.MutableKeyedCollectionLike.md)
+
 ## Table of contents
 
 ### Methods

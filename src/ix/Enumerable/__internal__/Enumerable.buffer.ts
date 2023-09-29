@@ -22,7 +22,7 @@ import {
   DelegatingDisposableLike_delegate,
   DisposableLike,
 } from "../../../utils.js";
-import Disposable_delegatingMixin from "../../../utils/Disposable/__internal__/Disposable.delegatingMixin.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
@@ -39,7 +39,7 @@ const Enumerable_buffer: Enumerable.Signature["buffer"] = /*@__PURE__*/ (<
 
   const createBufferEnumerator = createInstanceFactory(
     mix(
-      include(Disposable_delegatingMixin<EnumeratorLike<T>>()),
+      include(DelegatingDisposableMixin<EnumeratorLike<T>>()),
       function BufferEnumerator(
         instance: TProperties<T> &
           Omit<EnumeratorLike<readonly T[]>, keyof DisposableLike>,
@@ -47,7 +47,7 @@ const Enumerable_buffer: Enumerable.Signature["buffer"] = /*@__PURE__*/ (<
         count: Optional<number>,
       ): EnumeratorLike<readonly T[]> {
         init(
-          Disposable_delegatingMixin<EnumeratorLike<T>>(),
+          DelegatingDisposableMixin<EnumeratorLike<T>>(),
           instance,
           delegate,
         );

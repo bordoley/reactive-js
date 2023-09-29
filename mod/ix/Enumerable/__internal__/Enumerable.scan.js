@@ -5,16 +5,16 @@ import { error, none, partial, pipe, } from "../../../functions.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../ix.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
-import MutableEnumerator_mixin, { MutableEnumeratorLike_reset, } from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 const Enumerable_scan = /*@__PURE__*/ (() => {
     const ScanEnumerator_acc = Symbol("ScanEnumerator_acc");
     const ScanEnumerator_delegate = Symbol("ScanEnumerator_delegate");
     const ScanEnumerator_reducer = Symbol("ScanEnumerator_reducer");
-    const createScanEnumerator = createInstanceFactory(mix(include(MutableEnumerator_mixin(), Disposable_mixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
-        init(MutableEnumerator_mixin(), instance);
-        init(Disposable_mixin, instance);
+    const createScanEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin(), DisposableMixin), function ScanEnumerator(instance, delegate, reducer, initialValue) {
+        init(MutableEnumeratorMixin(), instance);
+        init(DisposableMixin, instance);
         pipe(instance, Disposable.add(delegate));
         instance[ScanEnumerator_reducer] = reducer;
         instance[ScanEnumerator_acc] = initialValue();

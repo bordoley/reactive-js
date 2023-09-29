@@ -1,7 +1,7 @@
 /// <reference types="./Disposable.create.d.ts" />
 
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
-import Disposable_mixin from "../../Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../__mixins__/DisposableMixin.js";
 const Disposable_create = 
-/*@__PURE__*/ createInstanceFactory(Disposable_mixin);
+/*@__PURE__*/ createInstanceFactory(DisposableMixin);
 export default Disposable_create;

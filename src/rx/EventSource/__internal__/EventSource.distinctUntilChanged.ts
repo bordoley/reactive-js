@@ -11,7 +11,7 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../rx.js";
 import type * as EventSource from "../../EventSource.js";
-import Sink_distinctUntilChangedMixin from "../../Sink/__internal__/Sink.distinctUntilChangedMixin.js";
+import DistinctUntilChangedSinkMixin from "../../__mixins__/DistinctUntilChangedSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChanged"] =
@@ -22,7 +22,7 @@ const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChan
     ) => EventListenerLike<T> = (<T>() =>
       createInstanceFactory(
         mix(
-          include(Sink_distinctUntilChangedMixin()),
+          include(DistinctUntilChangedSinkMixin()),
           function distinctUntilChangedEventListener(
             instance: Pick<
               EventListenerLike<T>,
@@ -32,7 +32,7 @@ const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChan
             equality: Equality<T>,
           ): EventListenerLike<T> {
             init(
-              Sink_distinctUntilChangedMixin<T>(),
+              DistinctUntilChangedSinkMixin<T>(),
               instance,
               delegate,
               equality,

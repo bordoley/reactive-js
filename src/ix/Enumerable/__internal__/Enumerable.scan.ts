@@ -25,12 +25,12 @@ import {
   DisposableLike_isDisposed,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_mixin from "../../../utils/Disposable/__internal__/Disposable.mixin.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Enumerable from "../../Enumerable.js";
-import MutableEnumerator_mixin, {
+import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
   MutableEnumeratorLike_reset,
-} from "../../Enumerator/__internal__/MutableEnumerator.mixin.js";
+} from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
 
 const Enumerable_scan: Enumerable.Signature["scan"] = /*@__PURE__*/ (<
@@ -49,7 +49,7 @@ const Enumerable_scan: Enumerable.Signature["scan"] = /*@__PURE__*/ (<
 
   const createScanEnumerator = createInstanceFactory(
     mix(
-      include(MutableEnumerator_mixin(), Disposable_mixin),
+      include(MutableEnumeratorMixin(), DisposableMixin),
       function ScanEnumerator(
         instance: Pick<EnumeratorLike<TAcc>, typeof EnumeratorLike_move> &
           TProperties<T, TAcc>,
@@ -57,8 +57,8 @@ const Enumerable_scan: Enumerable.Signature["scan"] = /*@__PURE__*/ (<
         reducer: Reducer<T, TAcc>,
         initialValue: Factory<TAcc>,
       ): EnumeratorLike<TAcc> {
-        init(MutableEnumerator_mixin<TAcc>(), instance);
-        init(Disposable_mixin, instance);
+        init(MutableEnumeratorMixin<TAcc>(), instance);
+        init(DisposableMixin, instance);
 
         pipe(instance, Disposable.add(delegate));
 
