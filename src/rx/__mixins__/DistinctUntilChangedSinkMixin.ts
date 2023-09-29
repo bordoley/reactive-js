@@ -1,4 +1,3 @@
-import { Equality, none, returns } from "../..//functions.js";
 import {
   Mixin2,
   include,
@@ -6,6 +5,7 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { Equality, none, returns } from "../../functions.js";
 import { SinkLike, SinkLike_notify } from "../../rx.js";
 import {
   DelegatingDisposableLike,

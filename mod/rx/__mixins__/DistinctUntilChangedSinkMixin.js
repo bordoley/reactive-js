@@ -1,7 +1,7 @@
 /// <reference types="./DistinctUntilChangedSinkMixin.d.ts" />
 
-import { none, returns } from "../..//functions.js";
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
+import { none, returns } from "../../functions.js";
 import { SinkLike_notify } from "../../rx.js";
 import { DelegatingDisposableLike_delegate, } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
