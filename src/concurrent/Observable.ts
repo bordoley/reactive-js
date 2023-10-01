@@ -1,4 +1,10 @@
 import {
+  Computation,
+  Computation_T,
+  Computation_type,
+  PureComputationModule,
+} from "../computation.js";
+import {
   DeferredObservableLike,
   MulticastObservableLike,
   ObservableLike,
@@ -91,11 +97,18 @@ export type DeferredObservableOperator<TIn, TOut> = <
   observable: TObservableIn,
 ) => DeferredObservableLike<TOut>;
 
+export interface ObservableComputation extends Computation {
+  readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
+}
+
+export type Type = ObservableComputation;
+
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface ObservableModule {
+export interface ObservableModule
+  extends PureComputationModule<ObservableComputation> {
   backpressureStrategy<T>(
     capacity: number,
     backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy],

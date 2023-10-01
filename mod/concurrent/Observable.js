@@ -1,5 +1,6 @@
 /// <reference types="./Observable.d.ts" />
 
+import { Computation_type, } from "../computation.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../concurrent.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";

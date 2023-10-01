@@ -4,6 +4,12 @@
 
 [concurrent/Observable](../modules/concurrent_Observable.md).ObservableModule
 
+## Hierarchy
+
+- [`PureComputationModule`](computation.PureComputationModule.md)<[`ObservableComputation`](concurrent_Observable.ObservableComputation.md)\>
+
+  ↳ **`ObservableModule`**
+
 ## Table of contents
 
 ### Methods
@@ -85,6 +91,10 @@ ___
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, readonly `T`[]\>
 
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[buffer](computation.PureComputationModule.md#buffer)
+
 ___
 
 ### create
@@ -123,6 +133,10 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
+
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[decodeWithCharset](computation.PureComputationModule.md#decodewithcharset)
 
 ___
 
@@ -168,6 +182,10 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[distinctUntilChanged](computation.PureComputationModule.md#distinctuntilchanged)
 
 ___
 
@@ -345,6 +363,10 @@ ___
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[keep](computation.PureComputationModule.md#keep)
+
 ___
 
 ### map
@@ -367,6 +389,10 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`TA`, `TB`\>
+
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[map](computation.PureComputationModule.md#map)
 
 ___
 
@@ -442,6 +468,10 @@ ___
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[pairwise](computation.PureComputationModule.md#pairwise)
+
 ___
 
 ### reduce
@@ -514,6 +544,10 @@ ___
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`\>
 
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[scan](computation.PureComputationModule.md#scan)
+
 ___
 
 ### skipFirst
@@ -536,6 +570,10 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[skipFirst](computation.PureComputationModule.md#skipfirst)
 
 ___
 
@@ -585,6 +623,10 @@ ___
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
 
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[takeFirst](computation.PureComputationModule.md#takefirst)
+
 ___
 
 ### takeLast
@@ -631,6 +673,10 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Overrides
+
+[PureComputationModule](computation.PureComputationModule.md).[takeWhile](computation.PureComputationModule.md#takewhile)
 
 ___
 

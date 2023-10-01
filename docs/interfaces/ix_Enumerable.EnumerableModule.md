@@ -4,6 +4,12 @@
 
 [ix/Enumerable](../modules/ix_Enumerable.md).EnumerableModule
 
+## Hierarchy
+
+- [`PureComputationModule`](computation.PureComputationModule.md)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md)\>
+
+  ↳ **`EnumerableModule`**
+
 ## Table of contents
 
 ### Methods
@@ -27,7 +33,7 @@
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<readonly `T`[]\>\>
+▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -44,7 +50,11 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<readonly `T`[]\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[buffer](computation.PureComputationModule.md#buffer)
 
 ___
 
@@ -119,7 +129,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`ArrayBuffer`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`string`\>\>
+▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -130,13 +140,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`ArrayBuffer`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`string`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[decodeWithCharset](computation.PureComputationModule.md#decodewithcharset)
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -153,13 +167,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[distinctUntilChanged](computation.PureComputationModule.md#distinctuntilchanged)
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -175,13 +193,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[keep](computation.PureComputationModule.md#keep)
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`TB`\>\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -198,13 +220,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`TB`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[map](computation.PureComputationModule.md#map)
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>\>
+▸ **pairwise**<`T`\>(): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -214,7 +240,11 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[pairwise](computation.PureComputationModule.md#pairwise)
 
 ___
 
@@ -244,7 +274,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`TAcc`\>\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -262,13 +292,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`TAcc`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[scan](computation.PureComputationModule.md#scan)
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -285,13 +319,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[skipFirst](computation.PureComputationModule.md#skipfirst)
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -308,13 +346,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[takeFirst](computation.PureComputationModule.md#takefirst)
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -332,4 +374,8 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+#### Inherited from
+
+[PureComputationModule](computation.PureComputationModule.md).[takeWhile](computation.PureComputationModule.md#takewhile)

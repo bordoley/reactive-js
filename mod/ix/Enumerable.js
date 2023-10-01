@@ -1,5 +1,6 @@
 /// <reference types="./Enumerable.d.ts" />
 
+import { Computation_type, } from "../computation.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
 import Enumerable_decodeWithCharset from "./Enumerable/__internal__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";

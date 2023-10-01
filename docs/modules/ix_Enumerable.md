@@ -6,11 +6,13 @@
 
 ### Interfaces
 
+- [EnumerableComputation](../interfaces/ix_Enumerable.EnumerableComputation.md)
 - [EnumerableModule](../interfaces/ix_Enumerable.EnumerableModule.md)
 
 ### Type Aliases
 
 - [Signature](ix_Enumerable.md#signature)
+- [Type](ix_Enumerable.md#type)
 
 ### Functions
 
@@ -32,11 +34,17 @@
 
 Ƭ **Signature**: [`EnumerableModule`](../interfaces/ix_Enumerable.EnumerableModule.md)
 
+___
+
+### Type
+
+Ƭ **Type**: [`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md)
+
 ## Functions
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<readonly `T`[]\>\>
+▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -53,13 +61,13 @@
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<readonly `T`[]\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`ArrayBuffer`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`string`\>\>
+▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -70,13 +78,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`ArrayBuffer`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`string`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -93,13 +101,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -115,13 +123,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\>\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -138,13 +146,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>\>
+▸ **pairwise**<`T`\>(): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -154,7 +162,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
 
 ___
 
@@ -184,7 +192,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TAcc`\>\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -202,13 +210,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TAcc`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -225,13 +233,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -248,13 +256,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -272,4 +280,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>

@@ -6,11 +6,13 @@
 
 ### Interfaces
 
+- [EventSourceComputation](../interfaces/rx_EventSource.EventSourceComputation.md)
 - [EventSourceModule](../interfaces/rx_EventSource.EventSourceModule.md)
 
 ### Type Aliases
 
 - [Signature](rx_EventSource.md#signature)
+- [Type](rx_EventSource.md#type)
 
 ### Functions
 
@@ -34,6 +36,12 @@
 ### Signature
 
 Ƭ **Signature**: [`EventSourceModule`](../interfaces/rx_EventSource.EventSourceModule.md)
+
+___
+
+### Type
+
+Ƭ **Type**: [`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md)
 
 ## Functions
 
@@ -61,7 +69,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<readonly `T`[]\>\>
+▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -78,7 +86,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<readonly `T`[]\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
 
 ___
 
@@ -106,7 +114,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -123,13 +131,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -145,13 +153,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TA`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TB`\>\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -168,7 +176,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TA`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TB`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 ___
 
@@ -243,7 +251,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<[`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>\>
+▸ **pairwise**<`T`\>(): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -253,13 +261,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<[`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TAcc`\>\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -277,13 +285,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`TAcc`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -300,13 +308,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -323,13 +331,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -347,4 +355,4 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>, [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\>\>
+[`PureComputationOperator`](computation.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/rx_EventSource.EventSourceComputation.md), `T`, `T`\>

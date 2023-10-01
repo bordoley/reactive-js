@@ -1,32 +1,15 @@
-import { Equality, Factory, Function1, Predicate, Reducer, Tuple2 } from "../functions.js";
+import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computation.js";
+import { Factory, Function1, Reducer } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
-export interface EnumerableModule {
-    buffer<T>(options?: {
-        count?: number;
-    }): Function1<EnumerableLike<T>, EnumerableLike<readonly T[]>>;
+export interface EnumerableComputation extends Computation {
+    readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
+}
+export type Type = EnumerableComputation;
+export interface EnumerableModule extends PureComputationModule<EnumerableComputation> {
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    decodeWithCharset(options?: {
-        readonly charset?: string | undefined;
-    }): Function1<EnumerableLike<ArrayBuffer>, EnumerableLike<string>>;
-    distinctUntilChanged<T>(options?: {
-        readonly equality?: Equality<T>;
-    }): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    keep<T>(predicate: Predicate<T>): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    map<TA, TB>(selector: Function1<TA, TB>): Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
-    pairwise<T>(): Function1<EnumerableLike<T>, EnumerableLike<Tuple2<T, T>>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, TAcc>;
-    scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, EnumerableLike<TAcc>>;
-    skipFirst<T>(options?: {
-        readonly count?: number;
-    }): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    takeFirst<T>(options?: {
-        readonly count?: number;
-    }): Function1<EnumerableLike<T>, EnumerableLike<T>>;
-    takeWhile<T>(predicate: Predicate<T>, options?: {
-        readonly inclusive?: boolean;
-    }): Function1<EnumerableLike<T>, EnumerableLike<T>>;
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];

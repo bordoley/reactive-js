@@ -1,5 +1,6 @@
 /// <reference types="./EventSource.d.ts" />
 
+import { Computation_type, } from "../computation.js";
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
 import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";

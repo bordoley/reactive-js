@@ -1,3 +1,4 @@
+import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computation.js";
 import { DeferredObservableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2 } from "../functions.js";
 import { DispatcherLike } from "../rx.js";
@@ -5,11 +6,15 @@ import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } fro
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> | RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> | MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => DeferredObservableLike<TOut>;
+export interface ObservableComputation extends Computation {
+    readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
+}
+export type Type = ObservableComputation;
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface ObservableModule {
+export interface ObservableModule extends PureComputationModule<ObservableComputation> {
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): PureObservableOperator<T, T>;
     buffer<T>(options?: {
         count?: number;

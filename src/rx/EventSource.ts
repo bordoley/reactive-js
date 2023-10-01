@@ -1,12 +1,10 @@
 import {
-  Equality,
-  Factory,
-  Function1,
-  Predicate,
-  Reducer,
-  SideEffect1,
-  Tuple2,
-} from "../functions.js";
+  Computation,
+  Computation_T,
+  Computation_type,
+  PureComputationModule,
+} from "../computation.js";
+import { Function1, SideEffect1 } from "../functions.js";
 import { EventListenerLike, EventSourceLike } from "../rx.js";
 import { DisposableLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
@@ -24,28 +22,19 @@ import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFi
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
 
-export interface EventSourceModule {
+export interface EventSourceComputation extends Computation {
+  readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
+}
+
+export type Type = EventSourceComputation;
+
+export interface EventSourceModule
+  extends PureComputationModule<EventSourceComputation> {
   addEventHandler<T>(
     handler: SideEffect1<T>,
   ): Function1<EventSourceLike<T>, DisposableLike>;
 
-  buffer<T>(options?: {
-    count?: number;
-  }): Function1<EventSourceLike<T>, EventSourceLike<readonly T[]>>;
-
   create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
-
-  distinctUntilChanged<T>(options?: {
-    readonly equality?: Equality<T>;
-  }): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  keep<T>(
-    predicate: Predicate<T>,
-  ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  map<TA, TB>(
-    selector: Function1<TA, TB>,
-  ): Function1<EventSourceLike<TA>, EventSourceLike<TB>>;
 
   merge<T>(
     fst: EventSourceLike<T>,
@@ -58,26 +47,6 @@ export interface EventSourceModule {
   mergeWith<T>(
     snd: EventSourceLike<T>,
     ...tail: readonly EventSourceLike<T>[]
-  ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  pairwise<T>(): Function1<EventSourceLike<T>, EventSourceLike<Tuple2<T, T>>>;
-
-  scan<T, TAcc>(
-    scanner: Reducer<T, TAcc>,
-    initialValue: Factory<TAcc>,
-  ): Function1<EventSourceLike<T>, EventSourceLike<TAcc>>;
-
-  skipFirst<T>(options?: {
-    readonly count?: number;
-  }): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  takeFirst<T>(options?: {
-    readonly count?: number;
-  }): Function1<EventSourceLike<T>, EventSourceLike<T>>;
-
-  takeWhile<T>(
-    predicate: Predicate<T>,
-    options?: { readonly inclusive?: boolean },
   ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
 }
 

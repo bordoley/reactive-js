@@ -8,12 +8,17 @@
 
 - [ObservableModule](../interfaces/concurrent_Observable.ObservableModule.md)
 
+### Other Interfaces
+
+- [ObservableComputation](../interfaces/concurrent_Observable.ObservableComputation.md)
+
 ### Type Aliases
 
 - [DeferredObservableOperator](concurrent_Observable.md#deferredobservableoperator)
 - [ObservableOperatorWithSideEffects](concurrent_Observable.md#observableoperatorwithsideeffects)
 - [PureObservableOperator](concurrent_Observable.md#pureobservableoperator)
 - [Signature](concurrent_Observable.md#signature)
+- [Type](concurrent_Observable.md#type)
 
 ### Functions
 
@@ -152,6 +157,12 @@ ___
 ### Signature
 
 Ƭ **Signature**: [`ObservableModule`](../interfaces/concurrent_Observable.ObservableModule.md)
+
+___
+
+### Type
+
+Ƭ **Type**: [`ObservableComputation`](../interfaces/concurrent_Observable.ObservableComputation.md)
 
 ## Functions
 

@@ -13,6 +13,7 @@ Reactive-JS
 - [collections/ReadonlyArray](modules/collections_ReadonlyArray.md)
 - [collections/ReadonlyMap](modules/collections_ReadonlyMap.md)
 - [collections/ReadonlyObjectMap](modules/collections_ReadonlyObjectMap.md)
+- [computation](modules/computation.md)
 - [concurrent](modules/concurrent.md)
 - [concurrent/Observable](modules/concurrent_Observable.md)
 - [concurrent/ReplayPublisher](modules/concurrent_ReplayPublisher.md)
