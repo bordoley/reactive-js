@@ -1,7 +1,7 @@
 import { CollectionLike, IndexedCollectionLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
 import { EnumerableLike } from "./ix.js";
-import { DispatcherLike, EventSourceLike, PauseableLike, SinkLike } from "./rx.js";
+import { DispatcherLike, ErrorSafeEventListenerLike, EventSourceLike, PauseableLike, SinkLike } from "./rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
 export declare const SchedulerLike_yield: unique symbol;
 export declare const SchedulerLike_inContinuation: unique symbol;
@@ -186,6 +186,10 @@ export declare const ReplayObservableLike_buffer: unique symbol;
  */
 export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
     readonly [ReplayObservableLike_buffer]: IndexedCollectionLike<T>;
+}
+export declare const ReplayPublisherLike_observerCount: unique symbol;
+export interface ReplayPublisherLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
+    readonly [ReplayPublisherLike_observerCount]: number;
 }
 export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
 }

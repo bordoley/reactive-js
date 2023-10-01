@@ -21,6 +21,7 @@ export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const ReplayObservableLike_buffer = Symbol("ReplayObservableLike_buffer");
+export const ReplayPublisherLike_observerCount = Symbol("ReplayPublisherLike_observerCount");
 export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
 export const StreamableLike_TStream = Symbol("StreamableLike_TStream");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

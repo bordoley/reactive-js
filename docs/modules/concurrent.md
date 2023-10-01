@@ -25,6 +25,7 @@
 - [ObserverLike](../interfaces/concurrent.ObserverLike.md)
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
+- [ReplayPublisherLike](../interfaces/concurrent.ReplayPublisherLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
 - [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/concurrent.VirtualTimeSchedulerLike.md)
@@ -49,6 +50,7 @@
 - [ObservableLike\_isRunnable](concurrent.md#observablelike_isrunnable)
 - [ObservableLike\_observe](concurrent.md#observablelike_observe)
 - [ReplayObservableLike\_buffer](concurrent.md#replayobservablelike_buffer)
+- [ReplayPublisherLike\_observerCount](concurrent.md#replaypublisherlike_observercount)
 - [SchedulerLike\_inContinuation](concurrent.md#schedulerlike_incontinuation)
 - [SchedulerLike\_maxYieldInterval](concurrent.md#schedulerlike_maxyieldinterval)
 - [SchedulerLike\_now](concurrent.md#schedulerlike_now)
@@ -149,6 +151,12 @@ ___
 ### ReplayObservableLike\_buffer
 
 • `Const` **ReplayObservableLike\_buffer**: unique `symbol`
+
+___
+
+### ReplayPublisherLike\_observerCount
+
+• `Const` **ReplayPublisherLike\_observerCount**: unique `symbol`
 
 ___
 

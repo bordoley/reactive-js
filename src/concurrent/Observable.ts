@@ -22,6 +22,7 @@ import {
   SideEffect1,
   Tuple2,
 } from "../functions.js";
+import { DispatcherLike } from "../rx.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -31,6 +32,7 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
+import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatchTo.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
@@ -108,6 +110,10 @@ export interface ObservableModule {
   decodeWithCharset(options?: {
     readonly charset?: string;
   }): PureObservableOperator<ArrayBuffer, string>;
+
+  dispatchTo<T>(
+    dispatcher: DispatcherLike<T>,
+  ): ObservableOperatorWithSideEffects<T, T>;
 
   distinctUntilChanged<T>(options?: {
     readonly equality?: Equality<T>;
@@ -231,6 +237,7 @@ export const buffer: Signature["buffer"] = Observable_buffer;
 export const create: Signature["create"] = Observable_create;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
+export const dispatchTo: Signature["dispatchTo"] = Observable_dispatchTo;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;

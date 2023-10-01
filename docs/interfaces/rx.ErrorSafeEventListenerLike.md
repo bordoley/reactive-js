@@ -16,6 +16,8 @@
 
   ↳ **`ErrorSafeEventListenerLike`**
 
+  ↳↳ [`ReplayPublisherLike`](concurrent.ReplayPublisherLike.md)
+
   ↳↳ [`PublisherLike`](rx.PublisherLike.md)
 
 ## Table of contents

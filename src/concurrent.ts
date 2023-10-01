@@ -3,6 +3,7 @@ import { Optional, SideEffect1 } from "./functions.js";
 import { EnumerableLike } from "./ix.js";
 import {
   DispatcherLike,
+  ErrorSafeEventListenerLike,
   EventSourceLike,
   PauseableLike,
   SinkLike,
@@ -258,6 +259,16 @@ export const ReplayObservableLike_buffer = Symbol(
 export interface ReplayObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
   readonly [ReplayObservableLike_buffer]: IndexedCollectionLike<T>;
+}
+
+export const ReplayPublisherLike_observerCount = Symbol(
+  "ReplayPublisherLike_observerCount",
+);
+
+export interface ReplayPublisherLike<T = unknown>
+  extends ReplayObservableLike<T>,
+    ErrorSafeEventListenerLike<T> {
+  readonly [ReplayPublisherLike_observerCount]: number;
 }
 
 export interface PauseableObservableLike<T = unknown>

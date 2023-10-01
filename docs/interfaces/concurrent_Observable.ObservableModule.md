@@ -12,6 +12,7 @@
 - [buffer](concurrent_Observable.ObservableModule.md#buffer)
 - [create](concurrent_Observable.ObservableModule.md#create)
 - [decodeWithCharset](concurrent_Observable.ObservableModule.md#decodewithcharset)
+- [dispatchTo](concurrent_Observable.ObservableModule.md#dispatchto)
 - [distinctUntilChanged](concurrent_Observable.ObservableModule.md#distinctuntilchanged)
 - [empty](concurrent_Observable.ObservableModule.md#empty)
 - [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
@@ -122,6 +123,28 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
+
+___
+
+### dispatchTo
+
+▸ **dispatchTo**<`T`\>(`dispatcher`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`DispatcherLike`](rx.DispatcherLike.md)<`T`\> |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
 ___
 

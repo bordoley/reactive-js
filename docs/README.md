@@ -15,6 +15,7 @@ Reactive-JS
 - [collections/ReadonlyObjectMap](modules/collections_ReadonlyObjectMap.md)
 - [concurrent](modules/concurrent.md)
 - [concurrent/Observable](modules/concurrent_Observable.md)
+- [concurrent/ReplayPublisher](modules/concurrent_ReplayPublisher.md)
 - [concurrent/Scheduler](modules/concurrent_Scheduler.md)
 - [concurrent/VirtualTimeScheduler](modules/concurrent_VirtualTimeScheduler.md)
 - [functions](modules/functions.md)
