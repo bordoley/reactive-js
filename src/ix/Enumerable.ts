@@ -13,6 +13,7 @@ import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerabl
 import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__internal__/Enumerable.map.js";
 import Enumerable_pairwise from "./Enumerable/__internal__/Enumerable.pairwise.js";
+import Enumerable_reduce from "./Enumerable/__internal__/Enumerable.reduce.js";
 import Enumerable_scan from "./Enumerable/__internal__/Enumerable.scan.js";
 import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst.js";
 import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst.js";
@@ -54,6 +55,11 @@ export interface EnumerableModule {
 
   pairwise<T>(): Function1<EnumerableLike<T>, EnumerableLike<Tuple2<T, T>>>;
 
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<EnumerableLike<T>, TAcc>;
+
   scan<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
@@ -83,6 +89,7 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
 export const keep: Signature["keep"] = Enumerable_keep;
 export const map: Signature["map"] = Enumerable_map;
 export const pairwise: Signature["pairwise"] = Enumerable_pairwise;
+export const reduce: Signature["reduce"] = Enumerable_reduce;
 export const scan: Signature["scan"] = Enumerable_scan;
 export const skipFirst: Signature["skipFirst"] = Enumerable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Enumerable_takeFirst;

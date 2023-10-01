@@ -16,6 +16,7 @@ export interface EnumerableModule {
     keep<T>(predicate: Predicate<T>): Function1<EnumerableLike<T>, EnumerableLike<T>>;
     map<TA, TB>(selector: Function1<TA, TB>): Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
     pairwise<T>(): Function1<EnumerableLike<T>, EnumerableLike<Tuple2<T, T>>>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, TAcc>;
     scan<T, TAcc>(scanner: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, EnumerableLike<TAcc>>;
     skipFirst<T>(options?: {
         readonly count?: number;
@@ -34,6 +35,7 @@ export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
+export declare const reduce: Signature["reduce"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];

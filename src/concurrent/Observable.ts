@@ -2,6 +2,9 @@ import {
   DeferredObservableLike,
   MulticastObservableLike,
   ObservableLike,
+  ObservableLike_isDeferred,
+  ObservableLike_isPure,
+  ObservableLike_isRunnable,
   ObserverLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
@@ -12,8 +15,10 @@ import {
   Factory,
   Function1,
   Function2,
+  Optional,
   Predicate,
   Reducer,
+  SideEffect,
   SideEffect1,
   Tuple2,
 } from "../functions.js";
@@ -27,12 +32,19 @@ import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
+import Observable_empty from "./Observable/__internal__/Observable.empty.js";
+import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
+import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
+import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
+import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
+import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
+import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
@@ -57,7 +69,7 @@ export type PureObservableOperator<TIn, TOut> = <
   ? DeferredObservableLike<TOut>
   : TObservableIn extends MulticastObservableLike<TIn>
   ? MulticastObservableLike<TOut>
-  : never;
+  : ObservableLike<TOut>;
 
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
@@ -69,7 +81,7 @@ export type ObservableOperatorWithSideEffects<TIn, TOut> = <
       | DeferredObservableLike<TIn>
       | MulticastObservableLike<TIn>
   ? DeferredObservableLike<TOut>
-  : never;
+  : ObservableLike<TOut>;
 
 export type DeferredObservableOperator<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
@@ -101,6 +113,10 @@ export interface ObservableModule {
     readonly equality?: Equality<T>;
   }): PureObservableOperator<T, T>;
 
+  empty<T>(): RunnableLike<T>;
+
+  encodeUtf8(): PureObservableOperator<string, Uint8Array>;
+
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
@@ -110,11 +126,35 @@ export interface ObservableModule {
     delayStart?: boolean;
   }): Function1<Iterable<T>, DeferredObservableLike<T>>;
 
+  ignoreElements<T>(): PureObservableOperator<unknown, T>;
+
+  isPure<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
+    [ObservableLike_isPure]: true;
+  };
+
+  isRunnable<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
+    [ObservableLike_isDeferred]: true;
+    [ObservableLike_isRunnable]: true;
+  };
+
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
 
   map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
 
+  onSubscribe<T>(
+    f: Factory<DisposableLike>,
+  ): ObservableOperatorWithSideEffects<T, T>;
+  onSubscribe<T>(
+    f: Factory<SideEffect1<Optional<Error>>>,
+  ): ObservableOperatorWithSideEffects<T, T>;
+  onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
+
   pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
+
+  reduce<T, TAcc>(
+    reducer: Reducer<T, TAcc>,
+    initialValue: Factory<TAcc>,
+  ): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, TAcc>;
 
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -193,12 +233,20 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
+export const empty: Signature["empty"] = Observable_empty;
+export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
+export const ignoreElements: Signature["ignoreElements"] =
+  Observable_ignoreElements;
+export const isPure: Signature["isPure"] = Observable_isPure;
+export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
 export const map: Signature["map"] = Observable_map;
+export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
+export const reduce: Signature["reduce"] = Observable_reduce;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;

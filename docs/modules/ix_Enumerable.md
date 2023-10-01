@@ -20,6 +20,7 @@
 - [keep](ix_Enumerable.md#keep)
 - [map](ix_Enumerable.md#map)
 - [pairwise](ix_Enumerable.md#pairwise)
+- [reduce](ix_Enumerable.md#reduce)
 - [scan](ix_Enumerable.md#scan)
 - [skipFirst](ix_Enumerable.md#skipfirst)
 - [takeFirst](ix_Enumerable.md#takefirst)
@@ -154,6 +155,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>, `TAcc`\>
 
 ___
 

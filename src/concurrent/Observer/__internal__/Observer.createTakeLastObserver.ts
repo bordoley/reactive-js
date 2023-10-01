@@ -14,7 +14,7 @@ import {
   QueueLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
-import Disposable_onComplete from "../../../utils/Disposable/__internal__/Disposable.onComplete.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_fromIterable from "../../Observable/__internal__/Observable.fromIterable.js";
@@ -46,7 +46,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
 
         pipe(
           instance,
-          Disposable_onComplete(() => {
+          Disposable.onComplete(() => {
             pipe(
               instance[TakeLastObserver_queue],
               Observable_fromIterable(),

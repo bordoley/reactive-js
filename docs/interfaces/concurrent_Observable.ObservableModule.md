@@ -13,12 +13,19 @@
 - [create](concurrent_Observable.ObservableModule.md#create)
 - [decodeWithCharset](concurrent_Observable.ObservableModule.md#decodewithcharset)
 - [distinctUntilChanged](concurrent_Observable.ObservableModule.md#distinctuntilchanged)
+- [empty](concurrent_Observable.ObservableModule.md#empty)
+- [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
 - [enqueue](concurrent_Observable.ObservableModule.md#enqueue)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
+- [ignoreElements](concurrent_Observable.ObservableModule.md#ignoreelements)
+- [isPure](concurrent_Observable.ObservableModule.md#ispure)
+- [isRunnable](concurrent_Observable.ObservableModule.md#isrunnable)
 - [keep](concurrent_Observable.ObservableModule.md#keep)
 - [map](concurrent_Observable.ObservableModule.md#map)
+- [onSubscribe](concurrent_Observable.ObservableModule.md#onsubscribe)
 - [pairwise](concurrent_Observable.ObservableModule.md#pairwise)
+- [reduce](concurrent_Observable.ObservableModule.md#reduce)
 - [run](concurrent_Observable.ObservableModule.md#run)
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
@@ -141,6 +148,32 @@ ___
 
 ___
 
+### empty
+
+▸ **empty**<`T`\>(): [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+___
+
+### encodeUtf8
+
+▸ **encodeUtf8**(): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`string`, `Uint8Array`\>
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`string`, `Uint8Array`\>
+
+___
+
 ### enqueue
 
 ▸ **enqueue**<`T`\>(`queue`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
@@ -209,6 +242,66 @@ ___
 
 ___
 
+### ignoreElements
+
+▸ **ignoreElements**<`T`\>(): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`\>
+
+___
+
+### isPure
+
+▸ **isPure**<`T`\>(`obs`): obs is ObservableLike<T\> & Object
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](concurrent.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+obs is ObservableLike<T\> & Object
+
+___
+
+### isRunnable
+
+▸ **isRunnable**<`T`\>(`obs`): obs is ObservableLike<T\> & Object
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](concurrent.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+obs is ObservableLike<T\> & Object
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
@@ -254,6 +347,64 @@ ___
 
 ___
 
+### onSubscribe
+
+▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](../modules/functions.md#factory)<[`DisposableLike`](utils.DisposableLike.md)\> |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](../modules/functions.md#factory)<[`SideEffect1`](../modules/functions.md#sideeffect1)<[`Optional`](../modules/functions.md#optional)<`Error`\>\>\> |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+▸ **onSubscribe**<`T`\>(`f`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`SideEffect`](../modules/functions.md#sideeffect) |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
 ### pairwise
 
 ▸ **pairwise**<`T`\>(): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
@@ -267,6 +418,30 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+
+___
+
+### reduce
+
+▸ **reduce**<`T`, `TAcc`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, `TAcc`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `reducer` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, `TAcc`\>
 
 ___
 

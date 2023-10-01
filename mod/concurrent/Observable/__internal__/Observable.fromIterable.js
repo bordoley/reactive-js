@@ -4,7 +4,7 @@ import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurren
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
-import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Observable_create from "./Observable.create.js";
 const Observable_fromIterable = (options) => (iterable) => Observable_create((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
@@ -28,6 +28,6 @@ const Observable_fromIterable = (options) => (iterable) => Observable_create((ob
             }
         }
     };
-    pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable_addTo(observer));
+    pipe(observer[SchedulerLike_schedule](continuation, delayStart ? options : none), Disposable.addTo(observer));
 });
 export default Observable_fromIterable;

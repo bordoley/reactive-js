@@ -10,7 +10,7 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_create from "./Observable.create.js";
 
@@ -47,7 +47,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] =
           continuation,
           delayStart ? options : none,
         ),
-        Disposable_addTo(observer),
+        Disposable.addTo(observer),
       );
     });
 

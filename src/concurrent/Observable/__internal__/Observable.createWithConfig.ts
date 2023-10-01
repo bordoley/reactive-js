@@ -54,6 +54,16 @@ interface ObservableCreateWithConfig {
       | typeof ObservableLike_isRunnable
     >,
   ): DeferredObservableLike<T>;
+
+  createWithConfig<T>(
+    f: SideEffect1<ObserverLike<T>>,
+    config: Pick<
+      ObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): ObservableLike<T>;
 }
 const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"] =
   /*@__PURE__*/ (() => {
