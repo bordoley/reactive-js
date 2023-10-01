@@ -1,8 +1,8 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";

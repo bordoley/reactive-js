@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- [`CollectionLike`](collections.CollectionLike.md)
+- [`CollectionLike`](collections.CollectionLike.md)<`T`\>
 
   ↳ **`KeyedCollectionLike`**
 

@@ -1,18 +1,26 @@
 [Reactive-JS](../README.md) / [collections](../modules/collections.md) / CollectionLike
 
-# Interface: CollectionLike
+# Interface: CollectionLike<T\>
 
 [collections](../modules/collections.md).CollectionLike
 
+## Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
 ## Hierarchy
 
-- **`CollectionLike`**
+- `Iterable`<`T`\>
 
-  ↳ [`KeyedCollectionLike`](collections.KeyedCollectionLike.md)
+  ↳ **`CollectionLike`**
 
-  ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
+  ↳↳ [`KeyedCollectionLike`](collections.KeyedCollectionLike.md)
 
-  ↳ [`QueueCollectionLike`](utils.QueueCollectionLike.md)
+  ↳↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
+
+  ↳↳ [`QueueCollectionLike`](utils.QueueCollectionLike.md)
 
 ## Table of contents
 

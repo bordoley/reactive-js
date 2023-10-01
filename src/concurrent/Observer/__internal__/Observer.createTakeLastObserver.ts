@@ -1,38 +1,45 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike, ObservableLike_observe } from "../../../concurrent.js";
-import { pipe, invoke, none } from "../../../functions.js";
+import { ObservableLike_observe, ObserverLike } from "../../../concurrent.js";
+import { invoke, none, pipe } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike,
+  IndexedQueueLike,
   QueueLike,
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import Disposable_onComplete from "../../../utils/Disposable/__internal__/Disposable.onComplete.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import Observable_fromIterable from "../../Observable/__internal__/Observable.fromIterable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
 
-const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() =>
-  createInstanceFactory(
+const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
+  const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
+
+  type TProperties = {
+    [TakeLastObserver_queue]: IndexedQueueLike<T>;
+  };
+
+  return createInstanceFactory(
     mix(
       include(DisposableMixin, ObserverMixin()),
       function TakeLastObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          TakeLastLike<T>,
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> & TProperties,
         delegate: ObserverLike<T>,
         takeLastCount: number,
       ): ObserverLike<T> {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
 
-        instance[TakeLastLike_queue] = Queue_createIndexedQueue(
+        instance[TakeLastObserver_queue] = Queue_createIndexedQueue(
           takeLastCount,
           "drop-oldest",
         );
@@ -41,8 +48,8 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() =>
           instance,
           Disposable_onComplete(() => {
             pipe(
-              instance[TakeLastLike_queue],
-              IndexedCollection_toObservable(),
+              instance[TakeLastObserver_queue],
+              Observable_fromIterable(),
               invoke(ObservableLike_observe, delegate),
             );
           }),
@@ -50,18 +57,19 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() =>
 
         return instance;
       },
-      props<TakeLastLike<T>>({
-        [TakeLastLike_queue]: none,
+      props<TProperties>({
+        [TakeLastObserver_queue]: none,
       }),
       {
         [SinkLike_notify](
-          this: TakeLastLike<T> & DisposableLike & QueueLike<T>,
+          this: TProperties & DisposableLike & QueueLike<T>,
           next: T,
         ) {
-          this[TakeLastLike_queue][QueueableLike_enqueue](next);
+          this[TakeLastObserver_queue][QueueableLike_enqueue](next);
         },
       },
     ),
-  ))();
+  );
+})();
 
 export default Observer_createTakeLastObserver;

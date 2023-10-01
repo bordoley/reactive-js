@@ -17,6 +17,7 @@ import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.j
 import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
+import Disposable_raiseIfDisposedWithError from "./Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
@@ -62,6 +63,8 @@ export interface DisposableModule {
   onError<TDisposable extends DisposableLike>(
     teardown: SideEffect1<Error>,
   ): Updater<TDisposable>;
+
+  raiseIfDisposedWithError(disposable: DisposableLike): void;
 
   toAbortSignal(disposable: DisposableLike): AbortSignal;
 
@@ -193,6 +196,8 @@ export const disposed: Signature["disposed"] = Disposable_disposed;
 export const onComplete: Signature["onComplete"] = Disposable_onComplete;
 export const onDisposed: Signature["onDisposed"] = Disposable_onDisposed;
 export const onError: Signature["onError"] = Disposable_onError;
+export const raiseIfDisposedWithError: Signature["raiseIfDisposedWithError"] =
+  Disposable_raiseIfDisposedWithError;
 export const toAbortSignal: Signature["toAbortSignal"] =
   Disposable_toAbortSignal;
 export const toErrorHandler: Signature["toErrorHandler"] =

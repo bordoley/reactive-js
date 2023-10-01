@@ -1,13 +1,14 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike, ObservableLike_observe } from "../../../concurrent.js";
-import { pipe, invoke } from "../../../functions.js";
+import { ObserverLike } from "../../../concurrent.js";
+import { DispatcherLike_complete } from "../../../rx.js";
 import BufferSinkMixin from "../../../rx/__mixins__/BufferSinkMixin.js";
+import { QueueableLike_enqueue } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 
@@ -24,11 +25,8 @@ const Observer_createBufferObserver: <T>(
         count: number,
       ): ObserverLike<T> {
         const onComplete = (buffer: readonly T[]) => {
-          pipe(
-            buffer,
-            Observable_fromOptional(),
-            invoke(ObservableLike_observe, delegate),
-          );
+          delegate[QueueableLike_enqueue](buffer);
+          delegate[DispatcherLike_complete]();
         };
 
         init(ObserverMixin(), instance, delegate, delegate);

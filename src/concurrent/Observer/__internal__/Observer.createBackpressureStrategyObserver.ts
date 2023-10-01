@@ -1,18 +1,18 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../rx.js";
 import {
-  QueueableLike,
-  QueueableLike_capacity,
-  QueueableLike_backpressureStrategy,
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

@@ -1,8 +1,8 @@
-import * as Disposable from "../../../utils/Disposable.js";
 import { init } from "../../../__internal__/mixins.js";
-import { pipe } from "../../../functions.js";
 import { ObserverLike } from "../../../concurrent.js";
+import { pipe } from "../../../functions.js";
 import { DisposableLike } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 
 interface ObserverMixinInitFromDelegate {

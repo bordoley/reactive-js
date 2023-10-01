@@ -17,6 +17,9 @@ class ReadonlyArrayDictionary {
     [AssociativeCollectionLike_keys]() {
         return pipe(this.d, ReadonlyArray_keys());
     }
+    [Symbol.iterator]() {
+        return this.d[Symbol.iterator]();
+    }
 }
 const ReadonlyArray_toDictionary = () => (arr) => newInstance(ReadonlyArrayDictionary, arr);
 export default ReadonlyArray_toDictionary;

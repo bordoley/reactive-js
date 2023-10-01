@@ -14,9 +14,13 @@
 
 - **`ObservableLike`**
 
-  ↳ [`PureObservableLike`](concurrent.PureObservableLike.md)
-
   ↳ [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)
+
+  ↳ [`RunnableLike`](concurrent.RunnableLike.md)
+
+  ↳ [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)
+
+  ↳ [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)
 
 ## Table of contents
 

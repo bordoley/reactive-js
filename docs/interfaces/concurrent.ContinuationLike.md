@@ -12,7 +12,7 @@ An interface for types that support buffering items with backpressure.
 
 - [`QueueableLike`](utils.QueueableLike.md)<[`ContinuationLike`](concurrent.ContinuationLike.md)\>
 
-- [`CollectionLike`](collections.CollectionLike.md)
+- [`CollectionLike`](collections.CollectionLike.md)<[`ContinuationLike`](concurrent.ContinuationLike.md)\>
 
   ↳ **`ContinuationLike`**
 

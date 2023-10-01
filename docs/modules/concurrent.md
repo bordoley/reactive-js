@@ -14,6 +14,7 @@
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
 - [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/concurrent.RunnableLike.md)
+- [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
 
 ### Other Interfaces
 
@@ -24,7 +25,6 @@
 - [ObserverLike](../interfaces/concurrent.ObserverLike.md)
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
-- [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
 - [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/concurrent.VirtualTimeSchedulerLike.md)

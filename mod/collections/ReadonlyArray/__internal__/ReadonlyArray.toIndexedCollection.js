@@ -17,6 +17,9 @@ class ReadonlyArrayIndexedCollection {
         }
         return this.d[index];
     }
+    [Symbol.iterator]() {
+        return this.d[Symbol.iterator]();
+    }
 }
 const ReadonlyArray_toIndexedCollection = (options) => (arr) => {
     // FIXME: Ideally the implementation would be lazy

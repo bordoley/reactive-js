@@ -74,7 +74,7 @@ export interface QueueLike<T = unknown> extends QueueableLike<T> {
     readonly [QueueLike_head]: Optional<T>;
     [QueueLike_dequeue](): Optional<T>;
 }
-export interface QueueCollectionLike<T = unknown> extends QueueLike<T>, CollectionLike {
+export interface QueueCollectionLike<T = unknown> extends QueueLike<T>, CollectionLike<T> {
 }
 export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedCollectionLike<T>, StackLike<T> {
 }

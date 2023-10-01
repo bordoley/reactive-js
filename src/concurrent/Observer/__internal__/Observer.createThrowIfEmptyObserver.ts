@@ -1,4 +1,3 @@
-import * as Disposable from "../../../utils/Disposable.js";
 import {
   Mutable,
   createInstanceFactory,
@@ -7,14 +6,15 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
+import { ObserverLike } from "../../../concurrent.js";
 import { Factory, Optional, error, none, pipe } from "../../../functions.js";
+import { SinkLike_notify } from "../../../rx.js";
+import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_assertState from "./Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "./Observer.mixin.initFromDelegate.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike } from "../../../utils.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
   const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");

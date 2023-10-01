@@ -9,10 +9,10 @@ import { ObserverLike, SchedulerLike } from "../../concurrent.js";
 import { Function3, returns } from "../../functions.js";
 import { SinkLike_notify } from "../../rx.js";
 import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike,
-  QueueableLike_capacity,
   DisposableLike,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../utils.js";
 import Observer_assertState from "../Observer/__internal__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";

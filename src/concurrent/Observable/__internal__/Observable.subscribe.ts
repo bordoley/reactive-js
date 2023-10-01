@@ -1,9 +1,9 @@
+import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
-  QueueableLike_capacity,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_subscribe: Observable.Signature["subscribe"] = (

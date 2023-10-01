@@ -77,7 +77,7 @@ export const CollectionLike_count = Symbol("CollectionLike_count");
 /**
  * @noInheritDoc
  */
-export interface CollectionLike {
+export interface CollectionLike<T> extends Iterable<T> {
   readonly [CollectionLike_count]: number;
 }
 
@@ -87,7 +87,7 @@ export const KeyedCollectionLike_get = Symbol("KeyedCollectionLike_get");
  * @noInheritDoc
  */
 export interface KeyedCollectionLike<TKey = unknown, T = unknown>
-  extends CollectionLike {
+  extends CollectionLike<T> {
   [KeyedCollectionLike_get](index: TKey): T;
 }
 

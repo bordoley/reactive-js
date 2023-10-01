@@ -22,6 +22,9 @@
 
 ### Properties
 
+- [[ObservableLike\_isDeferred]](concurrent.PauseableObservableLike.md#[observablelike_isdeferred])
+- [[ObservableLike\_isPure]](concurrent.PauseableObservableLike.md#[observablelike_ispure])
+- [[ObservableLike\_isRunnable]](concurrent.PauseableObservableLike.md#[observablelike_isrunnable])
 - [[PauseableLike\_isPaused]](concurrent.PauseableObservableLike.md#[pauseablelike_ispaused])
 
 ### Methods
@@ -30,6 +33,43 @@
 - [[PauseableLike\_resume]](concurrent.PauseableObservableLike.md#[pauseablelike_resume])
 
 ## Properties
+
+### [ObservableLike\_isDeferred]
+
+• `Readonly` **[ObservableLike\_isDeferred]**: ``false``
+
+Indicates if the `ObservableLike` is deferred, ie. cold.
+
+#### Inherited from
+
+[MulticastObservableLike](concurrent.MulticastObservableLike.md).[[ObservableLike_isDeferred]](concurrent.MulticastObservableLike.md#[observablelike_isdeferred])
+
+___
+
+### [ObservableLike\_isPure]
+
+• `Readonly` **[ObservableLike\_isPure]**: ``true``
+
+Indicates if subscribing to the `ObservableLike` is free of side-effects
+
+#### Inherited from
+
+[MulticastObservableLike](concurrent.MulticastObservableLike.md).[[ObservableLike_isPure]](concurrent.MulticastObservableLike.md#[observablelike_ispure])
+
+___
+
+### [ObservableLike\_isRunnable]
+
+• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
+
+Indicates if the `ObservableLike` supports being subscribed to
+on a VirtualTimeScheduler.
+
+#### Inherited from
+
+[MulticastObservableLike](concurrent.MulticastObservableLike.md).[[ObservableLike_isRunnable]](concurrent.MulticastObservableLike.md#[observablelike_isrunnable])
+
+___
 
 ### [PauseableLike\_isPaused]
 

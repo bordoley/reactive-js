@@ -25,6 +25,7 @@
 - [onComplete](utils_Disposable.md#oncomplete)
 - [onDisposed](utils_Disposable.md#ondisposed)
 - [onError](utils_Disposable.md#onerror)
+- [raiseIfDisposedWithError](utils_Disposable.md#raiseifdisposedwitherror)
 - [toAbortSignal](utils_Disposable.md#toabortsignal)
 - [toErrorHandler](utils_Disposable.md#toerrorhandler)
 - [using](utils_Disposable.md#using)
@@ -189,6 +190,22 @@ ___
 #### Returns
 
 [`Updater`](functions.md#updater)<`TDisposable`\>
+
+___
+
+### raiseIfDisposedWithError
+
+▸ **raiseIfDisposedWithError**(`disposable`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `disposable` | [`DisposableLike`](../interfaces/utils.DisposableLike.md) |
+
+#### Returns
+
+`void`
 
 ___
 

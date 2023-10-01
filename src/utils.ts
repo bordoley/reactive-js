@@ -109,7 +109,7 @@ export interface QueueLike<T = unknown> extends QueueableLike<T> {
 
 export interface QueueCollectionLike<T = unknown>
   extends QueueLike<T>,
-    CollectionLike {}
+    CollectionLike<T> {}
 
 export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,

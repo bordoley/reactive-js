@@ -1,15 +1,15 @@
 import {
   createInstanceFactory,
-  mix,
   include,
   init,
+  mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { SchedulerLike, ObserverLike } from "../../../concurrent.js";
+import { ObserverLike, SchedulerLike } from "../../../concurrent.js";
 import {
   QueueableLike,
-  QueueableLike_capacity,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

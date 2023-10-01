@@ -8,6 +8,7 @@ import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.j
 import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
 import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
 import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
+import Disposable_raiseIfDisposedWithError from "./Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
 import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
 import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
 import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
@@ -22,6 +23,7 @@ export const disposed = Disposable_disposed;
 export const onComplete = Disposable_onComplete;
 export const onDisposed = Disposable_onDisposed;
 export const onError = Disposable_onError;
+export const raiseIfDisposedWithError = Disposable_raiseIfDisposedWithError;
 export const toAbortSignal = Disposable_toAbortSignal;
 export const toErrorHandler = Disposable_toErrorHandler;
 export const using = Disposable_using;

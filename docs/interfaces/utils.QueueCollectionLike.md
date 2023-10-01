@@ -16,7 +16,7 @@ An interface for types that support buffering items with backpressure.
 
 - [`QueueLike`](utils.QueueLike.md)<`T`\>
 
-- [`CollectionLike`](collections.CollectionLike.md)
+- [`CollectionLike`](collections.CollectionLike.md)<`T`\>
 
   ↳ **`QueueCollectionLike`**
 

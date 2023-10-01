@@ -27,6 +27,10 @@ class ReadonlyArrayIndexedCollection<T> implements IndexedCollectionLike<T> {
     }
     return this.d[index];
   }
+
+  [Symbol.iterator](): Iterator<T, any, undefined> {
+    return this.d[Symbol.iterator]();
+  }
 }
 
 const ReadonlyArray_toIndexedCollection: ReadonlyArray.Signature["toIndexedCollection"] =

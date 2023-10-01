@@ -117,6 +117,48 @@ export interface VirtualTimeSchedulerLike
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
 
+export const ContinuationLike_activeChild = Symbol(
+  "ContinuationLike_activeChild",
+);
+export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
+export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
+export const ContinuationLike_run = Symbol("ContinuationLike_run");
+
+export interface ContinuationLike
+  extends DisposableLike,
+    QueueableLike<ContinuationLike>,
+    CollectionLike<ContinuationLike> {
+  readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
+  readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
+
+  [ContinuationLike_parent]: Optional<ContinuationLike>;
+
+  [ContinuationLike_run](): void;
+}
+
+export const ContinuationSchedulerLike_schedule = Symbol(
+  "ContinuationSchedulerLike_schedule",
+);
+
+export interface ContinuationSchedulerLike extends SchedulerLike {
+  [ContinuationSchedulerLike_schedule](
+    continuation: ContinuationLike,
+    options?: { readonly delay?: number },
+  ): void;
+}
+
+export const SchedulerTaskLike_continuation = Symbol(
+  "SchedulerTaskLike_continuation",
+);
+export const SchedulerTaskLike_dueTime = Symbol("SchedulerTaskLike_dueTime");
+export const SchedulerTaskLike_id = Symbol("SchedulerTaskLike_id");
+
+export interface SchedulerTaskLike {
+  readonly [SchedulerTaskLike_continuation]: ContinuationLike;
+  [SchedulerTaskLike_dueTime]: number;
+  [SchedulerTaskLike_id]: number;
+}
+
 /**
  * A consumer of push-based notifications.
  *
@@ -157,6 +199,11 @@ export interface ObservableLike<T = unknown> {
   [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
 
+export type Observableish<T> =
+  | ObservableLike<T>
+  | EnumerableLike<T>
+  | EventSourceLike<T>
+  | Iterable<T>;
 
 /**
  * @noInheritDoc
@@ -164,30 +211,29 @@ export interface ObservableLike<T = unknown> {
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isPure]: false;
 }
 
 /**
  * @noInheritDoc
  * @category Observable
  */
-export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
+export interface RunnableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isPure]: true;
   readonly [ObservableLike_isRunnable]: true;
 }
 
-export type Observableish<T> =
-  | ObservableLike<T>
-  | EnumerableLike<T>
-  | EventSourceLike<T>
-  | Iterable<T>;
-
-export type Pure<TObservable extends ObservableLike> = {
-  [ObservableLike_isPure]: true;
-} & TObservable;
-
-export type WithSideEffects<TObservable extends ObservableLike> = {
-  [ObservableLike_isPure]: false;
-} & TObservable;
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface RunnableWithSideEffectsLike<T = unknown>
+  extends ObservableLike<T> {
+  readonly [ObservableLike_isDeferred]: true;
+  readonly [ObservableLike_isPure]: false;
+  readonly [ObservableLike_isRunnable]: true;
+}
 
 /**
  * @noInheritDoc
@@ -281,45 +327,3 @@ export interface StreamableLike<
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;
-
-export const ContinuationLike_activeChild = Symbol(
-  "ContinuationLike_activeChild",
-);
-export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
-export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
-export const ContinuationLike_run = Symbol("ContinuationLike_run");
-
-export interface ContinuationLike
-  extends DisposableLike,
-    QueueableLike<ContinuationLike>,
-    CollectionLike {
-  readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
-  readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
-
-  [ContinuationLike_parent]: Optional<ContinuationLike>;
-
-  [ContinuationLike_run](): void;
-}
-
-export const ContinuationSchedulerLike_schedule = Symbol(
-  "ContinuationSchedulerLike_schedule",
-);
-
-export interface ContinuationSchedulerLike extends SchedulerLike {
-  [ContinuationSchedulerLike_schedule](
-    continuation: ContinuationLike,
-    options?: { readonly delay?: number },
-  ): void;
-}
-
-export const SchedulerTaskLike_continuation = Symbol(
-  "SchedulerTaskLike_continuation",
-);
-export const SchedulerTaskLike_dueTime = Symbol("SchedulerTaskLike_dueTime");
-export const SchedulerTaskLike_id = Symbol("SchedulerTaskLike_id");
-
-export interface SchedulerTaskLike {
-  readonly [SchedulerTaskLike_continuation]: ContinuationLike;
-  [SchedulerTaskLike_dueTime]: number;
-  [SchedulerTaskLike_id]: number;
-}

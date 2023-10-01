@@ -28,6 +28,10 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
   [AssociativeCollectionLike_keys](): Iterator<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
+
+  [Symbol.iterator](): Iterator<Optional<T>, any, undefined> {
+    return this.d[Symbol.iterator]();
+  }
 }
 
 const ReadonlyArray_toDictionary: ReadonlyArray.Signature["toDictionary"] =

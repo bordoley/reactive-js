@@ -44,14 +44,14 @@ export declare const CollectionLike_count: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface CollectionLike {
+export interface CollectionLike<T> extends Iterable<T> {
     readonly [CollectionLike_count]: number;
 }
 export declare const KeyedCollectionLike_get: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike {
+export interface KeyedCollectionLike<TKey = unknown, T = unknown> extends CollectionLike<T> {
     [KeyedCollectionLike_get](index: TKey): T;
 }
 /**

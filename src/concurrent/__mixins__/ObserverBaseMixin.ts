@@ -1,4 +1,3 @@
-import * as Disposable from "../../utils/Disposable.js";
 import {
   Mixin1,
   getPrototype,
@@ -8,37 +7,38 @@ import {
   props,
   unsafeCast,
 } from "../../__internal__/mixins.js";
-import { Function2, call, pipe, returns } from "../../functions.js";
 import { CollectionLike_count } from "../../collections.js";
 import {
   ObserverLike,
   SchedulerLike,
-  SchedulerLike_yield,
   SchedulerLike_schedule,
+  SchedulerLike_yield,
 } from "../../concurrent.js";
+import { Function2, call, pipe, returns } from "../../functions.js";
 import {
-  SinkLike_notify,
   DispatcherLikeEventMap,
-  DispatcherLikeEvent_ready,
-  DispatcherLike_complete,
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
+  DispatcherLikeEvent_ready,
+  DispatcherLike_complete,
+  SinkLike_notify,
 } from "../../rx.js";
-import {
-  QueueableLike_backpressureStrategy,
-  QueueableLike,
-  QueueableLike_capacity,
-  DisposableLike,
-  IndexedQueueLike,
-  DisposableLike_isDisposed,
-  QueueLike_dequeue,
-  DisposableLike_dispose,
-  QueueableLike_enqueue,
-} from "../../utils.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
 } from "../../rx/__mixins__/LazyInitEventSourceMixin.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  DisposableLike_isDisposed,
+  IndexedQueueLike,
+  QueueLike_dequeue,
+  QueueableLike,
+  QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
+  QueueableLike_enqueue,
+} from "../../utils.js";
+import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 
 type TObserverBaseMixin<T> = Omit<

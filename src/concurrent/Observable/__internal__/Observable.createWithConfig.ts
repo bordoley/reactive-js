@@ -1,27 +1,26 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import {
+  Mutable,
   createInstanceFactory,
   mix,
-  Mutable,
   props,
 } from "../../../__internal__/mixins.js";
 import {
-  ObserverLike,
-  RunnableLike,
+  DeferredObservableLike,
+  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
-  DeferredObservableLike,
   ObservableLike_observe,
-  ObservableLike,
-  Pure,
-  WithSideEffects,
+  ObserverLike,
+  RunnableLike,
+  RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
 import {
   SideEffect1,
-  raiseWithDebugMessage,
-  none,
   error,
+  none,
+  raiseWithDebugMessage,
 } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 
@@ -29,32 +28,32 @@ interface ObservableCreateWithConfig {
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      Pure<RunnableLike>,
+      RunnableLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-  ): Pure<RunnableLike<T>>;
+  ): RunnableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      WithSideEffects<RunnableLike>,
+      RunnableWithSideEffectsLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-  ): WithSideEffects<RunnableLike<T>>;
+  ): RunnableWithSideEffectsLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
     config: Pick<
-      WithSideEffects<DeferredObservableLike>,
+      DeferredObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
-  ): WithSideEffects<DeferredObservableLike<T>>;
+  ): DeferredObservableLike<T>;
 }
 const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"] =
   /*@__PURE__*/ (() => {

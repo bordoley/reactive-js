@@ -1,12 +1,12 @@
 import {
-  SchedulerLike,
-  ObservableLike_observe,
   ObservableLike,
+  ObservableLike_observe,
+  SchedulerLike,
 } from "../../../concurrent.js";
 import {
   QueueableLike,
-  QueueableLike_capacity,
   QueueableLike_backpressureStrategy,
+  QueueableLike_capacity,
 } from "../../../utils.js";
 import Observer_create from "../../Observer/__internal__/Observer.create.js";
 

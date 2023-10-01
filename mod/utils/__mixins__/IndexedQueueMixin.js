@@ -192,6 +192,20 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             grow(this);
             return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
+        *[Symbol.iterator]() {
+            const head = this[IndexedQueueMixin_head];
+            const count = this[CollectionLike_count];
+            const values = this[IndexedQueueMixin_values] ?? [];
+            const valuesLength = values.length;
+            let i = head;
+            let iNormalized = 0;
+            while (iNormalized < count) {
+                yield values[i];
+                iNormalized++;
+                i = i + 1;
+                i = i < valuesLength ? i : 0;
+            }
+        },
     }), returns);
 })();
 export default IndexedQueueMixin;
