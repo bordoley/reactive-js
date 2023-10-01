@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`Computation`](computation.Computation.md)
+- [`Computation`](computations.Computation.md)
 
   ↳ **`EventSourceComputation`**
 
@@ -25,7 +25,7 @@
 
 #### Inherited from
 
-[Computation](computation.Computation.md).[[Computation_T]](computation.Computation.md#[computation_t])
+[Computation](computations.Computation.md).[[Computation_T]](computations.Computation.md#[computation_t])
 
 ___
 
@@ -35,4 +35,4 @@ ___
 
 #### Overrides
 
-[Computation](computation.Computation.md).[[Computation_type]](computation.Computation.md#[computation_type])
+[Computation](computations.Computation.md).[[Computation_type]](computations.Computation.md#[computation_type])

@@ -3,7 +3,7 @@ import {
   Computation_T,
   Computation_type,
   PureComputationModule,
-} from "../computation.js";
+} from "../computations.js";
 import {
   DeferredObservableLike,
   MulticastObservableLike,

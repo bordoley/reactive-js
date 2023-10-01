@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`PureComputationModule`](computation.PureComputationModule.md)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md)\>
+- [`PureComputationModule`](computations.PureComputationModule.md)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md)\>
 
   ↳ **`EventSourceModule`**
 
@@ -56,7 +56,7 @@ ___
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -73,11 +73,11 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, readonly `T`[]\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[buffer](computation.PureComputationModule.md#buffer)
+[PureComputationModule](computations.PureComputationModule.md).[buffer](computations.PureComputationModule.md#buffer)
 
 ___
 
@@ -105,7 +105,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -116,17 +116,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[decodeWithCharset](computation.PureComputationModule.md#decodewithcharset)
+[PureComputationModule](computations.PureComputationModule.md).[decodeWithCharset](computations.PureComputationModule.md#decodewithcharset)
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -143,17 +143,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[distinctUntilChanged](computation.PureComputationModule.md#distinctuntilchanged)
+[PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
 
 ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -169,17 +169,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[keep](computation.PureComputationModule.md#keep)
+[PureComputationModule](computations.PureComputationModule.md).[keep](computations.PureComputationModule.md#keep)
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -196,11 +196,11 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `TA`, `TB`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[map](computation.PureComputationModule.md#map)
+[PureComputationModule](computations.PureComputationModule.md).[map](computations.PureComputationModule.md#map)
 
 ___
 
@@ -275,7 +275,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+▸ **pairwise**<`T`\>(): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -285,17 +285,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[pairwise](computation.PureComputationModule.md#pairwise)
+[PureComputationModule](computations.PureComputationModule.md).[pairwise](computations.PureComputationModule.md#pairwise)
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -313,17 +313,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `TAcc`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[scan](computation.PureComputationModule.md#scan)
+[PureComputationModule](computations.PureComputationModule.md).[scan](computations.PureComputationModule.md#scan)
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -340,17 +340,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[skipFirst](computation.PureComputationModule.md#skipfirst)
+[PureComputationModule](computations.PureComputationModule.md).[skipFirst](computations.PureComputationModule.md#skipfirst)
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -367,17 +367,17 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[takeFirst](computation.PureComputationModule.md#takefirst)
+[PureComputationModule](computations.PureComputationModule.md).[takeFirst](computations.PureComputationModule.md#takefirst)
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -395,8 +395,8 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computation.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
+[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EventSourceComputation`](rx_EventSource.EventSourceComputation.md), `T`, `T`\>
 
 #### Inherited from
 
-[PureComputationModule](computation.PureComputationModule.md).[takeWhile](computation.PureComputationModule.md#takewhile)
+[PureComputationModule](computations.PureComputationModule.md).[takeWhile](computations.PureComputationModule.md#takewhile)

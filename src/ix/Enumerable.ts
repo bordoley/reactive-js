@@ -3,7 +3,7 @@ import {
   Computation_T,
   Computation_type,
   PureComputationModule,
-} from "../computation.js";
+} from "../computations.js";
 import { Factory, Function1, Reducer } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";

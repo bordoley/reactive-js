@@ -1,4 +1,4 @@
-import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computation.js";
+import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
 import { Function1, SideEffect1 } from "../functions.js";
 import { EventListenerLike, EventSourceLike } from "../rx.js";
 import { DisposableLike } from "../utils.js";

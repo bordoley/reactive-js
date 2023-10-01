@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`PureComputationModule`](computation.PureComputationModule.md)<[`ObservableComputation`](concurrent_Observable.ObservableComputation.md)\>
+- [`PureComputationModule`](computations.PureComputationModule.md)<[`ObservableComputation`](concurrent_Observable.ObservableComputation.md)\>
 
   ↳ **`ObservableModule`**
 
@@ -93,7 +93,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[buffer](computation.PureComputationModule.md#buffer)
+[PureComputationModule](computations.PureComputationModule.md).[buffer](computations.PureComputationModule.md#buffer)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[decodeWithCharset](computation.PureComputationModule.md#decodewithcharset)
+[PureComputationModule](computations.PureComputationModule.md).[decodeWithCharset](computations.PureComputationModule.md#decodewithcharset)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[distinctUntilChanged](computation.PureComputationModule.md#distinctuntilchanged)
+[PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
 
 ___
 
@@ -365,7 +365,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[keep](computation.PureComputationModule.md#keep)
+[PureComputationModule](computations.PureComputationModule.md).[keep](computations.PureComputationModule.md#keep)
 
 ___
 
@@ -392,7 +392,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[map](computation.PureComputationModule.md#map)
+[PureComputationModule](computations.PureComputationModule.md).[map](computations.PureComputationModule.md#map)
 
 ___
 
@@ -470,7 +470,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[pairwise](computation.PureComputationModule.md#pairwise)
+[PureComputationModule](computations.PureComputationModule.md).[pairwise](computations.PureComputationModule.md#pairwise)
 
 ___
 
@@ -546,7 +546,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[scan](computation.PureComputationModule.md#scan)
+[PureComputationModule](computations.PureComputationModule.md).[scan](computations.PureComputationModule.md#scan)
 
 ___
 
@@ -573,7 +573,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[skipFirst](computation.PureComputationModule.md#skipfirst)
+[PureComputationModule](computations.PureComputationModule.md).[skipFirst](computations.PureComputationModule.md#skipfirst)
 
 ___
 
@@ -625,7 +625,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[takeFirst](computation.PureComputationModule.md#takefirst)
+[PureComputationModule](computations.PureComputationModule.md).[takeFirst](computations.PureComputationModule.md#takefirst)
 
 ___
 
@@ -676,7 +676,7 @@ ___
 
 #### Overrides
 
-[PureComputationModule](computation.PureComputationModule.md).[takeWhile](computation.PureComputationModule.md#takewhile)
+[PureComputationModule](computations.PureComputationModule.md).[takeWhile](computations.PureComputationModule.md#takewhile)
 
 ___
 

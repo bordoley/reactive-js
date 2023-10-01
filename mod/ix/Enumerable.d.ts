@@ -1,4 +1,4 @@
-import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computation.js";
+import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
 import { Factory, Function1, Reducer } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
 export interface EnumerableComputation extends Computation {

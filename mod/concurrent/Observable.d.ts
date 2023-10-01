@@ -1,4 +1,4 @@
-import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computation.js";
+import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
 import { DeferredObservableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2 } from "../functions.js";
 import { DispatcherLike } from "../rx.js";
