@@ -1,5 +1,5 @@
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
-import { DeferredObservableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { DeferredObservableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
 import { DispatcherLike } from "../rx.js";
@@ -179,6 +179,14 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     mergeWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): ObservableOperatorWithSideEffects<T, T>;
     mergeWith<T>(snd: RunnableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | MulticastObservableLike<T>)[]): <TObservableIn>(observableIn: TObservableIn) => TObservableIn extends RunnableLike<T> | MulticastObservableLike<T> ? MulticastObservableLike<T> : DeferredObservableLike<T>;
     mergeWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>)[]): Function1<ObservableLike<T>, DeferredObservableLike<T>>;
+    /**
+     * @category Transform
+     */
+    multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+        readonly replay?: number;
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
@@ -205,7 +213,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     subscribeOn<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): DeferredObservableOperator<T, T>;
+    }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<T> : DeferredObservableLike<T>;
     takeFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
@@ -299,6 +307,7 @@ export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
+export declare const multicast: Signature["multicast"];
 export declare const never: Signature["never"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
@@ -308,6 +317,7 @@ export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];
 export declare const subscribe: Signature["subscribe"];
+export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];
 export declare const takeLast: Signature["takeLast"];
 export declare const takeUntil: Signature["takeUntil"];

@@ -12,6 +12,7 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  ReplayObservableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
   SchedulerLike,
@@ -69,6 +70,7 @@ import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
+import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
@@ -78,6 +80,7 @@ import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
+import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
@@ -895,6 +898,23 @@ export interface ObservableModule
     )[]
   ): Function1<ObservableLike<T>, DeferredObservableLike<T>>;
 
+  /**
+   * @category Transform
+   */
+  multicast<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly replay?: number;
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<
+    | RunnableLike<T>
+    | RunnableWithSideEffectsLike<T>
+    | DeferredObservableLike<T>,
+    ReplayObservableLike<T> & DisposableLike
+  >;
+
   never<T>(): MulticastObservableLike<T>;
 
   onSubscribe<T>(
@@ -946,7 +966,11 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
     },
-  ): DeferredObservableOperator<T, T>;
+  ): <TObservableIn extends ObservableLike<T>>(
+    observable: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike
+    ? MulticastObservableLike<T>
+    : DeferredObservableLike<T>;
 
   takeFirst<T>(options?: {
     readonly count?: number;
@@ -1480,6 +1504,7 @@ export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
+export const multicast: Signature["multicast"] = Observable_multicast;
 export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
@@ -1489,6 +1514,7 @@ export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const spring: Signature["spring"] = Observable_spring;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
+export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
