@@ -31,6 +31,8 @@
 - [skipFirst](ix_Enumerable.md#skipfirst)
 - [takeFirst](ix_Enumerable.md#takefirst)
 - [takeWhile](ix_Enumerable.md#takewhile)
+- [zip](ix_Enumerable.md#zip)
+- [zipWith](ix_Enumerable.md#zipwith)
 
 ## Type Aliases
 
@@ -364,3 +366,435 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+___
+
+### zip
+
+▸ **zip**<`TA`, `TB`\>(`a`, `b`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TH`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **zip**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\> |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TI`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+___
+
+### zipWith
+
+▸ **zipWith**<`TA`, `TB`\>(`b`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`\>(`b`, `c`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`\>(`b`, `c`, `d`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`b`, `c`, `d`, `e`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`b`, `c`, `d`, `e`, `f`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`b`, `c`, `d`, `e`, `f`, `g`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple7`](functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TH`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple8`](functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>\>
+
+▸ **zipWith**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `b` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TB`\> |
+| `c` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TC`\> |
+| `d` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TD`\> |
+| `e` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TE`\> |
+| `f` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TF`\> |
+| `g` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TG`\> |
+| `h` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TH`\> |
+| `i` | [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TI`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>\>
