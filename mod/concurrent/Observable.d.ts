@@ -135,6 +135,11 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     empty<T>(): RunnableLike<T>;
     encodeUtf8(): PureObservableOperator<string, Uint8Array>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
+    firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    firstAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
     fromEnumerable<T>(options?: {
         delay: number;
@@ -156,6 +161,11 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         [ObservableLike_isRunnable]: true;
     };
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
+    lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    lastAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly capacity?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     merge<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
@@ -217,6 +227,12 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     throws<T>(options: {
         readonly raise: Factory<unknown>;
     }): RunnableWithSideEffectsLike<T>;
+    toReadonlyArray<T>(): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, ReadonlyArray<T>>;
+    toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
+    toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureObservableOperator<TA, TB>;
     withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): PureObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: RunnableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): ObservableOperatorWithSideEffects<TA, T>;
@@ -271,6 +287,7 @@ export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const enqueue: Signature["enqueue"];
+export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const ignoreElements: Signature["ignoreElements"];
@@ -278,6 +295,7 @@ export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];
 export declare const isRunnable: Signature["isRunnable"];
 export declare const keep: Signature["keep"];
+export declare const lastAsync: Signature["lastAsync"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeMany: Signature["mergeMany"];
@@ -297,6 +315,8 @@ export declare const takeWhile: Signature["takeWhile"];
 export declare const throttle: Signature["throttle"];
 export declare const throwIfEmpty: Signature["throwIfEmpty"];
 export declare const throws: Signature["throws"];
+export declare const toReadonlyArray: Signature["toReadonlyArray"];
+export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];

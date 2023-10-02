@@ -57,6 +57,7 @@ import Observable_distinctUntilChanged from "./Observable/__internal__/Observabl
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
+import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -64,6 +65,7 @@ import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferr
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
+import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
@@ -83,6 +85,8 @@ import Observable_takeWhile from "./Observable/__internal__/Observable.takeWhile
 import Observable_throttle from "./Observable/__internal__/Observable.throttle.js";
 import Observable_throwIfEmpty from "./Observable/__internal__/Observable.throwIfEmpty.js";
 import Observable_throws from "./Observable/__internal__/Observable.throws.js";
+import Observable_toReadonlyArray from "./Observable/__internal__/Observable.toReadonlyArray.js";
+import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observable.toReadonlyArrayAsync.js";
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
@@ -762,6 +766,15 @@ export interface ObservableModule
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
 
+  firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+  firstAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 
   fromEnumerable<T>(options?: {
@@ -790,6 +803,15 @@ export interface ObservableModule
   };
 
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
+
+  lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+  lastAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly capacity?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    },
+  ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
 
   map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
 
@@ -964,6 +986,23 @@ export interface ObservableModule
   throws<T>(options: {
     readonly raise: Factory<unknown>;
   }): RunnableWithSideEffectsLike<T>;
+
+  toReadonlyArray<T>(): Function1<
+    RunnableLike<T> | RunnableWithSideEffectsLike<T>,
+    ReadonlyArray<T>
+  >;
+
+  toReadonlyArrayAsync<T>(): Function1<
+    ObservableLike<T>,
+    Promise<ReadonlyArray<T>>
+  >;
+  toReadonlyArrayAsync<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
 
   withCurrentTime<TA, TB>(
     selector: Function2<number, TA, TB>,
@@ -1428,6 +1467,7 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
 export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
+export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
 export const ignoreElements: Signature["ignoreElements"] =
@@ -1436,6 +1476,7 @@ export const isDeferred: Signature["isDeferred"] = Observable_isDeferred;
 export const isPure: Signature["isPure"] = Observable_isPure;
 export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
+export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
@@ -1455,6 +1496,10 @@ export const takeWhile: Signature["takeWhile"] = Observable_takeWhile;
 export const throttle: Signature["throttle"] = Observable_throttle;
 export const throwIfEmpty: Signature["throwIfEmpty"] = Observable_throwIfEmpty;
 export const throws: Signature["throws"] = Observable_throws;
+export const toReadonlyArray: Signature["toReadonlyArray"] =
+  Observable_toReadonlyArray;
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  Observable_toReadonlyArrayAsync;
 export const withCurrentTime: Signature["withCurrentTime"] =
   Observable_withCurrentTime;
 export const withLatestFrom: Signature["withLatestFrom"] =

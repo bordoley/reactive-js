@@ -36,6 +36,7 @@
 - [empty](concurrent_Observable.ObservableModule.md#empty)
 - [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
 - [enqueue](concurrent_Observable.ObservableModule.md#enqueue)
+- [firstAsync](concurrent_Observable.ObservableModule.md#firstasync)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
 - [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
@@ -44,6 +45,7 @@
 - [isPure](concurrent_Observable.ObservableModule.md#ispure)
 - [isRunnable](concurrent_Observable.ObservableModule.md#isrunnable)
 - [keep](concurrent_Observable.ObservableModule.md#keep)
+- [lastAsync](concurrent_Observable.ObservableModule.md#lastasync)
 - [map](concurrent_Observable.ObservableModule.md#map)
 - [merge](concurrent_Observable.ObservableModule.md#merge)
 - [mergeMany](concurrent_Observable.ObservableModule.md#mergemany)
@@ -65,6 +67,8 @@
 - [throttle](concurrent_Observable.ObservableModule.md#throttle)
 - [throwIfEmpty](concurrent_Observable.ObservableModule.md#throwifempty)
 - [throws](concurrent_Observable.ObservableModule.md#throws)
+- [toReadonlyArray](concurrent_Observable.ObservableModule.md#toreadonlyarray)
+- [toReadonlyArrayAsync](concurrent_Observable.ObservableModule.md#toreadonlyarrayasync)
 - [withCurrentTime](concurrent_Observable.ObservableModule.md#withcurrenttime)
 - [withLatestFrom](concurrent_Observable.ObservableModule.md#withlatestfrom)
 - [zipLatest](concurrent_Observable.ObservableModule.md#ziplatest)
@@ -1458,6 +1462,43 @@ ___
 
 ___
 
+### firstAsync
+
+▸ **firstAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+▸ **firstAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
@@ -1633,6 +1674,43 @@ ___
 #### Overrides
 
 [PureComputationModule](computations.PureComputationModule.md).[keep](computations.PureComputationModule.md#keep)
+
+___
+
+### lastAsync
+
+▸ **lastAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+▸ **lastAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
 
 ___
 
@@ -2420,6 +2498,59 @@ ___
 #### Returns
 
 [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+___
+
+### toReadonlyArray
+
+▸ **toReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, readonly `T`[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, readonly `T`[]\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+▸ **toReadonlyArrayAsync**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
 
 ___
 
