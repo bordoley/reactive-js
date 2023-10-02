@@ -2,8 +2,10 @@
 
 import { Computation_type, } from "../computations.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
+import Enumerable_concatMany from "./Enumerable/__internal__/Enumerable.concatMany.js";
 import Enumerable_decodeWithCharset from "./Enumerable/__internal__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
+import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
 import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate.js";
 import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__internal__/Enumerable.map.js";
@@ -15,8 +17,10 @@ import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst
 import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst.js";
 import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerator.takeWhile.js";
 export const buffer = Enumerable_buffer;
+export const concatMany = Enumerable_concatMany;
 export const decodeWithCharset = Enumerable_decodeWithCharset;
 export const distinctUntilChanged = Enumerable_distinctUntilChanged;
+export const empty = Enumerable_empty;
 export const generate = Enumerable_generate;
 export const keep = Enumerable_keep;
 export const map = Enumerable_map;

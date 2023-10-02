@@ -9,6 +9,7 @@ export interface EnumerableModule extends PureComputationModule<EnumerableComput
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+    empty<T>(): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     range(start: number, options?: {
         readonly count?: number;
@@ -17,8 +18,10 @@ export interface EnumerableModule extends PureComputationModule<EnumerableComput
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];
+export declare const concatMany: Signature["concatMany"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
+export declare const empty: Signature["empty"];
 export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];

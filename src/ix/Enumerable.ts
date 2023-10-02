@@ -7,8 +7,10 @@ import {
 import { Factory, Function1, Reducer, Updater } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
+import Enumerable_concatMany from "./Enumerable/__internal__/Enumerable.concatMany.js";
 import Enumerable_decodeWithCharset from "./Enumerable/__internal__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
+import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
 import Enumerable_generate from "./Enumerable/__internal__/Enumerable.generate.js";
 import Enumerable_keep from "./Enumerable/__internal__/Enumerable.keep.js";
 import Enumerable_map from "./Enumerable/__internal__/Enumerable.map.js";
@@ -41,6 +43,8 @@ export interface EnumerableModule
     ...tail: readonly EnumerableLike<T>[]
   ): Function1<EnumerableLike<T>, EnumerableLike<T>>;
 
+  empty<T>(): EnumerableLike<T>;
+
   generate<T>(
     generator: Updater<T>,
     initialValue: Factory<T>,
@@ -60,10 +64,12 @@ export interface EnumerableModule
 export type Signature = EnumerableModule;
 
 export const buffer: Signature["buffer"] = Enumerable_buffer;
+export const concatMany: Signature["concatMany"] = Enumerable_concatMany;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Enumerable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Enumerable_distinctUntilChanged;
+export const empty: Signature["empty"] = Enumerable_empty;
 export const generate: Signature["generate"] = Enumerable_generate;
 export const keep: Signature["keep"] = Enumerable_keep;
 export const map: Signature["map"] = Enumerable_map;

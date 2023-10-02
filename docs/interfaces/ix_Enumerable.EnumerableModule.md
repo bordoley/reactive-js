@@ -20,6 +20,7 @@
 - [concatWith](ix_Enumerable.EnumerableModule.md#concatwith)
 - [decodeWithCharset](ix_Enumerable.EnumerableModule.md#decodewithcharset)
 - [distinctUntilChanged](ix_Enumerable.EnumerableModule.md#distinctuntilchanged)
+- [empty](ix_Enumerable.EnumerableModule.md#empty)
 - [generate](ix_Enumerable.EnumerableModule.md#generate)
 - [keep](ix_Enumerable.EnumerableModule.md#keep)
 - [map](ix_Enumerable.EnumerableModule.md#map)
@@ -174,6 +175,22 @@ ___
 #### Inherited from
 
 [PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>
 
 ___
 

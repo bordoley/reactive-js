@@ -17,8 +17,10 @@
 ### Functions
 
 - [buffer](ix_Enumerable.md#buffer)
+- [concatMany](ix_Enumerable.md#concatmany)
 - [decodeWithCharset](ix_Enumerable.md#decodewithcharset)
 - [distinctUntilChanged](ix_Enumerable.md#distinctuntilchanged)
+- [empty](ix_Enumerable.md#empty)
 - [generate](ix_Enumerable.md#generate)
 - [keep](ix_Enumerable.md#keep)
 - [map](ix_Enumerable.md#map)
@@ -67,6 +69,28 @@ ___
 
 ___
 
+### concatMany
+
+▸ **concatMany**<`T`\>(`enumerables`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `enumerables` | readonly [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
@@ -104,6 +128,22 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
+
+___
+
+### empty
+
+▸ **empty**<`T`\>(): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
 
 ___
 

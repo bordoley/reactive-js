@@ -37,6 +37,8 @@
 - [buffer](concurrent_Observable.md#buffer)
 - [catchError](concurrent_Observable.md#catcherror)
 - [combineLatest](concurrent_Observable.md#combinelatest)
+- [concatMany](concurrent_Observable.md#concatmany)
+- [concatWith](concurrent_Observable.md#concatwith)
 - [create](concurrent_Observable.md#create)
 - [decodeWithCharset](concurrent_Observable.md#decodewithcharset)
 - [defer](concurrent_Observable.md#defer)
@@ -1172,6 +1174,179 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+___
+
+### concatMany
+
+▸ **concatMany**<`T`\>(`observables`): [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>
+
+▸ **concatMany**<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **concatMany**<`T`\>(`observables`): [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>
+
+▸ **concatMany**<`T`\>(`observables`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>] |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): <TObservable\>(`obs`: `TObservable`) => `TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> : `TObservable` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>)[] |
+
+#### Returns
+
+`fn`
+
+▸ <`TObservable`\>(`obs`): `TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> : `TObservable` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservable` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`, `TObservable`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | `TObservable` |
+
+##### Returns
+
+`TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> ? [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> : `TObservable` extends [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): <TObservable\>(`obs`: `TObservable`) => `TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+`fn`
+
+▸ <`TObservable`\>(`obs`): `TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservable` | extends [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`, `TObservable`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | `TObservable` |
+
+##### Returns
+
+`TObservable` extends [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> : `TObservable` extends [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> ? [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> : [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>
 
 ___
 

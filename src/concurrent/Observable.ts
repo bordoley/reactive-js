@@ -46,6 +46,8 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
+import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
 import Observable_decodeWithCharset from "./Observable/__internal__/Observable.decodeWithCharset.js";
@@ -638,6 +640,103 @@ export interface ObservableModule
       | DeferredObservableLike<TI>
       | MulticastObservableLike<TI>,
   ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+
+  concat<T>(
+    fst: RunnableLike<T>,
+    snd: RunnableLike<T>,
+    ...tail: readonly RunnableLike<T>[]
+  ): RunnableLike<T>;
+  concat<T>(
+    fst: RunnableLike<T> | RunnableWithSideEffectsLike<T>,
+    snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>,
+    ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]
+  ): RunnableWithSideEffectsLike<T>;
+  concat<T>(
+    fst:
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>,
+    snd:
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>,
+    ...tail: readonly (
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>
+    )[]
+  ): DeferredObservableLike<T>;
+  concat<T>(
+    fst: MulticastObservableLike<T>,
+    snd:
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>,
+    ...tail: readonly (
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>
+    )[]
+  ): MulticastObservableLike<T>;
+
+  concatMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
+  concatMany<T>(
+    observables: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[],
+  ): RunnableWithSideEffectsLike<T>;
+  concatMany<T>(
+    observables: readonly (
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>
+    )[],
+  ): DeferredObservableLike<T>;
+  concatMany<T>(
+    observables: readonly [
+      MulticastObservableLike<T>,
+      ...(
+        | RunnableLike<T>
+        | RunnableWithSideEffectsLike<T>
+        | DeferredObservableLike<T>
+      )[],
+    ],
+  ): MulticastObservableLike<T>;
+
+  concatWith<T>(
+    snd: RunnableLike<T>,
+    ...tail: readonly RunnableLike<T>[]
+  ): PureObservableOperator<T, T>;
+  concatWith<T>(
+    snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>,
+    ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]
+  ): <TObservable extends ObservableLike<T>>(
+    obs: TObservable,
+  ) => TObservable extends MulticastObservableLike<T>
+    ? MulticastObservableLike<T>
+    : TObservable extends RunnableLike<T> | RunnableWithSideEffectsLike<T>
+    ? RunnableWithSideEffectsLike<T>
+    : TObservable extends DeferredObservableLike<T>
+    ? DeferredObservableLike<T>
+    : ObservableLike<T>;
+  concatWith<T>(
+    snd:
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>,
+    ...tail: readonly (
+      | RunnableLike<T>
+      | RunnableWithSideEffectsLike<T>
+      | DeferredObservableLike<T>
+    )[]
+  ): <TObservable extends ObservableLike<T>>(
+    obs: TObservable,
+  ) => TObservable extends MulticastObservableLike<T>
+    ? MulticastObservableLike<T>
+    : TObservable extends
+        | RunnableLike<T>
+        | RunnableWithSideEffectsLike<T>
+        | DeferredObservableLike<T>
+    ? DeferredObservableLike<T>
+    : ObservableLike<T>;
 
   create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableLike<T>;
 
@@ -1316,6 +1415,8 @@ export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =
   Observable_combineLatest;
+export const concatMany: Signature["concatMany"] = Observable_concatMany;
+export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
