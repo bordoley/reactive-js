@@ -9,6 +9,7 @@ import {
   EnumerableLike_enumerate,
   EnumeratorLike,
 } from "../../../ix.js";
+import EnumerableIterablePrototypeBase from "../../__mixins__/EnumerableIterablePrototypeBase.js";
 
 const Enumerable_create: <T>(
   enumerate: Factory<EnumeratorLike<T>>,
@@ -19,7 +20,7 @@ const Enumerable_create: <T>(
 
   return createInstanceFactory(
     mix(
-      function CreateObservable(
+      function CreateEnumerable(
         instance: EnumerableLike<T> & TProperties,
         enumerate: Factory<EnumeratorLike<T>>,
       ): EnumerableLike<T> {
@@ -30,7 +31,7 @@ const Enumerable_create: <T>(
       props<TProperties>({
         [EnumerableLike_enumerate]: none,
       }),
-      {},
+      EnumerableIterablePrototypeBase<T>(),
     ),
   );
 })();

@@ -33,6 +33,6 @@ export declare const EnumerableLike_enumerate: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface EnumerableLike<T = unknown> {
+export interface EnumerableLike<T = unknown> extends Iterable<T> {
     [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }

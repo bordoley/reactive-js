@@ -40,6 +40,6 @@ export const EnumerableLike_enumerate = Symbol("EnumerableLike_enumerate");
 /**
  * @noInheritDoc
  */
-export interface EnumerableLike<T = unknown> {
+export interface EnumerableLike<T = unknown> extends Iterable<T> {
   [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }

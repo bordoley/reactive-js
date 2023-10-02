@@ -10,6 +10,12 @@
 | :------ | :------ |
 | `T` | `unknown` |
 
+## Hierarchy
+
+- `Iterable`<`T`\>
+
+  ↳ **`EnumerableLike`**
+
 ## Table of contents
 
 ### Methods

@@ -3,6 +3,7 @@
 import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipeUnsafe } from "../../../functions.js";
 import { EnumerableLike_enumerate, } from "../../../ix.js";
+import EnumerableIterablePrototypeBase from "../../__mixins__/EnumerableIterablePrototypeBase.js";
 const LiftedEnumerable_source = Symbol("LiftedEnumerable_source");
 const LiftedEnumerable_ops = Symbol("LiftedEnumerable_ops");
 const createLiftedEnumerable = /*@__PURE__*/ (() => {
@@ -14,6 +15,7 @@ const createLiftedEnumerable = /*@__PURE__*/ (() => {
         [LiftedEnumerable_source]: none,
         [LiftedEnumerable_ops]: none,
     }), {
+        ...EnumerableIterablePrototypeBase(),
         [EnumerableLike_enumerate]() {
             return pipeUnsafe(this[LiftedEnumerable_source][EnumerableLike_enumerate](), ...this[LiftedEnumerable_ops]);
         },

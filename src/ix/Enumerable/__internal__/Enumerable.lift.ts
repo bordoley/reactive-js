@@ -9,6 +9,7 @@ import {
   EnumerableLike_enumerate,
   EnumeratorLike,
 } from "../../../ix.js";
+import EnumerableIterablePrototypeBase from "../../__mixins__/EnumerableIterablePrototypeBase.js";
 
 const LiftedEnumerable_source = Symbol("LiftedEnumerable_source");
 const LiftedEnumerable_ops = Symbol("LiftedEnumerable_ops");
@@ -41,6 +42,8 @@ const createLiftedEnumerable: <TIn, TOut>(
         [LiftedEnumerable_ops]: none,
       }),
       {
+        ...EnumerableIterablePrototypeBase<TOut>(),
+
         [EnumerableLike_enumerate](
           this: TProperties & EnumerableLike<TIn>,
         ): EnumeratorLike<TOut> {
