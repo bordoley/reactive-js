@@ -16,6 +16,8 @@
 
   ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
 
+  ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
+
   ↳ [`EnumerableModule`](ix_Enumerable.EnumerableModule.md)
 
   ↳ [`EventSourceModule`](rx_EventSource.EventSourceModule.md)

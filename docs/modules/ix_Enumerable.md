@@ -19,9 +19,11 @@
 - [buffer](ix_Enumerable.md#buffer)
 - [decodeWithCharset](ix_Enumerable.md#decodewithcharset)
 - [distinctUntilChanged](ix_Enumerable.md#distinctuntilchanged)
+- [generate](ix_Enumerable.md#generate)
 - [keep](ix_Enumerable.md#keep)
 - [map](ix_Enumerable.md#map)
 - [pairwise](ix_Enumerable.md#pairwise)
+- [range](ix_Enumerable.md#range)
 - [reduce](ix_Enumerable.md#reduce)
 - [scan](ix_Enumerable.md#scan)
 - [skipFirst](ix_Enumerable.md#skipfirst)
@@ -105,6 +107,29 @@ ___
 
 ___
 
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
@@ -163,6 +188,24 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EnumerableComputation`](../interfaces/ix_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](functions.md#tuple2)<`T`, `T`\>\>
+
+___
+
+### range
+
+▸ **range**(`start`, `options?`): [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`number`\>
 
 ___
 

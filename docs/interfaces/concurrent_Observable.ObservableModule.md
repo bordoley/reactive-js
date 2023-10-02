@@ -8,44 +8,93 @@
 
 - [`PureComputationModule`](computations.PureComputationModule.md)<[`ObservableComputation`](concurrent_Observable.ObservableComputation.md)\>
 
+- [`PureComputationModule`](computations.PureComputationModule.md)<[`RunnableComputation`](concurrent_Observable.RunnableComputation.md)\>
+
   ↳ **`ObservableModule`**
 
 ## Table of contents
 
+### Properties
+
+- [currentTime](concurrent_Observable.ObservableModule.md#currenttime)
+
 ### Methods
 
+- [animate](concurrent_Observable.ObservableModule.md#animate)
 - [backpressureStrategy](concurrent_Observable.ObservableModule.md#backpressurestrategy)
 - [buffer](concurrent_Observable.ObservableModule.md#buffer)
+- [catchError](concurrent_Observable.ObservableModule.md#catcherror)
+- [combineLatest](concurrent_Observable.ObservableModule.md#combinelatest)
 - [create](concurrent_Observable.ObservableModule.md#create)
 - [decodeWithCharset](concurrent_Observable.ObservableModule.md#decodewithcharset)
+- [defer](concurrent_Observable.ObservableModule.md#defer)
 - [dispatchTo](concurrent_Observable.ObservableModule.md#dispatchto)
 - [distinctUntilChanged](concurrent_Observable.ObservableModule.md#distinctuntilchanged)
 - [empty](concurrent_Observable.ObservableModule.md#empty)
 - [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
 - [enqueue](concurrent_Observable.ObservableModule.md#enqueue)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
+- [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
 - [ignoreElements](concurrent_Observable.ObservableModule.md#ignoreelements)
+- [isDeferred](concurrent_Observable.ObservableModule.md#isdeferred)
 - [isPure](concurrent_Observable.ObservableModule.md#ispure)
 - [isRunnable](concurrent_Observable.ObservableModule.md#isrunnable)
 - [keep](concurrent_Observable.ObservableModule.md#keep)
 - [map](concurrent_Observable.ObservableModule.md#map)
+- [merge](concurrent_Observable.ObservableModule.md#merge)
+- [mergeMany](concurrent_Observable.ObservableModule.md#mergemany)
+- [mergeWith](concurrent_Observable.ObservableModule.md#mergewith)
+- [never](concurrent_Observable.ObservableModule.md#never)
 - [onSubscribe](concurrent_Observable.ObservableModule.md#onsubscribe)
 - [pairwise](concurrent_Observable.ObservableModule.md#pairwise)
 - [reduce](concurrent_Observable.ObservableModule.md#reduce)
 - [run](concurrent_Observable.ObservableModule.md#run)
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
+- [spring](concurrent_Observable.ObservableModule.md#spring)
 - [subscribe](concurrent_Observable.ObservableModule.md#subscribe)
+- [subscribeOn](concurrent_Observable.ObservableModule.md#subscribeon)
 - [takeFirst](concurrent_Observable.ObservableModule.md#takefirst)
 - [takeLast](concurrent_Observable.ObservableModule.md#takelast)
+- [takeUntil](concurrent_Observable.ObservableModule.md#takeuntil)
 - [takeWhile](concurrent_Observable.ObservableModule.md#takewhile)
 - [throttle](concurrent_Observable.ObservableModule.md#throttle)
 - [throwIfEmpty](concurrent_Observable.ObservableModule.md#throwifempty)
+- [throws](concurrent_Observable.ObservableModule.md#throws)
 - [withCurrentTime](concurrent_Observable.ObservableModule.md#withcurrenttime)
 - [withLatestFrom](concurrent_Observable.ObservableModule.md#withlatestfrom)
+- [zipLatest](concurrent_Observable.ObservableModule.md#ziplatest)
+
+## Properties
+
+### currentTime
+
+• **currentTime**: [`RunnableLike`](concurrent.RunnableLike.md)<`number`\>
 
 ## Methods
+
+### animate
+
+▸ **animate**<`T`\>(`configs`): [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `configs` | [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\> \| readonly [`Animation`](../modules/concurrent_Observable.md#animation)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+___
 
 ### backpressureStrategy
 
@@ -97,6 +146,896 @@ ___
 
 ___
 
+### catchError
+
+▸ **catchError**<`T`\>(`onError`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onError` | [`SideEffect1`](../modules/functions.md#sideeffect1)<`Error`\> |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
+### combineLatest
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **combineLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **combineLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TI`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TI`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+___
+
 ### create
 
 ▸ **create**<`T`\>(`f`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
@@ -137,6 +1076,28 @@ ___
 #### Overrides
 
 [PureComputationModule](computations.PureComputationModule.md).[decodeWithCharset](computations.PureComputationModule.md#decodewithcharset)
+
+___
+
+### defer
+
+▸ **defer**<`T`\>(`f`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Factory`](../modules/functions.md#factory)<[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
 
 ___
 
@@ -259,6 +1220,30 @@ ___
 
 ___
 
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
 ### fromIterable
 
 ▸ **fromIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
@@ -296,6 +1281,28 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`unknown`, `T`\>
+
+___
+
+### isDeferred
+
+▸ **isDeferred**<`T`\>(`obs`): obs is ObservableLike<T\> & Object
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obs` | [`ObservableLike`](concurrent.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+obs is ObservableLike<T\> & Object
 
 ___
 
@@ -393,6 +1400,280 @@ ___
 #### Overrides
 
 [PureComputationModule](computations.PureComputationModule.md).[map](computations.PureComputationModule.md#map)
+
+___
+
+### merge
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+
+▸ **merge**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+___
+
+### mergeMany
+
+▸ **mergeMany**<`T`\>(`observables`): [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+
+▸ **mergeMany**<`T`\>(`observables`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observables` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+___
+
+### mergeWith
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): <TObservableIn\>(`observableIn`: `TObservableIn`) => `TObservableIn` extends [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+`fn`
+
+▸ <`TObservableIn`\>(`observableIn`): `TObservableIn` extends [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `TObservableIn` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observableIn` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+▸ **mergeWith**<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> |
+| `...tail` | readonly ([`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>)[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
+
+___
+
+### never
+
+▸ **never**<`T`\>(): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
 
 ___
 
@@ -577,6 +1858,25 @@ ___
 
 ___
 
+### spring
+
+▸ **spring**(`options?`): [`RunnableLike`](concurrent.RunnableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.damping?` | `number` |
+| `options.precision?` | `number` |
+| `options.stiffness?` | `number` |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<`number`\>
+
+___
+
 ### subscribe
 
 ▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
@@ -599,6 +1899,31 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
+
+___
+
+### subscribeOn
+
+▸ **subscribeOn**<`T`\>(`schedulerOrFactory`, `options?`): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -649,6 +1974,82 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+___
+
+### takeUntil
+
+▸ **takeUntil**<`T`\>(`notifier`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableLike`](concurrent.RunnableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\> |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
+
+▸ **takeUntil**<`T`\>(`notifier`): [`MulticastObservableOperator`](../modules/concurrent_Observable.md#multicastobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notifier` | [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> |
+
+#### Returns
+
+[`MulticastObservableOperator`](../modules/concurrent_Observable.md#multicastobservableoperator)<`T`, `T`\>
 
 ___
 
@@ -724,6 +2125,41 @@ ___
 #### Returns
 
 [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+___
+
+### throws
+
+▸ **throws**<`T`\>(): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **throws**<`T`\>(`options`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.raise` | [`Factory`](../modules/functions.md#factory)<`unknown`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
 
 ___
 
@@ -835,3 +2271,871 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### zipLatest
+
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableLike`](concurrent.RunnableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TI`\> |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+▸ **zipLatest**<`TA`, `TB`\>(`a`, `b`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TA`, `TB`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple3`](../modules/functions.md#tuple3)<`TA`, `TB`, `TC`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple4`](../modules/functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple5`](../modules/functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple6`](../modules/functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple7`](../modules/functions.md#tuple7)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple8`](../modules/functions.md#tuple8)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`\>\>
+
+▸ **zipLatest**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>(`a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+| `TG` |
+| `TH` |
+| `TI` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | [`RunnableLike`](concurrent.RunnableLike.md)<`TA`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TA`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TA`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TA`\> |
+| `b` | [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> |
+| `c` | [`RunnableLike`](concurrent.RunnableLike.md)<`TC`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TC`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TC`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TC`\> |
+| `d` | [`RunnableLike`](concurrent.RunnableLike.md)<`TD`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TD`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TD`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TD`\> |
+| `e` | [`RunnableLike`](concurrent.RunnableLike.md)<`TE`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TE`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TE`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TE`\> |
+| `f` | [`RunnableLike`](concurrent.RunnableLike.md)<`TF`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TF`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TF`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TF`\> |
+| `g` | [`RunnableLike`](concurrent.RunnableLike.md)<`TG`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TG`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TG`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TG`\> |
+| `h` | [`RunnableLike`](concurrent.RunnableLike.md)<`TH`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TH`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TH`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TH`\> |
+| `i` | [`RunnableLike`](concurrent.RunnableLike.md)<`TI`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TI`\> \| [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TI`\> \| [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TI`\> |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>

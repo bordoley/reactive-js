@@ -20,9 +20,11 @@
 - [concatWith](ix_Enumerable.EnumerableModule.md#concatwith)
 - [decodeWithCharset](ix_Enumerable.EnumerableModule.md#decodewithcharset)
 - [distinctUntilChanged](ix_Enumerable.EnumerableModule.md#distinctuntilchanged)
+- [generate](ix_Enumerable.EnumerableModule.md#generate)
 - [keep](ix_Enumerable.EnumerableModule.md#keep)
 - [map](ix_Enumerable.EnumerableModule.md#map)
 - [pairwise](ix_Enumerable.EnumerableModule.md#pairwise)
+- [range](ix_Enumerable.EnumerableModule.md#range)
 - [reduce](ix_Enumerable.EnumerableModule.md#reduce)
 - [scan](ix_Enumerable.EnumerableModule.md#scan)
 - [skipFirst](ix_Enumerable.EnumerableModule.md#skipfirst)
@@ -175,6 +177,29 @@ ___
 
 ___
 
+### generate
+
+▸ **generate**<`T`\>(`generator`, `initialValue`): [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `generator` | [`Updater`](../modules/functions.md#updater)<`T`\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+
+#### Returns
+
+[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>
+
+___
+
 ### keep
 
 ▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md), `T`, `T`\>
@@ -245,6 +270,24 @@ ___
 #### Inherited from
 
 [PureComputationModule](computations.PureComputationModule.md).[pairwise](computations.PureComputationModule.md#pairwise)
+
+___
+
+### range
+
+▸ **range**(`start`, `options?`): [`EnumerableLike`](ix.EnumerableLike.md)<`number`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `options?` | `Object` |
+| `options.count?` | `number` |
+
+#### Returns
+
+[`EnumerableLike`](ix.EnumerableLike.md)<`number`\>
 
 ___
 

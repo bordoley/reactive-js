@@ -7,6 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -54,6 +55,16 @@ interface ObservableCreateWithConfig {
       | typeof ObservableLike_isRunnable
     >,
   ): DeferredObservableLike<T>;
+
+  createWithConfig<T>(
+    f: SideEffect1<ObserverLike<T>>,
+    config: Pick<
+      MulticastObservableLike,
+      | typeof ObservableLike_isDeferred
+      | typeof ObservableLike_isPure
+      | typeof ObservableLike_isRunnable
+    >,
+  ): MulticastObservableLike<T>;
 
   createWithConfig<T>(
     f: SideEffect1<ObserverLike<T>>,
