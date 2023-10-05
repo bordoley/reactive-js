@@ -196,7 +196,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+    }): Function1<RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
@@ -212,6 +212,14 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T> | RunnableWithSideEffectsLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureObservableOperator<T, TAcc>;
+    /**
+     * @category Transform
+     */
+    share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+        readonly replay?: number;
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<DeferredObservableLike<T> | RunnableWithSideEffectsLike<T>, MulticastObservableLike<T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
@@ -332,6 +340,7 @@ export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];
 export declare const subscribe: Signature["subscribe"];

@@ -5,7 +5,6 @@ import {
 import { Function1, bind, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_run from "../../Observable/__internal__/Observable.run.js";
-
 import Observable_forEach from "./Observable.forEach.js";
 
 const Observable_toReadonlyArray: Observable.Signature["toReadonlyArray"] =

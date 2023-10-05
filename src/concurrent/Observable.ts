@@ -81,6 +81,7 @@ import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
@@ -942,9 +943,7 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<
-    | RunnableLike<T>
-    | RunnableWithSideEffectsLike<T>
-    | DeferredObservableLike<T>,
+    RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>,
     ReplayObservableLike<T> & DisposableLike
   >;
 
@@ -982,6 +981,21 @@ export interface ObservableModule
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): PureObservableOperator<T, TAcc>;
+
+  /**
+   * @category Transform
+   */
+  share<T>(
+    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    options?: {
+      readonly replay?: number;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<
+    DeferredObservableLike<T> | RunnableWithSideEffectsLike<T>,
+    MulticastObservableLike<T>
+  >;
 
   skipFirst<T>(options?: {
     readonly count?: number;
@@ -1558,6 +1572,7 @@ export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
+export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const spring: Signature["spring"] = Observable_spring;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
