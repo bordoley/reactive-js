@@ -27,6 +27,7 @@
 - [pairwise](ix_Enumerable.EnumerableModule.md#pairwise)
 - [range](ix_Enumerable.EnumerableModule.md#range)
 - [reduce](ix_Enumerable.EnumerableModule.md#reduce)
+- [repeat](ix_Enumerable.EnumerableModule.md#repeat)
 - [scan](ix_Enumerable.EnumerableModule.md#scan)
 - [skipFirst](ix_Enumerable.EnumerableModule.md#skipfirst)
 - [takeFirst](ix_Enumerable.EnumerableModule.md#takefirst)
@@ -331,6 +332,58 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, `TAcc`\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`predicate`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+
+▸ **repeat**<`T`\>(`count`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+
+▸ **repeat**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`EnumerableLike`](ix.EnumerableLike.md)<`T`\>\>
 
 ___
 

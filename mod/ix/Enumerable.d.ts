@@ -1,5 +1,5 @@
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
-import { Factory, Function1, Reducer, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
+import { Factory, Function1, Predicate, Reducer, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
 import { EnumerableLike } from "../ix.js";
 export interface EnumerableComputation extends Computation {
     readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
@@ -15,6 +15,9 @@ export interface EnumerableModule extends PureComputationModule<EnumerableComput
         readonly count?: number;
     }): EnumerableLike<number>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<EnumerableLike<T>, TAcc>;
+    repeat<T>(predicate: Predicate<number>): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+    repeat<T>(count: number): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+    repeat<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
     zip<TA, TB>(a: EnumerableLike<TA>, b: EnumerableLike<TB>): EnumerableLike<Tuple2<TA, TB>>;
     zip<TA, TB, TC>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>): EnumerableLike<Tuple3<TA, TB, TC>>;
     zip<TA, TB, TC, TD>(a: EnumerableLike<TA>, b: EnumerableLike<TB>, c: EnumerableLike<TC>, d: EnumerableLike<TD>): EnumerableLike<Tuple4<TA, TB, TC, TD>>;
@@ -44,6 +47,7 @@ export declare const map: Signature["map"];
 export declare const pairwise: Signature["pairwise"];
 export declare const range: Signature["range"];
 export declare const reduce: Signature["reduce"];
+export declare const repeat: Signature["repeat"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const takeFirst: Signature["takeFirst"];

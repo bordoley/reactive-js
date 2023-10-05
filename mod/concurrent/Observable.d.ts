@@ -5,6 +5,7 @@ import { EnumerableLike } from "../ix.js";
 import { DispatcherLike } from "../rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
+export type PureDeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> | RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> | MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => DeferredObservableLike<TOut>;
 export type MulticastObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredObservableLike<TOut>;
@@ -193,6 +194,10 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
     pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, TAcc>;
+    repeat<T>(predicate: Predicate<number>): PureDeferredObservableOperator<T, T>;
+    repeat<T>(count: number): PureDeferredObservableOperator<T, T>;
+    repeat<T>(): PureDeferredObservableOperator<T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureDeferredObservableOperator<T, T>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -312,6 +317,8 @@ export declare const never: Signature["never"];
 export declare const onSubscribe: Signature["onSubscribe"];
 export declare const pairwise: Signature["pairwise"];
 export declare const reduce: Signature["reduce"];
+export declare const repeat: Signature["repeat"];
+export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
 export declare const skipFirst: Signature["skipFirst"];

@@ -54,6 +54,8 @@
 - [onSubscribe](concurrent_Observable.ObservableModule.md#onsubscribe)
 - [pairwise](concurrent_Observable.ObservableModule.md#pairwise)
 - [reduce](concurrent_Observable.ObservableModule.md#reduce)
+- [repeat](concurrent_Observable.ObservableModule.md#repeat)
+- [retry](concurrent_Observable.ObservableModule.md#retry)
 - [run](concurrent_Observable.ObservableModule.md#run)
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
@@ -2118,6 +2120,80 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, `TAcc`\>
+
+___
+
+### repeat
+
+▸ **repeat**<`T`\>(`predicate`): [`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`number`\> |
+
+#### Returns
+
+[`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(`count`): [`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `count` | `number` |
+
+#### Returns
+
+[`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+▸ **repeat**<`T`\>(): [`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`shouldRetry?`): [`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shouldRetry?` | (`count`: `number`, `error`: `Error`) => `boolean` |
+
+#### Returns
+
+[`PureDeferredObservableOperator`](../modules/concurrent_Observable.md#puredeferredobservableoperator)<`T`, `T`\>
 
 ___
 

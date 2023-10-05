@@ -7,6 +7,7 @@ import {
 import {
   Factory,
   Function1,
+  Predicate,
   Reducer,
   Tuple2,
   Tuple3,
@@ -30,6 +31,7 @@ import Enumerable_map from "./Enumerable/__internal__/Enumerable.map.js";
 import Enumerable_pairwise from "./Enumerable/__internal__/Enumerable.pairwise.js";
 import Enumerable_range from "./Enumerable/__internal__/Enumerable.range.js";
 import Enumerable_reduce from "./Enumerable/__internal__/Enumerable.reduce.js";
+import Enumerable_repeat from "./Enumerable/__internal__/Enumerable.repeat.js";
 import Enumerable_scan from "./Enumerable/__internal__/Enumerable.scan.js";
 import Enumerable_skipFirst from "./Enumerable/__internal__/Enumerable.skipFirst.js";
 import Enumerable_takeFirst from "./Enumerable/__internal__/Enumerable.takeFirst.js";
@@ -74,6 +76,12 @@ export interface EnumerableModule
     reducer: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
   ): Function1<EnumerableLike<T>, TAcc>;
+
+  repeat<T>(
+    predicate: Predicate<number>,
+  ): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+  repeat<T>(count: number): Function1<EnumerableLike<T>, EnumerableLike<T>>;
+  repeat<T>(): Function1<EnumerableLike<T>, EnumerableLike<T>>;
 
   zip<TA, TB>(
     a: EnumerableLike<TA>,
@@ -217,6 +225,7 @@ export const map: Signature["map"] = Enumerable_map;
 export const pairwise: Signature["pairwise"] = Enumerable_pairwise;
 export const range: Signature["range"] = Enumerable_range;
 export const reduce: Signature["reduce"] = Enumerable_reduce;
+export const repeat: Signature["repeat"] = Enumerable_repeat;
 export const scan: Signature["scan"] = Enumerable_scan;
 export const skipFirst: Signature["skipFirst"] = Enumerable_skipFirst;
 export const takeFirst: Signature["takeFirst"] = Enumerable_takeFirst;

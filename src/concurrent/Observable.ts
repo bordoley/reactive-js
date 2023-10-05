@@ -75,6 +75,8 @@ import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
 import Observable_pairwise from "./Observable/__internal__/Observable.pairwise.js";
 import Observable_reduce from "./Observable/__internal__/Observable.reduce.js";
+import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
+import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
@@ -107,6 +109,18 @@ export type PureObservableOperator<TIn, TOut> = <
   : TObservableIn extends MulticastObservableLike<TIn>
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
+
+export type PureDeferredObservableOperator<TIn, TOut> = <
+  TObservableIn extends ObservableLike<TIn>,
+>(
+  observable: TObservableIn,
+) => TObservableIn extends RunnableLike<TIn>
+  ? RunnableLike<TOut>
+  : TObservableIn extends RunnableWithSideEffectsLike<TIn>
+  ? RunnableWithSideEffectsLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableLike<TOut>
+  : never;
 
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
@@ -932,6 +946,14 @@ export interface ObservableModule
     initialValue: Factory<TAcc>,
   ): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, TAcc>;
 
+  repeat<T>(predicate: Predicate<number>): PureDeferredObservableOperator<T, T>;
+  repeat<T>(count: number): PureDeferredObservableOperator<T, T>;
+  repeat<T>(): PureDeferredObservableOperator<T, T>;
+
+  retry<T>(
+    shouldRetry?: (count: number, error: Error) => boolean,
+  ): PureDeferredObservableOperator<T, T>;
+
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
@@ -1509,6 +1531,8 @@ export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
 export const pairwise: Signature["pairwise"] = Observable_pairwise;
 export const reduce: Signature["reduce"] = Observable_reduce;
+export const repeat: Signature["repeat"] = Observable_repeat;
+export const retry: Signature["retry"] = Observable_retry;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
