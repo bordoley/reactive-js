@@ -16,6 +16,8 @@
 
   ↳ **`IndexedCollectionModule`**
 
+  ↳↳ [`IndexedCollectionModule`](collections_IndexedCollection.IndexedCollectionModule.md)
+
   ↳↳ [`ReadonlyArrayModule`](collections_ReadonlyArray.ReadonlyArrayModule.md)
 
 ## Table of contents

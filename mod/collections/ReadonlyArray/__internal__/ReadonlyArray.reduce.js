@@ -1,5 +1,7 @@
 /// <reference types="./ReadonlyArray.reduce.d.ts" />
 
-import ReadonlyArray_reduceWithKey from "./ReadonlyArray.reduceWithKey.js";
-const ReadonlyArray_reduce = ReadonlyArray_reduceWithKey;
+const ReadonlyArray_reduce = (reducer, initialValue) => (arr) => {
+    const acc = initialValue();
+    return arr.reduce(reducer, acc);
+};
 export default ReadonlyArray_reduce;

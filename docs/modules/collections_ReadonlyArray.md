@@ -25,9 +25,7 @@
 ### Operator Functions
 
 - [keep](collections_ReadonlyArray.md#keep)
-- [keepWithKey](collections_ReadonlyArray.md#keepwithkey)
 - [map](collections_ReadonlyArray.md#map)
-- [mapWithKey](collections_ReadonlyArray.md#mapwithkey)
 
 ### Transform Functions
 
@@ -35,7 +33,6 @@
 - [keySet](collections_ReadonlyArray.md#keyset)
 - [keys](collections_ReadonlyArray.md#keys)
 - [reduce](collections_ReadonlyArray.md#reduce)
-- [reduceWithKey](collections_ReadonlyArray.md#reducewithkey)
 - [toDictionary](collections_ReadonlyArray.md#todictionary)
 - [toIndexedCollection](collections_ReadonlyArray.md#toindexedcollection)
 - [toReadonlyArray](collections_ReadonlyArray.md#toreadonlyarray)
@@ -101,32 +98,6 @@ source that satisfy the specified predicate.
 
 | Name | Type |
 | :------ | :------ |
-| `predicate` | [`Predicate`](functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-___
-
-### keepWithKey
-
-▸ **keepWithKey**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `T`, `T`, `TKey`\>
-
-Returns a ContainerOperator that only emits items produced by the
-source that satisfy the specified predicate.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
 | `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
 
 #### Returns
@@ -138,41 +109,6 @@ ___
 ### map
 
 ▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-Returns a ContainerOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function1`](functions.md#function1)<`TA`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
-
-___
-
-### mapWithKey
-
-▸ **mapWithKey**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](collections.md#containeroperator)<[`ReadonlyArrayContainer`](../interfaces/collections_ReadonlyArray.ReadonlyArrayContainer.md), `TA`, `TB`, `TKey`\>
 
 Returns a ContainerOperator that applies the `selector` function to each
 value emitted by the source.
@@ -267,31 +203,6 @@ ___
 ### reduce
 
 ▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TAcc` | `TAcc` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `reducer` | [`Reducer`](functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
-
-___
-
-### reduceWithKey
-
-▸ **reduceWithKey**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](functions.md#function1)<readonly `T`[], `TAcc`\>
 
 #### Type parameters
 

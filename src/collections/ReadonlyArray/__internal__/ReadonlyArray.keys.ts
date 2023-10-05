@@ -7,8 +7,7 @@ function* iterate<TKey>(arr: readonly unknown[]) {
   }
 }
 
-const ReadonlyArray_keys: ReadonlyArray.Signature["keys"] = returns(
-  iterate,
-) as ReadonlyArray.Signature["keys"];
+const ReadonlyArray_keys: ReadonlyArray.Signature["keys"] =
+  /*@__PURE__*/ returns(iterate) as ReadonlyArray.Signature["keys"];
 
 export default ReadonlyArray_keys;

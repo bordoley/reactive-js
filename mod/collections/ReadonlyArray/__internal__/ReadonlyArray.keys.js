@@ -6,5 +6,6 @@ function* iterate(arr) {
         yield i;
     }
 }
-const ReadonlyArray_keys = returns(iterate);
+const ReadonlyArray_keys = 
+/*@__PURE__*/ returns(iterate);
 export default ReadonlyArray_keys;

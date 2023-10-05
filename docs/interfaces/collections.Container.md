@@ -14,6 +14,8 @@
 
 - **`Container`**
 
+  ↳ [`IndexedCollectionContainer`](collections_IndexedCollection.IndexedCollectionContainer.md)
+
   ↳ [`IteratorContainer`](collections_Iterator.IteratorContainer.md)
 
   ↳ [`ReadonlyArrayContainer`](collections_ReadonlyArray.ReadonlyArrayContainer.md)

@@ -1,4 +1,4 @@
-import type { Factory, Function1, Function2, Function3, Optional, Predicate, Reducer, Tuple2 } from "./functions.js";
+import type { Factory, Function1, Function2, Function3, Optional, Tuple2 } from "./functions.js";
 export declare const AssociativeCollectionLike_keys: unique symbol;
 export declare const Container_T: unique symbol;
 export declare const Container_type: unique symbol;
@@ -97,14 +97,7 @@ export interface CollectionModule<C extends Container> {
      *
      * @category Operator
      */
-    keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Predicate<T>): ContainerOperator<C, T, T, TKey>;
-    /**
-     * Returns a ContainerOperator that only emits items produced by the
-     * source that satisfy the specified predicate.
-     *
-     * @category Operator
-     */
-    keepWithKey<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): ContainerOperator<C, T, T, TKey>;
+    keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): ContainerOperator<C, T, T, TKey>;
     /**
      * Returns a ContainerOperator that applies the `selector` function to each
      * value emitted by the source.
@@ -115,26 +108,11 @@ export interface CollectionModule<C extends Container> {
      *
      * @category Operator
      */
-    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function1<TA, TB>): ContainerOperator<C, TA, TB, TKey>;
-    /**
-     * Returns a ContainerOperator that applies the `selector` function to each
-     * value emitted by the source.
-     *
-     * @param selector - A pure map function that is applied each value emitted by the source
-     * @typeparam TA - The inner type of the source container
-     * @typeparam TB - The inner type of the mapped container
-     *
-     * @category Operator
-     */
-    mapWithKey<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
+    map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): ContainerOperator<C, TA, TB, TKey>;
     /**
      * @category Transform
      */
-    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
-    /**
-     * @category Transform
-     */
-    reduceWithKey<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
+    reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<ContainerOf<C, T, TKey>, TAcc>;
     /**
      *
      * @category Transform
