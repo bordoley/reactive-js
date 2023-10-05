@@ -109,6 +109,15 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
     combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>, i: RunnableLike<TI> | RunnableWithSideEffectsLike<TI> | DeferredObservableLike<TI> | MulticastObservableLike<TI>): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    computeDeferred<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): DeferredObservableLike<T>;
+    /**
+     * @category Constructor
+     */
+    computeRunnable<T>(computation: Factory<T>, options?: {
+        mode?: "batched" | "combine-latest";
+    }): RunnableWithSideEffectsLike<T>;
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
     concat<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
     concat<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]): DeferredObservableLike<T>;
@@ -289,6 +298,8 @@ export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];
+export declare const computeDeferred: Signature["computeDeferred"];
+export declare const computeRunnable: Signature["computeRunnable"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];
 export declare const create: Signature["create"];

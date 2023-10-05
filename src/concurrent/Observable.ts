@@ -47,6 +47,8 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import Observable_computeDeferred from "./Observable/__internal__/Observable.computeDeferred.js";
+import Observable_computeRunnable from "./Observable/__internal__/Observable.computeRunnable.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
@@ -661,6 +663,23 @@ export interface ObservableModule
       | DeferredObservableLike<TI>
       | MulticastObservableLike<TI>,
   ): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+
+  computeDeferred<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): DeferredObservableLike<T>;
+
+  /**
+   * @category Constructor
+   */
+  computeRunnable<T>(
+    computation: Factory<T>,
+    options?: {
+      mode?: "batched" | "combine-latest";
+    },
+  ): RunnableWithSideEffectsLike<T>;
 
   concat<T>(
     fst: RunnableLike<T>,
@@ -1500,6 +1519,10 @@ export const buffer: Signature["buffer"] = Observable_buffer;
 export const catchError: Signature["catchError"] = Observable_catchError;
 export const combineLatest: Signature["combineLatest"] =
   Observable_combineLatest;
+export const computeDeferred: Signature["computeDeferred"] =
+  Observable_computeDeferred;
+export const computeRunnable: Signature["computeRunnable"] =
+  Observable_computeRunnable;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;

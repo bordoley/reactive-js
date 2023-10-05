@@ -32,12 +32,17 @@
 
 - [currentTime](concurrent_Observable.md#currenttime)
 
+### Constructor Functions
+
+- [computeRunnable](concurrent_Observable.md#computerunnable)
+
 ### Other Functions
 
 - [backpressureStrategy](concurrent_Observable.md#backpressurestrategy)
 - [buffer](concurrent_Observable.md#buffer)
 - [catchError](concurrent_Observable.md#catcherror)
 - [combineLatest](concurrent_Observable.md#combinelatest)
+- [computeDeferred](concurrent_Observable.md#computedeferred)
 - [concatMany](concurrent_Observable.md#concatmany)
 - [concatWith](concurrent_Observable.md#concatwith)
 - [create](concurrent_Observable.md#create)
@@ -283,6 +288,32 @@ ___
 ### currentTime
 
 • `Const` **currentTime**: [`Signature`](concurrent_Observable.md#signature)[``"currentTime"``]
+
+## Constructor Functions
+
+### computeRunnable
+
+▸ **computeRunnable**<`T`\>(`computation`, `options?`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+___
 
 ## Other Functions
 
@@ -1219,6 +1250,30 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Tuple9`](functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+___
+
+### computeDeferred
+
+▸ **computeDeferred**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>
 
 ___
 

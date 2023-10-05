@@ -18,6 +18,10 @@
 
 - [currentTime](concurrent_Observable.ObservableModule.md#currenttime)
 
+### Constructor Methods
+
+- [computeRunnable](concurrent_Observable.ObservableModule.md#computerunnable)
+
 ### Other Methods
 
 - [animate](concurrent_Observable.ObservableModule.md#animate)
@@ -25,6 +29,7 @@
 - [buffer](concurrent_Observable.ObservableModule.md#buffer)
 - [catchError](concurrent_Observable.ObservableModule.md#catcherror)
 - [combineLatest](concurrent_Observable.ObservableModule.md#combinelatest)
+- [computeDeferred](concurrent_Observable.ObservableModule.md#computedeferred)
 - [concat](concurrent_Observable.ObservableModule.md#concat)
 - [concatMany](concurrent_Observable.ObservableModule.md#concatmany)
 - [concatWith](concurrent_Observable.ObservableModule.md#concatwith)
@@ -84,6 +89,32 @@
 ### currentTime
 
 • **currentTime**: [`RunnableLike`](concurrent.RunnableLike.md)<`number`\>
+
+## Constructor Methods
+
+### computeRunnable
+
+▸ **computeRunnable**<`T`\>(`computation`, `options?`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+___
 
 ## Other Methods
 
@@ -1046,6 +1077,30 @@ ___
 #### Returns
 
 [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
+
+___
+
+### computeDeferred
+
+▸ **computeDeferred**<`T`\>(`computation`, `options?`): [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>
 
 ___
 

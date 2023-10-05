@@ -6,6 +6,8 @@ import Observable_backpressureStrategy from "./Observable/__internal__/Observabl
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
+import Observable_computeDeferred from "./Observable/__internal__/Observable.computeDeferred.js";
+import Observable_computeRunnable from "./Observable/__internal__/Observable.computeRunnable.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
@@ -58,6 +60,8 @@ export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
+export const computeDeferred = Observable_computeDeferred;
+export const computeRunnable = Observable_computeRunnable;
 export const concatMany = Observable_concatMany;
 export const concatWith = Observable_concatWith;
 export const create = Observable_create;
