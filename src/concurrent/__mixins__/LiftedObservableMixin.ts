@@ -24,16 +24,24 @@ export const LiftedObservableLike_operators = Symbol(
   "LiftedObservableMixin_operators",
 );
 
-export interface LiftedObservableLike<TIn, TOut> extends ObservableLike<TOut> {
-  [LiftedObservableLike_source]: ObservableLike<TIn>;
+export interface LiftedObservableLike<
+  TIn,
+  TOut,
+  TSrc extends ObservableLike<TIn> = ObservableLike<TIn>,
+> extends ObservableLike<TOut> {
+  [LiftedObservableLike_source]: TSrc;
   [LiftedObservableLike_operators]: readonly Function1<
     ObserverLike<any>,
     ObserverLike<any>
   >[];
 }
 
-const LiftedObservableMixin: <TIn, TOut>() => Mixin3<
-  LiftedObservableLike<TIn, TOut>,
+const LiftedObservableMixin: <
+  TIn,
+  TOut,
+  TSrc extends ObservableLike<TIn> = ObservableLike<TIn>,
+>() => Mixin3<
+  LiftedObservableLike<TIn, TOut, TSrc>,
   ObservableLike<TIn>,
   readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
   {
@@ -43,9 +51,13 @@ const LiftedObservableMixin: <TIn, TOut>() => Mixin3<
   },
   unknown,
   Pick<ObservableLike<TOut>, typeof ObservableLike_observe>
-> = /*@__PURE__*/ (<TIn, TOut>() => {
+> = /*@__PURE__*/ (<
+  TIn,
+  TOut,
+  TSrc extends ObservableLike<TIn> = ObservableLike<TIn>,
+>() => {
   type TProperties = {
-    [LiftedObservableLike_source]: ObservableLike<TIn>;
+    [LiftedObservableLike_source]: TSrc;
     [LiftedObservableLike_operators]: readonly Function1<
       ObserverLike<any>,
       ObserverLike<any>
@@ -59,7 +71,7 @@ const LiftedObservableMixin: <TIn, TOut>() => Mixin3<
     mix(
       function LiftedObservable(
         instance: TProperties & ObservableLike<TOut>,
-        source: ObservableLike<TIn>,
+        source: TSrc,
         ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
         config: Pick<
           ObservableLike,
@@ -67,7 +79,7 @@ const LiftedObservableMixin: <TIn, TOut>() => Mixin3<
           | typeof ObservableLike_isPure
           | typeof ObservableLike_isRunnable
         >,
-      ): LiftedObservableLike<TIn, TOut> {
+      ): LiftedObservableLike<TIn, TOut, TSrc> {
         instance[LiftedObservableLike_source] = source;
         instance[LiftedObservableLike_operators] = ops;
 
