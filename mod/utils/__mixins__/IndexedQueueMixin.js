@@ -3,7 +3,8 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count, KeyedCollectionLike_get, MutableKeyedCollectionLike_set, } from "../../collections.js";
+import { CollectionLike_count, EnumerableLike_enumerate, KeyedCollectionLike_get, MutableKeyedCollectionLike_set, } from "../../collections.js";
+import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
 import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { BackPressureError, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {
@@ -191,6 +192,9 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             this[IndexedQueueMixin_tail] = tail;
             grow(this);
             return this[CollectionLike_count] < this[QueueableLike_capacity];
+        },
+        [EnumerableLike_enumerate]() {
+            return pipe(this[Symbol.iterator], Enumerator_fromIterator());
         },
         *[Symbol.iterator]() {
             const head = this[IndexedQueueMixin_head];

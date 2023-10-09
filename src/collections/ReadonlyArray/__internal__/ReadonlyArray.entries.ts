@@ -1,36 +1,47 @@
 import {
-  Container,
-  Container_T,
-  Container_type,
+  Collection,
+  Collection_T,
+  Collection_type,
+  EnumerableLike,
 } from "../../../collections.js";
-import { Tuple2 } from "../../../functions.js";
-import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
+import { Tuple2, pipe } from "../../../functions.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
+import IndexedCollection_toCollection from "../../IndexedCollection/__internal__/IndexedCollection.toCollection.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
-interface EntriesContainer extends Container<number> {
-  readonly [Container_type]?: Iterator<
-    Tuple2<number, this[typeof Container_T]>
+interface EntriesCollection extends Collection<number> {
+  readonly [Collection_type]?: EnumerableLike<
+    Tuple2<number, this[typeof Collection_T]>
   >;
 }
 
-function* iterate<TKey extends number, T>(
+const createEnumerableFromReadonlyArray = <TKey extends number, T>(
   arr: readonly T[],
   startIndex: number,
   count: number,
-): Iterator<Tuple2<TKey, T>> {
-  for (
-    ;
-    count !== 0;
-    count > 0 ? (startIndex++, count--) : (startIndex--, count++)
-  ) {
-    yield [startIndex as TKey, arr[startIndex]];
+) => {
+  function* ReadonlyArrayEntries(): Iterator<Tuple2<TKey, T>> {
+    for (
+      ;
+      count !== 0;
+      count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+    ) {
+      yield [startIndex as TKey, arr[startIndex]];
+    }
   }
-}
+  return Enumerable_create(() =>
+    pipe(ReadonlyArrayEntries(), Enumerator_fromIterator()),
+  );
+};
 
 const ReadonlyArray_entries: ReadonlyArray.Signature["entries"] =
-  /*@__PURE__*/ IndexedCollection_toContainer<
+  /*@__PURE__*/ IndexedCollection_toCollection<
     ReadonlyArray.Type,
-    EntriesContainer
-  >(iterate, v => v.length) as ReadonlyArray.Signature["entries"];
+    EntriesCollection
+  >(
+    createEnumerableFromReadonlyArray,
+    v => v.length,
+  ) as ReadonlyArray.Signature["entries"];
 
 export default ReadonlyArray_entries;

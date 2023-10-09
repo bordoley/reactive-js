@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- `Iterable`<`T`\>
+- [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
 
   ↳ **`CollectionLike`**
 

@@ -1,0 +1,7 @@
+import { testModule } from "../../__internal__/testing.js";
+
+import * as Enumerable from "../Enumerable.js";
+
+testModule("Enumerable");
+
+((_: Enumerable.Signature) => {})(Enumerable);

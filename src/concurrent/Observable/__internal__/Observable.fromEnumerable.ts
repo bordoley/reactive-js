@@ -1,22 +1,21 @@
 import {
+  EnumerableLike,
+  EnumerableLike_enumerate,
+  EnumeratorLike_current,
+  EnumeratorLike_move,
+} from "../../../collections.js";
+import {
   ObserverLike,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../../concurrent.js";
-import { none, pipe } from "../../../functions.js";
-import {
-  EnumerableLike,
-  EnumerableLike_enumerate,
-  EnumeratorLike_current,
-  EnumeratorLike_move,
-} from "../../../ix.js";
+import { none } from "../../../functions.js";
 import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createRunnable from "./Observable.createRunnable.js";
 
@@ -26,10 +25,7 @@ const Observable_fromEnumerable: Observable.Signature["fromEnumerable"] =
     Observable_createRunnable((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
-      const enumerator = pipe(
-        enumerable[EnumerableLike_enumerate](),
-        Disposable.addTo(observer),
-      );
+      const enumerator = enumerable[EnumerableLike_enumerate]();
 
       const continuation = (scheduler: SchedulerLike) => {
         while (

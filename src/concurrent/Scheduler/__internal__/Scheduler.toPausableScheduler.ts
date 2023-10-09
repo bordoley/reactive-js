@@ -10,6 +10,15 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_move,
+} from "../../../collections.js";
+import MutableEnumeratorMixin, {
+  MutableEnumeratorLike,
+} from "../../../collections/__mixins__/MutableEnumeratorMixin.js";
+import {
   ContinuationLike,
   PauseableSchedulerLike,
   SchedulerLike,
@@ -31,15 +40,6 @@ import {
   isSome,
   none,
 } from "../../../functions.js";
-import {
-  EnumeratorLike,
-  EnumeratorLike_current,
-  EnumeratorLike_hasCurrent,
-  EnumeratorLike_move,
-} from "../../../ix.js";
-import MutableEnumeratorMixin, {
-  MutableEnumeratorLike,
-} from "../../../ix/__mixins__/MutableEnumeratorMixin.js";
 import {
   PauseableLike_isPaused,
   PauseableLike_pause,

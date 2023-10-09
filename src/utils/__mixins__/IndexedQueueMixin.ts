@@ -9,9 +9,11 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   CollectionLike_count,
+  EnumerableLike_enumerate,
   KeyedCollectionLike_get,
   MutableKeyedCollectionLike_set,
 } from "../../collections.js";
+import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
 import {
   Optional,
   newInstance,
@@ -327,6 +329,10 @@ const IndexedQueueMixin: <T>() => Mixin2<
           grow(this);
 
           return this[CollectionLike_count] < this[QueueableLike_capacity];
+        },
+
+        [EnumerableLike_enumerate]() {
+          return pipe(this[Symbol.iterator], Enumerator_fromIterator<T>());
         },
 
         *[Symbol.iterator](

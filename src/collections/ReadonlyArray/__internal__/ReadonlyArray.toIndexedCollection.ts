@@ -1,5 +1,6 @@
 import {
   CollectionLike_count,
+  EnumerableLike_enumerate,
   IndexedCollectionLike,
   KeyedCollectionLike_get,
 } from "../../../collections.js";
@@ -8,6 +9,7 @@ import {
   pipe,
   raiseWithDebugMessage,
 } from "../../../functions.js";
+import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray.toReadonlyArray.js";
 
@@ -26,6 +28,10 @@ class ReadonlyArrayIndexedCollection<T> implements IndexedCollectionLike<T> {
       raiseWithDebugMessage("out of range");
     }
     return this.d[index];
+  }
+
+  [EnumerableLike_enumerate]() {
+    return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
   }
 
   [Symbol.iterator](): Iterator<T, any, undefined> {

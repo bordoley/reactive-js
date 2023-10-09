@@ -29,8 +29,8 @@
 
 ### [AssociativeCollectionLike\_keys]
 
-▸ **[AssociativeCollectionLike_keys]**(): `Iterator`<`TKey`, `any`, `undefined`\>
+▸ **[AssociativeCollectionLike_keys]**(): [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>
 
 #### Returns
 
-`Iterator`<`TKey`, `any`, `undefined`\>
+[`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>

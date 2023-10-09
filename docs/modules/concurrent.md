@@ -84,7 +84,7 @@ ___
 
 ### Observableish
 
-Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/ix.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
+Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
 
 #### Type parameters
 

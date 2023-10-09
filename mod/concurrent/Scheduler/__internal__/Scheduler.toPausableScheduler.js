@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../collections.js";
+import MutableEnumeratorMixin from "../../../collections/__mixins__/MutableEnumeratorMixin.js";
 import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../../../concurrent.js";
 import { isNone, isSome, none, } from "../../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../ix.js";
-import MutableEnumeratorMixin from "../../../ix/__mixins__/MutableEnumeratorMixin.js";
 import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StoreLike_value, } from "../../../rx.js";
 import * as WritableStore from "../../../rx/WritableStore.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";

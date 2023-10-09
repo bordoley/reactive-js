@@ -1,8 +1,8 @@
-import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
+import IndexedCollection_toCollection from "../../IndexedCollection/__internal__/IndexedCollection.toCollection.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
 
 const ReadonlyArray_toReadonlyArray: ReadonlyArray.Signature["toReadonlyArray"] =
-  /*@__PURE__*/ IndexedCollection_toContainer<
+  /*@__PURE__*/ IndexedCollection_toCollection<
     ReadonlyArray.Type,
     ReadonlyArray.Type
   >(

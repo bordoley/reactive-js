@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Container Interfaces
+### Collection Interfaces
 
-- [Container](../interfaces/collections.Container.md)
+- [Collection](../interfaces/collections.Collection.md)
 
 ### Module Interfaces
 
@@ -18,15 +18,17 @@
 - [AssociativeCollectionLike](../interfaces/collections.AssociativeCollectionLike.md)
 - [CollectionLike](../interfaces/collections.CollectionLike.md)
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
+- [EnumerableLike](../interfaces/collections.EnumerableLike.md)
+- [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
 - [IndexedCollectionLike](../interfaces/collections.IndexedCollectionLike.md)
 - [KeyedCollectionLike](../interfaces/collections.KeyedCollectionLike.md)
 - [MutableIndexedCollectionLike](../interfaces/collections.MutableIndexedCollectionLike.md)
 - [MutableKeyedCollectionLike](../interfaces/collections.MutableKeyedCollectionLike.md)
 
-### Container Type Aliases
+### Collection Type Aliases
 
-- [ContainerOf](collections.md#containerof)
-- [ContainerOperator](collections.md#containeroperator)
+- [CollectionOf](collections.md#collectionof)
+- [CollectionOperator](collections.md#collectionoperator)
 - [KeyOf](collections.md#keyof)
 
 ### Other Type Aliases
@@ -37,39 +39,44 @@
 
 - [AssociativeCollectionLike\_keys](collections.md#associativecollectionlike_keys)
 - [CollectionLike\_count](collections.md#collectionlike_count)
-- [Container\_T](collections.md#container_t)
-- [Container\_TKey](collections.md#container_tkey)
-- [Container\_type](collections.md#container_type)
+- [Collection\_T](collections.md#collection_t)
+- [Collection\_TKey](collections.md#collection_tkey)
+- [Collection\_type](collections.md#collection_type)
+- [EnumerableLike\_enumerate](collections.md#enumerablelike_enumerate)
+- [EnumeratorLike\_current](collections.md#enumeratorlike_current)
+- [EnumeratorLike\_hasCurrent](collections.md#enumeratorlike_hascurrent)
+- [EnumeratorLike\_isCompleted](collections.md#enumeratorlike_iscompleted)
+- [EnumeratorLike\_move](collections.md#enumeratorlike_move)
 - [KeyedCollectionLike\_get](collections.md#keyedcollectionlike_get)
 - [MutableKeyedCollectionLike\_set](collections.md#mutablekeyedcollectionlike_set)
 
-## Container Type Aliases
+## Collection Type Aliases
 
-### ContainerOf
+### CollectionOf
 
-Ƭ **ContainerOf**<`C`, `T`, `TKey`\>: `C` extends { `[Container_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[Container_TKey]`: `TKey` ; `[Container_T]`: `T`  }[typeof [`Container_type`](collections.md#container_type)]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
+Ƭ **CollectionOf**<`C`, `T`, `TKey`\>: `C` extends { `[Collection_type]?`: `unknown`  } ? `NonNullable`<`C` & { `[Collection_TKey]`: `TKey` ; `[Collection_T]`: `T`  }[typeof [`Collection_type`](collections.md#collection_type)]\> : { `_C`: `C` ; `_T`: () => `T` ; `_TKey`: () => `TKey`  }
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/collections.Container.md) |
+| `C` | extends [`Collection`](../interfaces/collections.Collection.md) |
 | `T` | `T` |
 | `TKey` | extends [`KeyOf`](collections.md#keyof)<`C`\> = [`KeyOf`](collections.md#keyof)<`C`\> |
 
 ___
 
-### ContainerOperator
+### CollectionOperator
 
-Ƭ **ContainerOperator**<`C`, `TA`, `TB`, `TKey`\>: [`Function1`](functions.md#function1)<[`ContainerOf`](collections.md#containerof)<`C`, `TA`, `TKey`\>, [`ContainerOf`](collections.md#containerof)<`C`, `TB`, `TKey`\>\>
+Ƭ **CollectionOperator**<`C`, `TA`, `TB`, `TKey`\>: [`Function1`](functions.md#function1)<[`CollectionOf`](collections.md#collectionof)<`C`, `TA`, `TKey`\>, [`CollectionOf`](collections.md#collectionof)<`C`, `TB`, `TKey`\>\>
 
-Utility type for a generic operator function that transforms a Container's inner value type.
+Utility type for a generic operator function that transforms a Collection's inner value type.
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/collections.Container.md) |
+| `C` | extends [`Collection`](../interfaces/collections.Collection.md) |
 | `TA` | `TA` |
 | `TB` | `TB` |
 | `TKey` | extends [`KeyOf`](collections.md#keyof)<`C`\> = [`KeyOf`](collections.md#keyof)<`C`\> |
@@ -78,13 +85,13 @@ ___
 
 ### KeyOf
 
-Ƭ **KeyOf**<`C`\>: `NonNullable`<`C`[typeof [`Container_TKey`](collections.md#container_tkey)]\>
+Ƭ **KeyOf**<`C`\>: `NonNullable`<`C`[typeof [`Collection_TKey`](collections.md#collection_tkey)]\>
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](../interfaces/collections.Container.md) |
+| `C` | extends [`Collection`](../interfaces/collections.Collection.md) |
 
 ___
 
@@ -117,21 +124,51 @@ ___
 
 ___
 
-### Container\_T
+### Collection\_T
 
-• `Const` **Container\_T**: unique `symbol`
-
-___
-
-### Container\_TKey
-
-• `Const` **Container\_TKey**: unique `symbol`
+• `Const` **Collection\_T**: unique `symbol`
 
 ___
 
-### Container\_type
+### Collection\_TKey
 
-• `Const` **Container\_type**: unique `symbol`
+• `Const` **Collection\_TKey**: unique `symbol`
+
+___
+
+### Collection\_type
+
+• `Const` **Collection\_type**: unique `symbol`
+
+___
+
+### EnumerableLike\_enumerate
+
+• `Const` **EnumerableLike\_enumerate**: unique `symbol`
+
+___
+
+### EnumeratorLike\_current
+
+• `Const` **EnumeratorLike\_current**: unique `symbol`
+
+___
+
+### EnumeratorLike\_hasCurrent
+
+• `Const` **EnumeratorLike\_hasCurrent**: unique `symbol`
+
+___
+
+### EnumeratorLike\_isCompleted
+
+• `Const` **EnumeratorLike\_isCompleted**: unique `symbol`
+
+___
+
+### EnumeratorLike\_move
+
+• `Const` **EnumeratorLike\_move**: unique `symbol`
 
 ___
 

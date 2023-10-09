@@ -1,6 +1,5 @@
-import { CollectionLike, IndexedCollectionLike } from "./collections.js";
+import { CollectionLike, EnumerableLike, IndexedCollectionLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
-import { EnumerableLike } from "./ix.js";
 import { DispatcherLike, ErrorSafeEventListenerLike, EventSourceLike, PauseableLike, SinkLike } from "./rx.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
 export declare const SchedulerLike_yield: unique symbol;

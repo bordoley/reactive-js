@@ -4,9 +4,9 @@
 
 ## Table of contents
 
-### Container Interfaces
+### Collection Interfaces
 
-- [IndexedCollectionContainer](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md)
+- [IndexedCollectionCollection](../interfaces/collections_IndexedCollection.IndexedCollectionCollection.md)
 
 ### Module Interfaces
 
@@ -22,7 +22,6 @@
 
 - [empty](collections_IndexedCollection.md#empty)
 - [entries](collections_IndexedCollection.md#entries)
-- [keep](collections_IndexedCollection.md#keep)
 - [keySet](collections_IndexedCollection.md#keyset)
 - [keys](collections_IndexedCollection.md#keys)
 - [map](collections_IndexedCollection.md#map)
@@ -52,7 +51,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`IndexedCollectionContainer`](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md)
+Ƭ **Type**: [`IndexedCollectionCollection`](../interfaces/collections_IndexedCollection.IndexedCollectionCollection.md)
 
 ## Other Functions
 
@@ -75,7 +74,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, `Iterator`<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>, `any`, `undefined`\>\>
+▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -94,30 +93,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, `Iterator`<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>, `any`, `undefined`\>\>
-
-___
-
-### keep
-
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`ContainerOperator`](collections.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md), `T`, `T`, `TKey`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
-
-#### Returns
-
-[`ContainerOperator`](collections.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md), `T`, `T`, `TKey`\>
+[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 ___
 
@@ -139,7 +115,7 @@ ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`unknown`\>, `Iterator`<`TKey`, `any`, `undefined`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -149,13 +125,13 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`unknown`\>, `Iterator`<`TKey`, `any`, `undefined`\>\>
+[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`ContainerOperator`](collections.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md), `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_IndexedCollection.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
@@ -173,7 +149,7 @@ ___
 
 #### Returns
 
-[`ContainerOperator`](collections.md#containeroperator)<[`IndexedCollectionContainer`](../interfaces/collections_IndexedCollection.IndexedCollectionContainer.md), `TA`, `TB`, `TKey`\>
+[`CollectionOperator`](collections.md#collectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_IndexedCollection.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
 
 ___
 
@@ -269,7 +245,7 @@ ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, `Iterator`<`T`, `any`, `undefined`\>\>
+▸ **values**<`T`, `TKey`\>(`options?`): [`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -288,7 +264,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, `Iterator`<`T`, `any`, `undefined`\>\>
+[`Function1`](functions.md#function1)<[`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
 
 ___
 

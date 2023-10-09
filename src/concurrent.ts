@@ -1,6 +1,9 @@
-import { CollectionLike, IndexedCollectionLike } from "./collections.js";
+import {
+  CollectionLike,
+  EnumerableLike,
+  IndexedCollectionLike,
+} from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
-import { EnumerableLike } from "./ix.js";
 import {
   DispatcherLike,
   ErrorSafeEventListenerLike,

@@ -3,10 +3,10 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { clampPositiveNonZeroInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
+import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../collections.js";
+import MutableEnumeratorMixin from "../../../collections/__mixins__/MutableEnumeratorMixin.js";
 import { SchedulerLike_now, SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, VirtualTimeSchedulerLike_run, } from "../../../concurrent.js";
 import { isSome } from "../../../functions.js";
-import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../../../ix.js";
-import MutableEnumeratorMixin from "../../../ix/__mixins__/MutableEnumeratorMixin.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import PriorityQueueMixin from "../../../utils/__mixins__/PriorityQueueMixin.js";
 import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";

@@ -1,21 +1,43 @@
-import IndexedCollection_toContainer from "../../IndexedCollection/__internal__/IndexedCollection.toContainer.js";
-import type * as Iterator from "../../Iterator.js";
-import type * as ReadonlyArray from "./../../ReadonlyArray.js";
+import {
+  Collection,
+  Collection_T,
+  Collection_type,
+  EnumerableLike,
+} from "../../../collections.js";
+import { pipe } from "../../../functions.js";
+import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
+import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
+import IndexedCollection_toCollection from "../../IndexedCollection/__internal__/IndexedCollection.toCollection.js";
+import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
-function* iterate<T>(values: readonly T[], startIndex: number, count: number) {
-  for (
-    ;
-    count !== 0;
-    count > 0 ? (startIndex++, count--) : (startIndex--, count++)
-  ) {
-    yield values[startIndex];
-  }
+interface ValuesCollection extends Collection<number> {
+  readonly [Collection_type]?: EnumerableLike<this[typeof Collection_T]>;
 }
 
 const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
-  /*@__PURE__*/ IndexedCollection_toContainer<
+  /*@__PURE__*/ IndexedCollection_toCollection<
     ReadonlyArray.Type,
-    Iterator.Type
-  >(iterate, v => v.length);
+    ValuesCollection
+  >(
+    <_ extends number, T>(
+      arr: readonly T[],
+      startIndex: number,
+      count: number,
+    ) => {
+      function* ReadonlyArrayValues(): Iterator<T> {
+        for (
+          ;
+          count !== 0;
+          count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+        ) {
+          yield arr[startIndex];
+        }
+      }
+      return Enumerable_create(() =>
+        pipe(ReadonlyArrayValues(), Enumerator_fromIterator()),
+      );
+    },
+    v => v.length,
+  ) as ReadonlyArray.Signature["values"];
 
 export default ReadonlyArray_values;

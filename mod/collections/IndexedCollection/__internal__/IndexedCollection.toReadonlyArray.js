@@ -3,9 +3,9 @@
 import { abs } from "../../../__internal__/math.js";
 import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../collections.js";
 import { newInstance, pick } from "../../../functions.js";
-import IndexedCollection_toContainer from "./IndexedCollection.toContainer.js";
+import IndexedCollection_toCollection from "./IndexedCollection.toCollection.js";
 const IndexedCollection_toReadonlyArray = 
-/*@__PURE__*/ IndexedCollection_toContainer((values, startIndex, count) => {
+/*@__PURE__*/ IndexedCollection_toCollection((values, startIndex, count) => {
     const result = newInstance(Array, abs(count));
     let resultIndex = 0;
     let index = startIndex;

@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Container`](collections.Container.md)<`number`\> |
+| `C` | extends [`Collection`](collections.Collection.md)<`number`\> |
 
 ## Hierarchy
 
@@ -33,7 +33,7 @@
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, `TKey`\>, `Iterator`<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>, `any`, `undefined`\>\>
+▸ **entries**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -52,7 +52,7 @@
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, `TKey`\>, `Iterator`<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>, `any`, `undefined`\>\>
+[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Overrides
 
@@ -62,7 +62,7 @@ ___
 
 ### toIndexedCollection
 
-▸ **toIndexedCollection**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
+▸ **toIndexedCollection**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -80,13 +80,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
 
 ___
 
 ### toReadonlyArray
 
-▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, readonly `T`[]\>
+▸ **toReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, readonly `T`[]\>
 
 #### Type parameters
 
@@ -104,13 +104,13 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, readonly `T`[]\>
+[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, readonly `T`[]\>
 
 ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, `TKey`\>, `Iterator`<`T`, `any`, `undefined`\>\>
+▸ **values**<`T`, `TKey`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -129,7 +129,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`ContainerOf`](../modules/collections.md#containerof)<`C`, `T`, `TKey`\>, `Iterator`<`T`, `any`, `undefined`\>\>
+[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
 
 #### Overrides
 

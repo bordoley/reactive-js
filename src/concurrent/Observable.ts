@@ -1,3 +1,4 @@
+import { EnumerableLike } from "../collections.js";
 import {
   Computation,
   Computation_T,
@@ -36,7 +37,6 @@ import {
   Tuple8,
   Tuple9,
 } from "../functions.js";
-import { EnumerableLike } from "../ix.js";
 import { DispatcherLike } from "../rx.js";
 import {
   DisposableLike,

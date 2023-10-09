@@ -12,8 +12,6 @@
 
   ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
 
-  ↳ [`EnumeratorLike`](ix.EnumeratorLike.md)
-
   ↳ [`SinkLike`](rx.SinkLike.md)
 
   ↳ [`DelegatingDisposableLike`](utils.DelegatingDisposableLike.md)

@@ -8,11 +8,11 @@
 
 - **`Computation`**
 
+  ↳ [`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md)
+
   ↳ [`ObservableComputation`](concurrent_Observable.ObservableComputation.md)
 
   ↳ [`RunnableComputation`](concurrent_Observable.RunnableComputation.md)
-
-  ↳ [`EnumerableComputation`](ix_Enumerable.EnumerableComputation.md)
 
   ↳ [`EventSourceComputation`](rx_EventSource.EventSourceComputation.md)
 

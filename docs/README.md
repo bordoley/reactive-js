@@ -8,8 +8,8 @@ Reactive-JS
 
 - [collections](modules/collections.md)
 - [collections/Dictionary](modules/collections_Dictionary.md)
+- [collections/Enumerable](modules/collections_Enumerable.md)
 - [collections/IndexedCollection](modules/collections_IndexedCollection.md)
-- [collections/Iterator](modules/collections_Iterator.md)
 - [collections/ReadonlyArray](modules/collections_ReadonlyArray.md)
 - [collections/ReadonlyMap](modules/collections_ReadonlyMap.md)
 - [collections/ReadonlyObjectMap](modules/collections_ReadonlyObjectMap.md)
@@ -22,8 +22,6 @@ Reactive-JS
 - [concurrent/Stream](modules/concurrent_Stream.md)
 - [concurrent/VirtualTimeScheduler](modules/concurrent_VirtualTimeScheduler.md)
 - [functions](modules/functions.md)
-- [ix](modules/ix.md)
-- [ix/Enumerable](modules/ix_Enumerable.md)
 - [rx](modules/rx.md)
 - [rx/EventSource](modules/rx_EventSource.md)
 - [rx/Publisher](modules/rx_Publisher.md)

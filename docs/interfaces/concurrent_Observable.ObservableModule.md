@@ -1585,7 +1585,7 @@ ___
 
 ### fromEnumerable
 
-▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -1603,7 +1603,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](ix.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
 
 ___
 

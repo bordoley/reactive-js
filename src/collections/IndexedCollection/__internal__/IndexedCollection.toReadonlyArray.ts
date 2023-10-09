@@ -7,10 +7,10 @@ import {
 import { newInstance, pick } from "../../../functions.js";
 import type * as IndexedCollection from "./../../IndexedCollection.js";
 import type * as ReadonlyArray from "./../../ReadonlyArray.js";
-import IndexedCollection_toContainer from "./IndexedCollection.toContainer.js";
+import IndexedCollection_toCollection from "./IndexedCollection.toCollection.js";
 
 const IndexedCollection_toReadonlyArray: IndexedCollection.Signature["toReadonlyArray"] =
-  /*@__PURE__*/ IndexedCollection_toContainer<
+  /*@__PURE__*/ IndexedCollection_toCollection<
     IndexedCollection.Type,
     ReadonlyArray.Type
   >(

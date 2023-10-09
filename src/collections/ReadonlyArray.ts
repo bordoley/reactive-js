@@ -1,13 +1,12 @@
 import {
-  Container,
-  Container_T,
-  Container_type,
+  Collection,
+  Collection_T,
+  Collection_type,
   IndexedCollectionModule,
   KeyOf,
 } from "../collections.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
-import ReadonlyArray_keep from "./ReadonlyArray/__internal__/ReadonlyArray.keep.js";
 import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";
 import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.js";
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
@@ -20,13 +19,13 @@ import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.val
 
 /**
  * @noInheritDoc
- * @category Container
+ * @category Collection
  */
-export interface ReadonlyArrayContainer extends Container<number> {
-  readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+export interface ReadonlyArrayCollection extends Collection<number> {
+  readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
 }
 
-export type Type = ReadonlyArrayContainer;
+export type Type = ReadonlyArrayCollection;
 
 export type TKeyBase = KeyOf<Type>;
 
@@ -39,7 +38,6 @@ export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {}
 export type Signature = ReadonlyArrayModule;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
-export const keep: Signature["keep"] = ReadonlyArray_keep;
 export const keys: Signature["keys"] = ReadonlyArray_keys;
 export const keySet: Signature["keySet"] = ReadonlyArray_keySet;
 export const map: Signature["map"] = ReadonlyArray_map;

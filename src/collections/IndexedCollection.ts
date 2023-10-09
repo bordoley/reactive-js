@@ -1,14 +1,13 @@
 import {
-  Container,
-  Container_T,
-  Container_type,
+  Collection,
+  Collection_T,
+  Collection_type,
   IndexedCollectionLike,
   IndexedCollectionModule as IndexedCollectionModuleBase,
   KeyOf,
 } from "../collections.js";
 import IndexedCollection_empty from "./IndexedCollection/__internal__/IndexedCollection.empty.js";
 import IndexedCollection_entries from "./IndexedCollection/__internal__/IndexedCollection.entries.js";
-import IndexedCollection_keep from "./IndexedCollection/__internal__/IndexedCollection.keep.js";
 import IndexedCollection_keySet from "./IndexedCollection/__internal__/IndexedCollection.keySet.js";
 import IndexedCollection_keys from "./IndexedCollection/__internal__/IndexedCollection.keys.js";
 import IndexedCollection_map from "./IndexedCollection/__internal__/IndexedCollection.map.js";
@@ -21,13 +20,13 @@ import IndexedCollection_values from "./IndexedCollection/__internal__/IndexedCo
 
 /**
  * @noInheritDoc
- * @category Container
+ * @category Collection
  */
-export interface IndexedCollectionContainer extends Container<number> {
-  readonly [Container_type]?: IndexedCollectionLike<this[typeof Container_T]>;
+export interface IndexedCollectionCollection extends Collection<number> {
+  readonly [Collection_type]?: IndexedCollectionLike<this[typeof Collection_T]>;
 }
 
-export type Type = IndexedCollectionContainer;
+export type Type = IndexedCollectionCollection;
 
 export type TKeyBase = KeyOf<Type>;
 
@@ -42,7 +41,6 @@ export type Signature = IndexedCollectionModule;
 
 export const empty = IndexedCollection_empty;
 export const entries = IndexedCollection_entries;
-export const keep = IndexedCollection_keep;
 export const keys = IndexedCollection_keys;
 export const keySet = IndexedCollection_keySet;
 export const map = IndexedCollection_map;

@@ -1,12 +1,12 @@
-import { Container, Container_T, Container_type, IndexedCollectionModule, KeyOf } from "../collections.js";
+import { Collection, Collection_T, Collection_type, IndexedCollectionModule, KeyOf } from "../collections.js";
 /**
  * @noInheritDoc
- * @category Container
+ * @category Collection
  */
-export interface ReadonlyArrayContainer extends Container<number> {
-    readonly [Container_type]?: ReadonlyArray<this[typeof Container_T]>;
+export interface ReadonlyArrayCollection extends Collection<number> {
+    readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
 }
-export type Type = ReadonlyArrayContainer;
+export type Type = ReadonlyArrayCollection;
 export type TKeyBase = KeyOf<Type>;
 /**
  * @noInheritDoc
@@ -17,7 +17,6 @@ export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {
 export type Signature = ReadonlyArrayModule;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
-export declare const keep: Signature["keep"];
 export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];

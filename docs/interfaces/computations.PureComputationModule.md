@@ -14,11 +14,11 @@
 
 - **`PureComputationModule`**
 
-  ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
+  ↳ [`EnumerableModule`](collections_Enumerable.EnumerableModule.md)
 
   ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
 
-  ↳ [`EnumerableModule`](ix_Enumerable.EnumerableModule.md)
+  ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
 
   ↳ [`EventSourceModule`](rx_EventSource.EventSourceModule.md)
 
