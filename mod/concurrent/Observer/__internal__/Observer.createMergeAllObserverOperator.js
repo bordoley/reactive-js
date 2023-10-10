@@ -5,8 +5,7 @@ import { clampPositiveInteger, clampPositiveNonZeroInteger, } from "../../../__i
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../../collections.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";

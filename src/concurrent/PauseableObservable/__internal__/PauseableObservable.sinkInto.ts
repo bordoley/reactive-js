@@ -1,5 +1,3 @@
-import { PauseableObservableLike } from "../../../concurrent.js";
-import { pipe } from "../../../functions.js";
 import {
   DispatcherLike,
   DispatcherLikeEventMap,
@@ -8,8 +6,10 @@ import {
   DispatcherLikeEvent_ready,
   PauseableLike_pause,
   PauseableLike_resume,
-} from "../../../rx.js";
-import * as EventSource from "../../../rx/EventSource.js";
+  PauseableObservableLike,
+} from "../../../concurrent.js";
+import * as EventSource from "../../../events/EventSource.js";
+import { pipe } from "../../../functions.js";
 import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";

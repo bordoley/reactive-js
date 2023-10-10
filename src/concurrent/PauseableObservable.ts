@@ -1,5 +1,6 @@
 import {
   DeferredObservableLike,
+  DispatcherLike,
   PauseableObservableLike,
 } from "../concurrent.js";
 import {
@@ -10,7 +11,6 @@ import {
   Reducer,
   Tuple2,
 } from "../functions.js";
-import { DispatcherLike } from "../rx.js";
 import PauseableObservable_buffer from "./PauseableObservable/__internal__/PauseableObservable.buffer.js";
 import PauseableObservable_distinctUntilChanged from "./PauseableObservable/__internal__/PauseableObservable.distinctUntilChanged.js";
 import PauseableObservable_keep from "./PauseableObservable/__internal__/PauseableObservable.keep.js";

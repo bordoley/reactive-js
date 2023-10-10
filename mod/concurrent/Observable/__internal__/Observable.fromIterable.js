@@ -2,8 +2,7 @@
 
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurrent.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_create from "./Observable.create.js";
 const Observable_fromIterable = (options) => (iterable) => Observable_create((observer) => {

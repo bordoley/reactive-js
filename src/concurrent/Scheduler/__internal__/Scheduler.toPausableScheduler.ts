@@ -20,6 +20,9 @@ import MutableEnumeratorMixin, {
 } from "../../../collections/__mixins__/MutableEnumeratorMixin.js";
 import {
   ContinuationLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   PauseableSchedulerLike,
   SchedulerLike,
   SchedulerLike_inContinuation,
@@ -33,6 +36,8 @@ import {
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
 } from "../../../concurrent.js";
+import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import * as WritableStore from "../../../events/WritableStore.js";
 import {
   Optional,
   SideEffect1,
@@ -40,14 +45,6 @@ import {
   isSome,
   none,
 } from "../../../functions.js";
-import {
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  StoreLike_value,
-  WritableStoreLike,
-} from "../../../rx.js";
-import * as WritableStore from "../../../rx/WritableStore.js";
 import {
   DisposableLike,
   DisposableLike_isDisposed,

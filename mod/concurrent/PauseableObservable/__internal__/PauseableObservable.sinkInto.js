@@ -1,8 +1,8 @@
 /// <reference types="./PauseableObservable.sinkInto.d.ts" />
 
+import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import * as EventSource from "../../../events/EventSource.js";
 import { pipe } from "../../../functions.js";
-import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, PauseableLike_pause, PauseableLike_resume, } from "../../../rx.js";
-import * as EventSource from "../../../rx/EventSource.js";
 import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";

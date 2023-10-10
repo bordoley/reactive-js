@@ -7,12 +7,12 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObservableLike_observe, ObserverLike } from "../../../concurrent.js";
 import { invoke, none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike,
   IndexedQueueLike,
   QueueLike,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";

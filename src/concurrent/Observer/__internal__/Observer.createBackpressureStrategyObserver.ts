@@ -6,13 +6,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  SinkLike_notify,
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

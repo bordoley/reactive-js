@@ -13,19 +13,16 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+  PauseableLike_resume,
   PauseableObservableLike,
   SchedulerLike,
   StreamLike,
 } from "../../../concurrent.js";
+import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import * as WritableStore from "../../../events/WritableStore.js";
 import { Function1, invoke, none, pipe } from "../../../functions.js";
-import {
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  StoreLike_value,
-  WritableStoreLike,
-} from "../../../rx.js";
-import * as WritableStore from "../../../rx/WritableStore.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,

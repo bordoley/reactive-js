@@ -4,4 +4,4 @@
 import "./computations.test.js";
 import "./functions.test.js";
 import "../utils/__tests__/Disposable.test.js";
-import "../rx/__tests__/WritableStore.test.js";
+import "../events/__tests__/WritableStore.test.js";

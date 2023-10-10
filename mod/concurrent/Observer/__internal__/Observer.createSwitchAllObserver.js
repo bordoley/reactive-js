@@ -2,8 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";

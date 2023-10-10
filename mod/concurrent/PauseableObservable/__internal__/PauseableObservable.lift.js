@@ -1,8 +1,7 @@
 /// <reference types="./PauseableObservable.lift.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
-import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../rx.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
 import LiftedObservableMixin, { LiftedObservableLike_operators, LiftedObservableLike_source, } from "../../__mixins__/LiftedObservableMixin.js";
 const createLiftedPauseableObservable = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(LiftedObservableMixin()), function LiftedPauseableObservable(instance, source, ops) {

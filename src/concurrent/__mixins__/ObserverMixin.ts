@@ -7,12 +7,12 @@ import {
 } from "../../__internal__/mixins.js";
 import { ObserverLike, SchedulerLike } from "../../concurrent.js";
 import { Function3, returns } from "../../functions.js";
-import { SinkLike_notify } from "../../rx.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  SinkLike_notify,
 } from "../../utils.js";
 import Observer_assertState from "../Observer/__internal__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";

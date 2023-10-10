@@ -20,9 +20,12 @@
 
 - [ContinuationLike](../interfaces/concurrent.ContinuationLike.md)
 - [ContinuationSchedulerLike](../interfaces/concurrent.ContinuationSchedulerLike.md)
+- [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
+- [DispatcherLikeEventMap](../interfaces/concurrent.DispatcherLikeEventMap.md)
 - [MulticastObservableLike](../interfaces/concurrent.MulticastObservableLike.md)
 - [ObservableLike](../interfaces/concurrent.ObservableLike.md)
 - [ObserverLike](../interfaces/concurrent.ObserverLike.md)
+- [PauseableLike](../interfaces/concurrent.PauseableLike.md)
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
 - [ReplayPublisherLike](../interfaces/concurrent.ReplayPublisherLike.md)
@@ -45,10 +48,17 @@
 - [ContinuationLike\_run](concurrent.md#continuationlike_run)
 - [ContinuationLike\_scheduler](concurrent.md#continuationlike_scheduler)
 - [ContinuationSchedulerLike\_schedule](concurrent.md#continuationschedulerlike_schedule)
+- [DispatcherLikeEvent\_capacityExceeded](concurrent.md#dispatcherlikeevent_capacityexceeded)
+- [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
+- [DispatcherLikeEvent\_ready](concurrent.md#dispatcherlikeevent_ready)
+- [DispatcherLike\_complete](concurrent.md#dispatcherlike_complete)
 - [ObservableLike\_isDeferred](concurrent.md#observablelike_isdeferred)
 - [ObservableLike\_isPure](concurrent.md#observablelike_ispure)
 - [ObservableLike\_isRunnable](concurrent.md#observablelike_isrunnable)
 - [ObservableLike\_observe](concurrent.md#observablelike_observe)
+- [PauseableLike\_isPaused](concurrent.md#pauseablelike_ispaused)
+- [PauseableLike\_pause](concurrent.md#pauseablelike_pause)
+- [PauseableLike\_resume](concurrent.md#pauseablelike_resume)
 - [ReplayObservableLike\_buffer](concurrent.md#replayobservablelike_buffer)
 - [ReplayPublisherLike\_observerCount](concurrent.md#replaypublisherlike_observercount)
 - [SchedulerLike\_inContinuation](concurrent.md#schedulerlike_incontinuation)
@@ -84,7 +94,7 @@ ___
 
 ### Observableish
 
-Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/rx.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
+Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
 
 #### Type parameters
 
@@ -124,6 +134,30 @@ ___
 
 ___
 
+### DispatcherLikeEvent\_capacityExceeded
+
+• `Const` **DispatcherLikeEvent\_capacityExceeded**: unique `symbol`
+
+___
+
+### DispatcherLikeEvent\_completed
+
+• `Const` **DispatcherLikeEvent\_completed**: unique `symbol`
+
+___
+
+### DispatcherLikeEvent\_ready
+
+• `Const` **DispatcherLikeEvent\_ready**: unique `symbol`
+
+___
+
+### DispatcherLike\_complete
+
+• `Const` **DispatcherLike\_complete**: unique `symbol`
+
+___
+
 ### ObservableLike\_isDeferred
 
 • `Const` **ObservableLike\_isDeferred**: unique `symbol`
@@ -145,6 +179,24 @@ ___
 ### ObservableLike\_observe
 
 • `Const` **ObservableLike\_observe**: unique `symbol`
+
+___
+
+### PauseableLike\_isPaused
+
+• `Const` **PauseableLike\_isPaused**: unique `symbol`
+
+___
+
+### PauseableLike\_pause
+
+• `Const` **PauseableLike\_pause**: unique `symbol`
+
+___
+
+### PauseableLike\_resume
+
+• `Const` **PauseableLike\_resume**: unique `symbol`
 
 ___
 

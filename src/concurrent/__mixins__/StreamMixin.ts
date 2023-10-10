@@ -9,6 +9,7 @@ import {
 } from "../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
+  DispatcherLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -27,8 +28,6 @@ import {
   raiseWithDebugMessage,
   returns,
 } from "../../functions.js";
-import { DispatcherLike } from "../../rx.js";
-import DelegatingDispatcherMixin from "../../rx/__mixins__/DelegatingDispatcherMixin.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -36,6 +35,7 @@ import {
 } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Observable_multicast from "../Observable/__internal__/Observable.multicast.js";
+import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
 import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
 
 const DispatchedObservableLike_dispatcher = Symbol(

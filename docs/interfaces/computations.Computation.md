@@ -14,7 +14,7 @@
 
   ↳ [`RunnableComputation`](concurrent_Observable.RunnableComputation.md)
 
-  ↳ [`EventSourceComputation`](rx_EventSource.EventSourceComputation.md)
+  ↳ [`EventSourceComputation`](events_EventSource.EventSourceComputation.md)
 
 ## Table of contents
 

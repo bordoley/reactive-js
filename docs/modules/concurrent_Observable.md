@@ -1526,7 +1526,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](../interfaces/rx.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

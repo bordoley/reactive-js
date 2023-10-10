@@ -7,7 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { Equality } from "../../../functions.js";
-import DistinctUntilChangedSinkMixin from "../../../rx/__mixins__/DistinctUntilChangedSinkMixin.js";
+import DistinctUntilChangedSinkMixin from "../../../utils/__mixins__/DistinctUntilChangedSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

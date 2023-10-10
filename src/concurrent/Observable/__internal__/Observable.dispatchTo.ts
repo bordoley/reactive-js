@@ -1,6 +1,9 @@
-import { ObserverLike } from "../../../concurrent.js";
+import {
+  DispatcherLike,
+  DispatcherLike_complete,
+  ObserverLike,
+} from "../../../concurrent.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { DispatcherLike, DispatcherLike_complete } from "../../../rx.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createEnqueueObserver from "../../Observer/__internal__/Observer.createEnqueueObserver.js";

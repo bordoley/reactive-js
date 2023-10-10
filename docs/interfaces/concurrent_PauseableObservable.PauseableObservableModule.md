@@ -167,7 +167,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`DispatcherLike`](rx.DispatcherLike.md)<`T`\> |
+| `sink` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

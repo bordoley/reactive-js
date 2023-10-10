@@ -1,10 +1,10 @@
 /// <reference types="./PauseableObservable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import { StoreLike_value } from "../../../events.js";
+import * as WritableStore from "../../../events/WritableStore.js";
 import { invoke, none, pipe } from "../../../functions.js";
-import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StoreLike_value, } from "../../../rx.js";
-import * as WritableStore from "../../../rx/WritableStore.js";
 import { DelegatingDisposableLike_delegate, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";

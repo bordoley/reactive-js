@@ -16,9 +16,9 @@ An interface for types that support buffering items with backpressure.
 
 - **`QueueableLike`**
 
-  ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
+  ↳ [`DispatcherLike`](concurrent.DispatcherLike.md)
 
-  ↳ [`DispatcherLike`](rx.DispatcherLike.md)
+  ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
 
   ↳ [`StackLike`](utils.StackLike.md)
 

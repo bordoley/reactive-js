@@ -11,10 +11,10 @@ import {
   SchedulerLike_yield,
 } from "../../../concurrent.js";
 import { none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  SinkLike_notify,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createRunnable from "./Observable.createRunnable.js";

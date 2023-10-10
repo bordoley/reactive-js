@@ -3,10 +3,10 @@
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../collections.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, ReplayPublisherLike_observerCount, } from "../../../concurrent.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, ReplayPublisherLike_observerCount, } from "../../../concurrent.js";
+import { EventListenerLike_isErrorSafe } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
-import { DispatcherLike_complete, EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, SinkLike_notify, } from "../../../utils.js";
 import Disposable_onDisposed from "../../../utils/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";

@@ -17,6 +17,7 @@
 - [QueueLike](../interfaces/utils.QueueLike.md)
 - [QueueableLike](../interfaces/utils.QueueableLike.md)
 - [SerialDisposableLike](../interfaces/utils.SerialDisposableLike.md)
+- [SinkLike](../interfaces/utils.SinkLike.md)
 - [StackLike](../interfaces/utils.StackLike.md)
 
 ### Variables
@@ -32,6 +33,7 @@
 - [QueueableLike\_capacity](utils.md#queueablelike_capacity)
 - [QueueableLike\_enqueue](utils.md#queueablelike_enqueue)
 - [SerialDisposableLike\_current](utils.md#serialdisposablelike_current)
+- [SinkLike\_notify](utils.md#sinklike_notify)
 - [StackLike\_head](utils.md#stacklike_head)
 - [StackLike\_pop](utils.md#stacklike_pop)
 
@@ -100,6 +102,12 @@ ___
 ### SerialDisposableLike\_current
 
 • `Const` **SerialDisposableLike\_current**: unique `symbol`
+
+___
+
+### SinkLike\_notify
+
+• `Const` **SinkLike\_notify**: unique `symbol`
 
 ___
 

@@ -26,7 +26,6 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
@@ -36,6 +35,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";

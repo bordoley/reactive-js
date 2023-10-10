@@ -7,7 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { Function1 } from "../../../functions.js";
-import MapSinkMixin from "../../../rx/__mixins__/MapSinkMixin.js";
+import MapSinkMixin from "../../../utils/__mixins__/MapSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

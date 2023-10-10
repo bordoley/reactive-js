@@ -179,7 +179,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `sink` | [`DispatcherLike`](../interfaces/rx.DispatcherLike.md)<`T`\> |
+| `sink` | [`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

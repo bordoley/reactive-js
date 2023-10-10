@@ -1441,7 +1441,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `dispatcher` | [`DispatcherLike`](rx.DispatcherLike.md)<`T`\> |
+| `dispatcher` | [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\> |
 
 #### Returns
 

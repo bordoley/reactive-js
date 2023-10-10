@@ -22,3 +22,4 @@ export class BackPressureError extends Error {
         this[QueueableLike_backpressureStrategy] = backpressureStrategy;
     }
 }
+export const SinkLike_notify = Symbol("SinkLike_notify");

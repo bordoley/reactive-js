@@ -9,24 +9,17 @@ import {
 } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import {
+  DispatcherLikeEventMap,
+  DispatcherLikeEvent_capacityExceeded,
+  DispatcherLikeEvent_completed,
+  DispatcherLikeEvent_ready,
+  DispatcherLike_complete,
   ObserverLike,
   SchedulerLike,
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../concurrent.js";
 import { Function2, call, pipe, returns } from "../../functions.js";
-import {
-  DispatcherLikeEventMap,
-  DispatcherLikeEvent_capacityExceeded,
-  DispatcherLikeEvent_completed,
-  DispatcherLikeEvent_ready,
-  DispatcherLike_complete,
-  SinkLike_notify,
-} from "../../rx.js";
-import LazyInitEventSourceMixin, {
-  LazyInitEventSourceLike,
-  LazyInitEventSourceMixin_publisher,
-} from "../../rx/__mixins__/LazyInitEventSourceMixin.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -37,9 +30,14 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
+import LazyInitEventSourceMixin, {
+  LazyInitEventSourceLike,
+  LazyInitEventSourceMixin_publisher,
+} from "../../utils/__mixins__/LazyInitEventSourceMixin.js";
 
 type TObserverBaseMixin<T> = Omit<
   ObserverLike<T>,

@@ -7,6 +7,7 @@ import {
 } from "../computations.js";
 import {
   DeferredObservableLike,
+  DispatcherLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
@@ -37,7 +38,6 @@ import {
   Tuple8,
   Tuple9,
 } from "../functions.js";
-import { DispatcherLike } from "../rx.js";
 import {
   DisposableLike,
   QueueableLike,

@@ -20,7 +20,7 @@
 
   ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
 
-  ↳ [`EventSourceModule`](rx_EventSource.EventSourceModule.md)
+  ↳ [`EventSourceModule`](events_EventSource.EventSourceModule.md)
 
 ## Table of contents
 

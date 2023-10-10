@@ -6,7 +6,11 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObservableLike, ObserverLike } from "../../../concurrent.js";
+import {
+  DispatcherLike_complete,
+  ObservableLike,
+  ObserverLike,
+} from "../../../concurrent.js";
 import {
   Function1,
   Optional,
@@ -15,12 +19,12 @@ import {
   none,
   pipe,
 } from "../../../functions.js";
-import { DispatcherLike_complete, SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike_isDisposed,
   QueueableLike_enqueue,
   SerialDisposableLike,
   SerialDisposableLike_current,
+  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";

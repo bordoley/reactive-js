@@ -4,8 +4,7 @@ import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../collect
 import * as IndexedCollection from "../../../collections/IndexedCollection.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ReplayObservableLike_buffer, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
 import Observable_empty from "./Observable.empty.js";

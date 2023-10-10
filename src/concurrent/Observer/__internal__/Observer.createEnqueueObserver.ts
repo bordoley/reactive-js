@@ -11,12 +11,12 @@ import {
   SchedulerLike_requestYield,
 } from "../../../concurrent.js";
 import { none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   QueueableLike,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

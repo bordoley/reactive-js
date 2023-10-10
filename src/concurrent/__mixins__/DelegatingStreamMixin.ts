@@ -11,9 +11,9 @@ import {
   StreamLike_scheduler,
 } from "../../concurrent.js";
 import { none, returns } from "../../functions.js";
-import DelegatingDispatcherMixin from "../../rx/__mixins__/DelegatingDispatcherMixin.js";
 import { DisposableLike } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
 import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
 
 const DelegatingStreamMixin: <TReq, T>() => Mixin1<

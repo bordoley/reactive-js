@@ -2,8 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DelegatingDisposableLike_delegate, DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
+import { DelegatingDisposableLike_delegate, DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";

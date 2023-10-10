@@ -16,7 +16,7 @@ A stateful ObservableLike resource.
 
 - [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>
 
-- [`ErrorSafeEventListenerLike`](rx.ErrorSafeEventListenerLike.md)<`T`\>
+- [`ErrorSafeEventListenerLike`](events.ErrorSafeEventListenerLike.md)<`T`\>
 
   ↳ **`ReplayPublisherLike`**
 
@@ -36,7 +36,7 @@ A stateful ObservableLike resource.
 
 #### Inherited from
 
-[ErrorSafeEventListenerLike](rx.ErrorSafeEventListenerLike.md).[[EventListenerLike_isErrorSafe]](rx.ErrorSafeEventListenerLike.md#[eventlistenerlike_iserrorsafe])
+[ErrorSafeEventListenerLike](events.ErrorSafeEventListenerLike.md).[[EventListenerLike_isErrorSafe]](events.ErrorSafeEventListenerLike.md#[eventlistenerlike_iserrorsafe])
 
 ___
 

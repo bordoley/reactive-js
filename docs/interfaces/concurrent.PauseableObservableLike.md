@@ -14,7 +14,7 @@
 
 - [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
 
-- [`PauseableLike`](rx.PauseableLike.md)
+- [`PauseableLike`](concurrent.PauseableLike.md)
 
   ↳ **`PauseableObservableLike`**
 
@@ -73,13 +73,13 @@ ___
 
 ### [PauseableLike\_isPaused]
 
-• `Readonly` **[PauseableLike\_isPaused]**: [`StoreLike`](rx.StoreLike.md)<`boolean`\>
+• `Readonly` **[PauseableLike\_isPaused]**: [`StoreLike`](events.StoreLike.md)<`boolean`\>
 
 Boolean flag indicating if the PauseableLike is currently paused or not.
 
 #### Inherited from
 
-[PauseableLike](rx.PauseableLike.md).[[PauseableLike_isPaused]](rx.PauseableLike.md#[pauseablelike_ispaused])
+[PauseableLike](concurrent.PauseableLike.md).[[PauseableLike_isPaused]](concurrent.PauseableLike.md#[pauseablelike_ispaused])
 
 ## Methods
 
@@ -95,7 +95,7 @@ Imperatively pause the source.
 
 #### Inherited from
 
-[PauseableLike](rx.PauseableLike.md).[[PauseableLike_pause]](rx.PauseableLike.md#[pauseablelike_pause])
+[PauseableLike](concurrent.PauseableLike.md).[[PauseableLike_pause]](concurrent.PauseableLike.md#[pauseablelike_pause])
 
 ___
 
@@ -111,4 +111,4 @@ Imperatively resume the source.
 
 #### Inherited from
 
-[PauseableLike](rx.PauseableLike.md).[[PauseableLike_resume]](rx.PauseableLike.md#[pauseablelike_resume])
+[PauseableLike](concurrent.PauseableLike.md).[[PauseableLike_resume]](concurrent.PauseableLike.md#[pauseablelike_resume])

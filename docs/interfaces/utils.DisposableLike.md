@@ -12,11 +12,11 @@
 
   ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
 
-  ↳ [`SinkLike`](rx.SinkLike.md)
-
   ↳ [`DelegatingDisposableLike`](utils.DelegatingDisposableLike.md)
 
   ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)
+
+  ↳ [`SinkLike`](utils.SinkLike.md)
 
 ## Table of contents
 

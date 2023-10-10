@@ -5,10 +5,9 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import { ObserverLike } from "../../../concurrent.js";
-import { DispatcherLike_complete } from "../../../rx.js";
-import BufferSinkMixin from "../../../rx/__mixins__/BufferSinkMixin.js";
+import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
 import { QueueableLike_enqueue } from "../../../utils.js";
+import BufferSinkMixin from "../../../utils/__mixins__/BufferSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

@@ -11,15 +11,13 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
-  PauseableObservableLike,
-} from "../../../concurrent.js";
-import { Function1 } from "../../../functions.js";
-import {
   PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
-} from "../../../rx.js";
+  PauseableObservableLike,
+} from "../../../concurrent.js";
+import { Function1 } from "../../../functions.js";
 import LiftedObservableMixin, {
   LiftedObservableLike,
   LiftedObservableLike_operators,

@@ -1,6 +1,5 @@
-import { DeferredObservableLike, PauseableObservableLike } from "../concurrent.js";
+import { DeferredObservableLike, DispatcherLike, PauseableObservableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Predicate, Reducer, Tuple2 } from "../functions.js";
-import { DispatcherLike } from "../rx.js";
 /**
  * @noInheritDoc
  * @category Module

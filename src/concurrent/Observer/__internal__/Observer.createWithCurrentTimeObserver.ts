@@ -8,10 +8,10 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike, SchedulerLike_now } from "../../../concurrent.js";
 import { Function2, none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
+  SinkLike_notify,
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

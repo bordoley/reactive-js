@@ -1,9 +1,9 @@
 /// <reference types="./Observer.createBufferObserver.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { DispatcherLike_complete } from "../../../rx.js";
-import BufferSinkMixin from "../../../rx/__mixins__/BufferSinkMixin.js";
+import { DispatcherLike_complete } from "../../../concurrent.js";
 import { QueueableLike_enqueue } from "../../../utils.js";
+import BufferSinkMixin from "../../../utils/__mixins__/BufferSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 const Observer_createBufferObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ObserverMixin(), BufferSinkMixin()), function BufferObserver(instance, delegate, count) {

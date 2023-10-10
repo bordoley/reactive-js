@@ -2,8 +2,7 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { bindMethod, isFunction, pipe, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";

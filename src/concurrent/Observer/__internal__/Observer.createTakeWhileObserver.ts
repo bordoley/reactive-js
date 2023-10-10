@@ -7,7 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { Predicate } from "../../../functions.js";
-import TakeWhileSinkMixin from "../../../rx/__mixins__/TakeWhileSinkMixin.js";
+import TakeWhileSinkMixin from "../../../utils/__mixins__/TakeWhileSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

@@ -28,11 +28,11 @@ import {
   raiseError,
   raiseWithDebugMessage,
 } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
+  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";

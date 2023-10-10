@@ -8,8 +8,11 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { Factory, Optional, error, none, pipe } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
+import {
+  DisposableLike,
+  DisposableLike_dispose,
+  SinkLike_notify,
+} from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

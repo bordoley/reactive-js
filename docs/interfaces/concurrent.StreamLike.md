@@ -15,7 +15,7 @@ Represents a duplex stream
 
 ## Hierarchy
 
-- [`DispatcherLike`](rx.DispatcherLike.md)<`TReq`\>
+- [`DispatcherLike`](concurrent.DispatcherLike.md)<`TReq`\>
 
 - [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>
 

@@ -83,3 +83,15 @@ export declare class BackPressureError extends Error {
     readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
     constructor(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]);
 }
+export declare const SinkLike_notify: unique symbol;
+/**
+ * @noInheritDoc
+ */
+export interface SinkLike<T = unknown> extends DisposableLike {
+    /**
+     * Notifies the sink of the next notification produced by the source.
+     *
+     * @param next - The next notification value.
+     */
+    [SinkLike_notify](event: T): void;
+}

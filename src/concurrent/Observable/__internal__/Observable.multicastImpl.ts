@@ -14,12 +14,12 @@ import {
   isFunction,
   pipe,
 } from "../../../functions.js";
-import { SinkLike_notify } from "../../../rx.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
+  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";

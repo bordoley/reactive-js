@@ -3,19 +3,75 @@ import {
   EnumerableLike,
   IndexedCollectionLike,
 } from "./collections.js";
-import { Optional, SideEffect1 } from "./functions.js";
 import {
-  DispatcherLike,
   ErrorSafeEventListenerLike,
   EventSourceLike,
-  PauseableLike,
-  SinkLike,
-} from "./rx.js";
+  StoreLike,
+} from "./events.js";
+import { Optional, SideEffect1 } from "./functions.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
+  SinkLike,
 } from "./utils.js";
+
+export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
+export const DispatcherLikeEvent_capacityExceeded = Symbol(
+  "DispatcherLikeEvent_capacityExceeded",
+);
+export const DispatcherLikeEvent_completed = Symbol(
+  "DispatcherLikeEvent_completed",
+);
+
+/**
+ * @noInheritDoc
+ */
+export interface DispatcherLikeEventMap {
+  [DispatcherLikeEvent_ready]: typeof DispatcherLikeEvent_ready;
+  [DispatcherLikeEvent_capacityExceeded]: typeof DispatcherLikeEvent_capacityExceeded;
+  [DispatcherLikeEvent_completed]: typeof DispatcherLikeEvent_completed;
+}
+
+export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+/**
+ * A `QueueableLike` type that consumes enqueued events to
+ * be dispatched from any execution constext.
+ *
+ * @noInheritDoc
+ */
+export interface DispatcherLike<T = unknown>
+  extends QueueableLike<T>,
+    EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]> {
+  /**
+   * Communicates to the dispatcher that no more events will be enqueued.
+   */
+  [DispatcherLike_complete](): void;
+}
+
+export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
+export const PauseableLike_pause = Symbol("PauseableLike_pause");
+export const PauseableLike_resume = Symbol("PauseableLike_resume");
+
+/**
+ * @noInheritDoc
+ */
+export interface PauseableLike {
+  /**
+   * Boolean flag indicating if the PauseableLike is currently paused or not.
+   */
+  readonly [PauseableLike_isPaused]: StoreLike<boolean>;
+
+  /**
+   * Imperatively pause the source.
+   */
+  [PauseableLike_pause](): void;
+
+  /**
+   * Imperatively resume the source.
+   */
+  [PauseableLike_resume](): void;
+}
 
 export const SchedulerLike_yield = Symbol("SchedulerLike_yield");
 export const SchedulerLike_inContinuation = Symbol(

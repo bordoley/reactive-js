@@ -14,9 +14,9 @@ A consumer of push-based notifications.
 
 ## Hierarchy
 
-- [`DispatcherLike`](rx.DispatcherLike.md)<`T`\>
+- [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\>
 
-- [`SinkLike`](rx.SinkLike.md)<`T`\>
+- [`SinkLike`](utils.SinkLike.md)<`T`\>
 
 - [`SchedulerLike`](concurrent.SchedulerLike.md)
 

@@ -13,6 +13,7 @@ import {
   KeyedCollectionLike_get,
 } from "../../../collections.js";
 import {
+  DispatcherLike_complete,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -22,18 +23,15 @@ import {
   ReplayPublisherLike,
   ReplayPublisherLike_observerCount,
 } from "../../../concurrent.js";
+import { EventListenerLike_isErrorSafe } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
-import {
-  DispatcherLike_complete,
-  EventListenerLike_isErrorSafe,
-  SinkLike_notify,
-} from "../../../rx.js";
 import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
   IndexedQueueLike,
   QueueableLike_enqueue,
+  SinkLike_notify,
 } from "../../../utils.js";
 import Disposable_onDisposed from "../../../utils/Disposable/__internal__/Disposable.onDisposed.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";

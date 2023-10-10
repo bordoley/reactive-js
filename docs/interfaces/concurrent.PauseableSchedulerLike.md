@@ -11,6 +11,6 @@ of it's run loop.
 
 - [`SchedulerLike`](concurrent.SchedulerLike.md)
 
-- [`PauseableLike`](rx.PauseableLike.md)
+- [`PauseableLike`](concurrent.PauseableLike.md)
 
   ↳ **`PauseableSchedulerLike`**

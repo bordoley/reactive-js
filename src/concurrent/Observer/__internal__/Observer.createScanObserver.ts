@@ -7,7 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { Factory, Reducer } from "../../../functions.js";
-import ScanSinkMixin from "../../../rx/__mixins__/ScanSinkMixin.js";
+import ScanSinkMixin from "../../../utils/__mixins__/ScanSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

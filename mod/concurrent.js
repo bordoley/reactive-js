@@ -1,5 +1,12 @@
 /// <reference types="./concurrent.d.ts" />
 
+export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
+export const DispatcherLikeEvent_capacityExceeded = Symbol("DispatcherLikeEvent_capacityExceeded");
+export const DispatcherLikeEvent_completed = Symbol("DispatcherLikeEvent_completed");
+export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
+export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
+export const PauseableLike_pause = Symbol("PauseableLike_pause");
+export const PauseableLike_resume = Symbol("PauseableLike_resume");
 export const SchedulerLike_yield = Symbol("SchedulerLike_yield");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");

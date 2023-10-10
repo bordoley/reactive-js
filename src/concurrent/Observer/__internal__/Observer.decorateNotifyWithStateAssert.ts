@@ -2,7 +2,7 @@ import { __DEV__ } from "../../../__internal__/constants.js";
 import { MixinPrototype, getPrototype } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import { call } from "../../../functions.js";
-import { SinkLike, SinkLike_notify } from "../../../rx.js";
+import { SinkLike, SinkLike_notify } from "../../../utils.js";
 import Observer_assertState from "./Observer.assertState.js";
 
 const Observer_decorateNotifyWithStateAssert = <
