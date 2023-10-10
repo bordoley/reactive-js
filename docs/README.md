@@ -20,6 +20,7 @@ Reactive-JS
 - [concurrent/ReplayPublisher](modules/concurrent_ReplayPublisher.md)
 - [concurrent/Scheduler](modules/concurrent_Scheduler.md)
 - [concurrent/Stream](modules/concurrent_Stream.md)
+- [concurrent/Streamable](modules/concurrent_Streamable.md)
 - [concurrent/VirtualTimeScheduler](modules/concurrent_VirtualTimeScheduler.md)
 - [events](modules/events.md)
 - [events/EventSource](modules/events_EventSource.md)
