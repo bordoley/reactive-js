@@ -28,7 +28,7 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
     return this.d[index];
   }
 
-  [AssociativeCollectionLike_keys](): EnumerableLike<TKey> {
+  get [AssociativeCollectionLike_keys](): EnumerableLike<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
 

@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`CollectionModule`](collections.CollectionModule.md)<[`Type`](../modules/collections_ReadonlyObjectMap.md#type)\>
+- [`DictionaryModule`](collections.DictionaryModule.md)<[`Type`](../modules/collections_ReadonlyObjectMap.md#type)\>
 
   ↳ **`ReadonlyObjectMapModule`**
 
@@ -19,6 +19,10 @@
 ### Operator Methods
 
 - [map](collections_ReadonlyObjectMap.ReadonlyObjectMapModule.md#map)
+
+### Other Methods
+
+- [fromEntries](collections_ReadonlyObjectMap.ReadonlyObjectMapModule.md#fromentries)
 
 ### Transform Methods
 
@@ -51,7 +55,7 @@ Return an Collection that emits no items.
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[empty](collections.CollectionModule.md#empty)
+[DictionaryModule](collections.DictionaryModule.md).[empty](collections.DictionaryModule.md#empty)
 
 ___
 
@@ -92,7 +96,30 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[map](collections.CollectionModule.md#map)
+[DictionaryModule](collections.DictionaryModule.md).[map](collections.DictionaryModule.md#map)
+
+___
+
+## Other Methods
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](../modules/collections.md#keyof)<[`Type`](../modules/collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Inherited from
+
+[DictionaryModule](collections.DictionaryModule.md).[fromEntries](collections.DictionaryModule.md#fromentries)
 
 ___
 
@@ -115,7 +142,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[entries](collections.CollectionModule.md#entries)
+[DictionaryModule](collections.DictionaryModule.md).[entries](collections.DictionaryModule.md#entries)
 
 ___
 
@@ -135,7 +162,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[keySet](collections.CollectionModule.md#keyset)
+[DictionaryModule](collections.DictionaryModule.md).[keySet](collections.DictionaryModule.md#keyset)
 
 ___
 
@@ -155,7 +182,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[keys](collections.CollectionModule.md#keys)
+[DictionaryModule](collections.DictionaryModule.md).[keys](collections.DictionaryModule.md#keys)
 
 ___
 
@@ -184,7 +211,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[reduce](collections.CollectionModule.md#reduce)
+[DictionaryModule](collections.DictionaryModule.md).[reduce](collections.DictionaryModule.md#reduce)
 
 ___
 
@@ -205,7 +232,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[toDictionary](collections.CollectionModule.md#todictionary)
+[DictionaryModule](collections.DictionaryModule.md).[toDictionary](collections.DictionaryModule.md#todictionary)
 
 ___
 
@@ -226,7 +253,7 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[toReadonlyMap](collections.CollectionModule.md#toreadonlymap)
+[DictionaryModule](collections.DictionaryModule.md).[toReadonlyMap](collections.DictionaryModule.md#toreadonlymap)
 
 ___
 
@@ -247,4 +274,4 @@ ___
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[values](collections.CollectionModule.md#values)
+[DictionaryModule](collections.DictionaryModule.md).[values](collections.DictionaryModule.md#values)

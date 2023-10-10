@@ -18,6 +18,8 @@
 
   ↳ [`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)
 
+  ↳ [`ReadonlyMapCollection`](collections_ReadonlyMap.ReadonlyMapCollection.md)
+
   ↳ [`ReadonlyObjectMapCollection`](collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md)
 
   ↳ [`DictionaryLike`](collections.DictionaryLike.md)

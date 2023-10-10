@@ -18,6 +18,7 @@
 - [AssociativeCollectionLike](../interfaces/collections.AssociativeCollectionLike.md)
 - [CollectionLike](../interfaces/collections.CollectionLike.md)
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
+- [DictionaryModule](../interfaces/collections.DictionaryModule.md)
 - [EnumerableLike](../interfaces/collections.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
 - [IndexedCollectionLike](../interfaces/collections.IndexedCollectionLike.md)

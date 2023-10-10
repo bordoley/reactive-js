@@ -140,7 +140,7 @@ export const AssociativeCollectionLike_keys = Symbol(
  */
 export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
   extends KeyedCollectionLike<TKey, T> {
-  [AssociativeCollectionLike_keys](): EnumerableLike<TKey>;
+  readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
 }
 
 /**
@@ -294,4 +294,12 @@ export interface IndexedCollectionModule<C extends Collection<number>>
     readonly count?: number;
     readonly start?: number;
   }): Function1<CollectionOf<C, T>, ReadonlyArray<T>>;
+}
+
+export interface DictionaryModule<C extends Collection>
+  extends CollectionModule<C> {
+  fromEntries<T, TKey extends KeyOf<C>>(): Function1<
+    EnumerableLike<Tuple2<TKey, T>>,
+    CollectionOf<C, T, TKey>
+  >;
 }

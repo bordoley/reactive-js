@@ -15,7 +15,7 @@ class ReadonlyArrayDictionary {
     [KeyedCollectionLike_get](index) {
         return this.d[index];
     }
-    [AssociativeCollectionLike_keys]() {
+    get [AssociativeCollectionLike_keys]() {
         return pipe(this.d, ReadonlyArray_keys());
     }
     [EnumerableLike_enumerate]() {

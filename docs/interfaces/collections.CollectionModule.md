@@ -14,9 +14,9 @@
 
 - **`CollectionModule`**
 
-  ↳ [`ReadonlyObjectMapModule`](collections_ReadonlyObjectMap.ReadonlyObjectMapModule.md)
-
   ↳ [`IndexedCollectionModule`](collections.IndexedCollectionModule.md)
+
+  ↳ [`DictionaryModule`](collections.DictionaryModule.md)
 
 ## Table of contents
 

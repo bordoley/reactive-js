@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Collection`](collections.Collection.md)
+- [`Collection`](collections.Collection.md)<`TKey`\>
 
   ↳ **`ReadonlyObjectMapCollection`**
 
