@@ -14,6 +14,7 @@ import {
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
+  PauseableObservableLike,
   ReplayObservableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
@@ -811,6 +812,17 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+
+  flow<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<
+    RunnableLike<T> | RunnableWithSideEffectsLike<T>,
+    PauseableObservableLike<T> & DisposableLike
+  >;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 

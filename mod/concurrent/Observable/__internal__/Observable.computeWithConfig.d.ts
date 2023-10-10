@@ -7,75 +7,75 @@ declare const Await = 2;
 declare const Observe = 3;
 declare const Using = 4;
 declare const Constant = 5;
-declare const __AwaitOrObserveEffect_hasValue: unique symbol;
-declare const __AwaitOrObserveEffect_observable: unique symbol;
-declare const __AwaitOrObserveEffect_subscription: unique symbol;
-declare const __AwaitOrObserveEffect_value: unique symbol;
-declare const __ComputeContext_awaitOrObserve: unique symbol;
-declare const __ComputeContext_cleanup: unique symbol;
-declare const __ComputeContext_constant: unique symbol;
-declare const __ComputeContext_effects: unique symbol;
-declare const __ComputeContext_index: unique symbol;
-declare const __ComputeContext_memoOrUse: unique symbol;
-declare const __ComputeContext_mode: unique symbol;
-declare const __ComputeContext_observableConfig: unique symbol;
-declare const __ComputeContext_observer: unique symbol;
-declare const __ComputeContext_runComputation: unique symbol;
-declare const __ComputeContext_scheduledComputationSubscription: unique symbol;
-declare const __ComputeEffect_type: unique symbol;
-declare const __ConstantEffect_args: unique symbol;
-declare const __ConstantEffect_value: unique symbol;
-declare const __MemoOrUsingEffect_args: unique symbol;
-declare const __MemoOrUsingEffect_func: unique symbol;
-declare const __MemoOrUsingEffect_value: unique symbol;
+declare const AwaitOrObserveEffect_hasValue: unique symbol;
+declare const AwaitOrObserveEffect_observable: unique symbol;
+declare const AwaitOrObserveEffect_subscription: unique symbol;
+declare const AwaitOrObserveEffect_value: unique symbol;
+export declare const ComputeContext_awaitOrObserve: unique symbol;
+declare const ComputeContext_cleanup: unique symbol;
+export declare const ComputeContext_constant: unique symbol;
+declare const ComputeContext_effects: unique symbol;
+declare const ComputeContext_index: unique symbol;
+export declare const ComputeContext_memoOrUse: unique symbol;
+declare const ComputeContext_mode: unique symbol;
+export declare const ComputeContext_observableConfig: unique symbol;
+export declare const ComputeContext_observer: unique symbol;
+declare const ComputeContext_runComputation: unique symbol;
+declare const ComputeContext_scheduledComputationSubscription: unique symbol;
+declare const ComputeEffect_type: unique symbol;
+declare const ConstantEffect_args: unique symbol;
+declare const ConstantEffect_value: unique symbol;
+declare const MemoOrUsingEffect_args: unique symbol;
+declare const MemoOrUsingEffect_func: unique symbol;
+declare const MemoOrUsingEffect_value: unique symbol;
 type MemoOrUsingEffect<T = unknown> = {
-    [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-    [__MemoOrUsingEffect_args]: unknown[];
-    [__MemoOrUsingEffect_value]: T;
+    [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+    [MemoOrUsingEffect_args]: unknown[];
+    [MemoOrUsingEffect_value]: T;
 };
 type MemoEffect = {
-    readonly [__ComputeEffect_type]: typeof Memo;
+    readonly [ComputeEffect_type]: typeof Memo;
 } & MemoOrUsingEffect;
 type UsingEffect = {
-    readonly [__ComputeEffect_type]: typeof Using;
-    [__MemoOrUsingEffect_func]: (...args: any[]) => unknown;
-    [__MemoOrUsingEffect_args]: unknown[];
+    readonly [ComputeEffect_type]: typeof Using;
+    [MemoOrUsingEffect_func]: (...args: any[]) => unknown;
+    [MemoOrUsingEffect_args]: unknown[];
 } & MemoOrUsingEffect<DisposableLike>;
 type AwaitOrObserveEffect = {
-    [__AwaitOrObserveEffect_observable]: ObservableLike;
-    [__AwaitOrObserveEffect_subscription]: DisposableLike;
-    [__AwaitOrObserveEffect_value]: Optional;
-    [__AwaitOrObserveEffect_hasValue]: boolean;
+    [AwaitOrObserveEffect_observable]: ObservableLike;
+    [AwaitOrObserveEffect_subscription]: DisposableLike;
+    [AwaitOrObserveEffect_value]: Optional;
+    [AwaitOrObserveEffect_hasValue]: boolean;
 };
 type ObserveEffect = {
-    readonly [__ComputeEffect_type]: typeof Observe;
+    readonly [ComputeEffect_type]: typeof Observe;
 } & AwaitOrObserveEffect;
 type AwaitEffect = {
-    readonly [__ComputeEffect_type]: typeof Await;
+    readonly [ComputeEffect_type]: typeof Await;
 } & AwaitOrObserveEffect;
 type ConstantEffect<T = unknown> = {
-    readonly [__ComputeEffect_type]: typeof Constant;
-    [__ConstantEffect_value]: T;
-    [__ConstantEffect_args]: unknown[];
+    readonly [ComputeEffect_type]: typeof Constant;
+    [ConstantEffect_value]: T;
+    [ConstantEffect_args]: unknown[];
 };
 type ComputeEffect = AwaitEffect | ConstantEffect | MemoEffect | ObserveEffect | UsingEffect;
 declare class ComputeContext {
-    [__ComputeContext_index]: number;
-    readonly [__ComputeContext_effects]: ComputeEffect[];
-    readonly [__ComputeContext_observableConfig]: {
+    [ComputeContext_index]: number;
+    readonly [ComputeContext_effects]: ComputeEffect[];
+    readonly [ComputeContext_observableConfig]: {
         readonly [ObservableLike_isDeferred]: boolean;
         readonly [ObservableLike_isRunnable]: boolean;
     };
-    readonly [__ComputeContext_observer]: ObserverLike;
-    private [__ComputeContext_scheduledComputationSubscription];
-    private readonly [__ComputeContext_runComputation];
-    private readonly [__ComputeContext_mode];
-    private readonly [__ComputeContext_cleanup];
+    readonly [ComputeContext_observer]: ObserverLike;
+    private [ComputeContext_scheduledComputationSubscription];
+    private readonly [ComputeContext_runComputation];
+    private readonly [ComputeContext_mode];
+    private readonly [ComputeContext_cleanup];
     constructor(observer: ObserverLike, runComputation: () => void, mode: EffectsMode, config: Pick<ObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isRunnable>);
-    [__ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
-    [__ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
-    [__ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
-    [__ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
+    [ComputeContext_awaitOrObserve]<T>(observable: ObservableLike<T>, shouldAwait: boolean): Optional<T>;
+    [ComputeContext_constant]<T>(value: T, ...args: unknown[]): T;
+    [ComputeContext_memoOrUse]<T>(shouldUse: false, f: (...args: any[]) => T, ...args: unknown[]): T;
+    [ComputeContext_memoOrUse]<T extends DisposableLike>(shouldUse: true, f: (...args: any[]) => T, ...args: unknown[]): T;
 }
 export declare const assertCurrentContext: () => ComputeContext;
 interface ObservableComputeWithConfig {

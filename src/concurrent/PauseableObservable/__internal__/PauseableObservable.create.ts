@@ -17,6 +17,8 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
+  RunnableLike,
+  RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
 } from "../../../concurrent.js";
@@ -45,7 +47,10 @@ import Scheduler_toPausableScheduler from "../../Scheduler/__internal__/Schedule
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
 
 const PauseableObservable_create: <T>(
-  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<
+    MulticastObservableLike<boolean>,
+    DeferredObservableLike<T> | RunnableLike<T> | RunnableWithSideEffectsLike<T>
+  >,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -63,7 +68,9 @@ const PauseableObservable_create: <T>(
         instance: PauseableObservableLike<T> & TProperties,
         op: Function1<
           MulticastObservableLike<boolean>,
-          DeferredObservableLike<T>
+          | DeferredObservableLike<T>
+          | RunnableLike<T>
+          | RunnableWithSideEffectsLike<T>
         >,
         scheduler: SchedulerLike,
         multicastOptions?: {

@@ -42,6 +42,7 @@
 - [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
 - [enqueue](concurrent_Observable.ObservableModule.md#enqueue)
 - [firstAsync](concurrent_Observable.ObservableModule.md#firstasync)
+- [flow](concurrent_Observable.ObservableModule.md#flow)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
 - [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
@@ -1558,6 +1559,31 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
 
 ___
 

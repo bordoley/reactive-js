@@ -16,6 +16,7 @@ Reactive-JS
 - [computations](modules/computations.md)
 - [concurrent](modules/concurrent.md)
 - [concurrent/Observable](modules/concurrent_Observable.md)
+- [concurrent/Observable/effects](modules/concurrent_Observable_effects.md)
 - [concurrent/PauseableObservable](modules/concurrent_PauseableObservable.md)
 - [concurrent/ReplayPublisher](modules/concurrent_ReplayPublisher.md)
 - [concurrent/Scheduler](modules/concurrent_Scheduler.md)
