@@ -8,13 +8,7 @@ export interface ReadonlyArrayCollection extends Collection<number> {
 }
 export type Type = ReadonlyArrayCollection;
 export type TKeyBase = KeyOf<Type>;
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {
-}
-export type Signature = ReadonlyArrayModule;
+export type Signature = IndexedCollectionModule<Type>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const keys: Signature["keys"];

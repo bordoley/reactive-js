@@ -8,10 +8,6 @@
 
 - [ReadonlyMapCollection](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)
 
-### Other Interfaces
-
-- [ReadonlyMapModule](../interfaces/collections_ReadonlyMap.ReadonlyMapModule.md)
-
 ### Type Aliases
 
 - [Signature](collections_ReadonlyMap.md#signature)
@@ -43,7 +39,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`ReadonlyMapModule`](../interfaces/collections_ReadonlyMap.ReadonlyMapModule.md)
+Ƭ **Signature**: [`DictionaryCollectionModule`](../interfaces/collections.DictionaryCollectionModule.md)<[`Type`](collections_ReadonlyMap.md#type)\>
 
 ___
 

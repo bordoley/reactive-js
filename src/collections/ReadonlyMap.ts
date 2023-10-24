@@ -34,9 +34,7 @@ export type Type<TKey = unknown> = ReadonlyMapCollection<TKey>;
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface ReadonlyMapModule extends DictionaryCollectionModule<Type> {}
-
-export type Signature = ReadonlyMapModule;
+export type Signature = DictionaryCollectionModule<Type>;
 
 export const empty: Signature["empty"] = ReadonlyMap_empty;
 export const entries: Signature["entries"] = ReadonlyMap_entries;

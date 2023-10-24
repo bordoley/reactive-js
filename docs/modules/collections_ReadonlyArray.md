@@ -8,10 +8,6 @@
 
 - [ReadonlyArrayCollection](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)
 
-### Module Interfaces
-
-- [ReadonlyArrayModule](../interfaces/collections_ReadonlyArray.ReadonlyArrayModule.md)
-
 ### Type Aliases
 
 - [Signature](collections_ReadonlyArray.md#signature)
@@ -42,7 +38,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`ReadonlyArrayModule`](../interfaces/collections_ReadonlyArray.ReadonlyArrayModule.md)
+Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`Type`](collections_ReadonlyArray.md#type)\>
 
 ___
 

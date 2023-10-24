@@ -9,9 +9,7 @@ export interface ReadonlyMapCollection<TKey = unknown> extends Collection<TKey> 
 }
 export type Type<TKey = unknown> = ReadonlyMapCollection<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyMapModule extends DictionaryCollectionModule<Type> {
-}
-export type Signature = ReadonlyMapModule;
+export type Signature = DictionaryCollectionModule<Type>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const fromEntries: Signature["fromEntries"];

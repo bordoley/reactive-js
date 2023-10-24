@@ -37,10 +37,7 @@ export type Type<TKey extends symbol | string = symbol | string> =
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface ReadonlyObjectMapModule
-  extends DictionaryCollectionModule<Type> {}
-
-export type Signature = ReadonlyObjectMapModule;
+export type Signature = DictionaryCollectionModule<Type>;
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;

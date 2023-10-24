@@ -8,10 +8,6 @@
 
 - [IndexedCollectionCollection](../interfaces/collections_Indexed.IndexedCollectionCollection.md)
 
-### Module Interfaces
-
-- [IndexedCollectionModule](../interfaces/collections_Indexed.IndexedCollectionModule.md)
-
 ### Type Aliases
 
 - [Signature](collections_Indexed.md#signature)
@@ -39,7 +35,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections_Indexed.IndexedCollectionModule.md)
+Ƭ **Signature**: [`IndexedCollectionModule`](../interfaces/collections.IndexedCollectionModule.md)<[`Type`](collections_Indexed.md#type)\>
 
 ___
 

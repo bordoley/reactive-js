@@ -16,10 +16,6 @@
 
   ↳ **`DictionaryCollectionModule`**
 
-  ↳↳ [`ReadonlyMapModule`](collections_ReadonlyMap.ReadonlyMapModule.md)
-
-  ↳↳ [`ReadonlyObjectMapModule`](collections_ReadonlyObjectMap.ReadonlyObjectMapModule.md)
-
 ## Table of contents
 
 ### Constructor Methods

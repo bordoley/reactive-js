@@ -9,9 +9,7 @@ export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symb
 }
 export type Type<TKey extends symbol | string = symbol | string> = ReadonlyObjectMapCollection<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyObjectMapModule extends DictionaryCollectionModule<Type> {
-}
-export type Signature = ReadonlyObjectMapModule;
+export type Signature = DictionaryCollectionModule<Type>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const keys: Signature["keys"];

@@ -29,20 +29,14 @@ export type Type = ReadonlyArrayCollection;
 
 export type TKeyBase = KeyOf<Type>;
 
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface ReadonlyArrayModule extends IndexedCollectionModule<Type> {}
+export type Signature = IndexedCollectionModule<Type>;
 
-export type Signature = ReadonlyArrayModule;
 export const empty: Signature["empty"] = ReadonlyArray_empty;
 export const entries: Signature["entries"] = ReadonlyArray_entries;
 export const keys: Signature["keys"] = ReadonlyArray_keys;
 export const keySet: Signature["keySet"] = ReadonlyArray_keySet;
 export const map: Signature["map"] = ReadonlyArray_map;
 export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
-
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
 export const toIndexed: Signature["toIndexed"] = ReadonlyArray_toIndexed;

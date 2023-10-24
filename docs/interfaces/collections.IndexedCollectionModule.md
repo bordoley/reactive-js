@@ -16,10 +16,6 @@
 
   ↳ **`IndexedCollectionModule`**
 
-  ↳↳ [`IndexedCollectionModule`](collections_Indexed.IndexedCollectionModule.md)
-
-  ↳↳ [`ReadonlyArrayModule`](collections_ReadonlyArray.ReadonlyArrayModule.md)
-
 ## Table of contents
 
 ### Transform Methods

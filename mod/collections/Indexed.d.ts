@@ -8,13 +8,7 @@ export interface IndexedCollectionCollection extends Collection<number> {
 }
 export type Type = IndexedCollectionCollection;
 export type TKeyBase = KeyOf<Type>;
-/**
- * @noInheritDoc
- * @category Module
- */
-export interface IndexedCollectionModule extends IndexedCollectionModuleBase<Type> {
-}
-export type Signature = IndexedCollectionModule;
+export type Signature = IndexedCollectionModuleBase<Type>;
 export declare const empty: <T, TKey extends number = number>() => IndexedLike<T>;
 export declare const entries: <T, TKey extends number = number>(options?: {
     readonly count?: number | undefined;
