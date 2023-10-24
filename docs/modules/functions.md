@@ -34,6 +34,7 @@
 - [SideEffect5](functions.md#sideeffect5)
 - [SideEffect6](functions.md#sideeffect6)
 - [SideEffect7](functions.md#sideeffect7)
+- [Tuple1](functions.md#tuple1)
 - [Tuple2](functions.md#tuple2)
 - [Tuple3](functions.md#tuple3)
 - [Tuple4](functions.md#tuple4)
@@ -867,6 +868,18 @@ ___
 ##### Returns
 
 `void`
+
+___
+
+### Tuple1
+
+Ƭ **Tuple1**<`TA`\>: readonly [`TA`]
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
 
 ___
 
@@ -5214,6 +5227,24 @@ The javascript strict equality function.
 ___
 
 ### tuple
+
+▸ **tuple**<`TA`\>(`a`): [`Tuple1`](functions.md#tuple1)<`TA`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+
+#### Returns
+
+[`Tuple1`](functions.md#tuple1)<`TA`\>
 
 ▸ **tuple**<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
 

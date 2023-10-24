@@ -1,6 +1,7 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
 import { DeferredObservableLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PauseableObservableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
@@ -158,10 +159,18 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         delay: number;
         delayStart?: boolean;
     }): Function1<EnumerableLike<T>, RunnableLike<T>>;
+    fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
+    fromFactory<T>(): Function1<Factory<T>, RunnableLike<T>>;
     fromIterable<T>(options?: {
         delay: number;
         delayStart?: boolean;
     }): Function1<Iterable<T>, DeferredObservableLike<T>>;
+    fromReadonlyArray<T>(options?: {
+        delay: number;
+        delayStart?: boolean;
+    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+    fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
+    fromValue<T>(): Function1<T, RunnableLike<T>>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
     isDeferred<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
         [ObservableLike_isDeferred]: true;
@@ -324,7 +333,12 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const enqueue: Signature["enqueue"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
+export declare const fromEnumerable: Signature["fromEnumerable"];
+export declare const fromEventSource: Signature["fromEventSource"];
+export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
+export declare const fromStore: Signature["fromStore"];
+export declare const fromValue: Signature["fromValue"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];

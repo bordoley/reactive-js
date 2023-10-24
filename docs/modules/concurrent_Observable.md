@@ -55,7 +55,12 @@
 - [enqueue](concurrent_Observable.md#enqueue)
 - [firstAsync](concurrent_Observable.md#firstasync)
 - [forEach](concurrent_Observable.md#foreach)
+- [fromEnumerable](concurrent_Observable.md#fromenumerable)
+- [fromEventSource](concurrent_Observable.md#fromeventsource)
+- [fromFactory](concurrent_Observable.md#fromfactory)
 - [fromIterable](concurrent_Observable.md#fromiterable)
+- [fromStore](concurrent_Observable.md#fromstore)
+- [fromValue](concurrent_Observable.md#fromvalue)
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
 - [isDeferred](concurrent_Observable.md#isdeferred)
 - [isPure](concurrent_Observable.md#ispure)
@@ -1664,6 +1669,62 @@ ___
 
 ___
 
+### fromEnumerable
+
+▸ **fromEnumerable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromEventSource
+
+▸ **fromEventSource**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Factory`](functions.md#factory)<`T`\>, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
 ### fromIterable
 
 ▸ **fromIterable**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
@@ -1685,6 +1746,38 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+
+___
+
+### fromStore
+
+▸ **fromStore**<`T`\>(): [`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/events.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StoreLike`](../interfaces/events.StoreLike.md)<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
 
 ___
 

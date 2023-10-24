@@ -45,7 +45,12 @@
 - [flow](concurrent_Observable.ObservableModule.md#flow)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
 - [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
+- [fromEventSource](concurrent_Observable.ObservableModule.md#fromeventsource)
+- [fromFactory](concurrent_Observable.ObservableModule.md#fromfactory)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
+- [fromReadonlyArray](concurrent_Observable.ObservableModule.md#fromreadonlyarray)
+- [fromStore](concurrent_Observable.ObservableModule.md#fromstore)
+- [fromValue](concurrent_Observable.ObservableModule.md#fromvalue)
 - [ignoreElements](concurrent_Observable.ObservableModule.md#ignoreelements)
 - [isDeferred](concurrent_Observable.ObservableModule.md#isdeferred)
 - [isPure](concurrent_Observable.ObservableModule.md#ispure)
@@ -1633,6 +1638,38 @@ ___
 
 ___
 
+### fromEventSource
+
+▸ **fromEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### fromFactory
+
+▸ **fromFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Factory`](../modules/functions.md#factory)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
 ### fromIterable
 
 ▸ **fromIterable**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
@@ -1654,6 +1691,62 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromStore
+
+▸ **fromStore**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`StoreLike`](events.StoreLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`StoreLike`](events.StoreLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### fromValue
+
+▸ **fromValue**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`T`, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
 
 ___
 

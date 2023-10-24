@@ -20,6 +20,7 @@ import {
   RunnableWithSideEffectsLike,
   SchedulerLike,
 } from "../concurrent.js";
+import { EventSourceLike, StoreLike } from "../events.js";
 import {
   Equality,
   Factory,
@@ -63,7 +64,12 @@ import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUt
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
+import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
+import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
+import Observable_fromStore from "./Observable/__internal__/Observable.fromStore.js";
+import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
@@ -831,10 +837,26 @@ export interface ObservableModule
     delayStart?: boolean;
   }): Function1<EnumerableLike<T>, RunnableLike<T>>;
 
+  fromEventSource<T>(): Function1<
+    EventSourceLike<T>,
+    MulticastObservableLike<T>
+  >;
+
+  fromFactory<T>(): Function1<Factory<T>, RunnableLike<T>>;
+
   fromIterable<T>(options?: {
     delay: number;
     delayStart?: boolean;
   }): Function1<Iterable<T>, DeferredObservableLike<T>>;
+
+  fromReadonlyArray<T>(options?: {
+    delay: number;
+    delayStart?: boolean;
+  }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+
+  fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
+
+  fromValue<T>(): Function1<T, RunnableLike<T>>;
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
@@ -1564,7 +1586,14 @@ export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromEnumerable: Signature["fromEnumerable"] =
+  Observable_fromEnumerable;
+export const fromEventSource: Signature["fromEventSource"] =
+  Observable_fromEventSource;
+export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
+export const fromStore: Signature["fromStore"] = Observable_fromStore;
+export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const isDeferred: Signature["isDeferred"] = Observable_isDeferred;

@@ -49,6 +49,7 @@ export type SideEffect4<TA, TB, TC, TD> = (a: TA, b: TB, c: TC, d: TD) => void;
 export type SideEffect5<TA, TB, TC, TD, TE> = (a: TA, b: TB, c: TC, d: TD, e: TE) => void;
 export type SideEffect6<TA, TB, TC, TD, TE, TF> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF) => void;
 export type SideEffect7<TA, TB, TC, TD, TE, TF, TG> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => void;
+export type Tuple1<TA> = readonly [TA];
 export type Tuple2<TA, TB> = readonly [TA, TB];
 export type Tuple3<TA, TB, TC> = readonly [TA, TB, TC];
 export type Tuple4<TA, TB, TC, TD> = readonly [TA, TB, TC, TD];
@@ -328,6 +329,7 @@ interface FunctionsModule {
      * The javascript strict equality function.
      */
     strictEquality<T>(a: T, b: T): boolean;
+    tuple<TA>(a: TA): Tuple1<TA>;
     tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
     tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
     tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
