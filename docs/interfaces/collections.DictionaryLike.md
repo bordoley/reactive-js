@@ -13,7 +13,7 @@
 
 ## Hierarchy
 
-- [`AssociativeCollectionLike`](collections.AssociativeCollectionLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
+- [`AssociativeLike`](collections.AssociativeLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
 - [`Collection`](collections.Collection.md)<`T`\>
 
@@ -38,7 +38,7 @@
 
 #### Overrides
 
-AssociativeCollectionLike.\_\_@EnumerableLike\_enumerate@24266
+AssociativeLike.\_\_@EnumerableLike\_enumerate@24266
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 #### Overrides
 
-AssociativeCollectionLike.\_\_@iterator@85
+AssociativeLike.\_\_@iterator@85

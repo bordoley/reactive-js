@@ -1,4 +1,4 @@
-import { CollectionLike, EnumerableLike, IndexedCollectionLike } from "./collections.js";
+import { CollectionLike, EnumerableLike, IndexedLike } from "./collections.js";
 import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1 } from "./functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SinkLike } from "./utils.js";
@@ -228,7 +228,7 @@ export declare const ReplayObservableLike_buffer: unique symbol;
  * @category Observable
  */
 export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
-    readonly [ReplayObservableLike_buffer]: IndexedCollectionLike<T>;
+    readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
 }
 export declare const ReplayPublisherLike_observerCount: unique symbol;
 export interface ReplayPublisherLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {

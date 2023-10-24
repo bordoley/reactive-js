@@ -16,7 +16,7 @@
 
   ↳ **`CollectionLike`**
 
-  ↳↳ [`KeyedCollectionLike`](collections.KeyedCollectionLike.md)
+  ↳↳ [`KeyedLike`](collections.KeyedLike.md)
 
   ↳↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
 

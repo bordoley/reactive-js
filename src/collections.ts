@@ -121,33 +121,31 @@ export interface CollectionLike<T> extends EnumerableLike<T> {
   readonly [CollectionLike_count]: number;
 }
 
-export const KeyedCollectionLike_get = Symbol("KeyedCollectionLike_get");
+export const KeyedLike_get = Symbol("KeyedLike_get");
 
 /**
  * @noInheritDoc
  */
-export interface KeyedCollectionLike<TKey = unknown, T = unknown>
+export interface KeyedLike<TKey = unknown, T = unknown>
   extends CollectionLike<T> {
-  [KeyedCollectionLike_get](index: TKey): T;
+  [KeyedLike_get](index: TKey): T;
 }
 
-export const AssociativeCollectionLike_keys = Symbol(
-  "AssociativeCollectionLike_keys",
-);
+export const AssociativeLike_keys = Symbol("AssociativeLike_keys");
 
 /**
  * @noInheritDoc
  */
-export interface AssociativeCollectionLike<TKey = unknown, T = unknown>
-  extends KeyedCollectionLike<TKey, T> {
-  readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
+export interface AssociativeLike<TKey = unknown, T = unknown>
+  extends KeyedLike<TKey, T> {
+  readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
 }
 
 /**
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown>
-  extends AssociativeCollectionLike<TKey, Optional<T>>,
+  extends AssociativeLike<TKey, Optional<T>>,
     Collection<T> {
   [EnumerableLike_enumerate](): EnumeratorLike<T>;
   [Symbol.iterator](): Iterator<T>;
@@ -156,21 +154,18 @@ export interface DictionaryLike<TKey = unknown, T = unknown>
 /**
  * @noInheritDoc
  */
-export interface IndexedCollectionLike<T = unknown>
-  extends KeyedCollectionLike<number, T> {}
+export interface IndexedLike<T = unknown> extends KeyedLike<number, T> {}
 
-export const MutableKeyedCollectionLike_set = Symbol(
-  "MutableKeyedCollectionLike_set",
-);
+export const MutableKeyedLike_set = Symbol("MutableKeyedLike_set");
 
-export interface MutableKeyedCollectionLike<TKey = unknown, T = unknown>
-  extends KeyedCollectionLike<TKey, T> {
-  [MutableKeyedCollectionLike_set](key: TKey, value: T): T;
+export interface MutableKeyedLike<TKey = unknown, T = unknown>
+  extends KeyedLike<TKey, T> {
+  [MutableKeyedLike_set](key: TKey, value: T): T;
 }
 
-export interface MutableIndexedCollectionLike<T = unknown>
-  extends IndexedCollectionLike<T>,
-    MutableKeyedCollectionLike<number, T> {}
+export interface MutableIndexedLike<T = unknown>
+  extends IndexedLike<T>,
+    MutableKeyedLike<number, T> {}
 
 /**
  * @noInheritDoc
@@ -196,9 +191,18 @@ export interface CollectionModule<C extends Collection> {
    *
    * @category Transform
    */
-  values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    CollectionOf<C, T, TKey>,
-    EnumerableLike<T>
+  keys<TKey extends KeyOf<C>>(): Function1<
+    CollectionOf<C, unknown, TKey>,
+    EnumerableLike<TKey>
+  >;
+
+  /**
+   *
+   * @category Transform
+   */
+  keySet<TKey extends KeyOf<C>>(): Function1<
+    CollectionOf<C, unknown, TKey>,
+    ReadonlySet<TKey>
   >;
 
   /**
@@ -227,24 +231,6 @@ export interface CollectionModule<C extends Collection> {
    *
    * @category Transform
    */
-  keys<TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, unknown, TKey>,
-    EnumerableLike<TKey>
-  >;
-
-  /**
-   *
-   * @category Transform
-   */
-  keySet<TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, unknown, TKey>,
-    ReadonlySet<TKey>
-  >;
-
-  /**
-   *
-   * @category Transform
-   */
   toDictionary<T, TKey extends KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
     DictionaryLike<TKey, T>
@@ -257,6 +243,15 @@ export interface CollectionModule<C extends Collection> {
   toReadonlyMap<T, TKey extends KeyOf<C>>(): Function1<
     CollectionOf<C, T, TKey>,
     ReadonlyMap<TKey, T>
+  >;
+
+  /**
+   *
+   * @category Transform
+   */
+  values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
+    CollectionOf<C, T, TKey>,
+    EnumerableLike<T>
   >;
 }
 
@@ -284,10 +279,10 @@ export interface IndexedCollectionModule<C extends Collection<number>>
   }): Function1<CollectionOf<C, T, TKey>, EnumerableLike<T>>;
 
   /** @category Transform */
-  toIndexedCollection<T>(options?: {
+  toIndexed<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<C, T>, IndexedCollectionLike<T>>;
+  }): Function1<CollectionOf<C, T>, IndexedLike<T>>;
 
   /** @category Transform */
   toReadonlyArray<T>(options?: {
@@ -296,7 +291,7 @@ export interface IndexedCollectionModule<C extends Collection<number>>
   }): Function1<CollectionOf<C, T>, ReadonlyArray<T>>;
 }
 
-export interface DictionaryModule<C extends Collection>
+export interface DictionaryCollectionModule<C extends Collection>
   extends CollectionModule<C> {
   fromEntries<T, TKey extends KeyOf<C>>(): Function1<
     EnumerableLike<Tuple2<TKey, T>>,

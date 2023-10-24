@@ -8,10 +8,7 @@ import {
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
-import {
-  CollectionLike_count,
-  KeyedCollectionLike_get,
-} from "../../../collections.js";
+import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import {
   DispatcherLike_complete,
   ObservableLike_isDeferred,
@@ -153,7 +150,7 @@ const ReplayPublisher_create: ReplayPublisher.Signature["create"] =
             const count = buffer[CollectionLike_count];
 
             for (let i = 0; i < count; i++) {
-              const next = buffer[KeyedCollectionLike_get](i);
+              const next = buffer[KeyedLike_get](i);
               observer[QueueableLike_enqueue](next);
             }
 

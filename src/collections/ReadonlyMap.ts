@@ -3,7 +3,7 @@ import {
   Collection_T,
   Collection_TKey,
   Collection_type,
-  DictionaryModule,
+  DictionaryCollectionModule,
   KeyOf,
 } from "../collections.js";
 import { identityLazy } from "../functions.js";
@@ -34,7 +34,7 @@ export type Type<TKey = unknown> = ReadonlyMapCollection<TKey>;
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface ReadonlyMapModule extends DictionaryModule<Type> {}
+export interface ReadonlyMapModule extends DictionaryCollectionModule<Type> {}
 
 export type Signature = ReadonlyMapModule;
 

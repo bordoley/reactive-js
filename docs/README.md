@@ -9,7 +9,7 @@ Reactive-JS
 - [collections](modules/collections.md)
 - [collections/Dictionary](modules/collections_Dictionary.md)
 - [collections/Enumerable](modules/collections_Enumerable.md)
-- [collections/IndexedCollection](modules/collections_IndexedCollection.md)
+- [collections/Indexed](modules/collections_Indexed.md)
 - [collections/ReadonlyArray](modules/collections_ReadonlyArray.md)
 - [collections/ReadonlyMap](modules/collections_ReadonlyMap.md)
 - [collections/ReadonlyObjectMap](modules/collections_ReadonlyObjectMap.md)

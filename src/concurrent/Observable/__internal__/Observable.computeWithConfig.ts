@@ -1,8 +1,5 @@
-import {
-  CollectionLike_count,
-  KeyedCollectionLike_get,
-} from "../../../collections.js";
-import * as IndexedCollection from "../../../collections/IndexedCollection.js";
+import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
+import * as Indexed from "../../../collections/Indexed.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -315,11 +312,9 @@ class ComputeContext {
 
       const buffer = Observable_isReplayObservable<T>(observable)
         ? observable[ReplayObservableLike_buffer]
-        : IndexedCollection.empty<T>();
+        : Indexed.empty<T>();
       const hasDefaultValue = buffer[CollectionLike_count] > 0;
-      const defaultValue = hasDefaultValue
-        ? buffer[KeyedCollectionLike_get](0)
-        : none;
+      const defaultValue = hasDefaultValue ? buffer[KeyedLike_get](0) : none;
 
       effect[AwaitOrObserveEffect_observable] = observable;
       effect[AwaitOrObserveEffect_subscription] = subscription;

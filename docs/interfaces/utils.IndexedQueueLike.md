@@ -16,7 +16,7 @@ An interface for types that support buffering items with backpressure.
 
 - [`QueueLike`](utils.QueueLike.md)<`T`\>
 
-- [`MutableIndexedCollectionLike`](collections.MutableIndexedCollectionLike.md)<`T`\>
+- [`MutableIndexedLike`](collections.MutableIndexedLike.md)<`T`\>
 
 - [`StackLike`](utils.StackLike.md)<`T`\>
 
@@ -33,7 +33,7 @@ An interface for types that support buffering items with backpressure.
 
 ### Methods
 
-- [[MutableKeyedCollectionLike\_set]](utils.IndexedQueueLike.md#[mutablekeyedcollectionlike_set])
+- [[MutableKeyedLike\_set]](utils.IndexedQueueLike.md#[mutablekeyedlike_set])
 - [[QueueLike\_dequeue]](utils.IndexedQueueLike.md#[queuelike_dequeue])
 - [[QueueableLike\_enqueue]](utils.IndexedQueueLike.md#[queueablelike_enqueue])
 - [[StackLike\_pop]](utils.IndexedQueueLike.md#[stacklike_pop])
@@ -84,9 +84,9 @@ ___
 
 ## Methods
 
-### [MutableKeyedCollectionLike\_set]
+### [MutableKeyedLike\_set]
 
-▸ **[MutableKeyedCollectionLike_set]**(`key`, `value`): `T`
+▸ **[MutableKeyedLike_set]**(`key`, `value`): `T`
 
 #### Parameters
 
@@ -101,7 +101,7 @@ ___
 
 #### Inherited from
 
-[MutableIndexedCollectionLike](collections.MutableIndexedCollectionLike.md).[[MutableKeyedCollectionLike_set]](collections.MutableIndexedCollectionLike.md#[mutablekeyedcollectionlike_set])
+[MutableIndexedLike](collections.MutableIndexedLike.md).[[MutableKeyedLike_set]](collections.MutableIndexedLike.md#[mutablekeyedlike_set])
 
 ___
 

@@ -3,7 +3,7 @@
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
-import { CollectionLike_count, EnumerableLike_enumerate, KeyedCollectionLike_get, MutableKeyedCollectionLike_set, } from "../../collections.js";
+import { CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
 import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
 import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { BackPressureError, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
@@ -127,7 +127,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             shrink(this);
             return item;
         },
-        [KeyedCollectionLike_get](index) {
+        [KeyedLike_get](index) {
             const count = this[CollectionLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];
@@ -141,7 +141,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
                     : tailOffsetIndex;
             return values[computedIndex];
         },
-        [MutableKeyedCollectionLike_set](index, value) {
+        [MutableKeyedLike_set](index, value) {
             const count = this[CollectionLike_count];
             const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
             const head = this[IndexedQueueMixin_head];

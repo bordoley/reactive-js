@@ -14,7 +14,7 @@
 
 - **`Collection`**
 
-  ↳ [`IndexedCollectionCollection`](collections_IndexedCollection.IndexedCollectionCollection.md)
+  ↳ [`IndexedCollectionCollection`](collections_Indexed.IndexedCollectionCollection.md)
 
   ↳ [`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)
 

@@ -10,8 +10,8 @@ import {
 import {
   CollectionLike_count,
   EnumerableLike_enumerate,
-  KeyedCollectionLike_get,
-  MutableKeyedCollectionLike_set,
+  KeyedLike_get,
+  MutableKeyedLike_set,
 } from "../../collections.js";
 import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
 import {
@@ -229,10 +229,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return item;
         },
 
-        [KeyedCollectionLike_get](
-          this: TProperties & QueueableLike,
-          index: number,
-        ): T {
+        [KeyedLike_get](this: TProperties & QueueableLike, index: number): T {
           const count = this[CollectionLike_count];
           const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
           const head = this[IndexedQueueMixin_head];
@@ -251,7 +248,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return values[computedIndex] as T;
         },
 
-        [MutableKeyedCollectionLike_set](
+        [MutableKeyedLike_set](
           this: TProperties & QueueableLike,
           index: number,
           value: T,

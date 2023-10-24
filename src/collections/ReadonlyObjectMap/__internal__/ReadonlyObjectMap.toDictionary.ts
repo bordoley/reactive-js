@@ -1,11 +1,11 @@
 import * as Obj from "../../../__internal__/Object.js";
 import {
-  AssociativeCollectionLike_keys,
+  AssociativeLike_keys,
   CollectionLike_count,
   DictionaryLike,
   EnumerableLike,
   EnumerableLike_enumerate,
-  KeyedCollectionLike_get,
+  KeyedLike_get,
   ReadonlyObjectMapLike,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
@@ -16,15 +16,12 @@ import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
   implements DictionaryLike<TKey, T>
 {
-  readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
+  readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
   readonly d: ReadonlyObjectMapLike<TKey, T>;
 
   constructor(delegate: ReadonlyObjectMapLike<TKey, T>) {
     this.d = delegate;
-    this[AssociativeCollectionLike_keys] = pipe(
-      delegate,
-      ReadonlyObjectMap_keys(),
-    );
+    this[AssociativeLike_keys] = pipe(delegate, ReadonlyObjectMap_keys());
   }
 
   get [CollectionLike_count](): number {
@@ -51,7 +48,7 @@ class ReadonlyObjectMapDictionary<T, TKey extends ReadonlyObjectMap.TKeyBase>
     return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
   }
 
-  [KeyedCollectionLike_get](index: TKey): Optional<T> {
+  [KeyedLike_get](index: TKey): Optional<T> {
     return this.d[index];
   }
 }

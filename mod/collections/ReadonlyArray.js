@@ -8,7 +8,7 @@ import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__internal__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toIndexedCollection from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexedCollection.js";
+import ReadonlyArray_toIndexed from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexed.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyMap.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
@@ -19,7 +19,7 @@ export const keySet = ReadonlyArray_keySet;
 export const map = ReadonlyArray_map;
 export const reduce = ReadonlyArray_reduce;
 export const toDictionary = ReadonlyArray_toDictionary;
-export const toIndexedCollection = ReadonlyArray_toIndexedCollection;
+export const toIndexed = ReadonlyArray_toIndexed;
 export const toReadonlyArray = ReadonlyArray_toReadonlyArray;
 export const toReadonlyMap = ReadonlyArray_toReadonlyMap;
 export const values = ReadonlyArray_values;

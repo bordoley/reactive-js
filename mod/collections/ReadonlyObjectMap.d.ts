@@ -1,4 +1,4 @@
-import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryModule, KeyOf, ReadonlyObjectMapLike } from "../collections.js";
+import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryCollectionModule, KeyOf, ReadonlyObjectMapLike } from "../collections.js";
 /**
  * @noInheritDoc
  * @category Collection
@@ -9,7 +9,7 @@ export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symb
 }
 export type Type<TKey extends symbol | string = symbol | string> = ReadonlyObjectMapCollection<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyObjectMapModule extends DictionaryModule<Type> {
+export interface ReadonlyObjectMapModule extends DictionaryCollectionModule<Type> {
 }
 export type Signature = ReadonlyObjectMapModule;
 export declare const empty: Signature["empty"];

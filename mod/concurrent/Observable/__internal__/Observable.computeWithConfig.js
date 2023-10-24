@@ -1,7 +1,7 @@
 /// <reference types="./Observable.computeWithConfig.d.ts" />
 
-import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../collections.js";
-import * as IndexedCollection from "../../../collections/IndexedCollection.js";
+import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
+import * as Indexed from "../../../collections/Indexed.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ReplayObservableLike_buffer, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
@@ -144,11 +144,9 @@ class ComputeContext {
             }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(this[ComputeContext_cleanup]));
             const buffer = Observable_isReplayObservable(observable)
                 ? observable[ReplayObservableLike_buffer]
-                : IndexedCollection.empty();
+                : Indexed.empty();
             const hasDefaultValue = buffer[CollectionLike_count] > 0;
-            const defaultValue = hasDefaultValue
-                ? buffer[KeyedCollectionLike_get](0)
-                : none;
+            const defaultValue = hasDefaultValue ? buffer[KeyedLike_get](0) : none;
             effect[AwaitOrObserveEffect_observable] = observable;
             effect[AwaitOrObserveEffect_subscription] = subscription;
             effect[AwaitOrObserveEffect_value] = defaultValue;

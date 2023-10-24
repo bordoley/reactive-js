@@ -15,16 +15,16 @@
 
 ### Other Interfaces
 
-- [AssociativeCollectionLike](../interfaces/collections.AssociativeCollectionLike.md)
+- [AssociativeLike](../interfaces/collections.AssociativeLike.md)
 - [CollectionLike](../interfaces/collections.CollectionLike.md)
+- [DictionaryCollectionModule](../interfaces/collections.DictionaryCollectionModule.md)
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
-- [DictionaryModule](../interfaces/collections.DictionaryModule.md)
 - [EnumerableLike](../interfaces/collections.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
-- [IndexedCollectionLike](../interfaces/collections.IndexedCollectionLike.md)
-- [KeyedCollectionLike](../interfaces/collections.KeyedCollectionLike.md)
-- [MutableIndexedCollectionLike](../interfaces/collections.MutableIndexedCollectionLike.md)
-- [MutableKeyedCollectionLike](../interfaces/collections.MutableKeyedCollectionLike.md)
+- [IndexedLike](../interfaces/collections.IndexedLike.md)
+- [KeyedLike](../interfaces/collections.KeyedLike.md)
+- [MutableIndexedLike](../interfaces/collections.MutableIndexedLike.md)
+- [MutableKeyedLike](../interfaces/collections.MutableKeyedLike.md)
 
 ### Collection Type Aliases
 
@@ -38,7 +38,7 @@
 
 ### Variables
 
-- [AssociativeCollectionLike\_keys](collections.md#associativecollectionlike_keys)
+- [AssociativeLike\_keys](collections.md#associativelike_keys)
 - [CollectionLike\_count](collections.md#collectionlike_count)
 - [Collection\_T](collections.md#collection_t)
 - [Collection\_TKey](collections.md#collection_tkey)
@@ -48,8 +48,8 @@
 - [EnumeratorLike\_hasCurrent](collections.md#enumeratorlike_hascurrent)
 - [EnumeratorLike\_isCompleted](collections.md#enumeratorlike_iscompleted)
 - [EnumeratorLike\_move](collections.md#enumeratorlike_move)
-- [KeyedCollectionLike\_get](collections.md#keyedcollectionlike_get)
-- [MutableKeyedCollectionLike\_set](collections.md#mutablekeyedcollectionlike_set)
+- [KeyedLike\_get](collections.md#keyedlike_get)
+- [MutableKeyedLike\_set](collections.md#mutablekeyedlike_set)
 
 ## Collection Type Aliases
 
@@ -113,9 +113,9 @@ ___
 
 ## Variables
 
-### AssociativeCollectionLike\_keys
+### AssociativeLike\_keys
 
-• `Const` **AssociativeCollectionLike\_keys**: unique `symbol`
+• `Const` **AssociativeLike\_keys**: unique `symbol`
 
 ___
 
@@ -173,12 +173,12 @@ ___
 
 ___
 
-### KeyedCollectionLike\_get
+### KeyedLike\_get
 
-• `Const` **KeyedCollectionLike\_get**: unique `symbol`
+• `Const` **KeyedLike\_get**: unique `symbol`
 
 ___
 
-### MutableKeyedCollectionLike\_set
+### MutableKeyedLike\_set
 
-• `Const` **MutableKeyedCollectionLike\_set**: unique `symbol`
+• `Const` **MutableKeyedLike\_set**: unique `symbol`

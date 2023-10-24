@@ -1,10 +1,10 @@
 import {
-  AssociativeCollectionLike_keys,
+  AssociativeLike_keys,
   CollectionLike_count,
   DictionaryLike,
   EnumerableLike,
   EnumerableLike_enumerate,
-  KeyedCollectionLike_get,
+  KeyedLike_get,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
@@ -16,10 +16,10 @@ class ReadonlyMapDictionary<
   TKey extends ReadonlyMap.TKeyBase = ReadonlyMap.TKeyBase,
 > implements DictionaryLike<TKey, T>
 {
-  readonly [AssociativeCollectionLike_keys]: EnumerableLike<TKey>;
+  readonly [AssociativeLike_keys]: EnumerableLike<TKey>;
 
   constructor(readonly d: ReadonlyMap<TKey, T>) {
-    this[AssociativeCollectionLike_keys] = pipe(this.d, ReadonlyMap_keys());
+    this[AssociativeLike_keys] = pipe(this.d, ReadonlyMap_keys());
   }
 
   get [CollectionLike_count](): number {
@@ -34,7 +34,7 @@ class ReadonlyMapDictionary<
     return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
   }
 
-  [KeyedCollectionLike_get](index: TKey): Optional<T> {
+  [KeyedLike_get](index: TKey): Optional<T> {
     return this.d.get(index);
   }
 }

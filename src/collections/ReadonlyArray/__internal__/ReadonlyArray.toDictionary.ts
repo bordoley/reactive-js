@@ -1,10 +1,10 @@
 import {
-  AssociativeCollectionLike_keys,
+  AssociativeLike_keys,
   CollectionLike_count,
   DictionaryLike,
   EnumerableLike,
   EnumerableLike_enumerate,
-  KeyedCollectionLike_get,
+  KeyedLike_get,
 } from "../../../collections.js";
 import { Optional, newInstance, pipe } from "../../../functions.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
@@ -24,11 +24,11 @@ class ReadonlyArrayDictionary<T, TKey extends ReadonlyArray.TKeyBase>
     return this.d.length;
   }
 
-  [KeyedCollectionLike_get](index: TKey): Optional<T> {
+  [KeyedLike_get](index: TKey): Optional<T> {
     return this.d[index];
   }
 
-  get [AssociativeCollectionLike_keys](): EnumerableLike<TKey> {
+  get [AssociativeLike_keys](): EnumerableLike<TKey> {
     return pipe(this.d, ReadonlyArray_keys());
   }
 

@@ -2,7 +2,7 @@
 
 import { clampPositiveInteger } from "../../../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { CollectionLike_count, KeyedCollectionLike_get, } from "../../../collections.js";
+import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, ReplayObservableLike_buffer, ReplayPublisherLike_observerCount, } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
@@ -73,7 +73,7 @@ const ReplayPublisher_create =
             const buffer = this[ReplayObservableLike_buffer];
             const count = buffer[CollectionLike_count];
             for (let i = 0; i < count; i++) {
-                const next = buffer[KeyedCollectionLike_get](i);
+                const next = buffer[KeyedLike_get](i);
                 observer[QueueableLike_enqueue](next);
             }
             if (this[DisposableLike_isDisposed]) {

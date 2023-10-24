@@ -7,7 +7,7 @@ import {
 import { pipe } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
-import IndexedCollection_toCollection from "../../IndexedCollection/__internal__/IndexedCollection.toCollection.js";
+import Indexed_toCollection from "../../Indexed/__internal__/Indexed.toCollection.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
 interface ValuesCollection extends Collection<number> {
@@ -15,10 +15,7 @@ interface ValuesCollection extends Collection<number> {
 }
 
 const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
-  /*@__PURE__*/ IndexedCollection_toCollection<
-    ReadonlyArray.Type,
-    ValuesCollection
-  >(
+  /*@__PURE__*/ Indexed_toCollection<ReadonlyArray.Type, ValuesCollection>(
     <_ extends number, T>(
       arr: readonly T[],
       startIndex: number,

@@ -16,7 +16,7 @@
 
   ↳ [`IndexedCollectionModule`](collections.IndexedCollectionModule.md)
 
-  ↳ [`DictionaryModule`](collections.DictionaryModule.md)
+  ↳ [`DictionaryCollectionModule`](collections.DictionaryCollectionModule.md)
 
 ## Table of contents
 

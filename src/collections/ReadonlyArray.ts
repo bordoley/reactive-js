@@ -12,7 +12,7 @@ import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.
 import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
 import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
 import ReadonlyArray_toDictionary from "./ReadonlyArray/__internal__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toIndexedCollection from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexedCollection.js";
+import ReadonlyArray_toIndexed from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexed.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
 import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyMap.js";
 import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
@@ -45,8 +45,7 @@ export const reduce: Signature["reduce"] = ReadonlyArray_reduce;
 
 export const toDictionary: Signature["toDictionary"] =
   ReadonlyArray_toDictionary;
-export const toIndexedCollection: Signature["toIndexedCollection"] =
-  ReadonlyArray_toIndexedCollection;
+export const toIndexed: Signature["toIndexed"] = ReadonlyArray_toIndexed;
 export const toReadonlyArray: Signature["toReadonlyArray"] =
   ReadonlyArray_toReadonlyArray;
 export const toReadonlyMap: Signature["toReadonlyMap"] =

@@ -1,8 +1,8 @@
 /// <reference types="./ReadonlyArray.toReadonlyArray.d.ts" />
 
-import IndexedCollection_toCollection from "../../IndexedCollection/__internal__/IndexedCollection.toCollection.js";
+import Indexed_toCollection from "../../Indexed/__internal__/Indexed.toCollection.js";
 const ReadonlyArray_toReadonlyArray = 
-/*@__PURE__*/ IndexedCollection_toCollection((values, startIndex, count) => startIndex === 0 && count === values.length
+/*@__PURE__*/ Indexed_toCollection((values, startIndex, count) => startIndex === 0 && count === values.length
     ? values
     : count >= 0
         ? values.slice(startIndex, count + startIndex)

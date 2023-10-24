@@ -1,4 +1,4 @@
-import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryModule, KeyOf } from "../collections.js";
+import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryCollectionModule, KeyOf } from "../collections.js";
 /**
  * @noInheritDoc
  * @category Collection
@@ -9,7 +9,7 @@ export interface ReadonlyMapCollection<TKey = unknown> extends Collection<TKey> 
 }
 export type Type<TKey = unknown> = ReadonlyMapCollection<TKey>;
 export type TKeyBase = KeyOf<Type>;
-export interface ReadonlyMapModule extends DictionaryModule<Type> {
+export interface ReadonlyMapModule extends DictionaryCollectionModule<Type> {
 }
 export type Signature = ReadonlyMapModule;
 export declare const empty: Signature["empty"];

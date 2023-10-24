@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`DictionaryModule`](collections.DictionaryModule.md)<[`Type`](../modules/collections_ReadonlyObjectMap.md#type)\>
+- [`DictionaryCollectionModule`](collections.DictionaryCollectionModule.md)<[`Type`](../modules/collections_ReadonlyObjectMap.md#type)\>
 
   ↳ **`ReadonlyObjectMapModule`**
 
@@ -55,7 +55,7 @@ Return an Collection that emits no items.
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[empty](collections.DictionaryModule.md#empty)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[empty](collections.DictionaryCollectionModule.md#empty)
 
 ___
 
@@ -96,7 +96,7 @@ TB - The inner type of the mapped container
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[map](collections.DictionaryModule.md#map)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[map](collections.DictionaryCollectionModule.md#map)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[fromEntries](collections.DictionaryModule.md#fromentries)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[fromEntries](collections.DictionaryCollectionModule.md#fromentries)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[entries](collections.DictionaryModule.md#entries)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[entries](collections.DictionaryCollectionModule.md#entries)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[keySet](collections.DictionaryModule.md#keyset)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[keySet](collections.DictionaryCollectionModule.md#keyset)
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[keys](collections.DictionaryModule.md#keys)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[keys](collections.DictionaryCollectionModule.md#keys)
 
 ___
 
@@ -211,7 +211,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[reduce](collections.DictionaryModule.md#reduce)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[reduce](collections.DictionaryCollectionModule.md#reduce)
 
 ___
 
@@ -232,7 +232,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[toDictionary](collections.DictionaryModule.md#todictionary)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[toDictionary](collections.DictionaryCollectionModule.md#todictionary)
 
 ___
 
@@ -253,7 +253,7 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[toReadonlyMap](collections.DictionaryModule.md#toreadonlymap)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[toReadonlyMap](collections.DictionaryCollectionModule.md#toreadonlymap)
 
 ___
 
@@ -274,4 +274,4 @@ ___
 
 #### Inherited from
 
-[DictionaryModule](collections.DictionaryModule.md).[values](collections.DictionaryModule.md#values)
+[DictionaryCollectionModule](collections.DictionaryCollectionModule.md).[values](collections.DictionaryCollectionModule.md#values)

@@ -33,7 +33,7 @@
 - [keys](collections_ReadonlyArray.md#keys)
 - [reduce](collections_ReadonlyArray.md#reduce)
 - [toDictionary](collections_ReadonlyArray.md#todictionary)
-- [toIndexedCollection](collections_ReadonlyArray.md#toindexedcollection)
+- [toIndexed](collections_ReadonlyArray.md#toindexed)
 - [toReadonlyArray](collections_ReadonlyArray.md#toreadonlyarray)
 - [toReadonlyMap](collections_ReadonlyArray.md#toreadonlymap)
 - [values](collections_ReadonlyArray.md#values)
@@ -215,9 +215,9 @@ ___
 
 ___
 
-### toIndexedCollection
+### toIndexed
 
-▸ **toIndexedCollection**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>\>
+▸ **toIndexed**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -235,7 +235,7 @@ ___
 
 #### Returns
 
-[`Function1`](functions.md#function1)<readonly `T`[], [`IndexedCollectionLike`](../interfaces/collections.IndexedCollectionLike.md)<`T`\>\>
+[`Function1`](functions.md#function1)<readonly `T`[], [`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
 
 ___
 

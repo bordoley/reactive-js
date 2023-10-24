@@ -42,7 +42,7 @@ ___
 
 ### [ReplayObservableLike\_buffer]
 
-• `Readonly` **[ReplayObservableLike\_buffer]**: [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>
+• `Readonly` **[ReplayObservableLike\_buffer]**: [`IndexedLike`](collections.IndexedLike.md)<`T`\>
 
 #### Inherited from
 

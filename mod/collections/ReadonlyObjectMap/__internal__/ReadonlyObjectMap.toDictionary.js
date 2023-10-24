@@ -1,16 +1,16 @@
 /// <reference types="./ReadonlyObjectMap.toDictionary.d.ts" />
 
 import * as Obj from "../../../__internal__/Object.js";
-import { AssociativeCollectionLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedCollectionLike_get, } from "../../../collections.js";
+import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
 import { newInstance, pipe } from "../../../functions.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap.keys.js";
 class ReadonlyObjectMapDictionary {
-    [AssociativeCollectionLike_keys];
+    [AssociativeLike_keys];
     d;
     constructor(delegate) {
         this.d = delegate;
-        this[AssociativeCollectionLike_keys] = pipe(delegate, ReadonlyObjectMap_keys());
+        this[AssociativeLike_keys] = pipe(delegate, ReadonlyObjectMap_keys());
     }
     get [CollectionLike_count]() {
         let cnt = 0;
@@ -33,7 +33,7 @@ class ReadonlyObjectMapDictionary {
     [EnumerableLike_enumerate]() {
         return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
     }
-    [KeyedCollectionLike_get](index) {
+    [KeyedLike_get](index) {
         return this.d[index];
     }
 }

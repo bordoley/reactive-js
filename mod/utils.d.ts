@@ -1,4 +1,4 @@
-import { CollectionLike, MutableIndexedCollectionLike } from "./collections.js";
+import { CollectionLike, MutableIndexedLike } from "./collections.js";
 import { Optional, SideEffect1 } from "./functions.js";
 export declare const DisposableLike_add: unique symbol;
 export declare const DisposableLike_dispose: unique symbol;
@@ -76,7 +76,7 @@ export interface QueueLike<T = unknown> extends QueueableLike<T> {
 }
 export interface QueueCollectionLike<T = unknown> extends QueueLike<T>, CollectionLike<T> {
 }
-export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedCollectionLike<T>, StackLike<T> {
+export interface IndexedQueueLike<T = unknown> extends QueueLike<T>, MutableIndexedLike<T>, StackLike<T> {
 }
 export declare class BackPressureError extends Error {
     readonly [QueueableLike_capacity]: number;

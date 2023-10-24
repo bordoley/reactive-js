@@ -16,7 +16,7 @@
 
   ↳ **`IndexedCollectionModule`**
 
-  ↳↳ [`IndexedCollectionModule`](collections_IndexedCollection.IndexedCollectionModule.md)
+  ↳↳ [`IndexedCollectionModule`](collections_Indexed.IndexedCollectionModule.md)
 
   ↳↳ [`ReadonlyArrayModule`](collections_ReadonlyArray.ReadonlyArrayModule.md)
 
@@ -25,7 +25,7 @@
 ### Transform Methods
 
 - [entries](collections.IndexedCollectionModule.md#entries)
-- [toIndexedCollection](collections.IndexedCollectionModule.md#toindexedcollection)
+- [toIndexed](collections.IndexedCollectionModule.md#toindexed)
 - [toReadonlyArray](collections.IndexedCollectionModule.md#toreadonlyarray)
 - [values](collections.IndexedCollectionModule.md#values)
 
@@ -60,9 +60,9 @@
 
 ___
 
-### toIndexedCollection
+### toIndexed
 
-▸ **toIndexedCollection**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
+▸ **toIndexed**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedLike`](collections.IndexedLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -80,7 +80,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedCollectionLike`](collections.IndexedCollectionLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, [`KeyOf`](../modules/collections.md#keyof)<`C`\>\>, [`IndexedLike`](collections.IndexedLike.md)<`T`\>\>
 
 ___
 

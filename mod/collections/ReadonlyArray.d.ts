@@ -22,7 +22,7 @@ export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];
 export declare const reduce: Signature["reduce"];
 export declare const toDictionary: Signature["toDictionary"];
-export declare const toIndexedCollection: Signature["toIndexedCollection"];
+export declare const toIndexed: Signature["toIndexed"];
 export declare const toReadonlyArray: Signature["toReadonlyArray"];
 export declare const toReadonlyMap: Signature["toReadonlyMap"];
 export declare const values: Signature["values"];

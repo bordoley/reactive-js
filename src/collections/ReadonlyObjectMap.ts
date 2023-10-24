@@ -3,7 +3,7 @@ import {
   Collection_T,
   Collection_TKey,
   Collection_type,
-  DictionaryModule,
+  DictionaryCollectionModule,
   KeyOf,
   ReadonlyObjectMapLike,
 } from "../collections.js";
@@ -37,7 +37,8 @@ export type Type<TKey extends symbol | string = symbol | string> =
 
 export type TKeyBase = KeyOf<Type>;
 
-export interface ReadonlyObjectMapModule extends DictionaryModule<Type> {}
+export interface ReadonlyObjectMapModule
+  extends DictionaryCollectionModule<Type> {}
 
 export type Signature = ReadonlyObjectMapModule;
 
