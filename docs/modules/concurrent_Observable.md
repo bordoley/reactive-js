@@ -55,6 +55,7 @@
 - [enqueue](concurrent_Observable.md#enqueue)
 - [firstAsync](concurrent_Observable.md#firstasync)
 - [forEach](concurrent_Observable.md#foreach)
+- [fromAsyncIterable](concurrent_Observable.md#fromasynciterable)
 - [fromEnumerable](concurrent_Observable.md#fromenumerable)
 - [fromEventSource](concurrent_Observable.md#fromeventsource)
 - [fromFactory](concurrent_Observable.md#fromfactory)
@@ -1674,6 +1675,22 @@ ___
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 ___
 

@@ -64,6 +64,7 @@ import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUt
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromAsyncIterable from "./Observable/__internal__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
@@ -833,6 +834,11 @@ export interface ObservableModule
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 
+  fromAsyncIterable<T>(): Function1<
+    AsyncIterable<T>,
+    DeferredObservableLike<T>
+  >;
+
   fromEnumerable<T>(options?: {
     delay: number;
     delayStart?: boolean;
@@ -1593,6 +1599,8 @@ export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromAsyncIterable: Signature["fromAsyncIterable"] =
+  Observable_fromAsyncIterable;
 export const fromEnumerable: Signature["fromEnumerable"] =
   Observable_fromEnumerable;
 export const fromEventSource: Signature["fromEventSource"] =

@@ -21,6 +21,7 @@ import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUt
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromAsyncIterable from "./Observable/__internal__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
@@ -82,6 +83,7 @@ export const encodeUtf8 = Observable_encodeUtf8;
 export const enqueue = Observable_enqueue;
 export const firstAsync = Observable_firstAsync;
 export const forEach = Observable_forEach;
+export const fromAsyncIterable = Observable_fromAsyncIterable;
 export const fromEnumerable = Observable_fromEnumerable;
 export const fromEventSource = Observable_fromEventSource;
 export const fromFactory = Observable_fromFactory;

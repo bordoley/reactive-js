@@ -157,6 +157,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly capacity?: number;
     }): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, PauseableObservableLike<T> & DisposableLike>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
     fromEnumerable<T>(options?: {
         delay: number;
         delayStart?: boolean;
@@ -341,6 +342,7 @@ export declare const encodeUtf8: Signature["encodeUtf8"];
 export declare const enqueue: Signature["enqueue"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const forEach: Signature["forEach"];
+export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
 export declare const fromFactory: Signature["fromFactory"];
