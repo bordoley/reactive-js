@@ -1564,13 +1564,20 @@ ___
 
 ### empty
 
-▸ **empty**<`T`\>(): [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>
+▸ **empty**<`T`\>(`options?`): [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 
@@ -1767,13 +1774,20 @@ ___
 
 ### fromValue
 
-▸ **fromValue**<`T`\>(): [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+▸ **fromValue**<`T`\>(`options?`): [`Function1`](functions.md#function1)<`T`, [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
 
 #### Returns
 

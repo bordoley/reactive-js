@@ -142,7 +142,9 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureObservableOperator<T, T>;
-    empty<T>(): RunnableLike<T>;
+    empty<T>(options?: {
+        delay: number;
+    }): RunnableLike<T>;
     encodeUtf8(): PureObservableOperator<string, Uint8Array>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
     firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
@@ -165,12 +167,17 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         delay: number;
         delayStart?: boolean;
     }): Function1<Iterable<T>, DeferredObservableLike<T>>;
+    fromOptional<T>(options?: {
+        delay: number;
+    }): Function1<Optional<T>, RunnableLike<T>>;
     fromReadonlyArray<T>(options?: {
         delay: number;
         delayStart?: boolean;
     }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
     fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
-    fromValue<T>(): Function1<T, RunnableLike<T>>;
+    fromValue<T>(options?: {
+        delay: number;
+    }): Function1<T, RunnableLike<T>>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
     isDeferred<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
         [ObservableLike_isDeferred]: true;

@@ -1,12 +1,14 @@
-import { returns } from "../../../functions.js";
-import { DisposableLike_dispose } from "../../../utils.js";
+import { isNone, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createRunnable from "./Observable.createRunnable.js";
+import Observable_fromReadonlyArray from "./Observable.fromReadonlyArray.js";
 
-const emptyObservable = /*@__PURE__*/ Observable_createRunnable(observer => {
-  observer[DisposableLike_dispose]();
-});
-const Observable_empty: Observable.Signature["empty"] =
-  /*@__PURE__*/ returns(emptyObservable);
+const emptyObservable = /*@__PURE__*/ pipe([], Observable_fromReadonlyArray());
+
+const Observable_empty: Observable.Signature["empty"] = (options?: {
+  delay: number;
+}) =>
+  isNone(options)
+    ? emptyObservable
+    : pipe([], Observable_fromReadonlyArray({ ...options, delayStart: true }));
 
 export default Observable_empty;

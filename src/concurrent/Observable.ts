@@ -804,7 +804,7 @@ export interface ObservableModule
     readonly equality?: Equality<T>;
   }): PureObservableOperator<T, T>;
 
-  empty<T>(): RunnableLike<T>;
+  empty<T>(options?: { delay: number }): RunnableLike<T>;
 
   encodeUtf8(): PureObservableOperator<string, Uint8Array>;
 
@@ -849,6 +849,10 @@ export interface ObservableModule
     delayStart?: boolean;
   }): Function1<Iterable<T>, DeferredObservableLike<T>>;
 
+  fromOptional<T>(options?: {
+    delay: number;
+  }): Function1<Optional<T>, RunnableLike<T>>;
+
   fromReadonlyArray<T>(options?: {
     delay: number;
     delayStart?: boolean;
@@ -856,7 +860,7 @@ export interface ObservableModule
 
   fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 
-  fromValue<T>(): Function1<T, RunnableLike<T>>;
+  fromValue<T>(options?: { delay: number }): Function1<T, RunnableLike<T>>;
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
