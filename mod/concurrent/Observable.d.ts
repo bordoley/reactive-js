@@ -170,6 +170,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     fromOptional<T>(options?: {
         delay: number;
     }): Function1<Optional<T>, RunnableLike<T>>;
+    fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
     fromReadonlyArray<T>(options?: {
         delay: number;
         delayStart?: boolean;
@@ -344,6 +345,7 @@ export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
+export declare const fromPromise: Signature["fromPromise"];
 export declare const fromStore: Signature["fromStore"];
 export declare const fromValue: Signature["fromValue"];
 export declare const ignoreElements: Signature["ignoreElements"];

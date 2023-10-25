@@ -12,10 +12,17 @@
 
 ## Table of contents
 
-### Methods
+### Operator Methods
+
+- [concatAll](collections_Enumerable.EnumerableModule.md#concatall)
+- [concatMap](collections_Enumerable.EnumerableModule.md#concatmap)
+
+### Other Methods
 
 - [buffer](collections_Enumerable.EnumerableModule.md#buffer)
+- [concat](collections_Enumerable.EnumerableModule.md#concat)
 - [concatMany](collections_Enumerable.EnumerableModule.md#concatmany)
+- [concatWith](collections_Enumerable.EnumerableModule.md#concatwith)
 - [decodeWithCharset](collections_Enumerable.EnumerableModule.md#decodewithcharset)
 - [distinctUntilChanged](collections_Enumerable.EnumerableModule.md#distinctuntilchanged)
 - [empty](collections_Enumerable.EnumerableModule.md#empty)
@@ -34,7 +41,51 @@
 - [zip](collections_Enumerable.EnumerableModule.md#zip)
 - [zipWith](collections_Enumerable.EnumerableModule.md#zipwith)
 
-## Methods
+## Operator Methods
+
+### concatAll
+
+▸ **concatAll**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+
+Converts a higher-order Container into a first-order
+Container by concatenating the inner sources in order.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+
+___
+
+### concatMap
+
+▸ **concatMap**<`TA`, `TB`\>(`selector`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TB`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`EnumerableLike`](collections.EnumerableLike.md)<`TB`\>\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`TA`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TB`\>\>
+
+___
+
+## Other Methods
 
 ### buffer
 
@@ -63,6 +114,30 @@
 
 ___
 
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`EnumerableLike`](collections.EnumerableLike.md)<`T`\> |
+| `snd` | [`EnumerableLike`](collections.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
+
+___
+
 ### concatMany
 
 ▸ **concatMany**<`T`\>(`enumerables`): [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
@@ -82,6 +157,29 @@ ___
 #### Returns
 
 [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
+
+___
+
+### concatWith
+
+▸ **concatWith**<`T`\>(`snd`, `...tail`): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snd` | [`EnumerableLike`](collections.EnumerableLike.md)<`T`\> |
+| `...tail` | readonly [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
 
 ___
 

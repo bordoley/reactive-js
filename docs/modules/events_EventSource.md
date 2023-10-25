@@ -20,6 +20,7 @@
 - [buffer](events_EventSource.md#buffer)
 - [create](events_EventSource.md#create)
 - [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
+- [fromPromise](events_EventSource.md#frompromise)
 - [keep](events_EventSource.md#keep)
 - [map](events_EventSource.md#map)
 - [merge](events_EventSource.md#merge)
@@ -132,6 +133,22 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
+
+___
+
+### fromPromise
+
+▸ **fromPromise**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 ___
 

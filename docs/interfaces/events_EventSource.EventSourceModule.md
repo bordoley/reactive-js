@@ -19,6 +19,7 @@
 - [create](events_EventSource.EventSourceModule.md#create)
 - [decodeWithCharset](events_EventSource.EventSourceModule.md#decodewithcharset)
 - [distinctUntilChanged](events_EventSource.EventSourceModule.md#distinctuntilchanged)
+- [fromPromise](events_EventSource.EventSourceModule.md#frompromise)
 - [keep](events_EventSource.EventSourceModule.md#keep)
 - [map](events_EventSource.EventSourceModule.md#map)
 - [merge](events_EventSource.EventSourceModule.md#merge)
@@ -148,6 +149,22 @@ ___
 #### Inherited from
 
 [PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
+
+___
+
+### fromPromise
+
+▸ **fromPromise**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 
 ___
 

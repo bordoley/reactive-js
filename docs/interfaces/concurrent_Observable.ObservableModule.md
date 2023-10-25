@@ -49,6 +49,7 @@
 - [fromFactory](concurrent_Observable.ObservableModule.md#fromfactory)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
 - [fromOptional](concurrent_Observable.ObservableModule.md#fromoptional)
+- [fromPromise](concurrent_Observable.ObservableModule.md#frompromise)
 - [fromReadonlyArray](concurrent_Observable.ObservableModule.md#fromreadonlyarray)
 - [fromStore](concurrent_Observable.ObservableModule.md#fromstore)
 - [fromValue](concurrent_Observable.ObservableModule.md#fromvalue)
@@ -1722,6 +1723,22 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>
+
+___
+
+### fromPromise
+
+▸ **fromPromise**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

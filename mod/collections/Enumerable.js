@@ -2,7 +2,11 @@
 
 import { Computation_type, } from "../computations.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
+import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat.js";
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMany from "./Enumerable/__internal__/Enumerable.concatMany.js";
+import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
+import Enumerable_concatWith from "./Enumerable/__internal__/Enumerable.concatWith.js";
 import Enumerable_decodeWithCharset from "./Enumerable/__internal__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
 import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
@@ -21,7 +25,11 @@ import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toR
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
 export const buffer = Enumerable_buffer;
+export const concat = Enumerable_concat;
+export const concatAll = Enumerable_concatAll;
 export const concatMany = Enumerable_concatMany;
+export const concatMap = Enumerable_concatMap;
+export const concatWith = Enumerable_concatWith;
 export const decodeWithCharset = Enumerable_decodeWithCharset;
 export const distinctUntilChanged = Enumerable_distinctUntilChanged;
 export const empty = Enumerable_empty;

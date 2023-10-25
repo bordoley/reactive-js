@@ -6,7 +6,20 @@ export interface EnumerableComputation extends Computation {
 }
 export type Type = EnumerableComputation;
 export interface EnumerableModule extends PureComputationModule<EnumerableComputation> {
+    concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
+    /**
+     * Converts a higher-order Container into a first-order
+     * Container by concatenating the inner sources in order.
+     *
+     * @category Operator
+     */
+    concatAll<T>(): Function1<EnumerableLike<EnumerableLike<T>>, EnumerableLike<T>>;
+    /**
+     * @category Operator
+     */
+    concatMap<TA, TB>(selector: Function1<TA, EnumerableLike<TB>>): Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
+    concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): Function1<EnumerableLike<T>, EnumerableLike<T>>;
     empty<T>(): EnumerableLike<T>;
     generate<T>(generator: Updater<T>, initialValue: Factory<T>): EnumerableLike<T>;
     range(start: number, options?: {
@@ -36,7 +49,11 @@ export interface EnumerableModule extends PureComputationModule<EnumerableComput
 }
 export type Signature = EnumerableModule;
 export declare const buffer: Signature["buffer"];
+export declare const concat: Signature["concat"];
+export declare const concatAll: Signature["concatAll"];
 export declare const concatMany: Signature["concatMany"];
+export declare const concatMap: Signature["concatMap"];
+export declare const concatWith: Signature["concatWith"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];

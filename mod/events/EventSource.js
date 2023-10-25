@@ -5,6 +5,7 @@ import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.
 import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
+import EventSource_fromPromise from "./EventSource/__internal__/EventSource.fromPromise.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
 import EventSource_merge from "./EventSource/__internal__/EventSource.merge.js";
@@ -19,6 +20,7 @@ export const addEventHandler = EventSource_addEventHandler;
 export const buffer = EventSource_buffer;
 export const create = EventSource_create;
 export const distinctUntilChanged = EventSource_distinctUntilChanged;
+export const fromPromise = EventSource_fromPromise;
 export const keep = EventSource_keep;
 export const map = EventSource_map;
 export const merge = EventSource_merge;

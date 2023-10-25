@@ -21,7 +21,11 @@ import {
   Updater,
 } from "../functions.js";
 import Enumerable_buffer from "./Enumerable/__internal__/Enumerable.buffer.js";
+import Enumerable_concat from "./Enumerable/__internal__/Enumerable.concat.js";
+import Enumerable_concatAll from "./Enumerable/__internal__/Enumerable.concatAll.js";
 import Enumerable_concatMany from "./Enumerable/__internal__/Enumerable.concatMany.js";
+import Enumerable_concatMap from "./Enumerable/__internal__/Enumerable.concatMap.js";
+import Enumerable_concatWith from "./Enumerable/__internal__/Enumerable.concatWith.js";
 import Enumerable_decodeWithCharset from "./Enumerable/__internal__/Enumerable.decodeWithCharset.js";
 import Enumerable_distinctUntilChanged from "./Enumerable/__internal__/Enumerable.distinctUntilChanged.js";
 import Enumerable_empty from "./Enumerable/__internal__/Enumerable.empty.js";
@@ -48,20 +52,36 @@ export type Type = EnumerableComputation;
 
 export interface EnumerableModule
   extends PureComputationModule<EnumerableComputation> {
-  /* 
   concat<T>(
     fst: EnumerableLike<T>,
     snd: EnumerableLike<T>,
     ...tail: readonly EnumerableLike<T>[]
-  ): EnumerableLike<T>;*/
+  ): EnumerableLike<T>;
 
   concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;
 
-  /*
+  /**
+   * Converts a higher-order Container into a first-order
+   * Container by concatenating the inner sources in order.
+   *
+   * @category Operator
+   */
+  concatAll<T>(): Function1<
+    EnumerableLike<EnumerableLike<T>>,
+    EnumerableLike<T>
+  >;
+
+  /**
+   * @category Operator
+   */
+  concatMap<TA, TB>(
+    selector: Function1<TA, EnumerableLike<TB>>,
+  ): Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
+
   concatWith<T>(
     snd: EnumerableLike<T>,
     ...tail: readonly EnumerableLike<T>[]
-  ): Function1<EnumerableLike<T>, EnumerableLike<T>>;*/
+  ): Function1<EnumerableLike<T>, EnumerableLike<T>>;
 
   empty<T>(): EnumerableLike<T>;
 
@@ -218,7 +238,11 @@ export interface EnumerableModule
 export type Signature = EnumerableModule;
 
 export const buffer: Signature["buffer"] = Enumerable_buffer;
+export const concat: Signature["concat"] = Enumerable_concat;
+export const concatAll: Signature["concatAll"] = Enumerable_concatAll;
 export const concatMany: Signature["concatMany"] = Enumerable_concatMany;
+export const concatMap: Signature["concatMap"] = Enumerable_concatMap;
+export const concatWith: Signature["concatWith"] = Enumerable_concatWith;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Enumerable_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =

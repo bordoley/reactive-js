@@ -59,6 +59,7 @@
 - [fromEventSource](concurrent_Observable.md#fromeventsource)
 - [fromFactory](concurrent_Observable.md#fromfactory)
 - [fromIterable](concurrent_Observable.md#fromiterable)
+- [fromPromise](concurrent_Observable.md#frompromise)
 - [fromStore](concurrent_Observable.md#fromstore)
 - [fromValue](concurrent_Observable.md#fromvalue)
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
@@ -1753,6 +1754,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+
+___
+
+### fromPromise
+
+▸ **fromPromise**<`T`\>(): [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 

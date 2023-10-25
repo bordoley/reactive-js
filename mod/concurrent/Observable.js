@@ -25,6 +25,7 @@ import Observable_fromEnumerable from "./Observable/__internal__/Observable.from
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
+import Observable_fromPromise from "./Observable/__internal__/Observable.fromPromise.js";
 import Observable_fromStore from "./Observable/__internal__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -85,6 +86,7 @@ export const fromEnumerable = Observable_fromEnumerable;
 export const fromEventSource = Observable_fromEventSource;
 export const fromFactory = Observable_fromFactory;
 export const fromIterable = Observable_fromIterable;
+export const fromPromise = Observable_fromPromise;
 export const fromStore = Observable_fromStore;
 export const fromValue = Observable_fromValue;
 export const ignoreElements = Observable_ignoreElements;

@@ -68,6 +68,7 @@ import Observable_fromEnumerable from "./Observable/__internal__/Observable.from
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
+import Observable_fromPromise from "./Observable/__internal__/Observable.fromPromise.js";
 import Observable_fromStore from "./Observable/__internal__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -853,6 +854,8 @@ export interface ObservableModule
     delay: number;
   }): Function1<Optional<T>, RunnableLike<T>>;
 
+  fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
+
   fromReadonlyArray<T>(options?: {
     delay: number;
     delayStart?: boolean;
@@ -1596,6 +1599,7 @@ export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
+export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const ignoreElements: Signature["ignoreElements"] =
