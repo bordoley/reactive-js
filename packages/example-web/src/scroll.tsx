@@ -9,17 +9,16 @@ import {
   useDisposable,
   useStream,
 } from "@reactive-js/core/integrations/react";
-import {
-  KeyedCollectionLike_get,
-  EventSourceLike,
-  SinkLike_notify,
-} from "@reactive-js/core/types";
 import { ScrollValue } from "@reactive-js/core/integrations/web";
 import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
-import * as EventSource from "@reactive-js/core/EventSource";
-import * as Streamable from "@reactive-js/core/Streamable";
+import * as EventSource from "@reactive-js/core/events/EventSource";
+import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import { EventSourceLike } from "@reactive-js/core/events";
+import { KeyedLike_get } from "@reactive-js/core/collections";
+import * as Publisher from "@reactive-js/core/events/Publisher";
+import { SinkLike_notify } from "@reactive-js/core/utils";
 
 const AnimatedCircle = ({
   animation,
@@ -98,9 +97,9 @@ const ScrollApp = () => {
   );
   const { enqueue } = useDispatcher(animationGroup);
 
-  const springAnimation = animationGroup?.[KeyedCollectionLike_get]("spring");
+  const springAnimation = animationGroup?.[KeyedLike_get]("spring");
 
-  const publishedAnimation = useDisposable(EventSource.createPublisher, []);
+  const publishedAnimation = useDisposable(Publisher.create, []);
 
   const containerRef = useScroll<HTMLDivElement>(
     ({ y }: ScrollValue) => {

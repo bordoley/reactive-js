@@ -6,7 +6,9 @@ import {
   isOdd,
   returns,
 } from "@reactive-js/core/functions";
-import * as Observable from "@reactive-js/core/Observable";
+import * as Enumerable from "@reactive-js/core/collections/Enumerable";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as ReadonlyArray from "@reactive-js/core/collections/ReadonlyArray";
 
 /**
  * A function that returns the result of summing
@@ -37,16 +39,15 @@ export const map = (n: number) =>
     benchmarkTest("Enumerable", async (src: readonly number[]) =>
       pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.map(increment),
-        Observable.toReadonlyArray(),
+        ReadonlyArray.values(),
+        Enumerable.map(increment),
+        Enumerable.toReadonlyArray(),
       ),
     ),
-    benchmarkTest("Runnable", async (src: readonly number[]) =>
+    benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        Observable.delay(0),
         Observable.map(increment),
         Observable.toReadonlyArray(),
       ),
@@ -63,20 +64,19 @@ export const filterMapFusion = (n: number) =>
     benchmarkTest("Enumerable", async (src: readonly number[]) =>
       pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.map(increment),
-        Observable.keep(isOdd),
-        Observable.map(increment),
-        Observable.map(increment),
-        Observable.keep(isEven),
-        Observable.toReadonlyArray(),
+        ReadonlyArray.values(),
+        Enumerable.map(increment),
+        Enumerable.keep(isOdd),
+        Enumerable.map(increment),
+        Enumerable.map(increment),
+        Enumerable.keep(isEven),
+        Enumerable.toReadonlyArray(),
       ),
     ),
-    benchmarkTest("Runnable", async (src: readonly number[]) =>
+    benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        Observable.delay(0),
         Observable.map(increment),
         Observable.keep(isOdd),
         Observable.map(increment),
@@ -105,17 +105,16 @@ export const filterMapReduce = (n: number) =>
     benchmarkTest("Enumerable", async (src: readonly number[]) =>
       pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.keep(isEven),
-        Observable.map(increment),
-        Observable.toReadonlyArray(),
+        ReadonlyArray.values(),
+        Enumerable.keep(isEven),
+        Enumerable.map(increment),
+        Enumerable.toReadonlyArray(),
       ),
     ),
-    benchmarkTest("Runnable", async (src: readonly number[]) =>
+    benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        Observable.delay(0),
         Observable.keep(isEven),
         Observable.map(increment),
         Observable.toReadonlyArray(),
@@ -142,16 +141,15 @@ export const scanReduce = (n: number) =>
     benchmarkTest("Enumerable", async (src: readonly number[]) =>
       pipeLazy(
         src,
-        Observable.fromReadonlyArray(),
-        Observable.scan(sum, returns(0)),
-        Observable.toReadonlyArray(),
+        ReadonlyArray.values(),
+        Enumerable.scan(sum, returns(0)),
+        Enumerable.toReadonlyArray(),
       ),
     ),
-    benchmarkTest("Runnable", async (src: readonly number[]) =>
+    benchmarkTest("Observable", async (src: readonly number[]) =>
       pipeLazy(
         src,
         Observable.fromReadonlyArray(),
-        Observable.delay(0),
         Observable.scan(sum, returns(0)),
         Observable.toReadonlyArray(),
       ),
@@ -164,26 +162,4 @@ export const scanReduce = (n: number) =>
       return () =>
         reduce<number, number>(passthrough, 0, scan(sum, 0, fromArray(src)));
     }),
-  );
-
-export const every = (n: number) =>
-  benchmarkGroup(
-    `every ${n} integers`,
-    () => createArray(n),
-    benchmarkTest("Enumerable", async src =>
-      pipeLazy(
-        src,
-        Observable.fromReadonlyArray(),
-        Observable.everySatisfy(i => i < 0),
-      ),
-    ),
-    benchmarkTest("Runnable", async src =>
-      pipeLazy(
-        src,
-        Observable.fromReadonlyArray(),
-        Observable.delay<number>(0),
-        Observable.everySatisfy(i => i < 0),
-      ),
-    ),
-    benchmarkTest("array methods", async src => () => src.every(i => i < 0)),
   );

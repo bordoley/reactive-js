@@ -4,7 +4,6 @@ import {
   filterMapFusion,
   filterMapReduce,
   scanReduce,
-  every,
 } from "./perfTests.js";
 
 const doRun = async () => {
@@ -12,7 +11,6 @@ const doRun = async () => {
   await run(filterMapFusion(10000));
   await run(filterMapReduce(10000));
   await run(scanReduce(10000));
-  await run(every(10000));
 };
 
 doRun();

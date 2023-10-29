@@ -54,6 +54,7 @@
 - [encodeUtf8](concurrent_Observable.md#encodeutf8)
 - [enqueue](concurrent_Observable.md#enqueue)
 - [firstAsync](concurrent_Observable.md#firstasync)
+- [flow](concurrent_Observable.md#flow)
 - [forEach](concurrent_Observable.md#foreach)
 - [fromAsyncIterable](concurrent_Observable.md#fromasynciterable)
 - [fromEnumerable](concurrent_Observable.md#fromenumerable)
@@ -61,6 +62,7 @@
 - [fromFactory](concurrent_Observable.md#fromfactory)
 - [fromIterable](concurrent_Observable.md#fromiterable)
 - [fromPromise](concurrent_Observable.md#frompromise)
+- [fromReadonlyArray](concurrent_Observable.md#fromreadonlyarray)
 - [fromStore](concurrent_Observable.md#fromstore)
 - [fromValue](concurrent_Observable.md#fromvalue)
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
@@ -1656,6 +1658,31 @@ ___
 
 ___
 
+### flow
+
+▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+
+___
+
 ### forEach
 
 ▸ **forEach**<`T`\>(`effect`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
@@ -1787,6 +1814,30 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(`options?`): [`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay` | `number` |
+| `options.delayStart?` | `boolean` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>\>
 
 ___
 

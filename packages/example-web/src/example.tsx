@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Observable from "@reactive-js/core/Observable";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   createComponent,
   useDispatcher,
@@ -32,19 +32,8 @@ import {
   returns,
   Tuple2,
 } from "@reactive-js/core/functions";
-import * as Streamable from "@reactive-js/core/Streamable";
-import {
-  KeyedCollectionLike_get,
-  ObservableLike,
-  QueueableLike_enqueue,
-  EventSourceLike,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  PauseableLike_isPaused,
-  SchedulerLike,
-  StoreLike_value,
-} from "@reactive-js/core/types";
-import * as Dictionary from "@reactive-js/core/Dictionary";
+import * as Streamable from "@reactive-js/core/concurrent/Streamable";
+import * as Dictionary from "@reactive-js/core/collections/Dictionary";
 import {
   __await,
   __bindMethod,
@@ -54,15 +43,25 @@ import {
   __observe,
   __stream,
   __using,
-} from "@reactive-js/core/Observable/effects";
+} from "@reactive-js/core/concurrent/Observable/effects";
 import { __animate } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
-import * as Scheduler from "@reactive-js/core/Scheduler";
+import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as Store from "@reactive-js/core/Store";
+import {
+  ObservableLike,
+  SchedulerLike,
+  PauseableLike_resume,
+  PauseableLike_isPaused,
+  PauseableLike_pause,
+} from "@reactive-js/core/concurrent";
+import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
+import { QueueableLike_enqueue } from "@reactive-js/core/utils";
+import { KeyedLike_get } from "@reactive-js/core/collections";
+import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 
 const AnimatedBox = ({
   animation,
@@ -133,12 +132,12 @@ const AnimationGroup = () => {
         {pipeSome(
           animationStream,
           Dictionary.entries(),
-          Observable.map(
+          Enumerable.map(
             ([key, animation]: Tuple2<string, EventSourceLike<number>>) => (
               <AnimatedBox key={key} animation={animation} />
             ),
           ),
-          Observable.toReadonlyArray(),
+          Enumerable.toReadonlyArray(),
         )}
       </div>
       <div>
@@ -156,7 +155,7 @@ const AnimationGroup = () => {
 const Cache = () => {
   const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
 
-  const values = cache?.[KeyedCollectionLike_get]("a");
+  const values = cache?.[KeyedLike_get]("a");
   const value = useObserve(values) ?? "";
 
   const onChange = useCallback(
@@ -177,7 +176,7 @@ const Cache = () => {
 
 const EnumeratorComponent = () => {
   const enumerator = useEnumerate(
-    () => Observable.generate(increment, () => -1),
+    () => Enumerable.generate(increment, () => -1),
     [],
   );
 
@@ -213,7 +212,8 @@ const Counter = () => {
   const counter = useDisposable(
     () =>
       pipe(
-        Observable.generate(increment, returns(counterInitialValue ?? -1)),
+        Enumerable.generate(increment, returns(counterInitialValue ?? -1)),
+        Observable.fromEnumerable(),
         Observable.forEach<number>(value =>
           history.replace((uri: WindowLocationURI) => ({
             ...uri,
@@ -320,7 +320,7 @@ const RxComponent = createComponent(
         { mode: "switching", scheduler: animationFrameScheduler },
       );
 
-    return Observable.compute(() => {
+    return Observable.computeDeferred(() => {
       const { windowLocation } = __await(props);
       const uri = __await(windowLocation);
 
@@ -331,7 +331,7 @@ const RxComponent = createComponent(
       );
 
       const createScheduler = __constant(() => {
-        const scheduler = Scheduler.createPausableScheduler(animationScheduler);
+        const scheduler = Scheduler.toPausableScheduler(animationScheduler);
         scheduler[PauseableLike_resume]();
         return scheduler;
       }, scheduler);
@@ -346,7 +346,10 @@ const RxComponent = createComponent(
 
       const isAnimationRunning = __observe(animationGroupEventHandler) ?? false;
       const isAnimationPausedObservable: ObservableLike<boolean> = __constant(
-        pipe(pauseableScheduler[PauseableLike_isPaused], Store.toObservable()),
+        pipe(
+          pauseableScheduler[PauseableLike_isPaused],
+          Observable.fromStore(),
+        ),
         pauseableScheduler,
       );
 
@@ -368,7 +371,7 @@ const RxComponent = createComponent(
       );
 
       const animatedDivRef = __animate(
-        animationGroupEventHandler[KeyedCollectionLike_get]("a")!,
+        animationGroupEventHandler[KeyedLike_get]("a")!,
       );
 
       return (

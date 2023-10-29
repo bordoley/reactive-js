@@ -63,6 +63,7 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
+import Observable_flow from "./Observable/__internal__/Observable.flow.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromAsyncIterable from "./Observable/__internal__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
@@ -70,6 +71,7 @@ import Observable_fromEventSource from "./Observable/__internal__/Observable.fro
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
 import Observable_fromPromise from "./Observable/__internal__/Observable.fromPromise.js";
+import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__internal__/Observable.fromStore.js";
 import Observable_fromValue from "./Observable/__internal__/Observable.fromValue.js";
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
@@ -1598,6 +1600,7 @@ export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
+export const flow: Signature["flow"] = Observable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   Observable_fromAsyncIterable;
@@ -1608,6 +1611,8 @@ export const fromEventSource: Signature["fromEventSource"] =
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  Observable_fromReadonlyArray;
 export const fromStore: Signature["fromStore"] = Observable_fromStore;
 export const fromValue: Signature["fromValue"] = Observable_fromValue;
 export const ignoreElements: Signature["ignoreElements"] =

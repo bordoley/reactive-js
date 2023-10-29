@@ -9,7 +9,7 @@ import {
   tuple,
 } from "@reactive-js/core/functions";
 import React, { useState } from "react";
-import * as Observable from "@reactive-js/core/Observable";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   useDispatcher,
   useDisposable,
@@ -17,19 +17,14 @@ import {
   useObserve,
 } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
-import * as EventSource from "@reactive-js/core/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
-import * as Streamable from "@reactive-js/core/Streamable";
-import {
-  DeferredObservableBaseLike,
-  KeyedCollectionLike_get,
-  MulticastObservableLike,
-} from "@reactive-js/core/types";
+import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
-import * as Store from "@reactive-js/core/Store";
-import * as Containers from "@reactive-js/core/Containers";
+import { pick } from "@reactive-js/core/computations";
+import { KeyedLike_get } from "@reactive-js/core/collections";
+import { MulticastObservableLike } from "@reactive-js/core/concurrent";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
@@ -69,7 +64,7 @@ const Measure = () => {
     { capacity: 1, backpressureStrategy: "drop-oldest" },
   );
 
-  const animation = animationGroup?.[KeyedCollectionLike_get]("a");
+  const animation = animationGroup?.[KeyedLike_get]("a");
 
   const { enqueue } = useDispatcher(animationGroup);
 
@@ -82,11 +77,11 @@ const Measure = () => {
     useObserve<number>(
       pipeSomeLazy(
         containerSize,
-        Store.toObservable(),
+        Observable.fromStore(),
         Observable.distinctUntilChanged<Rect>({
           equality: (a, b) => a.width === b.width,
         }),
-        Containers.pick<Observable.MulticastObservableContainer, Rect, "width">(
+        pick<Observable.MulticastObservableContainer, Rect, "width">(
           { map: Observable.map },
           "width",
         ),
@@ -97,7 +92,7 @@ const Measure = () => {
         >(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(
-              pipeSome(animation, EventSource.toObservable()) ??
+              pipeSome(animation, Observable.fromEventSource()) ??
                 Observable.never<number>(),
               tuple,
             ),
@@ -120,7 +115,7 @@ const Measure = () => {
     useObserve(
       pipeSomeLazy(
         animation,
-        EventSource.toObservable(),
+        Observable.fromEventSource(),
         Observable.throttle(50),
         Observable.map(Math.floor),
       ),

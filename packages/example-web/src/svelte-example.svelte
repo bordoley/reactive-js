@@ -1,6 +1,6 @@
 <script>
-import * as Scheduler from "@reactive-js/core/Scheduler";
-import * as Observable from "@reactive-js/core/Observable";
+import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
   bindMethod,
@@ -12,13 +12,14 @@ import {
   PauseableLike_isPaused,
   PauseableLike_pause, 
   PauseableLike_resume
-} from "@reactive-js/core/types";
-import * as Store from "@reactive-js/core/Store";
+} from "@reactive-js/core/concurrent";
+import * as Enumerable from "@reactive-js/cover/collections/Enumerable";
+
   const scheduler = Scheduler.createHostScheduler();
 
   const counter = pipe(
-    Observable.generate(increment, returns(-1)),
-    Observable.delay(500),
+    Enumerable.generate(increment, returns(-1)),
+    Observable.fromEnumerable({delay: 500}),
     Observable.flow(scheduler),
   );
 
@@ -28,7 +29,7 @@ import * as Store from "@reactive-js/core/Store";
   const isPaused = pipe(
     counter[PauseableLike_isPaused],
     // FIXME: Maybe we should add a function to avoid the need for scheduling?
-    Store.toObservable(),
+    Observable.fromStore(),
     subscribe(scheduler),
   );
 

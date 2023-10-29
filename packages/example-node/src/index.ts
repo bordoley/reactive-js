@@ -1,4 +1,5 @@
-import * as Observable from "@reactive-js/core/Observable";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
+import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 import {
   SideEffect,
   bindMethod,
@@ -6,17 +7,15 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import * as Scheduler from "@reactive-js/core/Scheduler";
-import {
-  DisposableLike_dispose,
-  SchedulerLike_schedule,
-} from "@reactive-js/core";
+import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
+import { SchedulerLike_schedule } from "@reactive-js/core/concurrent";
+import { DisposableLike_dispose } from "@reactive-js/core/utils";
 
 const scheduler = Scheduler.createHostScheduler();
 
 const subscription = pipe(
-  Observable.generate(incrementBy(1), returns(0)),
-  Observable.delay(1),
+  Enumerable.generate(incrementBy(1), returns(0)),
+  Observable.fromEnumerable({ delay: 1, delayStart: true }),
   Observable.throttle(2000),
   Observable.map(x => `${x}`),
   Observable.forEach(x => console.log(x)),

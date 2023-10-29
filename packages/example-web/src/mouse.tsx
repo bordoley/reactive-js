@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import ReactDOMClient from "react-dom/client";
-import * as Observable from "@reactive-js/core/Observable";
+import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { useDisposable } from "@reactive-js/core/integrations/react";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import {
@@ -19,9 +19,9 @@ import {
   __observe,
   __stream,
   __using,
-} from "@reactive-js/core/Observable/effects";
+} from "@reactive-js/core/concurrent/Observable/effects";
 import { __animate } from "@reactive-js/core/integrations/web/effects";
-import * as EventSource from "@reactive-js/core/EventSource";
+import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
@@ -50,7 +50,7 @@ const Root = () => {
             window,
             WebElement.eventSource<Window, "mousemove">("mousemove"),
             EventSource.map(ev => ({ x: ev.clientX, y: ev.clientY })),
-            EventSource.toObservable(),
+            Observable.fromEventSource(),
             Observable.throttle(300, { mode: "interval" }),
             Observable.scanMany(
               (prev: Point, next: Point) =>
