@@ -52,10 +52,12 @@
 - [distinctUntilChanged](concurrent_Observable.md#distinctuntilchanged)
 - [empty](concurrent_Observable.md#empty)
 - [encodeUtf8](concurrent_Observable.md#encodeutf8)
+- [endWith](concurrent_Observable.md#endwith)
 - [enqueue](concurrent_Observable.md#enqueue)
 - [firstAsync](concurrent_Observable.md#firstasync)
 - [flow](concurrent_Observable.md#flow)
 - [forEach](concurrent_Observable.md#foreach)
+- [fromAsyncFactory](concurrent_Observable.md#fromasyncfactory)
 - [fromAsyncIterable](concurrent_Observable.md#fromasynciterable)
 - [fromEnumerable](concurrent_Observable.md#fromenumerable)
 - [fromEventSource](concurrent_Observable.md#fromeventsource)
@@ -84,6 +86,7 @@
 - [scan](concurrent_Observable.md#scan)
 - [skipFirst](concurrent_Observable.md#skipfirst)
 - [spring](concurrent_Observable.md#spring)
+- [startWith](concurrent_Observable.md#startwith)
 - [subscribe](concurrent_Observable.md#subscribe)
 - [subscribeOn](concurrent_Observable.md#subscribeon)
 - [takeFirst](concurrent_Observable.md#takefirst)
@@ -1599,6 +1602,29 @@ ___
 
 ___
 
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+___
+
 ### enqueue
 
 ▸ **enqueue**<`T`\>(`queue`): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
@@ -1702,6 +1728,22 @@ ___
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
+### fromAsyncFactory
+
+▸ **fromAsyncFactory**<`T`\>(): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
@@ -2500,6 +2542,29 @@ ___
 #### Returns
 
 [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`number`\>
+
+___
+
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
 
 ___
 

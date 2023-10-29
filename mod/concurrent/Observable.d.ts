@@ -146,17 +146,20 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         delay: number;
     }): RunnableLike<T>;
     encodeUtf8(): PureObservableOperator<string, Uint8Array>;
+    endWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
     firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): <TObservableIn extends ObservableLike<TA>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<TB> : DeferredObservableLike<TB>;
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, PauseableObservableLike<T> & DisposableLike>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+    fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
     fromAsyncIterable<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -253,6 +256,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly damping?: number;
         readonly precision?: number;
     }): RunnableLike<number>;
+    startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -282,6 +286,11 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     throws<T>(options: {
         readonly raise: Factory<unknown>;
     }): RunnableWithSideEffectsLike<T>;
+    toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
+    toEventSource<T>(scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toReadonlyArray<T>(): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
@@ -343,10 +352,12 @@ export declare const dispatchTo: Signature["dispatchTo"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
 export declare const encodeUtf8: Signature["encodeUtf8"];
+export declare const endWith: Signature["endWith"];
 export declare const enqueue: Signature["enqueue"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
+export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
@@ -377,6 +388,7 @@ export declare const scan: Signature["scan"];
 export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];
+export declare const startWith: Signature["startWith"];
 export declare const subscribe: Signature["subscribe"];
 export declare const subscribeOn: Signature["subscribeOn"];
 export declare const takeFirst: Signature["takeFirst"];

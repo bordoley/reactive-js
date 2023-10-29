@@ -40,10 +40,13 @@
 - [distinctUntilChanged](concurrent_Observable.ObservableModule.md#distinctuntilchanged)
 - [empty](concurrent_Observable.ObservableModule.md#empty)
 - [encodeUtf8](concurrent_Observable.ObservableModule.md#encodeutf8)
+- [endWith](concurrent_Observable.ObservableModule.md#endwith)
 - [enqueue](concurrent_Observable.ObservableModule.md#enqueue)
 - [firstAsync](concurrent_Observable.ObservableModule.md#firstasync)
+- [flatMapAsync](concurrent_Observable.ObservableModule.md#flatmapasync)
 - [flow](concurrent_Observable.ObservableModule.md#flow)
 - [forEach](concurrent_Observable.ObservableModule.md#foreach)
+- [fromAsyncFactory](concurrent_Observable.ObservableModule.md#fromasyncfactory)
 - [fromAsyncIterable](concurrent_Observable.ObservableModule.md#fromasynciterable)
 - [fromEnumerable](concurrent_Observable.ObservableModule.md#fromenumerable)
 - [fromEventSource](concurrent_Observable.ObservableModule.md#fromeventsource)
@@ -74,6 +77,7 @@
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
 - [spring](concurrent_Observable.ObservableModule.md#spring)
+- [startWith](concurrent_Observable.ObservableModule.md#startwith)
 - [subscribe](concurrent_Observable.ObservableModule.md#subscribe)
 - [subscribeOn](concurrent_Observable.ObservableModule.md#subscribeon)
 - [takeFirst](concurrent_Observable.ObservableModule.md#takefirst)
@@ -83,6 +87,7 @@
 - [throttle](concurrent_Observable.ObservableModule.md#throttle)
 - [throwIfEmpty](concurrent_Observable.ObservableModule.md#throwifempty)
 - [throws](concurrent_Observable.ObservableModule.md#throws)
+- [toEventSource](concurrent_Observable.ObservableModule.md#toeventsource)
 - [toReadonlyArray](concurrent_Observable.ObservableModule.md#toreadonlyarray)
 - [toReadonlyArrayAsync](concurrent_Observable.ObservableModule.md#toreadonlyarrayasync)
 - [withCurrentTime](concurrent_Observable.ObservableModule.md#withcurrenttime)
@@ -1518,6 +1523,29 @@ ___
 
 ___
 
+### endWith
+
+▸ **endWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+___
+
 ### enqueue
 
 ▸ **enqueue**<`T`\>(`queue`): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
@@ -1577,6 +1605,47 @@ ___
 
 ___
 
+### flatMapAsync
+
+▸ **flatMapAsync**<`TA`, `TB`\>(`f`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`Function2`](../modules/functions.md#function2)<`TA`, `AbortSignal`, `Promise`<`TB`\>\> |
+
+#### Returns
+
+`fn`
+
+▸ <`TObservableIn`\>(`observable`): `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>
+
+##### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TObservableIn` | extends [`ObservableLike`](concurrent.ObservableLike.md)<`TA`, `TObservableIn`\> |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `observable` | `TObservableIn` |
+
+##### Returns
+
+`TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`TB`\> : [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>
+
+___
+
 ### flow
 
 ▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\> \| [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
@@ -1621,6 +1690,22 @@ ___
 #### Returns
 
 [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
+### fromAsyncFactory
+
+▸ **fromAsyncFactory**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`Function1`](../modules/functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`Function1`](../modules/functions.md#function1)<`AbortSignal`, `Promise`<`T`\>\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>
 
 ___
 
@@ -2563,6 +2648,29 @@ ___
 
 ___
 
+### startWith
+
+▸ **startWith**<`T`\>(`value`, `...values`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `...values` | readonly `T`[] |
+
+#### Returns
+
+[`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`T`, `T`\>
+
+___
+
 ### subscribe
 
 ▸ **subscribe**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DisposableLike`](utils.DisposableLike.md)\>
@@ -2864,6 +2972,43 @@ ___
 #### Returns
 
 [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+___
+
+### toEventSource
+
+▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 
 ___
 

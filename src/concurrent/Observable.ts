@@ -61,10 +61,12 @@ import Observable_dispatchTo from "./Observable/__internal__/Observable.dispatch
 import Observable_distinctUntilChanged from "./Observable/__internal__/Observable.distinctUntilChanged.js";
 import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
+import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_flow from "./Observable/__internal__/Observable.flow.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromAsyncIterable from "./Observable/__internal__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
@@ -95,6 +97,7 @@ import Observable_scan from "./Observable/__internal__/Observable.scan.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__internal__/Observable.spring.js";
+import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
@@ -816,6 +819,8 @@ export interface ObservableModule
   // FIXME: Doesnt support PauseableObservable
   encodeUtf8(): PureObservableOperator<string, Uint8Array>;
 
+  endWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
+
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
 
   firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
@@ -826,6 +831,14 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+
+  flatMapAsync<TA, TB>(
+    f: Function2<TA, AbortSignal, Promise<TB>>,
+  ): <TObservableIn extends ObservableLike<TA>>(
+    observable: TObservableIn,
+  ) => TObservableIn extends MulticastObservableLike
+    ? MulticastObservableLike<TB>
+    : DeferredObservableLike<TB>;
 
   flow<T>(
     scheduler: SchedulerLike,
@@ -839,6 +852,11 @@ export interface ObservableModule
   >;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+
+  fromAsyncFactory<T>(): Function1<
+    Function1<AbortSignal, Promise<T>>,
+    DeferredObservableLike<T>
+  >;
 
   fromAsyncIterable<T>(): Function1<
     AsyncIterable<T>,
@@ -1068,6 +1086,8 @@ export interface ObservableModule
     readonly precision?: number;
   }): RunnableLike<number>;
 
+  startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
+
   subscribe<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1126,6 +1146,15 @@ export interface ObservableModule
   throws<T>(options: {
     readonly raise: Factory<unknown>;
   }): RunnableWithSideEffectsLike<T>;
+
+  toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
+  toEventSource<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<ObservableLike<T>, EventSourceLike<T>>;
 
   toReadonlyArray<T>(): Function1<
     RunnableLike<T> | RunnableWithSideEffectsLike<T>,
@@ -1610,10 +1639,13 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Observable_distinctUntilChanged;
 export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
+export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const flow: Signature["flow"] = Observable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const fromAsyncFactory: Signature["fromAsyncFactory"] =
+  Observable_fromAsyncFactory;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =
   Observable_fromAsyncIterable;
 export const fromEnumerable: Signature["fromEnumerable"] =
@@ -1649,6 +1681,7 @@ export const scan: Signature["scan"] = Observable_scan;
 export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const spring: Signature["spring"] = Observable_spring;
+export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
