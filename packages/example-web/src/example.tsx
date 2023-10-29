@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactDOMClient from "react-dom/client";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import {
   createComponent,
   useDispatcher,
   useDisposable,
-  useEnumerate,
   useEnumerator,
   usePauseable,
   useStream,
@@ -60,7 +59,10 @@ import {
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
-import { KeyedLike_get } from "@reactive-js/core/collections";
+import {
+  EnumerableLike_enumerate,
+  KeyedLike_get,
+} from "@reactive-js/core/collections";
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 
 const AnimatedBox = ({
@@ -175,8 +177,8 @@ const Cache = () => {
 };
 
 const EnumeratorComponent = () => {
-  const enumerator = useEnumerate(
-    () => Enumerable.generate(increment, () => -1),
+  const enumerator = useMemo(
+    () => Enumerable.generate(increment, () => -1)[EnumerableLike_enumerate](),
     [],
   );
 

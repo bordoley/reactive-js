@@ -27,6 +27,8 @@ Reactive-JS
 - [events/Publisher](modules/events_Publisher.md)
 - [events/WritableStore](modules/events_WritableStore.md)
 - [functions](modules/functions.md)
+- [integrations/react](modules/integrations_react.md)
+- [integrations/react/Scheduler](modules/integrations_react_Scheduler.md)
 - [integrations/svelte](modules/integrations_svelte.md)
 - [utils](modules/utils.md)
 - [utils/Disposable](modules/utils_Disposable.md)
