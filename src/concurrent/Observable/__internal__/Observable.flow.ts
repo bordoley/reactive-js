@@ -9,7 +9,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
+import Observable_createPauseable from "./Observable.createPauseable.js";
 
 const Observable_flow: Observable.Signature["flow"] =
   <T>(
@@ -20,6 +20,6 @@ const Observable_flow: Observable.Signature["flow"] =
     },
   ) =>
   (runnable: RunnableLike<T> | RunnableWithSideEffectsLike<T>) => {
-    return PauseableObservable_create<T>(returns(runnable), scheduler, options);
+    return Observable_createPauseable<T>(returns(runnable), scheduler, options);
   };
 export default Observable_flow;

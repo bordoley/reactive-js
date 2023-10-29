@@ -120,6 +120,8 @@ export type PureObservableOperator<TIn, TOut> = <
   ? RunnableWithSideEffectsLike<TOut>
   : TObservableIn extends DeferredObservableLike<TIn>
   ? DeferredObservableLike<TOut>
+  : TObservableIn extends PauseableObservableLike<TIn>
+  ? PauseableObservableLike<TOut>
   : TObservableIn extends MulticastObservableLike<TIn>
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
@@ -753,6 +755,7 @@ export interface ObservableModule
     ],
   ): MulticastObservableLike<T>;
 
+  // FIXME: Doesn't support pauseableObservable
   concatWith<T>(
     snd: RunnableLike<T>,
     ...tail: readonly RunnableLike<T>[]
@@ -810,6 +813,7 @@ export interface ObservableModule
 
   empty<T>(options?: { delay: number }): RunnableLike<T>;
 
+  // FIXME: Doesnt support PauseableObservable
   encodeUtf8(): PureObservableOperator<string, Uint8Array>;
 
   enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
@@ -840,6 +844,13 @@ export interface ObservableModule
     AsyncIterable<T>,
     DeferredObservableLike<T>
   >;
+  fromAsyncIterable<T>(
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): Function1<AsyncIterable<T>, PauseableObservableLike<T>>;
 
   fromEnumerable<T>(options?: {
     delay: number;
@@ -951,6 +962,7 @@ export interface ObservableModule
     )[],
   ): DeferredObservableLike<T>;
 
+  // FIXME: Doesn't support pauseableObservable
   mergeWith<T>(
     snd: RunnableLike<T>,
     ...tail: readonly RunnableLike<T>[]

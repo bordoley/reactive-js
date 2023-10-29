@@ -35,18 +35,18 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import Observable_create from "../../Observable/__internal__/Observable.create.js";
-import Observable_distinctUntilChanged from "../../Observable/__internal__/Observable.distinctUntilChanged.js";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_fromIterable from "../../Observable/__internal__/Observable.fromIterable.js";
-import Observable_mergeWith from "../../Observable/__internal__/Observable.mergeWith.js";
-import Observable_multicast from "../../Observable/__internal__/Observable.multicast.js";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
-import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
 import Scheduler_toPausableScheduler from "../../Scheduler/__internal__/Scheduler.toPausableScheduler.js";
 import Stream_create from "../../Stream/__internal__/Stream.create.js";
+import Observable_create from "./Observable.create.js";
+import Observable_distinctUntilChanged from "./Observable.distinctUntilChanged.js";
+import Observable_forEach from "./Observable.forEach.js";
+import Observable_fromIterable from "./Observable.fromIterable.js";
+import Observable_mergeWith from "./Observable.mergeWith.js";
+import Observable_multicast from "./Observable.multicast.js";
+import Observable_subscribe from "./Observable.subscribe.js";
+import Observable_subscribeOn from "./Observable.subscribeOn.js";
 
-const PauseableObservable_create: <T>(
+const Observable_createPauseable: <T>(
   op: Function1<
     MulticastObservableLike<boolean>,
     DeferredObservableLike<T> | RunnableLike<T> | RunnableWithSideEffectsLike<T>
@@ -170,4 +170,4 @@ const PauseableObservable_create: <T>(
   );
 })();
 
-export default PauseableObservable_create;
+export default Observable_createPauseable;

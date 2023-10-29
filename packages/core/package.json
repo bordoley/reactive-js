@@ -58,7 +58,6 @@
     "./concurrent": "./concurrent.js",
     "./concurrent/Observable": "./concurrent/Observable.js",
     "./concurrent/Observable/effects": "./concurrent/Observable/effects.js",
-    "./concurrent/PauseableObservable": "./concurrent/PauseableObservable.js",
     "./concurrent/ReplayPublisher": "./concurrent/ReplayPublisher.js",
     "./concurrent/Scheduler": "./concurrent/Scheduler.js",
     "./concurrent/Stream": "./concurrent/Stream.js",
