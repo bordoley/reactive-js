@@ -32,5 +32,6 @@ Reactive-JS
 - [integrations/react/Scheduler](modules/integrations_react_Scheduler.md)
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
+- [integrations/web/AnimationFrameScheduler](modules/integrations_web_AnimationFrameScheduler.md)
 - [utils](modules/utils.md)
 - [utils/Disposable](modules/utils_Disposable.md)
