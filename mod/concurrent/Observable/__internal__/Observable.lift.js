@@ -47,8 +47,8 @@ const Observable_lift = ((config) => (operator) => (source) => {
         ? Observable_create(observer => {
             pipeUnsafe(observer, ...allFunctions, bindMethod(sourceSource, ObservableLike_observe));
         })
-            ? isPauseable
-            : createLiftedPauseableObservable(sourceSource, allFunctions)
-        : createLiftedObservable(sourceSource, allFunctions, liftedConfig);
+        : isPauseable
+            ? createLiftedPauseableObservable(sourceSource, allFunctions)
+            : createLiftedObservable(sourceSource, allFunctions, liftedConfig);
 });
 export default Observable_lift;

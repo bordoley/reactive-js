@@ -22,6 +22,8 @@ A stateful ObservableLike resource.
 
   ↳↳ [`StreamLike`](concurrent.StreamLike.md)
 
+  ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)
+
 ## Table of contents
 
 ### Properties

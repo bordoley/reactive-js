@@ -189,8 +189,8 @@ const Observable_lift: ObservableLift["lift"] = ((
             bindMethod(sourceSource, ObservableLike_observe),
           );
         })
-        ? isPauseable
-        : createLiftedPauseableObservable<TA, TB>(sourceSource, allFunctions)
+      : isPauseable
+      ? createLiftedPauseableObservable<TA, TB>(sourceSource, allFunctions)
       : createLiftedObservable<TA, TB>(
           sourceSource,
           allFunctions,

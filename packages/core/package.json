@@ -71,6 +71,7 @@
     "./integrations/react":  "./integrations/react.js",
     "./integrations/react/Scheduler":  "./integrations/react/Scheduler.js",
     "./integrations/svelte":  "./integrations/svelte.js",
+    "./integrations/web":  "./integrations/web.js",
     "./utils": "./utils.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
