@@ -1,17 +1,35 @@
 /// <reference types="./Observable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectToHaveBeenCalledTimes, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { mapTo } from "../../computations.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import * as EventSource from "../../events/EventSource.js";
 import { alwaysTrue, arrayEquality, bind, ignore, increment, incrementBy, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as ReplayPublisher from "../ReplayPublisher.js";
+import * as Scheduler from "../Scheduler.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("Observable", describe("catchError", test("when the source throws", () => {
+testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+    await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
+        for (let i = 0; i < 10; i++) {
+            observer[QueueableLike_enqueue](i);
+        }
+    }), Observable.backpressureStrategy(1, "throw"), Observable.toReadonlyArrayAsync(scheduler)));
+})), testAsync("with a drop latest backpressure strategy", pipeLazyAsync(Observable.create(observer => {
+    for (let i = 0; i < 10; i++) {
+        observer[QueueableLike_enqueue](i);
+    }
+    observer[DispatcherLike_complete]();
+}), Observable.backpressureStrategy(1, "drop-latest"), Observable.toReadonlyArrayAsync(), expectArrayEquals([0]))), testAsync("with a drop-oldest latest backpressure strategy", pipeLazyAsync(Observable.create(observer => {
+    for (let i = 0; i < 10; i++) {
+        observer[QueueableLike_enqueue](i);
+    }
+    observer[DispatcherLike_complete]();
+}), Observable.backpressureStrategy(1, "drop-oldest"), Observable.toReadonlyArrayAsync(), expectArrayEquals([9]))), test("it passes through notifications", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.backpressureStrategy(1, "drop-latest"), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("catchError", test("when the source throws", () => {
     const e1 = "e1";
     let result = none;
     pipe(Observable.throws({ raise: () => e1 }), Observable.catchError((e) => {
@@ -52,7 +70,29 @@ testModule("Observable", describe("catchError", test("when the source throws", (
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
     pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
-})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.endWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("flow", test("a source with delay", () => {
+})), describe("empty", test("with delay", () => {
+    let disposedTime = -1;
+    const scheduler = VirtualTimeScheduler.create();
+    pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), Disposable.onComplete(() => {
+        disposedTime = scheduler[SchedulerLike_now];
+    }));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(disposedTime, expectEquals(5));
+})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.endWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("firstAsync", testAsync("empty source", async () => {
+    const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());
+    pipe(result, expectIsNone);
+}), testAsync("it returns the first value", async () => {
+    const result = await pipe([1, 2, 3], Observable.fromReadonlyArray(), Observable.firstAsync());
+    pipe(result, expectEquals(1));
+})), describe("flatMapAsync", testAsync("mapping a number to a promise", pipeLazyAsync(1, Observable.fromValue(), Observable.flatMapAsync(async (x) => await Promise.resolve(x)), Observable.toReadonlyArrayAsync(), expectArrayEquals([1])))), describe("flatMapIterable", test("maps the incoming value with the inline generator function", pipeLazy([none, none], Observable.fromReadonlyArray(), Observable.flatMapIterable(function* (_) {
+    yield 1;
+    yield 2;
+    yield 3;
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps the incoming value with the inline generator function, with delayed source", pipeLazy([none, none], Observable.fromReadonlyArray({ delay: 2 }), Observable.flatMapIterable(function* (_) {
+    yield 1;
+    yield 2;
+    yield 3;
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flow", test("a source with delay", () => {
     const scheduler = VirtualTimeScheduler.create();
     const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.flow(scheduler));
     generateObservable[PauseableLike_resume](),
@@ -106,7 +146,7 @@ testModule("Observable", describe("catchError", test("when the source throws", (
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray({ delay: 3 }), Observable.forEach(_ => {
         throw err;
     }), Observable.toReadonlyArray()), expectToThrowError(err));
-})), describe("fork merge", test("with pure src and inner runnables with side-effects", () => {
+})), describe("forkMerge", test("with pure src and inner runnables with side-effects", () => {
     const obs = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2]), Observable.flatMapIterable(_ => [3, 4])));
     pipe(obs, Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
     expectTrue(obs[ObservableLike_isDeferred]);
@@ -144,6 +184,25 @@ testModule("Observable", describe("catchError", test("when the source throws", (
     const src = pipe(0, Observable.fromValue(), Observable.forEach(sideEffect));
     await pipeAsync(src, Observable.forkMerge(Observable.flatMapIterable(_ => [1, 2, 3]), Observable.flatMapIterable(_ => [4, 5, 6])), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 4, 5, 6]));
     pipe(sideEffect, expectToHaveBeenCalledTimes(1));
+})), describe("fromAsyncFactory", testAsync("when promise resolves", async () => {
+    const result = await pipe(async () => {
+        await Promise.resolve(1);
+        return 2;
+    }, Observable.fromAsyncFactory(), Observable.lastAsync());
+    pipe(result, expectEquals(2));
+}), testAsync("when promise fails with an exception", async () => {
+    await pipe(async () => {
+        await Promise.resolve(1);
+        raise();
+    }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
+}), testAsync("when factory throws an exception", async () => {
+    await pipe(async () => {
+        raise();
+    }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
+})), describe("fromIterable", test("fromIterable with delay", () => {
+    const result = [];
+    pipe([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    pipe(result, expectArrayEquals([0, 2, 4, 6]));
 })), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("lastAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectIsNone);
@@ -221,7 +280,13 @@ testModule("Observable", describe("catchError", test("when the source throws", (
     pipe(pipeLazy([], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(() => {
         throw error;
     }), Observable.run()), expectToThrowError(error));
-}), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([
+}), test("when source is not empty", pipeLazy([1], Observable.fromReadonlyArray(), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1]))), test("when source is not empty with delay", pipeLazy([1], Observable.fromReadonlyArray({ delay: 1 }), Observable.throwIfEmpty(returns(none)), Observable.toReadonlyArray(), expectArrayEquals([1])))), describe("toEventSource", test("when the source completes without error", () => {
+    const result = [];
+    const scheduler = VirtualTimeScheduler.create();
+    pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.toEventSource(scheduler), EventSource.addEventHandler(bind(Array.prototype.push, result)));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([0, 1, 2]));
+})), describe("toReadonlyArrayAsync", testAsync("with pure delayed source", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3])))), describe("withLatestFrom", test("when source and latest are interlaced", pipeLazy([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.withLatestFrom(pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), (tuple)), Observable.toReadonlyArray(), expectArrayEquals([
     [0, 0],
     [1, 0],
     [2, 1],
