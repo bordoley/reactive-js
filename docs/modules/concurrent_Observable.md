@@ -3606,13 +3606,20 @@ ___
 
 ### throws
 
-▸ **throws**<`T`\>(): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+▸ **throws**<`T`\>(`options?`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.delay?` | `number` |
 
 #### Returns
 
@@ -3631,6 +3638,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
+| `options.delay?` | `number` |
 | `options.raise` | [`Factory`](functions.md#factory)<`unknown`\> |
 
 #### Returns

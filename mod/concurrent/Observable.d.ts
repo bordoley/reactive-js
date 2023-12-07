@@ -370,9 +370,12 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly mode?: "first" | "last" | "interval";
     }): ObservableOperatorWithSideEffects<T, T>;
     throwIfEmpty<T>(factory: Factory<unknown>, options?: undefined): PureObservableOperator<T, T>;
-    throws<T>(): RunnableWithSideEffectsLike<T>;
+    throws<T>(options?: {
+        readonly delay?: number;
+    }): RunnableWithSideEffectsLike<T>;
     throws<T>(options: {
         readonly raise: Factory<unknown>;
+        readonly delay?: number;
     }): RunnableWithSideEffectsLike<T>;
     toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {

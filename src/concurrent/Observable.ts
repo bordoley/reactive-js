@@ -1097,9 +1097,12 @@ export interface ObservableModule
     options?: undefined,
   ): PureObservableOperator<T, T>;
 
-  throws<T>(): RunnableWithSideEffectsLike<T>;
+  throws<T>(options?: {
+    readonly delay?: number;
+  }): RunnableWithSideEffectsLike<T>;
   throws<T>(options: {
     readonly raise: Factory<unknown>;
+    readonly delay?: number;
   }): RunnableWithSideEffectsLike<T>;
 
   toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
