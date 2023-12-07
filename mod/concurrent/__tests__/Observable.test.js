@@ -1,10 +1,10 @@
 /// <reference types="./Observable.test.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { mapTo } from "../../computations.js";
-import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
 import { alwaysTrue, arrayEquality, bind, ignore, increment, incrementBy, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
@@ -12,6 +12,7 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as ReplayPublisher from "../ReplayPublisher.js";
 import * as Scheduler from "../Scheduler.js";
+import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
@@ -70,6 +71,41 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
     pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
+})), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+    const vts = VirtualTimeScheduler.create();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "throw",
+        capacity: 1,
+    });
+    expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
+}), test("when completed successfully", () => {
+    const vts = VirtualTimeScheduler.create();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+    });
+    let completed = false;
+    pipe(stream, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+        }
+    }));
+    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
+    expectTrue(completed);
+}), test("when completed successfully from delayed source", () => {
+    const vts = VirtualTimeScheduler.create();
+    const stream = Streamable.identity()[StreamableLike_stream](vts, {
+        backpressureStrategy: "overflow",
+        capacity: 1,
+    });
+    let completed = false;
+    pipe(stream, EventSource.addEventHandler(ev => {
+        if (ev === DispatcherLikeEvent_completed) {
+            completed = true;
+        }
+    }));
+    pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
+    expectTrue(completed);
 })), describe("empty", test("with delay", () => {
     let disposedTime = -1;
     const scheduler = VirtualTimeScheduler.create();
