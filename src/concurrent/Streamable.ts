@@ -1,9 +1,11 @@
 import {
+  DeferredObservableLike,
   DeferredSideEffectsObservableLike,
   StreamLike,
   StreamableLike,
 } from "../concurrent.js";
 import { Equality, Factory, Function1, Updater } from "../functions.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
@@ -22,6 +24,26 @@ export interface StreamableModule {
       DeferredSideEffectsObservableLike<T>
     >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+
+  createEventHandler<TEventType>(
+    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    options: { readonly mode: "switching" },
+  ): StreamableLike<TEventType, boolean>;
+  createEventHandler<TEventType>(
+    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    options: { readonly mode: "blocking" },
+  ): StreamableLike<TEventType, boolean>;
+  createEventHandler<TEventType>(
+    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    options: {
+      readonly mode: "queueing";
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): StreamableLike<TEventType, boolean>;
+  createEventHandler<TEventType>(
+    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+  ): StreamableLike<TEventType, boolean>;
 
   /**
    * Returns a new `StateStoreLike` instance that stores state which can
