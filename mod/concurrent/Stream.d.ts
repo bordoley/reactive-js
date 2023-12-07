@@ -14,3 +14,4 @@ export interface StreamModule {
     }): Function1<StreamLike<Updater<T>, T>, DisposableLike>;
 }
 export type Signature = StreamModule;
+export declare const syncState: Signature["syncState"];

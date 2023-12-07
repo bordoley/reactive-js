@@ -12,8 +12,40 @@
 
 - [Signature](concurrent_Stream.md#signature)
 
+### Functions
+
+- [syncState](concurrent_Stream.md#syncstate)
+
 ## Type Aliases
 
 ### Signature
 
 Ƭ **Signature**: [`StreamModule`](../interfaces/concurrent_Stream.StreamModule.md)
+
+## Functions
+
+### syncState
+
+▸ **syncState**<`T`\>(`onInit`, `onChange`, `options?`): [`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `onInit` | [`Function1`](functions.md#function1)<`T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\>\> |
+| `onChange` | [`Function2`](functions.md#function2)<`T`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<[`Updater`](functions.md#updater)<`T`\>\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+| `options.throttleDuration?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>, [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>

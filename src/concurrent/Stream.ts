@@ -9,7 +9,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../utils.js";
-//import Stream_syncState from "./Stream/__internal__/Stream.syncState.js";
+import Stream_syncState from "./Stream/__internal__/Stream.syncState.js";
 
 /**
  * @noInheritDoc
@@ -30,4 +30,4 @@ export interface StreamModule {
 
 export type Signature = StreamModule;
 
-//export const syncState: Signature["syncState"] = Stream_syncState;
+export const syncState: Signature["syncState"] = Stream_syncState;

@@ -1,4 +1,4 @@
 /// <reference types="./Stream.d.ts" />
 
-export {};
-//export const syncState: Signature["syncState"] = Stream_syncState;
+import Stream_syncState from "./Stream/__internal__/Stream.syncState.js";
+export const syncState = Stream_syncState;
