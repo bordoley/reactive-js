@@ -82,6 +82,7 @@ import Observable_fromEnumerable from "./Observable/__internal__/Observable.from
 import Observable_fromEventSource from "./Observable/__internal__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__internal__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__internal__/Observable.fromIterable.js";
+import Observable_fromOptional from "./Observable/__internal__/Observable.fromOptional.js";
 import Observable_fromPromise from "./Observable/__internal__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__internal__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__internal__/Observable.fromStore.js";
@@ -97,6 +98,7 @@ import Observable_merge from "./Observable/__internal__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
 import Observable_mergeMap from "./Observable/__internal__/Observable.mergeMap.js";
+import Observable_mergeWith from "./Observable/__internal__/Observable.mergeWith.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
@@ -137,8 +139,12 @@ export type PureObservableOperator<TIn, TOut> = <
   ? PureRunnableLike<TOut>
   : TObservableIn extends RunnableWithSideEffectsLike<TIn>
   ? RunnableWithSideEffectsLike<TOut>
+  : TObservableIn extends RunnableLike<TIn>
+  ? RunnableLike<TOut>
   : TObservableIn extends DeferredSideEffectsObservableLike<TIn>
   ? DeferredSideEffectsObservableLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableLike<TOut>
   : TObservableIn extends PauseableObservableLike<TIn>
   ? PauseableObservableLike<TOut>
   : TObservableIn extends MulticastObservableLike<TIn>
@@ -1450,6 +1456,7 @@ export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
+export const fromOptional: Signature["fromOptional"] = Observable_fromOptional;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;
@@ -1467,6 +1474,7 @@ export const merge: Signature["merge"] = Observable_merge;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
 export const mergeMap: Signature["mergeMap"] = Observable_mergeMap;
 export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
+export const mergeWith: Signature["mergeWith"] = Observable_mergeWith;
 export const multicast: Signature["multicast"] = Observable_multicast;
 export const never: Signature["never"] = Observable_never;
 export const onSubscribe: Signature["onSubscribe"] = Observable_onSubscribe;
