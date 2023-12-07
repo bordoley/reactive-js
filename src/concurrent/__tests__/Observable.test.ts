@@ -39,6 +39,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  pipeLazyAsync,
   raise,
   returns,
   tuple,
@@ -177,6 +178,21 @@ testModule(
     test(
       "concating an empty array returns the empty observable",
       pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())),
+    ),
+  ),
+  describe(
+    "concatMap",
+    testAsync(
+      "maps each value to a container and flattens",
+      pipeLazyAsync(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.concatMap(
+          pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+        ),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
     ),
   ),
   describe(
@@ -409,6 +425,44 @@ testModule(
       );
       pipe(result, expectEquals<Optional<number>>(3));
     }),
+  ),
+  describe(
+    "mergeAll",
+    test(
+      "with queueing",
+      pipeLazy(
+        [
+          pipe([1, 3, 5], Observable.fromReadonlyArray({ delay: 3 })),
+          pipe([2, 4, 6], Observable.fromReadonlyArray({ delay: 3 })),
+          pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
+        ],
+        Observable.fromReadonlyArray(),
+        Observable.mergeAll<number>({
+          concurrency: 2,
+
+          [ObservableLike_isDeferred]: true,
+          [ObservableLike_isPure]: true,
+          [ObservableLike_isRunnable]: true,
+        }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
+      ),
+    ),
+  ),
+  describe(
+    "mergeMap",
+    testAsync(
+      "without delay, merge all observables as they are produced",
+      pipeLazyAsync(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.mergeMap<number, number>(x =>
+          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+        ),
+        Observable.toReadonlyArrayAsync(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
+      ),
+    ),
   ),
   describe(
     "onSubscribe",

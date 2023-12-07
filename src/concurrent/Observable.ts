@@ -56,6 +56,7 @@ import Observable_computeDeferred from "./Observable/__internal__/Observable.com
 import Observable_computeRunnable from "./Observable/__internal__/Observable.computeRunnable.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
+import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
 import Observable_currentTime from "./Observable/__internal__/Observable.currentTime.js";
@@ -67,7 +68,10 @@ import Observable_empty from "./Observable/__internal__/Observable.empty.js";
 import Observable_encodeUtf8 from "./Observable/__internal__/Observable.encodeUtf8.js";
 import Observable_endWith from "./Observable/__internal__/Observable.endWith.js";
 import Observable_enqueue from "./Observable/__internal__/Observable.enqueue.js";
+import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js";
+import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
+import Observable_flatMapAsync from "./Observable/__internal__/Observable.flatMapAsync.js";
 import Observable_flow from "./Observable/__internal__/Observable.flow.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
@@ -88,7 +92,9 @@ import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
 import Observable_map from "./Observable/__internal__/Observable.map.js";
 import Observable_merge from "./Observable/__internal__/Observable.merge.js";
+import Observable_mergeAll from "./Observable/__internal__/Observable.mergeAll.js";
 import Observable_mergeMany from "./Observable/__internal__/Observable.mergeMany.js";
+import Observable_mergeMap from "./Observable/__internal__/Observable.mergeMap.js";
 import Observable_multicast from "./Observable/__internal__/Observable.multicast.js";
 import Observable_never from "./Observable/__internal__/Observable.never.js";
 import Observable_onSubscribe from "./Observable/__internal__/Observable.onSubscribe.js";
@@ -839,7 +845,36 @@ export interface ObservableModule
     observables: readonly ObservableLike<T>[],
   ): DeferredSideEffectsObservableLike<T>;
 
-  mergeMap: FlatMap["flatMap"];
+  mergeMap<TA, TB>(
+    selector: Function1<TA, PureRunnableLike<TB>>,
+    options: {
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: true;
+      readonly [ObservableLike_isRunnable]: true;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+  ): Function1<PureRunnableLike<TA>, PureRunnableLike<TB>>;
+  mergeMap<TA, TB>(
+    selector: Function1<TA, RunnableLike<TB>>,
+    options: {
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: false;
+      readonly [ObservableLike_isRunnable]: true;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+  ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+  mergeMap<TA, TB>(
+    selector: Function1<TA, DeferredObservableLike<TB>>,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+      readonly concurrency?: number;
+    },
+  ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 
   // FIXME: Doesn't support pauseableObservable
   mergeWith<T>(
@@ -1307,6 +1342,7 @@ export const computeRunnable: Signature["computeRunnable"] =
   Observable_computeRunnable;
 export const concat: Signature["concat"] = Observable_concat;
 export const concatMany: Signature["concatMany"] = Observable_concatMany;
+export const concatMap: Signature["concatMap"] = Observable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
@@ -1320,7 +1356,10 @@ export const empty: Signature["empty"] = Observable_empty;
 export const encodeUtf8: Signature["encodeUtf8"] = Observable_encodeUtf8;
 export const endWith: Signature["endWith"] = Observable_endWith;
 export const enqueue: Signature["enqueue"] = Observable_enqueue;
+export const exhaust: Signature["exhaust"] = Observable_exhaust;
+export const exhaustMap: Signature["exhaustMap"] = Observable_exhaustMap;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
+export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
 export const flow: Signature["flow"] = Observable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
@@ -1347,6 +1386,8 @@ export const keep: Signature["keep"] = Observable_keep;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
+export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;
+export const mergeMap: Signature["mergeMap"] = Observable_mergeMap;
 export const mergeMany: Signature["mergeMany"] = Observable_mergeMany;
 export const multicast: Signature["multicast"] = Observable_multicast;
 export const never: Signature["never"] = Observable_never;
