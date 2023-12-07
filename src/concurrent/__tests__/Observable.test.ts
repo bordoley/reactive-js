@@ -389,7 +389,7 @@ testModule(
       "summing all values from delayed source",
       pipeLazy(
         [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 3}),
+        Observable.fromReadonlyArray({ delay: 3 }),
         Observable.reduce<number, number>(
           (acc, next) => acc + next,
           returns(0),
@@ -556,11 +556,11 @@ testModule(
       "takes until the notifier notifies its first notification",
       pipeLazy(
         [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.takeUntil(
           pipe(
             [1],
-            Observable.fromReadonlyArray({ delay: 3, delayStart: true}),
+            Observable.fromReadonlyArray({ delay: 3, delayStart: true }),
           ),
         ),
         Observable.toReadonlyArray<number>(),
@@ -624,7 +624,7 @@ testModule(
       pipe(
         pipeLazy(
           [],
-          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.fromReadonlyArray({ delay: 1 }),
           Observable.throwIfEmpty(() => error),
           Observable.run(),
         ),
@@ -650,7 +650,7 @@ testModule(
       pipe(
         pipeLazy(
           [],
-          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.fromReadonlyArray({ delay: 1 }),
           Observable.throwIfEmpty(() => {
             throw error;
           }),
@@ -673,7 +673,7 @@ testModule(
       "when source is not empty with delay",
       pipeLazy(
         [1],
-        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.throwIfEmpty(returns(none)),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([1]),
@@ -686,12 +686,9 @@ testModule(
       "when source and latest are interlaced",
       pipeLazy(
         [0, 1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.withLatestFrom(
-          pipe(
-            [0, 1, 2, 3],
-            Observable.fromReadonlyArray({delay: 2}),
-          ),
+          pipe([0, 1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           tuple<number, number>,
         ),
         Observable.toReadonlyArray(),
@@ -710,7 +707,7 @@ testModule(
       "when latest produces no values",
       pipeLazy(
         [0],
-        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.fromReadonlyArray({ delay: 1 }),
         Observable.withLatestFrom(Observable.empty<number>(), returns(1)),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as number[]),
@@ -722,7 +719,7 @@ testModule(
       pipe(
         pipeLazy(
           [0],
-          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.fromReadonlyArray({ delay: 1 }),
           Observable.withLatestFrom(
             Observable.throws<number>({ raise: returns(error) }),
             returns(1),
@@ -741,11 +738,11 @@ testModule(
         Observable.zipLatest(
           pipe(
             [1, 2, 3, 4, 5, 6, 7, 8],
-            Observable.fromReadonlyArray({ delay: 1, delayStart: true}),
+            Observable.fromReadonlyArray({ delay: 1, delayStart: true }),
           ),
           pipe(
             [1, 2, 3, 4],
-            Observable.fromReadonlyArray({ delay: 2, delayStart: true}),
+            Observable.fromReadonlyArray({ delay: 2, delayStart: true }),
           ),
         ),
         Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
