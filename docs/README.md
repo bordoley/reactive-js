@@ -35,5 +35,6 @@ Reactive-JS
 - [integrations/web/AnimationFrameScheduler](modules/integrations_web_AnimationFrameScheduler.md)
 - [integrations/web/Element](modules/integrations_web_Element.md)
 - [integrations/web/WindowLocation](modules/integrations_web_WindowLocation.md)
+- [integrations/web/effects](modules/integrations_web_effects.md)
 - [utils](modules/utils.md)
 - [utils/Disposable](modules/utils_Disposable.md)
