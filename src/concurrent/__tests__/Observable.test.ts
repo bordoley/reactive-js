@@ -24,10 +24,12 @@ import {
 import {
   Optional,
   Tuple2,
+  alwaysTrue,
   arrayEquality,
   increment,
   incrementBy,
   lessThan,
+  newInstance,
   none,
   pipe,
   pipeLazy,
@@ -382,6 +384,21 @@ testModule(
     ),
   ),
   describe(
+    "reduce",
+    test(
+      "summing all values from delayed source",
+      pipeLazy(
+        [1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 3}),
+        Observable.reduce<number, number>(
+          (acc, next) => acc + next,
+          returns(0),
+        ),
+        expectEquals(6),
+      ),
+    ),
+  ),
+  describe(
     "repeat",
     test(
       "when repeating forever.",
@@ -464,6 +481,56 @@ testModule(
     }),
   ),
   describe(
+    "retry",
+    test(
+      "retrys the container on an exception",
+      pipeLazy(
+        Observable.concat(
+          pipe(
+            Enumerable.generate(increment, returns(0)),
+            Observable.fromEnumerable(),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          Observable.throws(),
+        ),
+        Observable.retry(alwaysTrue),
+        Observable.takeFirst<number>({ count: 6 }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+    test(
+      "retrys with the default predicate",
+      pipeLazy(
+        Observable.concat(
+          pipe(
+            Enumerable.generate(increment, returns(0)),
+            Observable.fromEnumerable(),
+            Observable.takeFirst({ count: 3 }),
+          ),
+          Observable.throws(),
+        ),
+        Observable.retry(),
+        Observable.takeFirst<number>({ count: 6 }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "startWith",
+    test(
+      "appends the additional values to the start of the container",
+      pipeLazy(
+        [0, 1],
+        Observable.fromReadonlyArray(),
+        Observable.startWith(2, 3, 4),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 3, 4, 0, 1]),
+      ),
+    ),
+  ),
+  describe(
     "switchMap",
     test(
       "concating arrays",
@@ -480,6 +547,210 @@ testModule(
         ),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "takeUntil",
+    test(
+      "takes until the notifier notifies its first notification",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.takeUntil(
+          pipe(
+            [1],
+            Observable.fromReadonlyArray({ delay: 3, delayStart: true}),
+          ),
+        ),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+  ),
+  describe(
+    "throttle",
+    test(
+      "first",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 100 }),
+        Observable.throttle<number>(50, { mode: "first" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 49, 99]),
+      ),
+    ),
+
+    test(
+      "last",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(50, { mode: "last" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([49, 99, 149, 199]),
+      ),
+    ),
+    test(
+      "interval",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(75, { mode: "interval" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 74, 149, 199]),
+      ),
+    ),
+  ),
+  describe(
+    "throwIfEmpty",
+    test("when source is empty", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.throwIfEmpty(() => error),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+    test("when source is empty and delayed", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.throwIfEmpty(() => error),
+          Observable.run(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+    test("when factory throw", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.throwIfEmpty(() => {
+            throw error;
+          }),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+    test("when factory throws after a delay", () => {
+      const error = new Error();
+      pipe(
+        pipeLazy(
+          [],
+          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.throwIfEmpty(() => {
+            throw error;
+          }),
+          Observable.run(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+    test(
+      "when source is not empty",
+      pipeLazy(
+        [1],
+        Observable.fromReadonlyArray(),
+        Observable.throwIfEmpty(returns(none)),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1]),
+      ),
+    ),
+    test(
+      "when source is not empty with delay",
+      pipeLazy(
+        [1],
+        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.throwIfEmpty(returns(none)),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1]),
+      ),
+    ),
+  ),
+  describe(
+    "withLatestFrom",
+    test(
+      "when source and latest are interlaced",
+      pipeLazy(
+        [0, 1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.withLatestFrom(
+          pipe(
+            [0, 1, 2, 3],
+            Observable.fromReadonlyArray({delay: 2}),
+          ),
+          tuple<number, number>,
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals<Tuple2<number, number>>(
+          [
+            [0, 0],
+            [1, 0],
+            [2, 1],
+            [3, 1],
+          ],
+          { valuesEquality: arrayEquality() },
+        ),
+      ),
+    ),
+    test(
+      "when latest produces no values",
+      pipeLazy(
+        [0],
+        Observable.fromReadonlyArray({ delay: 1}),
+        Observable.withLatestFrom(Observable.empty<number>(), returns(1)),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([] as number[]),
+      ),
+    ),
+    test("when latest throws", () => {
+      const error = newInstance(Error);
+
+      pipe(
+        pipeLazy(
+          [0],
+          Observable.fromReadonlyArray({ delay: 1}),
+          Observable.withLatestFrom(
+            Observable.throws<number>({ raise: returns(error) }),
+            returns(1),
+          ),
+          Observable.run(),
+        ),
+        expectToThrowError(error),
+      );
+    }),
+  ),
+  describe(
+    "zipLatest",
+    test(
+      "zip two delayed observable",
+      pipeLazy(
+        Observable.zipLatest(
+          pipe(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            Observable.fromReadonlyArray({ delay: 1, delayStart: true}),
+          ),
+          pipe(
+            [1, 2, 3, 4],
+            Observable.fromReadonlyArray({ delay: 2, delayStart: true}),
+          ),
+        ),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([2, 5, 8, 11]),
       ),
     ),
   ),
