@@ -12,7 +12,13 @@
 
   ↳ [`ObservableComputation`](concurrent_Observable.ObservableComputation.md)
 
-  ↳ [`RunnableComputation`](concurrent_Observable.RunnableComputation.md)
+  ↳ [`PureRunnableComputation`](concurrent_Observable.PureRunnableComputation.md)
+
+  ↳ [`RunnableWithSideEffectsComputation`](concurrent_Observable.RunnableWithSideEffectsComputation.md)
+
+  ↳ [`DeferredSideEffectsObservableComputation`](concurrent_Observable.DeferredSideEffectsObservableComputation.md)
+
+  ↳ [`MulticastObservableComputation`](concurrent_Observable.MulticastObservableComputation.md)
 
   ↳ [`EventSourceComputation`](events_EventSource.EventSourceComputation.md)
 

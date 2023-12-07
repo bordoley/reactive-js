@@ -40,7 +40,7 @@ const Observable_spring: Observable.Signature["spring"] = (options?: {
       },
       returns([MAX_VALUE, 0, 0]),
     ),
-    pick<Observable.RunnableComputation, Tuple3<number, number, number>, 2>(
+    pick<Observable.PureRunnableComputation, Tuple3<number, number, number>, 2>(
       { map: Observable_map },
       2,
     ),

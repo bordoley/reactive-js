@@ -33,7 +33,7 @@ const Observable_keyFrame = (
       const next = elapsed > duration ? 1 : easing(elapsed / duration);
       return [startTime, next];
     }, returns([MAX_VALUE, 0])),
-    pick<Observable.RunnableComputation, Tuple2<unknown, number>, 1>(
+    pick<Observable.PureRunnableComputation, Tuple2<unknown, number>, 1>(
       { map: Observable_map },
       1,
     ),

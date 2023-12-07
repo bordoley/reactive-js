@@ -72,8 +72,10 @@ import Observable_exhaust from "./Observable/__internal__/Observable.exhaust.js"
 import Observable_exhaustMap from "./Observable/__internal__/Observable.exhaustMap.js";
 import Observable_firstAsync from "./Observable/__internal__/Observable.firstAsync.js";
 import Observable_flatMapAsync from "./Observable/__internal__/Observable.flatMapAsync.js";
+import Observable_flatMapIterable from "./Observable/__internal__/Observable.flatMapIterable.js";
 import Observable_flow from "./Observable/__internal__/Observable.flow.js";
 import Observable_forEach from "./Observable/__internal__/Observable.forEach.js";
+import Observable_forkMerge from "./Observable/__internal__/Observable.forkMerge.js";
 import Observable_fromAsyncFactory from "./Observable/__internal__/Observable.fromAsyncFactory.js";
 import Observable_fromAsyncIterable from "./Observable/__internal__/Observable.fromAsyncIterable.js";
 import Observable_fromEnumerable from "./Observable/__internal__/Observable.fromEnumerable.js";
@@ -223,6 +225,14 @@ interface FlatMap {
   ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
   flatMap<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
+    options: {
+      readonly [ObservableLike_isDeferred]: boolean;
+      readonly [ObservableLike_isPure]: boolean;
+      readonly [ObservableLike_isRunnable]: boolean;
+    },
+  ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
+  flatMap<TA, TB>(
+    selector: Function1<TA, DeferredObservableLike<TB>>,
   ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 }
 
@@ -230,8 +240,26 @@ export interface ObservableComputation extends Computation {
   readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
 }
 
-export interface RunnableComputation extends Computation {
+export interface PureRunnableComputation extends Computation {
   readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
+}
+
+export interface RunnableWithSideEffectsComputation extends Computation {
+  readonly [Computation_type]?: RunnableWithSideEffectsLike<
+    this[typeof Computation_T]
+  >;
+}
+
+export interface DeferredSideEffectsObservableComputation extends Computation {
+  readonly [Computation_type]?: DeferredSideEffectsObservableLike<
+    this[typeof Computation_T]
+  >;
+}
+
+export interface MulticastObservableComputation extends Computation {
+  readonly [Computation_type]?: MulticastObservableLike<
+    this[typeof Computation_T]
+  >;
 }
 
 export type Type = ObservableComputation;
@@ -302,7 +330,7 @@ export type Animation<T = number> =
  */
 export interface ObservableModule
   extends PureComputationModule<ObservableComputation>,
-    PureComputationModule<RunnableComputation> {
+    PureComputationModule<PureRunnableComputation> {
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
   ): PureRunnableLike<T>;
@@ -704,6 +732,10 @@ export interface ObservableModule
     ? MulticastObservableLike<TB>
     : DeferredSideEffectsObservableLike<TB>;
 
+  flatMapIterable<TA, TB>(
+    selector: Function1<TA, Iterable<TB>>,
+  ): ObservableOperatorWithSideEffects<TA, TB>;
+
   flow<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -713,6 +745,38 @@ export interface ObservableModule
   ): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+
+  forkMerge<
+    TOut,
+    TObservableIn extends ObservableLike,
+    TObservableOut extends ObservableLike<TOut>,
+  >(
+    fst: Function1<TObservableIn, TObservableOut>,
+    snd: Function1<TObservableIn, TObservableOut>,
+    ...tail: readonly Function1<TObservableIn, TObservableOut>[]
+  ): TObservableIn extends PureRunnableLike
+    ? TObservableOut extends PureRunnableLike<TOut>
+      ? Function1<TObservableIn, PureRunnableLike<TOut>>
+      : TObservableOut extends RunnableLike<TOut>
+      ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>>
+      : TObservableOut extends DeferredObservableLike<TOut>
+      ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+      : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+    : TObservableIn extends RunnableWithSideEffectsLike
+    ? TObservableOut extends RunnableLike<TOut>
+      ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>>
+      : TObservableOut extends DeferredObservableLike<TOut>
+      ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+      : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+    : TObservableIn extends DeferredSideEffectsObservableLike
+    ? TObservableOut extends DeferredObservableLike<TOut>
+      ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+      : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+    : TObservableIn extends MulticastObservableLike
+    ? TObservableOut extends DeferredObservableLike<TOut>
+      ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+      : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>>
+    : never;
 
   fromAsyncFactory<T>(): Function1<
     Function1<AbortSignal, Promise<T>>,
@@ -746,7 +810,7 @@ export interface ObservableModule
   fromIterable<T>(options?: {
     readonly delay: number;
     readonly delayStart?: boolean;
-  }): Function1<Iterable<T>, DeferredSideEffectsObservableLike<T>>;
+  }): Function1<Iterable<T>, RunnableWithSideEffectsLike<T>>;
 
   fromOptional<T>(options?: {
     readonly delay: number;
@@ -1360,8 +1424,11 @@ export const exhaust: Signature["exhaust"] = Observable_exhaust;
 export const exhaustMap: Signature["exhaustMap"] = Observable_exhaustMap;
 export const firstAsync: Signature["firstAsync"] = Observable_firstAsync;
 export const flatMapAsync: Signature["flatMapAsync"] = Observable_flatMapAsync;
+export const flatMapIterable: Signature["flatMapIterable"] =
+  Observable_flatMapIterable;
 export const flow: Signature["flow"] = Observable_flow;
 export const forEach: Signature["forEach"] = Observable_forEach;
+export const forkMerge: Signature["forkMerge"] = Observable_forkMerge;
 export const fromAsyncFactory: Signature["fromAsyncFactory"] =
   Observable_fromAsyncFactory;
 export const fromAsyncIterable: Signature["fromAsyncIterable"] =

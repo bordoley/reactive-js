@@ -4,8 +4,8 @@ import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurren
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_create from "./Observable.create.js";
-const Observable_fromIterable = (options) => (iterable) => Observable_create((observer) => {
+import Observable_createRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
+const Observable_fromIterable = (options) => (iterable) => Observable_createRunnableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const iterator = iterable[Symbol.iterator]();
     const continuation = (scheduler) => {

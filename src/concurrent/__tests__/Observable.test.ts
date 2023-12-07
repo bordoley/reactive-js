@@ -15,12 +15,19 @@ import {
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import { mapTo } from "../../computations.js";
 import {
+  DeferredObservableLike,
+  MulticastObservableLike,
+  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   PauseableLike_pause,
   PauseableLike_resume,
+  PureRunnableLike,
+  RunnableLike,
+  RunnableWithSideEffectsLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
@@ -38,6 +45,7 @@ import {
   newInstance,
   none,
   pipe,
+  pipeAsync,
   pipeLazy,
   pipeLazyAsync,
   raise,
@@ -51,6 +59,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
+import * as ReplayPublisher from "../ReplayPublisher.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
@@ -392,6 +401,159 @@ testModule(
         ),
         expectToThrowError(err),
       );
+    }),
+  ),
+  describe(
+    "fork merge",
+    test("with pure src and inner runnables with side-effects", () => {
+      const obs: RunnableWithSideEffectsLike<number> = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.forkMerge<
+          number,
+          RunnableLike<number>,
+          RunnableWithSideEffectsLike<number>
+        >(
+          Observable.flatMapIterable(_ => [1, 2]),
+          Observable.flatMapIterable(_ => [3, 4]),
+        ),
+      );
+
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectFalse(obs[ObservableLike_isPure]);
+    }),
+    test("runnable with effects src and pure inner runnables", () => {
+      const obs: RunnableWithSideEffectsLike<number> = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forEach(ignore),
+        Observable.forkMerge(
+          mapTo<Observable.RunnableWithSideEffectsComputation, number>(
+            Observable,
+            1,
+          ),
+          mapTo<Observable.RunnableWithSideEffectsComputation, number>(
+            Observable,
+            2,
+          ),
+        ),
+      );
+
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectFalse(obs[ObservableLike_isPure]);
+    }),
+    test("with pure runnable src and pure inner runnables", () => {
+      const obs: PureRunnableLike<number> = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.forkMerge(
+          mapTo<Observable.PureRunnableComputation, number>(Observable, 1),
+          mapTo<Observable.PureRunnableComputation, number>(Observable, 2),
+        ),
+      );
+
+      pipe(
+        obs,
+        Observable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1, 2, 2, 2]),
+      );
+
+      expectTrue(obs[ObservableLike_isDeferred]);
+      expectTrue(obs[ObservableLike_isRunnable]);
+      expectTrue(obs[ObservableLike_isPure]);
+    }),
+    test("with multicast src and pure inner transforms", () => {
+      const forked = pipe(
+        ReplayPublisher.create(),
+        Observable.forkMerge(
+          mapTo<Observable.MulticastObservableComputation, number>(
+            Observable,
+            1,
+          ),
+          mapTo<Observable.MulticastObservableComputation, number>(
+            Observable,
+            2,
+          ),
+        ),
+      );
+
+      expectFalse(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectTrue(forked[ObservableLike_isPure]);
+    }),
+    test("with multicast src and deferred inner transforms", () => {
+      const forked = pipe(
+        ReplayPublisher.create(),
+        Observable.forkMerge<
+          number,
+          MulticastObservableLike,
+          ObservableLike<number>
+        >(
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          mapTo<Observable.MulticastObservableComputation, number>(
+            Observable,
+            2,
+          ),
+        ),
+      );
+
+      expectTrue(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectFalse(forked[ObservableLike_isPure]);
+    }),
+    test("with runnable pure src and deferred transforms", () => {
+      const forked = pipe(
+        [],
+        Observable.fromReadonlyArray<number>(),
+        x => x,
+        Observable.forkMerge<
+          number,
+          PureRunnableLike<number>,
+          DeferredObservableLike<number>
+        >(
+          Observable.flatMapAsync(_ => Promise.resolve(1)),
+          mapTo<Observable.PureRunnableComputation, number>(Observable, 2),
+        ),
+      );
+
+      expectTrue(forked[ObservableLike_isDeferred]);
+      expectFalse(forked[ObservableLike_isRunnable]);
+      expectFalse(forked[ObservableLike_isPure]);
+    }),
+    testAsync("src with side-effects is only subscribed to once", async () => {
+      const sideEffect = mockFn();
+      const src = pipe(
+        0,
+        Observable.fromValue(),
+        Observable.forEach(sideEffect),
+      );
+
+      await pipeAsync(
+        src,
+        Observable.forkMerge(
+          Observable.flatMapIterable(_ => [1, 2, 3]),
+          Observable.flatMapIterable(_ => [4, 5, 6]),
+        ),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      );
+
+      pipe(sideEffect, expectToHaveBeenCalledTimes(1));
     }),
   ),
   describe(

@@ -38,13 +38,27 @@ interface FlatMap {
         readonly [ObservableLike_isPure]: false;
         readonly [ObservableLike_isRunnable]: true;
     }): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+    flatMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>, options: {
+        readonly [ObservableLike_isDeferred]: boolean;
+        readonly [ObservableLike_isPure]: boolean;
+        readonly [ObservableLike_isRunnable]: boolean;
+    }): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
     flatMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 }
 export interface ObservableComputation extends Computation {
     readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
 }
-export interface RunnableComputation extends Computation {
+export interface PureRunnableComputation extends Computation {
     readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
+}
+export interface RunnableWithSideEffectsComputation extends Computation {
+    readonly [Computation_type]?: RunnableWithSideEffectsLike<this[typeof Computation_T]>;
+}
+export interface DeferredSideEffectsObservableComputation extends Computation {
+    readonly [Computation_type]?: DeferredSideEffectsObservableLike<this[typeof Computation_T]>;
+}
+export interface MulticastObservableComputation extends Computation {
+    readonly [Computation_type]?: MulticastObservableLike<this[typeof Computation_T]>;
 }
 export type Type = ObservableComputation;
 export declare namespace Animation {
@@ -101,7 +115,7 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
  * @noInheritDoc
  * @category Module
  */
-export interface ObservableModule extends PureComputationModule<ObservableComputation>, PureComputationModule<RunnableComputation> {
+export interface ObservableModule extends PureComputationModule<ObservableComputation>, PureComputationModule<PureRunnableComputation> {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): PureObservableOperator<T, T>;
     buffer<T>(options?: {
@@ -189,11 +203,13 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): <TObservableIn extends ObservableLike<TA>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<TB> : DeferredSideEffectsObservableLike<TB>;
+    flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ObservableOperatorWithSideEffects<TA, TB>;
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
+    forkMerge<TOut, TObservableIn extends ObservableLike, TObservableOut extends ObservableLike<TOut>>(fst: Function1<TObservableIn, TObservableOut>, snd: Function1<TObservableIn, TObservableOut>, ...tail: readonly Function1<TObservableIn, TObservableOut>[]): TObservableIn extends PureRunnableLike ? TObservableOut extends PureRunnableLike<TOut> ? Function1<TObservableIn, PureRunnableLike<TOut>> : TObservableOut extends RunnableLike<TOut> ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>> : TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends RunnableWithSideEffectsLike ? TObservableOut extends RunnableLike<TOut> ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>> : TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends DeferredSideEffectsObservableLike ? TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends MulticastObservableLike ? TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : never;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredSideEffectsObservableLike<T>>;
     fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredSideEffectsObservableLike<T>>;
     fromAsyncIterable<T>(scheduler: SchedulerLike, options?: {
@@ -209,7 +225,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     fromIterable<T>(options?: {
         readonly delay: number;
         readonly delayStart?: boolean;
-    }): Function1<Iterable<T>, DeferredSideEffectsObservableLike<T>>;
+    }): Function1<Iterable<T>, RunnableWithSideEffectsLike<T>>;
     fromOptional<T>(options?: {
         readonly delay: number;
     }): Function1<Optional<T>, PureRunnableLike<T>>;
@@ -432,8 +448,10 @@ export declare const exhaust: Signature["exhaust"];
 export declare const exhaustMap: Signature["exhaustMap"];
 export declare const firstAsync: Signature["firstAsync"];
 export declare const flatMapAsync: Signature["flatMapAsync"];
+export declare const flatMapIterable: Signature["flatMapIterable"];
 export declare const flow: Signature["flow"];
 export declare const forEach: Signature["forEach"];
+export declare const forkMerge: Signature["forkMerge"];
 export declare const fromAsyncFactory: Signature["fromAsyncFactory"];
 export declare const fromAsyncIterable: Signature["fromAsyncIterable"];
 export declare const fromEnumerable: Signature["fromEnumerable"];

@@ -12,12 +12,12 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import Observable_create from "./Observable.create.js";
+import Observable_createRunnableWithSideEffects from "./Observable.createRunnableWithSideEffects.js";
 
 const Observable_fromIterable: Observable.Signature["fromIterable"] =
   <T>(options?: { delay: number; delayStart?: boolean }) =>
   (iterable: Iterable<T>) =>
-    Observable_create((observer: ObserverLike<T>) => {
+    Observable_createRunnableWithSideEffects((observer: ObserverLike<T>) => {
       const { delay = 0, delayStart = false } = options ?? {};
 
       const iterator = iterable[Symbol.iterator]();
