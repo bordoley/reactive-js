@@ -14,8 +14,7 @@ import Observable_subscribeWithConfig from "../../Observable/__internal__/Observ
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";
 import Observer_mixin_initFromDelegate from "../../Observer/__internal__/Observer.mixin.initFromDelegate.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-const Observer_createMergeAllObserverOperator = 
-/*@__PURE__*/ (() => {
+const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
     const MergeAllObserver_concurrency = Symbol("MergeAllObserver_concurrency");
     const MergeAllObserver_delegate = Symbol("MergeAllObserver_delegate");
@@ -28,8 +27,7 @@ const Observer_createMergeAllObserverOperator =
     const createMergeAllObserver = createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
-        instance[MergeAllObserver_observablesQueue] =
-            Queue_createIndexedQueue(capacity, backpressureStrategy);
+        instance[MergeAllObserver_observablesQueue] = Queue_createIndexedQueue(capacity, backpressureStrategy);
         instance[MergeAllObserver_concurrency] = concurrency;
         instance[MergeAllObserver_delegate] = delegate;
         instance[MergeAllObserver_activeCount] = 0;

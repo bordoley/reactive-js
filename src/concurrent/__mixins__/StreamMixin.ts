@@ -8,7 +8,7 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   DispatcherLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -42,7 +42,8 @@ const DispatchedObservableLike_dispatcher = Symbol(
   "DispatchedObservableLike_dispatcher",
 );
 
-interface DispatchedObservableLike<T> extends DeferredObservableLike<T> {
+interface DispatchedObservableLike<T>
+  extends DeferredSideEffectsObservableLike<T> {
   [DispatchedObservableLike_dispatcher]: Optional<DispatcherLike<T>>;
 }
 
@@ -90,7 +91,10 @@ type TProperties = {
 
 const StreamMixin: <TReq, T>() => Mixin3<
   StreamLike<TReq, T> & DisposableLike,
-  Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+  Function1<
+    DeferredSideEffectsObservableLike<TReq>,
+    DeferredSideEffectsObservableLike<T>
+  >,
   SchedulerLike,
   Optional<{
     replay?: number;
@@ -107,7 +111,10 @@ const StreamMixin: <TReq, T>() => Mixin3<
       ),
       function StreamMixin(
         instance: TProperties,
-        op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+        op: Function1<
+          DeferredSideEffectsObservableLike<TReq>,
+          DeferredSideEffectsObservableLike<T>
+        >,
         scheduler: SchedulerLike,
         multicastOptions?: {
           replay?: number;

@@ -12,6 +12,8 @@
 ### Observable Interfaces
 
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
+- [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
+- [PureRunnableLike](../interfaces/concurrent.PureRunnableLike.md)
 - [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)
 - [RunnableLike](../interfaces/concurrent.RunnableLike.md)
 - [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
@@ -28,6 +30,7 @@
 - [PauseableLike](../interfaces/concurrent.PauseableLike.md)
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
+- [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
 - [ReplayPublisherLike](../interfaces/concurrent.ReplayPublisherLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
 - [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
@@ -36,10 +39,6 @@
 ### Interactive Type Aliases
 
 - [StreamOf](concurrent.md#streamof)
-
-### Other Type Aliases
-
-- [Observableish](concurrent.md#observableish)
 
 ### Variables
 
@@ -87,20 +86,6 @@
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
-
-___
-
-## Other Type Aliases
-
-### Observableish
-
-Ƭ **Observableish**<`T`\>: [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> \| [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\> \| [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\> \| `Iterable`<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
 
 ## Variables
 

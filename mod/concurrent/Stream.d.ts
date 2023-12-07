@@ -1,4 +1,4 @@
-import { DeferredObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike, StreamLike } from "../concurrent.js";
+import { DeferredObservableLike, SchedulerLike, StreamLike } from "../concurrent.js";
 import { Function1, Function2, Updater } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 /**
@@ -6,7 +6,7 @@ import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } fro
  * @category Module
  */
 export interface StreamModule {
-    syncState<T>(onInit: Function1<T, DeferredObservableLike<Updater<T>> | RunnableWithSideEffectsLike<Updater<T>> | RunnableLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableLike<Updater<T>> | RunnableWithSideEffectsLike<Updater<T>> | RunnableLike<Updater<T>>>, options?: {
+    syncState<T>(onInit: Function1<T, DeferredObservableLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>, options?: {
         readonly throttleDuration?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

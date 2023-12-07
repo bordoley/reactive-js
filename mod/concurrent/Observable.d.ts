@@ -1,19 +1,45 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
-import { DeferredObservableLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PauseableObservableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { DeferredObservableLike, DeferredSideEffectsObservableLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PauseableObservableLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
-export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends PauseableObservableLike<TIn> ? PauseableObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
-export type PureDeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
-export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> | RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> | MulticastObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
-export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => DeferredObservableLike<TOut>;
-export type MulticastObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredObservableLike<TOut>;
+export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : TObservableIn extends PauseableObservableLike<TIn> ? PauseableObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
+export type PureDeferredSideEffectsObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : never;
+export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> | MulticastObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : ObservableLike<TOut>;
+export type DeferredSideEffectsObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => DeferredSideEffectsObservableLike<TOut>;
+export type MulticastObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredSideEffectsObservableLike<TOut>;
+interface Flatten {
+    flatten<T>(options: {
+        [ObservableLike_isDeferred]: true;
+        [ObservableLike_isPure]: true;
+        [ObservableLike_isRunnable]: true;
+    }): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
+    flatten<T>(options: {
+        [ObservableLike_isDeferred]: true;
+        [ObservableLike_isPure]: false;
+        [ObservableLike_isRunnable]: true;
+    }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+    flatten<T>(): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredSideEffectsObservableLike<T>>;
+}
+interface FlatMap {
+    flatMap<TA, TB>(selector: Function1<TA, PureRunnableLike<TB>>, options: {
+        [ObservableLike_isDeferred]: true;
+        [ObservableLike_isPure]: true;
+        [ObservableLike_isRunnable]: true;
+    }): Function1<PureRunnableLike<TA>, PureRunnableLike<TB>>;
+    flatMap<TA, TB>(selector: Function1<TA, RunnableLike<TB>>, options: {
+        [ObservableLike_isDeferred]: true;
+        [ObservableLike_isPure]: false;
+        [ObservableLike_isRunnable]: true;
+    }): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
+    flatMap<TA, TB>(selector: Function1<TA, DeferredObservableLike<TB>>): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
+}
 export interface ObservableComputation extends Computation {
     readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
 }
 export interface RunnableComputation extends Computation {
-    readonly [Computation_type]?: RunnableLike<this[typeof Computation_T]>;
+    readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
 export type Type = ObservableComputation;
 export declare namespace Animation {
@@ -71,96 +97,100 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
  * @category Module
  */
 export interface ObservableModule extends PureComputationModule<ObservableComputation>, PureComputationModule<RunnableComputation> {
-    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): RunnableLike<T>;
+    animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): PureObservableOperator<T, T>;
     buffer<T>(options?: {
         count?: number;
     }): PureObservableOperator<T, readonly T[]>;
     catchError<T>(onError: SideEffect1<Error>): ObservableOperatorWithSideEffects<T, T>;
-    combineLatest<TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableLike<Tuple2<TA, TB>>;
-    combineLatest<TA, TB, TC>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>): RunnableLike<Tuple3<TA, TB, TC>>;
-    combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>): RunnableLike<Tuple4<TA, TB, TC, TD>>;
-    combineLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>): RunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    combineLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>): RunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>): RunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>): RunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>, i: RunnableLike<TI>): RunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    combineLatest<TA, TB>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
-    combineLatest<TA, TB, TC>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
-    combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
-    combineLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
-    combineLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH>): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH>, i: RunnableLike<TI> | RunnableWithSideEffectsLike<TI>): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    combineLatest<TA, TB>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>): MulticastObservableLike<Tuple2<TA, TB>>;
-    combineLatest<TA, TB, TC>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>): MulticastObservableLike<Tuple3<TA, TB, TC>>;
-    combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
-    combineLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    combineLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | MulticastObservableLike<TH>): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | MulticastObservableLike<TH>, i: RunnableLike<TI> | MulticastObservableLike<TI>): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    combineLatest<TA, TB>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>): DeferredObservableLike<Tuple2<TA, TB>>;
-    combineLatest<TA, TB, TC>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>): DeferredObservableLike<Tuple3<TA, TB, TC>>;
-    combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
-    combineLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    combineLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>, i: RunnableLike<TI> | RunnableWithSideEffectsLike<TI> | DeferredObservableLike<TI> | MulticastObservableLike<TI>): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    combineLatest<TA, TB>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>): PureRunnableLike<Tuple2<TA, TB>>;
+    combineLatest<TA, TB, TC>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>): PureRunnableLike<Tuple3<TA, TB, TC>>;
+    combineLatest<TA, TB, TC, TD>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>): PureRunnableLike<Tuple4<TA, TB, TC, TD>>;
+    combineLatest<TA, TB, TC, TD, TE>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>): PureRunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    combineLatest<TA, TB, TC, TD, TE, TF>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>): PureRunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>): PureRunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>, h: PureRunnableLike<TH>): PureRunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>, h: PureRunnableLike<TH>, i: PureRunnableLike<TI>): PureRunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    combineLatest<TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
+    combineLatest<TA, TB, TC>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
+    combineLatest<TA, TB, TC, TD>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
+    combineLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
+    combineLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>, i: RunnableLike<TI>): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    combineLatest<TA, TB>(a: PureObservableLike<TA>, b: PureObservableLike<TB>): MulticastObservableLike<Tuple2<TA, TB>>;
+    combineLatest<TA, TB, TC>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>): MulticastObservableLike<Tuple3<TA, TB, TC>>;
+    combineLatest<TA, TB, TC, TD>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
+    combineLatest<TA, TB, TC, TD, TE>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    combineLatest<TA, TB, TC, TD, TE, TF>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>, i: PureObservableLike<TI>): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    combineLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): DeferredSideEffectsObservableLike<Tuple2<TA, TB>>;
+    combineLatest<TA, TB, TC>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): DeferredSideEffectsObservableLike<Tuple3<TA, TB, TC>>;
+    combineLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): DeferredSideEffectsObservableLike<Tuple4<TA, TB, TC, TD>>;
+    combineLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): DeferredSideEffectsObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    combineLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): DeferredSideEffectsObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): DeferredSideEffectsObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): DeferredSideEffectsObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    combineLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): DeferredSideEffectsObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
     computeDeferred<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
-    }): DeferredObservableLike<T>;
+    }): DeferredSideEffectsObservableLike<T>;
     /**
      * @category Constructor
      */
     computeRunnable<T>(computation: Factory<T>, options?: {
         mode?: "batched" | "combine-latest";
     }): RunnableWithSideEffectsLike<T>;
-    concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
-    concat<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
-    concat<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]): DeferredObservableLike<T>;
-    concat<T>(fst: MulticastObservableLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]): MulticastObservableLike<T>;
-    concatMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
-    concatMany<T>(observables: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
-    concatMany<T>(observables: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]): DeferredObservableLike<T>;
+    concat<T>(fst: PureRunnableLike<T>, snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
+    concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredSideEffectsObservableLike<T>;
+    concat<T>(fst: MulticastObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike[]): MulticastObservableLike<T>;
+    concatAll: Flatten["flatten"];
+    concatMany<T>(observables: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
+    concatMany<T>(observables: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    concatMany<T>(observables: readonly DeferredObservableLike[]): DeferredSideEffectsObservableLike<T>;
     concatMany<T>(observables: readonly [
         MulticastObservableLike<T>,
-        ...(RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]
+        ...DeferredObservableLike[]
     ]): MulticastObservableLike<T>;
-    concatWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): PureObservableOperator<T, T>;
-    concatWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservable extends RunnableLike<T> | RunnableWithSideEffectsLike<T> ? RunnableWithSideEffectsLike<T> : TObservable extends DeferredObservableLike<T> ? DeferredObservableLike<T> : ObservableLike<T>;
-    concatWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>)[]): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservable extends RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> ? DeferredObservableLike<T> : ObservableLike<T>;
-    create<T>(f: SideEffect1<ObserverLike<T>>): DeferredObservableLike<T>;
-    currentTime: RunnableLike<number>;
+    concatMap: FlatMap["flatMap"];
+    concatWith<T>(snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureObservableOperator<T, T>;
+    concatWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservable extends RunnableLike<T> ? RunnableWithSideEffectsLike<T> : TObservable extends DeferredSideEffectsObservableLike<T> ? DeferredSideEffectsObservableLike<T> : ObservableLike<T>;
+    concatWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservable extends DeferredObservableLike<T> ? DeferredSideEffectsObservableLike<T> : ObservableLike<T>;
+    create<T>(f: SideEffect1<ObserverLike<T>>): DeferredSideEffectsObservableLike<T>;
+    currentTime: PureRunnableLike<number>;
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): PureObservableOperator<ArrayBuffer, string>;
-    defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredObservableLike<T>;
+    defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredSideEffectsObservableLike<T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperatorWithSideEffects<T, T>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureObservableOperator<T, T>;
     empty<T>(options?: {
         delay: number;
-    }): RunnableLike<T>;
+    }): PureRunnableLike<T>;
     encodeUtf8(): PureObservableOperator<string, Uint8Array>;
     endWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
+    exhaust: Flatten["flatten"];
+    exhaustMap: FlatMap["flatMap"];
     firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
-    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): <TObservableIn extends ObservableLike<TA>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<TB> : DeferredObservableLike<TB>;
+    flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): <TObservableIn extends ObservableLike<TA>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<TB> : DeferredSideEffectsObservableLike<TB>;
     flow<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, PauseableObservableLike<T> & DisposableLike>;
+    }): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
-    fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredObservableLike<T>>;
-    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredObservableLike<T>>;
+    fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredSideEffectsObservableLike<T>>;
+    fromAsyncIterable<T>(): Function1<AsyncIterable<T>, DeferredSideEffectsObservableLike<T>>;
     fromAsyncIterable<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -168,36 +198,29 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     fromEnumerable<T>(options?: {
         delay: number;
         delayStart?: boolean;
-    }): Function1<EnumerableLike<T>, RunnableLike<T>>;
+    }): Function1<EnumerableLike<T>, PureRunnableLike<T>>;
     fromEventSource<T>(): Function1<EventSourceLike<T>, MulticastObservableLike<T>>;
-    fromFactory<T>(): Function1<Factory<T>, RunnableLike<T>>;
+    fromFactory<T>(): Function1<Factory<T>, PureRunnableLike<T>>;
     fromIterable<T>(options?: {
         delay: number;
         delayStart?: boolean;
-    }): Function1<Iterable<T>, DeferredObservableLike<T>>;
+    }): Function1<Iterable<T>, DeferredSideEffectsObservableLike<T>>;
     fromOptional<T>(options?: {
         delay: number;
-    }): Function1<Optional<T>, RunnableLike<T>>;
+    }): Function1<Optional<T>, PureRunnableLike<T>>;
     fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
     fromReadonlyArray<T>(options?: {
         delay: number;
         delayStart?: boolean;
-    }): Function1<ReadonlyArray<T>, RunnableLike<T>>;
+    }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
     fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
     fromValue<T>(options?: {
         delay: number;
-    }): Function1<T, RunnableLike<T>>;
+    }): Function1<T, PureRunnableLike<T>>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
-    isDeferred<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
-        [ObservableLike_isDeferred]: true;
-    };
-    isPure<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
-        [ObservableLike_isPure]: true;
-    };
-    isRunnable<T>(obs: ObservableLike<T>): obs is ObservableLike<T> & {
-        [ObservableLike_isDeferred]: true;
-        [ObservableLike_isRunnable]: true;
-    };
+    isDeferred<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
+    isPure<T>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
+    isRunnable<T>(obs: ObservableLike<T>): obs is RunnableLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
@@ -205,18 +228,20 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
-    merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableLike<T>;
-    merge<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
-    merge<T>(fst: RunnableLike<T> | MulticastObservableLike<T>, snd: RunnableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | MulticastObservableLike<T>)[]): MulticastObservableLike<T>;
-    merge<T>(fst: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>, snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>)[]): DeferredObservableLike<T>;
-    mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableLike<T>;
-    mergeMany<T>(observables: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): RunnableWithSideEffectsLike<T>;
-    mergeMany<T>(observables: readonly (RunnableLike<T> | MulticastObservableLike<T>)[]): MulticastObservableLike<T>;
-    mergeMany<T>(observables: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>)[]): DeferredObservableLike<T>;
-    mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): PureObservableOperator<T, T>;
-    mergeWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T>)[]): ObservableOperatorWithSideEffects<T, T>;
-    mergeWith<T>(snd: RunnableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | MulticastObservableLike<T>)[]): <TObservableIn>(observableIn: TObservableIn) => TObservableIn extends RunnableLike<T> | MulticastObservableLike<T> ? MulticastObservableLike<T> : DeferredObservableLike<T>;
-    mergeWith<T>(snd: RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>, ...tail: readonly (RunnableLike<T> | RunnableWithSideEffectsLike<T> | DeferredObservableLike<T> | MulticastObservableLike<T>)[]): Function1<ObservableLike<T>, DeferredObservableLike<T>>;
+    merge<T>(fst: PureRunnableLike<T>, snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
+    merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    merge<T>(fst: PureObservableLike<T>, snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): MulticastObservableLike<T>;
+    merge<T>(fst: ObservableLike<T>, snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): DeferredSideEffectsObservableLike<T>;
+    mergeAll: Flatten["flatten"];
+    mergeMany<T>(observables: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
+    mergeMany<T>(observables: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
+    mergeMany<T>(observables: readonly PureObservableLike<T>[]): MulticastObservableLike<T>;
+    mergeMany<T>(observables: readonly ObservableLike<T>[]): DeferredSideEffectsObservableLike<T>;
+    mergeMap: FlatMap["flatMap"];
+    mergeWith<T>(snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureObservableOperator<T, T>;
+    mergeWith<T>(snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): ObservableOperatorWithSideEffects<T, T>;
+    mergeWith<T>(snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): <TObservableIn>(observableIn: TObservableIn) => TObservableIn extends PureObservableLike<T> ? MulticastObservableLike<T> : DeferredSideEffectsObservableLike<T>;
+    mergeWith<T>(snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
     /**
      * @category Transform
      */
@@ -224,21 +249,21 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+    }): Function1<RunnableWithSideEffectsLike<T> | DeferredSideEffectsObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
     pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
-    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, TAcc>;
-    repeat<T>(predicate: Predicate<number>): PureDeferredObservableOperator<T, T>;
-    repeat<T>(count: number): PureDeferredObservableOperator<T, T>;
-    repeat<T>(): PureDeferredObservableOperator<T, T>;
-    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureDeferredObservableOperator<T, T>;
+    reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
+    repeat<T>(predicate: Predicate<number>): PureDeferredSideEffectsObservableOperator<T, T>;
+    repeat<T>(count: number): PureDeferredSideEffectsObservableOperator<T, T>;
+    repeat<T>(): PureDeferredSideEffectsObservableOperator<T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureDeferredSideEffectsObservableOperator<T, T>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): SideEffect1<RunnableLike<T> | RunnableWithSideEffectsLike<T>>;
+    }): SideEffect1<RunnableLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureObservableOperator<T, TAcc>;
     /**
      * @category Transform
@@ -247,7 +272,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): Function1<DeferredObservableLike<T> | RunnableWithSideEffectsLike<T>, MulticastObservableLike<T>>;
+    }): Function1<DeferredObservableLike<T>, MulticastObservableLike<T>>;
     skipFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
@@ -255,8 +280,10 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly stiffness?: number;
         readonly damping?: number;
         readonly precision?: number;
-    }): RunnableLike<number>;
+    }): PureRunnableLike<number>;
     startWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
+    switchAll: Flatten["flatten"];
+    switchMap: FlatMap["flatMap"];
     subscribe<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -264,16 +291,16 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     subscribeOn<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
-    }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<T> : DeferredObservableLike<T>;
+    }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<T> : DeferredSideEffectsObservableLike<T>;
     takeFirst<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
     takeLast<T>(options?: {
         readonly count?: number;
     }): PureObservableOperator<T, T>;
-    takeUntil<T>(notifier: RunnableLike): PureObservableOperator<T, T>;
+    takeUntil<T>(notifier: PureRunnableLike): PureObservableOperator<T, T>;
     takeUntil<T>(notifier: RunnableWithSideEffectsLike): ObservableOperatorWithSideEffects<T, T>;
-    takeUntil<T>(notifier: DeferredObservableLike): DeferredObservableOperator<T, T>;
+    takeUntil<T>(notifier: DeferredSideEffectsObservableLike): DeferredSideEffectsObservableOperator<T, T>;
     takeUntil<T>(notifier: MulticastObservableLike): MulticastObservableOperator<T, T>;
     takeWhile<T>(predicate: Predicate<T>, options?: {
         readonly inclusive?: boolean;
@@ -291,49 +318,49 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
-    toReadonlyArray<T>(): Function1<RunnableLike<T> | RunnableWithSideEffectsLike<T>, ReadonlyArray<T>>;
+    toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
     toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     withCurrentTime<TA, TB>(selector: Function2<number, TA, TB>): PureObservableOperator<TA, TB>;
-    withLatestFrom<TA, TB, T>(other: RunnableLike<TB>, selector: Function2<TA, TB, T>): PureObservableOperator<TA, T>;
+    withLatestFrom<TA, TB, T>(other: PureRunnableLike<TB>, selector: Function2<TA, TB, T>): PureObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: RunnableWithSideEffectsLike<TB>, selector: Function2<TA, TB, T>): ObservableOperatorWithSideEffects<TA, T>;
-    withLatestFrom<TA, TB, T>(other: DeferredObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredObservableOperator<TA, T>;
+    withLatestFrom<TA, TB, T>(other: DeferredSideEffectsObservableLike<TB>, selector: Function2<TA, TB, T>): DeferredSideEffectsObservableOperator<TA, T>;
     withLatestFrom<TA, TB, T>(other: MulticastObservableLike<TB>, selector: Function2<TA, TB, T>): Function1<ObservableLike<TA>, MulticastObservableLike<T>>;
-    zipLatest<TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableLike<Tuple2<TA, TB>>;
-    zipLatest<TA, TB, TC>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>): RunnableLike<Tuple3<TA, TB, TC>>;
-    zipLatest<TA, TB, TC, TD>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>): RunnableLike<Tuple4<TA, TB, TC, TD>>;
-    zipLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>): RunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    zipLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>): RunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>): RunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>): RunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>, i: RunnableLike<TI>): RunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    zipLatest<TA, TB>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
-    zipLatest<TA, TB, TC>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
-    zipLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
-    zipLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
-    zipLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH>): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH>, i: RunnableLike<TI> | RunnableWithSideEffectsLike<TI>): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    zipLatest<TA, TB>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>): MulticastObservableLike<Tuple2<TA, TB>>;
-    zipLatest<TA, TB, TC>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>): MulticastObservableLike<Tuple3<TA, TB, TC>>;
-    zipLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
-    zipLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    zipLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | MulticastObservableLike<TH>): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | MulticastObservableLike<TH>, i: RunnableLike<TI> | MulticastObservableLike<TI>): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
-    zipLatest<TA, TB>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>): DeferredObservableLike<Tuple2<TA, TB>>;
-    zipLatest<TA, TB, TC>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>): DeferredObservableLike<Tuple3<TA, TB, TC>>;
-    zipLatest<TA, TB, TC, TD>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>): DeferredObservableLike<Tuple4<TA, TB, TC, TD>>;
-    zipLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>): DeferredObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
-    zipLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>): DeferredObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>): DeferredObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>): DeferredObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
-    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA> | RunnableWithSideEffectsLike<TA> | DeferredObservableLike<TA> | MulticastObservableLike<TA>, b: RunnableLike<TB> | RunnableWithSideEffectsLike<TB> | DeferredObservableLike<TB> | MulticastObservableLike<TB>, c: RunnableLike<TC> | RunnableWithSideEffectsLike<TC> | DeferredObservableLike<TC> | MulticastObservableLike<TC>, d: RunnableLike<TD> | RunnableWithSideEffectsLike<TD> | DeferredObservableLike<TD> | MulticastObservableLike<TD>, e: RunnableLike<TE> | RunnableWithSideEffectsLike<TE> | DeferredObservableLike<TE> | MulticastObservableLike<TE>, f: RunnableLike<TF> | RunnableWithSideEffectsLike<TF> | DeferredObservableLike<TF> | MulticastObservableLike<TF>, g: RunnableLike<TG> | RunnableWithSideEffectsLike<TG> | DeferredObservableLike<TG> | MulticastObservableLike<TG>, h: RunnableLike<TH> | RunnableWithSideEffectsLike<TH> | DeferredObservableLike<TH> | MulticastObservableLike<TH>, i: RunnableLike<TI> | RunnableWithSideEffectsLike<TI> | DeferredObservableLike<TI> | MulticastObservableLike<TI>): DeferredObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    zipLatest<TA, TB>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>): PureRunnableLike<Tuple2<TA, TB>>;
+    zipLatest<TA, TB, TC>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>): PureRunnableLike<Tuple3<TA, TB, TC>>;
+    zipLatest<TA, TB, TC, TD>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>): PureRunnableLike<Tuple4<TA, TB, TC, TD>>;
+    zipLatest<TA, TB, TC, TD, TE>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>): PureRunnableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    zipLatest<TA, TB, TC, TD, TE, TF>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>): PureRunnableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>): PureRunnableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>, h: PureRunnableLike<TH>): PureRunnableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: PureRunnableLike<TA>, b: PureRunnableLike<TB>, c: PureRunnableLike<TC>, d: PureRunnableLike<TD>, e: PureRunnableLike<TE>, f: PureRunnableLike<TF>, g: PureRunnableLike<TG>, h: PureRunnableLike<TH>, i: PureRunnableLike<TI>): PureRunnableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    zipLatest<TA, TB>(a: RunnableLike<TA>, b: RunnableLike<TB>): RunnableWithSideEffectsLike<Tuple2<TA, TB>>;
+    zipLatest<TA, TB, TC>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>): RunnableWithSideEffectsLike<Tuple3<TA, TB, TC>>;
+    zipLatest<TA, TB, TC, TD>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>): RunnableWithSideEffectsLike<Tuple4<TA, TB, TC, TD>>;
+    zipLatest<TA, TB, TC, TD, TE>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>): RunnableWithSideEffectsLike<Tuple5<TA, TB, TC, TD, TE>>;
+    zipLatest<TA, TB, TC, TD, TE, TF>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>): RunnableWithSideEffectsLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>): RunnableWithSideEffectsLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>): RunnableWithSideEffectsLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: RunnableLike<TA>, b: RunnableLike<TB>, c: RunnableLike<TC>, d: RunnableLike<TD>, e: RunnableLike<TE>, f: RunnableLike<TF>, g: RunnableLike<TG>, h: RunnableLike<TH>, i: RunnableLike<TI>): RunnableWithSideEffectsLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    zipLatest<TA, TB>(a: PureObservableLike<TA>, b: PureObservableLike<TB>): MulticastObservableLike<Tuple2<TA, TB>>;
+    zipLatest<TA, TB, TC>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>): MulticastObservableLike<Tuple3<TA, TB, TC>>;
+    zipLatest<TA, TB, TC, TD>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>): MulticastObservableLike<Tuple4<TA, TB, TC, TD>>;
+    zipLatest<TA, TB, TC, TD, TE>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>): MulticastObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    zipLatest<TA, TB, TC, TD, TE, TF>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>): MulticastObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>): MulticastObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>): MulticastObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: PureObservableLike<TA>, b: PureObservableLike<TB>, c: PureObservableLike<TC>, d: PureObservableLike<TD>, e: PureObservableLike<TE>, f: PureObservableLike<TF>, g: PureObservableLike<TG>, h: PureObservableLike<TH>, i: PureObservableLike<TI>): MulticastObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
+    zipLatest<TA, TB>(a: ObservableLike<TA>, b: ObservableLike<TB>): DeferredSideEffectsObservableLike<Tuple2<TA, TB>>;
+    zipLatest<TA, TB, TC>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>): DeferredSideEffectsObservableLike<Tuple3<TA, TB, TC>>;
+    zipLatest<TA, TB, TC, TD>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>): DeferredSideEffectsObservableLike<Tuple4<TA, TB, TC, TD>>;
+    zipLatest<TA, TB, TC, TD, TE>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>): DeferredSideEffectsObservableLike<Tuple5<TA, TB, TC, TD, TE>>;
+    zipLatest<TA, TB, TC, TD, TE, TF>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>): DeferredSideEffectsObservableLike<Tuple6<TA, TB, TC, TD, TE, TF>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>): DeferredSideEffectsObservableLike<Tuple7<TA, TB, TC, TD, TE, TF, TG>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>): DeferredSideEffectsObservableLike<Tuple8<TA, TB, TC, TD, TE, TF, TG, TH>>;
+    zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): DeferredSideEffectsObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 }
 export type Signature = ObservableModule;
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
@@ -403,3 +430,4 @@ export declare const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"];
 export declare const withCurrentTime: Signature["withCurrentTime"];
 export declare const withLatestFrom: Signature["withLatestFrom"];
 export declare const zipLatest: Signature["zipLatest"];
+export {};

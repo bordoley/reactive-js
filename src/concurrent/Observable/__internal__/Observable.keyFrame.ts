@@ -1,7 +1,7 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { min } from "../../../__internal__/math.js";
 import { pick } from "../../../computations.js";
-import { RunnableLike } from "../../../concurrent.js";
+import { PureRunnableLike } from "../../../concurrent.js";
 import {
   Function1,
   Tuple2,
@@ -21,7 +21,7 @@ const Observable_keyFrame = (
   options?: {
     readonly easing?: Function1<number, number>;
   },
-): RunnableLike<number> => {
+): PureRunnableLike<number> => {
   const { easing = identity } = options ?? {};
 
   return pipe(

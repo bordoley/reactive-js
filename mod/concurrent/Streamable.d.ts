@@ -1,4 +1,4 @@
-import { DeferredObservableLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { DeferredSideEffectsObservableLike, StreamLike, StreamableLike } from "../concurrent.js";
 import { Equality, Factory, Function1, Updater } from "../functions.js";
 /**
  * @noInheritDoc
@@ -8,7 +8,7 @@ export interface StreamableModule {
     /**
      * @category Constructor
      */
-    create<TReq, T>(op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+    create<TReq, T>(op: Function1<DeferredSideEffectsObservableLike<TReq>, DeferredSideEffectsObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a

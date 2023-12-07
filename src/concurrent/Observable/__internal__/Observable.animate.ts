@@ -1,4 +1,4 @@
-import { RunnableLike } from "../../../concurrent.js";
+import { PureRunnableLike } from "../../../concurrent.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import { PureObservableOperator } from "../../Observable.js";
@@ -17,7 +17,7 @@ const scale = (start: number, end: number) => (v: number) => {
 
 const parseAnimationConfig = <T = number>(
   config: Observable.Animation<T>,
-): RunnableLike<T> =>
+): PureRunnableLike<T> =>
   config.type === "loop"
     ? pipe(
         Observable_animate<T>(config.animation),

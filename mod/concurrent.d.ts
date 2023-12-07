@@ -1,4 +1,4 @@
-import { CollectionLike, EnumerableLike, IndexedLike } from "./collections.js";
+import { CollectionLike, IndexedLike } from "./collections.js";
 import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1 } from "./functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SinkLike } from "./utils.js";
@@ -185,20 +185,35 @@ export interface ObservableLike<T = unknown> {
      */
     [ObservableLike_observe](observer: ObserverLike<T>): void;
 }
-export type Observableish<T> = ObservableLike<T> | EnumerableLike<T> | EventSourceLike<T> | Iterable<T>;
 /**
  * @noInheritDoc
  * @category Observable
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
+}
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
+    readonly [ObservableLike_isRunnable]: true;
+}
+export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
+    readonly [ObservableLike_isPure]: true;
+}
+/**
+ * @noInheritDoc
+ * @category Observable
+ */
+export interface DeferredSideEffectsObservableLike<T = unknown> extends DeferredObservableLike<T> {
     readonly [ObservableLike_isPure]: false;
 }
 /**
  * @noInheritDoc
  * @category Observable
  */
-export interface RunnableLike<T = unknown> extends ObservableLike<T> {
+export interface PureRunnableLike<T = unknown> extends RunnableLike<T>, PureObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
     readonly [ObservableLike_isPure]: true;
     readonly [ObservableLike_isRunnable]: true;
@@ -207,16 +222,13 @@ export interface RunnableLike<T = unknown> extends ObservableLike<T> {
  * @noInheritDoc
  * @category Observable
  */
-export interface RunnableWithSideEffectsLike<T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_isDeferred]: true;
+export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isPure]: false;
-    readonly [ObservableLike_isRunnable]: true;
 }
 /**
  * @noInheritDoc
  */
-export interface MulticastObservableLike<T = unknown> extends ObservableLike<T> {
-    readonly [ObservableLike_isPure]: true;
+export interface MulticastObservableLike<T = unknown> extends PureObservableLike<T> {
     readonly [ObservableLike_isDeferred]: false;
     readonly [ObservableLike_isRunnable]: false;
 }

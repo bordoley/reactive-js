@@ -1,6 +1,6 @@
 import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   SchedulerLike,
   StreamLike,
 } from "../../../concurrent.js";
@@ -13,7 +13,10 @@ import {
 import StreamMixin from "../../__mixins__/StreamMixin.js";
 
 const Stream_create: <TReq, T>(
-  op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+  op: Function1<
+    DeferredSideEffectsObservableLike<TReq>,
+    DeferredSideEffectsObservableLike<T>
+  >,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

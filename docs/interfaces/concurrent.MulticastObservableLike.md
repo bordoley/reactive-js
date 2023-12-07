@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>
+- [`PureObservableLike`](concurrent.PureObservableLike.md)<`T`\>
 
   ↳ **`MulticastObservableLike`**
 
@@ -25,7 +25,6 @@
 ### Properties
 
 - [[ObservableLike\_isDeferred]](concurrent.MulticastObservableLike.md#[observablelike_isdeferred])
-- [[ObservableLike\_isPure]](concurrent.MulticastObservableLike.md#[observablelike_ispure])
 - [[ObservableLike\_isRunnable]](concurrent.MulticastObservableLike.md#[observablelike_isrunnable])
 
 ## Properties
@@ -38,19 +37,7 @@ Indicates if the `ObservableLike` is deferred, ie. cold.
 
 #### Overrides
 
-[ObservableLike](concurrent.ObservableLike.md).[[ObservableLike_isDeferred]](concurrent.ObservableLike.md#[observablelike_isdeferred])
-
-___
-
-### [ObservableLike\_isPure]
-
-• `Readonly` **[ObservableLike\_isPure]**: ``true``
-
-Indicates if subscribing to the `ObservableLike` is free of side-effects
-
-#### Overrides
-
-[ObservableLike](concurrent.ObservableLike.md).[[ObservableLike_isPure]](concurrent.ObservableLike.md#[observablelike_ispure])
+[PureObservableLike](concurrent.PureObservableLike.md).[[ObservableLike_isDeferred]](concurrent.PureObservableLike.md#[observablelike_isdeferred])
 
 ___
 
@@ -63,4 +50,4 @@ on a VirtualTimeScheduler.
 
 #### Overrides
 
-[ObservableLike](concurrent.ObservableLike.md).[[ObservableLike_isRunnable]](concurrent.ObservableLike.md#[observablelike_isrunnable])
+[PureObservableLike](concurrent.PureObservableLike.md).[[ObservableLike_isRunnable]](concurrent.PureObservableLike.md#[observablelike_isrunnable])

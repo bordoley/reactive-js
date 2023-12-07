@@ -2,8 +2,6 @@ import {
   DeferredObservableLike,
   ObservableLike,
   ObserverLike,
-  RunnableLike,
-  RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
 import {
   bindMethod,
@@ -22,7 +20,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 type ObservableRepeatOrRetry = <T>(
   shouldRepeat: (count: number, error?: Error) => boolean,
-) => Observable.PureDeferredObservableOperator<T, T>;
+) => Observable.PureDeferredSideEffectsObservableOperator<T, T>;
 
 const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   T,
@@ -66,12 +64,7 @@ const Observable_repeatOrRetry: ObservableRepeatOrRetry = /*@__PURE__*/ (<
   };
 
   return ((shouldRepeat: (count: number, error?: Error) => boolean) =>
-    (
-      observable:
-        | DeferredObservableLike<T>
-        | RunnableLike<T>
-        | RunnableWithSideEffectsLike<T>,
-    ) =>
+    (observable: DeferredObservableLike<T>) =>
       Observable_liftPure(
         pipe(createRepeatObserver, partial(observable, shouldRepeat)),
       )(observable)) as ObservableRepeatOrRetry;

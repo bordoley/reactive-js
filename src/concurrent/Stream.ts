@@ -1,7 +1,5 @@
 import {
   DeferredObservableLike,
-  RunnableLike,
-  RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
 } from "../concurrent.js";
@@ -19,19 +17,8 @@ import {
  */
 export interface StreamModule {
   syncState<T>(
-    onInit: Function1<
-      T,
-      | DeferredObservableLike<Updater<T>>
-      | RunnableWithSideEffectsLike<Updater<T>>
-      | RunnableLike<Updater<T>>
-    >,
-    onChange: Function2<
-      T,
-      T,
-      | DeferredObservableLike<Updater<T>>
-      | RunnableWithSideEffectsLike<Updater<T>>
-      | RunnableLike<Updater<T>>
-    >,
+    onInit: Function1<T, DeferredObservableLike<Updater<T>>>,
+    onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>,
     options?: {
       readonly throttleDuration?: number;
       readonly capacity?: number;

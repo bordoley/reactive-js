@@ -29,7 +29,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TReq`\>, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\> |
+| `op` | [`Function1`](../modules/functions.md#function1)<[`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TReq`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\> |
 
 #### Returns
 

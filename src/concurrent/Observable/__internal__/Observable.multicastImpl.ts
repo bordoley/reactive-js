@@ -3,7 +3,6 @@ import {
   DeferredObservableLike,
   ReplayObservableLike,
   ReplayPublisherLike,
-  RunnableWithSideEffectsLike,
   SchedulerLike,
 } from "../../../concurrent.js";
 import {
@@ -40,7 +39,7 @@ const Observable_multicastImpl =
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     } = {},
   ): Function1<
-    RunnableWithSideEffectsLike<T> | DeferredObservableLike<T>,
+    DeferredObservableLike<T>,
     ReplayObservableLike<T> & DisposableLike
   > =>
   observable => {

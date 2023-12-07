@@ -1,8 +1,4 @@
-import {
-  RunnableLike,
-  RunnableWithSideEffectsLike,
-  SchedulerLike,
-} from "../../../concurrent.js";
+import { RunnableLike, SchedulerLike } from "../../../concurrent.js";
 import { returns } from "../../../functions.js";
 import {
   QueueableLike,
@@ -19,7 +15,7 @@ const Observable_flow: Observable.Signature["flow"] =
       readonly capacity?: number;
     },
   ) =>
-  (runnable: RunnableLike<T> | RunnableWithSideEffectsLike<T>) => {
+  (runnable: RunnableLike<T>) => {
     return Observable_createPauseable<T>(returns(runnable), scheduler, options);
   };
 export default Observable_flow;

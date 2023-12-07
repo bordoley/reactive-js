@@ -3,7 +3,6 @@ import {
   ObservableLike,
   ObservableLike_observe,
   ReplayObservableLike,
-  RunnableWithSideEffectsLike,
   SchedulerLike,
 } from "../../../concurrent.js";
 import { Factory, Optional, none, pipe } from "../../../functions.js";
@@ -33,7 +32,7 @@ const Observable_share: Observable.Signature["share"] =
       readonly capacity?: number;
     },
   ) =>
-  (source: DeferredObservableLike<T> | RunnableWithSideEffectsLike<T>) => {
+  (source: DeferredObservableLike<T>) => {
     let multicasted: Optional<ReplayObservableLike<T>> = none;
 
     return createLazyMulticastObservable<T>(

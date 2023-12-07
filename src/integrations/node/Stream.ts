@@ -1,7 +1,7 @@
 import { Readable, Transform, Writable } from "stream";
 import Observable_createPauseable from "../..//concurrent/Observable/__internal__/Observable.createPauseable.js";
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   DispatcherLike_complete,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -42,7 +42,7 @@ interface NodeStreamModule {
     factory: Writable | Factory<Writable>,
   ): Function1<
     PauseableObservableLike<Uint8Array>,
-    DeferredObservableLike<void>
+    DeferredSideEffectsObservableLike<void>
   >;
 }
 
@@ -150,7 +150,7 @@ export const sinkInto: Signature["sinkInto"] =
     factory: Writable | Factory<Writable>,
   ): Function1<
     PauseableObservableLike<Uint8Array>,
-    DeferredObservableLike<void>
+    DeferredSideEffectsObservableLike<void>
   > =>
   flowable =>
     Observable.create<void>(observer => {

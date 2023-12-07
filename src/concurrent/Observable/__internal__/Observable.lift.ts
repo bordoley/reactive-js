@@ -7,7 +7,7 @@ import {
   unsafeCast,
 } from "../../../__internal__/mixins.js";
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -19,7 +19,7 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  RunnableLike,
+  PureRunnableLike,
   RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
 import {
@@ -29,7 +29,7 @@ import {
   pipeUnsafe,
 } from "../../../functions.js";
 import type {
-  DeferredObservableOperator,
+  DeferredSideEffectsObservableOperator,
   ObservableOperatorWithSideEffects,
   PureObservableOperator,
 } from "../../Observable.js";
@@ -107,7 +107,7 @@ const createLiftedPauseableObservable: <TIn, TOut>(
 interface ObservableLift {
   lift(
     options: Pick<
-      RunnableLike,
+      PureRunnableLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
@@ -129,14 +129,14 @@ interface ObservableLift {
 
   lift(
     options: Pick<
-      DeferredObservableLike,
+      DeferredSideEffectsObservableLike,
       | typeof ObservableLike_isDeferred
       | typeof ObservableLike_isPure
       | typeof ObservableLike_isRunnable
     >,
   ): <TA, TB>(
     operator: Function1<ObserverLike<TB>, ObserverLike<TA>>,
-  ) => DeferredObservableOperator<TA, TB>;
+  ) => DeferredSideEffectsObservableOperator<TA, TB>;
 
   lift(
     options: Pick<

@@ -1,6 +1,5 @@
 import {
   RunnableLike,
-  RunnableWithSideEffectsLike,
   VirtualTimeSchedulerLike_run,
 } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
@@ -19,7 +18,7 @@ const Observable_run: Observable.Signature["run"] =
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   }) =>
-  (observable: RunnableLike<T> | RunnableWithSideEffectsLike<T>) => {
+  (observable: RunnableLike<T>) => {
     const scheduler = VirtualTimeScheduler_create();
 
     const subscription = pipe(

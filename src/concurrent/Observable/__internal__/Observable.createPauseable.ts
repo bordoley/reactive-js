@@ -7,6 +7,7 @@ import {
 } from "../../../__internal__/mixins.js";
 import {
   DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   MulticastObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
@@ -17,8 +18,6 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  RunnableLike,
-  RunnableWithSideEffectsLike,
   SchedulerLike,
   StreamLike,
 } from "../../../concurrent.js";
@@ -47,10 +46,7 @@ import Observable_subscribe from "./Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable.subscribeOn.js";
 
 const Observable_createPauseable: <T>(
-  op: Function1<
-    MulticastObservableLike<boolean>,
-    DeferredObservableLike<T> | RunnableLike<T> | RunnableWithSideEffectsLike<T>
-  >,
+  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -68,9 +64,7 @@ const Observable_createPauseable: <T>(
         instance: PauseableObservableLike<T> & TProperties,
         op: Function1<
           MulticastObservableLike<boolean>,
-          | DeferredObservableLike<T>
-          | RunnableLike<T>
-          | RunnableWithSideEffectsLike<T>
+          DeferredObservableLike<T>
         >,
         scheduler: SchedulerLike,
         multicastOptions?: {
@@ -78,7 +72,7 @@ const Observable_createPauseable: <T>(
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
       ): PauseableObservableLike<T> & DisposableLike {
-        const liftedOp = (mode: DeferredObservableLike<boolean>) =>
+        const liftedOp = (mode: DeferredSideEffectsObservableLike<boolean>) =>
           Observable_create(observer => {
             const pauseableScheduler = pipe(
               observer,

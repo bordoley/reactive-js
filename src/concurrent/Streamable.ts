@@ -1,5 +1,5 @@
 import {
-  DeferredObservableLike,
+  DeferredSideEffectsObservableLike,
   StreamLike,
   StreamableLike,
 } from "../concurrent.js";
@@ -17,7 +17,10 @@ export interface StreamableModule {
    * @category Constructor
    */
   create<TReq, T>(
-    op: Function1<DeferredObservableLike<TReq>, DeferredObservableLike<T>>,
+    op: Function1<
+      DeferredSideEffectsObservableLike<TReq>,
+      DeferredSideEffectsObservableLike<T>
+    >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
   /**
