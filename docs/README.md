@@ -30,6 +30,7 @@ Reactive-JS
 - [integrations/node/Stream](modules/integrations_node_Stream.md)
 - [integrations/react](modules/integrations_react.md)
 - [integrations/react/Scheduler](modules/integrations_react_Scheduler.md)
+- [integrations/react/web](modules/integrations_react_web.md)
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/AnimationFrameScheduler](modules/integrations_web_AnimationFrameScheduler.md)
