@@ -33,5 +33,6 @@ Reactive-JS
 - [integrations/svelte](modules/integrations_svelte.md)
 - [integrations/web](modules/integrations_web.md)
 - [integrations/web/AnimationFrameScheduler](modules/integrations_web_AnimationFrameScheduler.md)
+- [integrations/web/Element](modules/integrations_web_Element.md)
 - [utils](modules/utils.md)
 - [utils/Disposable](modules/utils_Disposable.md)
