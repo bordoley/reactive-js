@@ -96,6 +96,7 @@
 - [retry](concurrent_Observable.md#retry)
 - [run](concurrent_Observable.md#run)
 - [scan](concurrent_Observable.md#scan)
+- [scanMany](concurrent_Observable.md#scanmany)
 - [skipFirst](concurrent_Observable.md#skipfirst)
 - [spring](concurrent_Observable.md#spring)
 - [startWith](concurrent_Observable.md#startwith)
@@ -3104,6 +3105,30 @@ ___
 #### Returns
 
 [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`T`, `TAcc`\>
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`TAcc`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`TAcc`\>\>
 
 ___
 

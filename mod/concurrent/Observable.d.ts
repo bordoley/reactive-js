@@ -326,6 +326,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly capacity?: number;
     }): SideEffect1<RunnableLike<T>>;
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureObservableOperator<T, TAcc>;
+    scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<TAcc>>;
     /**
      * @category Transform
      */
@@ -485,6 +486,7 @@ export declare const repeat: Signature["repeat"];
 export declare const retry: Signature["retry"];
 export declare const run: Signature["run"];
 export declare const scan: Signature["scan"];
+export declare const scanMany: Signature["scanMany"];
 export declare const share: Signature["share"];
 export declare const skipFirst: Signature["skipFirst"];
 export declare const spring: Signature["spring"];

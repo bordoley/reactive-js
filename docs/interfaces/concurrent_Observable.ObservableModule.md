@@ -85,6 +85,7 @@
 - [retry](concurrent_Observable.ObservableModule.md#retry)
 - [run](concurrent_Observable.ObservableModule.md#run)
 - [scan](concurrent_Observable.ObservableModule.md#scan)
+- [scanMany](concurrent_Observable.ObservableModule.md#scanmany)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
 - [spring](concurrent_Observable.ObservableModule.md#spring)
 - [startWith](concurrent_Observable.ObservableModule.md#startwith)
@@ -3347,6 +3348,30 @@ ___
 #### Overrides
 
 [PureComputationModule](computations.PureComputationModule.md).[scan](computations.PureComputationModule.md#scan)
+
+___
+
+### scanMany
+
+▸ **scanMany**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TAcc`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `TAcc` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scanner` | [`Function2`](../modules/functions.md#function2)<`TAcc`, `T`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TAcc`\>\> |
+| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TAcc`\>\>
 
 ___
 

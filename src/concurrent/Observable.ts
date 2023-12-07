@@ -106,6 +106,7 @@ import Observable_repeat from "./Observable/__internal__/Observable.repeat.js";
 import Observable_retry from "./Observable/__internal__/Observable.retry.js";
 import Observable_run from "./Observable/__internal__/Observable.run.js";
 import Observable_scan from "./Observable/__internal__/Observable.scan.js";
+import Observable_scanMany from "./Observable/__internal__/Observable.scanMany.js";
 import Observable_share from "./Observable/__internal__/Observable.share.js";
 import Observable_skipFirst from "./Observable/__internal__/Observable.skipFirst.js";
 import Observable_spring from "./Observable/__internal__/Observable.spring.js";
@@ -1015,6 +1016,12 @@ export interface ObservableModule
     initialValue: Factory<TAcc>,
   ): PureObservableOperator<T, TAcc>;
 
+  scanMany<T, TAcc>(
+    scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>,
+    initialValue: Factory<TAcc>,
+    // FIXME: Take options for inner scanner to support pure Runnables
+  ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<TAcc>>;
+
   /**
    * @category Transform
    */
@@ -1469,6 +1476,7 @@ export const repeat: Signature["repeat"] = Observable_repeat;
 export const retry: Signature["retry"] = Observable_retry;
 export const run: Signature["run"] = Observable_run;
 export const scan: Signature["scan"] = Observable_scan;
+export const scanMany: Signature["scanMany"] = Observable_scanMany;
 export const share: Signature["share"] = Observable_share;
 export const skipFirst: Signature["skipFirst"] = Observable_skipFirst;
 export const spring: Signature["spring"] = Observable_spring;
