@@ -8,6 +8,7 @@ import Observable_catchError from "./Observable/__internal__/Observable.catchErr
 import Observable_combineLatest from "./Observable/__internal__/Observable.combineLatest.js";
 import Observable_computeDeferred from "./Observable/__internal__/Observable.computeDeferred.js";
 import Observable_computeRunnable from "./Observable/__internal__/Observable.computeRunnable.js";
+import Observable_concat from "./Observable/__internal__/Observable.concat.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
 import Observable_create from "./Observable/__internal__/Observable.create.js";
@@ -77,6 +78,7 @@ export const catchError = Observable_catchError;
 export const combineLatest = Observable_combineLatest;
 export const computeDeferred = Observable_computeDeferred;
 export const computeRunnable = Observable_computeRunnable;
+export const concat = Observable_concat;
 export const concatMany = Observable_concatMany;
 export const concatWith = Observable_concatWith;
 export const create = Observable_create;

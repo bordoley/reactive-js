@@ -43,6 +43,7 @@
 - [catchError](concurrent_Observable.md#catcherror)
 - [combineLatest](concurrent_Observable.md#combinelatest)
 - [computeDeferred](concurrent_Observable.md#computedeferred)
+- [concat](concurrent_Observable.md#concat)
 - [concatMany](concurrent_Observable.md#concatmany)
 - [concatWith](concurrent_Observable.md#concatwith)
 - [create](concurrent_Observable.md#create)
@@ -1289,6 +1290,90 @@ ___
 #### Returns
 
 [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+
+___
+
+### concat
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\> |
+| `snd` | [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\> |
+| `...tail` | readonly [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> |
+| `snd` | [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\> |
+| `...tail` | readonly [`RunnableLike`](../interfaces/concurrent.RunnableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](../interfaces/concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> |
+| `snd` | [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>[] |
+
+#### Returns
+
+[`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+
+▸ **concat**<`T`\>(`fst`, `snd`, `...tail`): [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fst` | [`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\> |
+| `snd` | [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\> |
+| `...tail` | readonly [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>[] |
+
+#### Returns
+
+[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`T`\>
 
 ___
 

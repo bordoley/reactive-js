@@ -1,8 +1,9 @@
 /// <reference types="./Observable.fromReadonlyArray.d.ts" />
 
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurrent.js";
-import { none } from "../../../functions.js";
+import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createRunnable from "./Observable.createRunnable.js";
 const Observable_fromReadonlyArray = (options) => (array) => Observable_createRunnable((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
@@ -17,6 +18,6 @@ const Observable_fromReadonlyArray = (options) => (array) => Observable_createRu
         }
         observer[DisposableLike_dispose]();
     };
-    observer[SchedulerLike_schedule](continuation, delayStart ? { delay } : none);
+    pipe(observer[SchedulerLike_schedule](continuation, delayStart ? { delay } : none), Disposable.addTo(observer));
 });
 export default Observable_fromReadonlyArray;

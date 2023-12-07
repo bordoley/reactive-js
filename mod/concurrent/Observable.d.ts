@@ -394,6 +394,7 @@ export declare const catchError: Signature["catchError"];
 export declare const combineLatest: Signature["combineLatest"];
 export declare const computeDeferred: Signature["computeDeferred"];
 export declare const computeRunnable: Signature["computeRunnable"];
+export declare const concat: Signature["concat"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatWith: Signature["concatWith"];
 export declare const create: Signature["create"];
