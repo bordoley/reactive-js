@@ -103,6 +103,8 @@ import Observable_spring from "./Observable/__internal__/Observable.spring.js";
 import Observable_startWith from "./Observable/__internal__/Observable.startWith.js";
 import Observable_subscribe from "./Observable/__internal__/Observable.subscribe.js";
 import Observable_subscribeOn from "./Observable/__internal__/Observable.subscribeOn.js";
+import Observable_switchAll from "./Observable/__internal__/Observable.switchAll.js";
+import Observable_switchMap from "./Observable/__internal__/Observable.switchMap.js";
 import Observable_takeFirst from "./Observable/__internal__/Observable.takeFirst.js";
 import Observable_takeLast from "./Observable/__internal__/Observable.takeLast.js";
 import Observable_takeUntil from "./Observable/__internal__/Observable.takeUntil.js";
@@ -172,15 +174,23 @@ export type MulticastObservableOperator<TIn, TOut> = <
 
 interface Flatten {
   flatten<T>(options: {
-    [ObservableLike_isDeferred]: true;
-    [ObservableLike_isPure]: true;
-    [ObservableLike_isRunnable]: true;
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: true;
+    readonly [ObservableLike_isRunnable]: true;
   }): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
   flatten<T>(options: {
-    [ObservableLike_isDeferred]: true;
-    [ObservableLike_isPure]: false;
-    [ObservableLike_isRunnable]: true;
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: false;
+    readonly [ObservableLike_isRunnable]: true;
   }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  flatten<T>(options: {
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
+  }): Function1<
+    ObservableLike<DeferredObservableLike<T>>,
+    DeferredSideEffectsObservableLike<T>
+  >;
   flatten<T>(): Function1<
     ObservableLike<DeferredObservableLike<T>>,
     DeferredSideEffectsObservableLike<T>
@@ -191,17 +201,17 @@ interface FlatMap {
   flatMap<TA, TB>(
     selector: Function1<TA, PureRunnableLike<TB>>,
     options: {
-      [ObservableLike_isDeferred]: true;
-      [ObservableLike_isPure]: true;
-      [ObservableLike_isRunnable]: true;
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: true;
+      readonly [ObservableLike_isRunnable]: true;
     },
   ): Function1<PureRunnableLike<TA>, PureRunnableLike<TB>>;
   flatMap<TA, TB>(
     selector: Function1<TA, RunnableLike<TB>>,
     options: {
-      [ObservableLike_isDeferred]: true;
-      [ObservableLike_isPure]: false;
-      [ObservableLike_isRunnable]: true;
+      readonly [ObservableLike_isDeferred]: true;
+      readonly [ObservableLike_isPure]: false;
+      readonly [ObservableLike_isRunnable]: true;
     },
   ): Function1<RunnableLike<TA>, RunnableWithSideEffectsLike<TB>>;
   flatMap<TA, TB>(
@@ -296,7 +306,7 @@ export interface ObservableModule
   ): PureObservableOperator<T, T>;
 
   buffer<T>(options?: {
-    count?: number;
+    readonly count?: number;
   }): PureObservableOperator<T, readonly T[]>;
 
   catchError<T>(
@@ -552,7 +562,7 @@ export interface ObservableModule
   computeDeferred<T>(
     computation: Factory<T>,
     options?: {
-      mode?: "batched" | "combine-latest";
+      readonly mode?: "batched" | "combine-latest";
     },
   ): DeferredSideEffectsObservableLike<T>;
 
@@ -562,7 +572,7 @@ export interface ObservableModule
   computeRunnable<T>(
     computation: Factory<T>,
     options?: {
-      mode?: "batched" | "combine-latest";
+      readonly mode?: "batched" | "combine-latest";
     },
   ): RunnableWithSideEffectsLike<T>;
 
@@ -657,7 +667,7 @@ export interface ObservableModule
     readonly equality?: Equality<T>;
   }): PureObservableOperator<T, T>;
 
-  empty<T>(options?: { delay: number }): PureRunnableLike<T>;
+  empty<T>(options?: { readonly delay: number }): PureRunnableLike<T>;
 
   // FIXME: Doesnt support PauseableObservable
   encodeUtf8(): PureObservableOperator<string, Uint8Array>;
@@ -715,8 +725,8 @@ export interface ObservableModule
   ): Function1<AsyncIterable<T>, PauseableObservableLike<T>>;
 
   fromEnumerable<T>(options?: {
-    delay: number;
-    delayStart?: boolean;
+    readonly delay: number;
+    readonly delayStart?: boolean;
   }): Function1<EnumerableLike<T>, PureRunnableLike<T>>;
 
   fromEventSource<T>(): Function1<
@@ -727,24 +737,26 @@ export interface ObservableModule
   fromFactory<T>(): Function1<Factory<T>, PureRunnableLike<T>>;
 
   fromIterable<T>(options?: {
-    delay: number;
-    delayStart?: boolean;
+    readonly delay: number;
+    readonly delayStart?: boolean;
   }): Function1<Iterable<T>, DeferredSideEffectsObservableLike<T>>;
 
   fromOptional<T>(options?: {
-    delay: number;
+    readonly delay: number;
   }): Function1<Optional<T>, PureRunnableLike<T>>;
 
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 
   fromReadonlyArray<T>(options?: {
-    delay: number;
-    delayStart?: boolean;
+    readonly delay: number;
+    readonly delayStart?: boolean;
   }): Function1<ReadonlyArray<T>, PureRunnableLike<T>>;
 
   fromStore<T>(): Function1<StoreLike<T>, MulticastObservableLike<T>>;
 
-  fromValue<T>(options?: { delay: number }): Function1<T, PureRunnableLike<T>>;
+  fromValue<T>(options?: {
+    readonly delay: number;
+  }): Function1<T, PureRunnableLike<T>>;
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
@@ -788,7 +800,30 @@ export interface ObservableModule
     ...tail: readonly ObservableLike<T>[]
   ): DeferredSideEffectsObservableLike<T>;
 
-  mergeAll: Flatten["flatten"];
+  mergeAll<T>(options: {
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: true;
+    readonly [ObservableLike_isRunnable]: true;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
+  mergeAll<T>(options: {
+    readonly [ObservableLike_isDeferred]: true;
+    readonly [ObservableLike_isPure]: false;
+    readonly [ObservableLike_isRunnable]: true;
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  mergeAll<T>(options?: {
+    readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+    readonly capacity?: number;
+    readonly concurrency?: number;
+  }): Function1<
+    ObservableLike<DeferredObservableLike<T>>,
+    DeferredSideEffectsObservableLike<T>
+  >;
 
   mergeMany<T>(
     observables: readonly PureRunnableLike<T>[],
@@ -1326,6 +1361,8 @@ export const spring: Signature["spring"] = Observable_spring;
 export const startWith: Signature["startWith"] = Observable_startWith;
 export const subscribe: Signature["subscribe"] = Observable_subscribe;
 export const subscribeOn: Signature["subscribeOn"] = Observable_subscribeOn;
+export const switchAll: Signature["switchAll"] = Observable_switchAll;
+export const switchMap: Signature["switchMap"] = Observable_switchMap;
 export const takeFirst: Signature["takeFirst"] = Observable_takeFirst;
 export const takeLast: Signature["takeLast"] = Observable_takeLast;
 export const takeUntil: Signature["takeUntil"] = Observable_takeUntil;
