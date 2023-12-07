@@ -4,8 +4,6 @@ import { DispatcherLike_complete, SchedulerLike_maxYieldInterval, SchedulerLike_
 import { bindMethod, error, isSome, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_onComplete from "../../../utils/Disposable/__internal__/Disposable.onComplete.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_createPauseable from "./Observable.createPauseable.js";
 import Observable_forEach from "./Observable.forEach.js";
@@ -41,16 +39,16 @@ const Observable_fromAsyncIterable = ((scheduler, options) => (iterable) => isSo
                 observer[DisposableLike_dispose](error(e));
             }
             if (!isPaused) {
-                pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
+                pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
             }
         };
         pipe(modeObs, Observable_forEach((mode) => {
             const wasPaused = isPaused;
             isPaused = mode;
             if (!isPaused && wasPaused) {
-                pipe(observer[SchedulerLike_schedule](continuation), Disposable_addTo(observer));
+                pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
             }
-        }), Observable_subscribeWithConfig(observer, observer), Disposable_addTo(observer), Disposable_onComplete(bindMethod(observer, DispatcherLike_complete)));
+        }), Observable_subscribeWithConfig(observer, observer), Disposable.addTo(observer), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
     }), scheduler, options)
     : Observable_create((observer) => {
         const iterator = iterable[Symbol.asyncIterator]();

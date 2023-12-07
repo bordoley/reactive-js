@@ -16,8 +16,6 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Disposable_addTo from "../../../utils/Disposable/__internal__/Disposable.addTo.js";
-import Disposable_onComplete from "../../../utils/Disposable/__internal__/Disposable.onComplete.js";
 import type * as Observable from "../../Observable.js";
 import Observable_create from "../../Observable/__internal__/Observable.create.js";
 import Observable_createPauseable from "./Observable.createPauseable.js";
@@ -74,7 +72,7 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
                   if (!isPaused) {
                     pipe(
                       observer[SchedulerLike_schedule](continuation),
-                      Disposable_addTo(observer),
+                      Disposable.addTo(observer),
                     );
                   }
                 };
@@ -88,13 +86,13 @@ const Observable_fromAsyncIterable: Observable.Signature["fromAsyncIterable"] =
                     if (!isPaused && wasPaused) {
                       pipe(
                         observer[SchedulerLike_schedule](continuation),
-                        Disposable_addTo(observer),
+                        Disposable.addTo(observer),
                       );
                     }
                   }),
                   Observable_subscribeWithConfig(observer, observer),
-                  Disposable_addTo(observer),
-                  Disposable_onComplete(
+                  Disposable.addTo(observer),
+                  Disposable.onComplete(
                     bindMethod(observer, DispatcherLike_complete),
                   ),
                 );

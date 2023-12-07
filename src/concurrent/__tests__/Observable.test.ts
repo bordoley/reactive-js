@@ -2,11 +2,15 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
+  expectIsNone,
+  expectIsSome,
   expectToHaveBeenCalledTimes,
   expectToThrowError,
   expectTrue,
   mockFn,
   test,
+  testAsync,
   testModule,
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
@@ -26,6 +30,8 @@ import {
   Tuple2,
   alwaysTrue,
   arrayEquality,
+  bind,
+  ignore,
   increment,
   incrementBy,
   lessThan,
@@ -33,11 +39,13 @@ import {
   none,
   pipe,
   pipeLazy,
+  raise,
   returns,
   tuple,
 } from "../../functions.js";
 import {
   DisposableLike_dispose,
+  DisposableLike_error,
   DisposableLike_isDisposed,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -384,6 +392,84 @@ testModule(
     ),
   ),
   describe(
+    "lastAsync",
+    testAsync("empty source", async () => {
+      const result = await pipe(
+        [],
+        Observable.fromReadonlyArray(),
+        Observable.lastAsync(),
+      );
+      pipe(result, expectIsNone);
+    }),
+    testAsync("it returns the last value", async () => {
+      const result = await pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray(),
+        Observable.lastAsync(),
+      );
+      pipe(result, expectEquals<Optional<number>>(3));
+    }),
+  ),
+  describe(
+    "onSubscribe",
+    test("when subscribe function returns a teardown function", () => {
+      const scheduler = VirtualTimeScheduler.create();
+
+      const disp = mockFn();
+      const f = mockFn(disp);
+
+      pipe(
+        [1],
+        Observable.fromReadonlyArray(),
+        Observable.onSubscribe(f),
+        Observable.subscribe(scheduler),
+      );
+
+      pipe(disp, expectToHaveBeenCalledTimes(0));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(disp, expectToHaveBeenCalledTimes(1));
+      pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+
+    test("when callback function throws", () => {
+      const scheduler = VirtualTimeScheduler.create();
+      const subscription = pipe(
+        [1],
+        Observable.fromReadonlyArray(),
+        Observable.onSubscribe(raise),
+        Observable.subscribe(scheduler),
+      );
+
+      pipe(subscription[DisposableLike_error], expectIsSome);
+    }),
+
+    test("when call back returns a disposable", () => {
+      const scheduler = VirtualTimeScheduler.create();
+
+      const disp = Disposable.create();
+      const f = mockFn(disp);
+
+      pipe(
+        [1],
+        Observable.fromReadonlyArray(),
+        Observable.onSubscribe(f),
+        Observable.subscribe(scheduler),
+      );
+
+      expectFalse(disp[DisposableLike_isDisposed]);
+      pipe(f, expectToHaveBeenCalledTimes(1));
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      expectTrue(disp[DisposableLike_isDisposed]);
+      expectIsNone(disp[DisposableLike_error]);
+      pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+  ),
+  describe(
     "reduce",
     test(
       "summing all values from delayed source",
@@ -517,6 +603,31 @@ testModule(
       ),
     ),
   ),
+
+  describe(
+    "share",
+    test("shared observable zipped with itself", () => {
+      const scheduler = VirtualTimeScheduler.create();
+      const shared = pipe(
+        [1, 2, 3],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.forEach(ignore),
+        Observable.share(scheduler, { replay: 1 }),
+      );
+
+      let result: number[] = [];
+      pipe(
+        Observable.zipLatest(shared, shared),
+        Observable.map<Tuple2<number, number>, number>(([a, b]) => a + b),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+      pipe(result, expectArrayEquals([2, 4, 6]));
+    }),
+  ),
+
   describe(
     "startWith",
     test(

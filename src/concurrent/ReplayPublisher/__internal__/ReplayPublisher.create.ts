@@ -30,7 +30,7 @@ import {
   QueueableLike_enqueue,
   SinkLike_notify,
 } from "../../../utils.js";
-import Disposable_onDisposed from "../../../utils/Disposable/__internal__/Disposable.onDisposed.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as ReplayPublisher from "../../ReplayPublisher.js";
@@ -73,7 +73,7 @@ const ReplayPublisher_create: ReplayPublisher.Signature["create"] =
 
           pipe(
             instance,
-            Disposable_onDisposed(e => {
+            Disposable.onDisposed(e => {
               for (const observer of instance[ReplayPublisher_observers]) {
                 if (isSome(e)) {
                   observer[DisposableLike_dispose](e);
@@ -138,7 +138,7 @@ const ReplayPublisher_create: ReplayPublisher.Signature["create"] =
 
             pipe(
               observer,
-              Disposable_onDisposed(_ => {
+              Disposable.onDisposed(_ => {
                 observers.delete(observer);
               }),
             );

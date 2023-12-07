@@ -7,7 +7,7 @@ import { DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPu
 import { EventListenerLike_isErrorSafe } from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, SinkLike_notify, } from "../../../utils.js";
-import Disposable_onDisposed from "../../../utils/Disposable/__internal__/Disposable.onDisposed.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const ReplayPublisher_create = 
@@ -18,7 +18,7 @@ const ReplayPublisher_create =
         instance[ReplayPublisher_observers] =
             newInstance(Set);
         instance[ReplayObservableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
-        pipe(instance, Disposable_onDisposed(e => {
+        pipe(instance, Disposable.onDisposed(e => {
             for (const observer of instance[ReplayPublisher_observers]) {
                 if (isSome(e)) {
                     observer[DisposableLike_dispose](e);
@@ -64,7 +64,7 @@ const ReplayPublisher_create =
                 return;
             }
             observers.add(observer);
-            pipe(observer, Disposable_onDisposed(_ => {
+            pipe(observer, Disposable.onDisposed(_ => {
                 observers.delete(observer);
             }));
             // The idea here is that an onSubscribe function may
