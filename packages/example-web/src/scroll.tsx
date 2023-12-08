@@ -14,7 +14,7 @@ import { Optional, pipeLazy, pipeSomeLazy } from "@reactive-js/core/functions";
 import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { EventSourceLike } from "@reactive-js/core/events";
 import { KeyedLike_get } from "@reactive-js/core/collections";
 import * as Publisher from "@reactive-js/core/events/Publisher";
@@ -52,7 +52,7 @@ const AnimatedCircle = ({
 
 const ScrollApp = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
     [],
   );
 

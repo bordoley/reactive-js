@@ -23,7 +23,7 @@ import {
 import { __animate } from "@reactive-js/core/integrations/web/effects";
 import * as EventSource from "@reactive-js/core/events/EventSource";
 import * as WebElement from "@reactive-js/core/integrations/web/Element";
-import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 
 type Point = { x: number; y: number };
@@ -39,7 +39,7 @@ const scale = (start: Point, end: Point) => (v: number) => {
 
 const Root = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
     [],
   );
 

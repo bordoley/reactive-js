@@ -70,8 +70,13 @@
     "./functions": "./functions.js",
     "./integrations/react":  "./integrations/react.js",
     "./integrations/react/Scheduler":  "./integrations/react/Scheduler.js",
+    "./integrations/react/web":  "./integrations/react/web.js",
     "./integrations/svelte":  "./integrations/svelte.js",
     "./integrations/web":  "./integrations/web.js",
+    "./integrations/web/effects":  "./integrations/web/effects.js",
+    "./integrations/web/AnimationFrameScheduler": "./integrations/web/AnimationFrameScheduler.js",
+    "./integrations/web/Element":  "./integrations/web/Element.js",
+    "./integrations/web/WindowLocation":  "./integrations/web/WindowLocation.js",
     "./utils": "./utils.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"

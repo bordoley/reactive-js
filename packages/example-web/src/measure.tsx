@@ -21,16 +21,19 @@ import * as WebElement from "@reactive-js/core/integrations/web/Element";
 import { Rect } from "@reactive-js/core/integrations/web";
 import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import { pick } from "@reactive-js/core/computations";
 import { KeyedLike_get } from "@reactive-js/core/collections";
-import { MulticastObservableLike } from "@reactive-js/core/concurrent";
+import {
+  DeferredObservableLike,
+  MulticastObservableLike,
+} from "@reactive-js/core/concurrent";
 
 const Measure = () => {
   const [container, setContainer] = useState<Optional<HTMLDivElement>>();
 
   const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
     [],
   );
 
@@ -81,14 +84,14 @@ const Measure = () => {
         Observable.distinctUntilChanged<Rect>({
           equality: (a, b) => a.width === b.width,
         }),
-        pick<Observable.MulticastObservableContainer, Rect, "width">(
+        pick<Observable.MulticastObservableComputation, Rect, "width">(
           { map: Observable.map },
           "width",
         ),
         Observable.forkMerge<
           number,
           MulticastObservableLike<number>,
-          DeferredObservableBaseLike<number>
+          DeferredObservableLike<number>
         >(
           compose(
             Observable.withLatestFrom<number, number, Tuple2<number, number>>(

@@ -24,6 +24,7 @@ import {
   increment,
   isNone,
   isSome,
+  none,
   Optional,
   pipe,
   pipeLazy,
@@ -48,7 +49,7 @@ import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
 import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
-import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import {
   ObservableLike,
@@ -97,7 +98,7 @@ const AnimatedBox = ({
 
 const AnimationGroup = () => {
   const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
     [],
   );
 
@@ -144,7 +145,7 @@ const AnimationGroup = () => {
       </div>
       <div>
         <button
-          onClick={() => animationDispatcher.enqueue()}
+          onClick={() => animationDispatcher.enqueue(none)}
           disabled={isAnimationRunning}
         >
           Run Animation
@@ -328,7 +329,7 @@ const RxComponent = createComponent(
 
       const scheduler = __currentScheduler();
       const animationScheduler = __using(
-        WebScheduler.createAnimationFrameScheduler,
+        AnimationFrameScheduler.create,
         scheduler,
       );
 
