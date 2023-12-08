@@ -3,14 +3,14 @@
 import { describe, expectArrayEquals, expectEquals, expectFalse, expectIsNone, expectIsSome, expectPromiseToThrow, expectToHaveBeenCalledTimes, expectToThrow, expectToThrowAsync, expectToThrowError, expectTrue, mockFn, test, testAsync, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { mapTo } from "../../computations.js";
+import { keepType, mapTo } from "../../computations.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import * as EventSource from "../../events/EventSource.js";
-import { alwaysTrue, arrayEquality, bind, ignore, increment, incrementBy, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, bind, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
-import { __bindMethod, __constant, __do, __observe, __state, __stream, } from "../Observable/effects.js";
+import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __stream, } from "../Observable/effects.js";
 import * as ReplayPublisher from "../ReplayPublisher.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
@@ -84,7 +84,49 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
         return result;
     }), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync());
     pipe(result ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
-})), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatMany", test("concating an empty array returns the empty observable", pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())))), describe("concatMap", testAsync("maps each value to a container and flattens", pipeLazyAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
+})), describe("computeRunnable", test("batch mode", () => {
+    const result = [];
+    pipe(Observable.computeRunnable(() => {
+        const fromValueWithDelay = __constant((delay, value) => pipe([value], Observable.fromReadonlyArray({ delay })));
+        const obs1 = __memo(fromValueWithDelay, 10, 5);
+        const result1 = __await(obs1);
+        const obs2 = __memo(fromValueWithDelay, 20, 10);
+        const result2 = __await(obs2);
+        const obs3 = __memo(fromValueWithDelay, 30, 7);
+        const result3 = __await(obs3);
+        return result1 + result2 + result3;
+    }), Observable.takeLast(), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    pipe(result, expectArrayEquals([22]));
+}), test("combined-latest mode", () => {
+    const result = [];
+    pipe(Observable.computeRunnable(() => {
+        const oneTwoThreeDelayed = __constant(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })));
+        const createOneTwoThree = __constant((_) => pipe([1, 2, 3], Observable.fromReadonlyArray()));
+        const v = __await(oneTwoThreeDelayed);
+        const next = __memo(createOneTwoThree, v);
+        return __await(next);
+    }, { mode: "combine-latest" }), keepType(Observable, isSome), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    pipe(result, expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]));
+}), test("conditional hooks", () => {
+    const result = [];
+    pipe(Observable.computeRunnable(() => {
+        const src = __constant(pipe([0, 1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 5 })));
+        const src2 = __constant(pipe(Enumerable.generate(increment, returns(100)), Observable.fromEnumerable({ delay: 2 })));
+        const v = __await(src);
+        if (v % 2 === 0) {
+            __memo(increment, 1);
+            return __await(src2);
+        }
+        return v;
+    }), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
+    pipe(result, expectArrayEquals([
+        101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
+    ]));
+})), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatMany", test("concating an empty array returns the empty observable", pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())))), describe("concatMap", testAsync("maps each value to a container and flattens", pipeLazyAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     pipe([str], Observable.fromReadonlyArray({ delay: 1 }), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
 }), test("decoding ascii from enumerable", () => {
@@ -136,7 +178,19 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     }));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(disposedTime, expectEquals(5));
-})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.endWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("firstAsync", testAsync("empty source", async () => {
+})), describe("endWith", test("appends the additional values to the end of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.endWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("exhaust", test("when the initial observable never disposes", pipeLazy([
+    pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })),
+    pipe([4, 5, 6], Observable.fromReadonlyArray()),
+    pipe([7, 8, 9], Observable.fromReadonlyArray()),
+], Observable.fromReadonlyArray(), Observable.exhaust({
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("exhaustMap", test("when the initial observable never disposes", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.exhaustMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("firstAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectIsNone);
 }), testAsync("it returns the first value", async () => {
@@ -311,7 +365,11 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10])))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10])))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = mockFn();
     const f = mockFn(disp);
@@ -353,7 +411,26 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     pipe(Observable.zipLatest(shared, shared), Observable.map(([a, b]) => a + b), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([2, 4, 6]));
-})), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("switchMap", test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
+})), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty(), Observable.switchAll({
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("switchMap", test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.switchMap(x => pipe([x, x, x], Observable.fromReadonlyArray({
+    delay: 1,
+    delayStart: true,
+})), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
