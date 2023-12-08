@@ -145,8 +145,6 @@ export type PureObservableOperator<TIn, TOut> = <
   ? DeferredSideEffectsObservableLike<TOut>
   : TObservableIn extends DeferredObservableLike<TIn>
   ? DeferredObservableLike<TOut>
-  : TObservableIn extends PauseableObservableLike<TIn>
-  ? PauseableObservableLike<TOut>
   : TObservableIn extends MulticastObservableLike<TIn>
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
@@ -660,7 +658,6 @@ export interface ObservableModule
 
   concatMap: FlatMap["flatMap"];
 
-  // FIXME: Doesn't support pauseableObservable
   concatWith<T>(
     snd: PureRunnableLike<T>,
     ...tail: readonly PureRunnableLike<T>[]
@@ -712,7 +709,6 @@ export interface ObservableModule
 
   empty<T>(options?: { readonly delay: number }): PureRunnableLike<T>;
 
-  // FIXME: Doesnt support PauseableObservable
   encodeUtf8(): PureObservableOperator<string, Uint8Array>;
 
   endWith<T>(value: T, ...values: readonly T[]): PureObservableOperator<T, T>;
@@ -948,7 +944,6 @@ export interface ObservableModule
     },
   ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 
-  // FIXME: Doesn't support pauseableObservable
   mergeWith<T>(
     snd: PureRunnableLike<T>,
     ...tail: readonly PureRunnableLike<T>[]

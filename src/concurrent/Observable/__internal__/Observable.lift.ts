@@ -1,11 +1,4 @@
-import {
-  createInstanceFactory,
-  include,
-  init,
-  mix,
-  props,
-  unsafeCast,
-} from "../../../__internal__/mixins.js";
+import { createInstanceFactory } from "../../../__internal__/mixins.js";
 import {
   DeferredSideEffectsObservableLike,
   ObservableLike,
@@ -14,27 +7,16 @@ import {
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  PauseableLike,
-  PauseableLike_isPaused,
-  PauseableLike_pause,
-  PauseableLike_resume,
-  PauseableObservableLike,
   PureRunnableLike,
   RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
-import {
-  Function1,
-  bindMethod,
-  isSome,
-  pipeUnsafe,
-} from "../../../functions.js";
+import { Function1, bindMethod, pipeUnsafe } from "../../../functions.js";
 import type {
   DeferredSideEffectsObservableOperator,
   ObservableOperatorWithSideEffects,
   PureObservableOperator,
 } from "../../Observable.js";
 import LiftedObservableMixin, {
-  LiftedObservableLike,
   LiftedObservableLike_operators,
   LiftedObservableLike_source,
 } from "../../__mixins__/LiftedObservableMixin.js";
@@ -52,57 +34,6 @@ const createLiftedObservable: <TA, TB>(
   >,
 ) => ObservableLike<TB> = /*@__PURE__*/ (() =>
   createInstanceFactory(LiftedObservableMixin<unknown, unknown>()))();
-
-const createLiftedPauseableObservable: <TIn, TOut>(
-  source: PauseableObservableLike<TIn>,
-  ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-) => PauseableObservableLike<TOut> = /*@__PURE__*/ (<TIn, TOut>() => {
-  return createInstanceFactory(
-    mix(
-      include(LiftedObservableMixin()),
-      function LiftedPauseableObservable(
-        instance: PauseableLike,
-        source: PauseableObservableLike<TIn>,
-        ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
-      ): PauseableObservableLike<TOut> {
-        init(
-          LiftedObservableMixin<TIn, TOut, PauseableObservableLike<TIn>>(),
-          instance,
-          source,
-          ops,
-          {
-            [ObservableLike_isDeferred]: false,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: false,
-          },
-        );
-
-        return instance as PauseableObservableLike<TOut>;
-      },
-      props({}),
-      {
-        [ObservableLike_isPure]: true as const,
-
-        get [PauseableLike_isPaused]() {
-          unsafeCast<
-            LiftedObservableLike<TIn, TOut, PauseableObservableLike<TIn>>
-          >(this);
-          return this[LiftedObservableLike_source][PauseableLike_isPaused];
-        },
-        [PauseableLike_pause](
-          this: LiftedObservableLike<TIn, TOut, PauseableObservableLike<TIn>>,
-        ): void {
-          this[LiftedObservableLike_source][PauseableLike_pause]();
-        },
-        [PauseableLike_resume](
-          this: LiftedObservableLike<TIn, TOut, PauseableObservableLike<TIn>>,
-        ): void {
-          this[LiftedObservableLike_source][PauseableLike_resume]();
-        },
-      },
-    ),
-  );
-})();
 
 interface ObservableLift {
   lift(
@@ -173,8 +104,6 @@ const Observable_lift: ObservableLift["lift"] = ((
     const isRunnable =
       config[ObservableLike_isRunnable] && source[ObservableLike_isRunnable];
 
-    const isPauseable = isSome((source as any)[PauseableLike_pause]) && isPure;
-
     const liftedConfig = {
       [ObservableLike_isDeferred]: isDeferred,
       [ObservableLike_isPure]: isPure,
@@ -189,8 +118,6 @@ const Observable_lift: ObservableLift["lift"] = ((
             bindMethod(sourceSource, ObservableLike_observe),
           );
         })
-      : isPauseable
-      ? createLiftedPauseableObservable<TA, TB>(sourceSource, allFunctions)
       : createLiftedObservable<TA, TB>(
           sourceSource,
           allFunctions,

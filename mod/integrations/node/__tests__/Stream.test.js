@@ -20,7 +20,7 @@ testModule("node/Stream", describe("sinkInto", testAsync("sinking to writable", 
             callback();
         },
     });
-    await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.flow(scheduler), Disposable.addTo(scheduler), Observable.keep(x => x !== "xyz"), Observable.map(bindMethod(encoder, "encode")), NodeStream.sinkInto(writable), Observable.lastAsync(scheduler));
+    await pipe(["abc", "defg", "xyz"], Observable.fromReadonlyArray(), Observable.keep(x => x !== "xyz"), Observable.map(bindMethod(encoder, "encode")), Observable.flow(scheduler), Disposable.addTo(scheduler), NodeStream.sinkInto(writable), Observable.lastAsync(scheduler));
     pipe(writable.destroyed, expectEquals(true));
     pipe(data, expectEquals("abcdefg"));
 }, Disposable.usingAsync(Scheduler.createHostScheduler))), testAsync("sinking to writable that throws", pipeLazy(async (scheduler) => {

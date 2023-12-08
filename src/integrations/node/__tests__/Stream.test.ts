@@ -45,10 +45,10 @@ testModule(
         await pipe(
           ["abc", "defg", "xyz"],
           Observable.fromReadonlyArray(),
-          Observable.flow(scheduler),
-          Disposable.addTo(scheduler),
           Observable.keep(x => x !== "xyz"),
           Observable.map(bindMethod(encoder, "encode")),
+          Observable.flow(scheduler),
+          Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
           Observable.lastAsync(scheduler),
         );
