@@ -14,7 +14,7 @@ import {
 import { SinkLike_notify } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import * as ReplayPublisher from "../../ReplayPublisher.js";
+import * as Subject from "../../Subject.js";
 import Observable_create from "./Observable.create.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_switchMap from "./Observable.switchMap.js";
@@ -28,7 +28,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] =
   (observable: ObservableLike<T>) =>
     Observable_create(observer => {
       const accFeedbackStream = pipe(
-        ReplayPublisher.create(),
+        Subject.create(),
         Disposable.addTo(observer),
       );
 

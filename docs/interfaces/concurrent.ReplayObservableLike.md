@@ -18,7 +18,7 @@ A stateful ObservableLike resource.
 
   ↳ **`ReplayObservableLike`**
 
-  ↳↳ [`ReplayPublisherLike`](concurrent.ReplayPublisherLike.md)
+  ↳↳ [`SubjectLike`](concurrent.SubjectLike.md)
 
   ↳↳ [`StreamLike`](concurrent.StreamLike.md)
 

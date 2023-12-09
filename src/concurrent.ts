@@ -329,14 +329,12 @@ export interface ReplayObservableLike<T = unknown>
   readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
 }
 
-export const ReplayPublisherLike_observerCount = Symbol(
-  "ReplayPublisherLike_observerCount",
-);
+export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
 
-export interface ReplayPublisherLike<T = unknown>
+export interface SubjectLike<T = unknown>
   extends ReplayObservableLike<T>,
     ErrorSafeEventListenerLike<T> {
-  readonly [ReplayPublisherLike_observerCount]: number;
+  readonly [SubjectLike_observerCount]: number;
 }
 
 export interface PauseableObservableLike<T = unknown>

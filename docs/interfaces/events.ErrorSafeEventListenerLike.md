@@ -16,7 +16,7 @@
 
   ↳ **`ErrorSafeEventListenerLike`**
 
-  ↳↳ [`ReplayPublisherLike`](concurrent.ReplayPublisherLike.md)
+  ↳↳ [`SubjectLike`](concurrent.SubjectLike.md)
 
   ↳↳ [`PublisherLike`](events.PublisherLike.md)
 

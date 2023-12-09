@@ -13,9 +13,9 @@ import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __stream, } from "../Observable/effects.js";
-import * as ReplayPublisher from "../ReplayPublisher.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
+import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("Observable", describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
     await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
@@ -279,12 +279,12 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     expectTrue(obs[ObservableLike_isRunnable]);
     expectTrue(obs[ObservableLike_isPure]);
 }), test("with multicast src and pure inner transforms", () => {
-    const forked = pipe(ReplayPublisher.create(), Observable.forkMerge(mapTo(Observable, 1), mapTo(Observable, 2)));
+    const forked = pipe(Subject.create(), Observable.forkMerge(mapTo(Observable, 1), mapTo(Observable, 2)));
     expectFalse(forked[ObservableLike_isDeferred]);
     expectFalse(forked[ObservableLike_isRunnable]);
     expectTrue(forked[ObservableLike_isPure]);
 }), test("with multicast src and deferred inner transforms", () => {
-    const forked = pipe(ReplayPublisher.create(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.flatMapAsync(_ => Promise.resolve(1)), mapTo(Observable, 2)));
+    const forked = pipe(Subject.create(), Observable.forkMerge(Observable.flatMapAsync(_ => Promise.resolve(1)), Observable.flatMapAsync(_ => Promise.resolve(1)), mapTo(Observable, 2)));
     expectTrue(forked[ObservableLike_isDeferred]);
     expectFalse(forked[ObservableLike_isRunnable]);
     expectFalse(forked[ObservableLike_isPure]);
@@ -339,7 +339,7 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     const pureRunnable = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }));
     const runnableWithSideEffects = pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.forEach(ignore));
     const deferred = pipe(() => Promise.resolve(1), Observable.fromAsyncFactory());
-    const multicast = ReplayPublisher.create();
+    const multicast = Subject.create();
     const merged1 = Observable.merge(pureEnumerable, enumerableWithSideEffects, pureRunnable, runnableWithSideEffects, deferred, multicast);
     pipe(merged1[ObservableLike_isDeferred], expectEquals(true));
     pipe(merged1[ObservableLike_isPure], expectEquals(false));

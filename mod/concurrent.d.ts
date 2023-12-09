@@ -242,9 +242,9 @@ export declare const ReplayObservableLike_buffer: unique symbol;
 export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
     readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
 }
-export declare const ReplayPublisherLike_observerCount: unique symbol;
-export interface ReplayPublisherLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
-    readonly [ReplayPublisherLike_observerCount]: number;
+export declare const SubjectLike_observerCount: unique symbol;
+export interface SubjectLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
+    readonly [SubjectLike_observerCount]: number;
 }
 export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
 }

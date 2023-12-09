@@ -80,9 +80,9 @@ import {
   __state,
   __stream,
 } from "../Observable/effects.js";
-import * as ReplayPublisher from "../ReplayPublisher.js";
 import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
+import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
@@ -907,7 +907,7 @@ testModule(
     }),
     test("with multicast src and pure inner transforms", () => {
       const forked = pipe(
-        ReplayPublisher.create(),
+        Subject.create(),
         Observable.forkMerge(
           mapTo<Observable.MulticastObservableComputation, number>(
             Observable,
@@ -926,7 +926,7 @@ testModule(
     }),
     test("with multicast src and deferred inner transforms", () => {
       const forked = pipe(
-        ReplayPublisher.create(),
+        Subject.create(),
         Observable.forkMerge<
           number,
           MulticastObservableLike,
@@ -1119,7 +1119,7 @@ testModule(
         () => Promise.resolve(1),
         Observable.fromAsyncFactory(),
       );
-      const multicast = ReplayPublisher.create();
+      const multicast = Subject.create();
 
       const merged1 = Observable.merge(
         pureEnumerable,

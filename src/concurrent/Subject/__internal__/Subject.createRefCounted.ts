@@ -9,8 +9,8 @@ import {
 import {
   ObservableLike_observe,
   ObserverLike,
-  ReplayPublisherLike,
-  ReplayPublisherLike_observerCount,
+  SubjectLike,
+  SubjectLike_observerCount,
 } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe } from "../../../events.js";
 import { pipe } from "../../../functions.js";
@@ -22,58 +22,53 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
-import type * as ReplayPublisher from "../../ReplayPublisher.js";
+import type * as Subject from "../../Subject.js";
 import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
-import ReplayPublisher_create from "./ReplayPublisher.create.js";
+import Subject_create from "./Subject.create.js";
 
-const ReplayPublisher_createRefCounted: ReplayPublisher.Signature["createRefCounted"] =
+const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
   /*@__PURE__*/ (<T>() => {
     const createRefCountedPublisherInstance = createInstanceFactory(
       mix(
         include(
-          DelegatingDisposableMixin<ReplayPublisherLike<T>>(),
+          DelegatingDisposableMixin<SubjectLike<T>>(),
           DelegatingReplayObservableMixin(),
         ),
         function RefCountedPublisher(
           instance: Pick<
-            ReplayPublisherLike<T>,
+            SubjectLike<T>,
             | typeof EventListenerLike_isErrorSafe
             | typeof SinkLike_notify
             | typeof ObservableLike_observe
-            | typeof ReplayPublisherLike_observerCount
+            | typeof SubjectLike_observerCount
           >,
-          delegate: ReplayPublisherLike<T>,
-        ): ReplayPublisherLike<T> {
-          init(
-            DelegatingDisposableMixin<ReplayPublisherLike<T>>(),
-            instance,
-            delegate,
-          );
+          delegate: SubjectLike<T>,
+        ): SubjectLike<T> {
+          init(DelegatingDisposableMixin<SubjectLike<T>>(), instance, delegate);
           init(DelegatingReplayObservableMixin<T>(), instance, delegate);
 
           return instance;
         },
         props({}),
         {
-          get [ReplayPublisherLike_observerCount](): number {
-            unsafeCast<DelegatingDisposableLike<ReplayPublisherLike<T>>>(this);
+          get [SubjectLike_observerCount](): number {
+            unsafeCast<DelegatingDisposableLike<SubjectLike<T>>>(this);
             return this[DelegatingDisposableLike_delegate][
-              ReplayPublisherLike_observerCount
+              SubjectLike_observerCount
             ];
           },
 
           [EventListenerLike_isErrorSafe]: true as const,
 
           [SinkLike_notify](
-            this: DelegatingDisposableLike<ReplayPublisherLike<T>>,
+            this: DelegatingDisposableLike<SubjectLike<T>>,
             next: T,
           ) {
             this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
           },
 
           [ObservableLike_observe](
-            this: DelegatingDisposableLike<ReplayPublisherLike<T>> &
-              ReplayPublisherLike<T>,
+            this: DelegatingDisposableLike<SubjectLike<T>> & SubjectLike<T>,
             observer: ObserverLike<T>,
           ) {
             this[DelegatingDisposableLike_delegate][ObservableLike_observe](
@@ -83,7 +78,7 @@ const ReplayPublisher_createRefCounted: ReplayPublisher.Signature["createRefCoun
             pipe(
               observer,
               Disposable.onDisposed(() => {
-                if (this[ReplayPublisherLike_observerCount] === 0) {
+                if (this[SubjectLike_observerCount] === 0) {
                   this[DisposableLike_dispose]();
                 }
               }),
@@ -94,9 +89,9 @@ const ReplayPublisher_createRefCounted: ReplayPublisher.Signature["createRefCoun
     );
 
     return (options?: { readonly replay?: number }) => {
-      const delegate = ReplayPublisher_create<T>(options);
+      const delegate = Subject_create<T>(options);
       return createRefCountedPublisherInstance(delegate);
     };
   })();
 
-export default ReplayPublisher_createRefCounted;
+export default Subject_createRefCounted;

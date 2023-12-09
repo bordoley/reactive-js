@@ -6,7 +6,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import ReplayPublisher_create from "../../ReplayPublisher/__internal__/ReplayPublisher.create.js";
+import Subject_create from "../../Subject/__internal__/Subject.create.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
 const Observable_multicast: Observable.Signature["multicast"] = <T>(
@@ -16,11 +16,6 @@ const Observable_multicast: Observable.Signature["multicast"] = <T>(
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   } = {},
-) =>
-  Observable_multicastImpl<T>(
-    ReplayPublisher_create,
-    schedulerOrFactory,
-    options,
-  );
+) => Observable_multicastImpl<T>(Subject_create, schedulerOrFactory, options);
 
 export default Observable_multicast;

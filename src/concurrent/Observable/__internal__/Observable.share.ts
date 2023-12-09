@@ -13,7 +13,7 @@ import {
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_multicastImpl from "../../Observable/__internal__/Observable.multicastImpl.js";
-import ReplayPublisher_createRefCounted from "../../ReplayPublisher/__internal__/ReplayPublisher.createRefCounted.js";
+import Subject_createRefCounted from "../../Subject/__internal__/Subject.createRefCounted.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
 
 const createLazyMulticastObservable = <T>(
@@ -42,7 +42,7 @@ const Observable_share: Observable.Signature["share"] =
           multicasted = pipe(
             source,
             Observable_multicastImpl<T>(
-              ReplayPublisher_createRefCounted,
+              Subject_createRefCounted,
               schedulerOrFactory,
               options,
             ),

@@ -31,7 +31,7 @@ import {
 } from "../concurrent.js";
 import * as Observable from "../concurrent/Observable.js";
 import Observable_isReplayObservable from "../concurrent/Observable/__internal__/Observable.isReplayObservable.js";
-import * as ReplayPublisher from "../concurrent/ReplayPublisher.js";
+import * as Subject from "../concurrent/Subject.js";
 import { EventSourceLike, StoreLike_value } from "../events.js";
 import * as EventSource from "../events/EventSource.js";
 import {
@@ -169,7 +169,7 @@ export const createComponent: Signature["createComponent"] = <TProps>(
 ) => {
   const ObservableComponent = (props: TProps) => {
     const propsPublisher = useDisposable(
-      () => ReplayPublisher.create<TProps>({ replay: 1 }),
+      () => Subject.create<TProps>({ replay: 1 }),
       [],
     );
 

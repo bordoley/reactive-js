@@ -2,8 +2,8 @@ import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import {
   DeferredObservableLike,
   ReplayObservableLike,
-  ReplayPublisherLike,
   SchedulerLike,
+  SubjectLike,
 } from "../../../concurrent.js";
 import {
   Factory,
@@ -30,7 +30,7 @@ const Observable_multicastImpl =
       Optional<{
         replay?: number;
       }>,
-      ReplayPublisherLike<T>
+      SubjectLike<T>
     >,
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
     options: {

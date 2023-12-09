@@ -31,9 +31,9 @@
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
 - [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
-- [ReplayPublisherLike](../interfaces/concurrent.ReplayPublisherLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
 - [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
+- [SubjectLike](../interfaces/concurrent.SubjectLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/concurrent.VirtualTimeSchedulerLike.md)
 
 ### Interactive Type Aliases
@@ -59,7 +59,6 @@
 - [PauseableLike\_pause](concurrent.md#pauseablelike_pause)
 - [PauseableLike\_resume](concurrent.md#pauseablelike_resume)
 - [ReplayObservableLike\_buffer](concurrent.md#replayobservablelike_buffer)
-- [ReplayPublisherLike\_observerCount](concurrent.md#replaypublisherlike_observercount)
 - [SchedulerLike\_inContinuation](concurrent.md#schedulerlike_incontinuation)
 - [SchedulerLike\_maxYieldInterval](concurrent.md#schedulerlike_maxyieldinterval)
 - [SchedulerLike\_now](concurrent.md#schedulerlike_now)
@@ -73,6 +72,7 @@
 - [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
 - [StreamableLike\_TStream](concurrent.md#streamablelike_tstream)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
+- [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
 - [VirtualTimeSchedulerLike\_run](concurrent.md#virtualtimeschedulerlike_run)
 
 ## Interactive Type Aliases
@@ -191,12 +191,6 @@ ___
 
 ___
 
-### ReplayPublisherLike\_observerCount
-
-• `Const` **ReplayPublisherLike\_observerCount**: unique `symbol`
-
-___
-
 ### SchedulerLike\_inContinuation
 
 • `Const` **SchedulerLike\_inContinuation**: unique `symbol`
@@ -272,6 +266,12 @@ ___
 ### StreamableLike\_stream
 
 • `Const` **StreamableLike\_stream**: unique `symbol`
+
+___
+
+### SubjectLike\_observerCount
+
+• `Const` **SubjectLike\_observerCount**: unique `symbol`
 
 ___
 
