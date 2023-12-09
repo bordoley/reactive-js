@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Function1, partial, pipe } from "../../../functions.js";
-import MapSinkMixin from "../../../utils/__mixins__/MapSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import MapSinkMixin from "../../__mixins__/MapSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_map: EventSource.Signature["map"] = /*@__PURE__*/ (() => {

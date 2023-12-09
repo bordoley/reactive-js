@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Predicate, partial, pipe } from "../../../functions.js";
-import KeepSinkMixin from "../../../utils/__mixins__/KeepSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import KeepSinkMixin from "../../__mixins__/KeepSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_keep: EventSource.Signature["keep"] = /*@__PURE__*/ (() => {

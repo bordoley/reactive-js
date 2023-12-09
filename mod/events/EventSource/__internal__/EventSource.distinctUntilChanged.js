@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, } from "../../../events.js";
 import { partial, pipe, strictEquality } from "../../../functions.js";
-import DistinctUntilChangedSinkMixin from "../../../utils/__mixins__/DistinctUntilChangedSinkMixin.js";
+import DistinctUntilChangedSinkMixin from "../../__mixins__/DistinctUntilChangedSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_distinctUntilChanged = 
 /*@__PURE__*/ (() => {

@@ -1,9 +1,8 @@
 /// <reference types="./EventSource.addEventHandler.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, } from "../../../events.js";
+import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, SinkLike_notify, } from "../../../events.js";
 import { none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const EventListener_createInternal = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DisposableMixin), function EventListener(instance, notify, isErrorSafe) {

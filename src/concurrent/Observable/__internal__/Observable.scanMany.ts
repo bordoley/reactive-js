@@ -3,6 +3,7 @@ import {
   ObservableLike,
   ObservableLike_observe,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   Factory,
   Function2,
@@ -11,7 +12,6 @@ import {
   invoke,
   pipe,
 } from "../../../functions.js";
-import { SinkLike_notify } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import * as Subject from "../../Subject.js";

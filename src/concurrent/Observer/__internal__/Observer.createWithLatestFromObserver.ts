@@ -6,13 +6,13 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ObservableLike, ObserverLike } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { Function2, Optional, none, pipe } from "../../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";

@@ -8,11 +8,12 @@ import {
 import {
   EventListenerLike,
   EventListenerLike_isErrorSafe,
+  SinkLike_notify,
 } from "../../../events.js";
 import { Optional, error, none, partial, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
-import BufferSinkMixin from "../../../utils/__mixins__/BufferSinkMixin.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import type * as EventSource from "../../EventSource.js";
+import BufferSinkMixin from "../../__mixins__/BufferSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_buffer: EventSource.Signature["buffer"] =

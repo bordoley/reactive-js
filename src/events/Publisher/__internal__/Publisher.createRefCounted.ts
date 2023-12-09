@@ -12,13 +12,13 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
   PublisherLike_listenerCount,
+  SinkLike_notify,
 } from "../../../events.js";
 import { pipe } from "../../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   DisposableLike_dispose,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";

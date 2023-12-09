@@ -11,6 +11,7 @@ import {
   ObservableLike,
   ObserverLike,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -24,7 +25,6 @@ import {
   QueueableLike_enqueue,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";

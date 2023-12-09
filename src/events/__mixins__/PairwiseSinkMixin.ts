@@ -5,14 +5,13 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Tuple2, none, returns } from "../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  SinkLike,
-  SinkLike_notify,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
 const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");

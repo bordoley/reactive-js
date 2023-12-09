@@ -13,12 +13,12 @@ import {
   EventSourceLike_addEventListener,
   PublisherLike,
   PublisherLike_listenerCount,
+  SinkLike_notify,
 } from "../../../events.js";
 import { error, newInstance, none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";

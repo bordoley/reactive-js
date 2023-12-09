@@ -1,8 +1,8 @@
 /// <reference types="./Element.resizeEventSource.d.ts" />
 
+import { SinkLike_notify } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, none, pipe, } from "../../../../functions.js";
-import { SinkLike_notify } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 const Element_resizeEventSource = 
 /*@__PURE__*/ (() => {

@@ -1,8 +1,9 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
+import { SinkLike_notify } from "../../events.js";
 import { returns } from "../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, SinkLike_notify, } from "../../utils.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../utils.js";
 import Observer_assertState from "../Observer/__internal__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import Observer_baseMixin from "./ObserverBaseMixin.js";

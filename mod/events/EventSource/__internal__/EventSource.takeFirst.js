@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
-import TakeFirstSinkMixin from "../../../utils/__mixins__/TakeFirstSinkMixin.js";
+import TakeFirstSinkMixin from "../../__mixins__/TakeFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_takeFirst = 
 /*@__PURE__*/ (() => {

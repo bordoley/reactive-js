@@ -2,8 +2,9 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { newInstance, none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, QueueableLike_enqueue, SinkLike_notify, } from "../../../utils.js";
+import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

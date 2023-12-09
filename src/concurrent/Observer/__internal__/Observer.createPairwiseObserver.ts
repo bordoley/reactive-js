@@ -6,8 +6,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
+import PairwiseSinkMixin from "../../../events/__mixins__/PairwiseSinkMixin.js";
 import { Tuple2 } from "../../../functions.js";
-import PairwiseSinkMixin from "../../../utils/__mixins__/PairwiseSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

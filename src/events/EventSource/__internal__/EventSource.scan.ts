@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Factory, Reducer, partial, pipe } from "../../../functions.js";
-import ScanSinkMixin from "../../../utils/__mixins__/ScanSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import ScanSinkMixin from "../../__mixins__/ScanSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_scan: EventSource.Signature["scan"] = /*@__PURE__*/ (() => {

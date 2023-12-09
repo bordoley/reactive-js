@@ -6,11 +6,11 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { newInstance, none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";

@@ -1,7 +1,7 @@
 /// <reference types="./Observer.createTakeFirstObserver.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import TakeFirstSinkMixin from "../../../utils/__mixins__/TakeFirstSinkMixin.js";
+import TakeFirstSinkMixin from "../../../events/__mixins__/TakeFirstSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 const Observer_createTakeFirstObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ObserverMixin(), TakeFirstSinkMixin()), function TakeFirstObserver(instance, delegate, takeCount) {

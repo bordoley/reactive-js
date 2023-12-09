@@ -4,11 +4,11 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { Optional, error, isSome, none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";

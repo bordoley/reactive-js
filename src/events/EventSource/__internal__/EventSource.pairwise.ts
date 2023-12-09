@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Tuple2, pipe, returns } from "../../../functions.js";
-import PairwiseSinkMixin from "../../../utils/__mixins__/PairwiseSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import PairwiseSinkMixin from "../../__mixins__/PairwiseSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_pairwise: EventSource.Signature["pairwise"] = /*@__PURE__*/ (<

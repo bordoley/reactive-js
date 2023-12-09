@@ -6,14 +6,13 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Optional, returns } from "../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  SinkLike,
-  SinkLike_notify,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const SkipFirstSinkMixin_count = Symbol("SkipFirstSinkMixin_count");
 

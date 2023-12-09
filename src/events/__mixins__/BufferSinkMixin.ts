@@ -7,14 +7,11 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Optional, SideEffect1, none, pipe, returns } from "../../functions.js";
-import {
-  DisposableLike_dispose,
-  SinkLike,
-  SinkLike_notify,
-} from "../../utils.js";
-import * as Disposable from "../Disposable.js";
-import DisposableMixin from "./DisposableMixin.js";
+import { DisposableLike_dispose } from "../../utils.js";
+import * as Disposable from "../../utils/Disposable.js";
+import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 
 const BufferSinkMixin_delegate = Symbol("BufferSinkMixin_delegate");
 const BufferSinkMixin_buffer = Symbol("BufferSinkMixin_buffer");

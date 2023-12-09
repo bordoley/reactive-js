@@ -15,8 +15,9 @@ import {
   ObservableLike_observe,
   ObserverLike,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observer_assertState from "../../Observer/__internal__/Observer.assertState.js";

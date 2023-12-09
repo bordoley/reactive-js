@@ -1,9 +1,8 @@
 /// <reference types="./WritableStore.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { StoreLike_value } from "../../../events.js";
+import { SinkLike_notify, StoreLike_value, } from "../../../events.js";
 import { none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../__mixins__/LazyInitEventSourceMixin.js";
 const WritableStore_create = /*@__PURE__*/ (() => {

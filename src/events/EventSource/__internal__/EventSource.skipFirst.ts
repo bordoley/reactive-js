@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Optional, partial, pipe } from "../../../functions.js";
-import SkipFirstSinkMixin from "../../../utils/__mixins__/SkipFirstSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import SkipFirstSinkMixin from "../../__mixins__/SkipFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_skipFirst: EventSource.Signature["skipFirst"] =

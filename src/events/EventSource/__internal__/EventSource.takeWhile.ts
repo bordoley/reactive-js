@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Optional, Predicate, partial, pipe } from "../../../functions.js";
-import TakeWhileSinkMixin from "../../../utils/__mixins__/TakeWhileSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import TakeWhileSinkMixin from "../../__mixins__/TakeWhileSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_takeWhile: EventSource.Signature["takeWhile"] =

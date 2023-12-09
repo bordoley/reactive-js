@@ -11,9 +11,9 @@ import {
   EventListenerLike_isErrorSafe,
   EventSourceLike,
   EventSourceLike_addEventListener,
+  SinkLike_notify,
 } from "../../../events.js";
 import { SideEffect1, none } from "../../../functions.js";
-import { SinkLike_notify } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as EventSource from "../../EventSource.js";
 

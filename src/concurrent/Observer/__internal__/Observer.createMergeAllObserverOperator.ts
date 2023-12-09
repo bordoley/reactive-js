@@ -17,6 +17,7 @@ import {
   ObservableLike,
   ObserverLike,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   Function1,
   Optional,
@@ -35,7 +36,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";

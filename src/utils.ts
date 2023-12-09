@@ -129,17 +129,3 @@ export class BackPressureError extends Error {
     this[QueueableLike_backpressureStrategy] = backpressureStrategy;
   }
 }
-
-export const SinkLike_notify = Symbol("SinkLike_notify");
-
-/**
- * @noInheritDoc
- */
-export interface SinkLike<T = unknown> extends DisposableLike {
-  /**
-   * Notifies the sink of the next notification produced by the source.
-   *
-   * @param next - The next notification value.
-   */
-  [SinkLike_notify](event: T): void;
-}

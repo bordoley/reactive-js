@@ -1,4 +1,4 @@
-import { PublisherLike } from "../../../../events.js";
+import { PublisherLike, SinkLike_notify } from "../../../../events.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import {
   Optional,
@@ -7,7 +7,6 @@ import {
   none,
   pipe,
 } from "../../../../functions.js";
-import { SinkLike_notify } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import type * as Element from "../../Element.js";
 

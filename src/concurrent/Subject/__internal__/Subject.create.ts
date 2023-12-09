@@ -20,7 +20,10 @@ import {
   SubjectLike,
   SubjectLike_observerCount,
 } from "../../../concurrent.js";
-import { EventListenerLike_isErrorSafe } from "../../../events.js";
+import {
+  EventListenerLike_isErrorSafe,
+  SinkLike_notify,
+} from "../../../events.js";
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
 import {
   DisposableLike_dispose,
@@ -28,7 +31,6 @@ import {
   DisposableLike_isDisposed,
   IndexedQueueLike,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";

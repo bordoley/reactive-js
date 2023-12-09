@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
-import ScanSinkMixin from "../../../utils/__mixins__/ScanSinkMixin.js";
+import ScanSinkMixin from "../../__mixins__/ScanSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_scan = /*@__PURE__*/ (() => {
     const createScanEventListener = (() => createInstanceFactory(mix(include(ScanSinkMixin()), function ScanEventListener(instance, delegate, reducer, initialValue) {

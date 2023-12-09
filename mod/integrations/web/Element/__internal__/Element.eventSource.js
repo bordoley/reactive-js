@@ -1,8 +1,8 @@
 /// <reference types="./Element.eventSource.d.ts" />
 
+import { SinkLike_notify } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import { bindMethod, pipe } from "../../../../functions.js";
-import { SinkLike_notify } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 const Element_eventSource = (eventName, options) => (target) => EventSource.create(listener => {
     const eventHandler = bindMethod(listener, SinkLike_notify);

@@ -7,6 +7,7 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ObservableLike, ObserverLike } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import {
   DisposableLike,
@@ -14,7 +15,6 @@ import {
   DisposableLike_isDisposed,
   SerialDisposableLike,
   SerialDisposableLike_current,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";

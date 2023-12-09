@@ -1,6 +1,6 @@
-import { EventSourceLike } from "../../../events.js";
+import { EventSourceLike, SinkLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as EventSource from "../../EventSource.js";
 

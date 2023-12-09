@@ -6,9 +6,13 @@ import {
   props,
   unsafeCast,
 } from "../../../__internal__/mixins.js";
-import { StoreLike_value, WritableStoreLike } from "../../../events.js";
+import {
+  SinkLike_notify,
+  StoreLike_value,
+  WritableStoreLike,
+} from "../../../events.js";
 import { none } from "../../../functions.js";
-import { DisposableLike, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as WritableStore from "../../WritableStore.js";
 import LazyInitEventSourceMixin, {

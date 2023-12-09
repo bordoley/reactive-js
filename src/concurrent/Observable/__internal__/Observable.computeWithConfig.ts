@@ -11,6 +11,7 @@ import {
   RunnableWithSideEffectsLike,
   SchedulerLike_schedule,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   Factory,
   Optional,
@@ -29,7 +30,6 @@ import {
   DisposableLike,
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";

@@ -1,8 +1,8 @@
 /// <reference types="./Observable.toEventSource.d.ts" />
 
+import { SinkLike_notify } from "../../../events.js";
 import * as EventSource from "../../../events/EventSource.js";
 import { bindMethod, identity, isFunction, isNone, isSome, none, pipe, } from "../../../functions.js";
-import { SinkLike_notify, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Scheduler_createHostScheduler from "../../Scheduler/__internal__/Scheduler.createHostScheduler.js";
 import Observable_forEach from "./Observable.forEach.js";

@@ -5,6 +5,7 @@ import {
   SchedulerLike,
   SubjectLike,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   Factory,
   Function1,
@@ -18,7 +19,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_forEach from "./Observable.forEach.js";

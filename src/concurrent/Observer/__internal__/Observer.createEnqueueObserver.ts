@@ -10,13 +10,13 @@ import {
   ObserverLike,
   SchedulerLike_requestYield,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { none } from "../../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   QueueableLike,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";

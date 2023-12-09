@@ -15,6 +15,7 @@ import {
   SubjectLike_observerCount,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import {
   Optional,
   bind,
@@ -27,7 +28,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";

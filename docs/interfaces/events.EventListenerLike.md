@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`SinkLike`](utils.SinkLike.md)<`T`\>
+- [`SinkLike`](events.SinkLike.md)<`T`\>
 
   ↳ **`EventListenerLike`**
 

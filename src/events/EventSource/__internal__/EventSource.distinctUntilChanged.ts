@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Equality, partial, pipe, strictEquality } from "../../../functions.js";
-import DistinctUntilChangedSinkMixin from "../../../utils/__mixins__/DistinctUntilChangedSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import DistinctUntilChangedSinkMixin from "../../__mixins__/DistinctUntilChangedSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChanged"] =

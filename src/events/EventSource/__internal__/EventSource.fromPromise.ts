@@ -1,7 +1,7 @@
+import { SinkLike_notify } from "../../../events.js";
 import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as EventSource from "../../EventSource.js";

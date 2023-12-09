@@ -19,6 +19,7 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
@@ -34,7 +35,6 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";

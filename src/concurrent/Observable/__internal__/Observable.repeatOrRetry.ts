@@ -3,6 +3,7 @@ import {
   ObservableLike,
   ObserverLike,
 } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import {
   bindMethod,
   error,
@@ -10,7 +11,7 @@ import {
   partial,
   pipe,
 } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";

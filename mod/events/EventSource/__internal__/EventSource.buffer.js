@@ -1,10 +1,10 @@
 /// <reference types="./EventSource.buffer.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, } from "../../../events.js";
+import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events.js";
 import { error, none, partial, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
-import BufferSinkMixin from "../../../utils/__mixins__/BufferSinkMixin.js";
+import { DisposableLike_dispose } from "../../../utils.js";
+import BufferSinkMixin from "../../__mixins__/BufferSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_buffer = 
 /*@__PURE__*/ (() => {

@@ -3,9 +3,10 @@
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_schedule, SchedulerLike_yield, } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, pipe, returns } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, SinkLike_notify, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 const ObserverBaseMixin = /*@__PURE__*/ (() => {

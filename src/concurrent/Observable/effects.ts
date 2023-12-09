@@ -9,6 +9,7 @@ import {
   StreamableLike,
   StreamableLike_stream,
 } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import {
   Equality,
   Factory,
@@ -37,7 +38,6 @@ import {
   DisposableLike_dispose,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  SinkLike_notify,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import Observable_create from "../Observable/__internal__/Observable.create.js";

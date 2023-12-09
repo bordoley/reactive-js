@@ -32,7 +32,11 @@ import {
 import * as Observable from "../concurrent/Observable.js";
 import Observable_isReplayObservable from "../concurrent/Observable/__internal__/Observable.isReplayObservable.js";
 import * as Subject from "../concurrent/Subject.js";
-import { EventSourceLike, StoreLike_value } from "../events.js";
+import {
+  EventSourceLike,
+  SinkLike_notify,
+  StoreLike_value,
+} from "../events.js";
 import * as EventSource from "../events/EventSource.js";
 import {
   Factory,
@@ -54,7 +58,6 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
-  SinkLike_notify,
 } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import * as ReactScheduler from "./react/Scheduler.js";

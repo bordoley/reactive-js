@@ -1,8 +1,8 @@
 /// <reference types="./Observable.scanMany.d.ts" />
 
 import { ObservableLike_observe, } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, invoke, pipe, } from "../../../functions.js";
-import { SinkLike_notify } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as Subject from "../../Subject.js";
 import Observable_create from "./Observable.create.js";

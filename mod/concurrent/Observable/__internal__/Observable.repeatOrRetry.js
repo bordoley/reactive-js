@@ -1,7 +1,8 @@
 /// <reference types="./Observable.repeatOrRetry.d.ts" />
 
+import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, error, isSome, partial, pipe, } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observer_createWithDelegate from "../../Observer/__internal__/Observer.createWithDelegate.js";
 import Observable_forEach from "./Observable.forEach.js";

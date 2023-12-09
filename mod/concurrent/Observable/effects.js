@@ -1,8 +1,9 @@
 /// <reference types="./effects.d.ts" />
 
 import { ObservableLike_isRunnable, SchedulerLike_schedule, StreamableLike_stream, } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import { bindMethod, isSome, none, pipe, } from "../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify, } from "../../utils.js";
+import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import Observable_create from "../Observable/__internal__/Observable.create.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";

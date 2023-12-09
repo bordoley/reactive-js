@@ -1,8 +1,9 @@
 /// <reference types="./Observer.createForEachObserver.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { SinkLike_notify } from "../../../events.js";
 import { none } from "../../../functions.js";
-import { DelegatingDisposableLike_delegate, SinkLike_notify, } from "../../../utils.js";
+import { DelegatingDisposableLike_delegate, } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 const Observer_createForEachObserver = /*@__PURE__*/ (() => {

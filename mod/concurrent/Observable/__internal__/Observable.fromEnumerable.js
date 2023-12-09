@@ -2,8 +2,9 @@
 
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_move, } from "../../../collections.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createRunnable from "./Observable.createRunnable.js";
 const Observable_fromEnumerable = (options) => (enumerable) => Observable_createRunnable((observer) => {

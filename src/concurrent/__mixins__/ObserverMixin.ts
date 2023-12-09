@@ -6,13 +6,13 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { ObserverLike, SchedulerLike } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import { Function3, returns } from "../../functions.js";
 import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
-  SinkLike_notify,
 } from "../../utils.js";
 import Observer_assertState from "../Observer/__internal__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";

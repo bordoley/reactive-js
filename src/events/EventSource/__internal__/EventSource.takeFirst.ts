@@ -10,8 +10,8 @@ import {
   EventListenerLike_isErrorSafe,
 } from "../../../events.js";
 import { Optional, partial, pipe } from "../../../functions.js";
-import TakeFirstSinkMixin from "../../../utils/__mixins__/TakeFirstSinkMixin.js";
 import type * as EventSource from "../../EventSource.js";
+import TakeFirstSinkMixin from "../../__mixins__/TakeFirstSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 
 const EventSource_takeFirst: EventSource.Signature["takeFirst"] =

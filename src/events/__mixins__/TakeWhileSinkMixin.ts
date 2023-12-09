@@ -5,15 +5,14 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Optional, Predicate, none, returns } from "../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   DisposableLike_dispose,
-  SinkLike,
-  SinkLike_notify,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
 const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");

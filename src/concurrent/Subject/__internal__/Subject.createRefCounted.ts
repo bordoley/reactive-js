@@ -12,13 +12,15 @@ import {
   SubjectLike,
   SubjectLike_observerCount,
 } from "../../../concurrent.js";
-import { EventListenerLike_isErrorSafe } from "../../../events.js";
+import {
+  EventListenerLike_isErrorSafe,
+  SinkLike_notify,
+} from "../../../events.js";
 import { pipe } from "../../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   DisposableLike_dispose,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";

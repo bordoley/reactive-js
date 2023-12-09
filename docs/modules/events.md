@@ -10,6 +10,7 @@
 - [EventListenerLike](../interfaces/events.EventListenerLike.md)
 - [EventSourceLike](../interfaces/events.EventSourceLike.md)
 - [PublisherLike](../interfaces/events.PublisherLike.md)
+- [SinkLike](../interfaces/events.SinkLike.md)
 - [StoreLike](../interfaces/events.StoreLike.md)
 - [WritableStoreLike](../interfaces/events.WritableStoreLike.md)
 
@@ -18,6 +19,7 @@
 - [EventListenerLike\_isErrorSafe](events.md#eventlistenerlike_iserrorsafe)
 - [EventSourceLike\_addEventListener](events.md#eventsourcelike_addeventlistener)
 - [PublisherLike\_listenerCount](events.md#publisherlike_listenercount)
+- [SinkLike\_notify](events.md#sinklike_notify)
 - [StoreLike\_value](events.md#storelike_value)
 
 ## Variables
@@ -37,6 +39,12 @@ ___
 ### PublisherLike\_listenerCount
 
 • `Const` **PublisherLike\_listenerCount**: unique `symbol`
+
+___
+
+### SinkLike\_notify
+
+• `Const` **SinkLike\_notify**: unique `symbol`
 
 ___
 

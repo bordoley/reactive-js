@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
-import TakeWhileSinkMixin from "../../../utils/__mixins__/TakeWhileSinkMixin.js";
+import TakeWhileSinkMixin from "../../__mixins__/TakeWhileSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_takeWhile = 
 /*@__PURE__*/ (() => {

@@ -1,9 +1,9 @@
 /// <reference types="./Publisher.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, PublisherLike_listenerCount, } from "../../../events.js";
+import { EventListenerLike_isErrorSafe, EventSourceLike_addEventListener, PublisherLike_listenerCount, SinkLike_notify, } from "../../../events.js";
 import { error, newInstance, none, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, DisposableLike_isDisposed, SinkLike_notify, } from "../../../utils.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const Publisher_listeners = Symbol("Publisher_listeners");

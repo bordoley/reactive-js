@@ -3,7 +3,7 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EventListenerLike_isErrorSafe, } from "../../../events.js";
 import { pipe, returns } from "../../../functions.js";
-import PairwiseSinkMixin from "../../../utils/__mixins__/PairwiseSinkMixin.js";
+import PairwiseSinkMixin from "../../__mixins__/PairwiseSinkMixin.js";
 import EventSource_lift from "./EventSource.lift.js";
 const EventSource_pairwise = /*@__PURE__*/ (() => {
     const createPairwiseEventListener = createInstanceFactory(mix(include(PairwiseSinkMixin()), function PairwiseEventListener(instance, delegate) {

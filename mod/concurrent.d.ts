@@ -1,7 +1,7 @@
 import { CollectionLike, IndexedLike } from "./collections.js";
-import { ErrorSafeEventListenerLike, EventSourceLike, StoreLike } from "./events.js";
+import { ErrorSafeEventListenerLike, EventSourceLike, SinkLike, StoreLike } from "./events.js";
 import { Optional, SideEffect1 } from "./functions.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy, SinkLike } from "./utils.js";
+import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "./utils.js";
 export declare const DispatcherLikeEvent_ready: unique symbol;
 export declare const DispatcherLikeEvent_capacityExceeded: unique symbol;
 export declare const DispatcherLikeEvent_completed: unique symbol;

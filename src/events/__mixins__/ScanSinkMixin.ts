@@ -5,15 +5,14 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
+import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Factory, Reducer, error, none, returns } from "../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
   DisposableLike_dispose,
-  SinkLike,
-  SinkLike_notify,
 } from "../../utils.js";
-import DelegatingDisposableMixin from "./DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");

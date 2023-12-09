@@ -6,8 +6,8 @@ import {
   props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
+import KeepSinkMixin from "../../../events/__mixins__/KeepSinkMixin.js";
 import { Predicate } from "../../../functions.js";
-import KeepSinkMixin from "../../../utils/__mixins__/KeepSinkMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 

@@ -3,8 +3,9 @@
 import { describe, expectArrayEquals, expectEquals, expectIsSome, expectTrue, test, testModule, } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { ObservableLike_observe, SchedulerLike_schedule, SubjectLike_observerCount, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { SinkLike_notify } from "../../events.js";
 import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
-import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, SinkLike_notify, } from "../../utils.js";
+import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";

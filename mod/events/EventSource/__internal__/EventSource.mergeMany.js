@@ -1,7 +1,8 @@
 /// <reference types="./EventSource.mergeMany.d.ts" />
 
+import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, pipe } from "../../../functions.js";
-import { DisposableLike_dispose, SinkLike_notify } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 import EventSource_create from "./EventSource.create.js";

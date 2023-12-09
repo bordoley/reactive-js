@@ -1,11 +1,11 @@
 import {
   EventSourceLike_addEventListener,
   PublisherLike,
+  SinkLike_notify,
 } from "../../../../events.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import * as Publisher from "../../../../events/Publisher.js";
 import { isNone, newInstance, pipe } from "../../../../functions.js";
-import { SinkLike_notify } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
 import type * as Element from "../../Element.js";
 

@@ -16,7 +16,7 @@ A consumer of push-based notifications.
 
 - [`DispatcherLike`](concurrent.DispatcherLike.md)<`T`\>
 
-- [`SinkLike`](utils.SinkLike.md)<`T`\>
+- [`SinkLike`](events.SinkLike.md)<`T`\>
 
 - [`SchedulerLike`](concurrent.SchedulerLike.md)
 

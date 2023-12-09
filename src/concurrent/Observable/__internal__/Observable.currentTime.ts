@@ -5,7 +5,8 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../../concurrent.js";
-import { DisposableLike_isDisposed, SinkLike_notify } from "../../../utils.js";
+import { SinkLike_notify } from "../../../events.js";
+import { DisposableLike_isDisposed } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
 import Observable_createRunnable from "./Observable.createRunnable.js";
 

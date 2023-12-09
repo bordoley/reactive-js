@@ -1,4 +1,5 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import * as EventSource from "../../../events/EventSource.js";
 import {
   bindMethod,
@@ -12,7 +13,6 @@ import {
 import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  SinkLike_notify,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";

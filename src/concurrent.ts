@@ -2,6 +2,7 @@ import { CollectionLike, IndexedLike } from "./collections.js";
 import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
+  SinkLike,
   StoreLike,
 } from "./events.js";
 import { Optional, SideEffect1 } from "./functions.js";
@@ -9,7 +10,6 @@ import {
   DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
-  SinkLike,
 } from "./utils.js";
 
 export const DispatcherLikeEvent_ready = Symbol("DispatcherLikeEvent_ready");
