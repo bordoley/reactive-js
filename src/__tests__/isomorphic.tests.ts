@@ -4,6 +4,7 @@
 
 import "./computations.test.js";
 import "./functions.test.js";
+import "../collections/__tests__/Enumerable.test.js";
 import "../concurrent/__tests__/Observable.test.js";
 import "../concurrent/__tests__/PauseableObservable.test.js";
 import "../concurrent/__tests__/Stream.test.js";
