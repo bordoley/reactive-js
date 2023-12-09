@@ -5,7 +5,9 @@ import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { keepType, mapTo } from "../../computations.js";
 import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import * as WritableStotre from "../../events/WritableStore.js";
 import { alwaysTrue, arrayEquality, bind, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -315,6 +317,16 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     const result = [];
     pipe([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([0, 2, 4, 6]));
+})), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
+    const store = WritableStotre.create(-1);
+    const scheduler = VirtualTimeScheduler.create();
+    const result = [];
+    pipe(store, Observable.fromStore(), Observable.forEach(bind(Array.prototype.push, result)), Observable.subscribe(scheduler));
+    pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 3 }), Observable.takeFirst({ count: 3 }), Observable.forEach(x => {
+        store[StoreLike_value] = x;
+    }), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    pipe(result, expectArrayEquals([-1, 0, 1, 2]));
 })), describe("ignoreElements", test("ignores all elements", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.ignoreElements(), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("lastAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.lastAsync());
     pipe(result, expectIsNone);

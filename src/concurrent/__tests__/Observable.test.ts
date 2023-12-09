@@ -38,7 +38,9 @@ import {
   StreamableLike_stream,
   VirtualTimeSchedulerLike_run,
 } from "../../concurrent.js";
+import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
+import * as WritableStotre from "../../events/WritableStore.js";
 import {
   Optional,
   Tuple2,
@@ -1031,6 +1033,36 @@ testModule(
         Observable.run(),
       );
       pipe(result, expectArrayEquals([0, 2, 4, 6]));
+    }),
+  ),
+  describe(
+    "fromStore",
+    test("it publishes the current value and all subsequent values", () => {
+      const store = WritableStotre.create<number>(-1);
+      const scheduler = VirtualTimeScheduler.create();
+
+      const result: number[] = [];
+
+      pipe(
+        store,
+        Observable.fromStore(),
+        Observable.forEach<number>(bind(Array.prototype.push, result)),
+        Observable.subscribe(scheduler),
+      );
+
+      pipe(
+        Enumerable.generate(increment, returns(-1)),
+        Observable.fromEnumerable({ delay: 3 }),
+        Observable.takeFirst({ count: 3 }),
+        Observable.forEach<number>(x => {
+          store[StoreLike_value] = x;
+        }),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([-1, 0, 1, 2]));
     }),
   ),
   describe(
