@@ -168,19 +168,19 @@ export const createComponent: Signature["createComponent"] = <TProps>(
   } = {},
 ) => {
   const ObservableComponent = (props: TProps) => {
-    const propsPublisher = useDisposable(
+    const propsSubject = useDisposable(
       () => Subject.create<TProps>({ replay: 1 }),
       [],
     );
 
     useEffect(() => {
-      if (isSome(propsPublisher)) {
-        propsPublisher[SinkLike_notify](props);
+      if (isSome(propsSubject)) {
+        propsSubject[SinkLike_notify](props);
       }
-    }, [propsPublisher, props]);
+    }, [propsSubject, props]);
 
     return (
-      useObserve(pipeSomeLazy(propsPublisher, fn), [propsPublisher], options) ??
+      useObserve(pipeSomeLazy(propsSubject, fn), [propsSubject], options) ??
       null
     );
   };

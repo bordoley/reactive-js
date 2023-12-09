@@ -10,11 +10,11 @@ import { StoreLike_value, WritableStoreLike } from "../../../events.js";
 import { none } from "../../../functions.js";
 import { DisposableLike, SinkLike_notify } from "../../../utils.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
+import type * as WritableStore from "../../WritableStore.js";
 import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
-} from "../../../utils/__mixins__/LazyInitEventSourceMixin.js";
-import type * as WritableStore from "../../WritableStore.js";
+} from "../../__mixins__/LazyInitEventSourceMixin.js";
 
 const WritableStore_create: WritableStore.Signature["create"] = /*@__PURE__*/ (<
   T,

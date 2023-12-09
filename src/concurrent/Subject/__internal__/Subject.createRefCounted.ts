@@ -28,13 +28,13 @@ import Subject_create from "./Subject.create.js";
 
 const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
   /*@__PURE__*/ (<T>() => {
-    const createRefCountedPublisherInstance = createInstanceFactory(
+    const createRefCountedSubjectInstance = createInstanceFactory(
       mix(
         include(
           DelegatingDisposableMixin<SubjectLike<T>>(),
           DelegatingReplayObservableMixin(),
         ),
-        function RefCountedPublisher(
+        function RefCountedSubject(
           instance: Pick<
             SubjectLike<T>,
             | typeof EventListenerLike_isErrorSafe
@@ -90,7 +90,7 @@ const Subject_createRefCounted: Subject.Signature["createRefCounted"] =
 
     return (options?: { readonly replay?: number }) => {
       const delegate = Subject_create<T>(options);
-      return createRefCountedPublisherInstance(delegate);
+      return createRefCountedSubjectInstance(delegate);
     };
   })();
 

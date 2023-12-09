@@ -19,6 +19,10 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_yield,
 } from "../../concurrent.js";
+import LazyInitEventSourceMixin, {
+  LazyInitEventSourceLike,
+  LazyInitEventSourceMixin_publisher,
+} from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { Function2, call, pipe, returns } from "../../functions.js";
 import {
   DisposableLike,
@@ -34,10 +38,6 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
-import LazyInitEventSourceMixin, {
-  LazyInitEventSourceLike,
-  LazyInitEventSourceMixin_publisher,
-} from "../../utils/__mixins__/LazyInitEventSourceMixin.js";
 
 type TObserverBaseMixin<T> = Omit<
   ObserverLike<T>,

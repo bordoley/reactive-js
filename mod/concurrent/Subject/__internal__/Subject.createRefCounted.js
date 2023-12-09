@@ -11,7 +11,7 @@ import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayOb
 import Subject_create from "./Subject.create.js";
 const Subject_createRefCounted = 
 /*@__PURE__*/ (() => {
-    const createRefCountedPublisherInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()), function RefCountedPublisher(instance, delegate) {
+    const createRefCountedSubjectInstance = createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()), function RefCountedSubject(instance, delegate) {
         init(DelegatingDisposableMixin(), instance, delegate);
         init(DelegatingReplayObservableMixin(), instance, delegate);
         return instance;
@@ -35,7 +35,7 @@ const Subject_createRefCounted =
     }));
     return (options) => {
         const delegate = Subject_create(options);
-        return createRefCountedPublisherInstance(delegate);
+        return createRefCountedSubjectInstance(delegate);
     };
 })();
 export default Subject_createRefCounted;

@@ -26,7 +26,7 @@ import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js"
 
 const Observable_multicastImpl =
   <T>(
-    publisherFactory: Function1<
+    subjectFactory: Function1<
       Optional<{
         replay?: number;
       }>,
@@ -48,23 +48,23 @@ const Observable_multicastImpl =
       capacity = MAX_SAFE_INTEGER,
       replay = 0,
     } = options;
-    const publisher = publisherFactory({ replay });
+    const subject = subjectFactory({ replay });
 
     const scheduler = isFunction(schedulerOrFactory)
-      ? pipe(schedulerOrFactory(), Disposable.addTo(publisher))
+      ? pipe(schedulerOrFactory(), Disposable.addTo(subject))
       : schedulerOrFactory;
 
     pipe(
       observable,
-      Observable_forEach(bindMethod(publisher, SinkLike_notify)),
+      Observable_forEach(bindMethod(subject, SinkLike_notify)),
       Observable_subscribeWithConfig(scheduler, {
         [QueueableLike_capacity]: capacity,
         [QueueableLike_backpressureStrategy]: backpressureStrategy,
       }),
-      Disposable.bindTo(publisher),
+      Disposable.bindTo(subject),
     );
 
-    return publisher;
+    return subject;
   };
 
 export default Observable_multicastImpl;

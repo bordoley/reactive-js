@@ -3,7 +3,7 @@ import { SubjectLike } from "../concurrent.js";
  * @noInheritDoc
  * @category Module
  */
-export interface SubjectrModule {
+export interface SubjectModule {
     create<T>(options?: {
         readonly replay?: number;
     }): SubjectLike<T>;
@@ -11,6 +11,6 @@ export interface SubjectrModule {
         readonly replay?: number;
     }): SubjectLike<T>;
 }
-export type Signature = SubjectrModule;
+export type Signature = SubjectModule;
 export declare const create: Signature["create"];
 export declare const createRefCounted: Signature["createRefCounted"];

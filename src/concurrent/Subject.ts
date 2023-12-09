@@ -6,12 +6,12 @@ import Subject_createRefCounted from "./Subject/__internal__/Subject.createRefCo
  * @noInheritDoc
  * @category Module
  */
-export interface SubjectrModule {
+export interface SubjectModule {
   create<T>(options?: { readonly replay?: number }): SubjectLike<T>;
   createRefCounted<T>(options?: { readonly replay?: number }): SubjectLike<T>;
 }
 
-export type Signature = SubjectrModule;
+export type Signature = SubjectModule;
 
 export const create: Signature["create"] = Subject_create;
 export const createRefCounted: Signature["createRefCounted"] =

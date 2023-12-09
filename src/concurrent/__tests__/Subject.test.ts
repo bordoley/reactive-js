@@ -40,16 +40,16 @@ testModule(
     test("with replay", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const publisher = Subject.create<number>({ replay: 2 });
+      const subject = Subject.create<number>({ replay: 2 });
       for (const v of [1, 2, 3, 4]) {
-        publisher[SinkLike_notify](v);
+        subject[SinkLike_notify](v);
       }
 
-      publisher[DisposableLike_dispose]();
+      subject[DisposableLike_dispose]();
 
       const result: number[] = [];
       pipe(
-        publisher,
+        subject,
         Observable.forEach(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
@@ -62,35 +62,35 @@ testModule(
     test("with multiple observers", () => {
       const scheduler = VirtualTimeScheduler.create();
 
-      const publisher = Subject.create();
-      pipe(publisher[SubjectLike_observerCount], expectEquals(0));
-      const sub1 = pipe(publisher, Observable.subscribe(scheduler));
-      pipe(publisher[SubjectLike_observerCount], expectEquals(1));
-      const sub2 = pipe(publisher, Observable.subscribe(scheduler));
-      pipe(publisher[SubjectLike_observerCount], expectEquals(2));
+      const subject = Subject.create();
+      pipe(subject[SubjectLike_observerCount], expectEquals(0));
+      const sub1 = pipe(subject, Observable.subscribe(scheduler));
+      pipe(subject[SubjectLike_observerCount], expectEquals(1));
+      const sub2 = pipe(subject, Observable.subscribe(scheduler));
+      pipe(subject[SubjectLike_observerCount], expectEquals(2));
       const sub3 = pipe(
         Observable.create(observer => {
-          publisher[ObservableLike_observe](observer);
-          publisher[ObservableLike_observe](observer);
+          subject[ObservableLike_observe](observer);
+          subject[ObservableLike_observe](observer);
         }),
         Observable.subscribe(scheduler),
       );
-      pipe(publisher[SubjectLike_observerCount], expectEquals(3));
+      pipe(subject[SubjectLike_observerCount], expectEquals(3));
       sub3[DisposableLike_dispose]();
-      pipe(publisher[SubjectLike_observerCount], expectEquals(2));
+      pipe(subject[SubjectLike_observerCount], expectEquals(2));
       sub1[DisposableLike_dispose]();
-      pipe(publisher[SubjectLike_observerCount], expectEquals(1));
+      pipe(subject[SubjectLike_observerCount], expectEquals(1));
       sub2[DisposableLike_dispose]();
-      pipe(publisher[SubjectLike_observerCount], expectEquals(0));
+      pipe(subject[SubjectLike_observerCount], expectEquals(0));
     }),
-    test("notifying a disposed publisher", () => {
+    test("notifying a disposed subject", () => {
       const scheduler = VirtualTimeScheduler.create();
-      const publisher = Subject.create<number>();
+      const subject = Subject.create<number>();
 
       const result: number[] = [];
 
-      const publisherSubscription = pipe(
-        publisher,
+      const subjectSubscription = pipe(
+        subject,
         Observable.forEach<number>(bind(Array.prototype.push, result)),
         Observable.subscribe(scheduler),
       );
@@ -98,13 +98,13 @@ testModule(
       const generateSubscription = pipe(
         Enumerable.generate(increment, returns(-1)),
         Observable.fromEnumerable({ delay: 3, delayStart: true }),
-        Observable.forEach(bindMethod(publisher, SinkLike_notify)),
+        Observable.forEach(bindMethod(subject, SinkLike_notify)),
         Observable.subscribe(scheduler),
       );
 
       scheduler[SchedulerLike_schedule](
         () => {
-          publisher[DisposableLike_dispose]();
+          subject[DisposableLike_dispose]();
         },
         { delay: 7 },
       );
@@ -118,18 +118,18 @@ testModule(
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
-      expectTrue(publisherSubscription[DisposableLike_isDisposed]);
+      expectTrue(subjectSubscription[DisposableLike_isDisposed]);
 
       pipe(result, expectArrayEquals([0, 1]));
     }),
-    test("subscribing to a publisher disposed with an error", () => {
+    test("subscribing to a subject disposed with an error", () => {
       const scheduler = VirtualTimeScheduler.create();
-      const publisher = Subject.create<number>();
+      const subject = Subject.create<number>();
 
       const e = new Error();
-      publisher[DisposableLike_dispose](e);
+      subject[DisposableLike_dispose](e);
 
-      const subscription = pipe(publisher, Observable.subscribe(scheduler));
+      const subscription = pipe(subject, Observable.subscribe(scheduler));
 
       scheduler[VirtualTimeSchedulerLike_run]();
 
@@ -140,19 +140,19 @@ testModule(
     }),
     test("notifing an observer that throws an exception on overflow", () => {
       const scheduler = VirtualTimeScheduler.create();
-      const publisher = Subject.create<number>();
+      const subject = Subject.create<number>();
 
       const subscription = pipe(
-        publisher,
+        subject,
         Observable.subscribe(scheduler, {
           backpressureStrategy: "throw",
           capacity: 1,
         }),
       );
 
-      publisher[SinkLike_notify](1);
-      publisher[SinkLike_notify](2);
-      publisher[SinkLike_notify](3);
+      subject[SinkLike_notify](1);
+      subject[SinkLike_notify](2);
+      subject[SinkLike_notify](3);
 
       expectIsSome(subscription[DisposableLike_error]);
     }),

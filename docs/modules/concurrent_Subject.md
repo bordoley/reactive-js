@@ -6,7 +6,7 @@
 
 ### Module Interfaces
 
-- [SubjectrModule](../interfaces/concurrent_Subject.SubjectrModule.md)
+- [SubjectModule](../interfaces/concurrent_Subject.SubjectModule.md)
 
 ### Type Aliases
 
@@ -21,7 +21,7 @@
 
 ### Signature
 
-Ƭ **Signature**: [`SubjectrModule`](../interfaces/concurrent_Subject.SubjectrModule.md)
+Ƭ **Signature**: [`SubjectModule`](../interfaces/concurrent_Subject.SubjectModule.md)
 
 ## Functions
 
