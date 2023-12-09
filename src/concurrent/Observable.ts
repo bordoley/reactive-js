@@ -791,13 +791,6 @@ export interface ObservableModule
     AsyncIterable<T>,
     DeferredSideEffectsObservableLike<T>
   >;
-  fromAsyncIterable<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<AsyncIterable<T>, PauseableObservableLike<T>>;
 
   fromEnumerable<T>(options?: {
     readonly delay: number;

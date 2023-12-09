@@ -14,6 +14,7 @@
 
 ### Functions
 
+- [fromAsyncIterable](concurrent_PauseableObservable.md#fromasynciterable)
 - [sinkInto](concurrent_PauseableObservable.md#sinkinto)
 
 ## Type Aliases
@@ -23,6 +24,31 @@
 Ƭ **Signature**: [`PauseableObservableModule`](../interfaces/concurrent_PauseableObservable.PauseableObservableModule.md)
 
 ## Functions
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`T`\>\>
+
+___
 
 ### sinkInto
 

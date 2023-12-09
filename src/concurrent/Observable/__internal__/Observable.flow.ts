@@ -5,7 +5,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observable_createPauseable from "./Observable.createPauseable.js";
+import PauseableObservable_create from "../../PauseableObservable/__internal__/PauseableObservable.create.js";
 
 const Observable_flow: Observable.Signature["flow"] =
   <T>(
@@ -15,7 +15,6 @@ const Observable_flow: Observable.Signature["flow"] =
       readonly capacity?: number;
     },
   ) =>
-  (runnable: RunnableLike<T>) => {
-    return Observable_createPauseable<T>(returns(runnable), scheduler, options);
-  };
+  (runnable: RunnableLike<T>) =>
+    PauseableObservable_create<T>(returns(runnable), scheduler, options);
 export default Observable_flow;

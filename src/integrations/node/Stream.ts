@@ -1,5 +1,4 @@
 import { Readable, Transform, Writable } from "stream";
-import Observable_createPauseable from "../..//concurrent/Observable/__internal__/Observable.createPauseable.js";
 import {
   DeferredSideEffectsObservableLike,
   DispatcherLike_complete,
@@ -9,6 +8,7 @@ import {
   SchedulerLike,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
+import PauseableObservable_create from "../../concurrent/PauseableObservable/__internal__/PauseableObservable.create.js";
 import {
   Factory,
   Function1,
@@ -101,7 +101,7 @@ export const flow: Signature["flow"] =
     },
   ) =>
   factory =>
-    Observable_createPauseable(
+    PauseableObservable_create(
       mode =>
         Observable.create<Uint8Array>(observer => {
           const dispatchDisposable = pipe(

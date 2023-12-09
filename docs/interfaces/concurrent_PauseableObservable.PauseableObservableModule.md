@@ -8,9 +8,35 @@
 
 ### Methods
 
+- [fromAsyncIterable](concurrent_PauseableObservable.PauseableObservableModule.md#fromasynciterable)
 - [sinkInto](concurrent_PauseableObservable.PauseableObservableModule.md#sinkinto)
 
 ## Methods
+
+### fromAsyncIterable
+
+▸ **fromAsyncIterable**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`AsyncIterable`<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\>\>
+
+___
 
 ### sinkInto
 

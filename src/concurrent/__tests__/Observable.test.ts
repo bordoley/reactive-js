@@ -33,6 +33,7 @@ import {
   PureRunnableLike,
   RunnableLike,
   RunnableWithSideEffectsLike,
+  SchedulerLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   StreamableLike_stream,
@@ -47,6 +48,7 @@ import {
   alwaysTrue,
   arrayEquality,
   bind,
+  error,
   ignore,
   increment,
   incrementBy,
@@ -1020,6 +1022,71 @@ testModule(
         expectPromiseToThrow,
       );
     }),
+  ),
+  describe(
+    "fromAsyncIterable",
+    testAsync(
+      "infinite immediately resolving iterable",
+      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+        async (scheduler: SchedulerLike) => {
+          const result = await pipe(
+            (async function* foo() {
+              let i = 0;
+              while (true) {
+                yield i++;
+              }
+            })(),
+            Observable.fromAsyncIterable(),
+            Observable.takeFirst({ count: 10 }),
+            Observable.buffer<number>(),
+            Observable.lastAsync(scheduler, { capacity: 5 }),
+          );
+
+          pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        },
+      ),
+    ),
+    testAsync(
+      "iterable that completes",
+      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+        async (scheduler: SchedulerLike) => {
+          const result = await pipe(
+            (async function* foo() {
+              yield 1;
+              yield 2;
+              yield 3;
+            })(),
+            Observable.fromAsyncIterable(),
+            Observable.buffer<number>(),
+            Observable.lastAsync(scheduler, { capacity: 1 }),
+          );
+
+          pipe(result ?? [], expectArrayEquals([1, 2, 3]));
+        },
+      ),
+    ),
+
+    testAsync(
+      "iterable that throws",
+      pipeLazy(
+        Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+          async (scheduler: SchedulerLike) => {
+            const e = error();
+
+            const result = await pipe(
+              (async function* foo() {
+                throw e;
+              })(),
+              Observable.fromAsyncIterable(),
+              Observable.lastAsync(scheduler, { capacity: 1 }),
+            );
+
+            pipe(result, expectEquals(e as unknown));
+          },
+        ),
+        expectToThrowAsync,
+      ),
+    ),
   ),
   describe(
     "fromIterable",
