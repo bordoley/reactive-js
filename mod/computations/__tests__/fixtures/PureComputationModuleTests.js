@@ -11,7 +11,9 @@ const PureComputationModuleTests = (m, fromReadonlyArray, toReadonlyArray) => de
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],
-], { valuesEquality: arrayEquality() })))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
+], { valuesEquality: arrayEquality() }))), test("buffers all values when no count is provided", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8], fromReadonlyArray(), m.buffer(), toReadonlyArray(), expectArrayEquals([[1, 2, 3, 4, 5, 6, 7, 8]], {
+    valuesEquality: arrayEquality(),
+})))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
     const str = "abcdefghijklmnsopqrstuvwxyz";
     pipe([str], Observable.fromReadonlyArray({ delay: 1 }), Observable.encodeUtf8(), Observable.toReadonlyArray(), fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals(str));
 }), test("decoding ascii from enumerable", () => {

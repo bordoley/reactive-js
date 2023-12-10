@@ -7,13 +7,14 @@ import {
 } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
 import BufferSinkMixin from "../../../events/__mixins__/BufferSinkMixin.js";
+import { Optional } from "../../../functions.js";
 import { QueueableLike_enqueue } from "../../../utils.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observer_decorateNotifyWithStateAssert from "./Observer.decorateNotifyWithStateAssert.js";
 
 const Observer_createBufferObserver: <T>(
   delegate: ObserverLike<readonly T[]>,
-  count: number,
+  count: Optional<number>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
@@ -21,7 +22,7 @@ const Observer_createBufferObserver: <T>(
       function BufferObserver(
         instance: unknown,
         delegate: ObserverLike<readonly T[]>,
-        count: number,
+        count?: number,
       ): ObserverLike<T> {
         const onComplete = (buffer: readonly T[]) => {
           delegate[QueueableLike_enqueue](buffer);

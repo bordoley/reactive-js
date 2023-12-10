@@ -67,6 +67,18 @@ const PureComputationModuleTests = <C extends Computation>(
           ),
         ),
       ),
+      test(
+        "buffers all values when no count is provided",
+        pipeLazy(
+          [1, 2, 3, 4, 5, 6, 7, 8],
+          fromReadonlyArray(),
+          m.buffer(),
+          toReadonlyArray(),
+          expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
+            valuesEquality: arrayEquality(),
+          }),
+        ),
+      ),
     ),
     describe(
       "decodeWithCharset",
