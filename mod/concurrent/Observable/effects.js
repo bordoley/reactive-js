@@ -35,13 +35,12 @@ export const __do = /*@__PURE__*/ (() => {
         };
         pipe(observer[SchedulerLike_schedule](callback), Disposable.addTo(observer));
     });
-    const createRunnable = (onSubscribe) => Observable_createRunnableWithSideEffects(onSubscribe);
     return (f, ...args) => {
         const ctx = assertCurrentContext();
         const scheduler = ctx[ComputeContext_observer];
         const observableConfig = ctx[ComputeContext_observableConfig];
         const observable = ctx[ComputeContext_memoOrUse](false, deferSideEffect, observableConfig[ObservableLike_isRunnable]
-            ? createRunnable
+            ? Observable_createRunnableWithSideEffects
             : Observable_create, f, ...args);
         const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](false, Observable_subscribe, scheduler);
         ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);

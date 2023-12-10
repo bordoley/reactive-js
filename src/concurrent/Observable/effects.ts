@@ -156,9 +156,6 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       );
     });
 
-  const createRunnable = (onSubscribe: SideEffect1<ObserverLike<unknown>>) =>
-    Observable_createRunnableWithSideEffects(onSubscribe);
-
   return (f: (...args: any[]) => void, ...args: unknown[]): void => {
     const ctx = assertCurrentContext();
 
@@ -168,7 +165,7 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       false,
       deferSideEffect,
       observableConfig[ObservableLike_isRunnable]
-        ? createRunnable
+        ? Observable_createRunnableWithSideEffects
         : Observable_create,
       f,
       ...args,

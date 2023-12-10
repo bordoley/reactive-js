@@ -1,4 +1,9 @@
-import { createInstanceFactory } from "../../../__internal__/mixins.js";
+import { __DEV__ } from "../../../__internal__/constants.js";
+import {
+  createInstanceFactory,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
 import {
   DeferredSideEffectsObservableLike,
   ObservableLike,
@@ -10,18 +15,32 @@ import {
   PureRunnableLike,
   RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
-import { Function1, bindMethod, pipeUnsafe } from "../../../functions.js";
+import {
+  Function1,
+  bindMethod,
+  none,
+  pipeUnsafe,
+  raiseWithDebugMessage,
+} from "../../../functions.js";
 import type {
   DeferredSideEffectsObservableOperator,
   ObservableOperatorWithSideEffects,
   PureObservableOperator,
 } from "../../Observable.js";
-import LiftedObservableMixin, {
-  LiftedObservableLike_operators,
-  LiftedObservableLike_source,
-} from "../../__mixins__/LiftedObservableMixin.js";
-
 import Observable_create from "./Observable.create.js";
+
+const LiftedObservableLike_source = Symbol("LiftedObservableMixin_source");
+const LiftedObservableLike_operators = Symbol(
+  "LiftedObservableMixin_operators",
+);
+
+interface LiftedObservableLike<TIn, TOut> extends ObservableLike<TOut> {
+  [LiftedObservableLike_source]: ObservableLike<TIn>;
+  [LiftedObservableLike_operators]: readonly Function1<
+    ObserverLike<any>,
+    ObserverLike<any>
+  >[];
+}
 
 const createLiftedObservable: <TA, TB>(
   obs: ObservableLike<TA>,
@@ -32,8 +51,81 @@ const createLiftedObservable: <TA, TB>(
     | typeof ObservableLike_isPure
     | typeof ObservableLike_isRunnable
   >,
-) => ObservableLike<TB> = /*@__PURE__*/ (() =>
-  createInstanceFactory(LiftedObservableMixin<unknown, unknown>()))();
+) => ObservableLike<TB> = /*@__PURE__*/ (<TA, TB>() => {
+  type TProperties = {
+    [LiftedObservableLike_source]: ObservableLike<TA>;
+    [LiftedObservableLike_operators]: readonly Function1<
+      ObserverLike<any>,
+      ObserverLike<any>
+    >[];
+    [ObservableLike_isDeferred]: boolean;
+    [ObservableLike_isPure]: boolean;
+    [ObservableLike_isRunnable]: boolean;
+  };
+
+  return createInstanceFactory(
+    mix(
+      function LiftedObservable(
+        instance: TProperties & ObservableLike<TB>,
+        source: ObservableLike<TA>,
+        ops: readonly Function1<ObserverLike<any>, ObserverLike<any>>[],
+        config: Pick<
+          ObservableLike,
+          | typeof ObservableLike_isDeferred
+          | typeof ObservableLike_isPure
+          | typeof ObservableLike_isRunnable
+        >,
+      ): LiftedObservableLike<TA, TB> {
+        instance[LiftedObservableLike_source] = source;
+        instance[LiftedObservableLike_operators] = ops;
+
+        const configRunnable = config[ObservableLike_isRunnable] ?? false;
+        const configDeferred = config[ObservableLike_isDeferred] ?? false;
+        const configPure = config[ObservableLike_isPure] ?? false;
+
+        if (__DEV__) {
+          if (configRunnable && !configDeferred) {
+            raiseWithDebugMessage(
+              "Attempting to create a non-deferred, runnable observable, which is an illegal state",
+            );
+          } else if (!configDeferred && !configPure) {
+            raiseWithDebugMessage(
+              "Attempting to create a non-deferred, not-pure observable which is an illegal state",
+            );
+          }
+        }
+
+        instance[ObservableLike_isRunnable] = configRunnable;
+        instance[ObservableLike_isDeferred] = configDeferred;
+        instance[ObservableLike_isPure] = configPure;
+
+        return instance;
+      },
+      props<TProperties>({
+        [LiftedObservableLike_source]: none,
+        [LiftedObservableLike_operators]: none,
+        [ObservableLike_isDeferred]: false,
+        [ObservableLike_isPure]: false,
+        [ObservableLike_isRunnable]: false,
+      }),
+      {
+        [ObservableLike_observe](
+          this: TProperties,
+          observer: ObserverLike<TB>,
+        ) {
+          pipeUnsafe(
+            observer,
+            ...this[LiftedObservableLike_operators],
+            bindMethod(
+              this[LiftedObservableLike_source],
+              ObservableLike_observe,
+            ),
+          );
+        },
+      },
+    ),
+  );
+})();
 
 interface ObservableLift {
   lift(
