@@ -2717,6 +2717,31 @@ ___
 
 [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
+▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`, `TKeyD`\>(`keyA`, `keyB`, `keyC`, `keyD`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKeyA` | extends `string` \| `number` \| `symbol` |
+| `TKeyB` | extends `string` \| `number` \| `symbol` |
+| `TKeyC` | extends `string` \| `number` \| `symbol` |
+| `TKeyD` | extends `string` \| `number` \| `symbol` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `keyA` | `TKeyA` |
+| `keyB` | `TKeyB` |
+| `keyC` | `TKeyC` |
+| `keyD` | `TKeyD` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
+
 ___
 
 ### pickUnsafe

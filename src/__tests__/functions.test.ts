@@ -347,11 +347,13 @@ testModule(
         {
           a: {
             b: {
-              c: "abc",
+              c: {
+                d: "abc",
+              },
             },
           },
         },
-        pick("a", "b", "c"),
+        pick("a", "b", "c", "d"),
         expectEquals(expected),
       );
     }),

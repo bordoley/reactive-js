@@ -65,10 +65,12 @@ testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(fals
     pipe({
         a: {
             b: {
-                c: "abc",
+                c: {
+                    d: "abc",
+                },
             },
         },
-    }, pick("a", "b", "c"), expectEquals(expected));
+    }, pick("a", "b", "c", "d"), expectEquals(expected));
 })), describe("returns", test("allocated function always returns the input value", () => {
     const result = {};
     const f = returns(result);

@@ -582,6 +582,18 @@ interface FunctionsModule {
     keyB: TKeyB,
     keyC: TKeyC,
   ): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
+  pick<
+    T,
+    TKeyA extends keyof T,
+    TKeyB extends keyof T[TKeyA],
+    TKeyC extends keyof T[TKeyA][TKeyB],
+    TKeyD extends keyof T[TKeyA][TKeyB][TKeyC],
+  >(
+    keyA: TKeyA,
+    keyB: TKeyB,
+    keyC: TKeyC,
+    keyD: TKeyD,
+  ): Function1<T, T[TKeyA][TKeyB][TKeyC][TKeyD]>;
 
   pickUnsafe<T = unknown>(
     ...keys: (string | symbol | number)[]

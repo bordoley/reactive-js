@@ -235,6 +235,7 @@ interface FunctionsModule {
     pick<T, TKey extends keyof T>(key: TKey): Function1<T, T[TKey]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA]>(keyA: TKeyA, keyB: TKeyB): Function1<T, T[TKeyA][TKeyB]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
+    pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB], TKeyD extends keyof T[TKeyA][TKeyB][TKeyC]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC, keyD: TKeyD): Function1<T, T[TKeyA][TKeyB][TKeyC][TKeyD]>;
     pickUnsafe<T = unknown>(...keys: (string | symbol | number)[]): Function1<{}, T>;
     /**
      * Pipes `source` through a series of unary functions.
