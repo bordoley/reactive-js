@@ -19,6 +19,7 @@
 - [create](events_EventSource.EventSourceModule.md#create)
 - [decodeWithCharset](events_EventSource.EventSourceModule.md#decodewithcharset)
 - [distinctUntilChanged](events_EventSource.EventSourceModule.md#distinctuntilchanged)
+- [fromIterable](events_EventSource.EventSourceModule.md#fromiterable)
 - [fromPromise](events_EventSource.EventSourceModule.md#frompromise)
 - [keep](events_EventSource.EventSourceModule.md#keep)
 - [map](events_EventSource.EventSourceModule.md#map)
@@ -30,6 +31,7 @@
 - [skipFirst](events_EventSource.EventSourceModule.md#skipfirst)
 - [takeFirst](events_EventSource.EventSourceModule.md#takefirst)
 - [takeWhile](events_EventSource.EventSourceModule.md#takewhile)
+- [toReadonlyArrayAsync](events_EventSource.EventSourceModule.md#toreadonlyarrayasync)
 
 ## Methods
 
@@ -149,6 +151,22 @@ ___
 #### Inherited from
 
 [PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 
 ___
 
@@ -417,3 +435,19 @@ ___
 #### Inherited from
 
 [PureComputationModule](computations.PureComputationModule.md).[takeWhile](computations.PureComputationModule.md#takewhile)
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EventSourceLike`](events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>

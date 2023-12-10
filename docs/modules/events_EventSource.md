@@ -20,6 +20,7 @@
 - [buffer](events_EventSource.md#buffer)
 - [create](events_EventSource.md#create)
 - [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
+- [fromIterable](events_EventSource.md#fromiterable)
 - [fromPromise](events_EventSource.md#frompromise)
 - [keep](events_EventSource.md#keep)
 - [map](events_EventSource.md#map)
@@ -31,6 +32,7 @@
 - [skipFirst](events_EventSource.md#skipfirst)
 - [takeFirst](events_EventSource.md#takefirst)
 - [takeWhile](events_EventSource.md#takewhile)
+- [toReadonlyArrayAsync](events_EventSource.md#toreadonlyarrayasync)
 
 ## Type Aliases
 
@@ -133,6 +135,22 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
+
+___
+
+### fromIterable
+
+▸ **fromIterable**<`T`\>(): [`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`Iterable`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 ___
 
@@ -373,3 +391,19 @@ ___
 #### Returns
 
 [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `T`, `T`\>
+
+___
+
+### toReadonlyArrayAsync
+
+▸ **toReadonlyArrayAsync**<`T`\>(): [`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>, `Promise`<readonly `T`[]\>\>

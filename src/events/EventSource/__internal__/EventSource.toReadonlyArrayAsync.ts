@@ -1,8 +1,8 @@
-import type * as EventSource from "../../EventSource.js";
-import { bind, pipe } from "../../../functions.js";
-import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
-import * as Disposable from "../../../utils/Disposable.js";
 import { EventSourceLike } from "../../../events.js";
+import { bind, pipe } from "../../../functions.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import type * as EventSource from "../../EventSource.js";
+import EventSource_addEventHandler from "./EventSource.addEventHandler.js";
 
 const EventSource_toReadonlyArrayAsync: EventSource.Signature["toReadonlyArrayAsync"] =
 

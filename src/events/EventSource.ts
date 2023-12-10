@@ -11,6 +11,7 @@ import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.
 import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
+import EventSource_fromIterable from "./EventSource/__internal__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__internal__/EventSource.fromPromise.js";
 import EventSource_keep from "./EventSource/__internal__/EventSource.keep.js";
 import EventSource_map from "./EventSource/__internal__/EventSource.map.js";
@@ -37,6 +38,8 @@ export interface EventSourceModule
   ): Function1<EventSourceLike<T>, DisposableLike>;
 
   create<T>(setup: SideEffect1<EventListenerLike<T>>): EventSourceLike<T>;
+
+  fromIterable<T>(): Function1<Iterable<T>, EventSourceLike<T>>;
 
   fromPromise<T>(): Function1<Promise<T>, EventSourceLike<T>>;
 
@@ -67,6 +70,7 @@ export const buffer: Signature["buffer"] = EventSource_buffer;
 export const create: Signature["create"] = EventSource_create;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
+export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
