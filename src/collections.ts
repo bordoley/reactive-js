@@ -51,59 +51,6 @@ export interface EnumerableLike<T = unknown> extends Iterable<T> {
   [EnumerableLike_enumerate](): EnumeratorLike<T>;
 }
 
-export const Collection_T = Symbol("Collection_T");
-export const Collection_type = Symbol("Collection_type");
-export const Collection_TKey = Symbol("Collection_TKey");
-/**
- * @noInheritDoc
- * @category Collection
- */
-export interface Collection<TKey = unknown> {
-  readonly [Collection_T]?: unknown;
-  readonly [Collection_type]?: unknown;
-  readonly [Collection_TKey]?: TKey;
-}
-
-/**
- * @category Collection
- */
-export type KeyOf<C extends Collection> = NonNullable<
-  C[typeof Collection_TKey]
->;
-
-/**
- * @category Collection
- */
-export type CollectionOf<
-  C extends Collection,
-  T,
-  TKey extends KeyOf<C> = KeyOf<C>,
-> = C extends {
-  readonly [Collection_type]?: unknown;
-}
-  ? NonNullable<
-      (C & {
-        readonly [Collection_T]: T;
-        readonly [Collection_TKey]: TKey;
-      })[typeof Collection_type]
-    >
-  : {
-      readonly _C: C;
-      readonly _T: () => T;
-      readonly _TKey: () => TKey;
-    };
-
-/**
- * Utility type for a generic operator function that transforms a Collection's inner value type.
- * @category Collection
- */
-export type CollectionOperator<
-  C extends Collection,
-  TA,
-  TB,
-  TKey extends KeyOf<C> = KeyOf<C>,
-> = Function1<CollectionOf<C, TA, TKey>, CollectionOf<C, TB, TKey>>;
-
 /**
  * @noInheritDoc
  */
@@ -145,8 +92,7 @@ export interface AssociativeLike<TKey = unknown, T = unknown>
  * @noInheritDoc
  */
 export interface DictionaryLike<TKey = unknown, T = unknown>
-  extends AssociativeLike<TKey, Optional<T>>,
-    Collection<T> {
+  extends AssociativeLike<TKey, Optional<T>> {
   [EnumerableLike_enumerate](): EnumeratorLike<T>;
   [Symbol.iterator](): Iterator<T>;
 }
@@ -167,23 +113,77 @@ export interface MutableIndexedLike<T = unknown>
   extends IndexedLike<T>,
     MutableKeyedLike<number, T> {}
 
+export const KeyedCollection_T = Symbol("KeyedCollection_T");
+export const KeyedCollection_type = Symbol("KeyedCollection_type");
+export const KeyedCollection_TKey = Symbol("KeyedCollection_TKey");
+
+/**
+ * @noInheritDoc
+ * @category Collection
+ */
+export interface KeyedCollection<TKey = unknown> {
+  readonly [KeyedCollection_T]?: unknown;
+  readonly [KeyedCollection_type]?: unknown;
+  readonly [KeyedCollection_TKey]?: TKey;
+}
+
+/**
+ * @category Collection
+ */
+export type KeyOf<C extends KeyedCollection> = NonNullable<
+  C[typeof KeyedCollection_TKey]
+>;
+
+/**
+ * @category Collection
+ */
+export type KeyedCollectionOf<
+  C extends KeyedCollection,
+  T,
+  TKey extends KeyOf<C> = KeyOf<C>,
+> = C extends {
+  readonly [KeyedCollection_type]?: unknown;
+}
+  ? NonNullable<
+      (C & {
+        readonly [KeyedCollection_T]: T;
+        readonly [KeyedCollection_TKey]: TKey;
+      })[typeof KeyedCollection_type]
+    >
+  : {
+      readonly _C: C;
+      readonly _T: () => T;
+      readonly _TKey: () => TKey;
+    };
+
+/**
+ * Utility type for a generic operator function that transforms a Collection's inner value type.
+ * @category Collection
+ */
+export type KeyedCollectionOperator<
+  C extends KeyedCollection,
+  TA,
+  TB,
+  TKey extends KeyOf<C> = KeyOf<C>,
+> = Function1<KeyedCollectionOf<C, TA, TKey>, KeyedCollectionOf<C, TB, TKey>>;
+
 /**
  * @noInheritDoc
  * @category Module
  */
-export interface CollectionModule<C extends Collection> {
+export interface KeyedCollectionModule<C extends KeyedCollection> {
   /**
    * Return an Collection that emits no items.
    *
    * @category Constructor
    */
-  empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): CollectionOf<C, T, TKey>;
+  empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedCollectionOf<C, T, TKey>;
 
   /**
    * @category Transform
    */
   entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    CollectionOf<C, T, TKey>,
+    KeyedCollectionOf<C, T, TKey>,
     EnumerableLike<Tuple2<TKey, T>>
   >;
 
@@ -192,7 +192,7 @@ export interface CollectionModule<C extends Collection> {
    * @category Transform
    */
   keys<TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, unknown, TKey>,
+    KeyedCollectionOf<C, unknown, TKey>,
     EnumerableLike<TKey>
   >;
 
@@ -201,12 +201,12 @@ export interface CollectionModule<C extends Collection> {
    * @category Transform
    */
   keySet<TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, unknown, TKey>,
+    KeyedCollectionOf<C, unknown, TKey>,
     ReadonlySet<TKey>
   >;
 
   /**
-   * Returns a CollectionOperator that applies the `selector` function to each
+   * Returns a KeyedCollectionOperator that applies the `selector` function to each
    * value emitted by the source.
    *
    * @param selector - A pure map function that is applied each value emitted by the source
@@ -217,7 +217,7 @@ export interface CollectionModule<C extends Collection> {
    */
   map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(
     selector: Function2<TA, TKey, TB>,
-  ): CollectionOperator<C, TA, TB, TKey>;
+  ): KeyedCollectionOperator<C, TA, TB, TKey>;
 
   /**
    * @category Transform
@@ -225,14 +225,14 @@ export interface CollectionModule<C extends Collection> {
   reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(
     reducer: Function3<TAcc, T, TKey, TAcc>,
     initialValue: Factory<TAcc>,
-  ): Function1<CollectionOf<C, T, TKey>, TAcc>;
+  ): Function1<KeyedCollectionOf<C, T, TKey>, TAcc>;
 
   /**
    *
    * @category Transform
    */
   toDictionary<T, TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, T, TKey>,
+    KeyedCollectionOf<C, T, TKey>,
     DictionaryLike<TKey, T>
   >;
 
@@ -241,7 +241,7 @@ export interface CollectionModule<C extends Collection> {
    * @category Transform
    */
   toReadonlyMap<T, TKey extends KeyOf<C>>(): Function1<
-    CollectionOf<C, T, TKey>,
+    KeyedCollectionOf<C, T, TKey>,
     ReadonlyMap<TKey, T>
   >;
 
@@ -250,7 +250,7 @@ export interface CollectionModule<C extends Collection> {
    * @category Transform
    */
   values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<
-    CollectionOf<C, T, TKey>,
+    KeyedCollectionOf<C, T, TKey>,
     EnumerableLike<T>
   >;
 }
@@ -259,15 +259,15 @@ export interface CollectionModule<C extends Collection> {
  * @noInheritDoc
  * @category Module
  */
-export interface IndexedCollectionModule<C extends Collection<number>>
-  extends CollectionModule<C> {
+export interface IndexedCollectionModule<C extends KeyedCollection<number>>
+  extends KeyedCollectionModule<C> {
   /**
    * @category Transform
    */
   entries<T, TKey extends number = number>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
+  }): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
 
   /**
    *
@@ -276,25 +276,25 @@ export interface IndexedCollectionModule<C extends Collection<number>>
   values<T, TKey extends KeyOf<C> = KeyOf<C>>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<C, T, TKey>, EnumerableLike<T>>;
+  }): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<T>>;
 
   /** @category Transform */
   toIndexed<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<C, T>, IndexedLike<T>>;
+  }): Function1<KeyedCollectionOf<C, T>, IndexedLike<T>>;
 
   /** @category Transform */
   toReadonlyArray<T>(options?: {
     readonly count?: number;
     readonly start?: number;
-  }): Function1<CollectionOf<C, T>, ReadonlyArray<T>>;
+  }): Function1<KeyedCollectionOf<C, T>, ReadonlyArray<T>>;
 }
 
-export interface DictionaryCollectionModule<C extends Collection>
-  extends CollectionModule<C> {
+export interface DictionaryCollectionModule<C extends KeyedCollection>
+  extends KeyedCollectionModule<C> {
   fromEntries<T, TKey extends KeyOf<C>>(): Function1<
     EnumerableLike<Tuple2<TKey, T>>,
-    CollectionOf<C, T, TKey>
+    KeyedCollectionOf<C, T, TKey>
   >;
 }

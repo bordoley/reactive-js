@@ -1,8 +1,8 @@
 import {
-  Collection,
-  Collection_T,
-  Collection_type,
   EnumerableLike,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
 } from "../../../collections.js";
 import { pipe } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
@@ -10,8 +10,10 @@ import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fr
 import Indexed_toCollection from "../../Indexed/__internal__/Indexed.toCollection.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 
-interface ValuesCollection extends Collection<number> {
-  readonly [Collection_type]?: EnumerableLike<this[typeof Collection_T]>;
+interface ValuesCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: EnumerableLike<
+    this[typeof KeyedCollection_T]
+  >;
 }
 
 const ReadonlyArray_values: ReadonlyArray.Signature["values"] =

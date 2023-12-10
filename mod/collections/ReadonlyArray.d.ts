@@ -1,10 +1,10 @@
-import { Collection, Collection_T, Collection_type, IndexedCollectionModule, KeyOf } from "../collections.js";
+import { IndexedCollectionModule, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_type } from "../collections.js";
 /**
  * @noInheritDoc
  * @category Collection
  */
-export interface ReadonlyArrayCollection extends Collection<number> {
-    readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
+export interface ReadonlyArrayCollection extends KeyedCollection<number> {
+    readonly [KeyedCollection_type]?: ReadonlyArray<this[typeof KeyedCollection_T]>;
 }
 export type Type = ReadonlyArrayCollection;
 export type TKeyBase = KeyOf<Type>;

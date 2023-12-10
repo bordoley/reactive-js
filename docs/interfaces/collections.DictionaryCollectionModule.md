@@ -8,11 +8,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `C` | extends [`Collection`](collections.Collection.md) |
+| `C` | extends [`KeyedCollection`](collections.KeyedCollection.md) |
 
 ## Hierarchy
 
-- [`CollectionModule`](collections.CollectionModule.md)<`C`\>
+- [`KeyedCollectionModule`](collections.KeyedCollectionModule.md)<`C`\>
 
   ↳ **`DictionaryCollectionModule`**
 
@@ -44,7 +44,7 @@
 
 ### empty
 
-▸ **empty**<`T`, `TKey`\>(): [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>
+▸ **empty**<`T`, `TKey`\>(): [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>
 
 Return an Collection that emits no items.
 
@@ -57,11 +57,11 @@ Return an Collection that emits no items.
 
 #### Returns
 
-[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>
+[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[empty](collections.CollectionModule.md#empty)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[empty](collections.KeyedCollectionModule.md#empty)
 
 ___
 
@@ -69,9 +69,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
 
-Returns a CollectionOperator that applies the `selector` function to each
+Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -98,11 +98,11 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`CollectionOperator`](../modules/collections.md#collectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[map](collections.CollectionModule.md#map)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[map](collections.KeyedCollectionModule.md#map)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 ### fromEntries
 
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
 
 #### Type parameters
 
@@ -121,7 +121,7 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 ### entries
 
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Type parameters
 
@@ -140,17 +140,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[entries](collections.CollectionModule.md#entries)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[entries](collections.KeyedCollectionModule.md#entries)
 
 ___
 
 ### keySet
 
-▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
+▸ **keySet**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Type parameters
 
@@ -160,17 +160,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `unknown`, `TKey`\>, `ReadonlySet`<`TKey`\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[keySet](collections.CollectionModule.md#keyset)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[keySet](collections.KeyedCollectionModule.md#keyset)
 
 ___
 
 ### keys
 
-▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
+▸ **keys**<`TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
 
 #### Type parameters
 
@@ -180,17 +180,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[keys](collections.CollectionModule.md#keys)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[keys](collections.KeyedCollectionModule.md#keys)
 
 ___
 
 ### reduce
 
-▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
+▸ **reduce**<`T`, `TAcc`, `TKey`\>(`reducer`, `initialValue`): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
 
 #### Type parameters
 
@@ -209,17 +209,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, `TAcc`\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[reduce](collections.CollectionModule.md#reduce)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[reduce](collections.KeyedCollectionModule.md#reduce)
 
 ___
 
 ### toDictionary
 
-▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
+▸ **toDictionary**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -230,17 +230,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, `T`\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[toDictionary](collections.CollectionModule.md#todictionary)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[toDictionary](collections.KeyedCollectionModule.md#todictionary)
 
 ___
 
 ### toReadonlyMap
 
-▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+▸ **toReadonlyMap**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
 #### Type parameters
 
@@ -251,17 +251,17 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, `ReadonlyMap`<`TKey`, `T`\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[toReadonlyMap](collections.CollectionModule.md#toreadonlymap)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[toReadonlyMap](collections.KeyedCollectionModule.md#toreadonlymap)
 
 ___
 
 ### values
 
-▸ **values**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+▸ **values**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -272,8 +272,8 @@ ___
 
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`CollectionOf`](../modules/collections.md#collectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
 
 #### Inherited from
 
-[CollectionModule](collections.CollectionModule.md).[values](collections.CollectionModule.md#values)
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[values](collections.KeyedCollectionModule.md#values)

@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyObjectMap.d.ts" />
 
-import { Collection_TKey, Collection_type, } from "../collections.js";
+import { KeyedCollection_TKey, KeyedCollection_type, } from "../collections.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.entries.js";
 import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.fromEntries.js";

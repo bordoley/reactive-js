@@ -1,10 +1,10 @@
 import {
-  Collection,
-  Collection_T,
-  Collection_type,
   IndexedCollectionModule as IndexedCollectionModuleBase,
   IndexedLike,
   KeyOf,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
 } from "../collections.js";
 import Indexed_empty from "./Indexed/__internal__/Indexed.empty.js";
 import Indexed_entries from "./Indexed/__internal__/Indexed.entries.js";
@@ -22,8 +22,8 @@ import Indexed_values from "./Indexed/__internal__/Indexed.values.js";
  * @noInheritDoc
  * @category Collection
  */
-export interface IndexedCollectionCollection extends Collection<number> {
-  readonly [Collection_type]?: IndexedLike<this[typeof Collection_T]>;
+export interface IndexedCollectionCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;
 }
 
 export type Type = IndexedCollectionCollection;

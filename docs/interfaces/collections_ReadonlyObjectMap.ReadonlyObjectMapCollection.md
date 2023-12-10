@@ -12,7 +12,7 @@
 
 ## Hierarchy
 
-- [`Collection`](collections.Collection.md)<`TKey`\>
+- [`KeyedCollection`](collections.KeyedCollection.md)<`TKey`\>
 
   ↳ **`ReadonlyObjectMapCollection`**
 
@@ -20,25 +20,25 @@
 
 ### Properties
 
-- [[Collection\_TKey]](collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md#[collection_tkey])
-- [[Collection\_type]](collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md#[collection_type])
+- [[KeyedCollection\_TKey]](collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md#[keyedcollection_tkey])
+- [[KeyedCollection\_type]](collections_ReadonlyObjectMap.ReadonlyObjectMapCollection.md#[keyedcollection_type])
 
 ## Properties
 
-### [Collection\_TKey]
+### [KeyedCollection\_TKey]
 
-• `Optional` `Readonly` **[Collection\_TKey]**: `TKey`
+• `Optional` `Readonly` **[KeyedCollection\_TKey]**: `TKey`
 
 #### Overrides
 
-[Collection](collections.Collection.md).[[Collection_TKey]](collections.Collection.md#[collection_tkey])
+[KeyedCollection](collections.KeyedCollection.md).[[KeyedCollection_TKey]](collections.KeyedCollection.md#[keyedcollection_tkey])
 
 ___
 
-### [Collection\_type]
+### [KeyedCollection\_type]
 
-• `Optional` `Readonly` **[Collection\_type]**: [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`TKey` & {}, `unknown`\>
+• `Optional` `Readonly` **[KeyedCollection\_type]**: [`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`TKey` & {}, `unknown`\>
 
 #### Overrides
 
-[Collection](collections.Collection.md).[[Collection_type]](collections.Collection.md#[collection_type])
+[KeyedCollection](collections.KeyedCollection.md).[[KeyedCollection_type]](collections.KeyedCollection.md#[keyedcollection_type])

@@ -1,11 +1,11 @@
-import { Collection, Collection_T, Collection_TKey, Collection_type, DictionaryCollectionModule, KeyOf, ReadonlyObjectMapLike } from "../collections.js";
+import { DictionaryCollectionModule, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_TKey, KeyedCollection_type, ReadonlyObjectMapLike } from "../collections.js";
 /**
  * @noInheritDoc
  * @category Collection
  */
-export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symbol | string> extends Collection<TKey> {
-    readonly [Collection_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof Collection_TKey]>, this[typeof Collection_T]>;
-    readonly [Collection_TKey]?: TKey;
+export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symbol | string> extends KeyedCollection<TKey> {
+    readonly [KeyedCollection_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;
+    readonly [KeyedCollection_TKey]?: TKey;
 }
 export type Type<TKey extends symbol | string = symbol | string> = ReadonlyObjectMapCollection<TKey>;
 export type TKeyBase = KeyOf<Type>;

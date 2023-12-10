@@ -1,10 +1,10 @@
 import {
-  Collection,
-  Collection_T,
-  Collection_TKey,
-  Collection_type,
   DictionaryCollectionModule,
   KeyOf,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_TKey,
+  KeyedCollection_type,
   ReadonlyObjectMapLike,
 } from "../collections.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__internal__/ReadonlyObjectMap.empty.js";
@@ -24,13 +24,13 @@ import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__internal__/ReadonlyO
  */
 export interface ReadonlyObjectMapCollection<
   TKey extends symbol | string = symbol | string,
-> extends Collection<TKey> {
-  readonly [Collection_type]?: ReadonlyObjectMapLike<
-    NonNullable<this[typeof Collection_TKey]>,
-    this[typeof Collection_T]
+> extends KeyedCollection<TKey> {
+  readonly [KeyedCollection_type]?: ReadonlyObjectMapLike<
+    NonNullable<this[typeof KeyedCollection_TKey]>,
+    this[typeof KeyedCollection_T]
   >;
 
-  readonly [Collection_TKey]?: TKey;
+  readonly [KeyedCollection_TKey]?: TKey;
 }
 
 export type Type<TKey extends symbol | string = symbol | string> =

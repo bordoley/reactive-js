@@ -77,9 +77,9 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
 
-Returns a CollectionOperator that applies the `selector` function to each
+Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
 
 **`Typeparam`**
@@ -106,7 +106,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`CollectionOperator`](collections.md#collectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
 
 ___
 

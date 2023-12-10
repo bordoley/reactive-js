@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.d.ts" />
 
-import { Collection_type, } from "../collections.js";
+import { KeyedCollection_type, } from "../collections.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
 import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";

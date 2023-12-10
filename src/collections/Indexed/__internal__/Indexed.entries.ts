@@ -1,10 +1,10 @@
 import {
-  Collection,
   CollectionLike_count,
-  Collection_T,
-  Collection_type,
   EnumerableLike,
   IndexedLike,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
   KeyedLike_get,
 } from "../../../collections.js";
 import { Tuple2, pick, pipe } from "../../../functions.js";
@@ -13,9 +13,9 @@ import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fr
 import type * as Indexed from "../../Indexed.js";
 import Indexed_toCollection from "./Indexed.toCollection.js";
 
-interface EntriesCollection extends Collection<number> {
-  readonly [Collection_type]?: EnumerableLike<
-    Tuple2<number, this[typeof Collection_T]>
+interface EntriesCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: EnumerableLike<
+    Tuple2<number, this[typeof KeyedCollection_T]>
   >;
 }
 

@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyMap.d.ts" />
 
-import { Collection_TKey, Collection_type, } from "../collections.js";
+import { KeyedCollection_TKey, KeyedCollection_type, } from "../collections.js";
 import { identityLazy } from "../functions.js";
 import ReadonlyMap_empty from "./ReadonlyMap/__internal__/ReadonlyMap.empty.js";
 import ReadonlyMap_entries from "./ReadonlyMap/__internal__/ReadonlyMap.entries.js";

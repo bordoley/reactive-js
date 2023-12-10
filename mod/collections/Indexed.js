@@ -1,6 +1,6 @@
 /// <reference types="./Indexed.d.ts" />
 
-import { Collection_type, } from "../collections.js";
+import { KeyedCollection_type, } from "../collections.js";
 import Indexed_empty from "./Indexed/__internal__/Indexed.empty.js";
 import Indexed_entries from "./Indexed/__internal__/Indexed.entries.js";
 import Indexed_keySet from "./Indexed/__internal__/Indexed.keySet.js";

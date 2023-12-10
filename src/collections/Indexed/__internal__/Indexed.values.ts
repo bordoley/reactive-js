@@ -1,10 +1,10 @@
 import {
-  Collection,
   CollectionLike_count,
-  Collection_T,
-  Collection_type,
   EnumerableLike,
   IndexedLike,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
   KeyedLike_get,
 } from "../../../collections.js";
 import { pick, pipe } from "../../../functions.js";
@@ -13,8 +13,10 @@ import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fr
 import type * as Indexed from "../../Indexed.js";
 import Indexed_toCollection from "./Indexed.toCollection.js";
 
-interface ValuesCollection extends Collection<number> {
-  readonly [Collection_type]?: EnumerableLike<this[typeof Collection_T]>;
+interface ValuesCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: EnumerableLike<
+    this[typeof KeyedCollection_T]
+  >;
 }
 
 const Indexed_values: Indexed.Signature["values"] =

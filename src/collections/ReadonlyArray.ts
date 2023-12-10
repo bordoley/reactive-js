@@ -1,9 +1,9 @@
 import {
-  Collection,
-  Collection_T,
-  Collection_type,
   IndexedCollectionModule,
   KeyOf,
+  KeyedCollection,
+  KeyedCollection_T,
+  KeyedCollection_type,
 } from "../collections.js";
 import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
 import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
@@ -21,8 +21,10 @@ import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.val
  * @noInheritDoc
  * @category Collection
  */
-export interface ReadonlyArrayCollection extends Collection<number> {
-  readonly [Collection_type]?: ReadonlyArray<this[typeof Collection_T]>;
+export interface ReadonlyArrayCollection extends KeyedCollection<number> {
+  readonly [KeyedCollection_type]?: ReadonlyArray<
+    this[typeof KeyedCollection_T]
+  >;
 }
 
 export type Type = ReadonlyArrayCollection;

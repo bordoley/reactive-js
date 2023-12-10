@@ -1,6 +1,6 @@
 /// <reference types="./ReadonlyArray.values.d.ts" />
 
-import { Collection_type, } from "../../../collections.js";
+import { KeyedCollection_type, } from "../../../collections.js";
 import { pipe } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";

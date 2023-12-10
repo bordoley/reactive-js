@@ -127,7 +127,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`CollectionOperator`](collections.md#collectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
 
 #### Type parameters
 
@@ -145,7 +145,7 @@ ___
 
 #### Returns
 
-[`CollectionOperator`](collections.md#collectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
 
 ___
 

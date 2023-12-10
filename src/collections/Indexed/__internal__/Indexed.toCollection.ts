@@ -1,21 +1,21 @@
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
-import { Collection, CollectionOf } from "../../../collections.js";
+import { KeyedCollection, KeyedCollectionOf } from "../../../collections.js";
 import { Function1 } from "../../../functions.js";
 
 const Indexed_toCollection =
-  <CIn extends Collection<number>, COut extends Collection<number>>(
+  <CIn extends KeyedCollection<number>, COut extends KeyedCollection<number>>(
     factory: <T>(
-      values: CollectionOf<CIn, T>,
+      values: KeyedCollectionOf<CIn, T>,
       start: number,
       count: number,
-    ) => CollectionOf<COut, T>,
-    getLength: (c: CollectionOf<CIn, unknown>) => number,
+    ) => KeyedCollectionOf<COut, T>,
+    getLength: (c: KeyedCollectionOf<CIn, unknown>) => number,
   ) =>
   <T>(options?: {
     readonly start?: number;
     readonly count?: number;
-  }): Function1<CollectionOf<CIn, T>, CollectionOf<COut, T>> =>
+  }): Function1<KeyedCollectionOf<CIn, T>, KeyedCollectionOf<COut, T>> =>
   values => {
     const valuesLength = getLength(values);
     const { start: startOption, count: countOption = MAX_SAFE_INTEGER } =

@@ -15,8 +15,6 @@
 
 - [`AssociativeLike`](collections.AssociativeLike.md)<`TKey`, [`Optional`](../modules/functions.md#optional)<`T`\>\>
 
-- [`Collection`](collections.Collection.md)<`T`\>
-
   ↳ **`DictionaryLike`**
 
 ## Table of contents

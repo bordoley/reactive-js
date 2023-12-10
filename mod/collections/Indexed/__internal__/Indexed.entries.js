@@ -1,6 +1,6 @@
 /// <reference types="./Indexed.entries.d.ts" />
 
-import { CollectionLike_count, Collection_type, KeyedLike_get, } from "../../../collections.js";
+import { CollectionLike_count, KeyedCollection_type, KeyedLike_get, } from "../../../collections.js";
 import { pick, pipe } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__internal__/Enumerable.create.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
