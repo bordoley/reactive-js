@@ -112,5 +112,4 @@ testModule(
   ),
 );
 
-// FIXME
-// ((_: EventSource.Signature) => {})(EventSource);
+((_: EventSource.Signature) => {})(EventSource);

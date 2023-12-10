@@ -19,6 +19,7 @@
 - [addEventHandler](events_EventSource.md#addeventhandler)
 - [buffer](events_EventSource.md#buffer)
 - [create](events_EventSource.md#create)
+- [decodeWithCharset](events_EventSource.md#decodewithcharset)
 - [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
 - [fromIterable](events_EventSource.md#fromiterable)
 - [fromPromise](events_EventSource.md#frompromise)
@@ -112,6 +113,23 @@ ___
 #### Returns
 
 [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>
+
+___
+
+### decodeWithCharset
+
+▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](computations.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.charset?` | `string` |
+
+#### Returns
+
+[`PureComputationOperator`](computations.md#purecomputationoperator)<[`EventSourceComputation`](../interfaces/events_EventSource.EventSourceComputation.md), `ArrayBuffer`, `string`\>
 
 ___
 

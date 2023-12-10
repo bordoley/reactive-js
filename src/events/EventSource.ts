@@ -10,6 +10,7 @@ import { DisposableLike } from "../utils.js";
 import EventSource_addEventHandler from "./EventSource/__internal__/EventSource.addEventHandler.js";
 import EventSource_buffer from "./EventSource/__internal__/EventSource.buffer.js";
 import EventSource_create from "./EventSource/__internal__/EventSource.create.js";
+import EventSource_decodeWithCharset from "./EventSource/__internal__/EventSource.decodeWithCharset.js";
 import EventSource_distinctUntilChanged from "./EventSource/__internal__/EventSource.distinctUntilChanged.js";
 import EventSource_fromIterable from "./EventSource/__internal__/EventSource.fromIterable.js";
 import EventSource_fromPromise from "./EventSource/__internal__/EventSource.fromPromise.js";
@@ -68,6 +69,8 @@ export const addEventHandler: Signature["addEventHandler"] =
   EventSource_addEventHandler;
 export const buffer: Signature["buffer"] = EventSource_buffer;
 export const create: Signature["create"] = EventSource_create;
+export const decodeWithCharset: Signature["decodeWithCharset"] =
+  EventSource_decodeWithCharset;
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
 export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;

@@ -20,6 +20,7 @@ export type Signature = EventSourceModule;
 export declare const addEventHandler: Signature["addEventHandler"];
 export declare const buffer: Signature["buffer"];
 export declare const create: Signature["create"];
+export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const fromIterable: Signature["fromIterable"];
 export declare const fromPromise: Signature["fromPromise"];
