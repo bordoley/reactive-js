@@ -13,7 +13,7 @@ import {
   PauseableLike_pause, 
   PauseableLike_resume
 } from "@reactive-js/core/concurrent";
-import * as Enumerable from "@reactive-js/cover/collections/Enumerable";
+import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 
   const scheduler = Scheduler.createHostScheduler();
 

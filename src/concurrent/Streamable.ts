@@ -10,7 +10,9 @@ import { Equality, Factory, Function1, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
-import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
+import Streamable_createAnimationGroupEventHandler, {
+  Streamable_createAnimationGroupEventHandlerStream,
+} from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 
@@ -164,6 +166,8 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 
 export const create: Signature["create"] = Streamable_create;
+export const createAnimationGroupEventHandler: Signature["createAnimationGroupEventHandler"] =
+  Streamable_createAnimationGroupEventHandler;
 export const createStateStore: Signature["createStateStore"] =
   Streamable_createStateStore;
 export const identity: Signature["identity"] = Streamable_identity;

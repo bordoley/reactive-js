@@ -156,6 +156,7 @@ const AnimationGroup = () => {
 };
 
 const Cache = () => {
+  /*
   const cache = useStream(() => Streamable.createInMemoryCache<string>(), []);
 
   const values = cache?.[KeyedLike_get]("a");
@@ -174,7 +175,9 @@ const Cache = () => {
       <input type="text" onChange={onChange} value={value}></input>
       <span>{value}</span>
     </div>
-  );
+  );*/
+
+  return null;
 };
 
 const EnumeratorComponent = () => {
