@@ -20,4 +20,5 @@ import "../events/__tests__/EventSource.test.js";
 import "../events/__tests__/Publisher.test.js";
 import "../events/__tests__/WritableStore.test.js";
 import "../utils/__tests__/Disposable.test.js";
-import "../utils/__tests__/Queue.test.js";
+import "../utils/__tests__/IndexedQueue.test.js";
+import "../utils/__tests__/PriorityQueue.test.js";

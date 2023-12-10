@@ -8,7 +8,7 @@ import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, isSome, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -28,7 +28,7 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const createMergeAllObserver = createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
-        instance[MergeAllObserver_observablesQueue] = Queue_createIndexedQueue(capacity, backpressureStrategy);
+        instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(capacity, backpressureStrategy);
         instance[MergeAllObserver_concurrency] = concurrency;
         instance[MergeAllObserver_delegate] = delegate;
         instance[MergeAllObserver_activeCount] = 0;

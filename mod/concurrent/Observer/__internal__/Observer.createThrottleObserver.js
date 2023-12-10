@@ -6,7 +6,7 @@ import { SinkLike_notify } from "../../../events.js";
 import { isSome, none, pipe, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";
+import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -30,7 +30,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
         Observer_mixin_initFromDelegate(instance, delegate);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
-        instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable_create(Disposable.disposed), Disposable.addTo(delegate));
+        instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));
         instance[ThrottleObserver_onNotify] = (_) => {
             if (instance[ThrottleObserver_hasValue]) {
                 const value = instance[ThrottleObserver_value];

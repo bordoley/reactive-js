@@ -38,7 +38,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -112,7 +112,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
 
-        instance[MergeAllObserver_observablesQueue] = Queue_createIndexedQueue(
+        instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(
           capacity,
           backpressureStrategy,
         );

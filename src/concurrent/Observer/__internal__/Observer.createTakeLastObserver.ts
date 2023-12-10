@@ -15,7 +15,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_fromIterable from "../../Observable/__internal__/Observable.fromIterable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -39,7 +39,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
 
-        instance[TakeLastObserver_queue] = Queue_createIndexedQueue(
+        instance[TakeLastObserver_queue] = IndexedQueue.create(
           takeLastCount,
           "drop-oldest",
         );

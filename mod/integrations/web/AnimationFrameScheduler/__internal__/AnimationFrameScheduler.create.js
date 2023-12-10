@@ -9,16 +9,16 @@ import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleC
 import { invoke, isSome, none, pipe, pipeLazy, } from "../../../../functions.js";
 import { QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../../utils/IndexedQueue.js";
 const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
 const AnimationFrameScheduler_create = 
 /*@__PURE__*/ (() => {
-    let rafQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
+    let rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
     let rafIsRunning = false;
     const rafCallback = () => {
         const startTime = CurrentTime.now();
         const workQueue = rafQueue;
-        rafQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
+        rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
         let job = none;
         while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
             job();

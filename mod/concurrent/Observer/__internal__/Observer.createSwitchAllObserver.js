@@ -5,7 +5,7 @@ import { SinkLike_notify } from "../../../events.js";
 import { bind, bindMethod, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike_current, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";
+import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -24,7 +24,7 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
-        instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable_create(Disposable.disposed), Disposable.addTo(delegate));
+        instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));
         pipe(instance, Disposable.onComplete(bind(onDispose, instance)));
         return instance;
     }, props({

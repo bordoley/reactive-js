@@ -79,7 +79,10 @@
     "./integrations/web/Element": "./integrations/web/Element.js",
     "./integrations/web/WindowLocation": "./integrations/web/WindowLocation.js",
     "./utils": "./utils.js",
-    "./utils/Disposable": "./utils/Disposable.js"
+    "./utils/Disposable": "./utils/Disposable.js",
+    "./utils/IndexedQueue": "./utils/IndexedQueue.js",
+    "./utils/PriorityQueue": "./utils/PriorityQueue.js",
+    "./utils/SerialDisposable": "./utils/SerialDisposable.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }

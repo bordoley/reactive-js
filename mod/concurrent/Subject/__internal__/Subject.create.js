@@ -8,14 +8,14 @@ import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events
 import { error, isSome, newInstance, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 const Subject_create = /*@__PURE__*/ (() => {
     const Subject_observers = Symbol("Subject_observers");
     const createSubjectInstance = createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, replay) {
         init(DisposableMixin, instance);
         instance[Subject_observers] = newInstance(Set);
-        instance[ReplayObservableLike_buffer] = Queue_createIndexedQueue(replay, "drop-oldest");
+        instance[ReplayObservableLike_buffer] = IndexedQueue.create(replay, "drop-oldest");
         pipe(instance, Disposable.onDisposed(e => {
             for (const observer of instance[Subject_observers]) {
                 if (isSome(e)) {

@@ -11,8 +11,8 @@ import * as WritableStore from "../../../events/WritableStore.js";
 import { isNone, isSome, none, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, SerialDisposableLike_current, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
-import Queue_createPriorityQueue from "../../../utils/Queue/__internal__/Queue.createPriorityQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as PriorityQueue from "../../../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../../../utils/__mixins__/SerialDisposableMixin.js";
 import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
 const Scheduler_toPausableScheduler = 
@@ -101,8 +101,8 @@ const Scheduler_toPausableScheduler =
         init(ContinuationSchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(MutableEnumeratorMixin(), instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[PauseableScheduler_delayed] = Queue_createPriorityQueue(delayedComparator, MAX_SAFE_INTEGER, "overflow");
-        instance[PauseableScheduler_queue] = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
+        instance[PauseableScheduler_delayed] = PriorityQueue.create(delayedComparator, MAX_SAFE_INTEGER, "overflow");
+        instance[PauseableScheduler_queue] = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[PauseableScheduler_resumedTime] =

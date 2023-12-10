@@ -33,7 +33,7 @@ import {
   QueueableLike_enqueue,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Subject from "../../Subject.js";
 
@@ -66,7 +66,7 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
         init(DisposableMixin, instance);
 
         instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
-        instance[ReplayObservableLike_buffer] = Queue_createIndexedQueue(
+        instance[ReplayObservableLike_buffer] = IndexedQueue.create(
           replay,
           "drop-oldest",
         );

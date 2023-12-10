@@ -56,8 +56,8 @@ import {
   SerialDisposableLike_current,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
-import Queue_createPriorityQueue from "../../../utils/Queue/__internal__/Queue.createPriorityQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
+import * as PriorityQueue from "../../../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../../../utils/__mixins__/SerialDisposableMixin.js";
 import type * as Scheduler from "../../Scheduler.js";
 import ContinuationSchedulerMixin, {
@@ -246,12 +246,12 @@ const Scheduler_toPausableScheduler: Scheduler.Signature["toPausableScheduler"] 
           init(MutableEnumeratorMixin<SchedulerTaskLike>(), instance);
           init(SerialDisposableMixin(), instance, Disposable.disposed);
 
-          instance[PauseableScheduler_delayed] = Queue_createPriorityQueue(
+          instance[PauseableScheduler_delayed] = PriorityQueue.create(
             delayedComparator,
             MAX_SAFE_INTEGER,
             "overflow",
           );
-          instance[PauseableScheduler_queue] = Queue_createIndexedQueue(
+          instance[PauseableScheduler_queue] = IndexedQueue.create(
             MAX_SAFE_INTEGER,
             "overflow",
           );

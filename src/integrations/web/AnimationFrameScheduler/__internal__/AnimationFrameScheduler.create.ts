@@ -38,14 +38,14 @@ import {
   QueueableLike_enqueue,
 } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../../utils/IndexedQueue.js";
 import type * as AnimationFrameScheduler from "../../AnimationFrameScheduler.js";
 
 const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
 
 const AnimationFrameScheduler_create: AnimationFrameScheduler.Signature["create"] =
   /*@__PURE__*/ (() => {
-    let rafQueue = Queue_createIndexedQueue<SideEffect>(
+    let rafQueue = IndexedQueue.create<SideEffect>(
       MAX_SAFE_INTEGER,
       "overflow",
     );
@@ -55,7 +55,7 @@ const AnimationFrameScheduler_create: AnimationFrameScheduler.Signature["create"
       const startTime = CurrentTime.now();
       const workQueue = rafQueue;
 
-      rafQueue = Queue_createIndexedQueue(MAX_SAFE_INTEGER, "overflow");
+      rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
 
       let job: Optional<SideEffect> = none;
       while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {

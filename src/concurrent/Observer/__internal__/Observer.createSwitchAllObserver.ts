@@ -17,7 +17,7 @@ import {
   SerialDisposableLike_current,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import SerialDisposable_create from "../../../utils/SerialDisposable/__internal__/SerialDisposable.create.js";
+import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__internal__/Observable.subscribeWithConfig.js";
@@ -63,7 +63,7 @@ const Observer_createSwitchAllObserver: <T>(
         instance[SwitchAllObserver_delegate] = delegate;
 
         instance[SwitchAllObserver_currentRef] = pipe(
-          SerialDisposable_create(Disposable.disposed),
+          SerialDisposable.create(Disposable.disposed),
           Disposable.addTo(delegate),
         );
 

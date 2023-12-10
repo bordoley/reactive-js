@@ -6,7 +6,7 @@ import { SinkLike_notify } from "../../../events.js";
 import { invoke, none, pipe } from "../../../functions.js";
 import { QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Queue_createIndexedQueue from "../../../utils/Queue/__internal__/Queue.createIndexedQueue.js";
+import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_fromIterable from "../../Observable/__internal__/Observable.fromIterable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
@@ -16,7 +16,7 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         Observer_mixin_initFromDelegate(instance, delegate);
-        instance[TakeLastObserver_queue] = Queue_createIndexedQueue(takeLastCount, "drop-oldest");
+        instance[TakeLastObserver_queue] = IndexedQueue.create(takeLastCount, "drop-oldest");
         pipe(instance, Disposable.onComplete(() => {
             pipe(instance[TakeLastObserver_queue], Observable_fromIterable(), invoke(ObservableLike_observe, delegate));
         }));
