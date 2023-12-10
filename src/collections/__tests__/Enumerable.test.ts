@@ -21,8 +21,7 @@ testModule(
   "Enumerable",
   PureComputationModuleTests(
     Enumerable as PureComputationModule<Enumerable.Type>,
-    <T>() => ReadonlyArray.values<T>(),
-    <T>() => Enumerable.toReadonlyArray<T>(),
+    Enumerable.toReadonlyArray,
   ),
   describe(
     "concatAll",

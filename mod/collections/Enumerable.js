@@ -24,6 +24,7 @@ import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
+import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 export const buffer = Enumerable_buffer;
 export const concat = Enumerable_concat;
 export const concatAll = Enumerable_concatAll;
@@ -33,6 +34,7 @@ export const concatWith = Enumerable_concatWith;
 export const decodeWithCharset = Enumerable_decodeWithCharset;
 export const distinctUntilChanged = Enumerable_distinctUntilChanged;
 export const empty = Enumerable_empty;
+export const fromReadonlyArray = ReadonlyArray_values;
 export const generate = Enumerable_generate;
 export const keep = Enumerable_keep;
 export const map = Enumerable_map;

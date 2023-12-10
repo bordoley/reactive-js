@@ -43,6 +43,7 @@ import Enumerable_takeWhile from "./Enumerable/__internal__/Enumerable.takeWhile
 import Enumerable_toReadonlyArray from "./Enumerable/__internal__/Enumerable.toReadonlyArray.js";
 import Enumerable_zip from "./Enumerable/__internal__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__internal__/Enumerable.zipWith.js";
+import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
 
 export interface EnumerableComputation extends Computation {
   readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
@@ -248,6 +249,8 @@ export const decodeWithCharset: Signature["decodeWithCharset"] =
 export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   Enumerable_distinctUntilChanged;
 export const empty: Signature["empty"] = Enumerable_empty;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  ReadonlyArray_values;
 export const generate: Signature["generate"] = Enumerable_generate;
 export const keep: Signature["keep"] = Enumerable_keep;
 export const map: Signature["map"] = Enumerable_map;

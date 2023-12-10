@@ -21,6 +21,7 @@
 - [distinctUntilChanged](events_EventSource.EventSourceModule.md#distinctuntilchanged)
 - [fromIterable](events_EventSource.EventSourceModule.md#fromiterable)
 - [fromPromise](events_EventSource.EventSourceModule.md#frompromise)
+- [fromReadonlyArray](events_EventSource.EventSourceModule.md#fromreadonlyarray)
 - [keep](events_EventSource.EventSourceModule.md#keep)
 - [map](events_EventSource.EventSourceModule.md#map)
 - [merge](events_EventSource.EventSourceModule.md#merge)
@@ -183,6 +184,26 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
+
+#### Inherited from
+
+[PureComputationModule](computations.PureComputationModule.md).[fromReadonlyArray](computations.PureComputationModule.md#fromreadonlyarray)
 
 ___
 

@@ -26,7 +26,6 @@ import {
 
 const PureComputationModuleTests = <C extends Computation>(
   m: PureComputationModule<C>,
-  fromReadonlyArray: <T>() => Function1<ReadonlyArray<T>, ComputationOf<C, T>>,
   toReadonlyArray: <T>() => Function1<ComputationOf<C, T>, ReadonlyArray<T>>,
 ) =>
   describe(
@@ -37,7 +36,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "with multiple sub buffers",
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8, 9],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.buffer({ count: 3 }),
           toReadonlyArray(),
           expectArrayEquals<readonly number[]>(
@@ -54,7 +53,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "last buffer is short",
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.buffer({ count: 3 }),
           toReadonlyArray(),
           expectArrayEquals<readonly number[]>(
@@ -71,7 +70,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "buffers all values when no count is provided",
         pipeLazy(
           [1, 2, 3, 4, 5, 6, 7, 8],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.buffer(),
           toReadonlyArray(),
           expectArrayEquals<readonly number[]>([[1, 2, 3, 4, 5, 6, 7, 8]], {
@@ -90,7 +89,7 @@ const PureComputationModuleTests = <C extends Computation>(
           Observable.fromReadonlyArray({ delay: 1 }),
           Observable.encodeUtf8(),
           Observable.toReadonlyArray(),
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.decodeWithCharset(),
           toReadonlyArray(),
           x => x.join(),
@@ -105,7 +104,7 @@ const PureComputationModuleTests = <C extends Computation>(
           Observable.fromReadonlyArray(),
           Observable.encodeUtf8(),
           Observable.toReadonlyArray(),
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.decodeWithCharset(),
           toReadonlyArray(),
           x => x.join(),
@@ -119,7 +118,7 @@ const PureComputationModuleTests = <C extends Computation>(
           Observable.fromReadonlyArray(),
           Observable.encodeUtf8(),
           Observable.toReadonlyArray(),
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.decodeWithCharset(),
           toReadonlyArray(),
           x => x.join(),
@@ -133,7 +132,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when source has duplicates in order",
         pipeLazy(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.distinctUntilChanged(),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4]),
@@ -143,7 +142,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when source is empty",
         pipeLazy(
           [],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.distinctUntilChanged(),
           toReadonlyArray(),
           expectArrayEquals([]),
@@ -158,7 +157,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.distinctUntilChanged({ equality }),
             toReadonlyArray(),
           ),
@@ -172,7 +171,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "keeps only values greater than 5",
         pipeLazy(
           [4, 8, 10, 7],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.keep(greaterThan(5)),
           toReadonlyArray(),
           expectArrayEquals([8, 10, 7]),
@@ -187,7 +186,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.keep(predicate),
             toReadonlyArray(),
           ),
@@ -203,7 +202,7 @@ const PureComputationModuleTests = <C extends Computation>(
 
         pipeLazy(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.map(increment),
           toReadonlyArray(),
           expectArrayEquals([2, 3, 4]),
@@ -218,7 +217,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.map(selector),
             toReadonlyArray(),
           ),
@@ -233,7 +232,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when there are more than one input value",
         pipeLazy(
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.pairwise<number>(),
           toReadonlyArray<Tuple2<number, number>>(),
           expectArrayEquals<Tuple2<number, number>>(
@@ -256,7 +255,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when the input only provides 1 value",
         pipeLazy(
           [0],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.pairwise<number>(),
           toReadonlyArray(),
           expectArrayEquals<Tuple2<number, number>>([], {
@@ -271,7 +270,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "sums all the values in the array emitting intermediate values.",
         pipeLazy(
           [1, 1, 1],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.scan<number, number>((a, b) => a + b, returns(0)),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
@@ -286,7 +285,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.scan(scanner, returns(0)),
             toReadonlyArray(),
           ),
@@ -302,7 +301,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.scan((a, b) => a + b, initialValue),
             toReadonlyArray(),
           ),
@@ -316,7 +315,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "with default count",
         pipeLazy(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.skipFirst(),
           toReadonlyArray(),
           expectArrayEquals([2, 3]),
@@ -327,7 +326,7 @@ const PureComputationModuleTests = <C extends Computation>(
       "when skipped source has additional elements",
       pipeLazy(
         [1, 2, 3],
-        fromReadonlyArray(),
+        m.fromReadonlyArray(),
         m.skipFirst({ count: 2 }),
         toReadonlyArray(),
         expectArrayEquals([3]),
@@ -337,7 +336,7 @@ const PureComputationModuleTests = <C extends Computation>(
       "when all elements are skipped",
       pipeLazy(
         [1, 2, 3],
-        fromReadonlyArray(),
+        m.fromReadonlyArray(),
         m.skipFirst({ count: 4 }),
         toReadonlyArray(),
         expectArrayEquals([] as number[]),
@@ -349,7 +348,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "with default count",
         pipeLazy(
           [1, 2, 3, 4, 5],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst(),
           toReadonlyArray(),
           expectArrayEquals([1]),
@@ -359,7 +358,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when taking fewer than the total number of elements in the source",
         pipeLazy(
           [1, 2, 3, 4, 5],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst({ count: 3 }),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
@@ -369,7 +368,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when taking more than all the items produced by the source",
         pipeLazy(
           [1, 2],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst({ count: 3 }),
           toReadonlyArray(),
           expectArrayEquals([1, 2]),
@@ -379,7 +378,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when source is empty",
         pipeLazy(
           [],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst({ count: 3 }),
           toReadonlyArray(),
           expectArrayEquals([]),
@@ -389,7 +388,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "with default count",
         pipeLazy(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst(),
           toReadonlyArray(),
           expectArrayEquals([1]),
@@ -399,7 +398,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "when count is 0",
         pipeLazy(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeFirst({ count: 0 }),
           toReadonlyArray(),
           expectArrayEquals([] as number[]),
@@ -411,7 +410,7 @@ const PureComputationModuleTests = <C extends Computation>(
       test("exclusive", () => {
         pipe(
           [1, 2, 3, 4, 5],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeWhile(lessThan(4)),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
@@ -419,7 +418,7 @@ const PureComputationModuleTests = <C extends Computation>(
 
         pipe(
           [1, 2, 3],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeWhile<number>(alwaysTrue),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3]),
@@ -427,7 +426,7 @@ const PureComputationModuleTests = <C extends Computation>(
 
         pipe(
           [],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeWhile<number>(alwaysTrue),
           toReadonlyArray(),
           expectArrayEquals([] as number[]),
@@ -437,7 +436,7 @@ const PureComputationModuleTests = <C extends Computation>(
         "inclusive",
         pipeLazy(
           [1, 2, 3, 4, 5, 6],
-          fromReadonlyArray(),
+          m.fromReadonlyArray(),
           m.takeWhile(lessThan(4), { inclusive: true }),
           toReadonlyArray(),
           expectArrayEquals([1, 2, 3, 4]),
@@ -452,7 +451,7 @@ const PureComputationModuleTests = <C extends Computation>(
         pipe(
           pipeLazy(
             [1, 1],
-            fromReadonlyArray(),
+            m.fromReadonlyArray(),
             m.takeWhile(predicate),
             toReadonlyArray(),
           ),

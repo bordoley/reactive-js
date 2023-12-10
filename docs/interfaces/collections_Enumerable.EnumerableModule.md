@@ -26,6 +26,7 @@
 - [decodeWithCharset](collections_Enumerable.EnumerableModule.md#decodewithcharset)
 - [distinctUntilChanged](collections_Enumerable.EnumerableModule.md#distinctuntilchanged)
 - [empty](collections_Enumerable.EnumerableModule.md#empty)
+- [fromReadonlyArray](collections_Enumerable.EnumerableModule.md#fromreadonlyarray)
 - [generate](collections_Enumerable.EnumerableModule.md#generate)
 - [keep](collections_Enumerable.EnumerableModule.md#keep)
 - [map](collections_Enumerable.EnumerableModule.md#map)
@@ -244,6 +245,26 @@ ___
 #### Returns
 
 [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
+
+#### Inherited from
+
+[PureComputationModule](computations.PureComputationModule.md).[fromReadonlyArray](computations.PureComputationModule.md#fromreadonlyarray)
 
 ___
 

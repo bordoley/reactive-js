@@ -9,7 +9,7 @@ import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js"
 import { bind, compose, ignore, isSome, newInstance, pick, pipe, pipeLazy, raise, } from "../../functions.js";
 import { DisposableLike_error } from "../../utils.js";
 import * as EventSource from "../EventSource.js";
-testModule("EventSource", PureComputationModuleTests(EventSource, () => EventSource.fromIterable(), () => (eventSource) => {
+testModule("EventSource", PureComputationModuleTests(EventSource, () => (eventSource) => {
     const result = [];
     const subscription = pipe(eventSource, EventSource.addEventHandler(bind(Array.prototype.push, result)));
     if (isSome(subscription[DisposableLike_error])) {

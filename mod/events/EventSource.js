@@ -26,6 +26,7 @@ export const decodeWithCharset = EventSource_decodeWithCharset;
 export const distinctUntilChanged = EventSource_distinctUntilChanged;
 export const fromIterable = EventSource_fromIterable;
 export const fromPromise = EventSource_fromPromise;
+export const fromReadonlyArray = EventSource_fromIterable;
 export const keep = EventSource_keep;
 export const map = EventSource_map;
 export const merge = EventSource_merge;

@@ -32,6 +32,7 @@ export interface PureComputationModule<C extends Computation> {
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;
     }): PureComputationOperator<C, T, T>;
+    fromReadonlyArray<T>(): Function1<readonly T[], ComputationOf<C, T>>;
     keep<T>(predicate: Predicate<T>): PureComputationOperator<C, T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<C, TA, TB>;
     pairwise<T>(): PureComputationOperator<C, T, Tuple2<T, T>>;

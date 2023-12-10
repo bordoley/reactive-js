@@ -33,7 +33,6 @@ testModule(
   "EventSource",
   PureComputationModuleTests(
     EventSource as PureComputationModule<EventSource.Type>,
-    <T>() => EventSource.fromIterable<T>(),
     <T>() =>
       (eventSource: EventSourceLike<T>) => {
         const result: T[] = [];

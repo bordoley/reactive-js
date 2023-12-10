@@ -23,6 +23,7 @@
 - [distinctUntilChanged](events_EventSource.md#distinctuntilchanged)
 - [fromIterable](events_EventSource.md#fromiterable)
 - [fromPromise](events_EventSource.md#frompromise)
+- [fromReadonlyArray](events_EventSource.md#fromreadonlyarray)
 - [keep](events_EventSource.md#keep)
 - [map](events_EventSource.md#map)
 - [merge](events_EventSource.md#merge)
@@ -185,6 +186,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`Promise`<`T`\>, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\>
 
 ___
 

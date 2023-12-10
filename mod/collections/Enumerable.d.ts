@@ -57,6 +57,7 @@ export declare const concatWith: Signature["concatWith"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const distinctUntilChanged: Signature["distinctUntilChanged"];
 export declare const empty: Signature["empty"];
+export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const generate: Signature["generate"];
 export declare const keep: Signature["keep"];
 export declare const map: Signature["map"];

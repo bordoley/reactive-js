@@ -75,6 +75,8 @@ export const distinctUntilChanged: Signature["distinctUntilChanged"] =
   EventSource_distinctUntilChanged;
 export const fromIterable: Signature["fromIterable"] = EventSource_fromIterable;
 export const fromPromise: Signature["fromPromise"] = EventSource_fromPromise;
+export const fromReadonlyArray: Signature["fromReadonlyArray"] =
+  EventSource_fromIterable;
 export const keep: Signature["keep"] = EventSource_keep;
 export const map: Signature["map"] = EventSource_map;
 export const merge: Signature["merge"] = EventSource_merge;

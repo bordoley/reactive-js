@@ -92,8 +92,7 @@ testModule(
   "Observable",
   PureComputationModuleTests(
     Observable as PureComputationModule<Observable.PureRunnableComputation>,
-    <T>() => Observable.fromReadonlyArray<T>(),
-    <T>() => Observable.toReadonlyArray<T>(),
+    Observable.toReadonlyArray,
   ),
   describe(
     "backpressureStrategy",

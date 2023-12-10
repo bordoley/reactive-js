@@ -2463,6 +2463,10 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
 
+#### Overrides
+
+[PureComputationModule](computations.PureComputationModule.md).[fromReadonlyArray](computations.PureComputationModule.md#fromreadonlyarray)
+
 ___
 
 ### fromStore

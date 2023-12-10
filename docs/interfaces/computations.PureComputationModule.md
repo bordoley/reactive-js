@@ -29,6 +29,7 @@
 - [buffer](computations.PureComputationModule.md#buffer)
 - [decodeWithCharset](computations.PureComputationModule.md#decodewithcharset)
 - [distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
+- [fromReadonlyArray](computations.PureComputationModule.md#fromreadonlyarray)
 - [keep](computations.PureComputationModule.md#keep)
 - [map](computations.PureComputationModule.md#map)
 - [pairwise](computations.PureComputationModule.md#pairwise)
@@ -99,6 +100,22 @@ ___
 #### Returns
 
 [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`ComputationOf`](../modules/computations.md#computationof)<`C`, `T`\>\>
 
 ___
 

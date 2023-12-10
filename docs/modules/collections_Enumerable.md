@@ -28,6 +28,7 @@
 - [decodeWithCharset](collections_Enumerable.md#decodewithcharset)
 - [distinctUntilChanged](collections_Enumerable.md#distinctuntilchanged)
 - [empty](collections_Enumerable.md#empty)
+- [fromReadonlyArray](collections_Enumerable.md#fromreadonlyarray)
 - [generate](collections_Enumerable.md#generate)
 - [keep](collections_Enumerable.md#keep)
 - [map](collections_Enumerable.md#map)
@@ -246,6 +247,22 @@ ___
 #### Returns
 
 [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>
+
+___
+
+### fromReadonlyArray
+
+▸ **fromReadonlyArray**<`T`\>(): [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`T`\>\>
 
 ___
 
