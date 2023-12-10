@@ -14,6 +14,7 @@ import {
   ContinuationLike_parent,
   ContinuationLike_run,
   ContinuationLike_scheduler,
+  ContinuationLike_yield,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_schedule,
   SchedulerLike,
@@ -25,6 +26,7 @@ import {
   call,
   error,
   isSome,
+  newInstance,
   none,
   pipe,
   pipeLazy,
@@ -39,7 +41,10 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../utils/__mixins__/IndexedQueueMixin.js";
-import ContinuationYieldError from "../../__internal__/ContinuationYieldError.js";
+
+class ContinuationYieldError {
+  constructor(readonly delay: number) {}
+}
 
 const Continuation_effect = Symbol("Continuation_effect");
 
@@ -101,7 +106,10 @@ const Continuation_create = /*@__PURE__*/ (() => {
     mix(
       include(DisposableMixin, IndexedQueueMixin<ContinuationLike>()),
       function Continuation(
-        instance: Pick<ContinuationLike, typeof ContinuationLike_run> &
+        instance: Pick<
+          ContinuationLike,
+          typeof ContinuationLike_run | typeof ContinuationLike_yield
+        > &
           Mutable<TContinuationProperties>,
         scheduler: ContinuationSchedulerLike,
         effect: SideEffect1<SchedulerLike>,
@@ -189,6 +197,10 @@ const Continuation_create = /*@__PURE__*/ (() => {
             this[DisposableLike_dispose](err);
             rescheduleChildrenOnParentOrScheduler(this);
           }
+        },
+
+        [ContinuationLike_yield](delay?: number) {
+          throw newInstance(ContinuationYieldError, delay ?? 0);
         },
 
         [QueueableLike_enqueue](

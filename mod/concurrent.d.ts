@@ -133,11 +133,13 @@ export declare const ContinuationLike_activeChild: unique symbol;
 export declare const ContinuationLike_scheduler: unique symbol;
 export declare const ContinuationLike_parent: unique symbol;
 export declare const ContinuationLike_run: unique symbol;
+export declare const ContinuationLike_yield: unique symbol;
 export interface ContinuationLike extends DisposableLike, QueueableLike<ContinuationLike>, CollectionLike<ContinuationLike> {
     readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
     readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
     [ContinuationLike_parent]: Optional<ContinuationLike>;
     [ContinuationLike_run](): void;
+    [ContinuationLike_yield](delay?: number): void;
 }
 export declare const ContinuationSchedulerLike_schedule: unique symbol;
 export interface ContinuationSchedulerLike extends SchedulerLike {

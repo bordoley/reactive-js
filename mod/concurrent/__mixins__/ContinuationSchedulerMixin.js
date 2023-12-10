@@ -4,13 +4,12 @@ import { MAX_SAFE_INTEGER, __DEV__ } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
-import { isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
+import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationLike_yield, ContinuationSchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
+import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import Continuation_create from "../Continuation/__internal__/Continuation.create.js";
-import ContinuationYieldError from "../__internal__/ContinuationYieldError.js";
 export const ContinuationSchedulerInstanceLike_shouldYield = Symbol("ContinuationSchedulerInstanceLike_shouldYield");
 export const ContinuationSchedulerInstanceLike_scheduleContinuation = Symbol("ContinContinuationSchedulerInstanceLike_scheduleContinuationuationSchedulerDelegateLike_shouldYield");
 export const ContinuationSchedulerMixinLike_runContinuation = Symbol("ContinuationSchedulerMixinLike_runContinuation");
@@ -93,8 +92,9 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         },
         [SchedulerLike_yield](delay = 0) {
             const shouldYield = delay > 0 || this[SchedulerLike_shouldYield];
-            if (shouldYield) {
-                throw newInstance(ContinuationYieldError, delay);
+            const currentContinuation = this[ContinuationSchedulerMixin_currentContinuation];
+            if (shouldYield && isSome(currentContinuation)) {
+                currentContinuation[ContinuationLike_yield](delay);
             }
         },
         [ContinuationSchedulerMixinLike_runContinuation](continuation) {

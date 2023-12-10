@@ -19,6 +19,7 @@ export const ContinuationLike_activeChild = Symbol("ContinuationLike_activeChild
 export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
 export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
+export const ContinuationLike_yield = Symbol("ContinuationLike_yield");
 export const ContinuationSchedulerLike_schedule = Symbol("ContinuationSchedulerLike_schedule");
 export const SchedulerTaskLike_continuation = Symbol("SchedulerTaskLike_continuation");
 export const SchedulerTaskLike_dueTime = Symbol("SchedulerTaskLike_dueTime");

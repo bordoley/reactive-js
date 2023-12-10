@@ -46,6 +46,7 @@
 - [ContinuationLike\_parent](concurrent.md#continuationlike_parent)
 - [ContinuationLike\_run](concurrent.md#continuationlike_run)
 - [ContinuationLike\_scheduler](concurrent.md#continuationlike_scheduler)
+- [ContinuationLike\_yield](concurrent.md#continuationlike_yield)
 - [ContinuationSchedulerLike\_schedule](concurrent.md#continuationschedulerlike_schedule)
 - [DispatcherLikeEvent\_capacityExceeded](concurrent.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
@@ -110,6 +111,12 @@ ___
 ### ContinuationLike\_scheduler
 
 • `Const` **ContinuationLike\_scheduler**: unique `symbol`
+
+___
+
+### ContinuationLike\_yield
+
+• `Const` **ContinuationLike\_yield**: unique `symbol`
 
 ___
 

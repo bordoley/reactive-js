@@ -16,6 +16,7 @@ import {
   ContinuationLike_parent,
   ContinuationLike_run,
   ContinuationLike_scheduler,
+  ContinuationLike_yield,
   ContinuationSchedulerLike,
   ContinuationSchedulerLike_schedule,
   SchedulerLike,
@@ -33,7 +34,6 @@ import {
   SideEffect1,
   isNone,
   isSome,
-  newInstance,
   none,
   pipe,
   raiseIf,
@@ -46,7 +46,6 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import Continuation_create from "../Continuation/__internal__/Continuation.create.js";
-import ContinuationYieldError from "../__internal__/ContinuationYieldError.js";
 
 export const ContinuationSchedulerInstanceLike_shouldYield = Symbol(
   "ContinuationSchedulerInstanceLike_shouldYield",
@@ -246,8 +245,11 @@ const ContinuationSchedulerMixin: Mixin1<
       ) {
         const shouldYield = delay > 0 || this[SchedulerLike_shouldYield];
 
-        if (shouldYield) {
-          throw newInstance(ContinuationYieldError, delay);
+        const currentContinuation =
+          this[ContinuationSchedulerMixin_currentContinuation];
+
+        if (shouldYield && isSome(currentContinuation)) {
+          currentContinuation[ContinuationLike_yield](delay);
         }
       },
 

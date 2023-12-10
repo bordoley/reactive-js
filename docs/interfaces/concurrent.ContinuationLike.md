@@ -32,6 +32,7 @@ An interface for types that support buffering items with backpressure.
 ### Methods
 
 - [[ContinuationLike\_run]](concurrent.ContinuationLike.md#[continuationlike_run])
+- [[ContinuationLike\_yield]](concurrent.ContinuationLike.md#[continuationlike_yield])
 - [[DisposableLike\_add]](concurrent.ContinuationLike.md#[disposablelike_add])
 - [[DisposableLike\_dispose]](concurrent.ContinuationLike.md#[disposablelike_dispose])
 - [[QueueableLike\_enqueue]](concurrent.ContinuationLike.md#[queueablelike_enqueue])
@@ -117,6 +118,22 @@ The number of items the queue is capable of efficiently buffering.
 ### [ContinuationLike\_run]
 
 ▸ **[ContinuationLike_run]**(): `void`
+
+#### Returns
+
+`void`
+
+___
+
+### [ContinuationLike\_yield]
+
+▸ **[ContinuationLike_yield]**(`delay?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delay?` | `number` |
 
 #### Returns
 

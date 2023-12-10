@@ -179,6 +179,7 @@ export const ContinuationLike_activeChild = Symbol(
 export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
 export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
+export const ContinuationLike_yield = Symbol("ContinuationLike_yield");
 
 export interface ContinuationLike
   extends DisposableLike,
@@ -190,6 +191,8 @@ export interface ContinuationLike
   [ContinuationLike_parent]: Optional<ContinuationLike>;
 
   [ContinuationLike_run](): void;
+
+  [ContinuationLike_yield](delay?: number): void;
 }
 
 export const ContinuationSchedulerLike_schedule = Symbol(

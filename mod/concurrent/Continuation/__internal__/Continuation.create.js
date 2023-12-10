@@ -2,13 +2,18 @@
 
 import { MAX_SAFE_INTEGER } from "../../../__internal__/constants.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../concurrent.js";
-import { call, error, isSome, none, pipe, pipeLazy, } from "../../../functions.js";
+import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationLike_yield, ContinuationSchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../concurrent.js";
+import { call, error, isSome, newInstance, none, pipe, pipeLazy, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../../utils/__mixins__/IndexedQueueMixin.js";
-import ContinuationYieldError from "../../__internal__/ContinuationYieldError.js";
+class ContinuationYieldError {
+    delay;
+    constructor(delay) {
+        this.delay = delay;
+    }
+}
 const Continuation_effect = Symbol("Continuation_effect");
 const Continuation_create = /*@__PURE__*/ (() => {
     const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
@@ -111,6 +116,9 @@ const Continuation_create = /*@__PURE__*/ (() => {
                 this[DisposableLike_dispose](err);
                 rescheduleChildrenOnParentOrScheduler(this);
             }
+        },
+        [ContinuationLike_yield](delay) {
+            throw newInstance(ContinuationYieldError, delay ?? 0);
         },
         [QueueableLike_enqueue](continuation) {
             continuation[ContinuationLike_parent] = this;
