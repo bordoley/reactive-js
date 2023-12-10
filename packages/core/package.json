@@ -58,10 +58,11 @@
     "./concurrent": "./concurrent.js",
     "./concurrent/Observable": "./concurrent/Observable.js",
     "./concurrent/Observable/effects": "./concurrent/Observable/effects.js",
-    "./concurrent/ReplayPublisher": "./concurrent/ReplayPublisher.js",
+    "./concurrent/PauseableObservable": "./concurrent/PauseableObservable.js",
     "./concurrent/Scheduler": "./concurrent/Scheduler.js",
     "./concurrent/Stream": "./concurrent/Stream.js",
     "./concurrent/Streamable": "./concurrent/Streamable.js",
+    "./concurrent/Subject": "./concurrent/Subject.js",
     "./concurrent/VirtualTimeScheduler": "./concurrent/VirtualTimeScheduler.js",
     "./events": "./events.js",
     "./events/EventSource": "./events/EventSource.js",
@@ -77,7 +78,8 @@
     "./integrations/web/AnimationFrameScheduler": "./integrations/web/AnimationFrameScheduler.js",
     "./integrations/web/Element":  "./integrations/web/Element.js",
     "./integrations/web/WindowLocation":  "./integrations/web/WindowLocation.js",
-    "./utils": "./utils.js"
+    "./utils": "./utils.js",
+    "./utils/Disposable": "./utils/Disposable.js"
   },
   "gitHead": "c83b94619ce24d1a2605528963f162f51b49ea83"
 }
