@@ -4,6 +4,8 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
+import { PureComputationModule } from "../../computations.js";
+import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import { pipe, pipeLazy } from "../../functions.js";
 
 import * as Enumerable from "../Enumerable.js";
@@ -11,6 +13,11 @@ import * as ReadonlyArray from "../ReadonlyArray.js";
 
 testModule(
   "Enumerable",
+  PureComputationModuleTests(
+    Enumerable as PureComputationModule<Enumerable.Type>,
+    <T>() => ReadonlyArray.values<T>(),
+    <T>() => Enumerable.toReadonlyArray<T>(),
+  ),
   describe(
     "concatAll",
     test(

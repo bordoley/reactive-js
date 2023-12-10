@@ -18,7 +18,8 @@ import {
 } from "../../__internal__/testing.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
-import { keepType, mapTo } from "../../computations.js";
+import { PureComputationModule, keepType, mapTo } from "../../computations.js";
+import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import {
   DeferredObservableLike,
   DispatcherLikeEvent_completed,
@@ -89,6 +90,11 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
 testModule(
   "Observable",
+  PureComputationModuleTests(
+    Observable as PureComputationModule<Observable.PureRunnableComputation>,
+    <T>() => Observable.fromReadonlyArray<T>(),
+    <T>() => Observable.toReadonlyArray<T>(),
+  ),
   describe(
     "backpressureStrategy",
     testAsync(
@@ -1741,6 +1747,61 @@ testModule(
         Observable.throttle<number>(75, { mode: "interval" }),
         Observable.toReadonlyArray(),
         expectArrayEquals([0, 74, 149, 199]),
+      ),
+    ),
+  ),
+  describe(
+    "takeLast",
+    test(
+      "with default count",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray(),
+        Observable.takeLast(),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([5]),
+      ),
+    ),
+    test(
+      "when count is 0",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray(),
+
+        // Some implementations special case this
+        Observable.takeLast({ count: 0 }),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([] as number[]),
+      ),
+    ),
+    test(
+      "when count is less than the total number of elements",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray(),
+        Observable.takeLast({ count: 3 }),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([3, 4, 5]),
+      ),
+    ),
+    test(
+      "when count is greater than the total number of elements",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray(),
+        Observable.takeLast({ count: 10 }),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5]),
+      ),
+    ),
+    test(
+      "with default count",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray(),
+        Observable.takeLast(),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([5]),
       ),
     ),
   ),

@@ -25,14 +25,18 @@ const Enumerable_takeWhile = /*@__PURE__*/ (() => {
                 return false;
             }
             const delegate = this[TakeWhileEnumerator_delegate];
-            if (delegate[EnumeratorLike_move]()) {
+            if (!this[EnumeratorLike_isCompleted] &&
+                delegate[EnumeratorLike_move]()) {
                 const next = delegate[EnumeratorLike_current];
                 const satisfiesPredicate = this[TakeWhileEnumerator_predicate](next);
                 if (satisfiesPredicate || this[TakeWhileEnumerator_inclusive]) {
                     this[EnumeratorLike_current] = next;
                 }
+                this[EnumeratorLike_isCompleted] = !satisfiesPredicate;
             }
-            this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+            else {
+                this[EnumeratorLike_isCompleted] = true;
+            }
             return this[EnumeratorLike_hasCurrent];
         },
     }));

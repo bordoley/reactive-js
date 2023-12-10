@@ -8,6 +8,8 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
+import { PureComputationModule } from "../../computations.js";
+import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
 import { VirtualTimeSchedulerLike_run } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
 import * as VirtualTimeScheduler from "../../concurrent/VirtualTimeScheduler.js";
@@ -17,6 +19,7 @@ import {
   bind,
   compose,
   ignore,
+  isSome,
   newInstance,
   pick,
   pipe,
@@ -28,6 +31,24 @@ import * as EventSource from "../EventSource.js";
 
 testModule(
   "EventSource",
+  PureComputationModuleTests(
+    EventSource as PureComputationModule<EventSource.Type>,
+    <T>() => EventSource.fromIterable<T>(),
+    <T>() =>
+      (eventSource: EventSourceLike<T>) => {
+        const result: T[] = [];
+        const subscription = pipe(
+          eventSource,
+          EventSource.addEventHandler(bind(Array.prototype.push, result)),
+        );
+
+        if (isSome(subscription[DisposableLike_error])) {
+          throw subscription[DisposableLike_error];
+        }
+
+        return result;
+      },
+  ),
   describe(
     "buffer",
     test(

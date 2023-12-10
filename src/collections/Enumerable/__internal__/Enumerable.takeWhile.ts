@@ -72,7 +72,10 @@ const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
 
           const delegate = this[TakeWhileEnumerator_delegate];
 
-          if (delegate[EnumeratorLike_move]()) {
+          if (
+            !this[EnumeratorLike_isCompleted] &&
+            delegate[EnumeratorLike_move]()
+          ) {
             const next = delegate[EnumeratorLike_current];
 
             const satisfiesPredicate =
@@ -81,9 +84,11 @@ const Enumerable_takeWhile: Enumerable.Signature["takeWhile"] = /*@__PURE__*/ (<
             if (satisfiesPredicate || this[TakeWhileEnumerator_inclusive]) {
               this[EnumeratorLike_current] = next;
             }
-          }
 
-          this[EnumeratorLike_isCompleted] = !this[EnumeratorLike_hasCurrent];
+            this[EnumeratorLike_isCompleted] = !satisfiesPredicate;
+          } else {
+            this[EnumeratorLike_isCompleted] = true;
+          }
 
           return this[EnumeratorLike_hasCurrent];
         },
