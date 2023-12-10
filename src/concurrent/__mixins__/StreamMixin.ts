@@ -25,7 +25,7 @@ import {
   isSome,
   none,
   pipe,
-  raiseWithDebugMessage,
+  raiseIf,
   returns,
 } from "../../functions.js";
 import {
@@ -72,11 +72,10 @@ const DispatchedObservable_create: <T>() => DispatchedObservableLike<T> =
             this: TProperties & DispatchedObservableLike<T> & DisposableLike,
             observer: ObserverLike<T>,
           ) {
-            if (isSome(this[DispatchedObservableLike_dispatcher])) {
-              raiseWithDebugMessage(
-                "DispatchedObservable already subscribed to",
-              );
-            }
+            raiseIf(
+              isSome(this[DispatchedObservableLike_dispatcher]),
+              "DispatchedObservable already subscribed to",
+            );
 
             this[DispatchedObservableLike_dispatcher] = observer;
           },

@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, } from "../../collections.js";
-import { none, pipe, raiseWithDebugMessage, returns } from "../../functions.js";
+import { none, pipe, raiseIf, raiseWithDebugMessage, returns, } from "../../functions.js";
 export const MutableEnumeratorLike_reset = Symbol("MutableEnumeratorLike_reset");
 const MutableEnumeratorMixin_current = Symbol("MutableEnumeratorMixin_current");
 const MutableEnumeratorMixin = 
@@ -23,8 +23,8 @@ const MutableEnumeratorMixin =
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);
-            if (__DEV__ && this[EnumeratorLike_isCompleted]) {
-                raiseWithDebugMessage("enumerator has already been completed");
+            if (__DEV__) {
+                raiseIf(this[EnumeratorLike_isCompleted], "enumerator has already been completed");
             }
             this[MutableEnumeratorMixin_current] = v;
             this[EnumeratorLike_hasCurrent] = true;

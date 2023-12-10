@@ -317,6 +317,7 @@ interface FunctionsModule {
     pipeUnsafe<T = unknown>(source: unknown, ...operators: Function1<any, any>[]): T;
     raise<T>(e?: unknown): T;
     raiseError<T>(e: Error): T;
+    raiseIf(condition: boolean, message: string): void;
     /**
      * Throws a javascript error using the provided message.
      */
@@ -393,6 +394,7 @@ export declare const errorWithDebugMessage: Signature["errorWithDebugMessage"];
 export declare const raiseError: Signature["raiseError"];
 export declare const raiseWithDebugMessage: Signature["raiseWithDebugMessage"];
 export declare const raise: Signature["raise"];
+export declare const raiseIf: Signature["raiseIf"];
 export declare const returns: Signature["returns"];
 export declare const strictEquality: Signature["strictEquality"];
 export declare const tuple: Signature["tuple"];

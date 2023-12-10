@@ -169,6 +169,11 @@ export const raiseError = (e) => {
 };
 export const raiseWithDebugMessage = (message) => raiseError(error(__DEV__ ? message : none));
 export const raise = (e) => raiseError(error(e));
+export const raiseIf = (condition, message) => {
+    if (condition) {
+        raiseError(error(__DEV__ ? message : none));
+    }
+};
 export const returns = (v) => () => v;
 export const strictEquality = (a, b) => a === b;
 export const tuple = ((...v) => v);

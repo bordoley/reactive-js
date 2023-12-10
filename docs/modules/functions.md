@@ -99,6 +99,7 @@
 - [pipeUnsafe](functions.md#pipeunsafe)
 - [raise](functions.md#raise)
 - [raiseError](functions.md#raiseerror)
+- [raiseIf](functions.md#raiseif)
 - [raiseWithDebugMessage](functions.md#raisewithdebugmessage)
 - [returns](functions.md#returns)
 - [strictEquality](functions.md#strictequality)
@@ -5136,6 +5137,23 @@ ___
 #### Returns
 
 `T`
+
+___
+
+### raiseIf
+
+▸ **raiseIf**(`condition`, `message`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `condition` | `boolean` |
+| `message` | `string` |
+
+#### Returns
+
+`void`
 
 ___
 

@@ -36,7 +36,7 @@ import {
   none,
   pipe,
   pipeLazy,
-  raiseWithDebugMessage,
+  raiseIf,
   returns,
 } from "../../functions.js";
 import {
@@ -245,9 +245,10 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
   > = none;
 
   return (scheduler: SchedulerLike): WindowLocationLike & DisposableLike => {
-    if (isSome(currentWindowLocationObservable)) {
-      raiseWithDebugMessage("Cannot stream more than once");
-    }
+    raiseIf(
+      isSome(currentWindowLocationObservable),
+      "Cannot stream more than once",
+    );
 
     const replaceState = createSyncToHistoryStream(
       bindMethod(history, "replaceState"),

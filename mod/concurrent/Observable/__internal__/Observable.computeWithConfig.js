@@ -4,7 +4,7 @@ import { CollectionLike_count, KeyedLike_get } from "../../../collections.js";
 import * as Indexed from "../../../collections/Indexed.js";
 import { ObservableLike_isDeferred, ObservableLike_isRunnable, ReplayObservableLike_buffer, SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
-import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseWithDebugMessage, } from "../../../functions.js";
+import { arrayEquality, error, ignore, isNone, isSome, newInstance, none, pipe, raiseError, raiseIf, raiseWithDebugMessage, } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import Observable_createWithConfig from "./Observable.createWithConfig.js";
@@ -116,10 +116,8 @@ class ComputeContext {
         this[ComputeContext_observableConfig] = config;
     }
     [ComputeContext_awaitOrObserve](observable, shouldAwait) {
-        if (this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
-            !observable[ObservableLike_isRunnable]) {
-            raiseWithDebugMessage("cannot observe a non-runnable observable in a Runnable computation");
-        }
+        raiseIf(this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
+            !observable[ObservableLike_isRunnable], "cannot observe a non-runnable observable in a Runnable computation");
         const effect = shouldAwait
             ? validateComputeEffect(this, Await)
             : validateComputeEffect(this, Observe);

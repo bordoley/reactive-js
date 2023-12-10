@@ -1,7 +1,7 @@
 /// <reference types="./ReadonlyArray.toIndexed.d.ts" />
 
 import { CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, } from "../../../collections.js";
-import { newInstance, pipe, raiseWithDebugMessage, } from "../../../functions.js";
+import { newInstance, pipe, raiseIf } from "../../../functions.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray.toReadonlyArray.js";
 class ReadonlyArrayIndexedCollection {
@@ -13,9 +13,7 @@ class ReadonlyArrayIndexedCollection {
         return this.d.length;
     }
     [KeyedLike_get](index) {
-        if (index < 0 || index >= this[CollectionLike_count]) {
-            raiseWithDebugMessage("out of range");
-        }
+        raiseIf(index < 0 || index >= this[CollectionLike_count], "out of range");
         return this.d[index];
     }
     [EnumerableLike_enumerate]() {

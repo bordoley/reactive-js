@@ -24,6 +24,7 @@ import {
   none,
   pipe,
   raiseError,
+  raiseIf,
   raiseWithDebugMessage,
 } from "../../../functions.js";
 import {
@@ -259,14 +260,11 @@ class ComputeContext {
     observable: ObservableLike<T>,
     shouldAwait: boolean,
   ): Optional<T> {
-    if (
+    raiseIf(
       this[ComputeContext_observableConfig][ObservableLike_isRunnable] &&
-      !observable[ObservableLike_isRunnable]
-    ) {
-      raiseWithDebugMessage(
-        "cannot observe a non-runnable observable in a Runnable computation",
-      );
-    }
+        !observable[ObservableLike_isRunnable],
+      "cannot observe a non-runnable observable in a Runnable computation",
+    );
 
     const effect = shouldAwait
       ? validateComputeEffect(this, Await)

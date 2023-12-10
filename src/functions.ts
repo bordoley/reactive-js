@@ -1274,6 +1274,8 @@ interface FunctionsModule {
 
   raiseError<T>(e: Error): T;
 
+  raiseIf(condition: boolean, message: string): void;
+
   /**
    * Throws a javascript error using the provided message.
    */
@@ -1679,6 +1681,15 @@ export const raiseWithDebugMessage: Signature["raiseWithDebugMessage"] = (
 ) => raiseError(error(__DEV__ ? message : none));
 
 export const raise: Signature["raise"] = (e?: unknown) => raiseError(error(e));
+
+export const raiseIf: Signature["raiseIf"] = (
+  condition: boolean,
+  message: string,
+) => {
+  if (condition) {
+    raiseError(error(__DEV__ ? message : none));
+  }
+};
 
 export const returns: Signature["returns"] =
   <T>(v: T) =>

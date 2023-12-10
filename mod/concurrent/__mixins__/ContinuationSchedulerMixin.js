@@ -5,7 +5,7 @@ import { clampPositiveInteger } from "../../__internal__/math.js";
 import { include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationSchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
-import { isNone, isSome, newInstance, none, pipe, raiseWithDebugMessage, } from "../../functions.js";
+import { isNone, isSome, newInstance, none, pipe, raiseIf, } from "../../functions.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
@@ -62,8 +62,8 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             this[ContinuationSchedulerMixin_yieldRequested] = true;
         },
         [ContinuationSchedulerLike_schedule](continuation, options) {
-            if (__DEV__ && continuation[ContinuationLike_scheduler] !== this) {
-                raiseWithDebugMessage("Attempted to schedule a continuation created on a different scheduler");
+            if (__DEV__) {
+                raiseIf(continuation[ContinuationLike_scheduler] !== this, "Attempted to schedule a continuation created on a different scheduler");
             }
             const delay = clampPositiveInteger(options?.delay ?? 0);
             if (continuation[DisposableLike_isDisposed]) {

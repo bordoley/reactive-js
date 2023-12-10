@@ -7,7 +7,13 @@ import {
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../collections.js";
-import { none, pipe, raiseWithDebugMessage, returns } from "../../functions.js";
+import {
+  none,
+  pipe,
+  raiseIf,
+  raiseWithDebugMessage,
+  returns,
+} from "../../functions.js";
 
 export const MutableEnumeratorLike_reset = Symbol(
   "MutableEnumeratorLike_reset",
@@ -62,8 +68,11 @@ const MutableEnumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
 
-            if (__DEV__ && this[EnumeratorLike_isCompleted]) {
-              raiseWithDebugMessage("enumerator has already been completed");
+            if (__DEV__) {
+              raiseIf(
+                this[EnumeratorLike_isCompleted],
+                "enumerator has already been completed",
+              );
             }
 
             this[MutableEnumeratorMixin_current] = v;

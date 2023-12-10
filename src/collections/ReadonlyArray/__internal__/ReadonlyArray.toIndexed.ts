@@ -4,11 +4,7 @@ import {
   IndexedLike,
   KeyedLike_get,
 } from "../../../collections.js";
-import {
-  newInstance,
-  pipe,
-  raiseWithDebugMessage,
-} from "../../../functions.js";
+import { newInstance, pipe, raiseIf } from "../../../functions.js";
 import Enumerator_fromIterator from "../../Enumerator/__internal__/Enumerator.fromIterator.js";
 import type * as ReadonlyArray from "../../ReadonlyArray.js";
 import ReadonlyArray_toReadonlyArray from "./ReadonlyArray.toReadonlyArray.js";
@@ -24,9 +20,7 @@ class ReadonlyArrayIndexedCollection<T> implements IndexedLike<T> {
   }
 
   [KeyedLike_get](index: number): T {
-    if (index < 0 || index >= this[CollectionLike_count]) {
-      raiseWithDebugMessage("out of range");
-    }
+    raiseIf(index < 0 || index >= this[CollectionLike_count], "out of range");
     return this.d[index];
   }
 

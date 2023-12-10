@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../../__internal__/constants.js";
 import { createInstanceFactory, mix, props, } from "../../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
-import { error, none, raiseWithDebugMessage, } from "../../../functions.js";
+import { error, none, raiseIf } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 const Observable_createWithConfig = 
 /*@__PURE__*/ (() => {
@@ -14,12 +14,8 @@ const Observable_createWithConfig =
         const configDeferred = config[ObservableLike_isDeferred] ?? false;
         const configPure = config[ObservableLike_isPure] ?? false;
         if (__DEV__) {
-            if (configRunnable && !configDeferred) {
-                raiseWithDebugMessage("Attempting to create a non-deferred, runnable observable, which is an illegal state");
-            }
-            else if (!configDeferred && !configPure) {
-                raiseWithDebugMessage("Attempting to create a non-deferred, not-pure observable which is an illegal state");
-            }
+            raiseIf(configRunnable && !configDeferred, "Attempting to create a non-deferred, runnable observable, which is an illegal state");
+            raiseIf(!configDeferred && !configPure, "Attempting to create a non-deferred, not-pure observable which is an illegal state");
         }
         instance[ObservableLike_isRunnable] = configRunnable;
         instance[ObservableLike_isDeferred] = configDeferred;

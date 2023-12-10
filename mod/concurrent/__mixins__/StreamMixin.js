@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamLike_scheduler, } from "../../concurrent.js";
-import { isSome, none, pipe, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { isSome, none, pipe, raiseIf, returns, } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 import Observable_multicast from "../Observable/__internal__/Observable.multicast.js";
 import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
@@ -19,9 +19,7 @@ const DispatchedObservable_create =
         [ObservableLike_isPure]: false,
         [ObservableLike_isRunnable]: false,
         [ObservableLike_observe](observer) {
-            if (isSome(this[DispatchedObservableLike_dispatcher])) {
-                raiseWithDebugMessage("DispatchedObservable already subscribed to");
-            }
+            raiseIf(isSome(this[DispatchedObservableLike_dispatcher]), "DispatchedObservable already subscribed to");
             this[DispatchedObservableLike_dispatcher] = observer;
         },
     }));

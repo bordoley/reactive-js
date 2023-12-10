@@ -36,7 +36,7 @@ import {
   newInstance,
   none,
   pipe,
-  raiseWithDebugMessage,
+  raiseIf,
 } from "../../functions.js";
 import {
   DisposableLike,
@@ -191,8 +191,9 @@ const ContinuationSchedulerMixin: Mixin1<
         continuation: ContinuationLike,
         options?: { readonly delay?: number },
       ): void {
-        if (__DEV__ && continuation[ContinuationLike_scheduler] !== this) {
-          raiseWithDebugMessage(
+        if (__DEV__) {
+          raiseIf(
+            continuation[ContinuationLike_scheduler] !== this,
             "Attempted to schedule a continuation created on a different scheduler",
           );
         }

@@ -9,7 +9,7 @@ import * as Stream from "../../concurrent/Stream.js";
 import * as Streamable from "../../concurrent/Streamable.js";
 import DelegatingStreamMixin from "../../concurrent/__mixins__/DelegatingStreamMixin.js";
 import * as EventSource from "../../events/EventSource.js";
-import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { bindMethod, compose, identity, invoke, isFunction, isSome, newInstance, none, pipe, pipeLazy, raiseIf, returns, } from "../../functions.js";
 import { QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import { WindowLocationLike_canGoBack, WindowLocationLike_goBack, WindowLocationLike_push, WindowLocationLike_replace, } from "../web.js";
@@ -85,9 +85,7 @@ export const subscribe = /*@__PURE__*/ (() => {
     }));
     let currentWindowLocationObservable = none;
     return (scheduler) => {
-        if (isSome(currentWindowLocationObservable)) {
-            raiseWithDebugMessage("Cannot stream more than once");
-        }
+        raiseIf(isSome(currentWindowLocationObservable), "Cannot stream more than once");
         const replaceState = createSyncToHistoryStream(bindMethod(history, "replaceState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
         const pushState = createSyncToHistoryStream(bindMethod(history, "pushState"), scheduler, { backpressureStrategy: "drop-oldest", capacity: 1 });
         const locationStream = pipe(Streamable.createStateStore(() => ({

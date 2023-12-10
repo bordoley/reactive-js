@@ -17,12 +17,7 @@ import {
   PureRunnableLike,
   RunnableWithSideEffectsLike,
 } from "../../../concurrent.js";
-import {
-  SideEffect1,
-  error,
-  none,
-  raiseWithDebugMessage,
-} from "../../../functions.js";
+import { SideEffect1, error, none, raiseIf } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 
 interface ObservableCreateWithConfig {
@@ -106,15 +101,15 @@ const Observable_createWithConfig: ObservableCreateWithConfig["createWithConfig"
           const configPure = config[ObservableLike_isPure] ?? false;
 
           if (__DEV__) {
-            if (configRunnable && !configDeferred) {
-              raiseWithDebugMessage(
-                "Attempting to create a non-deferred, runnable observable, which is an illegal state",
-              );
-            } else if (!configDeferred && !configPure) {
-              raiseWithDebugMessage(
-                "Attempting to create a non-deferred, not-pure observable which is an illegal state",
-              );
-            }
+            raiseIf(
+              configRunnable && !configDeferred,
+              "Attempting to create a non-deferred, runnable observable, which is an illegal state",
+            );
+
+            raiseIf(
+              !configDeferred && !configPure,
+              "Attempting to create a non-deferred, not-pure observable which is an illegal state",
+            );
           }
 
           instance[ObservableLike_isRunnable] = configRunnable;

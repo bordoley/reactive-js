@@ -20,7 +20,7 @@ import {
   bindMethod,
   none,
   pipeUnsafe,
-  raiseWithDebugMessage,
+  raiseIf,
 } from "../../../functions.js";
 import type {
   DeferredSideEffectsObservableOperator,
@@ -84,15 +84,15 @@ const createLiftedObservable: <TA, TB>(
         const configPure = config[ObservableLike_isPure] ?? false;
 
         if (__DEV__) {
-          if (configRunnable && !configDeferred) {
-            raiseWithDebugMessage(
-              "Attempting to create a non-deferred, runnable observable, which is an illegal state",
-            );
-          } else if (!configDeferred && !configPure) {
-            raiseWithDebugMessage(
-              "Attempting to create a non-deferred, not-pure observable which is an illegal state",
-            );
-          }
+          raiseIf(
+            configRunnable && !configDeferred,
+            "Attempting to create a non-deferred, runnable observable, which is an illegal state",
+          );
+
+          raiseIf(
+            !configDeferred && !configPure,
+            "Attempting to create a non-deferred, not-pure observable which is an illegal state",
+          );
         }
 
         instance[ObservableLike_isRunnable] = configRunnable;
