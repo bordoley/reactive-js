@@ -41,7 +41,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
-import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
+import Streamable_createStateStore from "../Streamable/__private__/Streamable.createStateStore.js";
 import {
   ComputeContext_awaitOrObserve,
   ComputeContext_constant,
@@ -49,8 +49,8 @@ import {
   ComputeContext_observableConfig,
   ComputeContext_observer,
   assertCurrentContext,
-} from "./__internal__/Observable.computeWithConfig.js";
-import Observable_createRunnableWithSideEffects from "./__internal__/Observable.createRunnableWithSideEffects.js";
+} from "./__private__/Observable.computeWithConfig.js";
+import Observable_createRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
 
 interface __Memo {
   __memo<T>(fn: Factory<T>): T;

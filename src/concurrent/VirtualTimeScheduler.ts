@@ -1,5 +1,5 @@
 import { VirtualTimeSchedulerLike } from "../concurrent.js";
-import VirtualTimeScheduler_create from "./VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create.js";
+import VirtualTimeScheduler_create from "./VirtualTimeScheduler/__private__/VirtualTimeScheduler.create.js";
 /**
  * @noInheritDoc
  * @category Module

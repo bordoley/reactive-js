@@ -14,7 +14,7 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../utils.js";
-import Observer_assertState from "../Observer/__internal__/Observer.assertState.js";
+import Observer_assertState from "../Observer/__private__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import Observer_baseMixin from "./ObserverBaseMixin.js";
 

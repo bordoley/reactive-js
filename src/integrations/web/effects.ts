@@ -1,4 +1,4 @@
-import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
+import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
 import {
   __constant,
   __memo,

@@ -4,7 +4,7 @@ import { mix, props } from "../../__internal__/mixins.js";
 import { EventSourceLike_addEventListener, } from "../../events.js";
 import { none, pipe, returns } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
-import Publisher_create from "../Publisher/__internal__/Publisher.create.js";
+import Publisher_create from "../Publisher/__private__/Publisher.create.js";
 export const LazyInitEventSourceMixin_publisher = Symbol("LazyInitEventSourceMixin_publisher");
 const LazyInitEventSourceMixin = /*@__PURE__*/ (() => {
     return returns(mix(function LazyInitEventSourceMixin(instance) {

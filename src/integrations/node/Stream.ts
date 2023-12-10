@@ -8,7 +8,7 @@ import {
   SchedulerLike,
 } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
-import PauseableObservable_create from "../../concurrent/PauseableObservable/__internal__/PauseableObservable.create.js";
+import PauseableObservable_create from "../../concurrent/PauseableObservable/__private__/PauseableObservable.create.js";
 import {
   Factory,
   Function1,

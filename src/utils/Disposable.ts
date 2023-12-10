@@ -9,21 +9,21 @@ import {
   Updater,
 } from "../functions.js";
 import { DisposableLike } from "../utils.js";
-import Disposable_add from "./Disposable/__internal__/Disposable.add.js";
-import Disposable_addTo from "./Disposable/__internal__/Disposable.addTo.js";
-import Disposable_bindTo from "./Disposable/__internal__/Disposable.bindTo.js";
-import Disposable_create from "./Disposable/__internal__/Disposable.create.js";
-import Disposable_disposed from "./Disposable/__internal__/Disposable.disposed.js";
-import Disposable_onComplete from "./Disposable/__internal__/Disposable.onComplete.js";
-import Disposable_onDisposed from "./Disposable/__internal__/Disposable.onDisposed.js";
-import Disposable_onError from "./Disposable/__internal__/Disposable.onError.js";
-import Disposable_raiseIfDisposedWithError from "./Disposable/__internal__/Disposable.raiseIfDisposedWithError.js";
-import Disposable_toAbortSignal from "./Disposable/__internal__/Disposable.toAbortSignal.js";
-import Disposable_toErrorHandler from "./Disposable/__internal__/Disposable.toErrorHandler.js";
-import Disposable_using from "./Disposable/__internal__/Disposable.using.js";
-import Disposable_usingAsync from "./Disposable/__internal__/Disposable.usingAsync.js";
-import Disposable_usingAsyncLazy from "./Disposable/__internal__/Disposable.usingAsyncLazy.js";
-import Disposable_usingLazy from "./Disposable/__internal__/Disposable.usingLazy.js";
+import Disposable_add from "./Disposable/__private__/Disposable.add.js";
+import Disposable_addTo from "./Disposable/__private__/Disposable.addTo.js";
+import Disposable_bindTo from "./Disposable/__private__/Disposable.bindTo.js";
+import Disposable_create from "./Disposable/__private__/Disposable.create.js";
+import Disposable_disposed from "./Disposable/__private__/Disposable.disposed.js";
+import Disposable_onComplete from "./Disposable/__private__/Disposable.onComplete.js";
+import Disposable_onDisposed from "./Disposable/__private__/Disposable.onDisposed.js";
+import Disposable_onError from "./Disposable/__private__/Disposable.onError.js";
+import Disposable_raiseIfDisposedWithError from "./Disposable/__private__/Disposable.raiseIfDisposedWithError.js";
+import Disposable_toAbortSignal from "./Disposable/__private__/Disposable.toAbortSignal.js";
+import Disposable_toErrorHandler from "./Disposable/__private__/Disposable.toErrorHandler.js";
+import Disposable_using from "./Disposable/__private__/Disposable.using.js";
+import Disposable_usingAsync from "./Disposable/__private__/Disposable.usingAsync.js";
+import Disposable_usingAsyncLazy from "./Disposable/__private__/Disposable.usingAsyncLazy.js";
+import Disposable_usingLazy from "./Disposable/__private__/Disposable.usingLazy.js";
 
 /**
  * @noInheritDoc

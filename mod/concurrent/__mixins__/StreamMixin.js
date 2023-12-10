@@ -4,7 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../__inter
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, StreamLike_scheduler, } from "../../concurrent.js";
 import { isSome, none, pipe, raiseIf, returns, } from "../../functions.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import Observable_multicast from "../Observable/__internal__/Observable.multicast.js";
+import Observable_multicast from "../Observable/__private__/Observable.multicast.js";
 import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
 import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
 const DispatchedObservableLike_dispatcher = Symbol("DispatchedObservableLike_dispatcher");

@@ -2,7 +2,7 @@
 
 import { DispatcherLike_complete, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
 import * as Observable from "../../concurrent/Observable.js";
-import PauseableObservable_create from "../../concurrent/PauseableObservable/__internal__/PauseableObservable.create.js";
+import PauseableObservable_create from "../../concurrent/PauseableObservable/__private__/PauseableObservable.create.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";

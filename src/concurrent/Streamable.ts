@@ -9,13 +9,13 @@ import {
 import { Equality, Factory, Function1, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
-import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
+import Streamable_create from "./Streamable/__private__/Streamable.create.js";
 import Streamable_createAnimationGroupEventHandler, {
   Streamable_createAnimationGroupEventHandlerStream,
-} from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
-import Streamable_createEventHandler from "./Streamable/__internal__/Streamable.createEventHandler.js";
-import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
-import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
+} from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
+import Streamable_createEventHandler from "./Streamable/__private__/Streamable.createEventHandler.js";
+import Streamable_createStateStore from "./Streamable/__private__/Streamable.createStateStore.js";
+import Streamable_identity from "./Streamable/__private__/Streamable.identity.js";
 
 /**
  * @noInheritDoc

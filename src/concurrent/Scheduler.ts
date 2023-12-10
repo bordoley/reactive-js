@@ -1,7 +1,7 @@
 import { PauseableSchedulerLike, SchedulerLike } from "../concurrent.js";
 import { DisposableLike } from "../utils.js";
-import Scheduler_createHostScheduler from "./Scheduler/__internal__/Scheduler.createHostScheduler.js";
-import Scheduler_toPausableScheduler from "./Scheduler/__internal__/Scheduler.toPausableScheduler.js";
+import Scheduler_createHostScheduler from "./Scheduler/__private__/Scheduler.createHostScheduler.js";
+import Scheduler_toPausableScheduler from "./Scheduler/__private__/Scheduler.toPausableScheduler.js";
 
 /**
  * @noInheritDoc

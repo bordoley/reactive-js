@@ -3,7 +3,7 @@ import { DeferredObservableLike, DeferredSideEffectsObservableLike, SchedulerLik
 import { Equality, Factory, Function1, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
-import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
+import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
 /**
  * @noInheritDoc
  * @category Module

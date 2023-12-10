@@ -6,8 +6,8 @@ import {
 } from "../concurrent.js";
 import { Function1 } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
-import PauseableObservable_fromAsyncIterable from "./PauseableObservable/__internal__/PauseableObservable.fromAsyncIterable.js";
-import PauseableObservable_sinkInto from "./PauseableObservable/__internal__/PauseableObservable.sinkInto.js";
+import PauseableObservable_fromAsyncIterable from "./PauseableObservable/__private__/PauseableObservable.fromAsyncIterable.js";
+import PauseableObservable_sinkInto from "./PauseableObservable/__private__/PauseableObservable.sinkInto.js";
 
 /**
  * @noInheritDoc

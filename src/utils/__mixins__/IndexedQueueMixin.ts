@@ -13,7 +13,7 @@ import {
   KeyedLike_get,
   MutableKeyedLike_set,
 } from "../../collections.js";
-import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
+import Enumerator_fromIterator from "../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
 import {
   Optional,
   newInstance,

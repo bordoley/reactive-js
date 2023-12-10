@@ -34,7 +34,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
-import Observable_multicast from "../Observable/__internal__/Observable.multicast.js";
+import Observable_multicast from "../Observable/__private__/Observable.multicast.js";
 import DelegatingDispatcherMixin from "./DelegatingDispatcherMixin.js";
 import DelegatingReplayObservableMixin from "./DelegatingReplayObservableMixin.js";
 

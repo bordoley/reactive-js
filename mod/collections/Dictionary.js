@@ -2,15 +2,15 @@
 
 import { KeyedCollection_TKey, KeyedCollection_type, } from "../collections.js";
 import { identityLazy } from "../functions.js";
-import Dictionary_empty from "./Dictionary/__internal__/Dictionary.empty.js";
-import Dictionary_entries from "./Dictionary/__internal__/Dictionary.entries.js";
-import Dictionary_fromEntries from "./Dictionary/__internal__/Dictionary.fromEntries.js";
-import Dictionary_keySet from "./Dictionary/__internal__/Dictionary.keySet.js";
-import Dictionary_keys from "./Dictionary/__internal__/Dictionary.keys.js";
-import Dictionary_map from "./Dictionary/__internal__/Dictionary.map.js";
-import Dictionary_reduce from "./Dictionary/__internal__/Dictionary.reduce.js";
-import Dictionary_toReadonlyMap from "./Dictionary/__internal__/Dictionary.toReadonlyMap.js";
-import Dictionary_values from "./Dictionary/__internal__/Dictionary.values.js";
+import Dictionary_empty from "./Dictionary/__private__/Dictionary.empty.js";
+import Dictionary_entries from "./Dictionary/__private__/Dictionary.entries.js";
+import Dictionary_fromEntries from "./Dictionary/__private__/Dictionary.fromEntries.js";
+import Dictionary_keySet from "./Dictionary/__private__/Dictionary.keySet.js";
+import Dictionary_keys from "./Dictionary/__private__/Dictionary.keys.js";
+import Dictionary_map from "./Dictionary/__private__/Dictionary.map.js";
+import Dictionary_reduce from "./Dictionary/__private__/Dictionary.reduce.js";
+import Dictionary_toReadonlyMap from "./Dictionary/__private__/Dictionary.toReadonlyMap.js";
+import Dictionary_values from "./Dictionary/__private__/Dictionary.values.js";
 export const empty = Dictionary_empty;
 export const entries = Dictionary_entries;
 export const fromEntries = Dictionary_fromEntries;

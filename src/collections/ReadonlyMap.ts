@@ -7,15 +7,15 @@ import {
   KeyedCollection_type,
 } from "../collections.js";
 import { identityLazy } from "../functions.js";
-import ReadonlyMap_empty from "./ReadonlyMap/__internal__/ReadonlyMap.empty.js";
-import ReadonlyMap_entries from "./ReadonlyMap/__internal__/ReadonlyMap.entries.js";
-import ReadonlyMap_fromEntries from "./ReadonlyMap/__internal__/ReadonlyMap.fromEntries.js";
-import ReadonlyMap_keySet from "./ReadonlyMap/__internal__/ReadonlyMap.keySet.js";
-import ReadonlyMap_keys from "./ReadonlyMap/__internal__/ReadonlyMap.keys.js";
-import ReadonlyMap_map from "./ReadonlyMap/__internal__/ReadonlyMap.map.js";
-import ReadonlyMap_reduce from "./ReadonlyMap/__internal__/ReadonlyMap.reduce.js";
-import ReadonlyMap_toDictionary from "./ReadonlyMap/__internal__/ReadonlyMap.toDictionary.js";
-import ReadonlyMap_values from "./ReadonlyMap/__internal__/ReadonlyMap.values.js";
+import ReadonlyMap_empty from "./ReadonlyMap/__private__/ReadonlyMap.empty.js";
+import ReadonlyMap_entries from "./ReadonlyMap/__private__/ReadonlyMap.entries.js";
+import ReadonlyMap_fromEntries from "./ReadonlyMap/__private__/ReadonlyMap.fromEntries.js";
+import ReadonlyMap_keySet from "./ReadonlyMap/__private__/ReadonlyMap.keySet.js";
+import ReadonlyMap_keys from "./ReadonlyMap/__private__/ReadonlyMap.keys.js";
+import ReadonlyMap_map from "./ReadonlyMap/__private__/ReadonlyMap.map.js";
+import ReadonlyMap_reduce from "./ReadonlyMap/__private__/ReadonlyMap.reduce.js";
+import ReadonlyMap_toDictionary from "./ReadonlyMap/__private__/ReadonlyMap.toDictionary.js";
+import ReadonlyMap_values from "./ReadonlyMap/__private__/ReadonlyMap.values.js";
 
 /**
  * @noInheritDoc

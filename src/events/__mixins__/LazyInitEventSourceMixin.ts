@@ -8,7 +8,7 @@ import {
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
-import Publisher_create from "../Publisher/__internal__/Publisher.create.js";
+import Publisher_create from "../Publisher/__private__/Publisher.create.js";
 
 export const LazyInitEventSourceMixin_publisher = Symbol(
   "LazyInitEventSourceMixin_publisher",

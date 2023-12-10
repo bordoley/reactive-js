@@ -1,6 +1,6 @@
 import { SubjectLike } from "../concurrent.js";
-import Subject_create from "./Subject/__internal__/Subject.create.js";
-import Subject_createRefCounted from "./Subject/__internal__/Subject.createRefCounted.js";
+import Subject_create from "./Subject/__private__/Subject.create.js";
+import Subject_createRefCounted from "./Subject/__private__/Subject.createRefCounted.js";
 
 /**
  * @noInheritDoc

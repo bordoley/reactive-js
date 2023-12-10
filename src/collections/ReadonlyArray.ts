@@ -5,17 +5,17 @@ import {
   KeyedCollection_T,
   KeyedCollection_type,
 } from "../collections.js";
-import ReadonlyArray_empty from "./ReadonlyArray/__internal__/ReadonlyArray.empty.js";
-import ReadonlyArray_entries from "./ReadonlyArray/__internal__/ReadonlyArray.entries.js";
-import ReadonlyArray_keySet from "./ReadonlyArray/__internal__/ReadonlyArray.keySet.js";
-import ReadonlyArray_keys from "./ReadonlyArray/__internal__/ReadonlyArray.keys.js";
-import ReadonlyArray_map from "./ReadonlyArray/__internal__/ReadonlyArray.map.js";
-import ReadonlyArray_reduce from "./ReadonlyArray/__internal__/ReadonlyArray.reduce.js";
-import ReadonlyArray_toDictionary from "./ReadonlyArray/__internal__/ReadonlyArray.toDictionary.js";
-import ReadonlyArray_toIndexed from "./ReadonlyArray/__internal__/ReadonlyArray.toIndexed.js";
-import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyArray.js";
-import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__internal__/ReadonlyArray.toReadonlyMap.js";
-import ReadonlyArray_values from "./ReadonlyArray/__internal__/ReadonlyArray.values.js";
+import ReadonlyArray_empty from "./ReadonlyArray/__private__/ReadonlyArray.empty.js";
+import ReadonlyArray_entries from "./ReadonlyArray/__private__/ReadonlyArray.entries.js";
+import ReadonlyArray_keySet from "./ReadonlyArray/__private__/ReadonlyArray.keySet.js";
+import ReadonlyArray_keys from "./ReadonlyArray/__private__/ReadonlyArray.keys.js";
+import ReadonlyArray_map from "./ReadonlyArray/__private__/ReadonlyArray.map.js";
+import ReadonlyArray_reduce from "./ReadonlyArray/__private__/ReadonlyArray.reduce.js";
+import ReadonlyArray_toDictionary from "./ReadonlyArray/__private__/ReadonlyArray.toDictionary.js";
+import ReadonlyArray_toIndexed from "./ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
+import ReadonlyArray_toReadonlyArray from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyArray.js";
+import ReadonlyArray_toReadonlyMap from "./ReadonlyArray/__private__/ReadonlyArray.toReadonlyMap.js";
+import ReadonlyArray_values from "./ReadonlyArray/__private__/ReadonlyArray.values.js";
 
 /**
  * @noInheritDoc

@@ -9,7 +9,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../utils.js";
-import Stream_syncState from "./Stream/__internal__/Stream.syncState.js";
+import Stream_syncState from "./Stream/__private__/Stream.syncState.js";
 
 /**
  * @noInheritDoc

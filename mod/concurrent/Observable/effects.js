@@ -6,9 +6,9 @@ import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
-import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
-import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__internal__/Observable.computeWithConfig.js";
-import Observable_createRunnableWithSideEffects from "./__internal__/Observable.createRunnableWithSideEffects.js";
+import Streamable_createStateStore from "../Streamable/__private__/Streamable.createStateStore.js";
+import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";
+import Observable_createRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
 export const __memo = (f, ...args) => {
     const ctx = assertCurrentContext();
     return ctx[ComputeContext_memoOrUse](false, f, ...args);

@@ -1,6 +1,6 @@
 import { PublisherLike } from "../events.js";
-import Publisher_create from "./Publisher/__internal__/Publisher.create.js";
-import Publisher_createRefCounted from "./Publisher/__internal__/Publisher.createRefCounted.js";
+import Publisher_create from "./Publisher/__private__/Publisher.create.js";
+import Publisher_createRefCounted from "./Publisher/__private__/Publisher.createRefCounted.js";
 
 export interface PublisherModule {
   /**

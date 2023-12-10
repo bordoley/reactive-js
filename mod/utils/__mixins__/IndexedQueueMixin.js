@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count, EnumerableLike_enumerate, KeyedLike_get, MutableKeyedLike_set, } from "../../collections.js";
-import Enumerator_fromIterator from "../../collections/Enumerator/__internal__/Enumerator.fromIterator.js";
+import Enumerator_fromIterator from "../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
 import { newInstance, none, pipe, raiseError, raiseWithDebugMessage, returns, } from "../../functions.js";
 import { BackPressureError, QueueLike_dequeue, QueueLike_head, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, StackLike_head, StackLike_pop, } from "../../utils.js";
 const IndexedQueueMixin = /*@PURE*/ (() => {

@@ -45,7 +45,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import Continuation_create from "../Continuation/__internal__/Continuation.create.js";
+import Continuation_create from "../Continuation/__private__/Continuation.create.js";
 
 export const ContinuationSchedulerInstanceLike_shouldYield = Symbol(
   "ContinuationSchedulerInstanceLike_shouldYield",

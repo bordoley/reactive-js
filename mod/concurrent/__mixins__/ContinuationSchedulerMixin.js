@@ -9,7 +9,7 @@ import { isNone, isSome, none, pipe, raiseIf, } from "../../functions.js";
 import { DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
-import Continuation_create from "../Continuation/__internal__/Continuation.create.js";
+import Continuation_create from "../Continuation/__private__/Continuation.create.js";
 export const ContinuationSchedulerInstanceLike_shouldYield = Symbol("ContinuationSchedulerInstanceLike_shouldYield");
 export const ContinuationSchedulerInstanceLike_scheduleContinuation = Symbol("ContinContinuationSchedulerInstanceLike_scheduleContinuationuationSchedulerDelegateLike_shouldYield");
 export const ContinuationSchedulerMixinLike_runContinuation = Symbol("ContinuationSchedulerMixinLike_runContinuation");

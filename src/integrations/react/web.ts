@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import * as React from "react";
-import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
+import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
 import { EventSourceLike } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import {

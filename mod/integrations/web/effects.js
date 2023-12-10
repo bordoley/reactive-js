@@ -1,6 +1,6 @@
 /// <reference types="./effects.d.ts" />
 
-import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__internal__/ReadonlyObjectMap.forEach.js";
+import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
 import { __constant, __memo, __observe, __state, __using, } from "../../concurrent/Observable/effects.js";
 import * as EventSource from "../../events/EventSource.js";
 import { compose, identity, none, pipe, returns, } from "../../functions.js";
