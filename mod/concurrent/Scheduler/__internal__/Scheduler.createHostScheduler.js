@@ -1,11 +1,11 @@
 /// <reference types="./Scheduler.createHostScheduler.d.ts" />
 
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { SchedulerLike_now, } from "../../../concurrent.js";
 import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&

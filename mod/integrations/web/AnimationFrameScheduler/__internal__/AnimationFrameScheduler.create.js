@@ -1,10 +1,10 @@
 /// <reference types="./AnimationFrameScheduler.create.d.ts" />
 
+import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_SAFE_INTEGER } from "../../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../../../collections.js";
 import { ContinuationSchedulerLike_schedule, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../../concurrent.js";
-import * as CurrentTime from "../../../../concurrent/__internal__/CurrentTime.js";
 import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import { invoke, isSome, none, pipe, pipeLazy, } from "../../../../functions.js";
 import { QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";

@@ -1,3 +1,4 @@
+import * as CurrentTime from "../../../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
@@ -14,7 +15,6 @@ import { Optional, none, pipe } from "../../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Scheduler from "../../Scheduler.js";
-import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import ContinuationSchedulerMixin, {
   ContinuationSchedulerInstanceLike,
   ContinuationSchedulerInstanceLike_scheduleContinuation,

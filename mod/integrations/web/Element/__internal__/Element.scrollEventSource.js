@@ -1,8 +1,8 @@
 /// <reference types="./Element.scrollEventSource.d.ts" />
 
+import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_VALUE, MIN_VALUE } from "../../../../__internal__/constants.js";
 import { clamp } from "../../../../__internal__/math.js";
-import * as CurrentTime from "../../../../concurrent/__internal__/CurrentTime.js";
 import * as EventSource from "../../../../events/EventSource.js";
 import { pipe } from "../../../../functions.js";
 import Element_eventSource from "./Element.eventSource.js";

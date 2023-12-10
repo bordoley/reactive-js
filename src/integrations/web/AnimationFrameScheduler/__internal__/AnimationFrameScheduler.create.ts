@@ -1,3 +1,4 @@
+import * as CurrentTime from "../../../../__internal__/CurrentTime.js";
 import { MAX_SAFE_INTEGER } from "../../../../__internal__/constants.js";
 import {
   createInstanceFactory,
@@ -15,7 +16,6 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../../../concurrent.js";
-import * as CurrentTime from "../../../../concurrent/__internal__/CurrentTime.js";
 import ContinuationSchedulerMixin, {
   ContinuationSchedulerInstanceLike,
   ContinuationSchedulerInstanceLike_scheduleContinuation,

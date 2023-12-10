@@ -1,4 +1,4 @@
-import { bindMethod, isFunction } from "../../functions.js";
+import { bindMethod, isFunction } from "../functions.js";
 
 export const now = /*@__PURE__*/ (() => {
   const supportsPerformanceNow =
