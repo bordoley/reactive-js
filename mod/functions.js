@@ -171,7 +171,7 @@ export const raiseWithDebugMessage = (message) => raiseError(error(__DEV__ ? mes
 export const raise = (e) => raiseError(error(e));
 export const raiseIf = (condition, message) => {
     if (condition) {
-        raiseError(error(__DEV__ ? message : none));
+        raiseWithDebugMessage(__DEV__ ? message : "");
     }
 };
 export const returns = (v) => () => v;

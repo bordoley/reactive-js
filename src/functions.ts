@@ -1687,7 +1687,7 @@ export const raiseIf: Signature["raiseIf"] = (
   message: string,
 ) => {
   if (condition) {
-    raiseError(error(__DEV__ ? message : none));
+    raiseWithDebugMessage(__DEV__ ? message : "");
   }
 };
 
