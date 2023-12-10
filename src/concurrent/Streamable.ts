@@ -1,12 +1,16 @@
+import { ReadonlyObjectMapLike } from "../collections.js";
 import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
+  SchedulerLike,
   StreamLike,
   StreamableLike,
 } from "../concurrent.js";
 import { Equality, Factory, Function1, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
+import { Animation } from "./Observable.js";
 import Streamable_create from "./Streamable/__internal__/Streamable.create.js";
+import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__internal__/Streamable.createAnimationGroupEventHandler.js";
 import Streamable_createStateStore from "./Streamable/__internal__/Streamable.createStateStore.js";
 import Streamable_identity from "./Streamable/__internal__/Streamable.identity.js";
 
@@ -24,6 +28,96 @@ export interface StreamableModule {
       DeferredSideEffectsObservableLike<T>
     >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
+
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
+    >
+  >;
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
+    >
+  >;
+  createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Function1<TEvent, Animation<T> | readonly Animation<T>[]>
+    >,
+    options: {
+      readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): StreamableLike<
+    TEvent,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<TEvent, TKey, T>
+    >
+  >;
+
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: { readonly mode: "switching"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    void,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
+    >
+  >;
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: { readonly mode: "blocking"; readonly scheduler?: SchedulerLike },
+  ): StreamableLike<
+    void,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
+    >
+  >;
+  createAnimationGroupEventHandler<TKey extends string | symbol, T>(
+    animationGroup: ReadonlyObjectMapLike<
+      TKey,
+      Animation<T> | readonly Animation<T>[]
+    >,
+    options: {
+      readonly mode: "queueing";
+      readonly scheduler?: SchedulerLike;
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): StreamableLike<
+    void,
+    boolean,
+    ReturnType<
+      typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>
+    >
+  >;
 
   createEventHandler<TEventType>(
     op: Function1<TEventType, DeferredObservableLike<unknown>>,

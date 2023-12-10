@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  EventSourceLike,
-  KeyedCollectionLike_get,
-} from "@reactive-js/core/types";
 import { useAnimate } from "@reactive-js/core/integrations/react/web";
 import { Property } from "csstype";
-import * as Streamable from "@reactive-js/core/Streamable";
+import * as Streamable from "@reactive-js/core/concurrent/Streamable";
 import {
   useDispatcher,
   useDisposable,
@@ -14,7 +10,9 @@ import {
 } from "@reactive-js/core/integrations/react";
 import { Optional, pipeLazy } from "@reactive-js/core/functions";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
-import * as WebScheduler from "@reactive-js/core/integrations/web/Scheduler";
+import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
+import { EventSourceLike } from "@reactive-js/core/events";
+import { KeyedLike_get } from "@reactive-js/core/collections";
 
 const items = ["W", "O", "R", "D", "L", "E"];
 
@@ -114,7 +112,7 @@ export const Wordle = () => {
   const [state, updateState] = useState(false);
 
   const animationScheduler = useDisposable(
-    pipeLazy(ReactScheduler.get(), WebScheduler.createAnimationFrameScheduler),
+    pipeLazy(ReactScheduler.get(), AnimationFrameScheduler.create),
     [],
   );
 
@@ -141,7 +139,7 @@ export const Wordle = () => {
     [animationScheduler],
   );
 
-  const animation = animationGroup?.[KeyedCollectionLike_get]("a");
+  const animation = animationGroup?.[KeyedLike_get]("a");
   const { enqueue } = useDispatcher(animationGroup);
   const isAnimationRunning = useObserve(animationGroup) ?? false;
 

@@ -18,7 +18,7 @@ import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/Ani
 import { EventSourceLike } from "@reactive-js/core/events";
 import { KeyedLike_get } from "@reactive-js/core/collections";
 import * as Publisher from "@reactive-js/core/events/Publisher";
-import { SinkLike_notify } from "@reactive-js/core/utils";
+import { SinkLike_notify } from "@reactive-js/core/events";
 
 const AnimatedCircle = ({
   animation,
