@@ -3,12 +3,12 @@
 import { isFunction, isNone, newInstance, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Scheduler_createHostScheduler from "../../Scheduler/__internal__/Scheduler.createHostScheduler.js";
+import * as Scheduler from "../../Scheduler.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 const Observable_lastAsync = (schedulerOrNone, options) => async (observable) => {
     const schedulerOrFactory = isNone(schedulerOrNone)
-        ? Scheduler_createHostScheduler
+        ? Scheduler.createHostScheduler
         : none;
     const isSchedulerFactory = isFunction(schedulerOrFactory);
     const schedulerDisposable = isSchedulerFactory

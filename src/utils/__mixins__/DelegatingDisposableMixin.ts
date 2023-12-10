@@ -9,8 +9,7 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
 } from "../../utils.js";
-
-import Disposable_onDisposed from "../Disposable/__internal__/Disposable.onDisposed.js";
+import * as Disposable from "../Disposable.js";
 
 const DelegatingDisposableMixin: <
   TDisposable extends DisposableLike = DisposableLike,
@@ -37,7 +36,7 @@ const DelegatingDisposableMixin: <
 
           pipe(
             delegate,
-            Disposable_onDisposed(_ => {
+            Disposable.onDisposed(_ => {
               instance[DisposableLike_isDisposed] = true;
             }),
           );

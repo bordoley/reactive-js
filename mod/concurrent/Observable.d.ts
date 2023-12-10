@@ -235,9 +235,10 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly delay: number;
     }): Function1<T, PureRunnableLike<T>>;
     ignoreElements<T>(): PureObservableOperator<unknown, T>;
-    isDeferred<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
-    isPure<T>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
-    isRunnable<T>(obs: ObservableLike<T>): obs is RunnableLike<T>;
+    isDeferred<T = unknown>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
+    isPure<T = unknown>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
+    isReplayObservable<T = unknown>(o: ObservableLike<T>): o is ReplayObservableLike<T>;
+    isRunnable<T = unknown>(obs: ObservableLike<T>): obs is RunnableLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
     lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
@@ -468,6 +469,7 @@ export declare const fromValue: Signature["fromValue"];
 export declare const ignoreElements: Signature["ignoreElements"];
 export declare const isDeferred: Signature["isDeferred"];
 export declare const isPure: Signature["isPure"];
+export declare const isReplayObservable: Signature["isReplayObservable"];
 export declare const isRunnable: Signature["isRunnable"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];

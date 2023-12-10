@@ -83,6 +83,7 @@
 - [ignoreElements](concurrent_Observable.md#ignoreelements)
 - [isDeferred](concurrent_Observable.md#isdeferred)
 - [isPure](concurrent_Observable.md#ispure)
+- [isReplayObservable](concurrent_Observable.md#isreplayobservable)
 - [isRunnable](concurrent_Observable.md#isrunnable)
 - [keep](concurrent_Observable.md#keep)
 - [lastAsync](concurrent_Observable.md#lastasync)
@@ -2525,9 +2526,9 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 
@@ -2547,9 +2548,9 @@ ___
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 
@@ -2563,15 +2564,37 @@ obs is PureObservableLike<T\>
 
 ___
 
+### isReplayObservable
+
+▸ **isReplayObservable**<`T`\>(`o`): o is ReplayObservableLike<T\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\> |
+
+#### Returns
+
+o is ReplayObservableLike<T\>
+
+___
+
 ### isRunnable
 
 ▸ **isRunnable**<`T`\>(`obs`): obs is RunnableLike<T\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 

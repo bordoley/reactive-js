@@ -18,13 +18,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
-import Observable_concatMap from "../../Observable/__internal__/Observable.concatMap.js";
-import Observable_dispatchTo from "../../Observable/__internal__/Observable.dispatchTo.js";
-import Observable_forkMerge from "../../Observable/__internal__/Observable.forkMerge.js";
-import Observable_pairwise from "../../Observable/__internal__/Observable.pairwise.js";
-import Observable_subscribe from "../../Observable/__internal__/Observable.subscribe.js";
-import Observable_takeFirst from "../../Observable/__internal__/Observable.takeFirst.js";
-import Observable_throttle from "../../Observable/__internal__/Observable.throttle.js";
+import * as Observable from "../../Observable.js";
 import type * as Stream from "../../Stream.js";
 
 const Stream_syncState: Stream.Signature["syncState"] = <T>(
@@ -55,20 +49,20 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
 
     return pipe(
       stateStore,
-      Observable_forkMerge(
-        compose(Observable_takeFirst(), Observable_concatMap(onInit)),
+      Observable.forkMerge(
+        compose(Observable.takeFirst(), Observable.concatMap(onInit)),
         compose(
           throttleDuration > 0
-            ? Observable_throttle(throttleDuration)
+            ? Observable.throttle(throttleDuration)
             : identity<ObservableLike<T>>,
-          Observable_pairwise(),
-          Observable_concatMap<Tuple2<T, T>, Updater<T>>(
+          Observable.pairwise(),
+          Observable.concatMap<Tuple2<T, T>, Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
           ),
         ),
       ),
-      Observable_dispatchTo<Updater<T>>(stateStore),
-      Observable_subscribe(scheduler, {
+      Observable.dispatchTo<Updater<T>>(stateStore),
+      Observable.subscribe(scheduler, {
         backpressureStrategy: options?.backpressureStrategy,
         capacity: options?.capacity,
       }),

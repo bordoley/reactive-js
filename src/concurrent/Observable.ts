@@ -92,6 +92,7 @@ import Observable_fromValue from "./Observable/__internal__/Observable.fromValue
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
+import Observable_isReplayObservable from "./Observable/__internal__/Observable.isReplayObservable.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
@@ -830,11 +831,17 @@ export interface ObservableModule
 
   ignoreElements<T>(): PureObservableOperator<unknown, T>;
 
-  isDeferred<T>(obs: ObservableLike<T>): obs is DeferredObservableLike<T>;
+  isDeferred<T = unknown>(
+    obs: ObservableLike<T>,
+  ): obs is DeferredObservableLike<T>;
 
-  isPure<T>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
+  isPure<T = unknown>(obs: ObservableLike<T>): obs is PureObservableLike<T>;
 
-  isRunnable<T>(obs: ObservableLike<T>): obs is RunnableLike<T>;
+  isReplayObservable<T = unknown>(
+    o: ObservableLike<T>,
+  ): o is ReplayObservableLike<T>;
+
+  isRunnable<T = unknown>(obs: ObservableLike<T>): obs is RunnableLike<T>;
 
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
 
@@ -1458,6 +1465,8 @@ export const ignoreElements: Signature["ignoreElements"] =
   Observable_ignoreElements;
 export const isDeferred: Signature["isDeferred"] = Observable_isDeferred;
 export const isPure: Signature["isPure"] = Observable_isPure;
+export const isReplayObservable: Signature["isReplayObservable"] =
+  Observable_isReplayObservable;
 export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;

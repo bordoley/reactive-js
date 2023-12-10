@@ -46,6 +46,7 @@ import Observable_fromValue from "./Observable/__internal__/Observable.fromValue
 import Observable_ignoreElements from "./Observable/__internal__/Observable.ignoreElements.js";
 import Observable_isDeferred from "./Observable/__internal__/Observable.isDeferred.js";
 import Observable_isPure from "./Observable/__internal__/Observable.isPure.js";
+import Observable_isReplayObservable from "./Observable/__internal__/Observable.isReplayObservable.js";
 import Observable_isRunnable from "./Observable/__internal__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__internal__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__internal__/Observable.lastAsync.js";
@@ -130,6 +131,7 @@ export const fromValue = Observable_fromValue;
 export const ignoreElements = Observable_ignoreElements;
 export const isDeferred = Observable_isDeferred;
 export const isPure = Observable_isPure;
+export const isReplayObservable = Observable_isReplayObservable;
 export const isRunnable = Observable_isRunnable;
 export const keep = Observable_keep;
 export const lastAsync = Observable_lastAsync;

@@ -9,7 +9,7 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Observable from "../../Observable.js";
-import VirtualTimeScheduler_create from "../../VirtualTimeScheduler/__internal__/VirtualTimeScheduler.create.js";
+import * as VirtualTimeScheduler from "../../VirtualTimeScheduler.js";
 
 import Observable_subscribe from "./Observable.subscribe.js";
 
@@ -19,7 +19,7 @@ const Observable_run: Observable.Signature["run"] =
     readonly capacity?: number;
   }) =>
   (observable: RunnableLike<T>) => {
-    const scheduler = VirtualTimeScheduler_create();
+    const scheduler = VirtualTimeScheduler.create();
 
     const subscription = pipe(
       observable,

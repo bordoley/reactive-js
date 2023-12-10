@@ -48,14 +48,7 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type { Animation } from "../../Observable.js";
-import Observable_animate from "../../Observable/__internal__/Observable.animate.js";
-import Observable_forEach from "../../Observable/__internal__/Observable.forEach.js";
-import Observable_fromEnumerable from "../../Observable/__internal__/Observable.fromEnumerable.js";
-import Observable_ignoreElements from "../../Observable/__internal__/Observable.ignoreElements.js";
-import Observable_map from "../../Observable/__internal__/Observable.map.js";
-import Observable_mergeMany from "../../Observable/__internal__/Observable.mergeMany.js";
-import Observable_subscribeOn from "../../Observable/__internal__/Observable.subscribeOn.js";
-import Observable_toReadonlyArray from "../../Observable/__internal__/Observable.toReadonlyArray.js";
+import * as Observable from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingStreamMixin from "../../__mixins__/DelegatingStreamMixin.js";
 import Streamable_createEventHandler from "./Streamable.createEventHandler.js";
@@ -157,16 +150,16 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
                 string
               >((factory, key: string) =>
                 pipe(
-                  Observable_animate<T>(
+                  Observable.animate<T>(
                     isFunction(factory) ? factory(event) : factory,
                   ),
-                  Observable_forEach((value: T) => {
+                  Observable.forEach((value: T) => {
                     const publisher = publishers[key];
                     if (isSome(publisher)) {
                       publisher[SinkLike_notify](value);
                     }
                   }),
-                  Observable_ignoreElements<T>(),
+                  Observable.ignoreElements<T>(),
                 ),
               ),
             );
@@ -174,15 +167,15 @@ export const Streamable_createAnimationGroupEventHandlerStream: <
             const deferredAnimatedObservables = pipe(
               observables,
               ReadonlyObjectMap.values(),
-              Observable_fromEnumerable(),
-              Observable_map<
+              Observable.fromEnumerable(),
+              Observable.map<
                 RunnableWithSideEffectsLike<T>,
                 DeferredObservableLike<T>
-              >(Observable_subscribeOn(animationScheduler)),
-              Observable_toReadonlyArray(),
+              >(Observable.subscribeOn(animationScheduler)),
+              Observable.toReadonlyArray(),
             );
 
-            return Observable_mergeMany(deferredAnimatedObservables);
+            return Observable.mergeMany(deferredAnimatedObservables);
           },
           creationOptions as any,
         )[StreamableLike_stream](scheduler, streamOptions);

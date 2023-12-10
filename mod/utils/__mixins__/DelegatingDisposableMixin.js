@@ -3,12 +3,12 @@
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { none, pipe, returns } from "../../functions.js";
 import { DelegatingDisposableLike_delegate, DisposableLike_add, DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
-import Disposable_onDisposed from "../Disposable/__internal__/Disposable.onDisposed.js";
+import * as Disposable from "../Disposable.js";
 const DelegatingDisposableMixin = 
 /*@__PURE__*/ (() => {
     return returns(mix(function DelegatingDisposableMixin(instance, delegate) {
         instance[DelegatingDisposableLike_delegate] = delegate;
-        pipe(delegate, Disposable_onDisposed(_ => {
+        pipe(delegate, Disposable.onDisposed(_ => {
             instance[DisposableLike_isDisposed] = true;
         }));
         return instance;

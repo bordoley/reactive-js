@@ -6,7 +6,7 @@ import {
   mix,
   props,
 } from "../../../__internal__/mixins.js";
-import ReadonlyArray_map from "../../../collections/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import {
   ObservableLike,
   ObservableLike_isDeferred,
@@ -101,7 +101,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
           if (isReady) {
             const result = pipe(
               observers,
-              ReadonlyArray_map(observer => observer[LatestObserver_latest]),
+              ReadonlyArray.map(observer => observer[LatestObserver_latest]),
             );
             ctx[LatestCtx_delegate][SinkLike_notify](result);
 

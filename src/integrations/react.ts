@@ -30,7 +30,6 @@ import {
   StreamableLike_stream,
 } from "../concurrent.js";
 import * as Observable from "../concurrent/Observable.js";
-import Observable_isReplayObservable from "../concurrent/Observable/__internal__/Observable.isReplayObservable.js";
 import * as Subject from "../concurrent/Subject.js";
 import {
   EventSourceLike,
@@ -360,7 +359,7 @@ export const useObserve: Signature["useObserve"] = <T>(
   );
 
   const buffer =
-    isSome(observable) && Observable_isReplayObservable<T>(observable)
+    isSome(observable) && Observable.isReplayObservable<T>(observable)
       ? observable[ReplayObservableLike_buffer]
       : Indexed.empty<T>();
   const defaultValue =

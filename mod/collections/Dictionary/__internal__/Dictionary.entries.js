@@ -2,9 +2,9 @@
 
 import { KeyedLike_get } from "../../../collections.js";
 import { pipe } from "../../../functions.js";
-import Enumerable_map from "../../Enumerable/__internal__/Enumerable.map.js";
+import * as Enumerable from "../../Enumerable.js";
 import Dictionary_keys from "./Dictionary.keys.js";
-const Dictionary_entries = () => (dict) => pipe(dict, Dictionary_keys(), Enumerable_map(key => [
+const Dictionary_entries = () => (dict) => pipe(dict, Dictionary_keys(), Enumerable.map(key => [
     key,
     dict[KeyedLike_get](key),
 ]));

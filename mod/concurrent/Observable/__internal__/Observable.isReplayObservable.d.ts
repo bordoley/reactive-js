@@ -1,3 +1,3 @@
-import { ObservableLike, ReplayObservableLike } from "../../../concurrent.js";
-declare const Observable_isReplayObservable: <T = unknown>(o: ObservableLike<T>) => o is ReplayObservableLike<T>;
+import type * as Observable from "../../Observable.js";
+declare const Observable_isReplayObservable: Observable.Signature["isReplayObservable"];
 export default Observable_isReplayObservable;

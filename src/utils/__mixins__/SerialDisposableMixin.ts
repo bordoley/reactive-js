@@ -12,7 +12,7 @@ import {
   SerialDisposableLike,
   SerialDisposableLike_current,
 } from "../../utils.js";
-import Disposable_add from "../Disposable/__internal__/Disposable.add.js";
+import * as Disposable from "../Disposable.js";
 
 const SerialDisposableMixin_current = Symbol("SerialDisposableMixin_current");
 
@@ -37,7 +37,7 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
         unsafeCast<DisposableLike>(instance);
 
         instance[SerialDisposableMixin_current] = defaultValue;
-        pipe(instance, Disposable_add(defaultValue));
+        pipe(instance, Disposable.add(defaultValue));
 
         return instance;
       },
@@ -55,7 +55,7 @@ const SerialDisposableMixin: <TDisposable extends DisposableLike>() => Mixin1<
           oldValue[DisposableLike_dispose]();
 
           this[SerialDisposableMixin_current] = v;
-          pipe(this, Disposable_add(v));
+          pipe(this, Disposable.add(v));
         },
       },
     ),

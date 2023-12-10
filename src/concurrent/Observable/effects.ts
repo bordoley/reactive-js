@@ -40,7 +40,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
-import Observable_create from "../Observable/__internal__/Observable.create.js";
+import * as Observable from "../Observable.js";
 import Streamable_createStateStore from "../Streamable/__internal__/Streamable.createStateStore.js";
 import {
   ComputeContext_awaitOrObserve,
@@ -51,7 +51,6 @@ import {
   assertCurrentContext,
 } from "./__internal__/Observable.computeWithConfig.js";
 import Observable_createRunnableWithSideEffects from "./__internal__/Observable.createRunnableWithSideEffects.js";
-import Observable_subscribe from "./__internal__/Observable.subscribe.js";
 
 interface __Memo {
   __memo<T>(fn: Factory<T>): T;
@@ -166,13 +165,13 @@ export const __do: __Do["__do"] = /*@__PURE__*/ (() => {
       deferSideEffect,
       observableConfig[ObservableLike_isRunnable]
         ? Observable_createRunnableWithSideEffects
-        : Observable_create,
+        : Observable.create,
       f,
       ...args,
     );
     const subscribeOnScheduler = ctx[ComputeContext_memoOrUse](
       false,
-      Observable_subscribe,
+      Observable.subscribe,
       scheduler,
     );
     ctx[ComputeContext_memoOrUse](true, subscribeOnScheduler, observable);

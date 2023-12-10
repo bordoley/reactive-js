@@ -1,7 +1,7 @@
 /// <reference types="./Observable.latest.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import ReadonlyArray_map from "../../../collections/ReadonlyArray/__internal__/ReadonlyArray.map.js";
+import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
@@ -49,7 +49,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
             const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } = ctx;
             const isReady = observers.every(x => x[LatestObserver_ready]);
             if (isReady) {
-                const result = pipe(observers, ReadonlyArray_map(observer => observer[LatestObserver_latest]));
+                const result = pipe(observers, ReadonlyArray.map(observer => observer[LatestObserver_latest]));
                 ctx[LatestCtx_delegate][SinkLike_notify](result);
                 if (mode === zipMode) {
                     for (const sub of observers) {
