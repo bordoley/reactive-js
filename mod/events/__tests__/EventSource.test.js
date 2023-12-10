@@ -28,3 +28,5 @@ testModule("EventSource", describe("buffer", test("when the event listener throw
     vts[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
 })));
+// FIXME
+// ((_: EventSource.Signature) => {})(EventSource);

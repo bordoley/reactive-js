@@ -29,6 +29,7 @@
 ### Transform Functions
 
 - [entries](collections_Dictionary.md#entries)
+- [keySet](collections_Dictionary.md#keyset)
 - [keys](collections_Dictionary.md#keys)
 - [reduce](collections_Dictionary.md#reduce)
 - [toDictionary](collections_Dictionary.md#todictionary)
@@ -152,6 +153,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### keySet
+
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 

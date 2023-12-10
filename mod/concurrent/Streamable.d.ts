@@ -75,5 +75,6 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const createAnimationGroupEventHandler: Signature["createAnimationGroupEventHandler"];
+export declare const createEventHandler: Signature["createEventHandler"];
 export declare const createStateStore: Signature["createStateStore"];
 export declare const identity: Signature["identity"];

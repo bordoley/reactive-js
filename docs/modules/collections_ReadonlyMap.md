@@ -29,6 +29,7 @@
 ### Transform Functions
 
 - [entries](collections_ReadonlyMap.md#entries)
+- [keySet](collections_ReadonlyMap.md#keyset)
 - [keys](collections_ReadonlyMap.md#keys)
 - [reduce](collections_ReadonlyMap.md#reduce)
 - [toDictionary](collections_ReadonlyMap.md#todictionary)
@@ -152,6 +153,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### keySet
+
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
 
 ___
 

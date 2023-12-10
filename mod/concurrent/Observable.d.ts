@@ -424,6 +424,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     zipLatest<TA, TB, TC, TD, TE, TF, TG, TH, TI>(a: ObservableLike<TA>, b: ObservableLike<TB>, c: ObservableLike<TC>, d: ObservableLike<TD>, e: ObservableLike<TE>, f: ObservableLike<TF>, g: ObservableLike<TG>, h: ObservableLike<TH>, i: ObservableLike<TI>): DeferredSideEffectsObservableLike<Tuple9<TA, TB, TC, TD, TE, TF, TG, TH, TI>>;
 }
 export type Signature = ObservableModule;
+export declare const animate: Signature["animate"];
 export declare const backpressureStrategy: Signature["backpressureStrategy"];
 export declare const buffer: Signature["buffer"];
 export declare const catchError: Signature["catchError"];
@@ -431,6 +432,7 @@ export declare const combineLatest: Signature["combineLatest"];
 export declare const computeDeferred: Signature["computeDeferred"];
 export declare const computeRunnable: Signature["computeRunnable"];
 export declare const concat: Signature["concat"];
+export declare const concatAll: Signature["concatAll"];
 export declare const concatMany: Signature["concatMany"];
 export declare const concatMap: Signature["concatMap"];
 export declare const concatWith: Signature["concatWith"];

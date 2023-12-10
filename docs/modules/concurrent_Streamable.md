@@ -21,6 +21,7 @@
 ### Other Functions
 
 - [createAnimationGroupEventHandler](concurrent_Streamable.md#createanimationgroupeventhandler)
+- [createEventHandler](concurrent_Streamable.md#createeventhandler)
 
 ## Type Aliases
 
@@ -239,3 +240,87 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](../interfaces/events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+
+___
+
+### createEventHandler
+
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEventType` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.mode` | ``"switching"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEventType` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.mode` | ``"blocking"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+▸ **createEventHandler**<`TEventType`\>(`op`, `options`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEventType` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>\> |
+| `options` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.mode` | ``"queueing"`` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+▸ **createEventHandler**<`TEventType`\>(`op`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TEventType` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `op` | [`Function1`](functions.md#function1)<`TEventType`, [`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>\> |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>

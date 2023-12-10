@@ -158,3 +158,5 @@ testModule(
     }),
   ),
 );
+
+((_: Subject.Signature) => {})(Subject);

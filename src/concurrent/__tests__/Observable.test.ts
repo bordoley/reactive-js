@@ -1920,3 +1920,5 @@ testModule(
     ),
   ),
 );
+
+((_: Observable.Signature) => {})(Observable);

@@ -22,6 +22,10 @@
 
 - [map](collections_ReadonlyObjectMap.md#map)
 
+### Other Functions
+
+- [fromEntries](collections_ReadonlyObjectMap.md#fromentries)
+
 ### Transform Functions
 
 - [entries](collections_ReadonlyObjectMap.md#entries)
@@ -111,6 +115,25 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`CollectionOperator`](collections.md#collectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `TA`, `TB`, `TKey`\>
+
+___
+
+## Other Functions
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
 
 ___
 

@@ -74,3 +74,4 @@ testModule("Subject", describe("create", test("with replay", () => {
     subject[SinkLike_notify](3);
     expectIsSome(subscription[DisposableLike_error]);
 })));
+((_) => { })(Subject);

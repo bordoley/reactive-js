@@ -1,7 +1,6 @@
 import { PureRunnableLike } from "../../../concurrent.js";
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import { PureObservableOperator } from "../../Observable.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_empty from "./Observable.empty.js";
 import Observable_fromOptional from "./Observable.fromOptional.js";
@@ -31,7 +30,7 @@ const parseAnimationConfig = <T = number>(
         Observable_fromOptional(),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as PureObservableOperator<number, T>),
+          : (identity as Observable.PureObservableOperator<number, T>),
       )
     : config.type === "frame"
     ? pipe(
@@ -39,7 +38,7 @@ const parseAnimationConfig = <T = number>(
         Observable_fromOptional(),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as PureObservableOperator<number, T>),
+          : (identity as Observable.PureObservableOperator<number, T>),
       )
     : pipe(
         config.type === "keyframe"
@@ -48,7 +47,7 @@ const parseAnimationConfig = <T = number>(
         Observable_map(scale(config.from, config.to)),
         isSome(config.selector)
           ? Observable_map(config.selector)
-          : (identity as PureObservableOperator<number, T>),
+          : (identity as Observable.PureObservableOperator<number, T>),
       );
 
 const Observable_animate: Observable.Signature["animate"] = <T = number>(

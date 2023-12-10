@@ -10,7 +10,6 @@ import {
   DisposableLike_dispose,
   DisposableLike_isDisposed,
 } from "../../utils.js";
-
 import * as EventSource from "../EventSource.js";
 import * as WritableStore from "../WritableStore.js";
 
@@ -38,3 +37,5 @@ testModule(
     expectTrue(store[DisposableLike_isDisposed]);
   }),
 );
+
+((_: WritableStore.Signature) => {})(WritableStore);

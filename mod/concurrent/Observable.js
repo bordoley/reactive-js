@@ -2,6 +2,7 @@
 
 import { Computation_type, } from "../computations.js";
 import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../concurrent.js";
+import Observable_animate from "./Observable/__internal__/Observable.animate.js";
 import Observable_backpressureStrategy from "./Observable/__internal__/Observable.backpressureStrategy.js";
 import Observable_buffer from "./Observable/__internal__/Observable.buffer.js";
 import Observable_catchError from "./Observable/__internal__/Observable.catchError.js";
@@ -9,6 +10,7 @@ import Observable_combineLatest from "./Observable/__internal__/Observable.combi
 import Observable_computeDeferred from "./Observable/__internal__/Observable.computeDeferred.js";
 import Observable_computeRunnable from "./Observable/__internal__/Observable.computeRunnable.js";
 import Observable_concat from "./Observable/__internal__/Observable.concat.js";
+import Observable_concatAll from "./Observable/__internal__/Observable.concatAll.js";
 import Observable_concatMany from "./Observable/__internal__/Observable.concatMany.js";
 import Observable_concatMap from "./Observable/__internal__/Observable.concatMap.js";
 import Observable_concatWith from "./Observable/__internal__/Observable.concatWith.js";
@@ -84,6 +86,7 @@ import Observable_toReadonlyArrayAsync from "./Observable/__internal__/Observabl
 import Observable_withCurrentTime from "./Observable/__internal__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__internal__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__internal__/Observable.zipLatest.js";
+export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;
 export const catchError = Observable_catchError;
@@ -91,6 +94,7 @@ export const combineLatest = Observable_combineLatest;
 export const computeDeferred = Observable_computeDeferred;
 export const computeRunnable = Observable_computeRunnable;
 export const concat = Observable_concat;
+export const concatAll = Observable_concatAll;
 export const concatMany = Observable_concatMany;
 export const concatMap = Observable_concatMap;
 export const concatWith = Observable_concatWith;
