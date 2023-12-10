@@ -459,47 +459,6 @@ testModule(
     ),
   ),
   describe(
-    "decodeWithCharset",
-    test("decoding ascii from runnable", () => {
-      const str = "abcdefghijklmnsopqrstuvwxyz";
-
-      pipe(
-        [str],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.encodeUtf8(),
-        Observable.decodeWithCharset(),
-        Observable.toReadonlyArray(),
-        x => x.join(),
-        expectEquals(str),
-      );
-    }),
-    test("decoding ascii from enumerable", () => {
-      const str = "abcdefghijklmnsopqrstuvwxyz";
-
-      pipe(
-        [str],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.decodeWithCharset(),
-        Observable.toReadonlyArray(),
-        x => x.join(),
-        expectEquals(str),
-      );
-    }),
-    test("decoding multi-byte code points", () => {
-      const str = String.fromCodePoint(8364);
-      pipe(
-        [str],
-        Observable.fromReadonlyArray(),
-        Observable.encodeUtf8(),
-        Observable.decodeWithCharset(),
-        Observable.toReadonlyArray(),
-        x => x.join(),
-        expectEquals(str),
-      );
-    }),
-  ),
-  describe(
     "dispatchTo",
     test("when backpressure exception is thrown", () => {
       const vts = VirtualTimeScheduler.create();

@@ -1,6 +1,7 @@
 /// <reference types="./PureComputationModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
+import * as Observable from "../../../concurrent/Observable.js";
 import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, pipe, pipeLazy, returns, } from "../../../functions.js";
 const PureComputationModuleTests = (m, fromReadonlyArray, toReadonlyArray) => describe("PureComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], fromReadonlyArray(), m.buffer({ count: 3 }), toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
@@ -10,7 +11,16 @@ const PureComputationModuleTests = (m, fromReadonlyArray, toReadonlyArray) => de
     [1, 2, 3],
     [4, 5, 6],
     [7, 8],
-], { valuesEquality: arrayEquality() })))), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy([], fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([]))), test("when equality operator throws", () => {
+], { valuesEquality: arrayEquality() })))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
+    const str = "abcdefghijklmnsopqrstuvwxyz";
+    pipe([str], Observable.fromReadonlyArray({ delay: 1 }), Observable.encodeUtf8(), Observable.toReadonlyArray(), fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals(str));
+}), test("decoding ascii from enumerable", () => {
+    const str = "abcdefghijklmnsopqrstuvwxyz";
+    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toReadonlyArray(), fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals(str));
+}), test("decoding multi-byte code points", () => {
+    const str = String.fromCodePoint(8364);
+    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toReadonlyArray(), fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals(str));
+})), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy([], fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([]))), test("when equality operator throws", () => {
     const err = new Error();
     const equality = (_a, _b) => {
         throw err;

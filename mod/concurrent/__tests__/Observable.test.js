@@ -129,16 +129,7 @@ testModule("Observable", PureComputationModuleTests(Observable, () => Observable
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: true,
     [ObservableLike_isRunnable]: true,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("decodeWithCharset", test("decoding ascii from runnable", () => {
-    const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], Observable.fromReadonlyArray({ delay: 1 }), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
-}), test("decoding ascii from enumerable", () => {
-    const str = "abcdefghijklmnsopqrstuvwxyz";
-    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
-}), test("decoding multi-byte code points", () => {
-    const str = String.fromCodePoint(8364);
-    pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.decodeWithCharset(), Observable.toReadonlyArray(), x => x.join(), expectEquals(str));
-})), describe("dispatchTo", test("when backpressure exception is thrown", () => {
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
     const vts = VirtualTimeScheduler.create();
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
         backpressureStrategy: "throw",

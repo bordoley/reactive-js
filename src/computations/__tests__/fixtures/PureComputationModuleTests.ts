@@ -1,6 +1,7 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   expectToThrowError,
   test,
 } from "../../../__internal__/testing.js";
@@ -9,6 +10,7 @@ import {
   ComputationOf,
   PureComputationModule,
 } from "../../../computations.js";
+import * as Observable from "../../../concurrent/Observable.js";
 import {
   Function1,
   Tuple2,
@@ -65,6 +67,53 @@ const PureComputationModuleTests = <C extends Computation>(
           ),
         ),
       ),
+    ),
+    describe(
+      "decodeWithCharset",
+      test("decoding ascii from runnable", () => {
+        const str = "abcdefghijklmnsopqrstuvwxyz";
+
+        pipe(
+          [str],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.encodeUtf8(),
+          Observable.toReadonlyArray(),
+          fromReadonlyArray(),
+          m.decodeWithCharset(),
+          toReadonlyArray(),
+          x => x.join(),
+          expectEquals(str),
+        );
+      }),
+      test("decoding ascii from enumerable", () => {
+        const str = "abcdefghijklmnsopqrstuvwxyz";
+
+        pipe(
+          [str],
+          Observable.fromReadonlyArray(),
+          Observable.encodeUtf8(),
+          Observable.toReadonlyArray(),
+          fromReadonlyArray(),
+          m.decodeWithCharset(),
+          toReadonlyArray(),
+          x => x.join(),
+          expectEquals(str),
+        );
+      }),
+      test("decoding multi-byte code points", () => {
+        const str = String.fromCodePoint(8364);
+        pipe(
+          [str],
+          Observable.fromReadonlyArray(),
+          Observable.encodeUtf8(),
+          Observable.toReadonlyArray(),
+          fromReadonlyArray(),
+          m.decodeWithCharset(),
+          toReadonlyArray(),
+          x => x.join(),
+          expectEquals(str),
+        );
+      }),
     ),
     describe(
       "distinctUntilChanged",
