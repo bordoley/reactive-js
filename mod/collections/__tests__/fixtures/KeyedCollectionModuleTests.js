@@ -1,7 +1,7 @@
 /// <reference types="./KeyedCollectionModuleTests.d.ts" />
 
-import { describe, expectArrayEquals, expectEquals, test, } from "../../../__internal__/testing.js";
-import { CollectionLike_count, } from "../../../collections.js";
+import { describe, expectArrayEquals, expectEquals, expectIsNone, test, } from "../../../__internal__/testing.js";
+import { CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
 import { arrayEquality, none, pipe, pipeLazy, returns, } from "../../../functions.js";
 import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
@@ -19,7 +19,13 @@ const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedColl
 }), test("get values", () => {
     const dict = pipe(["b", none, "v"], fromReadonlyArray(), m.toDictionary());
     pipe(dict, Dictionary.values(), Enumerable.toReadonlyArray(), expectArrayEquals(["b", none, "v"]));
-}), test("keys", pipeLazy(["b", none, "v"], fromReadonlyArray(), m.toDictionary(), Dictionary.keys(), Enumerable.toReadonlyArray(), expectArrayEquals([0, 1, 2])))), describe("toReadonlyMap", test("from non-empty map", () => {
+}), test("keys", pipeLazy(["b", none, "v"], fromReadonlyArray(), m.toDictionary(), Dictionary.keys(), Enumerable.toReadonlyArray(), expectArrayEquals([0, 1, 2]))), test("get returns none if a key is missing", () => {
+    const dict = pipe(["b", "c", "d"], fromReadonlyArray(), m.toDictionary());
+    pipe(dict[KeyedLike_get](5), expectIsNone);
+}), test("get returns value of the key", () => {
+    const dict = pipe(["b", "c", "d"], fromReadonlyArray(), m.toDictionary());
+    pipe(dict[KeyedLike_get](0), expectEquals("b"));
+})), describe("toReadonlyMap", test("from non-empty map", () => {
     const dict = pipe(["b", "d", "v"], fromReadonlyArray(), m.toReadonlyMap());
     pipe(dict, ReadonlyMap.keys(), Enumerable.toReadonlyArray(), expectArrayEquals([0, 1, 2]));
 })));

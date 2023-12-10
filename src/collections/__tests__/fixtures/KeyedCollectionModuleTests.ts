@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectIsNone,
   test,
 } from "../../../__internal__/testing.js";
 import {
@@ -9,6 +10,7 @@ import {
   KeyedCollection,
   KeyedCollectionModule,
   KeyedCollectionOf,
+  KeyedLike_get,
 } from "../../../collections.js";
 import {
   Function1,
@@ -106,7 +108,6 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
         ),
       ),
     ),
-
     describe(
       "toDictionary",
       test("count", () => {
@@ -143,6 +144,24 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           expectArrayEquals([0, 1, 2]),
         ),
       ),
+      test("get returns none if a key is missing", () => {
+        const dict = pipe(
+          ["b", "c", "d"],
+          fromReadonlyArray<string>(),
+          m.toDictionary(),
+        );
+
+        pipe(dict[KeyedLike_get](5), expectIsNone);
+      }),
+      test("get returns value of the key", () => {
+        const dict = pipe(
+          ["b", "c", "d"],
+          fromReadonlyArray<string>(),
+          m.toDictionary(),
+        );
+
+        pipe(dict[KeyedLike_get](0), expectEquals<Optional<string>>("b"));
+      }),
     ),
     describe(
       "toReadonlyMap",

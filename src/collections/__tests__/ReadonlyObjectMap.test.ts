@@ -2,10 +2,11 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectIsNone,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { CollectionLike_count } from "../../collections.js";
+import { CollectionLike_count, KeyedLike_get } from "../../collections.js";
 import {
   Optional,
   Tuple2,
@@ -167,6 +168,34 @@ testModule(
         expectArrayEquals(["0", "1", "2"]),
       ),
     ),
+    test("get returns none if a key is missing", () => {
+      const dict = pipe(
+        [
+          ["0", "b"],
+          ["1", "c"],
+          ["2", "v"],
+        ],
+        ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
+        ReadonlyObjectMap.fromEntries(),
+        ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
+      );
+
+      pipe(dict[KeyedLike_get]("5"), expectIsNone);
+    }),
+    test("get returns value of the key", () => {
+      const dict = pipe(
+        [
+          ["0", "b"],
+          ["1", "c"],
+          ["2", "v"],
+        ],
+        ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
+        ReadonlyObjectMap.fromEntries(),
+        ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
+      );
+
+      pipe(dict[KeyedLike_get]("0"), expectEquals<Optional<string>>("b"));
+    }),
   ),
   describe(
     "toReadonlyMap",
