@@ -338,6 +338,14 @@ testModule("Observable", describe("backpressureStrategy", testAsync("with a thro
     const result = [];
     pipe([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([0, 2, 4, 6]));
+})), describe("fromPromise", testAsync("when the promise resolves", async () => {
+    const promise = Promise.resolve(1);
+    const result = await pipe(promise, Observable.fromPromise(), Observable.lastAsync());
+    pipe(result, expectEquals(1));
+}), testAsync("when the promise reject", async () => {
+    const error = newInstance(Error);
+    const promise = Promise.reject(error);
+    await pipe(pipe(promise, Observable.fromPromise(), Observable.lastAsync()), expectPromiseToThrow);
 })), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
     const store = WritableStotre.create(-1);
     const scheduler = VirtualTimeScheduler.create();

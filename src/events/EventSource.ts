@@ -22,6 +22,7 @@ import EventSource_scan from "./EventSource/__internal__/EventSource.scan.js";
 import EventSource_skipFirst from "./EventSource/__internal__/EventSource.skipFirst.js";
 import EventSource_takeFirst from "./EventSource/__internal__/EventSource.takeFirst.js";
 import EventSource_takeWhile from "./EventSource/__internal__/EventSource.takeWhile.js";
+import EventSource_toReadonlyArrayAsync from "./EventSource/__internal__/EventSource.toReadonlyArrayAsync.js";
 
 export interface EventSourceComputation extends Computation {
   readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
@@ -51,6 +52,11 @@ export interface EventSourceModule
     snd: EventSourceLike<T>,
     ...tail: readonly EventSourceLike<T>[]
   ): Function1<EventSourceLike<T>, EventSourceLike<T>>;
+
+  toReadonlyArrayAsync<T>(): Function1<
+    EventSourceLike<T>,
+    Promise<ReadonlyArray<T>>
+  >;
 }
 
 export type Signature = EventSourceModule;
@@ -72,3 +78,5 @@ export const scan: Signature["scan"] = EventSource_scan;
 export const skipFirst: Signature["skipFirst"] = EventSource_skipFirst;
 export const takeFirst: Signature["takeFirst"] = EventSource_takeFirst;
 export const takeWhile: Signature["takeWhile"] = EventSource_takeWhile;
+export const toReadonlyArrayAsync: Signature["toReadonlyArrayAsync"] =
+  EventSource_toReadonlyArrayAsync;
