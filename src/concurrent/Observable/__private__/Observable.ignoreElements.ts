@@ -1,15 +1,8 @@
-import { alwaysFalse, partial, pipe, returns } from "../../../functions.js";
+import { alwaysFalse } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createKeepObserver from "../../Observer/__private__/Observer.createKeepObserver.js";
-import Observable_liftPure from "./Observable.liftPure.js";
+import Observable_keep from "./Observable.keep.js";
 
 const Observable_ignoreElements: Observable.Signature["ignoreElements"] =
-  /*@__PURE__*/ (<T>() =>
-    pipe(
-      Observer_createKeepObserver<T>,
-      partial(alwaysFalse),
-      Observable_liftPure,
-      returns,
-    ))();
+  /*@__PURE__*/ () => Observable_keep(alwaysFalse);
 
 export default Observable_ignoreElements;

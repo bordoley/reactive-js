@@ -1,12 +1,60 @@
+import {
+  createInstanceFactory,
+  include,
+  init,
+  mix,
+  props,
+} from "../../../__internal__/mixins.js";
+import { ObserverLike } from "../../../concurrent.js";
+import { SinkLike_notify } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
 import {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
+import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observer_createBackpressureObserver from "../../Observer/__private__/Observer.createBackpressureStrategyObserver.js";
+import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
+
+const Observer_createBackpressureObserver: <T>(
+  delegate: ObserverLike<T>,
+  config: Pick<
+    QueueableLike,
+    typeof QueueableLike_capacity | typeof QueueableLike_backpressureStrategy
+  >,
+) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
+  createInstanceFactory(
+    mix(
+      include(ObserverMixin<T>(), DelegatingDisposableMixin<ObserverLike<T>>()),
+      function EnqueueObserver(
+        instance: Pick<ObserverLike<T>, typeof SinkLike_notify>,
+        delegate: ObserverLike<T>,
+        config: Pick<
+          QueueableLike,
+          | typeof QueueableLike_capacity
+          | typeof QueueableLike_backpressureStrategy
+        >,
+      ): ObserverLike<T> {
+        init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
+        init(ObserverMixin<T>(), instance, delegate, config);
+
+        return instance;
+      },
+      props({}),
+      {
+        [SinkLike_notify](
+          this: DelegatingDisposableLike<ObserverLike<T>>,
+          next: T,
+        ) {
+          this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+        },
+      },
+    ),
+  ))();
 
 const Observable_backpressureStrategy: Observable.Signature["backpressureStrategy"] =
   <T>(
