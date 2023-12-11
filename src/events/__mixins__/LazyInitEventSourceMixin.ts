@@ -8,7 +8,7 @@ import {
 import { Function1, Optional, none, pipe, returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
-import Publisher_create from "../Publisher/__private__/Publisher.create.js";
+import * as Publisher from "../Publisher.js";
 
 export const LazyInitEventSourceMixin_publisher = Symbol(
   "LazyInitEventSourceMixin_publisher",
@@ -53,7 +53,7 @@ const LazyInitEventSourceMixin: <T>() => Mixin<
             this[LazyInitEventSourceMixin_publisher] ??
             (() => {
               const publisher = pipe(
-                Publisher_create(),
+                Publisher.create(),
                 Disposable.addTo(this),
               );
               this[LazyInitEventSourceMixin_publisher] = publisher;

@@ -8,12 +8,12 @@ import { DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_
 import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
     const ThrottleObserver_value = Symbol("ThrottleObserver_value");
     const ThrottleObserver_hasValue = Symbol("ThrottleObserver_hasValue");

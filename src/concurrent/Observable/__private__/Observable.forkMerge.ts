@@ -1,5 +1,4 @@
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import ReadonlyArray_map from "../../../collections/ReadonlyArray/__private__/ReadonlyArray.map.js";
 import {
   DeferredObservableLike,
   ObservableLike,
@@ -37,7 +36,7 @@ const Observable_forkMerge: Observable.Signature["forkMerge"] = (<TIn, TOut>(
 
             pipe(
               ops,
-              ReadonlyArray_map(op => op(src)),
+              ReadonlyArray.map(op => op(src)),
               Observable_mergeMany,
               invoke(ObservableLike_observe, observer),
             );

@@ -3,7 +3,7 @@
 import { isFunction, pipe } from "../../../functions.js";
 import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
+import Observable_create from "./Observable.create.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
 import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";

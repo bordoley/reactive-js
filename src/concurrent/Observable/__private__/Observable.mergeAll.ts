@@ -44,11 +44,11 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observer_createMergeAllObserverOperator: <T>(options?: {
   readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

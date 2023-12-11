@@ -20,7 +20,7 @@ import {
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as EventSource from "../../EventSource.js";
-import Publisher_createRefCounted from "../../Publisher/__private__/Publisher.createRefCounted.js";
+import * as Publisher from "../../Publisher.js";
 
 const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
 const CreateEventSource_createDelegate = Symbol(
@@ -56,7 +56,7 @@ const EventSource_create: EventSource.Signature["create"] = /*@__PURE__*/ (<
           listener: EventListenerLike<T>,
         ) => {
           const delegate = pipe(
-            Publisher_createRefCounted<T>(),
+            Publisher.createRefCounted<T>(),
             Disposable.onDisposed(() => {
               instance[CreateEventSource_delegate] = none;
             }),

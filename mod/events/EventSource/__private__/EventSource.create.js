@@ -5,7 +5,7 @@ import { EventSourceLike_addEventListener, } from "../../../events.js";
 import { error, none, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Publisher_createRefCounted from "../../Publisher/__private__/Publisher.createRefCounted.js";
+import * as Publisher from "../../Publisher.js";
 const CreateEventSource_delegate = Symbol("CreateEventSource_delegate");
 const CreateEventSource_createDelegate = Symbol("CreateEventSource_createDelegate");
 const EventSource_create = /*@__PURE__*/ (() => {
@@ -15,7 +15,7 @@ const EventSource_create = /*@__PURE__*/ (() => {
         // the setup function is run, in case the setup function
         // publishes notifications. useful for testing.
         instance[CreateEventSource_createDelegate] = (listener) => {
-            const delegate = pipe(Publisher_createRefCounted(), Disposable.onDisposed(() => {
+            const delegate = pipe(Publisher.createRefCounted(), Disposable.onDisposed(() => {
                 instance[CreateEventSource_delegate] = none;
             }));
             delegate[EventSourceLike_addEventListener](listener);

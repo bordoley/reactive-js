@@ -23,11 +23,11 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
-import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
+import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observer_createWithLatestFromObserver: <TA, TB, T>(
   delegate: ObserverLike<T>,
