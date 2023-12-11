@@ -4,10 +4,8 @@ import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, Di
 import * as EventSource from "../../../events/EventSource.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
-import Observable_dispatchTo from "../../Observable/__private__/Observable.dispatchTo.js";
-import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
-const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => Observable_create(observer => {
+import * as Observable from "../../Observable.js";
+const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => Observable.create(observer => {
     pipe(sink, EventSource.addEventHandler((ev) => {
         if (ev === DispatcherLikeEvent_capacityExceeded ||
             ev === DispatcherLikeEvent_completed) {
@@ -17,7 +15,7 @@ const PauseableObservable_sinkInto = (sink) => (pauseableObservable) => Observab
             pauseableObservable[PauseableLike_resume]();
         }
     }), Disposable.addTo(observer));
-    pipe(pauseableObservable, Observable_dispatchTo(sink), Observable_subscribe(observer), Disposable.addTo(observer));
+    pipe(pauseableObservable, Observable.dispatchTo(sink), Observable.subscribe(observer), Disposable.addTo(observer));
     pauseableObservable[PauseableLike_resume]();
 });
 export default PauseableObservable_sinkInto;

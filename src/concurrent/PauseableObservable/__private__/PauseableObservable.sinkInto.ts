@@ -11,15 +11,13 @@ import {
 import * as EventSource from "../../../events/EventSource.js";
 import { pipe } from "../../../functions.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
-import Observable_dispatchTo from "../../Observable/__private__/Observable.dispatchTo.js";
-import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
+import * as Observable from "../../Observable.js";
 import type * as PauseableObservable from "../../PauseableObservable.js";
 
 const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
   <T>(sink: DispatcherLike<T>) =>
   (pauseableObservable: PauseableObservableLike<T>) =>
-    Observable_create(observer => {
+    Observable.create(observer => {
       pipe(
         sink,
         EventSource.addEventHandler(
@@ -39,8 +37,8 @@ const PauseableObservable_sinkInto: PauseableObservable.Signature["sinkInto"] =
 
       pipe(
         pauseableObservable,
-        Observable_dispatchTo(sink),
-        Observable_subscribe(observer),
+        Observable.dispatchTo(sink),
+        Observable.subscribe(observer),
         Disposable.addTo(observer),
       );
 

@@ -12,7 +12,7 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Subject_createRefCounted from "../../Subject/__private__/Subject.createRefCounted.js";
+import * as Subject from "../../Subject.js";
 import Observable_createMulticast from "./Observable.createMulticast.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
@@ -42,7 +42,7 @@ const Observable_share: Observable.Signature["share"] =
           multicasted = pipe(
             source,
             Observable_multicastImpl<T>(
-              Subject_createRefCounted,
+              Subject.createRefCounted,
               schedulerOrFactory,
               options,
             ),
