@@ -1,11 +1,11 @@
 import { compose } from "../../../functions.js";
 import type * as Indexed from "../../Indexed.js";
-import ReadonlyArray_toIndexed from "../../ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import Indexed_toReadonlyArray from "./Indexed.toReadonlyArray.js";
 
 const Indexed_toIndexed: Indexed.Signature["toIndexed"] = <T>(options?: {
   readonly count?: number;
   readonly start?: number;
-}) => compose(Indexed_toReadonlyArray<T>(options), ReadonlyArray_toIndexed());
+}) => compose(Indexed_toReadonlyArray<T>(options), ReadonlyArray.toIndexed());
 
 export default Indexed_toIndexed;

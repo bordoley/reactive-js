@@ -1,8 +1,7 @@
 /// <reference types="./Indexed.map.d.ts" />
 
 import { compose } from "../../../functions.js";
-import ReadonlyArray_map from "../../ReadonlyArray/__private__/ReadonlyArray.map.js";
-import ReadonlyArray_toIndexed from "../../ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import Indexed_toReadonlyArray from "./Indexed.toReadonlyArray.js";
-const Indexed_map = (mapper) => compose(Indexed_toReadonlyArray(), ReadonlyArray_map(mapper), ReadonlyArray_toIndexed());
+const Indexed_map = (mapper) => compose(Indexed_toReadonlyArray(), ReadonlyArray.map(mapper), ReadonlyArray.toIndexed());
 export default Indexed_map;

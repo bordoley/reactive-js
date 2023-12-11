@@ -1,7 +1,6 @@
 import { Function2, compose } from "../../../functions.js";
 import type * as Indexed from "../../Indexed.js";
-import ReadonlyArray_map from "../../ReadonlyArray/__private__/ReadonlyArray.map.js";
-import ReadonlyArray_toIndexed from "../../ReadonlyArray/__private__/ReadonlyArray.toIndexed.js";
+import * as ReadonlyArray from "../../ReadonlyArray.js";
 import Indexed_toReadonlyArray from "./Indexed.toReadonlyArray.js";
 
 const Indexed_map: Indexed.Signature["map"] = <TA, TB, TKey extends number>(
@@ -9,8 +8,8 @@ const Indexed_map: Indexed.Signature["map"] = <TA, TB, TKey extends number>(
 ) =>
   compose(
     Indexed_toReadonlyArray<TA>(),
-    ReadonlyArray_map<TA, TB, TKey>(mapper),
-    ReadonlyArray_toIndexed(),
+    ReadonlyArray.map<TA, TB, TKey>(mapper),
+    ReadonlyArray.toIndexed(),
   );
 
 export default Indexed_map;
