@@ -6,7 +6,7 @@ import { bindMethod, isSome, none, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
-import Streamable_createStateStore from "../Streamable/__private__/Streamable.createStateStore.js";
+import * as Streamable from "../Streamable.js";
 import { ComputeContext_awaitOrObserve, ComputeContext_constant, ComputeContext_memoOrUse, ComputeContext_observableConfig, ComputeContext_observer, assertCurrentContext, } from "./__private__/Observable.computeWithConfig.js";
 import Observable_createRunnableWithSideEffects from "./__private__/Observable.createRunnableWithSideEffects.js";
 export const __memo = (f, ...args) => {
@@ -69,7 +69,7 @@ export const __state = /*@__PURE__*/ (() => {
     return (initialState, options = {}) => {
         const { equality } = options;
         const optionsMemo = __memo(createStateOptions, equality);
-        const streamable = __memo(Streamable_createStateStore, initialState, optionsMemo);
+        const streamable = __memo(Streamable.createStateStore, initialState, optionsMemo);
         return __stream(streamable, options);
     };
 })();

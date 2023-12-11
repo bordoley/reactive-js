@@ -41,7 +41,7 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
-import Streamable_createStateStore from "../Streamable/__private__/Streamable.createStateStore.js";
+import * as Streamable from "../Streamable.js";
 import {
   ComputeContext_awaitOrObserve,
   ComputeContext_constant,
@@ -289,7 +289,7 @@ export const __state = /*@__PURE__*/ (() => {
     const { equality } = options;
     const optionsMemo = __memo(createStateOptions, equality);
     const streamable = __memo(
-      Streamable_createStateStore as <T>(
+      Streamable.createStateStore as <T>(
         initialState: Factory<T>,
         options?: { readonly equality?: Equality<T> },
       ) => StreamableLike<Updater<T>, T>,
