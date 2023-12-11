@@ -3,15 +3,14 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { DispatcherLike_complete, ObserverLike } from "../../../concurrent.js";
 import BufferSinkMixin from "../../../events/__mixins__/BufferSinkMixin.js";
 import { Optional, partial, pipe } from "../../../functions.js";
 import { QueueableLike_enqueue } from "../../../utils.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createBufferObserver: <T>(
@@ -20,7 +19,10 @@ const Observer_createBufferObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin(), BufferSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(BufferSinkMixin()),
+      ),
       function BufferObserver(
         instance: unknown,
         delegate: ObserverLike<readonly T[]>,
@@ -36,8 +38,6 @@ const Observer_createBufferObserver: <T>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(BufferSinkMixin<T>()),
     ),
   ))();
 

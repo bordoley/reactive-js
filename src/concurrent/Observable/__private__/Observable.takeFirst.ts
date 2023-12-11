@@ -4,14 +4,13 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import TakeFirstSinkMixin from "../../../events/__mixins__/TakeFirstSinkMixin.js";
 import { partial, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createTakeFirstObserver: <T>(
@@ -20,7 +19,10 @@ const Observer_createTakeFirstObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin(), TakeFirstSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(TakeFirstSinkMixin()),
+      ),
       function TakeFirstObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -31,8 +33,6 @@ const Observer_createTakeFirstObserver: <T>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(TakeFirstSinkMixin<T>()),
     ),
   ))();
 

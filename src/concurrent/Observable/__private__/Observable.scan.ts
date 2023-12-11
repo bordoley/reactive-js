@@ -9,8 +9,8 @@ import { ObserverLike } from "../../../concurrent.js";
 import ScanSinkMixin from "../../../events/__mixins__/ScanSinkMixin.js";
 import { Factory, Reducer, partial, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createScanObserver: <T, TAcc>(
@@ -20,7 +20,10 @@ const Observer_createScanObserver: <T, TAcc>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return createInstanceFactory(
     mix(
-      include(ObserverMixin(), ScanSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(ScanSinkMixin()),
+      ),
       function ScanObserver(
         instance: unknown,
         delegate: ObserverLike<TAcc>,
@@ -39,7 +42,6 @@ const Observer_createScanObserver: <T, TAcc>(
         return instance;
       },
       props({}),
-      Observer_decorateNotifyWithStateAssert(ScanSinkMixin<T, TAcc>()),
     ),
   );
 })();

@@ -3,14 +3,13 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import DistinctUntilChangedSinkMixin from "../../../events/__mixins__/DistinctUntilChangedSinkMixin.js";
 import { Equality, partial, pipe, strictEquality } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createDistinctUntilChangedObserver: <T>(
@@ -19,7 +18,10 @@ const Observer_createDistinctUntilChangedObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin(), DistinctUntilChangedSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(DistinctUntilChangedSinkMixin()),
+      ),
       function DistinctUntilChangedObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -30,10 +32,6 @@ const Observer_createDistinctUntilChangedObserver: <T>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(
-        DistinctUntilChangedSinkMixin<T>(),
-      ),
     ),
   ))();
 

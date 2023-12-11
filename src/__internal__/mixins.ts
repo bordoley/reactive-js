@@ -29,9 +29,9 @@ export type Mutable<Type> = {
   -readonly [Key in keyof Type]: Type[Key];
 };
 
-export type PartialMixin = {
+export type PartialMixin<TPrototype extends object = object> = {
   [Object_properties]: object;
-  [Object_prototype]: object;
+  [Object_prototype]: TPrototype;
 };
 
 export interface MixinAny<TReturn extends TInstance, TInstance = unknown>
@@ -43,9 +43,8 @@ export interface Mixin<
   TReturn extends TInstance,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](instance: TInstance): TReturn;
-  [Object_prototype]: TPrototype;
 }
 
 export interface Mixin1<
@@ -53,9 +52,8 @@ export interface Mixin1<
   TA,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](instance: TInstance, a: TA): TReturn;
-  [Object_prototype]: TPrototype;
 }
 
 export interface Mixin2<
@@ -64,9 +62,8 @@ export interface Mixin2<
   TB,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](instance: TInstance, a: TA, b: TB): TReturn;
-  [Object_prototype]: TPrototype;
 }
 
 export interface Mixin3<
@@ -76,9 +73,8 @@ export interface Mixin3<
   TC,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](instance: TInstance, a: TA, b: TB, c: TC): TReturn;
-  [Object_prototype]: TPrototype;
 }
 
 export interface Mixin4<
@@ -89,9 +85,8 @@ export interface Mixin4<
   TD,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](instance: TInstance, a: TA, b: TB, c: TC, d: TD): TReturn;
-  [Object_prototype]: TPrototype;
 }
 export interface Mixin5<
   TReturn extends TInstance,
@@ -102,7 +97,7 @@ export interface Mixin5<
   TE,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](
     instance: TInstance,
     a: TA,
@@ -111,7 +106,6 @@ export interface Mixin5<
     d: TD,
     e: TE,
   ): TReturn;
-  [Object_prototype]: TPrototype;
 }
 export interface Mixin6<
   TReturn extends TInstance,
@@ -123,7 +117,7 @@ export interface Mixin6<
   TF,
   TInstance = unknown,
   TPrototype extends object = object,
-> extends PartialMixin {
+> extends PartialMixin<TPrototype> {
   [Object_init](
     instance: TInstance,
     a: TA,
@@ -133,7 +127,6 @@ export interface Mixin6<
     e: TE,
     f: TF,
   ): TReturn;
-  [Object_prototype]: TPrototype;
 }
 
 function initUnsafe<TReturn>(
@@ -249,9 +242,8 @@ interface Mix {
     init: TInit,
     properties: TProperties,
     prototype: TPrototype,
-  ): PartialMixin & {
+  ): PartialMixin<TPrototype> & {
     [Object_init]: typeof init;
-    [Object_prototype]: TPrototype;
   };
 
   mix<
@@ -269,9 +261,8 @@ interface Mix {
     init: TInit,
     properties: TProperties,
     prototype: TPrototype,
-  ): PartialMixin & {
+  ): PartialMixin<TPrototype> & {
     [Object_init]: TInit;
-    [Object_prototype]: TPrototype;
   };
 
   mix<
@@ -280,6 +271,23 @@ interface Mix {
   >(
     parent: PartialMixin,
     init: TInit,
+  ): PartialMixin & {
+    [Object_init]: TInit;
+  };
+
+  mix<
+    TInit extends (
+      instance: TInstance & Mutable<TProperties>,
+      ...args: readonly any[]
+    ) => unknown,
+    TProperties extends {
+      [Object_private_initializedProperties]?: true;
+    },
+    TInstance = unknown,
+  >(
+    parent: PartialMixin,
+    init: TInit,
+    properties: TProperties,
   ): PartialMixin & {
     [Object_init]: TInit;
   };
@@ -372,12 +380,8 @@ export const props = <TProperties>(
   };
 };
 
-export type MixinPrototype<TPrototype> = {
-  [Object_prototype]: TPrototype;
-};
-
-export const getPrototype = <TPrototype>(
-  mixin: MixinPrototype<TPrototype>,
+export const getPrototype = <TPrototype extends object>(
+  mixin: PartialMixin<TPrototype>,
 ): TPrototype => mixin[Object_prototype];
 
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}

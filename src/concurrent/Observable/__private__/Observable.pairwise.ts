@@ -3,14 +3,13 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import PairwiseSinkMixin from "../../../events/__mixins__/PairwiseSinkMixin.js";
 import { Tuple2 } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createPairwiseObserver: <T>(
@@ -18,7 +17,10 @@ const Observer_createPairwiseObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin<T>(), PairwiseSinkMixin()),
+      include(
+        ObserverMixin<T>(),
+        decorateNotifyWithObserverStateAssert(PairwiseSinkMixin()),
+      ),
       function PairwiseObserver(
         instance: unknown,
         delegate: ObserverLike<Tuple2<T, T>>,
@@ -28,8 +30,6 @@ const Observer_createPairwiseObserver: <T>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(PairwiseSinkMixin<T>()),
     ),
   ))();
 

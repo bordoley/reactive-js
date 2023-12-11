@@ -4,14 +4,13 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import SkipFirstSinkMixin from "../../../events/__mixins__/SkipFirstSinkMixin.js";
 import { partial, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createSkipFirstObserver: <T>(
@@ -20,7 +19,10 @@ const Observer_createSkipFirstObserver: <T>(
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin(), SkipFirstSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(SkipFirstSinkMixin()),
+      ),
       function SkipFirstObserver(
         instance: unknown,
         delegate: ObserverLike<T>,
@@ -31,8 +33,6 @@ const Observer_createSkipFirstObserver: <T>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(SkipFirstSinkMixin<T>()),
     ),
   ))();
 

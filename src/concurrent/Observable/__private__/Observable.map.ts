@@ -3,14 +3,13 @@ import {
   include,
   init,
   mix,
-  props,
 } from "../../../__internal__/mixins.js";
 import { ObserverLike } from "../../../concurrent.js";
 import MapSinkMixin from "../../../events/__mixins__/MapSinkMixin.js";
 import { Function1, partial, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observer_decorateNotifyWithStateAssert from "../../Observer/__private__/Observer.decorateNotifyWithStateAssert.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createMapObserver: <TA, TB>(
@@ -19,7 +18,10 @@ const Observer_createMapObserver: <TA, TB>(
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   createInstanceFactory(
     mix(
-      include(ObserverMixin(), MapSinkMixin()),
+      include(
+        ObserverMixin(),
+        decorateNotifyWithObserverStateAssert(MapSinkMixin()),
+      ),
       function MapObserver(
         instance: unknown,
         delegate: ObserverLike<TB>,
@@ -30,8 +32,6 @@ const Observer_createMapObserver: <TA, TB>(
 
         return instance;
       },
-      props({}),
-      Observer_decorateNotifyWithStateAssert(MapSinkMixin<TA, TB>()),
     ),
   ))();
 
