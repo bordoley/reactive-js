@@ -4,23 +4,9 @@
 
 ## Table of contents
 
-### Module Interfaces
-
-- [VirtualTimeSchedulerModule](../interfaces/concurrent_VirtualTimeScheduler.VirtualTimeSchedulerModule.md)
-
-### Type Aliases
-
-- [Signature](concurrent_VirtualTimeScheduler.md#signature)
-
 ### Functions
 
 - [create](concurrent_VirtualTimeScheduler.md#create)
-
-## Type Aliases
-
-### Signature
-
-Ƭ **Signature**: [`VirtualTimeSchedulerModule`](../interfaces/concurrent_VirtualTimeScheduler.VirtualTimeSchedulerModule.md)
 
 ## Functions
 

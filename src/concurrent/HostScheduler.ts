@@ -1,27 +1,36 @@
-import * as CurrentTime from "../../../__internal__/CurrentTime.js";
+import * as CurrentTime from "../__internal__/CurrentTime.js";
 import {
   createInstanceFactory,
   include,
   init,
   mix,
   props,
-} from "../../../__internal__/mixins.js";
+} from "../__internal__/mixins.js";
 import {
   ContinuationLike,
   SchedulerLike,
   SchedulerLike_now,
-} from "../../../concurrent.js";
-import { Optional, none, pipe } from "../../../functions.js";
-import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import type * as Scheduler from "../../Scheduler.js";
+} from "../concurrent.js";
+import { Optional, none, pipe } from "../functions.js";
+import { DisposableLike, DisposableLike_dispose } from "../utils.js";
+import * as Disposable from "../utils/Disposable.js";
 import ContinuationSchedulerMixin, {
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerMixinLike,
   ContinuationSchedulerMixinLike_runContinuation,
-} from "../../__mixins__/ContinuationSchedulerMixin.js";
+} from "./__mixins__/ContinuationSchedulerMixin.js";
+
+/**
+ * @noInheritDoc
+ * @category Module
+ */
+interface Signature {
+  create(options?: {
+    readonly maxYieldInterval?: number;
+  }): SchedulerLike & DisposableLike;
+}
 
 declare const navigator: {
   scheduling: Optional<{
@@ -134,14 +143,11 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
     ),
   ))();
 
-const Scheduler_createHostScheduler: Scheduler.Signature["createHostScheduler"] =
-  (
-    options: {
-      readonly maxYieldInterval?: number;
-    } = {},
-  ) => {
-    const { maxYieldInterval = 300 } = options;
-    return createHostSchedulerInstance(maxYieldInterval);
-  };
-
-export default Scheduler_createHostScheduler;
+export const create: Signature["create"] = (
+  options: {
+    readonly maxYieldInterval?: number;
+  } = {},
+) => {
+  const { maxYieldInterval = 300 } = options;
+  return createHostSchedulerInstance(maxYieldInterval);
+};

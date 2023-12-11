@@ -48,7 +48,7 @@ import { __animate } from "@reactive-js/core/integrations/web/effects";
 import { Wordle } from "./wordle.js";
 import Measure from "./measure.js";
 import * as WindowLocation from "@reactive-js/core/integrations/web/WindowLocation";
-import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
+import * as PauseableScheduler from "@reactive-js/core/concurrent/PauseableScheduler";
 import * as AnimationFrameScheduler from "@reactive-js/core/integrations/web/AnimationFrameScheduler";
 import * as ReactScheduler from "@reactive-js/core/integrations/react/Scheduler";
 import {
@@ -337,7 +337,7 @@ const RxComponent = createComponent(
       );
 
       const createScheduler = __constant(() => {
-        const scheduler = Scheduler.toPausableScheduler(animationScheduler);
+        const scheduler = PauseableScheduler.create(animationScheduler);
         scheduler[PauseableLike_resume]();
         return scheduler;
       }, scheduler);

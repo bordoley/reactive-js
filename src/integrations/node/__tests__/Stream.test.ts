@@ -8,8 +8,8 @@ import {
   testModule,
 } from "../../../__internal__/testing.js";
 import { PauseableLike_resume, SchedulerLike } from "../../../concurrent.js";
+import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
-import * as Scheduler from "../../../concurrent/Scheduler.js";
 import {
   Optional,
   bindMethod,
@@ -55,7 +55,7 @@ testModule(
 
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
-      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+      }, Disposable.usingAsync(HostScheduler.create)),
     ),
     testAsync(
       "sinking to writable that throws",
@@ -83,7 +83,7 @@ testModule(
 
         await expectPromiseToThrow(promise);
         pipe(writable.destroyed, expectEquals(true));
-      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+      }, Disposable.usingAsync(HostScheduler.create)),
     ),
     testAsync(
       "sinking to writable with pipeline",
@@ -118,7 +118,7 @@ testModule(
 
         pipe(writable.destroyed, expectEquals(true));
         pipe(data, expectEquals("abcdefg"));
-      }, Disposable.usingAsync(Scheduler.createHostScheduler)),
+      }, Disposable.usingAsync(HostScheduler.create)),
     ),
   ),
 
@@ -132,27 +132,25 @@ testModule(
 
       const textDecoder = newInstance(TextDecoder);
 
-      await Disposable.usingAsync(Scheduler.createHostScheduler)(
-        async scheduler => {
-          const flowable = pipe(
-            () => Readable.from(generate()),
-            NodeStream.flow(scheduler),
-            Disposable.addTo(scheduler),
-          );
+      await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
+        const flowable = pipe(
+          () => Readable.from(generate()),
+          NodeStream.flow(scheduler),
+          Disposable.addTo(scheduler),
+        );
 
-          flowable[PauseableLike_resume]();
+        flowable[PauseableLike_resume]();
 
-          const acc = await pipe(
-            flowable,
-            Observable.scan<Uint8Array, string>(
-              (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-              returns(""),
-            ),
-            Observable.lastAsync<string>(scheduler),
-          );
-          pipe(acc, expectEquals<Optional<string>>("abcdefg"));
-        },
-      );
+        const acc = await pipe(
+          flowable,
+          Observable.scan<Uint8Array, string>(
+            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+            returns(""),
+          ),
+          Observable.lastAsync<string>(scheduler),
+        );
+        pipe(acc, expectEquals<Optional<string>>("abcdefg"));
+      });
     }),
     testAsync("reading from readable that throws", async () => {
       const err = newInstance(Error);
@@ -164,27 +162,25 @@ testModule(
 
       const textDecoder = newInstance(TextDecoder);
 
-      await Disposable.usingAsync(Scheduler.createHostScheduler)(
-        async scheduler => {
-          const flowable = pipe(
-            () => Readable.from(generate()),
-            NodeStream.flow(scheduler),
-            Disposable.addTo(scheduler),
-          );
+      await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
+        const flowable = pipe(
+          () => Readable.from(generate()),
+          NodeStream.flow(scheduler),
+          Disposable.addTo(scheduler),
+        );
 
-          flowable[PauseableLike_resume]();
+        flowable[PauseableLike_resume]();
 
-          await pipe(
-            flowable,
-            Observable.scan<Uint8Array, string>(
-              (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
-              returns(""),
-            ),
-            Observable.lastAsync(scheduler),
-            expectPromiseToThrow,
-          );
-        },
-      );
+        await pipe(
+          flowable,
+          Observable.scan<Uint8Array, string>(
+            (acc: string, next: Uint8Array) => acc + textDecoder.decode(next),
+            returns(""),
+          ),
+          Observable.lastAsync(scheduler),
+          expectPromiseToThrow,
+        );
+      });
     }),
   ),
 );

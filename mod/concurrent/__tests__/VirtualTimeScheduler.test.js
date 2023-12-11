@@ -99,4 +99,3 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([0, 100, 101, 1, 100, 101, 2, 100, 101, 3, 100, 101]));
 }));
-((_) => { })(VirtualTimeScheduler);

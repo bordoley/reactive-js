@@ -7,11 +7,11 @@ import {
   pipe,
   returns,
 } from "@reactive-js/core/functions";
-import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
+import * as HostScheduler from "@reactive-js/core/concurrent/HostScheduler";
 import { SchedulerLike_schedule } from "@reactive-js/core/concurrent";
 import { DisposableLike_dispose } from "@reactive-js/core/utils";
 
-const scheduler = Scheduler.createHostScheduler();
+const scheduler = HostScheduler.create();
 
 const subscription = pipe(
   Enumerable.generate(incrementBy(1), returns(0)),

@@ -146,5 +146,3 @@ testModule(
     );
   }),
 );
-
-((_: VirtualTimeScheduler.Signature) => {})(VirtualTimeScheduler);

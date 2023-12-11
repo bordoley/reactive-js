@@ -25,9 +25,9 @@ import {
   returns,
 } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
-import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 
@@ -37,7 +37,7 @@ testModule(
     "fromAsyncIterable",
     testAsync(
       "infinite immediately resolving iterable",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+      Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike) => {
           const stream = pipe(
             (async function* foo() {
@@ -62,7 +62,7 @@ testModule(
     ),
     testAsync(
       "iterable that completes",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+      Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike) => {
           const stream = pipe(
             (async function* foo() {
@@ -87,7 +87,7 @@ testModule(
     testAsync(
       "iterable that throws",
       pipeLazy(
-        Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+        Disposable.usingAsyncLazy(HostScheduler.create)(
           async (scheduler: SchedulerLike) => {
             const e = error();
 

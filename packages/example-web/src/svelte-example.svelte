@@ -1,5 +1,5 @@
 <script>
-import * as Scheduler from "@reactive-js/core/concurrent/Scheduler";
+import * as HostScheduler from "@reactive-js/core/concurrent/HostScheduler";
 import * as Observable from "@reactive-js/core/concurrent/Observable";
 import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@reactive-js/core/concurrent";
 import * as Enumerable from "@reactive-js/core/collections/Enumerable";
 
-  const scheduler = Scheduler.createHostScheduler();
+  const scheduler = HostScheduler.create();
 
   const counter = pipe(
     Enumerable.generate(increment, returns(-1)),

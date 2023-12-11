@@ -12,13 +12,13 @@ import * as WritableStotre from "../../events/WritableStore.js";
 import { alwaysTrue, arrayEquality, bind, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
 import { __await, __bindMethod, __constant, __do, __memo, __observe, __state, __stream, } from "../Observable/effects.js";
-import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("Observable", PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+testModule("Observable", PureComputationModuleTests(Observable, Observable.toReadonlyArray), describe("backpressureStrategy", testAsync("with a throw backpressure strategy", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     await expectToThrowAsync(pipeLazyAsync(Observable.create(observer => {
         for (let i = 0; i < 10; i++) {
             observer[QueueableLike_enqueue](i);
@@ -305,7 +305,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     await pipe(async () => {
         raise();
     }, Observable.fromAsyncFactory(), Observable.lastAsync(), expectPromiseToThrow);
-})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+})), describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const result = await pipe((async function* foo() {
         let i = 0;
         while (true) {
@@ -313,14 +313,14 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         }
     })(), Observable.fromAsyncIterable(), Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 5 }));
     pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-})), testAsync("iterable that completes", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+})), testAsync("iterable that completes", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const result = await pipe((async function* foo() {
         yield 1;
         yield 2;
         yield 3;
     })(), Observable.fromAsyncIterable(), Observable.buffer(), Observable.lastAsync(scheduler, { capacity: 1 }));
     pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-})), testAsync("iterable that throws", pipeLazy(Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+})), testAsync("iterable that throws", pipeLazy(Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const e = error();
     const result = await pipe((async function* foo() {
         throw e;

@@ -72,6 +72,7 @@ import {
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
 import {
   __await,
@@ -83,7 +84,6 @@ import {
   __state,
   __stream,
 } from "../Observable/effects.js";
-import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -98,21 +98,19 @@ testModule(
     "backpressureStrategy",
     testAsync(
       "with a throw backpressure strategy",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
-        async scheduler => {
-          await expectToThrowAsync(
-            pipeLazyAsync(
-              Observable.create(observer => {
-                for (let i = 0; i < 10; i++) {
-                  observer[QueueableLike_enqueue](i);
-                }
-              }),
-              Observable.backpressureStrategy(1, "throw"),
-              Observable.toReadonlyArrayAsync<number>(scheduler),
-            ),
-          );
-        },
-      ),
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler => {
+        await expectToThrowAsync(
+          pipeLazyAsync(
+            Observable.create(observer => {
+              for (let i = 0; i < 10; i++) {
+                observer[QueueableLike_enqueue](i);
+              }
+            }),
+            Observable.backpressureStrategy(1, "throw"),
+            Observable.toReadonlyArrayAsync<number>(scheduler),
+          ),
+        );
+      }),
     ),
     testAsync(
       "with a drop latest backpressure strategy",
@@ -991,7 +989,7 @@ testModule(
     "fromAsyncIterable",
     testAsync(
       "infinite immediately resolving iterable",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+      Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike) => {
           const result = await pipe(
             (async function* foo() {
@@ -1012,7 +1010,7 @@ testModule(
     ),
     testAsync(
       "iterable that completes",
-      Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+      Disposable.usingAsyncLazy(HostScheduler.create)(
         async (scheduler: SchedulerLike) => {
           const result = await pipe(
             (async function* foo() {
@@ -1033,7 +1031,7 @@ testModule(
     testAsync(
       "iterable that throws",
       pipeLazy(
-        Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(
+        Disposable.usingAsyncLazy(HostScheduler.create)(
           async (scheduler: SchedulerLike) => {
             const e = error();
 

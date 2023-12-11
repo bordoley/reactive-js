@@ -6,12 +6,12 @@ import { PauseableLike_isPaused, PauseableLike_resume, StreamableLike_stream, Vi
 import { StoreLike_value } from "../../events.js";
 import { bind, error, increment, pipe, pipeLazy, returns, } from "../../functions.js";
 import * as Disposable from "../../utils/Disposable.js";
+import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
 import * as PauseableObservable from "../PauseableObservable.js";
-import * as Scheduler from "../Scheduler.js";
 import * as Streamable from "../Streamable.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
-testModule("PauseableObservable", describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+testModule("PauseableObservable", describe("fromAsyncIterable", testAsync("infinite immediately resolving iterable", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const stream = pipe((async function* foo() {
         let i = 0;
         while (true) {
@@ -21,7 +21,7 @@ testModule("PauseableObservable", describe("fromAsyncIterable", testAsync("infin
     stream[PauseableLike_resume]();
     const result = await pipe(stream, Observable.takeFirst({ count: 10 }), Observable.buffer(), Observable.lastAsync(scheduler));
     pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-})), testAsync("iterable that completes", Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+})), testAsync("iterable that completes", Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const stream = pipe((async function* foo() {
         yield 1;
         yield 2;
@@ -30,7 +30,7 @@ testModule("PauseableObservable", describe("fromAsyncIterable", testAsync("infin
     stream[PauseableLike_resume]();
     const result = await pipe(stream, Observable.buffer(), Observable.lastAsync(scheduler));
     pipe(result ?? [], expectArrayEquals([1, 2, 3]));
-})), testAsync("iterable that throws", pipeLazy(Disposable.usingAsyncLazy(Scheduler.createHostScheduler)(async (scheduler) => {
+})), testAsync("iterable that throws", pipeLazy(Disposable.usingAsyncLazy(HostScheduler.create)(async (scheduler) => {
     const e = error();
     const stream = pipe((async function* foo() {
         throw e;

@@ -13,8 +13,8 @@ import {
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
+import * as HostScheduler from "../../HostScheduler.js";
 import type * as Observable from "../../Observable.js";
-import * as Scheduler from "../../Scheduler.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_subscribe from "./Observable.subscribe.js";
 
@@ -28,7 +28,7 @@ const Observable_lastAsync: Observable.Signature["lastAsync"] =
   ) =>
   async (observable: ObservableLike<T>) => {
     const schedulerOrFactory = isNone(schedulerOrNone)
-      ? Scheduler.createHostScheduler
+      ? HostScheduler.create
       : none;
     const isSchedulerFactory = isFunction(schedulerOrFactory);
     const schedulerDisposable = isSchedulerFactory
