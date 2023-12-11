@@ -16,8 +16,8 @@ import {
 } from "../../../collections.js";
 import { Function1, invoke, none, pipe, returns } from "../../../functions.js";
 import type * as Enumerable from "../../Enumerable.js";
-import Enumerator_empty from "../../Enumerator/__private__/Enumerator.empty.js";
 import Enumerable_create from "./Enumerable.create.js";
+import Enumerable_empty from "./Enumerable.empty.js";
 import Enumerable_map from "./Enumerable.map.js";
 
 const ConcatAllEnumerator_inner = Symbol("ConcatAllEnumerator_inner");
@@ -40,7 +40,8 @@ const Enumerator_concatAll: <T>() => Function1<
           delegate: EnumeratorLike<EnumeratorLike<T>>,
         ): EnumeratorLike<T> {
           instance[ConcatAllEnumerator_delegate] = delegate;
-          instance[ConcatAllEnumerator_inner] = Enumerator_empty();
+          instance[ConcatAllEnumerator_inner] =
+            Enumerable_empty<T>()[EnumerableLike_enumerate]();
 
           return instance;
         },
@@ -78,7 +79,7 @@ const Enumerator_concatAll: <T>() => Function1<
                 inner = delegate[EnumeratorLike_current];
                 this[ConcatAllEnumerator_inner] = inner;
               } else {
-                inner = Enumerator_empty();
+                inner = Enumerable_empty<T>()[EnumerableLike_enumerate]();
                 this[ConcatAllEnumerator_inner] = inner;
                 break;
               }

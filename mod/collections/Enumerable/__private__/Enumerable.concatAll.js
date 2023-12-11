@@ -3,14 +3,15 @@
 import { createInstanceFactory, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
 import { EnumerableLike_enumerate, EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
 import { invoke, none, pipe, returns } from "../../../functions.js";
-import Enumerator_empty from "../../Enumerator/__private__/Enumerator.empty.js";
 import Enumerable_create from "./Enumerable.create.js";
+import Enumerable_empty from "./Enumerable.empty.js";
 import Enumerable_map from "./Enumerable.map.js";
 const ConcatAllEnumerator_inner = Symbol("ConcatAllEnumerator_inner");
 const ConcatAllEnumerator_delegate = Symbol("ConcatAllEnumerator_delegate");
 const Enumerator_concatAll = /*@__PURE__*/ (() => returns(createInstanceFactory(mix(function ConcatAllEnumerator(instance, delegate) {
     instance[ConcatAllEnumerator_delegate] = delegate;
-    instance[ConcatAllEnumerator_inner] = Enumerator_empty();
+    instance[ConcatAllEnumerator_inner] =
+        Enumerable_empty()[EnumerableLike_enumerate]();
     return instance;
 }, props({
     [ConcatAllEnumerator_inner]: none,
@@ -37,7 +38,7 @@ const Enumerator_concatAll = /*@__PURE__*/ (() => returns(createInstanceFactory(
                 this[ConcatAllEnumerator_inner] = inner;
             }
             else {
-                inner = Enumerator_empty();
+                inner = Enumerable_empty()[EnumerableLike_enumerate]();
                 this[ConcatAllEnumerator_inner] = inner;
                 break;
             }

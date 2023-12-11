@@ -1,11 +1,25 @@
-import { returns } from "../../../functions.js";
+import {
+  EnumeratorLike,
+  EnumeratorLike_current,
+  EnumeratorLike_hasCurrent,
+  EnumeratorLike_isCompleted,
+  EnumeratorLike_move,
+} from "../../../collections.js";
+import { none, pipe, returns } from "../../../functions.js";
 import type * as Enumerable from "../../Enumerable.js";
-import Enumerator_empty from "../../Enumerator/__private__/Enumerator.empty.js";
 import Enumerable_create from "./Enumerable.create.js";
 
-const emptyEnumerable = /*@__PURE__*/ Enumerable_create(Enumerator_empty);
-const Enumerable_empty: Enumerable.Signature["empty"] = /*@__PURE__*/ returns(
-  emptyEnumerable,
-) as Enumerable.Signature["empty"];
+const Enumerable_empty: Enumerable.Signature["empty"] = /*@__PURE__*/ (() => {
+  const emptyEnumerator: EnumeratorLike = {
+    [EnumeratorLike_current]: none,
+    [EnumeratorLike_hasCurrent]: false,
+    [EnumeratorLike_isCompleted]: true,
+    [EnumeratorLike_move](): boolean {
+      return false;
+    },
+  };
+
+  return pipe(emptyEnumerator, returns, Enumerable_create, returns);
+})() as Enumerable.Signature["empty"];
 
 export default Enumerable_empty;
