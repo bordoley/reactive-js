@@ -2,17 +2,17 @@
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_schedule, SchedulerLike_yield, } from "../../concurrent.js";
+import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
-import { call, pipe, returns } from "../../functions.js";
+import { call, none, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
-import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 const ObserverMixin = /*@__PURE__*/ (() => {
     const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
     const ObserverMixin_dispatchSubscription = Symbol("ObserverMixin_dispatchSubscription");
+    const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
     const scheduleDrainQueue = (observer) => {
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
             const continuation = (scheduler) => {
@@ -35,17 +35,43 @@ const ObserverMixin = /*@__PURE__*/ (() => {
         }
     };
     const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
-    return returns(mix(include(IndexedQueueMixin(), LazyInitEventSourceMixin(), DelegatingSchedulerMixin), function ObserverMixin(instance, scheduler, config) {
+    return returns(mix(include(IndexedQueueMixin(), LazyInitEventSourceMixin()), function ObserverMixin(instance, scheduler, config) {
         init(
         // FIXME: Change this to take a config
         IndexedQueueMixin(), instance, config[QueueableLike_capacity], config[QueueableLike_backpressureStrategy]);
         init(LazyInitEventSourceMixin(), instance);
-        init(DelegatingSchedulerMixin, instance, scheduler);
+        instance[ObserverMixin_scheduler] = scheduler;
         return instance;
     }, props({
         [ObserverMixin_isCompleted]: false,
         [ObserverMixin_dispatchSubscription]: Disposable.disposed,
+        [ObserverMixin_scheduler]: none,
     }), {
+        get [SchedulerLike_inContinuation]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_inContinuation];
+        },
+        get [SchedulerLike_maxYieldInterval]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_maxYieldInterval];
+        },
+        get [SchedulerLike_now]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_now];
+        },
+        get [SchedulerLike_shouldYield]() {
+            unsafeCast(this);
+            return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
+        },
+        [SchedulerLike_requestYield]() {
+            this[ObserverMixin_scheduler][SchedulerLike_requestYield]();
+        },
+        [SchedulerLike_schedule](continuation, options) {
+            return pipe(this[ObserverMixin_scheduler][SchedulerLike_schedule](continuation, options), Disposable.addTo(this, { ignoreChildErrors: true }));
+        },
+        [SchedulerLike_yield](delay) {
+            this[ObserverMixin_scheduler][SchedulerLike_yield](delay);
+        },
         [QueueableLike_enqueue](next) {
             if (!this[ObserverMixin_isCompleted] &&
                 !this[DisposableLike_isDisposed]) {

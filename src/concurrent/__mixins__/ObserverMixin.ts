@@ -16,7 +16,12 @@ import {
   DispatcherLike_complete,
   ObserverLike,
   SchedulerLike,
+  SchedulerLike_inContinuation,
+  SchedulerLike_maxYieldInterval,
+  SchedulerLike_now,
+  SchedulerLike_requestYield,
   SchedulerLike_schedule,
+  SchedulerLike_shouldYield,
   SchedulerLike_yield,
 } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
@@ -24,7 +29,14 @@ import LazyInitEventSourceMixin, {
   LazyInitEventSourceLike,
   LazyInitEventSourceMixin_publisher,
 } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
-import { Function3, call, pipe, returns } from "../../functions.js";
+import {
+  Function3,
+  SideEffect1,
+  call,
+  none,
+  pipe,
+  returns,
+} from "../../functions.js";
 import {
   DisposableLike,
   DisposableLike_dispose,
@@ -38,7 +50,6 @@ import {
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
-import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 
 const ObserverMixin: <T>() => Mixin2<
   ObserverLike<T>,
@@ -53,10 +64,12 @@ const ObserverMixin: <T>() => Mixin2<
   const ObserverMixin_dispatchSubscription = Symbol(
     "ObserverMixin_dispatchSubscription",
   );
+  const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
 
   type TProperties = {
     [ObserverMixin_isCompleted]: boolean;
     [ObserverMixin_dispatchSubscription]: DisposableLike;
+    [ObserverMixin_scheduler]: SchedulerLike;
   };
 
   const scheduleDrainQueue = (
@@ -104,12 +117,14 @@ const ObserverMixin: <T>() => Mixin2<
     mix<
       Function3<
         DisposableLike &
+          SchedulerLike &
           Pick<
             ObserverLike<T>,
             | typeof SinkLike_notify
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
-          >,
+          > &
+          TProperties,
         ObserverLike,
         {
           readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -117,28 +132,27 @@ const ObserverMixin: <T>() => Mixin2<
         },
         ObserverLike<T>
       >,
-      object,
-      Pick<
-        ObserverLike<T>,
-        | typeof SinkLike_notify
-        | typeof DispatcherLike_complete
-        | typeof QueueableLike_enqueue
-      >,
+      ReturnType<typeof props<TProperties>>,
+      SchedulerLike &
+        Pick<
+          ObserverLike<T>,
+          | typeof SinkLike_notify
+          | typeof DispatcherLike_complete
+          | typeof QueueableLike_enqueue
+        >,
       DisposableLike
     >(
-      include(
-        IndexedQueueMixin(),
-        LazyInitEventSourceMixin(),
-        DelegatingSchedulerMixin,
-      ),
+      include(IndexedQueueMixin(), LazyInitEventSourceMixin()),
       function ObserverMixin(
-        instance: DisposableLike &
+        instance: SchedulerLike &
+          DisposableLike &
           Pick<
             ObserverLike<T>,
             | typeof SinkLike_notify
             | typeof DispatcherLike_complete
             | typeof QueueableLike_enqueue
-          >,
+          > &
+          TProperties,
         scheduler: SchedulerLike,
         config: Pick<
           QueueableLike,
@@ -155,15 +169,64 @@ const ObserverMixin: <T>() => Mixin2<
         );
 
         init(LazyInitEventSourceMixin(), instance);
-        init(DelegatingSchedulerMixin, instance, scheduler);
+
+        instance[ObserverMixin_scheduler] = scheduler;
 
         return instance;
       },
-      props({
+      props<TProperties>({
         [ObserverMixin_isCompleted]: false,
         [ObserverMixin_dispatchSubscription]: Disposable.disposed,
+        [ObserverMixin_scheduler]: none,
       }),
       {
+        get [SchedulerLike_inContinuation]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_inContinuation];
+        },
+
+        get [SchedulerLike_maxYieldInterval]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_maxYieldInterval];
+        },
+
+        get [SchedulerLike_now]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_now];
+        },
+
+        get [SchedulerLike_shouldYield]() {
+          unsafeCast<TProperties>(this);
+          return this[ObserverMixin_scheduler][SchedulerLike_shouldYield];
+        },
+
+        [SchedulerLike_requestYield](this: TProperties) {
+          this[ObserverMixin_scheduler][SchedulerLike_requestYield]();
+        },
+
+        [SchedulerLike_schedule](
+          this: TProperties & SchedulerLike & DisposableLike,
+          continuation: SideEffect1<SchedulerLike>,
+          options?: {
+            readonly delay?: number;
+          },
+        ): DisposableLike {
+          return pipe(
+            this[ObserverMixin_scheduler][SchedulerLike_schedule](
+              continuation,
+              options,
+            ),
+            Disposable.addTo(this, { ignoreChildErrors: true }),
+          );
+        },
+
+        [SchedulerLike_yield](
+          this: TProperties & SchedulerLike & DisposableLike,
+          delay?: number,
+        ) {
+          this[ObserverMixin_scheduler][SchedulerLike_yield](delay);
+        },
+
         [QueueableLike_enqueue](
           this: TProperties &
             ObserverLike<T> &
