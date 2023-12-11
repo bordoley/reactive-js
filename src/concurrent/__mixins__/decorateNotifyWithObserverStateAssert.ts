@@ -1,6 +1,6 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import {
-  Object_properties,
+  Mixin_properties,
   PartialMixin,
   getPrototype,
   include,
@@ -22,7 +22,7 @@ const decorateNotifyWithObserverStateAssert = <This extends ObserverLike<T>, T>(
           raiseWithDebugMessage("should never be called");
           return instance;
         },
-        mixin[Object_properties],
+        mixin[Mixin_properties],
         {
           [SinkLike_notify](this: This, next: T) {
             Observer_assertState(this);
