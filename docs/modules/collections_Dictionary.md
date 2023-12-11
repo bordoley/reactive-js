@@ -18,6 +18,7 @@
 
 - [empty](collections_Dictionary.md#empty)
 - [entries](collections_Dictionary.md#entries)
+- [forEach](collections_Dictionary.md#foreach)
 - [fromEntries](collections_Dictionary.md#fromentries)
 - [keySet](collections_Dictionary.md#keyset)
 - [keys](collections_Dictionary.md#keys)
@@ -86,6 +87,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
 
 ___
 

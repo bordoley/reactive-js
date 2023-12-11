@@ -24,6 +24,7 @@
 
 - [empty](collections.KeyedCollectionModule.md#empty)
 - [entries](collections.KeyedCollectionModule.md#entries)
+- [forEach](collections.KeyedCollectionModule.md#foreach)
 - [keySet](collections.KeyedCollectionModule.md#keyset)
 - [keys](collections.KeyedCollectionModule.md#keys)
 - [map](collections.KeyedCollectionModule.md#map)
@@ -67,6 +68,29 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](../modules/functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](../modules/functions.md#sideeffect1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
 
 ___
 

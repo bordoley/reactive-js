@@ -1,7 +1,7 @@
 import { SchedulerLike } from "../../concurrent.js";
 import { DisposableLike } from "../../utils.js";
-export interface AnimationFrameScheduler {
+interface Signature {
     create(hostScheduler: SchedulerLike): SchedulerLike & DisposableLike;
 }
-export type Signature = AnimationFrameScheduler;
 export declare const create: Signature["create"];
+export {};

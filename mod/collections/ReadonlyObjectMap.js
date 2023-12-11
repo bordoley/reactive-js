@@ -3,6 +3,7 @@
 import { KeyedCollection_TKey, KeyedCollection_type, } from "../collections.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.entries.js";
+import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
 import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.fromEntries.js";
 import ReadonlyObjectMap_keySet from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.keySet.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.keys.js";
@@ -13,6 +14,7 @@ import ReadonlyObjectMap_toReadonlyMap from "./ReadonlyObjectMap/__private__/Rea
 import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.values.js";
 export const empty = ReadonlyObjectMap_empty;
 export const entries = ReadonlyObjectMap_entries;
+export const forEach = ReadonlyObjectMap_forEach;
 export const fromEntries = ReadonlyObjectMap_fromEntries;
 export const keys = ReadonlyObjectMap_keys;
 export const keySet = ReadonlyObjectMap_keySet;

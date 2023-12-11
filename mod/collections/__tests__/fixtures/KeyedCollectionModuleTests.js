@@ -9,7 +9,13 @@ import * as ReadonlyMap from "../../ReadonlyMap.js";
 const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedCollectionModule", describe("empty", test("returns an empty enumerator", pipeLazy(m.empty(), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([])))), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], fromReadonlyArray(), m.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([
     [0, "b"],
     [1, "d"],
-], { valuesEquality: arrayEquality() })))), describe("keySet", test("returns a keyset with all the keys", () => {
+], { valuesEquality: arrayEquality() })))), describe("forEach", test("summing the keys", () => {
+    let result = 0;
+    pipe(["a", "B", "c"], fromReadonlyArray(), m.forEach((_, key) => {
+        result = result + key;
+    }));
+    pipe(result, expectEquals(3));
+})), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keySet());
     pipe(keys.size, expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));

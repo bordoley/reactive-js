@@ -18,6 +18,7 @@
 
 - [empty](collections_ReadonlyObjectMap.md#empty)
 - [entries](collections_ReadonlyObjectMap.md#entries)
+- [forEach](collections_ReadonlyObjectMap.md#foreach)
 - [fromEntries](collections_ReadonlyObjectMap.md#fromentries)
 - [keySet](collections_ReadonlyObjectMap.md#keyset)
 - [keys](collections_ReadonlyObjectMap.md#keys)
@@ -86,6 +87,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
 
 ___
 

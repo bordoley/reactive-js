@@ -4,6 +4,8 @@ import type {
   Function2,
   Function3,
   Optional,
+  SideEffect1,
+  SideEffect2,
   Tuple2,
 } from "./functions.js";
 
@@ -179,6 +181,10 @@ export interface KeyedCollectionModule<C extends KeyedCollection> {
     KeyedCollectionOf<C, T, TKey>,
     EnumerableLike<Tuple2<TKey, T>>
   >;
+
+  forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(
+    selector: SideEffect2<T, TKey>,
+  ): SideEffect1<KeyedCollectionOf<C, T, TKey>>;
 
   /**
    *

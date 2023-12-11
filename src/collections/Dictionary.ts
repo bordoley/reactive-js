@@ -10,6 +10,7 @@ import {
 import { identityLazy } from "../functions.js";
 import Dictionary_empty from "./Dictionary/__private__/Dictionary.empty.js";
 import Dictionary_entries from "./Dictionary/__private__/Dictionary.entries.js";
+import Dictionary_forEach from "./Dictionary/__private__/Dictionary.forEach.js";
 import Dictionary_fromEntries from "./Dictionary/__private__/Dictionary.fromEntries.js";
 import Dictionary_keySet from "./Dictionary/__private__/Dictionary.keySet.js";
 import Dictionary_keys from "./Dictionary/__private__/Dictionary.keys.js";
@@ -39,6 +40,7 @@ export type Signature = DictionaryCollectionModule<Type>;
 
 export const empty: Signature["empty"] = Dictionary_empty;
 export const entries: Signature["entries"] = Dictionary_entries;
+export const forEach: Signature["forEach"] = Dictionary_forEach;
 export const fromEntries: Signature["fromEntries"] = Dictionary_fromEntries;
 export const keys: Signature["keys"] = Dictionary_keys;
 export const keySet: Signature["keySet"] = Dictionary_keySet;

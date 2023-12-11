@@ -9,6 +9,7 @@ import {
 } from "../collections.js";
 import ReadonlyObjectMap_empty from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.empty.js";
 import ReadonlyObjectMap_entries from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.entries.js";
+import ReadonlyObjectMap_forEach from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
 import ReadonlyObjectMap_fromEntries from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.fromEntries.js";
 import ReadonlyObjectMap_keySet from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.keySet.js";
 import ReadonlyObjectMap_keys from "./ReadonlyObjectMap/__private__/ReadonlyObjectMap.keys.js";
@@ -41,6 +42,7 @@ export type Signature = DictionaryCollectionModule<Type>;
 
 export const empty: Signature["empty"] = ReadonlyObjectMap_empty;
 export const entries: Signature["entries"] = ReadonlyObjectMap_entries;
+export const forEach: Signature["forEach"] = ReadonlyObjectMap_forEach;
 export const fromEntries: Signature["fromEntries"] =
   ReadonlyObjectMap_fromEntries;
 export const keys: Signature["keys"] = ReadonlyObjectMap_keys;

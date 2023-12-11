@@ -4,23 +4,9 @@
 
 ## Table of contents
 
-### Interfaces
-
-- [AnimationFrameScheduler](../interfaces/integrations_web_AnimationFrameScheduler.AnimationFrameScheduler.md)
-
-### Type Aliases
-
-- [Signature](integrations_web_AnimationFrameScheduler.md#signature)
-
 ### Functions
 
 - [create](integrations_web_AnimationFrameScheduler.md#create)
-
-## Type Aliases
-
-### Signature
-
-Ƭ **Signature**: [`AnimationFrameScheduler`](../interfaces/integrations_web_AnimationFrameScheduler.AnimationFrameScheduler.md)
 
 ## Functions
 

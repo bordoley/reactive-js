@@ -1,4 +1,4 @@
-import type { Factory, Function1, Function2, Function3, Optional, Tuple2 } from "./functions.js";
+import type { Factory, Function1, Function2, Function3, Optional, SideEffect1, SideEffect2, Tuple2 } from "./functions.js";
 export declare const EnumeratorLike_current: unique symbol;
 export declare const EnumeratorLike_hasCurrent: unique symbol;
 export declare const EnumeratorLike_isCompleted: unique symbol;
@@ -123,6 +123,7 @@ export interface KeyedCollectionModule<C extends KeyedCollection> {
     /**
      */
     entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
+    forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(selector: SideEffect2<T, TKey>): SideEffect1<KeyedCollectionOf<C, T, TKey>>;
     /**
      *
      */

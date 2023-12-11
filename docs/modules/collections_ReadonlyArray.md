@@ -18,6 +18,7 @@
 
 - [empty](collections_ReadonlyArray.md#empty)
 - [entries](collections_ReadonlyArray.md#entries)
+- [forEach](collections_ReadonlyArray.md#foreach)
 - [keySet](collections_ReadonlyArray.md#keyset)
 - [keys](collections_ReadonlyArray.md#keys)
 - [map](collections_ReadonlyArray.md#map)
@@ -89,6 +90,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `T`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)<readonly `T`[]\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<readonly `T`[]\>
 
 ___
 

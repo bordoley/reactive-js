@@ -11,6 +11,7 @@ export type TKeyBase = KeyOf<Type>;
 export type Signature = DictionaryCollectionModule<Type>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
+export declare const forEach: Signature["forEach"];
 export declare const fromEntries: Signature["fromEntries"];
 export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];

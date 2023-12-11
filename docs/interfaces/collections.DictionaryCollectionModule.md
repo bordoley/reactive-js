@@ -22,6 +22,7 @@
 
 - [empty](collections.DictionaryCollectionModule.md#empty)
 - [entries](collections.DictionaryCollectionModule.md#entries)
+- [forEach](collections.DictionaryCollectionModule.md#foreach)
 - [fromEntries](collections.DictionaryCollectionModule.md#fromentries)
 - [keySet](collections.DictionaryCollectionModule.md#keyset)
 - [keys](collections.DictionaryCollectionModule.md#keys)
@@ -74,6 +75,33 @@ ___
 #### Inherited from
 
 [KeyedCollectionModule](collections.KeyedCollectionModule.md).[entries](collections.KeyedCollectionModule.md#entries)
+
+___
+
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](../modules/functions.md#sideeffect1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](../modules/functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](../modules/functions.md#sideeffect1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+#### Inherited from
+
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[forEach](collections.KeyedCollectionModule.md#foreach)
 
 ___
 

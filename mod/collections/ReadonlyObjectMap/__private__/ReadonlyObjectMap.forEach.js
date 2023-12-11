@@ -8,6 +8,5 @@ const ReadonlyObjectMap_forEach = (effect) => record => {
             effect(v, key);
         }
     }
-    return record;
 };
 export default ReadonlyObjectMap_forEach;

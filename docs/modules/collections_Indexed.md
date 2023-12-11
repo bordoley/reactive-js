@@ -18,6 +18,7 @@
 
 - [empty](collections_Indexed.md#empty)
 - [entries](collections_Indexed.md#entries)
+- [forEach](collections_Indexed.md#foreach)
 - [keySet](collections_Indexed.md#keyset)
 - [keys](collections_Indexed.md#keys)
 - [map](collections_Indexed.md#map)
@@ -51,6 +52,8 @@ ___
 ### empty
 
 ▸ **empty**<`T`, `TKey`\>(): [`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>
+
+Return an Collection that emits no items.
 
 #### Type parameters
 
@@ -90,6 +93,29 @@ ___
 
 ___
 
+### forEach
+
+▸ **forEach**<`T`, `TKey`\>(`selector`): [`SideEffect1`](functions.md#sideeffect1)<[`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | [`SideEffect2`](functions.md#sideeffect2)<`T`, `TKey`\> |
+
+#### Returns
+
+[`SideEffect1`](functions.md#sideeffect1)<[`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
+
+___
+
 ### keySet
 
 ▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`IndexedLike`](../interfaces/collections.IndexedLike.md)<`unknown`\>, `ReadonlySet`<`TKey`\>\>
@@ -126,6 +152,17 @@ ___
 
 ▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
 
+Returns a KeyedCollectionOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
 #### Type parameters
 
 | Name | Type |
@@ -136,9 +173,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
 
 #### Returns
 

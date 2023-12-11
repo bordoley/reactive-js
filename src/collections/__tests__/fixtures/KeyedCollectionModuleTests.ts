@@ -67,6 +67,21 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
       ),
     ),
     describe(
+      "forEach",
+      test("summing the keys", () => {
+        let result = 0;
+        pipe(
+          ["a", "B", "c"],
+          fromReadonlyArray(),
+          m.forEach((_: string, key: number) => {
+            result = result + key;
+          }),
+        );
+
+        pipe(result, expectEquals(3));
+      }),
+    ),
+    describe(
       "keySet",
       test("returns a keyset with all the keys", () => {
         const keys = pipe(

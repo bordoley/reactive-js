@@ -1,4 +1,4 @@
-import ReadonlyObjectMap_forEach from "../../collections/ReadonlyObjectMap/__private__/ReadonlyObjectMap.forEach.js";
+import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import {
   __constant,
   __memo,
@@ -59,7 +59,7 @@ const animateHtmlElement = <T>(
         EventSource.addEventHandler(
           compose(
             selector,
-            ReadonlyObjectMap_forEach<string, keyof CSSStyleMapLike>(
+            ReadonlyObjectMap.forEach<string, keyof CSSStyleMapLike>(
               (v, key) => {
                 element.style[key] = v ?? "";
               },
