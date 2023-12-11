@@ -16,12 +16,12 @@ import Observable_mergeWith from "../../Observable/__private__/Observable.mergeW
 import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
 import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
-import Scheduler_toPausableScheduler from "../../Scheduler/__private__/Scheduler.toPausableScheduler.js";
+import * as Scheduler from "../../Scheduler.js";
 import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DelegatingDisposableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable_create(observer => {
-            const pauseableScheduler = pipe(observer, Scheduler_toPausableScheduler, Disposable.addTo(observer));
+            const pauseableScheduler = pipe(observer, Scheduler.toPausableScheduler, Disposable.addTo(observer));
             const multicastedMode = pipe(mode, Observable_mergeWith(
             // Initialize to paused state
             pipe([true], Observable_fromIterable())), Observable_distinctUntilChanged(), Observable_multicast(observer, {

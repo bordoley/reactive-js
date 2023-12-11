@@ -14,6 +14,6 @@ const Observer_createWithDelegate =
         return instance;
     }, props({
         [SinkLike_notify]: none,
-    }), {}));
+    })));
 })();
 export default Observer_createWithDelegate;

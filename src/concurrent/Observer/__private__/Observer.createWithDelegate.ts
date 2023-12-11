@@ -32,7 +32,6 @@ const Observer_createWithDelegate: <T>(o: ObserverLike<T>) => ObserverLike<T> =
         props<TProperties>({
           [SinkLike_notify]: none,
         }),
-        {},
       ),
     );
   })();

@@ -43,7 +43,7 @@ import Observable_mergeWith from "../../Observable/__private__/Observable.mergeW
 import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
 import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
-import Scheduler_toPausableScheduler from "../../Scheduler/__private__/Scheduler.toPausableScheduler.js";
+import * as Scheduler from "../../Scheduler.js";
 import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
 
 const PauseableObservable_create: <T>(
@@ -77,7 +77,7 @@ const PauseableObservable_create: <T>(
           Observable_create(observer => {
             const pauseableScheduler = pipe(
               observer,
-              Scheduler_toPausableScheduler,
+              Scheduler.toPausableScheduler,
               Disposable.addTo(observer),
             );
 
