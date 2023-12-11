@@ -1,7 +1,7 @@
 /// <reference types="./PauseableObservable.create.d.ts" />
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
-import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, } from "../../../concurrent.js";
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import { StoreLike_value } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { invoke, none, pipe } from "../../../functions.js";
@@ -17,7 +17,7 @@ import Observable_multicast from "../../Observable/__private__/Observable.multic
 import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
 import Scheduler_toPausableScheduler from "../../Scheduler/__private__/Scheduler.toPausableScheduler.js";
-import Stream_create from "../../Stream/__private__/Stream.create.js";
+import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DelegatingDisposableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable_create(observer => {
@@ -40,7 +40,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
             }), Observable_subscribe(observer), Disposable.addTo(observer));
             pipe(multicastedMode, op, Observable_subscribeOn(pauseableScheduler), invoke(ObservableLike_observe, observer));
         });
-        const stream = Stream_create(liftedOp, scheduler, multicastOptions);
+        const stream = Streamable_create(liftedOp)[StreamableLike_stream](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);
         instance[PauseableLike_isPaused] = WritableStore.create(true);
         return instance;

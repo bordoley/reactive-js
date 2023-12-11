@@ -20,6 +20,7 @@ import {
   PauseableObservableLike,
   SchedulerLike,
   StreamLike,
+  StreamableLike_stream,
 } from "../../../concurrent.js";
 import { StoreLike_value, WritableStoreLike } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
@@ -43,7 +44,7 @@ import Observable_multicast from "../../Observable/__private__/Observable.multic
 import Observable_subscribe from "../../Observable/__private__/Observable.subscribe.js";
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
 import Scheduler_toPausableScheduler from "../../Scheduler/__private__/Scheduler.toPausableScheduler.js";
-import Stream_create from "../../Stream/__private__/Stream.create.js";
+import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
 
 const PauseableObservable_create: <T>(
   op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
@@ -118,7 +119,10 @@ const PauseableObservable_create: <T>(
             );
           });
 
-        const stream = Stream_create(liftedOp, scheduler, multicastOptions);
+        const stream = Streamable_create(liftedOp)[StreamableLike_stream](
+          scheduler,
+          multicastOptions,
+        );
         init(DelegatingDisposableMixin(), instance, stream);
 
         instance[PauseableLike_isPaused] = WritableStore.create(true);
