@@ -4,8 +4,10 @@
 
 ## Table of contents
 
-### Hook Functions
+### Functions
 
+- [createComponent](integrations_react.md#createcomponent)
+- [useDispatcher](integrations_react.md#usedispatcher)
 - [useDisposable](integrations_react.md#usedisposable)
 - [useEnumerator](integrations_react.md#useenumerator)
 - [useListen](integrations_react.md#uselisten)
@@ -13,12 +15,60 @@
 - [usePauseable](integrations_react.md#usepauseable)
 - [useStream](integrations_react.md#usestream)
 
-### Other Functions
+## Functions
 
-- [createComponent](integrations_react.md#createcomponent)
-- [useDispatcher](integrations_react.md#usedispatcher)
+### createComponent
 
-## Hook Functions
+▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TProps` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
+
+#### Returns
+
+`ComponentType`<`TProps`\>
+
+___
+
+### useDispatcher
+
+▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TReq` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`TReq`\>\> |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `complete` | [`SideEffect`](functions.md#sideeffect) |
+| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |
+
+___
 
 ### useDisposable
 
@@ -231,58 +281,3 @@ ___
 #### Returns
 
 [`Optional`](functions.md#optional)<[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>\>
-
-___
-
-## Other Functions
-
-### createComponent
-
-▸ **createComponent**<`TProps`\>(`fn`, `options?`): `ComponentType`<`TProps`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TProps` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `fn` | [`Function1`](functions.md#function1)<[`MulticastObservableLike`](../interfaces/concurrent.MulticastObservableLike.md)<`TProps`\>, [`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>\>\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.priority?` | ``2`` \| ``1`` \| ``3`` \| ``4`` \| ``5`` |
-
-#### Returns
-
-`ComponentType`<`TProps`\>
-
-___
-
-### useDispatcher
-
-▸ **useDispatcher**<`TReq`\>(`dispatcher`): `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TReq` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dispatcher` | [`Optional`](functions.md#optional)<[`DispatcherLike`](../interfaces/concurrent.DispatcherLike.md)<`TReq`\>\> |
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `complete` | [`SideEffect`](functions.md#sideeffect) |
-| `enqueue` | [`Function1`](functions.md#function1)<`TReq`, `boolean`\> |

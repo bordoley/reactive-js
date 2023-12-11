@@ -335,7 +335,6 @@ export type Animation<T = number> =
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface ObservableModule
   extends PureComputationModule<ObservableComputation>,
@@ -611,7 +610,6 @@ export interface ObservableModule
   ): DeferredSideEffectsObservableLike<T>;
 
   /**
-   * @category Constructor
    */
   computeRunnable<T>(
     computation: Factory<T>,
@@ -968,7 +966,6 @@ export interface ObservableModule
   ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
 
   /**
-   * @category Transform
    */
   multicast<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
@@ -1026,7 +1023,6 @@ export interface ObservableModule
   ): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<TAcc>>;
 
   /**
-   * @category Transform
    */
   share<T>(
     schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,

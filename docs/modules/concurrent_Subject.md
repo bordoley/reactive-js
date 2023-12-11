@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Module Interfaces
+### Interfaces
 
 - [SubjectModule](../interfaces/concurrent_Subject.SubjectModule.md)
 

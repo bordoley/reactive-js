@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Module Interfaces
+### Interfaces
 
 - [StreamModule](../interfaces/concurrent_Stream.StreamModule.md)
 

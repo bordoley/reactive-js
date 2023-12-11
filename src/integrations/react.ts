@@ -80,7 +80,6 @@ interface ReactModule {
   };
 
   /**
-   * @category Hook
    */
   useDisposable<TDisposable extends DisposableLike>(
     factory: () => Optional<TDisposable>,
@@ -88,7 +87,6 @@ interface ReactModule {
   ): Optional<TDisposable>;
 
   /**
-   * @category Hook
    */
   useEnumerator<T>(enumerator: Optional<EnumeratorLike<T>>): {
     move: Factory<boolean>;
@@ -97,7 +95,6 @@ interface ReactModule {
   };
 
   /**
-   * @category Hook
    */
   useListen<T>(eventSource: Optional<EventSourceLike<T>>): Optional<T>;
   useListen<T>(
@@ -106,7 +103,6 @@ interface ReactModule {
   ): Optional<T>;
 
   /**
-   * @category Hook
    */
   useObserve<T>(
     observable: Optional<ObservableLike<T>>,
@@ -127,7 +123,6 @@ interface ReactModule {
   ): Optional<T>;
 
   /**
-   * @category Hook
    */
   usePauseable(pauseable: Optional<PauseableLike>): {
     isPaused: boolean;
@@ -136,7 +131,6 @@ interface ReactModule {
   };
 
   /**
-   * @category Hook
    */
   useStream<TStreamable extends StreamableLike>(
     streamable: TStreamable,

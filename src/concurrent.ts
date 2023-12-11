@@ -260,7 +260,6 @@ export interface ObservableLike<T = unknown> {
 
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isDeferred]: true;
@@ -268,7 +267,6 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
 
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
@@ -280,7 +278,6 @@ export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
 
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface DeferredSideEffectsObservableLike<T = unknown>
   extends DeferredObservableLike<T> {
@@ -289,7 +286,6 @@ export interface DeferredSideEffectsObservableLike<T = unknown>
 
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface PureRunnableLike<T = unknown>
   extends RunnableLike<T>,
@@ -301,7 +297,6 @@ export interface PureRunnableLike<T = unknown>
 
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface RunnableWithSideEffectsLike<T = unknown>
   extends RunnableLike<T> {
@@ -325,7 +320,6 @@ export const ReplayObservableLike_buffer = Symbol(
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
- * @category Observable
  */
 export interface ReplayObservableLike<T = unknown>
   extends MulticastObservableLike<T> {
@@ -350,7 +344,6 @@ export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
  * Represents a duplex stream
  *
  * @noInheritDoc
- * @category Interactive
  */
 export interface StreamLike<TReq, T>
   extends DispatcherLike<TReq>,
@@ -369,7 +362,6 @@ export const StreamableLike_stream = Symbol("StreamableLike_stream");
  * @typeparam TStream
  *
  * @noInheritDoc
- * @category Interactive
  */
 export interface StreamableLike<
   TReq = unknown,
@@ -403,7 +395,6 @@ export interface StreamableLike<
   ): TStream & DisposableLike;
 }
 
-/** @category Interactive */
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
   TStreamable[typeof StreamableLike_TStream]
 >;

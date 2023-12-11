@@ -1,7 +1,6 @@
 import { IndexedCollectionModule as IndexedCollectionModuleBase, IndexedLike, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_type } from "../collections.js";
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface IndexedCollectionCollection extends KeyedCollection<number> {
     readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;

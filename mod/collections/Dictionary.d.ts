@@ -1,7 +1,6 @@
 import { DictionaryCollectionModule, DictionaryLike, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_TKey, KeyedCollection_type } from "../collections.js";
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface DictionaryCollection<TKey = unknown> extends KeyedCollection<TKey> {
     readonly [KeyedCollection_type]?: DictionaryLike<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;

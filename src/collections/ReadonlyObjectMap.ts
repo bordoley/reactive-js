@@ -20,7 +20,6 @@ import ReadonlyObjectMap_values from "./ReadonlyObjectMap/__private__/ReadonlyOb
 
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface ReadonlyObjectMapCollection<
   TKey extends symbol | string = symbol | string,

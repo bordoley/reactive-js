@@ -18,29 +18,20 @@
 
 ## Table of contents
 
-### Constructor Methods
+### Methods
 
 - [empty](collections.DictionaryCollectionModule.md#empty)
-
-### Operator Methods
-
-- [map](collections.DictionaryCollectionModule.md#map)
-
-### Other Methods
-
-- [fromEntries](collections.DictionaryCollectionModule.md#fromentries)
-
-### Transform Methods
-
 - [entries](collections.DictionaryCollectionModule.md#entries)
+- [fromEntries](collections.DictionaryCollectionModule.md#fromentries)
 - [keySet](collections.DictionaryCollectionModule.md#keyset)
 - [keys](collections.DictionaryCollectionModule.md#keys)
+- [map](collections.DictionaryCollectionModule.md#map)
 - [reduce](collections.DictionaryCollectionModule.md#reduce)
 - [toDictionary](collections.DictionaryCollectionModule.md#todictionary)
 - [toReadonlyMap](collections.DictionaryCollectionModule.md#toreadonlymap)
 - [values](collections.DictionaryCollectionModule.md#values)
 
-## Constructor Methods
+## Methods
 
 ### empty
 
@@ -65,68 +56,6 @@ Return an Collection that emits no items.
 
 ___
 
-## Operator Methods
-
-### map
-
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
-
-Returns a KeyedCollectionOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
-
-#### Inherited from
-
-[KeyedCollectionModule](collections.KeyedCollectionModule.md).[map](collections.KeyedCollectionModule.md#map)
-
-___
-
-## Other Methods
-
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
-
-___
-
-## Transform Methods
-
 ### entries
 
 ▸ **entries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>\>
@@ -145,6 +74,23 @@ ___
 #### Inherited from
 
 [KeyedCollectionModule](collections.KeyedCollectionModule.md).[entries](collections.KeyedCollectionModule.md#entries)
+
+___
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
 
 ___
 
@@ -185,6 +131,45 @@ ___
 #### Inherited from
 
 [KeyedCollectionModule](collections.KeyedCollectionModule.md).[keys](collections.KeyedCollectionModule.md#keys)
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+
+Returns a KeyedCollectionOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+
+#### Inherited from
+
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[map](collections.KeyedCollectionModule.md#map)
 
 ___
 

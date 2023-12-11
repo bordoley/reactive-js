@@ -189,14 +189,12 @@ export interface ObservableLike<T = unknown> {
 }
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
 }
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
@@ -206,14 +204,12 @@ export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
 }
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface DeferredSideEffectsObservableLike<T = unknown> extends DeferredObservableLike<T> {
     readonly [ObservableLike_isPure]: false;
 }
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface PureRunnableLike<T = unknown> extends RunnableLike<T>, PureObservableLike<T> {
     readonly [ObservableLike_isDeferred]: true;
@@ -222,7 +218,6 @@ export interface PureRunnableLike<T = unknown> extends RunnableLike<T>, PureObse
 }
 /**
  * @noInheritDoc
- * @category Observable
  */
 export interface RunnableWithSideEffectsLike<T = unknown> extends RunnableLike<T> {
     readonly [ObservableLike_isPure]: false;
@@ -239,7 +234,6 @@ export declare const ReplayObservableLike_buffer: unique symbol;
  * A stateful ObservableLike resource.
  *
  * @noInheritDoc
- * @category Observable
  */
 export interface ReplayObservableLike<T = unknown> extends MulticastObservableLike<T> {
     readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
@@ -255,7 +249,6 @@ export declare const StreamLike_scheduler: unique symbol;
  * Represents a duplex stream
  *
  * @noInheritDoc
- * @category Interactive
  */
 export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
@@ -270,7 +263,6 @@ export declare const StreamableLike_stream: unique symbol;
  * @typeparam TStream
  *
  * @noInheritDoc
- * @category Interactive
  */
 export interface StreamableLike<TReq = unknown, T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
     readonly [StreamableLike_TStream]?: TStream;
@@ -293,5 +285,4 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): TStream & DisposableLike;
 }
-/** @category Interactive */
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;

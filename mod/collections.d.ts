@@ -86,7 +86,6 @@ export declare const KeyedCollection_type: unique symbol;
 export declare const KeyedCollection_TKey: unique symbol;
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface KeyedCollection<TKey = unknown> {
     readonly [KeyedCollection_T]?: unknown;
@@ -94,11 +93,9 @@ export interface KeyedCollection<TKey = unknown> {
     readonly [KeyedCollection_TKey]?: TKey;
 }
 /**
- * @category Collection
  */
 export type KeyOf<C extends KeyedCollection> = NonNullable<C[typeof KeyedCollection_TKey]>;
 /**
- * @category Collection
  */
 export type KeyedCollectionOf<C extends KeyedCollection, T, TKey extends KeyOf<C> = KeyOf<C>> = C extends {
     readonly [KeyedCollection_type]?: unknown;
@@ -112,32 +109,26 @@ export type KeyedCollectionOf<C extends KeyedCollection, T, TKey extends KeyOf<C
 };
 /**
  * Utility type for a generic operator function that transforms a Collection's inner value type.
- * @category Collection
  */
 export type KeyedCollectionOperator<C extends KeyedCollection, TA, TB, TKey extends KeyOf<C> = KeyOf<C>> = Function1<KeyedCollectionOf<C, TA, TKey>, KeyedCollectionOf<C, TB, TKey>>;
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface KeyedCollectionModule<C extends KeyedCollection> {
     /**
      * Return an Collection that emits no items.
      *
-     * @category Constructor
      */
     empty<T, TKey extends KeyOf<C> = KeyOf<C>>(): KeyedCollectionOf<C, T, TKey>;
     /**
-     * @category Transform
      */
     entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
     /**
      *
-     * @category Transform
      */
     keys<TKey extends KeyOf<C>>(): Function1<KeyedCollectionOf<C, unknown, TKey>, EnumerableLike<TKey>>;
     /**
      *
-     * @category Transform
      */
     keySet<TKey extends KeyOf<C>>(): Function1<KeyedCollectionOf<C, unknown, TKey>, ReadonlySet<TKey>>;
     /**
@@ -148,36 +139,29 @@ export interface KeyedCollectionModule<C extends KeyedCollection> {
      * @typeparam TA - The inner type of the source container
      * @typeparam TB - The inner type of the mapped container
      *
-     * @category Operator
      */
     map<TA, TB, TKey extends KeyOf<C> = KeyOf<C>>(selector: Function2<TA, TKey, TB>): KeyedCollectionOperator<C, TA, TB, TKey>;
     /**
-     * @category Transform
      */
     reduce<T, TAcc, TKey extends KeyOf<C> = KeyOf<C>>(reducer: Function3<TAcc, T, TKey, TAcc>, initialValue: Factory<TAcc>): Function1<KeyedCollectionOf<C, T, TKey>, TAcc>;
     /**
      *
-     * @category Transform
      */
     toDictionary<T, TKey extends KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, DictionaryLike<TKey, T>>;
     /**
      *
-     * @category Transform
      */
     toReadonlyMap<T, TKey extends KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, ReadonlyMap<TKey, T>>;
     /**
      *
-     * @category Transform
      */
     values<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<T>>;
 }
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface IndexedCollectionModule<C extends KeyedCollection<number>> extends KeyedCollectionModule<C> {
     /**
-     * @category Transform
      */
     entries<T, TKey extends number = number>(options?: {
         readonly count?: number;
@@ -185,18 +169,15 @@ export interface IndexedCollectionModule<C extends KeyedCollection<number>> exte
     }): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
     /**
      *
-     * @category Transform
      */
     values<T, TKey extends KeyOf<C> = KeyOf<C>>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<T>>;
-    /** @category Transform */
     toIndexed<T>(options?: {
         readonly count?: number;
         readonly start?: number;
     }): Function1<KeyedCollectionOf<C, T>, IndexedLike<T>>;
-    /** @category Transform */
     toReadonlyArray<T>(options?: {
         readonly count?: number;
         readonly start?: number;

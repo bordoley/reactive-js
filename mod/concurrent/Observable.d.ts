@@ -113,7 +113,6 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 });
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface ObservableModule extends PureComputationModule<ObservableComputation>, PureComputationModule<PureRunnableComputation> {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
@@ -158,7 +157,6 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly mode?: "batched" | "combine-latest";
     }): DeferredSideEffectsObservableLike<T>;
     /**
-     * @category Constructor
      */
     computeRunnable<T>(computation: Factory<T>, options?: {
         readonly mode?: "batched" | "combine-latest";
@@ -301,7 +299,6 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     mergeWith<T>(snd: PureObservableLike<T>, ...tail: readonly PureObservableLike<T>[]): <TObservableIn>(observableIn: TObservableIn) => TObservableIn extends PureObservableLike<T> ? MulticastObservableLike<T> : DeferredSideEffectsObservableLike<T>;
     mergeWith<T>(snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
     /**
-     * @category Transform
      */
     multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;
@@ -325,7 +322,6 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     scan<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): PureObservableOperator<T, TAcc>;
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<TAcc>>;
     /**
-     * @category Transform
      */
     share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
         readonly replay?: number;

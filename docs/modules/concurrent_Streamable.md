@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Module Interfaces
+### Interfaces
 
 - [StreamableModule](../interfaces/concurrent_Streamable.StreamableModule.md)
 
@@ -12,16 +12,13 @@
 
 - [Signature](concurrent_Streamable.md#signature)
 
-### Constructor Functions
+### Functions
 
 - [create](concurrent_Streamable.md#create)
-- [createStateStore](concurrent_Streamable.md#createstatestore)
-- [identity](concurrent_Streamable.md#identity)
-
-### Other Functions
-
 - [createAnimationGroupEventHandler](concurrent_Streamable.md#createanimationgroupeventhandler)
 - [createEventHandler](concurrent_Streamable.md#createeventhandler)
+- [createStateStore](concurrent_Streamable.md#createstatestore)
+- [identity](concurrent_Streamable.md#identity)
 
 ## Type Aliases
 
@@ -29,7 +26,7 @@
 
 Ƭ **Signature**: [`StreamableModule`](../interfaces/concurrent_Streamable.StreamableModule.md)
 
-## Constructor Functions
+## Functions
 
 ### create
 
@@ -53,52 +50,6 @@
 [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TReq`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TReq`, `T`\>\>
 
 ___
-
-### createStateStore
-
-▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
-
-Returns a new `StateStoreLike` instance that stores state which can
-be updated by notifying the instance with a `StateUpdater` that computes a
-new state based upon the previous state.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
-| `options?` | `Object` | - |
-| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
-
-___
-
-### identity
-
-▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`T`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`T`, `T`\>\>
-
-___
-
-## Other Functions
 
 ### createAnimationGroupEventHandler
 
@@ -324,3 +275,47 @@ ___
 #### Returns
 
 [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+___
+
+### createStateStore
+
+▸ **createStateStore**<`T`\>(`initialState`, `options?`): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+
+Returns a new `StateStoreLike` instance that stores state which can
+be updated by notifying the instance with a `StateUpdater` that computes a
+new state based upon the previous state.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `initialState` | [`Factory`](functions.md#factory)<`T`\> | The initial accumulation value. |
+| `options?` | `Object` | - |
+| `options.equality?` | [`Equality`](functions.md#equality)<`T`\> | - |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<[`Updater`](functions.md#updater)<`T`\>, `T`\>\>
+
+___
+
+### identity
+
+▸ **identity**<`T`\>(): [`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`T`, `T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`StreamableLike`](../interfaces/concurrent.StreamableLike.md)<`T`, `T`, [`StreamLike`](../interfaces/concurrent.StreamLike.md)<`T`, `T`\>\>

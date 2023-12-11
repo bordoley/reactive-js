@@ -24,11 +24,7 @@
 - [switchAll](concurrent_Observable.ObservableModule.md#switchall)
 - [switchMap](concurrent_Observable.ObservableModule.md#switchmap)
 
-### Constructor Methods
-
-- [computeRunnable](concurrent_Observable.ObservableModule.md#computerunnable)
-
-### Other Methods
+### Methods
 
 - [animate](concurrent_Observable.ObservableModule.md#animate)
 - [backpressureStrategy](concurrent_Observable.ObservableModule.md#backpressurestrategy)
@@ -36,6 +32,7 @@
 - [catchError](concurrent_Observable.ObservableModule.md#catcherror)
 - [combineLatest](concurrent_Observable.ObservableModule.md#combinelatest)
 - [computeDeferred](concurrent_Observable.ObservableModule.md#computedeferred)
+- [computeRunnable](concurrent_Observable.ObservableModule.md#computerunnable)
 - [concat](concurrent_Observable.ObservableModule.md#concat)
 - [concatMany](concurrent_Observable.ObservableModule.md#concatmany)
 - [concatWith](concurrent_Observable.ObservableModule.md#concatwith)
@@ -78,6 +75,7 @@
 - [mergeMany](concurrent_Observable.ObservableModule.md#mergemany)
 - [mergeMap](concurrent_Observable.ObservableModule.md#mergemap)
 - [mergeWith](concurrent_Observable.ObservableModule.md#mergewith)
+- [multicast](concurrent_Observable.ObservableModule.md#multicast)
 - [never](concurrent_Observable.ObservableModule.md#never)
 - [onSubscribe](concurrent_Observable.ObservableModule.md#onsubscribe)
 - [pairwise](concurrent_Observable.ObservableModule.md#pairwise)
@@ -87,6 +85,7 @@
 - [run](concurrent_Observable.ObservableModule.md#run)
 - [scan](concurrent_Observable.ObservableModule.md#scan)
 - [scanMany](concurrent_Observable.ObservableModule.md#scanmany)
+- [share](concurrent_Observable.ObservableModule.md#share)
 - [skipFirst](concurrent_Observable.ObservableModule.md#skipfirst)
 - [spring](concurrent_Observable.ObservableModule.md#spring)
 - [startWith](concurrent_Observable.ObservableModule.md#startwith)
@@ -105,11 +104,6 @@
 - [withCurrentTime](concurrent_Observable.ObservableModule.md#withcurrenttime)
 - [withLatestFrom](concurrent_Observable.ObservableModule.md#withlatestfrom)
 - [zipLatest](concurrent_Observable.ObservableModule.md#ziplatest)
-
-### Transform Methods
-
-- [multicast](concurrent_Observable.ObservableModule.md#multicast)
-- [share](concurrent_Observable.ObservableModule.md#share)
 
 ## Properties
 
@@ -654,33 +648,7 @@ ___
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
 
-## Constructor Methods
-
-### computeRunnable
-
-▸ **computeRunnable**<`T`\>(`computation`, `options?`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
-| `options?` | `Object` |
-| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
-
-#### Returns
-
-[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
-
-___
-
-## Other Methods
+## Methods
 
 ### animate
 
@@ -1665,6 +1633,30 @@ ___
 #### Returns
 
 [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+
+___
+
+### computeRunnable
+
+▸ **computeRunnable**<`T`\>(`computation`, `options?`): [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `computation` | [`Factory`](../modules/functions.md#factory)<`T`\> |
+| `options?` | `Object` |
+| `options.mode?` | ``"batched"`` \| ``"combine-latest"`` |
+
+#### Returns
+
+[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>
 
 ___
 
@@ -3113,6 +3105,32 @@ ___
 
 ___
 
+### multicast
+
+▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+
+___
+
 ### never
 
 ▸ **never**<`T`\>(): [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
@@ -3378,6 +3396,32 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TAcc`\>\>
+
+___
+
+### share
+
+▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
+| `options.replay?` | `number` |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
 
 ___
 
@@ -4828,57 +4872,3 @@ ___
 #### Returns
 
 [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<[`Tuple9`](../modules/functions.md#tuple9)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`, `TG`, `TH`, `TI`\>\>
-
-___
-
-## Transform Methods
-
-### multicast
-
-▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\> \| [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
-
-___
-
-### share
-
-▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-| `options.replay?` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>

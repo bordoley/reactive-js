@@ -4,16 +4,7 @@
 
 ## Table of contents
 
-### Collection Interfaces
-
-- [KeyedCollection](../interfaces/collections.KeyedCollection.md)
-
-### Module Interfaces
-
-- [IndexedCollectionModule](../interfaces/collections.IndexedCollectionModule.md)
-- [KeyedCollectionModule](../interfaces/collections.KeyedCollectionModule.md)
-
-### Other Interfaces
+### Interfaces
 
 - [AssociativeLike](../interfaces/collections.AssociativeLike.md)
 - [CollectionLike](../interfaces/collections.CollectionLike.md)
@@ -21,19 +12,19 @@
 - [DictionaryLike](../interfaces/collections.DictionaryLike.md)
 - [EnumerableLike](../interfaces/collections.EnumerableLike.md)
 - [EnumeratorLike](../interfaces/collections.EnumeratorLike.md)
+- [IndexedCollectionModule](../interfaces/collections.IndexedCollectionModule.md)
 - [IndexedLike](../interfaces/collections.IndexedLike.md)
+- [KeyedCollection](../interfaces/collections.KeyedCollection.md)
+- [KeyedCollectionModule](../interfaces/collections.KeyedCollectionModule.md)
 - [KeyedLike](../interfaces/collections.KeyedLike.md)
 - [MutableIndexedLike](../interfaces/collections.MutableIndexedLike.md)
 - [MutableKeyedLike](../interfaces/collections.MutableKeyedLike.md)
 
-### Collection Type Aliases
+### Type Aliases
 
 - [KeyOf](collections.md#keyof)
 - [KeyedCollectionOf](collections.md#keyedcollectionof)
 - [KeyedCollectionOperator](collections.md#keyedcollectionoperator)
-
-### Other Type Aliases
-
 - [ReadonlyObjectMapLike](collections.md#readonlyobjectmaplike)
 
 ### Variables
@@ -51,7 +42,7 @@
 - [KeyedLike\_get](collections.md#keyedlike_get)
 - [MutableKeyedLike\_set](collections.md#mutablekeyedlike_set)
 
-## Collection Type Aliases
+## Type Aliases
 
 ### KeyOf
 
@@ -95,8 +86,6 @@ Utility type for a generic operator function that transforms a Collection's inne
 | `TKey` | extends [`KeyOf`](collections.md#keyof)<`C`\> = [`KeyOf`](collections.md#keyof)<`C`\> |
 
 ___
-
-## Other Type Aliases
 
 ### ReadonlyObjectMapLike
 

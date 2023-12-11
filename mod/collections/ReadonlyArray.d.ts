@@ -1,7 +1,6 @@
 import { IndexedCollectionModule, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_type } from "../collections.js";
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface ReadonlyArrayCollection extends KeyedCollection<number> {
     readonly [KeyedCollection_type]?: ReadonlyArray<this[typeof KeyedCollection_T]>;

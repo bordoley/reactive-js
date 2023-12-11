@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Collection Interfaces
+### Interfaces
 
 - [DictionaryCollection](../interfaces/collections_Dictionary.DictionaryCollection.md)
 
@@ -14,23 +14,14 @@
 - [TKeyBase](collections_Dictionary.md#tkeybase)
 - [Type](collections_Dictionary.md#type)
 
-### Constructor Functions
+### Functions
 
 - [empty](collections_Dictionary.md#empty)
-
-### Operator Functions
-
-- [map](collections_Dictionary.md#map)
-
-### Other Functions
-
-- [fromEntries](collections_Dictionary.md#fromentries)
-
-### Transform Functions
-
 - [entries](collections_Dictionary.md#entries)
+- [fromEntries](collections_Dictionary.md#fromentries)
 - [keySet](collections_Dictionary.md#keyset)
 - [keys](collections_Dictionary.md#keys)
+- [map](collections_Dictionary.md#map)
 - [reduce](collections_Dictionary.md#reduce)
 - [toDictionary](collections_Dictionary.md#todictionary)
 - [toReadonlyMap](collections_Dictionary.md#toreadonlymap)
@@ -60,7 +51,7 @@ ___
 | :------ | :------ |
 | `TKey` | `unknown` |
 
-## Constructor Functions
+## Functions
 
 ### empty
 
@@ -81,7 +72,71 @@ Return an Collection that emits no items.
 
 ___
 
-## Operator Functions
+### entries
+
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
+
+___
+
+### keySet
+
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+___
+
+### keys
+
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+
+___
 
 ### map
 
@@ -115,76 +170,6 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
-
-___
-
-## Other Functions
-
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
-
-___
-
-## Transform Functions
-
-### entries
-
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = {} |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-___
-
-### keys
-
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
 
 ___
 

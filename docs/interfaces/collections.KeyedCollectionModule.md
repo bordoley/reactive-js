@@ -20,25 +20,19 @@
 
 ## Table of contents
 
-### Constructor Methods
+### Methods
 
 - [empty](collections.KeyedCollectionModule.md#empty)
-
-### Operator Methods
-
-- [map](collections.KeyedCollectionModule.md#map)
-
-### Transform Methods
-
 - [entries](collections.KeyedCollectionModule.md#entries)
 - [keySet](collections.KeyedCollectionModule.md#keyset)
 - [keys](collections.KeyedCollectionModule.md#keys)
+- [map](collections.KeyedCollectionModule.md#map)
 - [reduce](collections.KeyedCollectionModule.md#reduce)
 - [toDictionary](collections.KeyedCollectionModule.md#todictionary)
 - [toReadonlyMap](collections.KeyedCollectionModule.md#toreadonlymap)
 - [values](collections.KeyedCollectionModule.md#values)
 
-## Constructor Methods
+## Methods
 
 ### empty
 
@@ -58,45 +52,6 @@ Return an Collection that emits no items.
 [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>
 
 ___
-
-## Operator Methods
-
-### map
-
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
-
-Returns a KeyedCollectionOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
-
-___
-
-## Transform Methods
 
 ### entries
 
@@ -144,6 +99,41 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `unknown`, `TKey`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`TKey`\>\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
+
+Returns a KeyedCollectionOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](../modules/functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `TA`, `TB`, `TKey`\>
 
 ___
 

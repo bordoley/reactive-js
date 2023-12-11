@@ -19,11 +19,9 @@ import Streamable_identity from "./Streamable/__private__/Streamable.identity.js
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface StreamableModule {
   /**
-   * @category Constructor
    */
   create<TReq, T>(
     op: Function1<
@@ -151,7 +149,6 @@ export interface StreamableModule {
    * @param equals - Optional equality function that is used to compare
    * if a state value is distinct from the previous one.
    *
-   * @category Constructor
    */
   createStateStore<T>(
     initialState: Factory<T>,
@@ -159,7 +156,6 @@ export interface StreamableModule {
   ): StreamableLike<Updater<T>, T>;
 
   /**
-   * @category Constructor
    */
   identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 }

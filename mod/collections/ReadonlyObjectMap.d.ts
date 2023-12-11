@@ -1,7 +1,6 @@
 import { DictionaryCollectionModule, KeyOf, KeyedCollection, KeyedCollection_T, KeyedCollection_TKey, KeyedCollection_type, ReadonlyObjectMapLike } from "../collections.js";
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface ReadonlyObjectMapCollection<TKey extends symbol | string = symbol | string> extends KeyedCollection<TKey> {
     readonly [KeyedCollection_type]?: ReadonlyObjectMapLike<NonNullable<this[typeof KeyedCollection_TKey]>, this[typeof KeyedCollection_T]>;

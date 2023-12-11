@@ -1,7 +1,6 @@
 import { SubjectLike } from "../concurrent.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface SubjectModule {
     create<T>(options?: {

@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Module Interfaces
+### Interfaces
 
 - [DisposableModule](../interfaces/utils_Disposable.DisposableModule.md)
 

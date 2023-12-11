@@ -1,11 +1,9 @@
 import { PublisherLike } from "../events.js";
 export interface PublisherModule {
     /**
-     * @category Constructor
      */
     create<T>(): PublisherLike<T>;
     /**
-     * @category Constructor
      */
     createRefCounted<T>(): PublisherLike<T>;
 }

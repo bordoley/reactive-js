@@ -4,12 +4,10 @@ import Publisher_createRefCounted from "./Publisher/__private__/Publisher.create
 
 export interface PublisherModule {
   /**
-   * @category Constructor
    */
   create<T>(): PublisherLike<T>;
 
   /**
-   * @category Constructor
    */
   createRefCounted<T>(): PublisherLike<T>;
 }

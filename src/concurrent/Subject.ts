@@ -4,7 +4,6 @@ import Subject_createRefCounted from "./Subject/__private__/Subject.createRefCou
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface SubjectModule {
   create<T>(options?: { readonly replay?: number }): SubjectLike<T>;

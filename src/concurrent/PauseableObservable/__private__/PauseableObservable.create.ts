@@ -8,7 +8,7 @@ import {
 import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
-  MulticastObservableLike,
+  ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
@@ -47,7 +47,7 @@ import * as PauseableScheduler from "../../PauseableScheduler.js";
 import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
 
 const PauseableObservable_create: <T>(
-  op: Function1<MulticastObservableLike<boolean>, DeferredObservableLike<T>>,
+  op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
   scheduler: SchedulerLike,
   options?: {
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -63,10 +63,7 @@ const PauseableObservable_create: <T>(
       include(DelegatingDisposableMixin()),
       function PauseableObservable(
         instance: PauseableObservableLike<T> & TProperties,
-        op: Function1<
-          MulticastObservableLike<boolean>,
-          DeferredObservableLike<T>
-        >,
+        op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;

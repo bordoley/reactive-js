@@ -19,7 +19,6 @@ import ReadonlyArray_values from "./ReadonlyArray/__private__/ReadonlyArray.valu
 
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface ReadonlyArrayCollection extends KeyedCollection<number> {
   readonly [KeyedCollection_type]?: ReadonlyArray<

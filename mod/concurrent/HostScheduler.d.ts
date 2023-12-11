@@ -2,7 +2,6 @@ import { SchedulerLike } from "../concurrent.js";
 import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 interface Signature {
     create(options?: {

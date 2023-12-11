@@ -4,12 +4,9 @@
 
 ## Table of contents
 
-### Computation Interfaces
+### Interfaces
 
 - [Computation](../interfaces/computations.Computation.md)
-
-### Module Interfaces
-
 - [PureComputationModule](../interfaces/computations.PureComputationModule.md)
 
 ### Type Aliases

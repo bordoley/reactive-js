@@ -19,7 +19,6 @@ import ReadonlyMap_values from "./ReadonlyMap/__private__/ReadonlyMap.values.js"
 
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface ReadonlyMapCollection<TKey = unknown>
   extends KeyedCollection<TKey> {

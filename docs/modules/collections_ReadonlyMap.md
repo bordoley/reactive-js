@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Collection Interfaces
+### Interfaces
 
 - [ReadonlyMapCollection](../interfaces/collections_ReadonlyMap.ReadonlyMapCollection.md)
 
@@ -14,23 +14,14 @@
 - [TKeyBase](collections_ReadonlyMap.md#tkeybase)
 - [Type](collections_ReadonlyMap.md#type)
 
-### Constructor Functions
+### Functions
 
 - [empty](collections_ReadonlyMap.md#empty)
-
-### Operator Functions
-
-- [map](collections_ReadonlyMap.md#map)
-
-### Other Functions
-
-- [fromEntries](collections_ReadonlyMap.md#fromentries)
-
-### Transform Functions
-
 - [entries](collections_ReadonlyMap.md#entries)
+- [fromEntries](collections_ReadonlyMap.md#fromentries)
 - [keySet](collections_ReadonlyMap.md#keyset)
 - [keys](collections_ReadonlyMap.md#keys)
+- [map](collections_ReadonlyMap.md#map)
 - [reduce](collections_ReadonlyMap.md#reduce)
 - [toDictionary](collections_ReadonlyMap.md#todictionary)
 - [toReadonlyMap](collections_ReadonlyMap.md#toreadonlymap)
@@ -60,7 +51,7 @@ ___
 | :------ | :------ |
 | `TKey` | `unknown` |
 
-## Constructor Functions
+## Functions
 
 ### empty
 
@@ -81,7 +72,71 @@ Return an Collection that emits no items.
 
 ___
 
-## Operator Functions
+### entries
+
+▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
+
+___
+
+### fromEntries
+
+▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+
+___
+
+### keySet
+
+▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
+
+___
+
+### keys
+
+▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `Object` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+
+___
 
 ### map
 
@@ -115,76 +170,6 @@ TB - The inner type of the mapped container
 #### Returns
 
 [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `TA`, `TB`, `TKey`\>
-
-___
-
-## Other Functions
-
-### fromEntries
-
-▸ **fromEntries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
-
-___
-
-## Transform Functions
-
-### entries
-
-▸ **entries**<`T`, `TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `TKey` | extends `Object` = {} |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>\>
-
-___
-
-### keySet
-
-▸ **keySet**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, `ReadonlySet`<`TKey`\>\>
-
-___
-
-### keys
-
-▸ **keys**<`TKey`\>(): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TKey` | extends `Object` |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `unknown`\>, [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
 
 ___
 

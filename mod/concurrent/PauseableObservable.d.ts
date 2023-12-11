@@ -3,7 +3,6 @@ import { Function1 } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface PauseableObservableModule {
     fromAsyncIterable<T>(scheduler: SchedulerLike, options?: {

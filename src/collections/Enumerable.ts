@@ -65,7 +65,6 @@ export interface EnumerableModule
    * Converts a higher-order Container into a first-order
    * Container by concatenating the inner sources in order.
    *
-   * @category Operator
    */
   concatAll<T>(): Function1<
     EnumerableLike<EnumerableLike<T>>,
@@ -73,7 +72,6 @@ export interface EnumerableModule
   >;
 
   /**
-   * @category Operator
    */
   concatMap<TA, TB>(
     selector: Function1<TA, EnumerableLike<TB>>,

@@ -43,7 +43,6 @@ interface ReactWebModule {
   }>;
 
   /**
-   * @category Hook
    */
   useAnimate<TElement extends HTMLElement>(
     animation: Optional<EventSourceLike<CSSStyleMapLike>>,
@@ -55,7 +54,6 @@ interface ReactWebModule {
   ): React.Ref<TElement>;
 
   /**
-   * @category Hook
    */
   useScroll<TElement extends HTMLElement>(
     callback: SideEffect1<ScrollValue>,
@@ -63,7 +61,6 @@ interface ReactWebModule {
   ): React.Ref<TElement>;
 
   /**
-   * @category Hook
    */
   useWindowLocation(): {
     uri: Optional<WindowLocationURI>;

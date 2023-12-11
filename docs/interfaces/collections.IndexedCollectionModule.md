@@ -18,14 +18,14 @@
 
 ## Table of contents
 
-### Transform Methods
+### Methods
 
 - [entries](collections.IndexedCollectionModule.md#entries)
 - [toIndexed](collections.IndexedCollectionModule.md#toindexed)
 - [toReadonlyArray](collections.IndexedCollectionModule.md#toreadonlyarray)
 - [values](collections.IndexedCollectionModule.md#values)
 
-## Transform Methods
+## Methods
 
 ### entries
 

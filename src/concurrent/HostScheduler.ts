@@ -24,7 +24,6 @@ import ContinuationSchedulerMixin, {
 
 /**
  * @noInheritDoc
- * @category Module
  */
 interface Signature {
   create(options?: {

@@ -12,11 +12,9 @@ export interface EnumerableModule extends PureComputationModule<EnumerableComput
      * Converts a higher-order Container into a first-order
      * Container by concatenating the inner sources in order.
      *
-     * @category Operator
      */
     concatAll<T>(): Function1<EnumerableLike<EnumerableLike<T>>, EnumerableLike<T>>;
     /**
-     * @category Operator
      */
     concatMap<TA, TB>(selector: Function1<TA, EnumerableLike<TB>>): Function1<EnumerableLike<TA>, EnumerableLike<TB>>;
     concatWith<T>(snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): Function1<EnumerableLike<T>, EnumerableLike<T>>;

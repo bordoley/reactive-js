@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Collection Interfaces
+### Interfaces
 
 - [ReadonlyArrayCollection](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)
 
@@ -14,19 +14,13 @@
 - [TKeyBase](collections_ReadonlyArray.md#tkeybase)
 - [Type](collections_ReadonlyArray.md#type)
 
-### Constructor Functions
+### Functions
 
 - [empty](collections_ReadonlyArray.md#empty)
-
-### Operator Functions
-
-- [map](collections_ReadonlyArray.md#map)
-
-### Transform Functions
-
 - [entries](collections_ReadonlyArray.md#entries)
 - [keySet](collections_ReadonlyArray.md#keyset)
 - [keys](collections_ReadonlyArray.md#keys)
+- [map](collections_ReadonlyArray.md#map)
 - [reduce](collections_ReadonlyArray.md#reduce)
 - [toDictionary](collections_ReadonlyArray.md#todictionary)
 - [toIndexed](collections_ReadonlyArray.md#toindexed)
@@ -52,7 +46,7 @@ ___
 
 Ƭ **Type**: [`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md)
 
-## Constructor Functions
+## Functions
 
 ### empty
 
@@ -72,45 +66,6 @@ Return an Collection that emits no items.
 readonly `T`[]
 
 ___
-
-## Operator Functions
-
-### map
-
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
-
-Returns a KeyedCollectionOperator that applies the `selector` function to each
-value emitted by the source.
-
-**`Typeparam`**
-
-TA - The inner type of the source container
-
-**`Typeparam`**
-
-TB - The inner type of the mapped container
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TA` | `TA` |
-| `TB` | `TB` |
-| `TKey` | extends `number` = `number` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
-
-#### Returns
-
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
-
-___
-
-## Transform Functions
 
 ### entries
 
@@ -166,6 +121,41 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<readonly `unknown`[], [`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<`TKey`\>\>
+
+___
+
+### map
+
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
+
+Returns a KeyedCollectionOperator that applies the `selector` function to each
+value emitted by the source.
+
+**`Typeparam`**
+
+TA - The inner type of the source container
+
+**`Typeparam`**
+
+TB - The inner type of the mapped container
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TA` | `TA` |
+| `TB` | `TB` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | [`Function2`](functions.md#function2)<`TA`, `TKey`, `TB`\> | A pure map function that is applied each value emitted by the source |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `TA`, `TB`, `TKey`\>
 
 ___
 

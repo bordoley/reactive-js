@@ -4,17 +4,33 @@
 
 ## Table of contents
 
-### Hook Functions
+### Functions
 
+- [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
 - [useAnimate](integrations_react_web.md#useanimate)
 - [useScroll](integrations_react_web.md#usescroll)
 - [useWindowLocation](integrations_react_web.md#usewindowlocation)
 
-### Other Functions
+## Functions
 
-- [WindowLocationProvider](integrations_react_web.md#windowlocationprovider)
+### WindowLocationProvider
 
-## Hook Functions
+▸ **WindowLocationProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `props` | `Object` |
+| `props.children` | `ReactNode` |
+| `props.windowLocation` | [`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) |
+| `context?` | `any` |
+
+#### Returns
+
+``null`` \| `ReactElement`<`any`, `any`\>
+
+___
 
 ### useAnimate
 
@@ -97,24 +113,3 @@ ___
 | `push` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
 | `replace` | [`SideEffect1`](functions.md#sideeffect1)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md) \| [`Updater`](functions.md#updater)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\>\> |
 | `uri` | [`Optional`](functions.md#optional)<[`WindowLocationURI`](../interfaces/integrations_web.WindowLocationURI.md)\> |
-
-___
-
-## Other Functions
-
-### WindowLocationProvider
-
-▸ **WindowLocationProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.children` | `ReactNode` |
-| `props.windowLocation` | [`WindowLocationLike`](../interfaces/integrations_web.WindowLocationLike.md) |
-| `context?` | `any` |
-
-#### Returns
-
-``null`` \| `ReactElement`<`any`, `any`\>

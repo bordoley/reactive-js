@@ -15,7 +15,6 @@ export const Computation_type = Symbol("Computation_type");
 
 /**
  * @noInheritDoc
- * @category Computation
  */
 export interface Computation {
   readonly [Computation_T]?: unknown;
@@ -42,7 +41,6 @@ export type PureComputationOperator<C extends Computation, TA, TB> = Function1<
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface PureComputationModule<C extends Computation> {
   buffer<T>(options?: {

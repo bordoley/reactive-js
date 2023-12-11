@@ -2,7 +2,6 @@ import { Factory, Function1, Function2, Function3, Optional, SideEffect, SideEff
 import { DisposableLike } from "../utils.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface DisposableModule {
     readonly disposed: DisposableLike;

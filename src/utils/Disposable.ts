@@ -27,7 +27,6 @@ import Disposable_usingLazy from "./Disposable/__private__/Disposable.usingLazy.
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface DisposableModule {
   readonly disposed: DisposableLike;

@@ -4,24 +4,12 @@
 
 ## Table of contents
 
-### Interactive Interfaces
-
-- [StreamLike](../interfaces/concurrent.StreamLike.md)
-- [StreamableLike](../interfaces/concurrent.StreamableLike.md)
-
-### Observable Interfaces
-
-- [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
-- [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
-- [PureRunnableLike](../interfaces/concurrent.PureRunnableLike.md)
-- [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)
-- [RunnableLike](../interfaces/concurrent.RunnableLike.md)
-- [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
-
-### Other Interfaces
+### Interfaces
 
 - [ContinuationLike](../interfaces/concurrent.ContinuationLike.md)
 - [ContinuationSchedulerLike](../interfaces/concurrent.ContinuationSchedulerLike.md)
+- [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
+- [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
 - [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
 - [DispatcherLikeEventMap](../interfaces/concurrent.DispatcherLikeEventMap.md)
 - [MulticastObservableLike](../interfaces/concurrent.MulticastObservableLike.md)
@@ -31,12 +19,18 @@
 - [PauseableObservableLike](../interfaces/concurrent.PauseableObservableLike.md)
 - [PauseableSchedulerLike](../interfaces/concurrent.PauseableSchedulerLike.md)
 - [PureObservableLike](../interfaces/concurrent.PureObservableLike.md)
+- [PureRunnableLike](../interfaces/concurrent.PureRunnableLike.md)
+- [ReplayObservableLike](../interfaces/concurrent.ReplayObservableLike.md)
+- [RunnableLike](../interfaces/concurrent.RunnableLike.md)
+- [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
 - [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
+- [StreamLike](../interfaces/concurrent.StreamLike.md)
+- [StreamableLike](../interfaces/concurrent.StreamableLike.md)
 - [SubjectLike](../interfaces/concurrent.SubjectLike.md)
 - [VirtualTimeSchedulerLike](../interfaces/concurrent.VirtualTimeSchedulerLike.md)
 
-### Interactive Type Aliases
+### Type Aliases
 
 - [StreamOf](concurrent.md#streamof)
 
@@ -76,7 +70,7 @@
 - [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
 - [VirtualTimeSchedulerLike\_run](concurrent.md#virtualtimeschedulerlike_run)
 
-## Interactive Type Aliases
+## Type Aliases
 
 ### StreamOf
 

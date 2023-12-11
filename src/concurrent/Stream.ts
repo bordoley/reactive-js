@@ -13,7 +13,6 @@ import Stream_syncState from "./Stream/__private__/Stream.syncState.js";
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface StreamModule {
   syncState<T>(

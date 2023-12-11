@@ -6,11 +6,9 @@ import { Animation } from "./Observable.js";
 import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface StreamableModule {
     /**
-     * @category Constructor
      */
     create<TReq, T>(op: Function1<DeferredSideEffectsObservableLike<TReq>, DeferredSideEffectsObservableLike<T>>): StreamableLike<TReq, T, StreamLike<TReq, T>>;
     createAnimationGroupEventHandler<TEvent, TKey extends string | symbol, T>(animationGroup: ReadonlyObjectMapLike<TKey, Function1<TEvent, Animation<T> | readonly Animation<T>[]>>, options: {
@@ -62,13 +60,11 @@ export interface StreamableModule {
      * @param equals - Optional equality function that is used to compare
      * if a state value is distinct from the previous one.
      *
-     * @category Constructor
      */
     createStateStore<T>(initialState: Factory<T>, options?: {
         readonly equality?: Equality<T>;
     }): StreamableLike<Updater<T>, T>;
     /**
-     * @category Constructor
      */
     identity<T>(): StreamableLike<T, T, StreamLike<T, T>>;
 }

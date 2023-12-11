@@ -3,7 +3,6 @@ import { Function1, Function2, Updater } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface StreamModule {
     syncState<T>(onInit: Function1<T, DeferredObservableLike<Updater<T>>>, onChange: Function2<T, T, DeferredObservableLike<Updater<T>>>, options?: {

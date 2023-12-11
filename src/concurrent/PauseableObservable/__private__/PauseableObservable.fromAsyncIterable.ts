@@ -1,6 +1,6 @@
 import {
   DispatcherLike_complete,
-  MulticastObservableLike,
+  ObservableLike,
   ObserverLike,
   SchedulerLike,
   SchedulerLike_maxYieldInterval,
@@ -33,7 +33,7 @@ const PauseableObservable_fromAsyncIterable: PauseableObservable.Signature["from
     ) =>
     (iterable: AsyncIterable<T>) =>
       PauseableObservable_create<T>(
-        (modeObs: MulticastObservableLike<boolean>) =>
+        (modeObs: ObservableLike<boolean>) =>
           Observable_create((observer: ObserverLike<T>) => {
             const iterator = iterable[Symbol.asyncIterator]();
             const maxYieldInterval = observer[SchedulerLike_maxYieldInterval];

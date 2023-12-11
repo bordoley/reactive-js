@@ -11,7 +11,6 @@ import PauseableObservable_sinkInto from "./PauseableObservable/__private__/Paus
 
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface PauseableObservableModule {
   fromAsyncIterable<T>(

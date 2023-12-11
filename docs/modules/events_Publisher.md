@@ -12,7 +12,7 @@
 
 - [Signature](events_Publisher.md#signature)
 
-### Constructor Functions
+### Functions
 
 - [create](events_Publisher.md#create)
 - [createRefCounted](events_Publisher.md#createrefcounted)
@@ -23,7 +23,7 @@
 
 Ƭ **Signature**: [`PublisherModule`](../interfaces/events_Publisher.PublisherModule.md)
 
-## Constructor Functions
+## Functions
 
 ### create
 

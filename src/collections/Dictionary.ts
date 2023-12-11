@@ -20,7 +20,6 @@ import Dictionary_values from "./Dictionary/__private__/Dictionary.values.js";
 
 /**
  * @noInheritDoc
- * @category Collection
  */
 export interface DictionaryCollection<TKey = unknown>
   extends KeyedCollection<TKey> {

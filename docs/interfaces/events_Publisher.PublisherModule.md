@@ -6,12 +6,12 @@
 
 ## Table of contents
 
-### Constructor Methods
+### Methods
 
 - [create](events_Publisher.PublisherModule.md#create)
 - [createRefCounted](events_Publisher.PublisherModule.md#createrefcounted)
 
-## Constructor Methods
+## Methods
 
 ### create
 

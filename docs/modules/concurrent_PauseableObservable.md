@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Module Interfaces
+### Interfaces
 
 - [PauseableObservableModule](../interfaces/concurrent_PauseableObservable.PauseableObservableModule.md)
 

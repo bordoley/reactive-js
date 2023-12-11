@@ -3,7 +3,6 @@ export declare const Computation_T: unique symbol;
 export declare const Computation_type: unique symbol;
 /**
  * @noInheritDoc
- * @category Computation
  */
 export interface Computation {
     readonly [Computation_T]?: unknown;
@@ -20,7 +19,6 @@ export type ComputationOf<C extends Computation, T> = C extends {
 export type PureComputationOperator<C extends Computation, TA, TB> = Function1<ComputationOf<C, TA>, ComputationOf<C, TB>>;
 /**
  * @noInheritDoc
- * @category Module
  */
 export interface PureComputationModule<C extends Computation> {
     buffer<T>(options?: {
