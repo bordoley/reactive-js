@@ -1,16 +1,75 @@
 /// <reference types="./ObserverMixin.d.ts" />
 
-import { include, init, mix, props, } from "../../__internal__/mixins.js";
+import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
+import { CollectionLike_count } from "../../collections.js";
+import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_schedule, SchedulerLike_yield, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
-import { returns } from "../../functions.js";
-import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../utils.js";
+import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
+import { call, pipe, returns } from "../../functions.js";
+import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
+import * as Disposable from "../../utils/Disposable.js";
+import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
-import Observer_baseMixin from "./ObserverBaseMixin.js";
-const ObserverMixin = /*@__PURE__*/ (() => returns(mix(include(Observer_baseMixin(), DelegatingSchedulerMixin), function ObserverMixin(instance, scheduler, config) {
-    init(DelegatingSchedulerMixin, instance, scheduler);
-    init(Observer_baseMixin(), instance, config);
-    return instance;
-}, props({}), {
-    [SinkLike_notify](_) { },
-})))();
+const ObserverMixin = /*@__PURE__*/ (() => {
+    const ObserverMixin_isCompleted = Symbol("ObserverMixin_isCompleted");
+    const ObserverMixin_dispatchSubscription = Symbol("ObserverMixin_dispatchSubscription");
+    const scheduleDrainQueue = (observer) => {
+        if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
+            const continuation = (scheduler) => {
+                unsafeCast(observer);
+                while (observer[CollectionLike_count] > 0) {
+                    const next = observer[QueueLike_dequeue]();
+                    observer[SinkLike_notify](next);
+                    if (observer[CollectionLike_count] > 0) {
+                        scheduler[SchedulerLike_yield]();
+                    }
+                }
+                if (observer[ObserverMixin_isCompleted]) {
+                    observer[DisposableLike_dispose]();
+                }
+                else {
+                    observer[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_ready);
+                }
+            };
+            observer[ObserverMixin_dispatchSubscription] = pipe(observer[SchedulerLike_schedule](continuation), Disposable.addTo(observer));
+        }
+    };
+    const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
+    return returns(mix(include(IndexedQueueMixin(), LazyInitEventSourceMixin(), DelegatingSchedulerMixin), function ObserverMixin(instance, scheduler, config) {
+        init(
+        // FIXME: Change this to take a config
+        IndexedQueueMixin(), instance, config[QueueableLike_capacity], config[QueueableLike_backpressureStrategy]);
+        init(LazyInitEventSourceMixin(), instance);
+        init(DelegatingSchedulerMixin, instance, scheduler);
+        return instance;
+    }, props({
+        [ObserverMixin_isCompleted]: false,
+        [ObserverMixin_dispatchSubscription]: Disposable.disposed,
+    }), {
+        [QueueableLike_enqueue](next) {
+            if (!this[ObserverMixin_isCompleted] &&
+                !this[DisposableLike_isDisposed]) {
+                const result = call(indexedQueueProtoype[QueueableLike_enqueue], this, next);
+                if (!result) {
+                    this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_capacityExceeded);
+                }
+                scheduleDrainQueue(this);
+                return result;
+            }
+            return true;
+        },
+        [DispatcherLike_complete]() {
+            const isCompleted = this[ObserverMixin_isCompleted];
+            this[ObserverMixin_isCompleted] = true;
+            if (!isCompleted) {
+                this[LazyInitEventSourceMixin_publisher]?.[SinkLike_notify](DispatcherLikeEvent_completed);
+            }
+            if (this[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed] &&
+                !isCompleted) {
+                this[DisposableLike_dispose]();
+            }
+        },
+        [SinkLike_notify](_) { },
+    }));
+})();
 export default ObserverMixin;
