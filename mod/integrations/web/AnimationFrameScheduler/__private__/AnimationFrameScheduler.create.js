@@ -5,7 +5,7 @@ import { MAX_SAFE_INTEGER } from "../../../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../../../collections.js";
 import { ContinuationSchedulerLike_schedule, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../../../concurrent.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import { invoke, isSome, none, pipe, pipeLazy, } from "../../../../functions.js";
 import { QueueLike_dequeue, QueueableLike_enqueue, } from "../../../../utils.js";
 import * as Disposable from "../../../../utils/Disposable.js";
@@ -60,9 +60,9 @@ const AnimationFrameScheduler_create =
         get [SchedulerLike_now]() {
             return CurrentTime.now();
         },
-        [ContinuationSchedulerInstanceLike_shouldYield]: true,
+        [ContinuationSchedulerImplementationLike_shouldYield]: true,
         [SchedulerLike_shouldYield]: true,
-        [ContinuationSchedulerInstanceLike_scheduleContinuation](continuation, delay) {
+        [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {

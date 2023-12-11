@@ -9,7 +9,7 @@ import { SchedulerLike_now, SchedulerTaskLike_continuation, SchedulerTaskLike_du
 import { isSome } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import PriorityQueueMixin from "../../../utils/__mixins__/PriorityQueueMixin.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
 const comparator = (a, b) => {
     const diff = a[SchedulerTaskLike_dueTime] - b[SchedulerTaskLike_dueTime];
     return diff !== 0 ? diff : a[SchedulerTaskLike_id] - b[SchedulerTaskLike_id];
@@ -29,7 +29,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
     [VirtualTimeScheduler_microTaskTicks]: 0,
     [VirtualTimeScheduler_taskIDCount]: 0,
 }), {
-    get [ContinuationSchedulerInstanceLike_shouldYield]() {
+    get [ContinuationSchedulerImplementationLike_shouldYield]() {
         unsafeCast(this);
         this[VirtualTimeScheduler_microTaskTicks]++;
         return (this[VirtualTimeScheduler_microTaskTicks] >=
@@ -45,7 +45,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() => createInstanceFa
             this[ContinuationSchedulerMixinLike_runContinuation](continuation);
         }
     },
-    [ContinuationSchedulerInstanceLike_scheduleContinuation](continuation, delay) {
+    [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
         this[QueueableLike_enqueue]({
             [SchedulerTaskLike_id]: this[VirtualTimeScheduler_taskIDCount]++,
             [SchedulerTaskLike_dueTime]: this[SchedulerLike_now] + delay,

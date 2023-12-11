@@ -61,9 +61,9 @@ import * as PriorityQueue from "../../../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../../../utils/__mixins__/SerialDisposableMixin.js";
 import type * as Scheduler from "../../Scheduler.js";
 import ContinuationSchedulerMixin, {
-  ContinuationSchedulerInstanceLike,
-  ContinuationSchedulerInstanceLike_scheduleContinuation,
-  ContinuationSchedulerInstanceLike_shouldYield,
+  ContinuationSchedulerImplementationLike,
+  ContinuationSchedulerImplementationLike_scheduleContinuation,
+  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerMixinLike,
   ContinuationSchedulerMixinLike_runContinuation,
 } from "../../__mixins__/ContinuationSchedulerMixin.js";
@@ -234,7 +234,7 @@ const Scheduler_toPausableScheduler: Scheduler.Signature["toPausableScheduler"] 
             PauseableSchedulerLike,
             typeof PauseableLike_pause | typeof PauseableLike_resume
           > &
-            ContinuationSchedulerInstanceLike &
+            ContinuationSchedulerImplementationLike &
             Mutable<TProperties>,
           host: SchedulerLike,
         ): PauseableSchedulerLike & DisposableLike {
@@ -287,7 +287,7 @@ const Scheduler_toPausableScheduler: Scheduler.Signature["toPausableScheduler"] 
               (hostNow - this[PauseableScheduler_resumedTime])
             );
           },
-          get [ContinuationSchedulerInstanceLike_shouldYield](): boolean {
+          get [ContinuationSchedulerImplementationLike_shouldYield](): boolean {
             unsafeCast<
               TProperties &
                 EnumeratorLike<SchedulerTaskLike> &
@@ -310,7 +310,7 @@ const Scheduler_toPausableScheduler: Scheduler.Signature["toPausableScheduler"] 
             this: TProperties &
               SerialDisposableLike &
               EnumeratorLike &
-              ContinuationSchedulerInstanceLike,
+              ContinuationSchedulerImplementationLike,
           ) {
             this[PauseableScheduler_initialTime] = this[SchedulerLike_now];
             this[SerialDisposableLike_current] = Disposable.disposed;
@@ -343,7 +343,7 @@ const Scheduler_toPausableScheduler: Scheduler.Signature["toPausableScheduler"] 
 
             return this[EnumeratorLike_hasCurrent];
           },
-          [ContinuationSchedulerInstanceLike_scheduleContinuation](
+          [ContinuationSchedulerImplementationLike_scheduleContinuation](
             this: TProperties &
               SerialDisposableLike &
               EnumeratorLike<SchedulerTaskLike> &

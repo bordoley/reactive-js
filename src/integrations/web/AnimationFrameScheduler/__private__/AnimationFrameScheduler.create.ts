@@ -17,9 +17,9 @@ import {
   SchedulerLike_shouldYield,
 } from "../../../../concurrent.js";
 import ContinuationSchedulerMixin, {
-  ContinuationSchedulerInstanceLike,
-  ContinuationSchedulerInstanceLike_scheduleContinuation,
-  ContinuationSchedulerInstanceLike_shouldYield,
+  ContinuationSchedulerImplementationLike,
+  ContinuationSchedulerImplementationLike_scheduleContinuation,
+  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerMixinLike,
   ContinuationSchedulerMixinLike_runContinuation,
 } from "../../../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
@@ -99,7 +99,7 @@ const AnimationFrameScheduler_create: AnimationFrameScheduler.Signature["create"
       mix(
         include(ContinuationSchedulerMixin),
         function AnimationFrameScheduler(
-          instance: ContinuationSchedulerInstanceLike & TProperties,
+          instance: ContinuationSchedulerImplementationLike & TProperties,
           hostScheduler: SchedulerLike,
         ): SchedulerLike & DisposableLike {
           init(ContinuationSchedulerMixin, instance, 5);
@@ -116,10 +116,10 @@ const AnimationFrameScheduler_create: AnimationFrameScheduler.Signature["create"
             return CurrentTime.now();
           },
 
-          [ContinuationSchedulerInstanceLike_shouldYield]: true,
+          [ContinuationSchedulerImplementationLike_shouldYield]: true,
           [SchedulerLike_shouldYield]: true,
 
-          [ContinuationSchedulerInstanceLike_scheduleContinuation](
+          [ContinuationSchedulerImplementationLike_scheduleContinuation](
             this: ContinuationSchedulerMixinLike & TProperties,
             continuation: ContinuationLike,
             delay: number,

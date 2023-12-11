@@ -14,7 +14,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import * as PriorityQueue from "../../../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../../../utils/__mixins__/SerialDisposableMixin.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerInstanceLike_scheduleContinuation, ContinuationSchedulerInstanceLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../__mixins__/ContinuationSchedulerMixin.js";
 const Scheduler_toPausableScheduler = 
 /*@PURE__*/ (() => {
     const PauseableScheduler_delayed = Symbol("PauseableScheduler_delayed");
@@ -126,7 +126,7 @@ const Scheduler_toPausableScheduler =
             return (this[PauseableScheduler_initialTime] +
                 (hostNow - this[PauseableScheduler_resumedTime]));
         },
-        get [ContinuationSchedulerInstanceLike_shouldYield]() {
+        get [ContinuationSchedulerImplementationLike_shouldYield]() {
             unsafeCast(this);
             const next = peek(this);
             return (!this[EnumeratorLike_hasCurrent] ||
@@ -156,7 +156,7 @@ const Scheduler_toPausableScheduler =
             }
             return this[EnumeratorLike_hasCurrent];
         },
-        [ContinuationSchedulerInstanceLike_scheduleContinuation](continuation, delay) {
+        [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             const now = this[SchedulerLike_now];
             const dueTime = max(now + delay, now);
             const task = this[SchedulerLike_inContinuation] &&

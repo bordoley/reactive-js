@@ -41,9 +41,9 @@ import {
 import PriorityQueueMixin from "../../../utils/__mixins__/PriorityQueueMixin.js";
 import type * as VirtualTimeScheduler from "../../VirtualTimeScheduler.js";
 import ContinuationSchedulerMixin, {
-  ContinuationSchedulerInstanceLike,
-  ContinuationSchedulerInstanceLike_scheduleContinuation,
-  ContinuationSchedulerInstanceLike_shouldYield,
+  ContinuationSchedulerImplementationLike,
+  ContinuationSchedulerImplementationLike_scheduleContinuation,
+  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerMixinLike,
   ContinuationSchedulerMixinLike_runContinuation,
 } from "../../__mixins__/ContinuationSchedulerMixin.js";
@@ -84,7 +84,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
           typeof VirtualTimeSchedulerLike_run
         > &
           Mutable<TProperties> &
-          ContinuationSchedulerInstanceLike,
+          ContinuationSchedulerImplementationLike,
         maxMicroTaskTicks: number,
       ): VirtualTimeSchedulerLike {
         init(ContinuationSchedulerMixin, instance, 1);
@@ -108,7 +108,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeScheduler_taskIDCount]: 0,
       }),
       {
-        get [ContinuationSchedulerInstanceLike_shouldYield]() {
+        get [ContinuationSchedulerImplementationLike_shouldYield]() {
           unsafeCast<TProperties>(this);
 
           this[VirtualTimeScheduler_microTaskTicks]++;
@@ -139,7 +139,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             this[ContinuationSchedulerMixinLike_runContinuation](continuation);
           }
         },
-        [ContinuationSchedulerInstanceLike_scheduleContinuation](
+        [ContinuationSchedulerImplementationLike_scheduleContinuation](
           this: TProperties & QueueLike<SchedulerTaskLike> & SchedulerLike,
           continuation: ContinuationLike,
           delay: number,

@@ -16,9 +16,9 @@ import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import type * as Scheduler from "../../Scheduler.js";
 import ContinuationSchedulerMixin, {
-  ContinuationSchedulerInstanceLike,
-  ContinuationSchedulerInstanceLike_scheduleContinuation,
-  ContinuationSchedulerInstanceLike_shouldYield,
+  ContinuationSchedulerImplementationLike,
+  ContinuationSchedulerImplementationLike_scheduleContinuation,
+  ContinuationSchedulerImplementationLike_shouldYield,
   ContinuationSchedulerMixinLike,
   ContinuationSchedulerMixinLike_runContinuation,
 } from "../../__mixins__/ContinuationSchedulerMixin.js";
@@ -102,7 +102,7 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
     mix(
       include(ContinuationSchedulerMixin),
       function HostScheduler(
-        instance: ContinuationSchedulerInstanceLike,
+        instance: ContinuationSchedulerImplementationLike,
         maxYieldInterval: number,
       ): SchedulerLike & DisposableLike {
         init(ContinuationSchedulerMixin, instance, maxYieldInterval);
@@ -115,11 +115,11 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
           return CurrentTime.now();
         },
 
-        get [ContinuationSchedulerInstanceLike_shouldYield](): boolean {
+        get [ContinuationSchedulerImplementationLike_shouldYield](): boolean {
           return isInputPending();
         },
 
-        [ContinuationSchedulerInstanceLike_scheduleContinuation](
+        [ContinuationSchedulerImplementationLike_scheduleContinuation](
           this: ContinuationSchedulerMixinLike,
           continuation: ContinuationLike,
           delay: number,
