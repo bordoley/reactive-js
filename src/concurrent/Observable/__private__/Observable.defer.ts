@@ -4,7 +4,7 @@ import {
 } from "../../../concurrent.js";
 import { Factory, invoke, pipe } from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
-import Observable_create from "../../Observable/__private__/Observable.create.js";
+import Observable_create from "./Observable.create.js";
 
 const Observable_defer: Observable.Signature["defer"] = <T>(
   factory: Factory<MulticastObservableLike<T>>,
