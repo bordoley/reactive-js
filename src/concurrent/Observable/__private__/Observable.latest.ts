@@ -20,8 +20,8 @@ import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -65,55 +65,59 @@ const Observable_latest = /*@__PURE__*/ (() => {
   };
 
   const createLatestObserver = createInstanceFactory(
-    mix(
-      include(DisposableMixin, DelegatingObserverMixin()),
-      function LatestObserver(
-        instance: Pick<ObserverLike, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        ctx: LatestCtx,
-        delegate: ObserverLike,
-      ): ObserverLike & TProperties {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
+    decorateNotifyWithObserverStateAssert<
+      ObserverLike & TProperties,
+      LatestCtx,
+      ObserverLike
+    >(
+      mix(
+        include(DisposableMixin, DelegatingObserverMixin()),
+        function LatestObserver(
+          instance: Pick<ObserverLike, typeof SinkLike_notify> &
+            Mutable<TProperties>,
+          ctx: LatestCtx,
+          delegate: ObserverLike,
+        ): ObserverLike & TProperties {
+          init(DisposableMixin, instance);
+          init(DelegatingObserverMixin(), instance, delegate);
 
-        instance[LatestObserver_ctx] = ctx;
+          instance[LatestObserver_ctx] = ctx;
 
-        return instance;
-      },
-      props<TProperties>({
-        [LatestObserver_ready]: false,
-        [LatestObserver_latest]: none,
-        [LatestObserver_ctx]: none,
-      }),
-      {
-        [SinkLike_notify](this: TProperties & ObserverLike, next: unknown) {
-          Observer_assertState(this);
+          return instance;
+        },
+        props<TProperties>({
+          [LatestObserver_ready]: false,
+          [LatestObserver_latest]: none,
+          [LatestObserver_ctx]: none,
+        }),
+        {
+          [SinkLike_notify](this: TProperties & ObserverLike, next: unknown) {
+            const { [LatestObserver_ctx]: ctx } = this;
+            this[LatestObserver_latest] = next;
+            this[LatestObserver_ready] = true;
 
-          const { [LatestObserver_ctx]: ctx } = this;
-          this[LatestObserver_latest] = next;
-          this[LatestObserver_ready] = true;
+            const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
+              ctx;
 
-          const { [LatestCtx_mode]: mode, [LatestCtx_observers]: observers } =
-            ctx;
+            const isReady = observers.every(x => x[LatestObserver_ready]);
 
-          const isReady = observers.every(x => x[LatestObserver_ready]);
+            if (isReady) {
+              const result = pipe(
+                observers,
+                ReadonlyArray.map(observer => observer[LatestObserver_latest]),
+              );
+              ctx[LatestCtx_delegate][SinkLike_notify](result);
 
-          if (isReady) {
-            const result = pipe(
-              observers,
-              ReadonlyArray.map(observer => observer[LatestObserver_latest]),
-            );
-            ctx[LatestCtx_delegate][SinkLike_notify](result);
-
-            if (mode === zipMode) {
-              for (const sub of observers) {
-                sub[LatestObserver_ready] = false;
-                sub[LatestObserver_latest] = none as any;
+              if (mode === zipMode) {
+                for (const sub of observers) {
+                  sub[LatestObserver_ready] = false;
+                  sub[LatestObserver_latest] = none as any;
+                }
               }
             }
-          }
+          },
         },
-      },
+      ),
     ),
   );
 

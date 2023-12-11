@@ -14,7 +14,6 @@ import {
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../utils.js";
-import Observer_assertState from "../Observer/__private__/Observer.assertState.js";
 import DelegatingSchedulerMixin from "./DelegatingSchedulerMixin.js";
 import Observer_baseMixin from "./ObserverBaseMixin.js";
 
@@ -60,9 +59,7 @@ const ObserverMixin: <T>() => Mixin2<
       },
       props({}),
       {
-        [SinkLike_notify](this: ObserverLike, _: T) {
-          Observer_assertState(this);
-        },
+        [SinkLike_notify](this: ObserverLike, _: T) {},
       },
     ),
   ))();

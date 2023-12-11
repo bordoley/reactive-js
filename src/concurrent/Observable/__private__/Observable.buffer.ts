@@ -18,26 +18,25 @@ const Observer_createBufferObserver: <T>(
   count: Optional<number>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(BufferSinkMixin()),
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), BufferSinkMixin()),
+        function BufferObserver(
+          instance: unknown,
+          delegate: ObserverLike<readonly T[]>,
+          count?: number,
+        ): ObserverLike<T> {
+          const onComplete = (buffer: readonly T[]) => {
+            delegate[QueueableLike_enqueue](buffer);
+            delegate[DispatcherLike_complete]();
+          };
+
+          init(ObserverMixin(), instance, delegate, delegate);
+          init(BufferSinkMixin<T>(), instance, delegate, count, onComplete);
+
+          return instance;
+        },
       ),
-      function BufferObserver(
-        instance: unknown,
-        delegate: ObserverLike<readonly T[]>,
-        count?: number,
-      ): ObserverLike<T> {
-        const onComplete = (buffer: readonly T[]) => {
-          delegate[QueueableLike_enqueue](buffer);
-          delegate[DispatcherLike_complete]();
-        };
-
-        init(ObserverMixin(), instance, delegate, delegate);
-        init(BufferSinkMixin<T>(), instance, delegate, count, onComplete);
-
-        return instance;
-      },
     ),
   ))();
 

@@ -378,3 +378,34 @@ export const getPrototype = <TPrototype extends object>(
 ): TPrototype => mixin[Mixin_prototype];
 
 export function unsafeCast<T>(_v: unknown): asserts _v is T {}
+
+export interface MixinDecorator {
+  <TReturn>(mixin: Mixin<TReturn>): Mixin<TReturn>;
+
+  <TReturn, TA>(mixin: Mixin1<TReturn, TA>): Mixin1<TReturn, TA>;
+
+  <TReturn, TA, TB>(mixin: Mixin2<TReturn, TA, TB>): Mixin2<TReturn, TA, TB>;
+
+  <TReturn, TA, TB, TC>(mixin: Mixin3<TReturn, TA, TB, TC>): Mixin3<
+    TReturn,
+    TA,
+    TB,
+    TC
+  >;
+
+  <TReturn, TA, TB, TC, TD>(mixin: Mixin4<TReturn, TA, TB, TC, TD>): Mixin4<
+    TReturn,
+    TA,
+    TB,
+    TC,
+    TD
+  >;
+
+  <TReturn, TA, TB, TC, TD, TE>(
+    mixin: Mixin5<TReturn, TA, TB, TC, TD, TE>,
+  ): Mixin5<TReturn, TA, TB, TC, TD, TE>;
+
+  <TReturn, TA, TB, TC, TD, TE, TF>(
+    mixin: Mixin6<TReturn, TA, TB, TC, TD, TE, TF>,
+  ): Mixin6<TReturn, TA, TB, TC, TD, TE, TF>;
+}

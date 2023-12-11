@@ -17,21 +17,20 @@ const Observer_createDistinctUntilChangedObserver: <T>(
   equality: Equality<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(DistinctUntilChangedSinkMixin()),
-      ),
-      function DistinctUntilChangedObserver(
-        instance: unknown,
-        delegate: ObserverLike<T>,
-        equality: Equality<T>,
-      ): ObserverLike<T> {
-        init(DistinctUntilChangedSinkMixin(), instance, delegate, equality);
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), DistinctUntilChangedSinkMixin()),
+        function DistinctUntilChangedObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          equality: Equality<T>,
+        ): ObserverLike<T> {
+          init(DistinctUntilChangedSinkMixin(), instance, delegate, equality);
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

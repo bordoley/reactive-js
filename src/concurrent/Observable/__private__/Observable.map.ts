@@ -17,21 +17,20 @@ const Observer_createMapObserver: <TA, TB>(
   selector: Function1<TA, TB>,
 ) => ObserverLike<TA> = /*@__PURE__*/ (<TA, TB>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(MapSinkMixin()),
-      ),
-      function MapObserver(
-        instance: unknown,
-        delegate: ObserverLike<TB>,
-        selector: Function1<TA, TB>,
-      ): ObserverLike<TA> {
-        init(ObserverMixin(), instance, delegate, delegate);
-        init(MapSinkMixin<TA, TB>(), instance, delegate, selector);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), MapSinkMixin()),
+        function MapObserver(
+          instance: unknown,
+          delegate: ObserverLike<TB>,
+          selector: Function1<TA, TB>,
+        ): ObserverLike<TA> {
+          init(ObserverMixin(), instance, delegate, delegate);
+          init(MapSinkMixin<TA, TB>(), instance, delegate, selector);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

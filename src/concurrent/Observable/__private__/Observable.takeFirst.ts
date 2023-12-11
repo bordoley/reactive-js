@@ -18,21 +18,20 @@ const Observer_createTakeFirstObserver: <T>(
   count: number,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(TakeFirstSinkMixin()),
-      ),
-      function TakeFirstObserver(
-        instance: unknown,
-        delegate: ObserverLike<T>,
-        takeCount: number,
-      ): ObserverLike<T> {
-        init(TakeFirstSinkMixin<T>(), instance, delegate, takeCount);
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), TakeFirstSinkMixin()),
+        function TakeFirstObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          takeCount: number,
+        ): ObserverLike<T> {
+          init(TakeFirstSinkMixin<T>(), instance, delegate, takeCount);
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

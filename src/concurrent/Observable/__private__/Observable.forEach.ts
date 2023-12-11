@@ -14,8 +14,8 @@ import {
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
 const Observer_createForEachObserver: <T>(
@@ -29,35 +29,39 @@ const Observer_createForEachObserver: <T>(
   }
 
   return createInstanceFactory(
-    mix(
-      include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
-      function ForEachObserver(
-        instance: TProperties,
-        delegate: ObserverLike<T>,
-        effect: SideEffect1<T>,
-      ): ObserverLike<T> {
-        init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
-        instance[ForEachObserver_effect] = effect;
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+        function ForEachObserver(
+          instance: TProperties,
+          delegate: ObserverLike<T>,
+          effect: SideEffect1<T>,
+        ): ObserverLike<T> {
+          init(
+            DelegatingDisposableMixin<ObserverLike<T>>(),
+            instance,
+            delegate,
+          );
+          init(ObserverMixin(), instance, delegate, delegate);
+          instance[ForEachObserver_effect] = effect;
 
-        return instance;
-      },
-      props<TProperties>({
-        [ForEachObserver_effect]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties &
-            DelegatingDisposableLike<ObserverLike<T>> &
-            ObserverLike<T>,
-          next: T,
-        ) {
-          Observer_assertState(this);
-
-          this[ForEachObserver_effect](next);
-          this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+          return instance;
         },
-      },
+        props<TProperties>({
+          [ForEachObserver_effect]: none,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties &
+              DelegatingDisposableLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            this[ForEachObserver_effect](next);
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+          },
+        },
+      ),
     ),
   );
 })();

@@ -20,7 +20,7 @@ import {
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
-import Observer_assertState from "./Observer.assertState.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 
 const Observer_createEnqueueObserver: <T>(
   delegate: ObserverLike<T>,
@@ -33,38 +33,42 @@ const Observer_createEnqueueObserver: <T>(
   };
 
   return createInstanceFactory(
-    mix(
-      include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
-      function EnqueueObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: ObserverLike<T>,
-        queue: QueueableLike<T>,
-      ): ObserverLike<T> {
-        init(DelegatingDisposableMixin<ObserverLike<T>>(), instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
-        instance[EnqueueObserver_queue] = queue;
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<T>>()),
+        function EnqueueObserver(
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
+          delegate: ObserverLike<T>,
+          queue: QueueableLike<T>,
+        ): ObserverLike<T> {
+          init(
+            DelegatingDisposableMixin<ObserverLike<T>>(),
+            instance,
+            delegate,
+          );
+          init(ObserverMixin(), instance, delegate, delegate);
+          instance[EnqueueObserver_queue] = queue;
 
-        return instance;
-      },
-      props<TProperties>({
-        [EnqueueObserver_queue]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties &
-            DelegatingDisposableLike<ObserverLike<T>> &
-            ObserverLike<T>,
-          next: T,
-        ) {
-          Observer_assertState(this);
-
-          if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
-            this[SchedulerLike_requestYield]();
-          }
-          this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+          return instance;
         },
-      },
+        props<TProperties>({
+          [EnqueueObserver_queue]: none,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties &
+              DelegatingDisposableLike<ObserverLike<T>> &
+              ObserverLike<T>,
+            next: T,
+          ) {
+            if (!this[EnqueueObserver_queue][QueueableLike_enqueue](next)) {
+              this[SchedulerLike_requestYield]();
+            }
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](next);
+          },
+        },
+      ),
     ),
   );
 })();

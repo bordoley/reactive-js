@@ -10,7 +10,6 @@ import { SinkLike_notify } from "../../events.js";
 import { Function2, pipe, returns } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
-import Observer_assertState from "../Observer/__private__/Observer.assertState.js";
 import ObserverMixin from "./ObserverMixin.js";
 
 const DelegatingObserverMixin: <T>() => Mixin1<
@@ -42,9 +41,7 @@ const DelegatingObserverMixin: <T>() => Mixin1<
       },
       props({}),
       {
-        [SinkLike_notify](this: ObserverLike, _: T) {
-          Observer_assertState(this);
-        },
+        [SinkLike_notify](this: ObserverLike, _: T) {},
       },
     ),
   ))();

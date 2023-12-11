@@ -8,8 +8,8 @@ import { none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_allAreDeferred from "./Observable.allAreDeferred.js";
 import Observable_allArePure from "./Observable.allArePure.js";
 import Observable_allAreRunnable from "./Observable.allAreRunnable.js";
@@ -30,7 +30,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
     const LatestObserver_ctx = Symbol("LatestObserver_ctx");
     const LatestObserver_latest = Symbol("LatestObserver_latest");
     const LatestObserver_ready = Symbol("LatestObserver_ready");
-    const createLatestObserver = createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(instance, ctx, delegate) {
+    const createLatestObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function LatestObserver(instance, ctx, delegate) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[LatestObserver_ctx] = ctx;
@@ -41,7 +41,6 @@ const Observable_latest = /*@__PURE__*/ (() => {
         [LatestObserver_ctx]: none,
     }), {
         [SinkLike_notify](next) {
-            Observer_assertState(this);
             const { [LatestObserver_ctx]: ctx } = this;
             this[LatestObserver_latest] = next;
             this[LatestObserver_ready] = true;
@@ -58,7 +57,7 @@ const Observable_latest = /*@__PURE__*/ (() => {
                 }
             }
         },
-    }));
+    })));
     return (observables, mode) => {
         const onSubscribe = (delegate) => {
             const ctx = {

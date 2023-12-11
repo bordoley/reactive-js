@@ -18,22 +18,27 @@ const Observer_createTakeWhileObserver: <T>(
   inclusive: boolean,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(TakeWhileSinkMixin()),
-      ),
-      function TakeWhileObserver(
-        instance: unknown,
-        delegate: ObserverLike<T>,
-        predicate: Predicate<T>,
-        inclusive: boolean,
-      ): ObserverLike<T> {
-        init(TakeWhileSinkMixin<T>(), instance, delegate, predicate, inclusive);
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), TakeWhileSinkMixin()),
+        function TakeWhileObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          predicate: Predicate<T>,
+          inclusive: boolean,
+        ): ObserverLike<T> {
+          init(
+            TakeWhileSinkMixin<T>(),
+            instance,
+            delegate,
+            predicate,
+            inclusive,
+          );
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

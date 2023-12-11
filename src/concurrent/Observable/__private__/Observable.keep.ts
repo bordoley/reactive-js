@@ -17,21 +17,20 @@ const Observer_createKeepObserver: <T>(
   predicate: Predicate<T>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(KeepSinkMixin()),
-      ),
-      function KeepObserver(
-        instance: unknown,
-        delegate: ObserverLike<T>,
-        predicate: Predicate<T>,
-      ): ObserverLike<T> {
-        init(KeepSinkMixin<T>(), instance, delegate, predicate);
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), KeepSinkMixin()),
+        function KeepObserver(
+          instance: unknown,
+          delegate: ObserverLike<T>,
+          predicate: Predicate<T>,
+        ): ObserverLike<T> {
+          init(KeepSinkMixin<T>(), instance, delegate, predicate);
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

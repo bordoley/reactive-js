@@ -6,13 +6,13 @@ import { error, none, partial, pipe, } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
     const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
-    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
+    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[ThrowIfEmptyObserver_delegate] = delegate;
@@ -34,11 +34,10 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
         [ThrowIfEmptyObserver_isEmpty]: true,
     }), {
         [SinkLike_notify](next) {
-            Observer_assertState(this);
             this[ThrowIfEmptyObserver_isEmpty] = false;
             this[ThrowIfEmptyObserver_delegate][SinkLike_notify](next);
         },
-    }));
+    })));
 })();
 const Observable_throwIfEmpty = (factory) => pipe(Observer_createThrowIfEmptyObserver, partial(factory), Observable_liftPure);
 export default Observable_throwIfEmpty;

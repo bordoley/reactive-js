@@ -8,8 +8,8 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, SerialDisposableLike
 import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -21,7 +21,7 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
             this[SwitchAllObserver_delegate][DisposableLike_dispose]();
         }
     }
-    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function SwitchAllObserver(instance, delegate) {
+    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function SwitchAllObserver(instance, delegate) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
@@ -33,7 +33,6 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
         [SwitchAllObserver_delegate]: none,
     }), {
         [SinkLike_notify](next) {
-            Observer_assertState(this);
             this[SwitchAllObserver_currentRef][SerialDisposableLike_current] =
                 pipe(next, Observable_forEach(bindMethod(this[SwitchAllObserver_delegate], SinkLike_notify)), Observable_subscribeWithConfig(this[SwitchAllObserver_delegate], this), Disposable.addTo(this[SwitchAllObserver_delegate]), Disposable.onComplete(() => {
                     if (this[DisposableLike_isDisposed]) {
@@ -41,7 +40,7 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
                     }
                 }));
         },
-    }));
+    })));
 })();
 const Observable_switchAll = ((options) => Observable_lift({
     [ObservableLike_isDeferred]: false,

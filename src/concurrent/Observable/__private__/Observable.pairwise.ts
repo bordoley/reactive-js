@@ -16,20 +16,19 @@ const Observer_createPairwiseObserver: <T>(
   delegate: ObserverLike<Tuple2<T, T>>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T>() =>
   createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin<T>(),
-        decorateNotifyWithObserverStateAssert(PairwiseSinkMixin()),
-      ),
-      function PairwiseObserver(
-        instance: unknown,
-        delegate: ObserverLike<Tuple2<T, T>>,
-      ): ObserverLike<T> {
-        init(PairwiseSinkMixin<T>(), instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin<T>(), PairwiseSinkMixin()),
+        function PairwiseObserver(
+          instance: unknown,
+          delegate: ObserverLike<Tuple2<T, T>>,
+        ): ObserverLike<T> {
+          init(PairwiseSinkMixin<T>(), instance, delegate);
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
+          return instance;
+        },
+      ),
     ),
   ))();
 

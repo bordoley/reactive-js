@@ -20,8 +20,8 @@ import { DisposableLike, DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
@@ -34,52 +34,52 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
   };
 
   return createInstanceFactory(
-    mix(
-      include(DisposableMixin, DelegatingObserverMixin<T>()),
-      function ThrowIfEmptyObserver(
-        instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: ObserverLike<T>,
-        factory: Factory<unknown>,
-      ): ObserverLike<T> {
-        init(DisposableMixin, instance);
-        init(DelegatingObserverMixin(), instance, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(DisposableMixin, DelegatingObserverMixin<T>()),
+        function ThrowIfEmptyObserver(
+          instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
+          delegate: ObserverLike<T>,
+          factory: Factory<unknown>,
+        ): ObserverLike<T> {
+          init(DisposableMixin, instance);
+          init(DelegatingObserverMixin(), instance, delegate);
 
-        instance[ThrowIfEmptyObserver_delegate] = delegate;
+          instance[ThrowIfEmptyObserver_delegate] = delegate;
 
-        pipe(
-          instance,
-          Disposable.onComplete(() => {
-            let err: Optional<Error> = none;
+          pipe(
+            instance,
+            Disposable.onComplete(() => {
+              let err: Optional<Error> = none;
 
-            if (instance[ThrowIfEmptyObserver_isEmpty]) {
-              try {
-                err = error(factory());
-              } catch (e) {
-                err = error(e);
+              if (instance[ThrowIfEmptyObserver_isEmpty]) {
+                try {
+                  err = error(factory());
+                } catch (e) {
+                  err = error(e);
+                }
               }
-            }
-            delegate[DisposableLike_dispose](err);
-          }),
-        );
+              delegate[DisposableLike_dispose](err);
+            }),
+          );
 
-        return instance;
-      },
-      props<TProperties>({
-        [ThrowIfEmptyObserver_delegate]: none,
-        [ThrowIfEmptyObserver_isEmpty]: true,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties & DisposableLike & ObserverLike<T>,
-          next: T,
-        ) {
-          Observer_assertState(this);
-
-          this[ThrowIfEmptyObserver_isEmpty] = false;
-          this[ThrowIfEmptyObserver_delegate][SinkLike_notify](next);
+          return instance;
         },
-      },
+        props<TProperties>({
+          [ThrowIfEmptyObserver_delegate]: none,
+          [ThrowIfEmptyObserver_isEmpty]: true,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties & DisposableLike & ObserverLike<T>,
+            next: T,
+          ) {
+            this[ThrowIfEmptyObserver_isEmpty] = false;
+            this[ThrowIfEmptyObserver_delegate][SinkLike_notify](next);
+          },
+        },
+      ),
     ),
   );
 })();

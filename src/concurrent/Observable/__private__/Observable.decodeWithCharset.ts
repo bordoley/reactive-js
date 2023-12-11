@@ -15,8 +15,8 @@ import {
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
@@ -33,62 +33,62 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
   };
 
   return createInstanceFactory(
-    mix(
-      include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
-      function DecodeWithCharsetObserver(
-        instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
-          TProperties,
-        delegate: ObserverLike<string>,
-        charset: string,
-      ): ObserverLike<ArrayBuffer> {
-        init(DisposableMixin, instance);
-        instance[DecodeWithCharsetObserver_delegate] = delegate;
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
+        function DecodeWithCharsetObserver(
+          instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
+            TProperties,
+          delegate: ObserverLike<string>,
+          charset: string,
+        ): ObserverLike<ArrayBuffer> {
+          init(DisposableMixin, instance);
+          instance[DecodeWithCharsetObserver_delegate] = delegate;
 
-        init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
+          init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
 
-        const textDecoder = newInstance(TextDecoder, charset, {
-          fatal: true,
-        });
-        instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
+          const textDecoder = newInstance(TextDecoder, charset, {
+            fatal: true,
+          });
+          instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
-        pipe(
-          instance,
-          Disposable.onComplete(() => {
-            const data = textDecoder.decode();
+          pipe(
+            instance,
+            Disposable.onComplete(() => {
+              const data = textDecoder.decode();
 
-            if (data.length > 0) {
-              delegate[QueueableLike_enqueue](data);
-              delegate[DispatcherLike_complete]();
-            } else {
-              delegate[DisposableLike_dispose]();
-            }
-          }),
-        );
-
-        return instance;
-      },
-      props<TProperties>({
-        [DecodeWithCharsetObserver_delegate]: none,
-        [DecodeWithCharsetObserver_textDecoder]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties & ObserverLike<ArrayBuffer>,
-          next: ArrayBuffer,
-        ) {
-          Observer_assertState(this);
-
-          const data = this[DecodeWithCharsetObserver_textDecoder].decode(
-            next,
-            {
-              stream: true,
-            },
+              if (data.length > 0) {
+                delegate[QueueableLike_enqueue](data);
+                delegate[DispatcherLike_complete]();
+              } else {
+                delegate[DisposableLike_dispose]();
+              }
+            }),
           );
-          if (data.length > 0) {
-            this[DecodeWithCharsetObserver_delegate][SinkLike_notify](data);
-          }
+
+          return instance;
         },
-      },
+        props<TProperties>({
+          [DecodeWithCharsetObserver_delegate]: none,
+          [DecodeWithCharsetObserver_textDecoder]: none,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties & ObserverLike<ArrayBuffer>,
+            next: ArrayBuffer,
+          ) {
+            const data = this[DecodeWithCharsetObserver_textDecoder].decode(
+              next,
+              {
+                stream: true,
+              },
+            );
+            if (data.length > 0) {
+              this[DecodeWithCharsetObserver_delegate][SinkLike_notify](data);
+            }
+          },
+        },
+      ),
     ),
   );
 })();

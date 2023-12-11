@@ -11,8 +11,8 @@ import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, Q
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_lift from "./Observable.lift.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
@@ -26,7 +26,7 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         observer[MergeAllObserver_activeCount]++;
         pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], SinkLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), Disposable.onComplete(observer[MergeAllObserver_onDispose]));
     };
-    const createMergeAllObserver = createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+    const createMergeAllObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
         instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(capacity, backpressureStrategy);
@@ -63,7 +63,6 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         [MergeAllObserver_observablesQueue]: none,
     }), {
         [SinkLike_notify](next) {
-            Observer_assertState(this);
             if (this[MergeAllObserver_activeCount] <
                 this[MergeAllObserver_concurrency]) {
                 subscribeToObservable(this, next);
@@ -72,7 +71,7 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
                 this[MergeAllObserver_observablesQueue][QueueableLike_enqueue](next);
             }
         },
-    }));
+    })));
     return (options = {}) => {
         const concurrency = clampPositiveNonZeroInteger(options.concurrency ?? MAX_SAFE_INTEGER);
         const capacity = clampPositiveInteger(options.capacity ?? MAX_SAFE_INTEGER);

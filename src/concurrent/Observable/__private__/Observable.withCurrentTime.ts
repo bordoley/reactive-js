@@ -15,8 +15,8 @@ import {
 } from "../../../utils.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createWithCurrentTimeObserver: <TA, TB>(
@@ -32,39 +32,44 @@ const Observer_createWithCurrentTimeObserver: <TA, TB>(
   };
 
   return createInstanceFactory(
-    mix(
-      include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<TB>>()),
-      function WithCurrentTimeObserver(
-        instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
-          Mutable<TProperties>,
-        delegate: ObserverLike<TB>,
-        selector: Function2<number, TA, TB>,
-      ): ObserverLike<TA> {
-        init(DelegatingDisposableMixin<ObserverLike<TB>>(), instance, delegate);
-        init(ObserverMixin(), instance, delegate, delegate);
-        instance[WithCurrentTimeObserver_selector] = selector;
-
-        return instance;
-      },
-      props<TProperties>({
-        [WithCurrentTimeObserver_selector]: none,
-      }),
-      {
-        [SinkLike_notify](
-          this: TProperties &
-            DelegatingDisposableLike<ObserverLike<TB>> &
-            ObserverLike<TA>,
-          next: TA,
-        ) {
-          Observer_assertState(this);
-          const currentTime = this[SchedulerLike_now];
-          const mapped = this[WithCurrentTimeObserver_selector](
-            currentTime,
-            next,
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), DelegatingDisposableMixin<ObserverLike<TB>>()),
+        function WithCurrentTimeObserver(
+          instance: Pick<ObserverLike<TA>, typeof SinkLike_notify> &
+            Mutable<TProperties>,
+          delegate: ObserverLike<TB>,
+          selector: Function2<number, TA, TB>,
+        ): ObserverLike<TA> {
+          init(
+            DelegatingDisposableMixin<ObserverLike<TB>>(),
+            instance,
+            delegate,
           );
-          this[DelegatingDisposableLike_delegate][SinkLike_notify](mapped);
+          init(ObserverMixin(), instance, delegate, delegate);
+          instance[WithCurrentTimeObserver_selector] = selector;
+
+          return instance;
         },
-      },
+        props<TProperties>({
+          [WithCurrentTimeObserver_selector]: none,
+        }),
+        {
+          [SinkLike_notify](
+            this: TProperties &
+              DelegatingDisposableLike<ObserverLike<TB>> &
+              ObserverLike<TA>,
+            next: TA,
+          ) {
+            const currentTime = this[SchedulerLike_now];
+            const mapped = this[WithCurrentTimeObserver_selector](
+              currentTime,
+              next,
+            );
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](mapped);
+          },
+        },
+      ),
     ),
   );
 })();

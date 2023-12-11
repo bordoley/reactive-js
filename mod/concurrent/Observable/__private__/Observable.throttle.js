@@ -8,8 +8,8 @@ import { DisposableLike_isDisposed, QueueableLike_enqueue, SerialDisposableLike_
 import * as Disposable from "../../../utils/Disposable.js";
 import * as SerialDisposable from "../../../utils/SerialDisposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
 import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
+import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_forEach from "./Observable.forEach.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
@@ -25,7 +25,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer, next) => {
         observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[ThrottleObserver_delegate], observer), Disposable.addTo(observer[ThrottleObserver_delegate]));
     };
-    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
+    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(DisposableMixin, instance);
         instance[ThrottleObserver_delegate] = delegate;
         init(DelegatingObserverMixin(), instance, delegate);
@@ -61,7 +61,6 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
         [ThrottleObserver_onNotify]: none,
     }), {
         [SinkLike_notify](next) {
-            Observer_assertState(this);
             this[ThrottleObserver_value] = next;
             this[ThrottleObserver_hasValue] = true;
             const durationSubscriptionDisposableIsDisposed = this[ThrottleObserver_durationSubscription][SerialDisposableLike_current][DisposableLike_isDisposed];
@@ -73,7 +72,7 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
                 setupDurationSubscription(this, next);
             }
         },
-    }));
+    })));
 })();
 const Observable_throttle = (duration, options = {}) => {
     const { mode = "interval" } = options;

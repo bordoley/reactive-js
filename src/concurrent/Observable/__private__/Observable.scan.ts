@@ -19,29 +19,28 @@ const Observer_createScanObserver: <T, TAcc>(
   initialValue: Factory<TAcc>,
 ) => ObserverLike<T> = /*@__PURE__*/ (<T, TAcc>() => {
   return createInstanceFactory(
-    mix(
-      include(
-        ObserverMixin(),
-        decorateNotifyWithObserverStateAssert(ScanSinkMixin()),
-      ),
-      function ScanObserver(
-        instance: unknown,
-        delegate: ObserverLike<TAcc>,
-        reducer: Reducer<T, TAcc>,
-        initialValue: Factory<TAcc>,
-      ): ObserverLike<T> {
-        init(
-          ScanSinkMixin<T, TAcc>(),
-          instance,
-          delegate,
-          reducer,
-          initialValue,
-        );
-        init(ObserverMixin(), instance, delegate, delegate);
+    decorateNotifyWithObserverStateAssert(
+      mix(
+        include(ObserverMixin(), ScanSinkMixin()),
+        function ScanObserver(
+          instance: unknown,
+          delegate: ObserverLike<TAcc>,
+          reducer: Reducer<T, TAcc>,
+          initialValue: Factory<TAcc>,
+        ): ObserverLike<T> {
+          init(
+            ScanSinkMixin<T, TAcc>(),
+            instance,
+            delegate,
+            reducer,
+            initialValue,
+          );
+          init(ObserverMixin(), instance, delegate, delegate);
 
-        return instance;
-      },
-      props({}),
+          return instance;
+        },
+        props({}),
+      ),
     ),
   );
 })();
