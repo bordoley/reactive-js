@@ -35,8 +35,7 @@ import type * as Observable from "../../Observable.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 
@@ -86,7 +85,7 @@ const Observer_createThrottleObserver: <T>(
 
   return createInstanceFactory(
     mix(
-      include(DisposableMixin, ObserverMixin()),
+      include(DisposableMixin, DelegatingObserverMixin()),
       function ThrottleObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -96,7 +95,7 @@ const Observer_createThrottleObserver: <T>(
       ): ObserverLike<T> {
         init(DisposableMixin, instance);
         instance[ThrottleObserver_delegate] = delegate;
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
 
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;

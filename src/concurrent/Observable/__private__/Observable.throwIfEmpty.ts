@@ -21,8 +21,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
@@ -36,7 +35,7 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
 
   return createInstanceFactory(
     mix(
-      include(DisposableMixin, ObserverMixin<T>()),
+      include(DisposableMixin, DelegatingObserverMixin<T>()),
       function ThrowIfEmptyObserver(
         instance: Pick<ObserverLike<T>, typeof SinkLike_notify> &
           Mutable<TProperties>,
@@ -44,7 +43,7 @@ const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (<T>() => {
         factory: Factory<unknown>,
       ): ObserverLike<T> {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
 
         instance[ThrowIfEmptyObserver_delegate] = delegate;
 

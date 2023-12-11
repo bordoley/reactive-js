@@ -14,8 +14,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_lift from "./Observable.lift.js";
 const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const MergeAllObserver_activeCount = Symbol("MergeAllObserver_activeCount");
@@ -27,9 +26,9 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
         observer[MergeAllObserver_activeCount]++;
         pipe(nextObs, Observable_forEach(bindMethod(observer[MergeAllObserver_delegate], SinkLike_notify)), Observable_subscribeWithConfig(observer[MergeAllObserver_delegate], observer), Disposable.addTo(observer[MergeAllObserver_delegate]), Disposable.onComplete(observer[MergeAllObserver_onDispose]));
     };
-    const createMergeAllObserver = createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
+    const createMergeAllObserver = createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(capacity, backpressureStrategy);
         instance[MergeAllObserver_concurrency] = concurrency;
         instance[MergeAllObserver_delegate] = delegate;

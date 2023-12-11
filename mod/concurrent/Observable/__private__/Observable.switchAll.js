@@ -11,8 +11,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_lift from "./Observable.lift.js";
 const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
     const SwitchAllObserver_currentRef = Symbol("SwitchAllObserver_currentRef");
@@ -22,9 +21,9 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
             this[SwitchAllObserver_delegate][DisposableLike_dispose]();
         }
     }
-    return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function SwitchAllObserver(instance, delegate) {
+    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function SwitchAllObserver(instance, delegate) {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         instance[SwitchAllObserver_delegate] = delegate;
         instance[SwitchAllObserver_currentRef] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));
         pipe(instance, Disposable.onComplete(bind(onDispose, instance)));

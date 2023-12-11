@@ -9,15 +9,14 @@ import { QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
     const TakeLastObserver_queue = Symbol("TakeLastObserver_queue");
-    return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
+    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         instance[TakeLastObserver_queue] = IndexedQueue.create(takeLastCount, "drop-oldest");
         pipe(instance, Disposable.onComplete(() => {
             pipe(instance[TakeLastObserver_queue], Observable_fromIterable(), invoke(ObservableLike_observe, delegate));

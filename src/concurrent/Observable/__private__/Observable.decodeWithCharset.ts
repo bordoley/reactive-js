@@ -16,8 +16,7 @@ import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
@@ -35,7 +34,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
 
   return createInstanceFactory(
     mix(
-      include(DisposableMixin, ObserverMixin<ArrayBuffer>()),
+      include(DisposableMixin, DelegatingObserverMixin<ArrayBuffer>()),
       function DecodeWithCharsetObserver(
         instance: Pick<ObserverLike<ArrayBuffer>, typeof SinkLike_notify> &
           TProperties,
@@ -45,7 +44,7 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         init(DisposableMixin, instance);
         instance[DecodeWithCharsetObserver_delegate] = delegate;
 
-        Observer_mixin_initFromDelegate<ArrayBuffer>(instance, delegate);
+        init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
 
         const textDecoder = newInstance(TextDecoder, charset, {
           fatal: true,

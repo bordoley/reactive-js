@@ -11,8 +11,7 @@ import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_fromIterable from "./Observable.fromIterable.js";
 import Observable_liftWithSideEffects from "./Observable.liftWithSideEffects.js";
 const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
@@ -26,10 +25,10 @@ const Observer_createThrottleObserver = /*@__PURE__*/ (() => {
     const setupDurationSubscription = (observer, next) => {
         observer[ThrottleObserver_durationSubscription][SerialDisposableLike_current] = pipe(observer[ThrottleObserver_durationFunction](next), Observable_forEach(observer[ThrottleObserver_onNotify]), Observable_subscribeWithConfig(observer[ThrottleObserver_delegate], observer), Disposable.addTo(observer[ThrottleObserver_delegate]));
     };
-    return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
+    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrottleObserver(instance, delegate, durationFunction, mode) {
         init(DisposableMixin, instance);
         instance[ThrottleObserver_delegate] = delegate;
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         instance[ThrottleObserver_durationFunction] = durationFunction;
         instance[ThrottleObserver_mode] = mode;
         instance[ThrottleObserver_durationSubscription] = pipe(SerialDisposable.create(Disposable.disposed), Disposable.addTo(delegate));

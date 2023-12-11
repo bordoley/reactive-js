@@ -7,15 +7,14 @@ import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createThrowIfEmptyObserver = /*@__PURE__*/ (() => {
     const ThrowIfEmptyObserver_delegate = Symbol("ThrowIfEmptyObserver_delegate");
     const ThrowIfEmptyObserver_isEmpty = Symbol("ThrowIfEmptyObserver_isEmpty");
-    return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
+    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function ThrowIfEmptyObserver(instance, delegate, factory) {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         instance[ThrowIfEmptyObserver_delegate] = delegate;
         pipe(instance, Disposable.onComplete(() => {
             let err = none;

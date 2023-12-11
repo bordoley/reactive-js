@@ -8,16 +8,15 @@ import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../../utils.j
 import * as Disposable from "../../../utils/Disposable.js";
 import DisposableMixin from "../../../utils/__mixins__/DisposableMixin.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_delegate = Symbol("DecodeWithCharsetObserver_delegate");
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
-    return createInstanceFactory(mix(include(DisposableMixin, ObserverMixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
+    return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
         init(DisposableMixin, instance);
         instance[DecodeWithCharsetObserver_delegate] = delegate;
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
         const textDecoder = newInstance(TextDecoder, charset, {
             fatal: true,
         });

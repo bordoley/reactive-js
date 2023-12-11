@@ -47,8 +47,7 @@ import type * as Observable from "../../Observable.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
 import Observable_subscribeWithConfig from "../../Observable/__private__/Observable.subscribeWithConfig.js";
 import Observer_assertState from "../../Observer/__private__/Observer.assertState.js";
-import Observer_mixin_initFromDelegate from "../../Observer/__private__/Observer.mixin.initFromDelegate.js";
-import ObserverMixin from "../../__mixins__/ObserverMixin.js";
+import DelegatingObserverMixin from "../../__mixins__/DelegatingObserverMixin.js";
 import Observable_lift from "./Observable.lift.js";
 
 const Observer_createMergeAllObserverOperator: <T>(options?: {
@@ -101,7 +100,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
     mix(
       include(
         DisposableMixin,
-        ObserverMixin<DeferredSideEffectsObservableLike<T>>(),
+        DelegatingObserverMixin<DeferredSideEffectsObservableLike<T>>(),
       ),
       function MergeAllObserver(
         instance: Pick<
@@ -115,7 +114,7 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
         concurrency: number,
       ): ObserverLike<ObservableLike<T>> {
         init(DisposableMixin, instance);
-        Observer_mixin_initFromDelegate(instance, delegate);
+        init(DelegatingObserverMixin(), instance, delegate);
 
         instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(
           capacity,
