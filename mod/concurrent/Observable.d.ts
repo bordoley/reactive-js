@@ -301,7 +301,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): Function1<RunnableWithSideEffectsLike<T> | DeferredSideEffectsObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
+    }): Function1<DeferredObservableLike<T>, ReplayObservableLike<T> & DisposableLike>;
     never<T>(): MulticastObservableLike<T>;
     onSubscribe<T>(f: Factory<DisposableLike>): ObservableOperatorWithSideEffects<T, T>;
     onSubscribe<T>(f: Factory<SideEffect1<Optional<Error>>>): ObservableOperatorWithSideEffects<T, T>;

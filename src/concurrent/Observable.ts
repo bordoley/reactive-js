@@ -969,7 +969,7 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<
-    RunnableWithSideEffectsLike<T> | DeferredSideEffectsObservableLike<T>,
+    DeferredObservableLike<T>,
     ReplayObservableLike<T> & DisposableLike
   >;
 
