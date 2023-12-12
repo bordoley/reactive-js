@@ -22,13 +22,15 @@ import {
   ContinuationLike,
   SchedulerLike,
   SchedulerLike_now,
+  VirtualTimeSchedulerLike,
+  VirtualTimeSchedulerLike_run,
+} from "../concurrent.js";
+import {
   SchedulerTaskLike,
   SchedulerTaskLike_continuation,
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
-  VirtualTimeSchedulerLike,
-  VirtualTimeSchedulerLike_run,
-} from "../concurrent.js";
+} from "../concurrent/__private__.js";
 import { isSome } from "../functions.js";
 import {
   DisposableLike,

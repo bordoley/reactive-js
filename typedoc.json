@@ -5,6 +5,9 @@
   "exclude": [
     "./packages/core/__internal__/**/**/*",
     "./packages/core/__tests__/**/**/*",
+    "./packages/core/**/__internal__.*",
+    "./packages/core/**/__internal__/**/*",
+    "./packages/core/**/__private__.*",
     "./packages/core/**/__private__/**/*",
     "./packages/core/**/__mixins__/**/*"
   ],

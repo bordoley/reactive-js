@@ -25,7 +25,6 @@
 - [RunnableLike](../interfaces/concurrent.RunnableLike.md)
 - [RunnableWithSideEffectsLike](../interfaces/concurrent.RunnableWithSideEffectsLike.md)
 - [SchedulerLike](../interfaces/concurrent.SchedulerLike.md)
-- [SchedulerTaskLike](../interfaces/concurrent.SchedulerTaskLike.md)
 - [StreamLike](../interfaces/concurrent.StreamLike.md)
 - [StreamableLike](../interfaces/concurrent.StreamableLike.md)
 - [SubjectLike](../interfaces/concurrent.SubjectLike.md)
@@ -63,9 +62,6 @@
 - [SchedulerLike\_schedule](concurrent.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
 - [SchedulerLike\_yield](concurrent.md#schedulerlike_yield)
-- [SchedulerTaskLike\_continuation](concurrent.md#schedulertasklike_continuation)
-- [SchedulerTaskLike\_dueTime](concurrent.md#schedulertasklike_duetime)
-- [SchedulerTaskLike\_id](concurrent.md#schedulertasklike_id)
 - [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
 - [StreamableLike\_TStream](concurrent.md#streamablelike_tstream)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
@@ -239,24 +235,6 @@ ___
 ### SchedulerLike\_yield
 
 • `Const` **SchedulerLike\_yield**: unique `symbol`
-
-___
-
-### SchedulerTaskLike\_continuation
-
-• `Const` **SchedulerTaskLike\_continuation**: unique `symbol`
-
-___
-
-### SchedulerTaskLike\_dueTime
-
-• `Const` **SchedulerTaskLike\_dueTime**: unique `symbol`
-
-___
-
-### SchedulerTaskLike\_id
-
-• `Const` **SchedulerTaskLike\_id**: unique `symbol`
 
 ___
 

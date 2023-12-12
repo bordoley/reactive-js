@@ -31,11 +31,13 @@ import {
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
   SchedulerLike_yield,
+} from "../concurrent.js";
+import {
   SchedulerTaskLike,
   SchedulerTaskLike_continuation,
   SchedulerTaskLike_dueTime,
   SchedulerTaskLike_id,
-} from "../concurrent.js";
+} from "../concurrent/__private__.js";
 import { StoreLike_value, WritableStoreLike } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
 import { Optional, SideEffect1, isNone, isSome, none } from "../functions.js";
