@@ -229,7 +229,7 @@ const Counter = () => {
           })),
         ),
         Observable.flow(),
-        invoke(FlowableLike_flow, ReactScheduler.get())
+        invoke(FlowableLike_flow, ReactScheduler.get()),
       ),
     [history.replace, counterInitialValue],
   );

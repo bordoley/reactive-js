@@ -32,7 +32,7 @@ import {
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import * as Disposable from "../../../utils/Disposable.js";
 import Observable_multicast from "../../Observable/__private__/Observable.multicast.js";
 import type * as Streamable from "../../Streamable.js";
 import DelegatingDispatcherMixin from "../../__mixins__/DelegatingDispatcherMixin.js";
@@ -106,7 +106,6 @@ const Stream_create: <TReq, T>(
       include(
         DelegatingDispatcherMixin(),
         DelegatingReplayObservableMixin<T>(),
-        DelegatingDisposableMixin(),
       ),
       function StreamMixin(
         instance: TProperties,
@@ -131,13 +130,14 @@ const Stream_create: <TReq, T>(
           Observable_multicast<T>(scheduler, multicastOptions),
         );
 
-        init(DelegatingDisposableMixin(), instance, delegate);
         init(
           DelegatingDispatcherMixin<TReq>(),
           instance,
           dispatchedObservable[DispatchedObservableLike_dispatcher],
         );
         init(DelegatingReplayObservableMixin<T>(), instance, delegate);
+
+        pipe(delegate, Disposable.addTo(instance));
 
         return instance;
       },

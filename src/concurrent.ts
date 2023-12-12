@@ -38,7 +38,8 @@ export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
  */
 export interface DispatcherLike<T = unknown>
   extends QueueableLike<T>,
-    EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]> {
+    EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>,
+    DisposableLike {
   /**
    * Communicates to the dispatcher that no more events will be enqueued.
    */
@@ -52,7 +53,7 @@ export const PauseableLike_resume = Symbol("PauseableLike_resume");
 /**
  * @noInheritDoc
  */
-export interface PauseableLike {
+export interface PauseableLike extends DisposableLike {
   /**
    * Boolean flag indicating if the PauseableLike is currently paused or not.
    */
@@ -336,8 +337,7 @@ export interface SubjectLike<T = unknown>
 
 export interface PauseableObservableLike<T = unknown>
   extends MulticastObservableLike<T>,
-    PauseableLike,
-    DisposableLike {}
+    PauseableLike {}
 
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
 
@@ -405,7 +405,7 @@ export interface StreamableLike<
 
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
-  ): TStream & DisposableLike;
+  ): TStream;
 }
 
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<

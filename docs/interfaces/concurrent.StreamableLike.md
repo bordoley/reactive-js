@@ -46,7 +46,7 @@ TStream
 
 ### [StreamableLike\_stream]
 
-▸ **[StreamableLike_stream]**(`scheduler`, `options?`): `TStream` & [`DisposableLike`](utils.DisposableLike.md)
+▸ **[StreamableLike_stream]**(`scheduler`, `options?`): `TStream`
 
 Subscribe to the Streamable.
 
@@ -62,4 +62,4 @@ Subscribe to the Streamable.
 
 #### Returns
 
-`TStream` & [`DisposableLike`](utils.DisposableLike.md)
+`TStream`

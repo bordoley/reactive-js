@@ -16,52 +16,22 @@
 
 - [`PauseableLike`](concurrent.PauseableLike.md)
 
-- [`DisposableLike`](utils.DisposableLike.md)
-
   ↳ **`PauseableObservableLike`**
 
 ## Table of contents
 
 ### Properties
 
-- [[DisposableLike\_error]](concurrent.PauseableObservableLike.md#[disposablelike_error])
-- [[DisposableLike\_isDisposed]](concurrent.PauseableObservableLike.md#[disposablelike_isdisposed])
 - [[ObservableLike\_isDeferred]](concurrent.PauseableObservableLike.md#[observablelike_isdeferred])
 - [[ObservableLike\_isRunnable]](concurrent.PauseableObservableLike.md#[observablelike_isrunnable])
 - [[PauseableLike\_isPaused]](concurrent.PauseableObservableLike.md#[pauseablelike_ispaused])
 
 ### Methods
 
-- [[DisposableLike\_add]](concurrent.PauseableObservableLike.md#[disposablelike_add])
-- [[DisposableLike\_dispose]](concurrent.PauseableObservableLike.md#[disposablelike_dispose])
 - [[PauseableLike\_pause]](concurrent.PauseableObservableLike.md#[pauseablelike_pause])
 - [[PauseableLike\_resume]](concurrent.PauseableObservableLike.md#[pauseablelike_resume])
 
 ## Properties
-
-### [DisposableLike\_error]
-
-• `Readonly` **[DisposableLike\_error]**: [`Optional`](../modules/functions.md#optional)<`Error`\>
-
-The error the `Disposable` was disposed with if disposed.
-
-#### Inherited from
-
-[DisposableLike](utils.DisposableLike.md).[[DisposableLike_error]](utils.DisposableLike.md#[disposablelike_error])
-
-___
-
-### [DisposableLike\_isDisposed]
-
-• `Readonly` **[DisposableLike\_isDisposed]**: `boolean`
-
-`true` if this resource has been disposed, otherwise false
-
-#### Inherited from
-
-[DisposableLike](utils.DisposableLike.md).[[DisposableLike_isDisposed]](utils.DisposableLike.md#[disposablelike_isdisposed])
-
-___
 
 ### [ObservableLike\_isDeferred]
 
@@ -99,66 +69,6 @@ Boolean flag indicating if the PauseableLike is currently paused or not.
 [PauseableLike](concurrent.PauseableLike.md).[[PauseableLike_isPaused]](concurrent.PauseableLike.md#[pauseablelike_ispaused])
 
 ## Methods
-
-### [DisposableLike\_add]
-
-▸ **[DisposableLike_add]**(`disposable`): `void`
-
-Adds the given `DisposableLike` or teardown function to this container or disposes it if the container has been disposed.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `disposable` | [`DisposableLike`](utils.DisposableLike.md) | The disposable to add. |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[DisposableLike](utils.DisposableLike.md).[[DisposableLike_add]](utils.DisposableLike.md#[disposablelike_add])
-
-▸ **[DisposableLike_add]**(`teardown`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `teardown` | [`SideEffect1`](../modules/functions.md#sideeffect1)<[`Optional`](../modules/functions.md#optional)<`Error`\>\> |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[DisposableLike](utils.DisposableLike.md).[[DisposableLike_add]](utils.DisposableLike.md#[disposablelike_add])
-
-___
-
-### [DisposableLike\_dispose]
-
-▸ **[DisposableLike_dispose]**(`error?`): `void`
-
-Dispose the resource.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `error?` | `Error` | An optional error that signals the resource is being disposed due to an error. |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[DisposableLike](utils.DisposableLike.md).[[DisposableLike_dispose]](utils.DisposableLike.md#[disposablelike_dispose])
-
-___
 
 ### [PauseableLike\_pause]
 

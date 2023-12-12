@@ -20,7 +20,7 @@ export declare const DispatcherLike_complete: unique symbol;
  *
  * @noInheritDoc
  */
-export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]> {
+export interface DispatcherLike<T = unknown> extends QueueableLike<T>, EventSourceLike<DispatcherLikeEventMap[keyof DispatcherLikeEventMap]>, DisposableLike {
     /**
      * Communicates to the dispatcher that no more events will be enqueued.
      */
@@ -32,7 +32,7 @@ export declare const PauseableLike_resume: unique symbol;
 /**
  * @noInheritDoc
  */
-export interface PauseableLike {
+export interface PauseableLike extends DisposableLike {
     /**
      * Boolean flag indicating if the PauseableLike is currently paused or not.
      */
@@ -242,7 +242,7 @@ export declare const SubjectLike_observerCount: unique symbol;
 export interface SubjectLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
     readonly [SubjectLike_observerCount]: number;
 }
-export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike, DisposableLike {
+export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
 }
 export declare const FlowableLike_flow: unique symbol;
 export interface FlowableLike<T> {
@@ -290,6 +290,6 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
          */
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    }): TStream & DisposableLike;
+    }): TStream;
 }
 export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;

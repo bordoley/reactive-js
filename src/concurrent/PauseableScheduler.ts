@@ -62,7 +62,7 @@ import ContinuationSchedulerMixin, {
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 interface Signature {
-  create(hostScheduler: SchedulerLike): PauseableSchedulerLike & DisposableLike;
+  create(hostScheduler: SchedulerLike): PauseableSchedulerLike;
 }
 
 export const create: Signature["create"] = /*@PURE__*/ (() => {
@@ -231,7 +231,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           ContinuationSchedulerImplementationLike &
           Mutable<TProperties>,
         host: SchedulerLike,
-      ): PauseableSchedulerLike & DisposableLike {
+      ): PauseableSchedulerLike {
         init(
           ContinuationSchedulerMixin,
           instance,

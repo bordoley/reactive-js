@@ -8,11 +8,13 @@
 
 - **`DisposableLike`**
 
+  ↳ [`DispatcherLike`](concurrent.DispatcherLike.md)
+
+  ↳ [`PauseableLike`](concurrent.PauseableLike.md)
+
   ↳ [`VirtualTimeSchedulerLike`](concurrent.VirtualTimeSchedulerLike.md)
 
   ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
-
-  ↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
 
   ↳ [`SinkLike`](events.SinkLike.md)
 

@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**(`hostScheduler`): [`PauseableSchedulerLike`](../interfaces/concurrent.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+▸ **create**(`hostScheduler`): [`PauseableSchedulerLike`](../interfaces/concurrent.PauseableSchedulerLike.md)
 
 #### Parameters
 
@@ -22,4 +22,4 @@
 
 #### Returns
 
-[`PauseableSchedulerLike`](../interfaces/concurrent.PauseableSchedulerLike.md) & [`DisposableLike`](../interfaces/utils.DisposableLike.md)
+[`PauseableSchedulerLike`](../interfaces/concurrent.PauseableSchedulerLike.md)

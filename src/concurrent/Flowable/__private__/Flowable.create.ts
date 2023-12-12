@@ -10,14 +10,12 @@ import {
   DeferredSideEffectsObservableLike,
   FlowableLike,
   FlowableLike_flow,
-  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
-  PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -58,7 +56,7 @@ const PauseableObservable_create: <T>(
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     readonly capacity?: number;
   },
-) => PauseableObservableLike<T> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => PauseableObservableLike<T> = /*@__PURE__*/ (<T>() => {
   type TProperties = {
     [PauseableLike_isPaused]: WritableStoreLike<boolean>;
   };
@@ -67,10 +65,7 @@ const PauseableObservable_create: <T>(
     mix(
       include(DelegatingDisposableMixin()),
       function PauseableObservable(
-        instance: Pick<
-          PauseableObservableLike<T>,
-          keyof MulticastObservableLike | keyof PauseableLike
-        > &
+        instance: Omit<PauseableObservableLike<T>, keyof DisposableLike> &
           TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,

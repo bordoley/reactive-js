@@ -19,6 +19,8 @@ be dispatched from any execution constext.
 
 - [`EventSourceLike`](events.EventSourceLike.md)<[`DispatcherLikeEventMap`](concurrent.DispatcherLikeEventMap.md)[keyof [`DispatcherLikeEventMap`](concurrent.DispatcherLikeEventMap.md)]\>
 
+- [`DisposableLike`](utils.DisposableLike.md)
+
   ↳ **`DispatcherLike`**
 
   ↳↳ [`ObserverLike`](concurrent.ObserverLike.md)

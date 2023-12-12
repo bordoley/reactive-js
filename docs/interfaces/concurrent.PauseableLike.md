@@ -6,11 +6,13 @@
 
 ## Hierarchy
 
-- **`PauseableLike`**
+- [`DisposableLike`](utils.DisposableLike.md)
 
-  ↳ [`PauseableSchedulerLike`](concurrent.PauseableSchedulerLike.md)
+  ↳ **`PauseableLike`**
 
-  ↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
+  ↳↳ [`PauseableSchedulerLike`](concurrent.PauseableSchedulerLike.md)
+
+  ↳↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
 
 ## Table of contents
 
