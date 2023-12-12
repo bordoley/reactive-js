@@ -4,6 +4,8 @@
 
 [concurrent](../modules/concurrent.md).PauseableObservableLike
 
+A stateful ObservableLike resource.
+
 ## Type parameters
 
 | Name | Type |
@@ -12,7 +14,7 @@
 
 ## Hierarchy
 
-- [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>
+- [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\>
 
 - [`PauseableLike`](concurrent.PauseableLike.md)
 
@@ -22,9 +24,8 @@
 
 ### Properties
 
-- [[ObservableLike\_isDeferred]](concurrent.PauseableObservableLike.md#[observablelike_isdeferred])
-- [[ObservableLike\_isRunnable]](concurrent.PauseableObservableLike.md#[observablelike_isrunnable])
 - [[PauseableLike\_isPaused]](concurrent.PauseableObservableLike.md#[pauseablelike_ispaused])
+- [[ReplayObservableLike\_buffer]](concurrent.PauseableObservableLike.md#[replayobservablelike_buffer])
 
 ### Methods
 
@@ -32,31 +33,6 @@
 - [[PauseableLike\_resume]](concurrent.PauseableObservableLike.md#[pauseablelike_resume])
 
 ## Properties
-
-### [ObservableLike\_isDeferred]
-
-• `Readonly` **[ObservableLike\_isDeferred]**: ``false``
-
-Indicates if the `ObservableLike` is deferred, ie. cold.
-
-#### Inherited from
-
-[MulticastObservableLike](concurrent.MulticastObservableLike.md).[[ObservableLike_isDeferred]](concurrent.MulticastObservableLike.md#[observablelike_isdeferred])
-
-___
-
-### [ObservableLike\_isRunnable]
-
-• `Readonly` **[ObservableLike\_isRunnable]**: ``false``
-
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
-
-#### Inherited from
-
-[MulticastObservableLike](concurrent.MulticastObservableLike.md).[[ObservableLike_isRunnable]](concurrent.MulticastObservableLike.md#[observablelike_isrunnable])
-
-___
 
 ### [PauseableLike\_isPaused]
 
@@ -67,6 +43,16 @@ Boolean flag indicating if the PauseableLike is currently paused or not.
 #### Inherited from
 
 [PauseableLike](concurrent.PauseableLike.md).[[PauseableLike_isPaused]](concurrent.PauseableLike.md#[pauseablelike_ispaused])
+
+___
+
+### [ReplayObservableLike\_buffer]
+
+• `Readonly` **[ReplayObservableLike\_buffer]**: [`IndexedLike`](collections.IndexedLike.md)<`T`\>
+
+#### Inherited from
+
+[ReplayObservableLike](concurrent.ReplayObservableLike.md).[[ReplayObservableLike_buffer]](concurrent.ReplayObservableLike.md#[replayobservablelike_buffer])
 
 ## Methods
 

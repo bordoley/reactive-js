@@ -324,7 +324,7 @@ export interface SubjectLike<T = unknown>
 }
 
 export interface PauseableObservableLike<T = unknown>
-  extends MulticastObservableLike<T>,
+  extends ReplayObservableLike<T>,
     PauseableLike {}
 
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
@@ -335,6 +335,7 @@ export interface FlowableLike<T> {
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
+      readonly replay?: number;
     },
   ): PauseableObservableLike<T>;
 }

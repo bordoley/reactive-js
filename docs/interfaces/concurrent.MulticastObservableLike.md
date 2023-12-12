@@ -18,8 +18,6 @@
 
   ↳↳ [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)
 
-  ↳↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
-
 ## Table of contents
 
 ### Properties

@@ -29,7 +29,7 @@ testModule(
       const src = pipe(
         Enumerable.generate(increment, returns(-1)),
         Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.takeFirst({ count: 5 }),
+        Observable.takeFirst<number>({ count: 5 }),
         Observable.flow(),
         invoke(FlowableLike_flow, scheduler),
       );

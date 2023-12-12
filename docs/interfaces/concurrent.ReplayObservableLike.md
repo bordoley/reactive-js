@@ -20,6 +20,8 @@ A stateful ObservableLike resource.
 
   ↳↳ [`SubjectLike`](concurrent.SubjectLike.md)
 
+  ↳↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
+
   ↳↳ [`StreamLike`](concurrent.StreamLike.md)
 
   ↳↳ [`WindowLocationLike`](integrations_web.WindowLocationLike.md)

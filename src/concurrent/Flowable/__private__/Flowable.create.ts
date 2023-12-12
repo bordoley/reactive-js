@@ -4,7 +4,9 @@ import {
   init,
   mix,
   props,
+  unsafeCast,
 } from "../../../__internal__/mixins.js";
+import { IndexedLike } from "../../../collections.js";
 import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
@@ -20,6 +22,7 @@ import {
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
+  ReplayObservableLike_buffer,
   SchedulerLike,
   StreamLike,
   StreamableLike_stream,
@@ -72,6 +75,7 @@ const PauseableObservable_create: <T>(
         multicastOptions?: {
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+          replay?: number;
         },
       ): PauseableObservableLike<T> {
         const liftedOp = (mode: DeferredSideEffectsObservableLike<boolean>) =>
@@ -137,6 +141,16 @@ const PauseableObservable_create: <T>(
         [ObservableLike_isDeferred]: false as const,
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
+
+        get [ReplayObservableLike_buffer](): IndexedLike<T> {
+          unsafeCast<
+            DelegatingDisposableLike<StreamLike<boolean, T> & DisposableLike>
+          >(this);
+
+          return this[DelegatingDisposableLike_delegate][
+            ReplayObservableLike_buffer
+          ];
+        },
 
         [ObservableLike_observe](
           this: DelegatingDisposableLike<
