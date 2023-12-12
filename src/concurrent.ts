@@ -353,7 +353,6 @@ export interface StreamLike<TReq, T>
   readonly [StreamLike_scheduler]: SchedulerLike;
 }
 
-export const StreamableLike_TStream = Symbol("StreamableLike_TStream");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");
 
 /**
@@ -370,8 +369,6 @@ export interface StreamableLike<
   T = unknown,
   TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>,
 > {
-  readonly [StreamableLike_TStream]?: TStream;
-
   /**
    * Subscribe to the Streamable.
    *
@@ -397,6 +394,6 @@ export interface StreamableLike<
   ): TStream;
 }
 
-export type StreamOf<TStreamable extends StreamableLike> = NonNullable<
-  TStreamable[typeof StreamableLike_TStream]
+export type StreamOf<TStreamable extends StreamableLike> = ReturnType<
+  TStreamable[typeof StreamableLike_stream]
 >;

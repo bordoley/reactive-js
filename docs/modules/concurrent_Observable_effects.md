@@ -482,7 +482,7 @@ ___
 
 ### \_\_stream
 
-▸ **__stream**<`TStreamable`\>(`streamable`, `«destructured»?`): [`StreamOf`](concurrent.md#streamof)<`TStreamable`\>
+▸ **__stream**<`TStreamable`\>(`streamable`, `«destructured»?`): `ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>
 
 #### Type parameters
 
@@ -503,7 +503,7 @@ ___
 
 #### Returns
 
-[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>
+`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>
 
 ___
 

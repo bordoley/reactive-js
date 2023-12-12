@@ -235,7 +235,7 @@ ___
 
 ### useStream
 
-▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`streamable`, `options?`): [`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
 
 #### Type parameters
 
@@ -256,9 +256,9 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
 
-▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>\>
+▸ **useStream**<`TStreamable`\>(`factory`, `dep`, `options?`): [`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>
 
 #### Type parameters
 
@@ -280,4 +280,4 @@ ___
 
 #### Returns
 
-[`Optional`](functions.md#optional)<[`StreamOf`](concurrent.md#streamof)<`TStreamable`\>\>
+[`Optional`](functions.md#optional)<`ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>\>

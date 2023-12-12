@@ -253,7 +253,6 @@ export declare const StreamLike_scheduler: unique symbol;
 export interface StreamLike<TReq, T> extends DispatcherLike<TReq>, ReplayObservableLike<T> {
     readonly [StreamLike_scheduler]: SchedulerLike;
 }
-export declare const StreamableLike_TStream: unique symbol;
 export declare const StreamableLike_stream: unique symbol;
 /**
  * A container that supports bi-directional streaming.
@@ -265,7 +264,6 @@ export declare const StreamableLike_stream: unique symbol;
  * @noInheritDoc
  */
 export interface StreamableLike<TReq = unknown, T = unknown, TStream extends StreamLike<TReq, T> = StreamLike<TReq, T>> {
-    readonly [StreamableLike_TStream]?: TStream;
     /**
      * Subscribe to the Streamable.
      *
@@ -285,4 +283,4 @@ export interface StreamableLike<TReq = unknown, T = unknown, TStream extends Str
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): TStream;
 }
-export type StreamOf<TStreamable extends StreamableLike> = NonNullable<TStreamable[typeof StreamableLike_TStream]>;
+export type StreamOf<TStreamable extends StreamableLike> = ReturnType<TStreamable[typeof StreamableLike_stream]>;

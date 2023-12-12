@@ -240,12 +240,12 @@ export const __stream = /*@__PURE__*/ (() => {
     backpressureStrategy: Optional<
       QueueableLike[typeof QueueableLike_backpressureStrategy]
     >,
-  ) =>
+  ): StreamOf<TStreamable> =>
     streamable[StreamableLike_stream](scheduler, {
       replay,
       backpressureStrategy,
       capacity,
-    });
+    }) as StreamOf<TStreamable>;
 
   return <TStreamable extends StreamableLike>(
     streamable: TStreamable,

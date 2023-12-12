@@ -28,19 +28,9 @@ TStream
 
 ## Table of contents
 
-### Properties
-
-- [[StreamableLike\_TStream]](concurrent.StreamableLike.md#[streamablelike_tstream])
-
 ### Methods
 
 - [[StreamableLike\_stream]](concurrent.StreamableLike.md#[streamablelike_stream])
-
-## Properties
-
-### [StreamableLike\_TStream]
-
-• `Optional` `Readonly` **[StreamableLike\_TStream]**: `TStream`
 
 ## Methods
 

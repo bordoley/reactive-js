@@ -43,7 +43,7 @@ ___
 
 ### createAnimationGroupEventHandler
 
-▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -64,9 +64,9 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -87,9 +87,9 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TEvent`, `TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -112,9 +112,9 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`TEvent`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEvent`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -134,9 +134,9 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -156,9 +156,9 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
-▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **createAnimationGroupEventHandler**<`TKey`, `T`\>(`animationGroup`, `options`): [`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 #### Type parameters
 
@@ -180,7 +180,7 @@ ___
 
 #### Returns
 
-[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`StreamableLike`](concurrent.StreamableLike.md)<`void`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`void`, `boolean`\> & [`DictionaryLike`](collections.DictionaryLike.md)<`TKey`, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>\>
 
 ___
 

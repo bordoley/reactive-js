@@ -2,7 +2,7 @@ import { DictionaryLike, ReadonlyObjectMapLike } from "../../../collections.js";
 import { SchedulerLike, StreamLike, StreamOf, StreamableLike } from "../../../concurrent.js";
 import { EventSourceLike } from "../../../events.js";
 import { Function1, Optional } from "../../../functions.js";
-import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../../../utils.js";
+import { QueueableLike, QueueableLike_backpressureStrategy } from "../../../utils.js";
 import type { Animation } from "../../Observable.js";
 import type * as Streamable from "../../Streamable.js";
 export type AnimationGroupEventHandlerLike<TEvent, TKey extends string | number | symbol, T> = StreamableLike<TEvent, boolean, StreamLike<TEvent, boolean> & DictionaryLike<TKey, EventSourceLike<T>>>;
@@ -15,6 +15,6 @@ export declare const Streamable_createAnimationGroupEventHandlerStream: <TEvent,
     readonly replay?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-}>) => StreamOf<AnimationGroupEventHandlerLike<TEvent, TKey, T>> & DisposableLike;
+}>) => StreamOf<AnimationGroupEventHandlerLike<TEvent, TKey, T>>;
 declare const Streamable_createAnimationGroupEventHandler: Streamable.Signature["createAnimationGroupEventHandler"];
 export default Streamable_createAnimationGroupEventHandler;

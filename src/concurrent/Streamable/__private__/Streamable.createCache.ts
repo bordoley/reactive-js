@@ -91,7 +91,7 @@ const createCacheStream: <T>(
   capacity: number,
   cleanupScheduler: SchedulerLike,
   persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-) => StreamOf<CacheLike<T>> & DisposableLike = /*@__PURE__*/ (<T>() => {
+) => StreamOf<CacheLike<T>> = /*@__PURE__*/ (<T>() => {
   type TProperties<T> = {
     delegate: StreamLike<
       ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>,
@@ -129,7 +129,7 @@ const createCacheStream: <T>(
         capacity: number,
         cleanupScheduler: SchedulerLike,
         persistentStore: Optional<ReactiveCachePersistentStorageLike<T>>,
-      ): StreamOf<CacheLike<T>> & DisposableLike {
+      ): StreamOf<CacheLike<T>> {
         instance.store = new Map();
         instance.subscriptions = new Map();
 

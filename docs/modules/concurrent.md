@@ -63,7 +63,6 @@
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
 - [SchedulerLike\_yield](concurrent.md#schedulerlike_yield)
 - [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
-- [StreamableLike\_TStream](concurrent.md#streamablelike_tstream)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
 - [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
 - [VirtualTimeSchedulerLike\_run](concurrent.md#virtualtimeschedulerlike_run)
@@ -72,7 +71,7 @@
 
 ### StreamOf
 
-Ƭ **StreamOf**<`TStreamable`\>: `NonNullable`<`TStreamable`[typeof [`StreamableLike_TStream`](concurrent.md#streamablelike_tstream)]\>
+Ƭ **StreamOf**<`TStreamable`\>: `ReturnType`<`TStreamable`[typeof [`StreamableLike_stream`](concurrent.md#streamablelike_stream)]\>
 
 #### Type parameters
 
@@ -241,12 +240,6 @@ ___
 ### StreamLike\_scheduler
 
 • `Const` **StreamLike\_scheduler**: unique `symbol`
-
-___
-
-### StreamableLike\_TStream
-
-• `Const` **StreamableLike\_TStream**: unique `symbol`
 
 ___
 
