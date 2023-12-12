@@ -324,7 +324,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
           const push = !replace && locationChanged;
           replace = replace || (titleChanged && !locationChanged);
 
-          const x = pipe(
+          return pipe(
             state,
             Observable.fromOptional(),
             replace
@@ -332,11 +332,8 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
               : push
               ? Observable.enqueue(pushState)
               : identity<DeferredObservableLike>,
-            x => x,
             Observable.ignoreElements(),
           );
-
-          return x;
         },
       ),
     );

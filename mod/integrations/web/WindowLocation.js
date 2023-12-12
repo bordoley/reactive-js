@@ -118,12 +118,11 @@ export const subscribe = /*@__PURE__*/ (() => {
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            const x = pipe(state, Observable.fromOptional(), replace
+            return pipe(state, Observable.fromOptional(), replace
                 ? Observable.enqueue(replaceState)
                 : push
                     ? Observable.enqueue(pushState)
-                    : identity, x => x, Observable.ignoreElements());
-            return x;
+                    : identity, Observable.ignoreElements());
         }));
         currentWindowLocationObservable = pipe(locationStream, createWindowLocationObservable, Disposable.add(pushState), Disposable.add(replaceState), Disposable.add(syncState));
         return currentWindowLocationObservable;
