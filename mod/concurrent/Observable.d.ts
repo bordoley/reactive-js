@@ -1,6 +1,6 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
-import { DeferredObservableLike, DeferredSideEffectsObservableLike, DispatcherLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PauseableObservableLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
+import { DeferredObservableLike, DeferredSideEffectsObservableLike, DispatcherLike, FlowableLike, MulticastObservableLike, ObservableLike, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObserverLike, PureObservableLike, PureRunnableLike, ReplayObservableLike, RunnableLike, RunnableWithSideEffectsLike, SchedulerLike } from "../concurrent.js";
 import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
@@ -202,10 +202,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     flatMapAsync<TA, TB>(f: Function2<TA, AbortSignal, Promise<TB>>): <TObservableIn extends ObservableLike<TA>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<TB> : DeferredSideEffectsObservableLike<TB>;
     flatMapIterable<TA, TB>(selector: Function1<TA, Iterable<TB>>): ObservableOperatorWithSideEffects<TA, TB>;
-    flow<T>(scheduler: SchedulerLike, options?: {
-        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly capacity?: number;
-    }): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
+    flow<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
     forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
     forkMerge<TOut, TObservableIn extends ObservableLike, TObservableOut extends ObservableLike<TOut>>(fst: Function1<TObservableIn, TObservableOut>, snd: Function1<TObservableIn, TObservableOut>, ...tail: readonly Function1<TObservableIn, TObservableOut>[]): TObservableIn extends PureRunnableLike ? TObservableOut extends PureRunnableLike<TOut> ? Function1<TObservableIn, PureRunnableLike<TOut>> : TObservableOut extends RunnableLike<TOut> ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>> : TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends RunnableWithSideEffectsLike ? TObservableOut extends RunnableLike<TOut> ? Function1<TObservableIn, RunnableWithSideEffectsLike<TOut>> : TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends DeferredSideEffectsObservableLike ? TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : TObservableIn extends MulticastObservableLike ? TObservableOut extends DeferredObservableLike<TOut> ? Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : Function1<TObservableIn, DeferredSideEffectsObservableLike<TOut>> : never;
     fromAsyncFactory<T>(): Function1<Function1<AbortSignal, Promise<T>>, DeferredSideEffectsObservableLike<T>>;

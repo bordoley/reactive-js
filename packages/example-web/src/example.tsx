@@ -22,6 +22,7 @@ import {
 } from "@reactive-js/core/integrations/web";
 import {
   increment,
+  invoke,
   isNone,
   isSome,
   none,
@@ -57,6 +58,7 @@ import {
   PauseableLike_resume,
   PauseableLike_isPaused,
   PauseableLike_pause,
+  FlowableLike_flow,
 } from "@reactive-js/core/concurrent";
 import { EventSourceLike, StoreLike_value } from "@reactive-js/core/events";
 import { QueueableLike_enqueue } from "@reactive-js/core/utils";
@@ -226,7 +228,8 @@ const Counter = () => {
             query: `v=${value}`,
           })),
         ),
-        Observable.flow(ReactScheduler.get()),
+        Observable.flow(),
+        invoke(FlowableLike_flow, ReactScheduler.get())
       ),
     [history.replace, counterInitialValue],
   );

@@ -8,12 +8,16 @@ import {
 import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
+  FlowableLike,
+  FlowableLike_flow,
+  MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObservableLike_observe,
   ObserverLike,
+  PauseableLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -35,6 +39,7 @@ import {
 } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import type * as Flowable from "../../Flowable.js";
 import Observable_create from "../../Observable/__private__/Observable.create.js";
 import Observable_distinctUntilChanged from "../../Observable/__private__/Observable.distinctUntilChanged.js";
 import Observable_forEach from "../../Observable/__private__/Observable.forEach.js";
@@ -62,14 +67,18 @@ const PauseableObservable_create: <T>(
     mix(
       include(DelegatingDisposableMixin()),
       function PauseableObservable(
-        instance: PauseableObservableLike<T> & TProperties,
+        instance: Pick<
+          PauseableObservableLike<T>,
+          keyof MulticastObservableLike | keyof PauseableLike
+        > &
+          TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
         multicastOptions?: {
           capacity?: number;
           backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         },
-      ): PauseableObservableLike<T> & DisposableLike {
+      ): PauseableObservableLike<T> {
         const liftedOp = (mode: DeferredSideEffectsObservableLike<boolean>) =>
           Observable_create(observer => {
             const pauseableScheduler = pipe(
@@ -165,4 +174,11 @@ const PauseableObservable_create: <T>(
   );
 })();
 
-export default PauseableObservable_create;
+const Flowable_create: Flowable.Signature["create"] = <T>(
+  op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
+): FlowableLike<T> => ({
+  [FlowableLike_flow]: (scheduler, options) =>
+    PauseableObservable_create(op, scheduler, options),
+});
+
+export default Flowable_create;

@@ -2,13 +2,13 @@ import { Readable, Transform, Writable } from "stream";
 import {
   DeferredSideEffectsObservableLike,
   DispatcherLike_complete,
+  FlowableLike,
   PauseableLike_pause,
   PauseableLike_resume,
   PauseableObservableLike,
-  SchedulerLike,
 } from "../../concurrent.js";
+import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
-import PauseableObservable_create from "../../concurrent/PauseableObservable/__private__/PauseableObservable.create.js";
 import {
   Factory,
   Function1,
@@ -20,23 +20,12 @@ import {
 import {
   DisposableLike,
   DisposableLike_dispose,
-  QueueableLike,
-  QueueableLike_backpressureStrategy,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 
 interface NodeStreamModule {
-  flow(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    },
-  ): Function1<
-    Factory<Readable> | Readable,
-    PauseableObservableLike<Uint8Array> & DisposableLike
-  >;
+  flow(): Function1<Factory<Readable> | Readable, FlowableLike<Uint8Array>>;
 
   sinkInto(
     factory: Writable | Factory<Writable>,
@@ -92,58 +81,45 @@ const addToDisposable =
     return stream;
   };
 
-export const flow: Signature["flow"] =
-  (
-    scheduler: SchedulerLike,
-    options?: {
-      readonly capacity?: number;
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    },
-  ) =>
-  factory =>
-    PauseableObservable_create(
-      mode =>
-        Observable.create<Uint8Array>(observer => {
-          const dispatchDisposable = pipe(
-            Disposable.create(),
-            Disposable.onError(Disposable.toErrorHandler(observer)),
-            Disposable.onComplete(
-              bindMethod(observer, DispatcherLike_complete),
-            ),
-          );
+export const flow: Signature["flow"] = () => factory =>
+  Flowable.create(mode =>
+    Observable.create<Uint8Array>(observer => {
+      const dispatchDisposable = pipe(
+        Disposable.create(),
+        Disposable.onError(Disposable.toErrorHandler(observer)),
+        Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)),
+      );
 
-          const readable = isFunction(factory)
-            ? pipe(
-                factory(),
-                addToDisposable(observer),
-                addDisposable(dispatchDisposable),
-              )
-            : pipe(factory, addDisposable(dispatchDisposable));
+      const readable = isFunction(factory)
+        ? pipe(
+            factory(),
+            addToDisposable(observer),
+            addDisposable(dispatchDisposable),
+          )
+        : pipe(factory, addDisposable(dispatchDisposable));
 
-          readable.pause();
+      readable.pause();
 
-          pipe(
-            mode,
-            Observable.forEach(isPaused => {
-              if (isPaused) {
-                readable.pause();
-              } else {
-                readable.resume();
-              }
-            }),
-            Observable.subscribe(observer),
-            addToNodeStream(readable),
-          );
-
-          const onData = bindMethod(observer, QueueableLike_enqueue);
-          const onEnd = bindMethod(observer, DispatcherLike_complete);
-
-          readable.on("data", onData);
-          readable.on("end", onEnd);
+      pipe(
+        mode,
+        Observable.forEach(isPaused => {
+          if (isPaused) {
+            readable.pause();
+          } else {
+            readable.resume();
+          }
         }),
-      scheduler,
-      options,
-    );
+        Observable.subscribe(observer),
+        addToNodeStream(readable),
+      );
+
+      const onData = bindMethod(observer, QueueableLike_enqueue);
+      const onEnd = bindMethod(observer, DispatcherLike_complete);
+
+      readable.on("data", onData);
+      readable.on("end", onEnd);
+    }),
+  );
 
 export const sinkInto: Signature["sinkInto"] =
   (

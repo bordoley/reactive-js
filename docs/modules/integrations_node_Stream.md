@@ -13,20 +13,11 @@
 
 ### flow
 
-▸ **flow**(`scheduler`, `options?`): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
+▸ **flow**(): [`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
 
 #### Returns
 
-[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`PauseableObservableLike`](../interfaces/concurrent.PauseableObservableLike.md)<`Uint8Array`\> & [`DisposableLike`](../interfaces/utils.DisposableLike.md)\>
+[`Function1`](functions.md#function1)<`Readable` \| [`Factory`](functions.md#factory)<`Readable`\>, [`FlowableLike`](../interfaces/concurrent.FlowableLike.md)<`Uint8Array`\>\>
 
 ___
 

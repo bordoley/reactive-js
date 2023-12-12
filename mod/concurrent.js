@@ -30,6 +30,7 @@ export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 export const ReplayObservableLike_buffer = Symbol("ReplayObservableLike_buffer");
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
+export const FlowableLike_flow = Symbol("FlowableLike_flow");
 export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
 export const StreamableLike_TStream = Symbol("StreamableLike_TStream");
 export const StreamableLike_stream = Symbol("StreamableLike_stream");

@@ -336,7 +336,20 @@ export interface SubjectLike<T = unknown>
 
 export interface PauseableObservableLike<T = unknown>
   extends MulticastObservableLike<T>,
-    PauseableLike {}
+    PauseableLike,
+    DisposableLike {}
+
+export const FlowableLike_flow = Symbol("FlowableLike_flow");
+
+export interface FlowableLike<T> {
+  [FlowableLike_flow](
+    scheduler: SchedulerLike,
+    options?: {
+      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+      readonly capacity?: number;
+    },
+  ): PauseableObservableLike<T>;
+}
 
 export const StreamLike_scheduler = Symbol("StreamLike_scheduler");
 

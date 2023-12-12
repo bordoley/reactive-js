@@ -242,7 +242,14 @@ export declare const SubjectLike_observerCount: unique symbol;
 export interface SubjectLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
     readonly [SubjectLike_observerCount]: number;
 }
-export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike {
+export interface PauseableObservableLike<T = unknown> extends MulticastObservableLike<T>, PauseableLike, DisposableLike {
+}
+export declare const FlowableLike_flow: unique symbol;
+export interface FlowableLike<T> {
+    [FlowableLike_flow](scheduler: SchedulerLike, options?: {
+        readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
+        readonly capacity?: number;
+    }): PauseableObservableLike<T>;
 }
 export declare const StreamLike_scheduler: unique symbol;
 /**

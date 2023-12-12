@@ -2212,7 +2212,7 @@ ___
 
 ### flow
 
-▸ **flow**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **flow**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -2220,18 +2220,9 @@ ___
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
-| `options?` | `Object` |
-| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
-| `options.capacity?` | `number` |
-
 #### Returns
 
-[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+[`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>, [`FlowableLike`](concurrent.FlowableLike.md)<`T`\>\>
 
 ___
 

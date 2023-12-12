@@ -12,6 +12,8 @@
 
   ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
 
+  ↳ [`PauseableObservableLike`](concurrent.PauseableObservableLike.md)
+
   ↳ [`SinkLike`](events.SinkLike.md)
 
   ↳ [`DelegatingDisposableLike`](utils.DelegatingDisposableLike.md)

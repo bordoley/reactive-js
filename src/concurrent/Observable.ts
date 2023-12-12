@@ -9,13 +9,13 @@ import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
   DispatcherLike,
+  FlowableLike,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
   ObservableLike_isPure,
   ObservableLike_isRunnable,
   ObserverLike,
-  PauseableObservableLike,
   PureObservableLike,
   PureRunnableLike,
   ReplayObservableLike,
@@ -741,13 +741,7 @@ export interface ObservableModule
     selector: Function1<TA, Iterable<TB>>,
   ): ObservableOperatorWithSideEffects<TA, TB>;
 
-  flow<T>(
-    scheduler: SchedulerLike,
-    options?: {
-      readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-      readonly capacity?: number;
-    },
-  ): Function1<RunnableLike<T>, PauseableObservableLike<T> & DisposableLike>;
+  flow<T>(): Function1<RunnableLike<T>, FlowableLike<T>>;
 
   forEach<T>(effect: SideEffect1<T>): ObservableOperatorWithSideEffects<T, T>;
 

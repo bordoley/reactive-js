@@ -7,12 +7,17 @@ import {
   testAsync,
   testModule,
 } from "../../../__internal__/testing.js";
-import { PauseableLike_resume, SchedulerLike } from "../../../concurrent.js";
+import {
+  FlowableLike_flow,
+  PauseableLike_resume,
+  SchedulerLike,
+} from "../../../concurrent.js";
 import * as HostScheduler from "../../../concurrent/HostScheduler.js";
 import * as Observable from "../../../concurrent/Observable.js";
 import {
   Optional,
   bindMethod,
+  invoke,
   newInstance,
   pipe,
   pipeLazy,
@@ -47,7 +52,8 @@ testModule(
           Observable.fromReadonlyArray(),
           Observable.keep(x => x !== "xyz"),
           Observable.map(bindMethod(encoder, "encode")),
-          Observable.flow(scheduler),
+          Observable.flow(),
+          invoke(FlowableLike_flow, scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
           Observable.lastAsync(scheduler),
@@ -75,7 +81,8 @@ testModule(
         const promise = pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           Observable.fromReadonlyArray(),
-          Observable.flow(scheduler),
+          Observable.flow(),
+          invoke(FlowableLike_flow, scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(writable),
           Observable.lastAsync(scheduler),
@@ -110,7 +117,8 @@ testModule(
         await pipe(
           [encoder.encode("abc"), encoder.encode("defg")],
           Observable.fromReadonlyArray(),
-          Observable.flow(scheduler),
+          Observable.flow(),
+          invoke(FlowableLike_flow, scheduler),
           Disposable.addTo(scheduler),
           NodeStream.sinkInto(compressionPipeline),
           Observable.lastAsync(scheduler),
@@ -135,7 +143,8 @@ testModule(
       await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
         const flowable = pipe(
           () => Readable.from(generate()),
-          NodeStream.flow(scheduler),
+          NodeStream.flow(),
+          invoke(FlowableLike_flow, scheduler),
           Disposable.addTo(scheduler),
         );
 
@@ -165,7 +174,8 @@ testModule(
       await Disposable.usingAsync(HostScheduler.create)(async scheduler => {
         const flowable = pipe(
           () => Readable.from(generate()),
-          NodeStream.flow(scheduler),
+          NodeStream.flow(),
+          invoke(FlowableLike_flow, scheduler),
           Disposable.addTo(scheduler),
         );
 

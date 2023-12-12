@@ -1,8 +1,8 @@
 /// <reference types="./Stream.d.ts" />
 
 import { DispatcherLike_complete, PauseableLike_pause, PauseableLike_resume, } from "../../concurrent.js";
+import * as Flowable from "../../concurrent/Flowable.js";
 import * as Observable from "../../concurrent/Observable.js";
-import PauseableObservable_create from "../../concurrent/PauseableObservable/__private__/PauseableObservable.create.js";
 import { bindMethod, ignore, isFunction, pipe, } from "../../functions.js";
 import { DisposableLike_dispose, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -32,7 +32,7 @@ const addToDisposable = (disposable) => stream => {
     stream.on("error", Disposable.toErrorHandler(disposable));
     return stream;
 };
-export const flow = (scheduler, options) => factory => PauseableObservable_create(mode => Observable.create(observer => {
+export const flow = () => factory => Flowable.create(mode => Observable.create(observer => {
     const dispatchDisposable = pipe(Disposable.create(), Disposable.onError(Disposable.toErrorHandler(observer)), Disposable.onComplete(bindMethod(observer, DispatcherLike_complete)));
     const readable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(dispatchDisposable))
@@ -50,7 +50,7 @@ export const flow = (scheduler, options) => factory => PauseableObservable_creat
     const onEnd = bindMethod(observer, DispatcherLike_complete);
     readable.on("data", onData);
     readable.on("end", onEnd);
-}), scheduler, options);
+}));
 export const sinkInto = (factory) => flowable => Observable.create(observer => {
     const writable = isFunction(factory)
         ? pipe(factory(), addToDisposable(observer), addDisposable(observer))

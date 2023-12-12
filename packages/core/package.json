@@ -56,6 +56,7 @@
     "./collections/ReadonlyObjectMap": "./collections/ReadonlyObjectMap.js",
     "./computations": "./computations.js",
     "./concurrent": "./concurrent.js",
+    "./concurrent/Flowable": "./concurrent/Flowable.js",
     "./concurrent/HostScheduler": "./concurrent/HostScheduler.js",
     "./concurrent/Observable": "./concurrent/Observable.js",
     "./concurrent/Observable/effects": "./concurrent/Observable/effects.js",

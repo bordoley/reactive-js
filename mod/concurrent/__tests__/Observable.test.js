@@ -5,11 +5,11 @@ import * as Enumerable from "../../collections/Enumerable.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import { keepType, mapTo } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import { DispatcherLikeEvent_completed, DispatcherLike_complete, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { DispatcherLikeEvent_completed, DispatcherLike_complete, FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, PauseableLike_pause, PauseableLike_resume, SchedulerLike_now, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { StoreLike_value } from "../../events.js";
 import * as EventSource from "../../events/EventSource.js";
 import * as WritableStotre from "../../events/WritableStore.js";
-import { alwaysTrue, arrayEquality, bind, error, ignore, increment, incrementBy, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
+import { alwaysTrue, arrayEquality, bind, error, ignore, increment, incrementBy, invoke, isSome, lessThan, newInstance, none, pipe, pipeAsync, pipeLazy, pipeLazyAsync, raise, returns, tuple, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as HostScheduler from "../HostScheduler.js";
@@ -200,7 +200,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     yield 3;
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("flow", test("a source with delay", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.flow(scheduler));
+    const generateObservable = pipe(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.flow(), invoke(FlowableLike_flow, scheduler));
     generateObservable[PauseableLike_resume](),
         scheduler[SchedulerLike_schedule](() => generateObservable[PauseableLike_pause](), {
             delay: 2,
@@ -225,7 +225,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     pipe(subscription[DisposableLike_isDisposed], expectTrue);
 }), test("flow a generating source", () => {
     const scheduler = VirtualTimeScheduler.create();
-    const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.flow(scheduler), Disposable.addTo(scheduler));
+    const flowed = pipe([0, 1, 2], Observable.fromReadonlyArray(), Observable.flow(), invoke(FlowableLike_flow, scheduler), Disposable.addTo(scheduler));
     scheduler[SchedulerLike_schedule](() => flowed[PauseableLike_resume](), {
         delay: 2,
     });

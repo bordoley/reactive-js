@@ -24,6 +24,7 @@ import {
   DeferredObservableLike,
   DispatcherLikeEvent_completed,
   DispatcherLike_complete,
+  FlowableLike_flow,
   MulticastObservableLike,
   ObservableLike,
   ObservableLike_isDeferred,
@@ -53,6 +54,7 @@ import {
   ignore,
   increment,
   incrementBy,
+  invoke,
   isSome,
   lessThan,
   newInstance,
@@ -672,7 +674,8 @@ testModule(
       const generateObservable = pipe(
         Enumerable.generate(increment, returns(-1)),
         Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.flow(scheduler),
+        Observable.flow(),
+        invoke(FlowableLike_flow, scheduler),
       );
 
       generateObservable[PauseableLike_resume](),
@@ -729,7 +732,8 @@ testModule(
       const flowed = pipe(
         [0, 1, 2],
         Observable.fromReadonlyArray(),
-        Observable.flow(scheduler),
+        Observable.flow(),
+        invoke(FlowableLike_flow, scheduler),
         Disposable.addTo(scheduler),
       );
 
