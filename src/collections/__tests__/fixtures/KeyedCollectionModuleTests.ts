@@ -17,6 +17,7 @@ import {
   Optional,
   Tuple2,
   arrayEquality,
+  greaterThan,
   none,
   pipe,
   pipeLazy,
@@ -80,6 +81,20 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
 
         pipe(result, expectEquals(3));
       }),
+    ),
+    describe(
+      "keep",
+      test(
+        "keeps only values greater than 5",
+        pipeLazy(
+          [4, 8, 10, 7],
+          fromReadonlyArray(),
+          m.keep(greaterThan(5)),
+          m.values(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([8, 10, 7]),
+        ),
+      ),
     ),
     describe(
       "keySet",

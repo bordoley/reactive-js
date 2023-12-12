@@ -2,7 +2,7 @@
 
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, } from "../../../__internal__/testing.js";
 import { CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
-import { arrayEquality, none, pipe, pipeLazy, returns, } from "../../../functions.js";
+import { arrayEquality, greaterThan, none, pipe, pipeLazy, returns, } from "../../../functions.js";
 import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
@@ -15,7 +15,7 @@ const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedColl
         result = result + key;
     }));
     pipe(result, expectEquals(3));
-})), describe("keySet", test("returns a keyset with all the keys", () => {
+})), describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], fromReadonlyArray(), m.keep(greaterThan(5)), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([8, 10, 7])))), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keySet());
     pipe(keys.size, expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));
