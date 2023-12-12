@@ -26,7 +26,7 @@ export interface StreamableModule {
   create<TReq, T>(
     op: Function1<
       DeferredSideEffectsObservableLike<TReq>,
-      DeferredSideEffectsObservableLike<T>
+      DeferredObservableLike<T>
     >,
   ): StreamableLike<TReq, T, StreamLike<TReq, T>>;
 
