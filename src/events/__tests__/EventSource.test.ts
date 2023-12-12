@@ -130,6 +130,36 @@ testModule(
       pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }),
   ),
+  describe(
+    "mergeWith",
+    test("with source that have different delays", () => {
+      const vts = VirtualTimeScheduler.create();
+
+      const result: number[] = [];
+      const [ev1, ev2] = pipe(
+        [
+          [1, 3, 5],
+          [2, 4, 6],
+        ],
+        ReadonlyArray.map<number[], EventSourceLike<number>, number>(
+          compose(
+            Observable.fromReadonlyArray({ delay: 3 }),
+            Observable.toEventSource(vts),
+          ),
+        ),
+      );
+
+      pipe(
+        ev1,
+        EventSource.mergeWith(ev2),
+        EventSource.addEventHandler(bind(Array.prototype.push, result)),
+      );
+
+      vts[VirtualTimeSchedulerLike_run]();
+
+      pipe(result, expectArrayEquals([1, 2, 3, 4, 5, 6]));
+    }),
+  ),
 );
 
 ((_: EventSource.Signature) => {})(EventSource);
