@@ -420,6 +420,8 @@ interface FunctionsModule {
     op12: Function1<K, L>,
   ): Function1<T, Factory<L>>;
 
+  debug<T>(v: T): T;
+
   /**
    * An updater function that returns the result of decrementing `x`.
    */
@@ -531,6 +533,8 @@ interface FunctionsModule {
   isTrue(v: boolean): v is true;
 
   lessThan(v: number): Predicate<number>;
+
+  log<T>(v: T): T;
 
   /**
    * Applies logical negation to the value `v`.
@@ -1410,6 +1414,15 @@ export const composeLazy: Signature["composeLazy"] = ((
       ...operators,
     )) as Signature["composeLazy"];
 
+export const debug: Signature["debug"] = <T>(v: T) => {
+  if (__DEV__) {
+    // eslint-disable-next-line no-debugger
+    debugger;
+  }
+
+  return v;
+};
+
 export const decrement: Signature["decrement"] = (x: number) => x - 1;
 
 export const decrementBy: Signature["decrementBy"] =
@@ -1518,6 +1531,14 @@ export const greaterThan: Signature["greaterThan"] =
 
 export const lessThan: Signature["lessThan"] = (v: number) => (x: number) =>
   x < v;
+
+export const log: Signature["log"] = <T>(v: T) => {
+  if (__DEV__) {
+    console.log(v);
+  }
+
+  return v;
+};
 
 export const negate: Signature["negate"] = (v: boolean) => !v;
 

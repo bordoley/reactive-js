@@ -37,6 +37,7 @@
 - [concatMany](concurrent_Observable.ObservableModule.md#concatmany)
 - [concatWith](concurrent_Observable.ObservableModule.md#concatwith)
 - [create](concurrent_Observable.ObservableModule.md#create)
+- [debug](concurrent_Observable.ObservableModule.md#debug)
 - [decodeWithCharset](concurrent_Observable.ObservableModule.md#decodewithcharset)
 - [defer](concurrent_Observable.ObservableModule.md#defer)
 - [dispatchTo](concurrent_Observable.ObservableModule.md#dispatchto)
@@ -69,6 +70,7 @@
 - [isRunnable](concurrent_Observable.ObservableModule.md#isrunnable)
 - [keep](concurrent_Observable.ObservableModule.md#keep)
 - [lastAsync](concurrent_Observable.ObservableModule.md#lastasync)
+- [log](concurrent_Observable.ObservableModule.md#log)
 - [map](concurrent_Observable.ObservableModule.md#map)
 - [merge](concurrent_Observable.ObservableModule.md#merge)
 - [mergeAll](concurrent_Observable.ObservableModule.md#mergeall)
@@ -1939,6 +1941,22 @@ ___
 
 ___
 
+### debug
+
+▸ **debug**<`T`\>(): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`PureObservableOperator`](../modules/concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
@@ -2656,6 +2674,22 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](../modules/functions.md#optional)<`T`\>\>\>
+
+___
+
+### log
+
+▸ **log**<`T`\>(): [`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](../modules/concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
 ___
 

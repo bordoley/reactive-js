@@ -47,6 +47,7 @@
 - [concatMap](concurrent_Observable.md#concatmap)
 - [concatWith](concurrent_Observable.md#concatwith)
 - [create](concurrent_Observable.md#create)
+- [debug](concurrent_Observable.md#debug)
 - [decodeWithCharset](concurrent_Observable.md#decodewithcharset)
 - [defer](concurrent_Observable.md#defer)
 - [dispatchTo](concurrent_Observable.md#dispatchto)
@@ -81,6 +82,7 @@
 - [isRunnable](concurrent_Observable.md#isrunnable)
 - [keep](concurrent_Observable.md#keep)
 - [lastAsync](concurrent_Observable.md#lastasync)
+- [log](concurrent_Observable.md#log)
 - [map](concurrent_Observable.md#map)
 - [merge](concurrent_Observable.md#merge)
 - [mergeAll](concurrent_Observable.md#mergeall)
@@ -1772,6 +1774,22 @@ ___
 
 ___
 
+### debug
+
+▸ **debug**<`T`\>(): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+___
+
 ### decodeWithCharset
 
 ▸ **decodeWithCharset**(`options?`): [`PureObservableOperator`](concurrent_Observable.md#pureobservableoperator)<`ArrayBuffer`, `string`\>
@@ -2644,6 +2662,22 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<`T`\>, `Promise`<[`Optional`](functions.md#optional)<`T`\>\>\>
+
+___
+
+### log
+
+▸ **log**<`T`\>(): [`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`ObservableOperatorWithSideEffects`](concurrent_Observable.md#observableoperatorwithsideeffects)<`T`, `T`\>
 
 ___
 

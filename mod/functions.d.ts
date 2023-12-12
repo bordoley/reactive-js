@@ -146,6 +146,7 @@ interface FunctionsModule {
     composeLazy<T, A, B, C, D, E, F, G, H, I, J>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>): Function1<T, Factory<J>>;
     composeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Function1<T, Factory<K>>;
     composeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Function1<T, Factory<L>>;
+    debug<T>(v: T): T;
     /**
      * An updater function that returns the result of decrementing `x`.
      */
@@ -220,6 +221,7 @@ interface FunctionsModule {
     isSome<T>(v: Optional<T>): v is T;
     isTrue(v: boolean): v is true;
     lessThan(v: number): Predicate<number>;
+    log<T>(v: T): T;
     /**
      * Applies logical negation to the value `v`.
      */
@@ -345,6 +347,7 @@ export declare const bindMethod: Signature["bindMethod"];
 export declare const call: Signature["call"];
 export declare const compose: Signature["compose"];
 export declare const composeLazy: Signature["composeLazy"];
+export declare const debug: Signature["debug"];
 export declare const decrement: Signature["decrement"];
 export declare const decrementBy: Signature["decrementBy"];
 export declare const identity: Signature["identity"];
@@ -368,6 +371,7 @@ export declare const isSome: Signature["isSome"];
 export declare const isTrue: Signature["isTrue"];
 export declare const greaterThan: Signature["greaterThan"];
 export declare const lessThan: Signature["lessThan"];
+export declare const log: Signature["log"];
 export declare const negate: Signature["negate"];
 export declare const newInstance: Signature["newInstance"];
 export declare const none: Signature["none"];

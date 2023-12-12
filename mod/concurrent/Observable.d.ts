@@ -179,6 +179,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     concatWith<T>(snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): <TObservable extends ObservableLike<T>>(obs: TObservable) => TObservable extends MulticastObservableLike<T> ? MulticastObservableLike<T> : TObservable extends DeferredObservableLike<T> ? DeferredSideEffectsObservableLike<T> : ObservableLike<T>;
     create<T>(f: SideEffect1<ObserverLike<T>>): DeferredSideEffectsObservableLike<T>;
     currentTime: PureRunnableLike<number>;
+    debug<T>(): ObservableOperatorWithSideEffects<T, T>;
     decodeWithCharset(options?: {
         readonly charset?: string;
     }): PureObservableOperator<ArrayBuffer, string>;
@@ -240,6 +241,7 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     }): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+    log<T>(): ObservableOperatorWithSideEffects<T, T>;
     map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
     merge<T>(fst: PureRunnableLike<T>, snd: PureRunnableLike<T>, ...tail: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
     merge<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
@@ -432,6 +434,7 @@ export declare const concatMap: Signature["concatMap"];
 export declare const concatWith: Signature["concatWith"];
 export declare const create: Signature["create"];
 export declare const currentTime: Signature["currentTime"];
+export declare const debug: Signature["debug"];
 export declare const decodeWithCharset: Signature["decodeWithCharset"];
 export declare const defer: Signature["defer"];
 export declare const dispatchTo: Signature["dispatchTo"];
@@ -466,6 +469,7 @@ export declare const isReplayObservable: Signature["isReplayObservable"];
 export declare const isRunnable: Signature["isRunnable"];
 export declare const keep: Signature["keep"];
 export declare const lastAsync: Signature["lastAsync"];
+export declare const log: Signature["log"];
 export declare const map: Signature["map"];
 export declare const merge: Signature["merge"];
 export declare const mergeAll: Signature["mergeAll"];

@@ -62,6 +62,7 @@ import Observable_concatMap from "./Observable/__private__/Observable.concatMap.
 import Observable_concatWith from "./Observable/__private__/Observable.concatWith.js";
 import Observable_create from "./Observable/__private__/Observable.create.js";
 import Observable_currentTime from "./Observable/__private__/Observable.currentTime.js";
+import Observable_debug from "./Observable/__private__/Observable.debug.js";
 import Observable_decodeWithCharset from "./Observable/__private__/Observable.decodeWithCharset.js";
 import Observable_defer from "./Observable/__private__/Observable.defer.js";
 import Observable_dispatchTo from "./Observable/__private__/Observable.dispatchTo.js";
@@ -96,6 +97,7 @@ import Observable_isReplayObservable from "./Observable/__private__/Observable.i
 import Observable_isRunnable from "./Observable/__private__/Observable.isRunnable.js";
 import Observable_keep from "./Observable/__private__/Observable.keep.js";
 import Observable_lastAsync from "./Observable/__private__/Observable.lastAsync.js";
+import Observable_log from "./Observable/__private__/Observable.log.js";
 import Observable_map from "./Observable/__private__/Observable.map.js";
 import Observable_merge from "./Observable/__private__/Observable.merge.js";
 import Observable_mergeAll from "./Observable/__private__/Observable.mergeAll.js";
@@ -696,6 +698,8 @@ export interface ObservableModule
 
   currentTime: PureRunnableLike<number>;
 
+  debug<T>(): ObservableOperatorWithSideEffects<T, T>;
+
   decodeWithCharset(options?: {
     readonly charset?: string;
   }): PureObservableOperator<ArrayBuffer, string>;
@@ -849,6 +853,8 @@ export interface ObservableModule
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
     },
   ): Function1<ObservableLike<T>, Promise<Optional<T>>>;
+
+  log<T>(): ObservableOperatorWithSideEffects<T, T>;
 
   map<TA, TB>(selector: Function1<TA, TB>): PureObservableOperator<TA, TB>;
 
@@ -1420,6 +1426,7 @@ export const concatMap: Signature["concatMap"] = Observable_concatMap;
 export const concatWith: Signature["concatWith"] = Observable_concatWith;
 export const create: Signature["create"] = Observable_create;
 export const currentTime: Signature["currentTime"] = Observable_currentTime;
+export const debug: Signature["debug"] = Observable_debug;
 export const decodeWithCharset: Signature["decodeWithCharset"] =
   Observable_decodeWithCharset;
 export const defer: Signature["defer"] = Observable_defer;
@@ -1464,6 +1471,7 @@ export const isReplayObservable: Signature["isReplayObservable"] =
 export const isRunnable: Signature["isRunnable"] = Observable_isRunnable;
 export const keep: Signature["keep"] = Observable_keep;
 export const lastAsync: Signature["lastAsync"] = Observable_lastAsync;
+export const log: Signature["log"] = Observable_log;
 export const map: Signature["map"] = Observable_map;
 export const merge: Signature["merge"] = Observable_merge;
 export const mergeAll: Signature["mergeAll"] = Observable_mergeAll;

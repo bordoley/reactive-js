@@ -60,6 +60,7 @@
 - [call](functions.md#call)
 - [compose](functions.md#compose)
 - [composeLazy](functions.md#composelazy)
+- [debug](functions.md#debug)
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
@@ -85,6 +86,7 @@
 - [isString](functions.md#isstring)
 - [isTrue](functions.md#istrue)
 - [lessThan](functions.md#lessthan)
+- [log](functions.md#log)
 - [negate](functions.md#negate)
 - [newInstance](functions.md#newinstance)
 - [partial](functions.md#partial)
@@ -1978,6 +1980,28 @@ ___
 
 ___
 
+### debug
+
+▸ **debug**<`T`\>(`v`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+`T`
+
+___
+
 ### decrement
 
 ▸ **decrement**(`x`): `number`
@@ -2447,6 +2471,28 @@ ___
 #### Returns
 
 [`Predicate`](functions.md#predicate)<`number`\>
+
+___
+
+### log
+
+▸ **log**<`T`\>(`v`): `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `T` |
+
+#### Returns
+
+`T`
 
 ___
 

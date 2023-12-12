@@ -28,6 +28,13 @@ export const bindMethod = (thiz, key) => bind(thiz[key], thiz);
 export const call = (f, self, ...args) => f.call(self, ...args);
 export const compose = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => source => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
 export const composeLazy = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => (source) => () => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
+export const debug = (v) => {
+    if (__DEV__) {
+        // eslint-disable-next-line no-debugger
+        debugger;
+    }
+    return v;
+};
 export const decrement = (x) => x - 1;
 export const decrementBy = (decr) => (x) => x - decr;
 export const identity = (v) => v;
@@ -72,6 +79,12 @@ export const isSome = (option) => option !== none;
 export const isTrue = (v) => v;
 export const greaterThan = (v) => (x) => x > v;
 export const lessThan = (v) => (x) => x < v;
+export const log = (v) => {
+    if (__DEV__) {
+        console.log(v);
+    }
+    return v;
+};
 export const negate = (v) => !v;
 export const newInstance = (Constructor, ...args) => new Constructor(...args);
 export const none = undefined;
