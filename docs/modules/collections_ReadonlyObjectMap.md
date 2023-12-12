@@ -20,12 +20,14 @@
 - [entries](collections_ReadonlyObjectMap.md#entries)
 - [forEach](collections_ReadonlyObjectMap.md#foreach)
 - [fromEntries](collections_ReadonlyObjectMap.md#fromentries)
+- [keep](collections_ReadonlyObjectMap.md#keep)
 - [keySet](collections_ReadonlyObjectMap.md#keyset)
 - [keys](collections_ReadonlyObjectMap.md#keys)
 - [map](collections_ReadonlyObjectMap.md#map)
 - [reduce](collections_ReadonlyObjectMap.md#reduce)
 - [toDictionary](collections_ReadonlyObjectMap.md#todictionary)
 - [toReadonlyMap](collections_ReadonlyObjectMap.md#toreadonlymap)
+- [union](collections_ReadonlyObjectMap.md#union)
 - [values](collections_ReadonlyObjectMap.md#values)
 
 ## Type Aliases
@@ -127,6 +129,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> = [`KeyOf`](collections.md#keyof)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyObjectMap.md#type)<`string` \| `symbol`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -253,6 +278,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### union
+
+▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `string` \| `symbol` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m2` | [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>, [`ReadonlyObjectMapLike`](collections.md#readonlyobjectmaplike)<`NonNullable`<`Object`\>, `T`\>\>
 
 ___
 

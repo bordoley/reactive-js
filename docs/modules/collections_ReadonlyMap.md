@@ -20,12 +20,14 @@
 - [entries](collections_ReadonlyMap.md#entries)
 - [forEach](collections_ReadonlyMap.md#foreach)
 - [fromEntries](collections_ReadonlyMap.md#fromentries)
+- [keep](collections_ReadonlyMap.md#keep)
 - [keySet](collections_ReadonlyMap.md#keyset)
 - [keys](collections_ReadonlyMap.md#keys)
 - [map](collections_ReadonlyMap.md#map)
 - [reduce](collections_ReadonlyMap.md#reduce)
 - [toDictionary](collections_ReadonlyMap.md#todictionary)
 - [toReadonlyMap](collections_ReadonlyMap.md#toreadonlymap)
+- [union](collections_ReadonlyMap.md#union)
 - [values](collections_ReadonlyMap.md#values)
 
 ## Type Aliases
@@ -127,6 +129,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_ReadonlyMap.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -253,6 +278,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### union
+
+▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `string` \| `symbol` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m2` | `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<`ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`NonNullable`<`TKey`\>, `T`\>\>
 
 ___
 

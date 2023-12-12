@@ -162,6 +162,8 @@ export type PureDeferredSideEffectsObservableOperator<TIn, TOut> = <
   ? RunnableWithSideEffectsLike<TOut>
   : TObservableIn extends DeferredSideEffectsObservableLike<TIn>
   ? DeferredSideEffectsObservableLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableLike<TOut>
   : never;
 
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <
@@ -174,6 +176,8 @@ export type ObservableOperatorWithSideEffects<TIn, TOut> = <
       | DeferredSideEffectsObservableLike<TIn>
       | MulticastObservableLike<TIn>
   ? DeferredSideEffectsObservableLike<TOut>
+  : TObservableIn extends DeferredObservableLike<TIn>
+  ? DeferredObservableLike<TOut>
   : ObservableLike<TOut>;
 
 export type DeferredSideEffectsObservableOperator<TIn, TOut> = <

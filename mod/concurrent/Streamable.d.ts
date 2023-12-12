@@ -1,6 +1,6 @@
-import { ReadonlyObjectMapLike } from "../collections.js";
-import { DeferredObservableLike, DeferredSideEffectsObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
-import { Equality, Factory, Function1, Updater } from "../functions.js";
+import { AssociativeLike, ReadonlyObjectMapLike } from "../collections.js";
+import { DeferredObservableLike, DeferredSideEffectsObservableLike, ObservableLike, SchedulerLike, StreamLike, StreamableLike } from "../concurrent.js";
+import { Equality, Factory, Function1, Optional, Updater } from "../functions.js";
 import { QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 import { Animation } from "./Observable.js";
 import { Streamable_createAnimationGroupEventHandlerStream } from "./Streamable/__private__/Streamable.createAnimationGroupEventHandler.js";
@@ -51,6 +51,17 @@ export interface StreamableModule {
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
     createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>): StreamableLike<TEventType, boolean>;
+    createInMemoryCache<T>(options?: {
+        readonly capacity?: number;
+        readonly cleanupScheduler?: SchedulerLike;
+    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeLike<string, ObservableLike<T>>>;
+    createPersistentCache<T>(persistentStore: {
+        load(keys: ReadonlySet<string>): DeferredObservableLike<Readonly<Record<string, Optional<T>>>>;
+        store(updates: Readonly<Record<string, T>>): DeferredObservableLike<void>;
+    }, options?: {
+        readonly capacity?: number;
+        readonly cleanupScheduler?: SchedulerLike;
+    }): StreamableLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never, StreamLike<ReadonlyObjectMapLike<string, Function1<Optional<T>, Optional<T>>>, never> & AssociativeLike<string, ObservableLike<T>>>;
     /**
      * Returns a new `StateStoreLike` instance that stores state which can
      * be updated by notifying the instance with a `StateUpdater` that computes a
@@ -71,6 +82,8 @@ export interface StreamableModule {
 export type Signature = StreamableModule;
 export declare const create: Signature["create"];
 export declare const createAnimationGroupEventHandler: Signature["createAnimationGroupEventHandler"];
+export declare const createInMemoryCache: Signature["createInMemoryCache"];
+export declare const createPersistentCache: Signature["createPersistentCache"];
 export declare const createEventHandler: Signature["createEventHandler"];
 export declare const createStateStore: Signature["createStateStore"];
 export declare const identity: Signature["identity"];

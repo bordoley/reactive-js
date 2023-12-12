@@ -19,6 +19,7 @@
 - [empty](collections_Indexed.md#empty)
 - [entries](collections_Indexed.md#entries)
 - [forEach](collections_Indexed.md#foreach)
+- [keep](collections_Indexed.md#keep)
 - [keySet](collections_Indexed.md#keyset)
 - [keys](collections_Indexed.md#keys)
 - [map](collections_Indexed.md#map)
@@ -113,6 +114,29 @@ ___
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<[`IndexedLike`](../interfaces/collections.IndexedLike.md)<`T`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `T`, `T`, `TKey`\>
 
 ___
 

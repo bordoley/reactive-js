@@ -1,3 +1,3 @@
-import { ReadonlyObjectMapLike } from "../../../collections.js";
-declare const ReadonlyObjectMap_union: <TKey extends string | symbol, T>(m1: ReadonlyObjectMapLike<TKey, T>, m2: ReadonlyObjectMapLike<TKey, T>) => ReadonlyObjectMapLike<TKey, T>;
+import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
+declare const ReadonlyObjectMap_union: ReadonlyObjectMap.Signature["union"];
 export default ReadonlyObjectMap_union;

@@ -9,6 +9,7 @@ import {
 import Indexed_empty from "./Indexed/__private__/Indexed.empty.js";
 import Indexed_entries from "./Indexed/__private__/Indexed.entries.js";
 import Indexed_forEach from "./Indexed/__private__/Indexed.forEach.js";
+import Indexed_keep from "./Indexed/__private__/Indexed.keep.js";
 import Indexed_keySet from "./Indexed/__private__/Indexed.keySet.js";
 import Indexed_keys from "./Indexed/__private__/Indexed.keys.js";
 import Indexed_map from "./Indexed/__private__/Indexed.map.js";
@@ -35,6 +36,7 @@ export type Signature = IndexedCollectionModuleBase<Type>;
 export const empty: Signature["empty"] = Indexed_empty;
 export const entries: Signature["entries"] = Indexed_entries;
 export const forEach: Signature["forEach"] = Indexed_forEach;
+export const keep: Signature["keep"] = Indexed_keep;
 export const keys: Signature["keys"] = Indexed_keys;
 export const keySet: Signature["keySet"] = Indexed_keySet;
 export const map: Signature["map"] = Indexed_map;

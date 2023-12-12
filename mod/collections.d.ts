@@ -124,6 +124,7 @@ export interface KeyedCollectionModule<C extends KeyedCollection> {
      */
     entries<T, TKey extends KeyOf<C> = KeyOf<C>>(): Function1<KeyedCollectionOf<C, T, TKey>, EnumerableLike<Tuple2<TKey, T>>>;
     forEach<T, TKey extends KeyOf<C> = KeyOf<C>>(selector: SideEffect2<T, TKey>): SideEffect1<KeyedCollectionOf<C, T, TKey>>;
+    keep<T, TKey extends KeyOf<C> = KeyOf<C>>(predicate: Function2<T, TKey, boolean>): KeyedCollectionOperator<C, T, T, TKey>;
     /**
      *
      */
@@ -186,4 +187,5 @@ export interface IndexedCollectionModule<C extends KeyedCollection<number>> exte
 }
 export interface DictionaryCollectionModule<C extends KeyedCollection> extends KeyedCollectionModule<C> {
     fromEntries<T, TKey extends KeyOf<C>>(): Function1<EnumerableLike<Tuple2<TKey, T>>, KeyedCollectionOf<C, T, TKey>>;
+    union<TKey extends string | symbol, T>(m2: KeyedCollectionOf<C, T, TKey>): Function1<KeyedCollectionOf<C, T, TKey>, KeyedCollectionOf<C, T, TKey>>;
 }

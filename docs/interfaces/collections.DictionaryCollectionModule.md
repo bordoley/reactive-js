@@ -24,12 +24,14 @@
 - [entries](collections.DictionaryCollectionModule.md#entries)
 - [forEach](collections.DictionaryCollectionModule.md#foreach)
 - [fromEntries](collections.DictionaryCollectionModule.md#fromentries)
+- [keep](collections.DictionaryCollectionModule.md#keep)
 - [keySet](collections.DictionaryCollectionModule.md#keyset)
 - [keys](collections.DictionaryCollectionModule.md#keys)
 - [map](collections.DictionaryCollectionModule.md#map)
 - [reduce](collections.DictionaryCollectionModule.md#reduce)
 - [toDictionary](collections.DictionaryCollectionModule.md#todictionary)
 - [toReadonlyMap](collections.DictionaryCollectionModule.md#toreadonlymap)
+- [union](collections.DictionaryCollectionModule.md#union)
 - [values](collections.DictionaryCollectionModule.md#values)
 
 ## Methods
@@ -119,6 +121,33 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<[`Tuple2`](../modules/functions.md#tuple2)<`TKey`, `T`\>\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](../modules/functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `T`, `T`, `TKey`\>
+
+#### Inherited from
+
+[KeyedCollectionModule](collections.KeyedCollectionModule.md).[keep](collections.KeyedCollectionModule.md#keep)
 
 ___
 
@@ -269,6 +298,29 @@ ___
 #### Inherited from
 
 [KeyedCollectionModule](collections.KeyedCollectionModule.md).[toReadonlyMap](collections.KeyedCollectionModule.md#toreadonlymap)
+
+___
+
+### union
+
+▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `string` \| `symbol` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m2` | [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\> |
+
+#### Returns
+
+[`Function1`](../modules/functions.md#function1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>, [`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
 
 ___
 

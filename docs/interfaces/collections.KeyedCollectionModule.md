@@ -25,6 +25,7 @@
 - [empty](collections.KeyedCollectionModule.md#empty)
 - [entries](collections.KeyedCollectionModule.md#entries)
 - [forEach](collections.KeyedCollectionModule.md#foreach)
+- [keep](collections.KeyedCollectionModule.md#keep)
 - [keySet](collections.KeyedCollectionModule.md#keyset)
 - [keys](collections.KeyedCollectionModule.md#keys)
 - [map](collections.KeyedCollectionModule.md#map)
@@ -91,6 +92,29 @@ ___
 #### Returns
 
 [`SideEffect1`](../modules/functions.md#sideeffect1)<[`KeyedCollectionOf`](../modules/collections.md#keyedcollectionof)<`C`, `T`, `TKey`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = [`KeyOf`](../modules/collections.md#keyof)<`C`\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](../modules/functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](../modules/collections.md#keyedcollectionoperator)<`C`, `T`, `T`, `TKey`\>
 
 ___
 

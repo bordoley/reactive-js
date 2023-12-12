@@ -20,12 +20,14 @@
 - [entries](collections_Dictionary.md#entries)
 - [forEach](collections_Dictionary.md#foreach)
 - [fromEntries](collections_Dictionary.md#fromentries)
+- [keep](collections_Dictionary.md#keep)
 - [keySet](collections_Dictionary.md#keyset)
 - [keys](collections_Dictionary.md#keys)
 - [map](collections_Dictionary.md#map)
 - [reduce](collections_Dictionary.md#reduce)
 - [toDictionary](collections_Dictionary.md#todictionary)
 - [toReadonlyMap](collections_Dictionary.md#toreadonlymap)
+- [union](collections_Dictionary.md#union)
 - [values](collections_Dictionary.md#values)
 
 ## Type Aliases
@@ -127,6 +129,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`EnumerableLike`](../interfaces/collections.EnumerableLike.md)<[`Tuple2`](functions.md#tuple2)<`TKey`, `T`\>\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`Type`](collections_Dictionary.md#type)<`unknown`\>, `T`, `T`, `TKey`\>
 
 ___
 
@@ -253,6 +278,29 @@ ___
 #### Returns
 
 [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, `ReadonlyMap`<`TKey`, `T`\>\>
+
+___
+
+### union
+
+▸ **union**<`TKey`, `T`\>(`m2`): [`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TKey` | extends `string` \| `symbol` |
+| `T` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m2` | [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\> |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>, [`DictionaryLike`](../interfaces/collections.DictionaryLike.md)<`NonNullable`<`TKey`\>, `T`\>\>
 
 ___
 

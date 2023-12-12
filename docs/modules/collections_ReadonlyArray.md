@@ -19,6 +19,7 @@
 - [empty](collections_ReadonlyArray.md#empty)
 - [entries](collections_ReadonlyArray.md#entries)
 - [forEach](collections_ReadonlyArray.md#foreach)
+- [keep](collections_ReadonlyArray.md#keep)
 - [keySet](collections_ReadonlyArray.md#keyset)
 - [keys](collections_ReadonlyArray.md#keys)
 - [map](collections_ReadonlyArray.md#map)
@@ -113,6 +114,29 @@ ___
 #### Returns
 
 [`SideEffect1`](functions.md#sideeffect1)<readonly `T`[]\>
+
+___
+
+### keep
+
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `T`, `T`, `TKey`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `TKey` | extends `number` = `number` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | [`Function2`](functions.md#function2)<`T`, `TKey`, `boolean`\> |
+
+#### Returns
+
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`ReadonlyArrayCollection`](../interfaces/collections_ReadonlyArray.ReadonlyArrayCollection.md), `T`, `T`, `TKey`\>
 
 ___
 

@@ -11,6 +11,7 @@ export type Signature = IndexedCollectionModule<Type>;
 export declare const empty: Signature["empty"];
 export declare const entries: Signature["entries"];
 export declare const forEach: Signature["forEach"];
+export declare const keep: Signature["keep"];
 export declare const keys: Signature["keys"];
 export declare const keySet: Signature["keySet"];
 export declare const map: Signature["map"];

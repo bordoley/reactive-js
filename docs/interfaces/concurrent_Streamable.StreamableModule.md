@@ -11,6 +11,8 @@
 - [create](concurrent_Streamable.StreamableModule.md#create)
 - [createAnimationGroupEventHandler](concurrent_Streamable.StreamableModule.md#createanimationgroupeventhandler)
 - [createEventHandler](concurrent_Streamable.StreamableModule.md#createeventhandler)
+- [createInMemoryCache](concurrent_Streamable.StreamableModule.md#createinmemorycache)
+- [createPersistentCache](concurrent_Streamable.StreamableModule.md#createpersistentcache)
 - [createStateStore](concurrent_Streamable.StreamableModule.md#createstatestore)
 - [identity](concurrent_Streamable.StreamableModule.md#identity)
 
@@ -263,6 +265,57 @@ ___
 #### Returns
 
 [`StreamableLike`](concurrent.StreamableLike.md)<`TEventType`, `boolean`, [`StreamLike`](concurrent.StreamLike.md)<`TEventType`, `boolean`\>\>
+
+___
+
+### createInMemoryCache
+
+▸ **createInMemoryCache**<`T`\>(`options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.capacity?` | `number` |
+| `options.cleanupScheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+
+#### Returns
+
+[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+
+___
+
+### createPersistentCache
+
+▸ **createPersistentCache**<`T`\>(`persistentStore`, `options?`): [`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `persistentStore` | `Object` |
+| `persistentStore.load` | (`keys`: `ReadonlySet`<`string`\>) => [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`Readonly`<`Record`<`string`, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>\> |
+| `persistentStore.store` | (`updates`: `Readonly`<`Record`<`string`, `T`\>\>) => [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`void`\> |
+| `options?` | `Object` |
+| `options.capacity?` | `number` |
+| `options.cleanupScheduler?` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
+
+#### Returns
+
+[`StreamableLike`](concurrent.StreamableLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`, [`StreamLike`](concurrent.StreamLike.md)<[`ReadonlyObjectMapLike`](../modules/collections.md#readonlyobjectmaplike)<`string`, [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`Optional`](../modules/functions.md#optional)<`T`\>\>\>, `never`\> & [`AssociativeLike`](collections.AssociativeLike.md)<`string`, [`ObservableLike`](concurrent.ObservableLike.md)<`T`\>\>\>
 
 ___
 
