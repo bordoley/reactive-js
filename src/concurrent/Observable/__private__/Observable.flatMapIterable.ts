@@ -16,8 +16,10 @@ const Observable_flatMapIterable: Observable.Signature["flatMapIterable"] = (<
     pipe(
       observable,
       Observable_concatMap(mapper, {
-        ...observable,
-        [ObservableLike_isPure]: false,
+        innerType: {
+          ...observable,
+          [ObservableLike_isPure]: false,
+        } as typeof Observable.DeferredObservableType,
       }),
     );
 }) as Observable.Signature["flatMapIterable"];

@@ -82,6 +82,6 @@ const Observable_mergeAll = ((options) => Observable_lift({
     [ObservableLike_isDeferred]: false,
     [ObservableLike_isPure]: false,
     [ObservableLike_isRunnable]: false,
-    ...(options ?? {}),
+    ...(options?.innerType ?? {}),
 })(Observer_createMergeAllObserverOperator(options)));
 export default Observable_mergeAll;

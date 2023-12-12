@@ -13,9 +13,11 @@ import Observable_switchAll from "./Observable.switchAll.js";
 const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options?: {
-      readonly [ObservableLike_isDeferred]?: boolean;
-      readonly [ObservableLike_isPure]?: boolean;
-      readonly [ObservableLike_isRunnable]?: boolean;
+      innerType: {
+        readonly [ObservableLike_isDeferred]?: boolean;
+        readonly [ObservableLike_isPure]?: boolean;
+        readonly [ObservableLike_isRunnable]?: boolean;
+      };
     },
   ) =>
   (obs: ObservableLike<TA>) =>
@@ -24,9 +26,11 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
       Observable_map(selector),
       Observable_switchAll<TB>(
         options as {
-          readonly [ObservableLike_isDeferred]: true;
-          readonly [ObservableLike_isPure]: boolean;
-          readonly [ObservableLike_isRunnable]: boolean;
+          innerType: {
+            readonly [ObservableLike_isDeferred]: true;
+            readonly [ObservableLike_isPure]: boolean;
+            readonly [ObservableLike_isRunnable]: boolean;
+          };
         },
       ),
     )) as Observable.Signature["switchMap"];

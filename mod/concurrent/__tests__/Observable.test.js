@@ -126,9 +126,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
         101, 102, 103, 1, 101, 102, 103, 3, 101, 102, 103, 5,
     ]));
 })), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatMany", test("concating an empty array returns the empty observable", pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())))), describe("concatMap", testAsync("maps each value to a container and flattens", pipeLazyAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
     const vts = VirtualTimeScheduler.create();
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
@@ -177,13 +175,9 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     pipe([4, 5, 6], Observable.fromReadonlyArray()),
     pipe([7, 8, 9], Observable.fromReadonlyArray()),
 ], Observable.fromReadonlyArray(), Observable.exhaust({
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("exhaustMap", test("when the initial observable never disposes", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.exhaustMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("firstAsync", testAsync("empty source", async () => {
     const result = await pipe([], Observable.fromReadonlyArray(), Observable.firstAsync());
     pipe(result, expectIsNone);
@@ -395,13 +389,9 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     pipe([9, 10], Observable.fromReadonlyArray({ delay: 3 })),
 ], Observable.fromReadonlyArray(), Observable.mergeAll({
     concurrency: 2,
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10])))), describe("mergeMap", testAsync("without delay, merge all observables as they are produced", pipeLazyAsync([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray())), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]))), test("without delay, merge all observables as they are produced", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.mergeMap(x => pipe([x, x, x], Observable.fromReadonlyArray()), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3])))), describe("onSubscribe", test("when subscribe function returns a teardown function", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = mockFn();
@@ -445,28 +435,18 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(result, expectArrayEquals([2, 4, 6]));
 })), describe("startWith", test("appends the additional values to the start of the container", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.startWith(2, 3, 4), Observable.toReadonlyArray(), expectArrayEquals([2, 3, 4, 0, 1])))), describe("switchAll", test("with empty source", pipeLazy(Observable.empty(), Observable.switchAll({
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([])))), describe("switchMap", test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("only produce the last observable", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.switchMap(x => pipe([x, x, x], Observable.fromReadonlyArray({
     delay: 1,
     delayStart: true,
 })), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([3, 3, 3]))), test("overlapping notification", pipeLazy([none, none, none], Observable.fromReadonlyArray({ delay: 4 }), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 1, 2, 1, 2, 3]))), test("concating arrays", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.switchMap(_ => pipe([1, 2, 3], Observable.fromReadonlyArray()), {
-    [ObservableLike_isDeferred]: true,
-    [ObservableLike_isPure]: true,
-    [ObservableLike_isRunnable]: true,
+    innerType: Observable.PureRunnableType,
 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3])))), describe("takeUntil", test("takes until the notifier notifies its first notification", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray({ delay: 1 }), Observable.takeUntil(pipe([1], Observable.fromReadonlyArray({ delay: 3, delayStart: true }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3])))), describe("throttle", test("first", pipeLazy(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 100 }), Observable.throttle(50, { mode: "first" }), Observable.toReadonlyArray(), expectArrayEquals([0, 49, 99]))), test("last", pipeLazy(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 200 }), Observable.throttle(50, { mode: "last" }), Observable.toReadonlyArray(), expectArrayEquals([49, 99, 149, 199]))), test("interval", pipeLazy(Enumerable.generate(increment, returns(-1)), Observable.fromEnumerable({ delay: 1, delayStart: true }), Observable.takeFirst({ count: 200 }), Observable.throttle(75, { mode: "interval" }), Observable.toReadonlyArray(), expectArrayEquals([0, 74, 149, 199])))), describe("takeLast", test("with default count", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray(), Observable.takeLast(), Observable.toReadonlyArray(), expectArrayEquals([5]))), test("when count is 0", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray(), 
 // Some implementations special case this
 Observable.takeLast({ count: 0 }), Observable.toReadonlyArray(), expectArrayEquals([]))), test("when count is less than the total number of elements", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray(), Observable.takeLast({ count: 3 }), Observable.toReadonlyArray(), expectArrayEquals([3, 4, 5]))), test("when count is greater than the total number of elements", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray(), Observable.takeLast({ count: 10 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5]))), test("with default count", pipeLazy([1, 2, 3, 4, 5], Observable.fromReadonlyArray(), Observable.takeLast(), Observable.toReadonlyArray(), expectArrayEquals([5])))), describe("throwIfEmpty", test("when source is empty", () => {

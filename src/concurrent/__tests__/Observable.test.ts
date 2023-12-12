@@ -434,9 +434,7 @@ testModule(
         Observable.concatMap(
           pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray<number>(),
@@ -573,9 +571,7 @@ testModule(
         ],
         Observable.fromReadonlyArray(),
         Observable.exhaust<number>({
-          [ObservableLike_isDeferred]: true,
-          [ObservableLike_isPure]: true,
-          [ObservableLike_isRunnable]: true,
+          innerType: Observable.PureRunnableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3]),
@@ -593,9 +589,7 @@ testModule(
           _ =>
             pipe([1, 2, 3], Observable.fromReadonlyArray<number>({ delay: 1 })),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1288,10 +1282,7 @@ testModule(
         Observable.fromReadonlyArray(),
         Observable.mergeAll<number>({
           concurrency: 2,
-
-          [ObservableLike_isDeferred]: true,
-          [ObservableLike_isPure]: true,
-          [ObservableLike_isRunnable]: true,
+          innerType: Observable.PureRunnableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
@@ -1320,9 +1311,7 @@ testModule(
         Observable.mergeMap<number, number>(
           x => pipe([x, x, x], Observable.fromReadonlyArray<number>()),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1567,9 +1556,7 @@ testModule(
       pipeLazy(
         Observable.empty(),
         Observable.switchAll<number>({
-          [ObservableLike_isDeferred]: true,
-          [ObservableLike_isPure]: true,
-          [ObservableLike_isRunnable]: true,
+          innerType: Observable.PureRunnableType,
         }),
         Observable.toReadonlyArray(),
         expectArrayEquals([] as readonly number[]),
@@ -1586,9 +1573,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1610,9 +1595,7 @@ testModule(
               }),
             ),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1627,9 +1610,7 @@ testModule(
         Observable.switchMap<void, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),
@@ -1645,9 +1626,7 @@ testModule(
         Observable.switchMap<number, number>(
           _ => pipe([1, 2, 3], Observable.fromReadonlyArray()),
           {
-            [ObservableLike_isDeferred]: true,
-            [ObservableLike_isPure]: true,
-            [ObservableLike_isRunnable]: true,
+            innerType: Observable.PureRunnableType,
           },
         ),
         Observable.toReadonlyArray(),

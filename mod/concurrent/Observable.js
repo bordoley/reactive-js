@@ -89,6 +89,19 @@ import Observable_toReadonlyArrayAsync from "./Observable/__private__/Observable
 import Observable_withCurrentTime from "./Observable/__private__/Observable.withCurrentTime.js";
 import Observable_withLatestFrom from "./Observable/__private__/Observable.withLatestFrom.js";
 import Observable_zipLatest from "./Observable/__private__/Observable.zipLatest.js";
+export const PureRunnableType = {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
+};
+export const RunnableWithSideEffectsType = {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: false,
+    [ObservableLike_isRunnable]: true,
+};
+export const DeferredObservableType = {
+    [ObservableLike_isDeferred]: true,
+};
 export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;
 export const buffer = Observable_buffer;

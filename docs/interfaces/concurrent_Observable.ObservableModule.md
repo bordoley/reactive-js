@@ -111,7 +111,7 @@
 
 ### concatAll
 
-• **concatAll**: <T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
+• **concatAll**: <T\>(`options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
 
 #### Type declaration
 
@@ -128,9 +128,7 @@
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -149,9 +147,7 @@
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -170,9 +166,7 @@
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -194,7 +188,7 @@ ___
 
 ### concatMap
 
-• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: `boolean` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
+• **concatMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
 
 #### Type declaration
 
@@ -213,9 +207,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -236,9 +228,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -259,9 +249,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | `boolean` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -296,7 +284,7 @@ ___
 
 ### exhaust
 
-• **exhaust**: <T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
+• **exhaust**: <T\>(`options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
 
 #### Type declaration
 
@@ -313,9 +301,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -334,9 +320,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -355,9 +339,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -379,7 +361,7 @@ ___
 
 ### exhaustMap
 
-• **exhaustMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: `boolean` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
+• **exhaustMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
 
 #### Type declaration
 
@@ -398,9 +380,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -421,9 +401,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -444,9 +422,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | `boolean` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -475,7 +451,7 @@ ___
 
 ### switchAll
 
-• **switchAll**: <T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
+• **switchAll**: <T\>(`options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<[`RunnableLike`](concurrent.RunnableLike.md)<`T`\>\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`T`\>\><T\>(`options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\><T\>() => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
 
 #### Type declaration
 
@@ -492,9 +468,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -513,9 +487,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -534,9 +506,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -558,7 +528,7 @@ ___
 
 ### switchMap
 
-• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``true`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: ``true`` ; `[ObservableLike_isPure]`: ``false`` ; `[ObservableLike_isRunnable]`: ``true``  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `[ObservableLike_isDeferred]`: `boolean` ; `[ObservableLike_isPure]`: `boolean` ; `[ObservableLike_isRunnable]`: `boolean`  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
+• **switchMap**: <TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TA`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\>  }) => [`Function1`](../modules/functions.md#function1)<[`RunnableLike`](concurrent.RunnableLike.md)<`TA`\>, [`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>, `options`: { `innerType`: `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\>  }) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\><TA, TB\>(`selector`: [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\>) => [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`TA`\>, [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`TB`\>\>
 
 #### Type declaration
 
@@ -577,9 +547,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -600,9 +568,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 ##### Returns
 
@@ -623,9 +589,7 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | `boolean` |
-| `options.[ObservableLike_isPure]` | `boolean` |
-| `options.[ObservableLike_isRunnable]` | `boolean` |
+| `options.innerType` | `Pick`<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred)\> |
 
 ##### Returns
 
@@ -2819,12 +2783,10 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -2843,12 +2805,10 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -2970,12 +2930,10 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``true`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
+| `options.innerType` | `Pick`<[`PureRunnableLike`](concurrent.PureRunnableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
@@ -2996,12 +2954,10 @@ ___
 | :------ | :------ |
 | `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, [`RunnableLike`](concurrent.RunnableLike.md)<`TB`\>\> |
 | `options` | `Object` |
-| `options.[ObservableLike_isDeferred]` | ``true`` |
-| `options.[ObservableLike_isPure]` | ``false`` |
-| `options.[ObservableLike_isRunnable]` | ``true`` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
 | `options.concurrency?` | `number` |
+| `options.innerType` | `Pick`<[`RunnableWithSideEffectsLike`](concurrent.RunnableWithSideEffectsLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](../modules/concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](../modules/concurrent.md#observablelike_ispure) \| typeof [`ObservableLike_isRunnable`](../modules/concurrent.md#observablelike_isrunnable)\> |
 
 #### Returns
 
