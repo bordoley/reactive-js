@@ -6,8 +6,6 @@
 
 ## Hierarchy
 
-- [`PureComputationModule`](computations.PureComputationModule.md)<[`ObservableComputation`](concurrent_Observable.ObservableComputation.md)\>
-
 - [`PureComputationModule`](computations.PureComputationModule.md)<[`PureRunnableComputation`](concurrent_Observable.PureRunnableComputation.md)\>
 
   ↳ **`ObservableModule`**
@@ -3232,7 +3230,7 @@ ___
 
 ### repeat
 
-▸ **repeat**<`T`\>(`predicate`): [`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`predicate`): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3248,9 +3246,9 @@ ___
 
 #### Returns
 
-[`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(`count`): [`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(`count`): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3266,9 +3264,9 @@ ___
 
 #### Returns
 
-[`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
-▸ **repeat**<`T`\>(): [`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+▸ **repeat**<`T`\>(): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3278,13 +3276,13 @@ ___
 
 #### Returns
 
-[`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 
 ### retry
 
-▸ **retry**<`T`\>(`shouldRetry?`): [`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+▸ **retry**<`T`\>(`shouldRetry?`): [`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 #### Type parameters
 
@@ -3300,7 +3298,7 @@ ___
 
 #### Returns
 
-[`PureDeferredSideEffectsObservableOperator`](../modules/concurrent_Observable.md#puredeferredsideeffectsobservableoperator)<`T`, `T`\>
+[`DeferredObservableOperator`](../modules/concurrent_Observable.md#deferredobservableoperator)<`T`, `T`\>
 
 ___
 

@@ -18,8 +18,6 @@
 
   ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
 
-  ↳ [`ObservableModule`](concurrent_Observable.ObservableModule.md)
-
   ↳ [`EventSourceModule`](events_EventSource.EventSourceModule.md)
 
 ## Table of contents

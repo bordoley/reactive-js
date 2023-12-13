@@ -154,7 +154,7 @@ export type PureObservableOperator<TIn, TOut> = <
   ? MulticastObservableLike<TOut>
   : ObservableLike<TOut>;
 
-export type PureDeferredSideEffectsObservableOperator<TIn, TOut> = <
+export type DeferredObservableOperator<TIn, TOut> = <
   TObservableIn extends ObservableLike<TIn>,
 >(
   observable: TObservableIn,
@@ -206,6 +206,7 @@ export const PureRunnableType: Pick<
   [ObservableLike_isPure]: true,
   [ObservableLike_isRunnable]: true,
 };
+
 export const RunnableWithSideEffectsType: Pick<
   RunnableWithSideEffectsLike,
   | typeof ObservableLike_isDeferred
@@ -359,8 +360,7 @@ export type Animation<T = number> =
  * @noInheritDoc
  */
 export interface ObservableModule
-  extends PureComputationModule<ObservableComputation>,
-    PureComputationModule<PureRunnableComputation> {
+  extends PureComputationModule<PureRunnableComputation> {
   animate<T = number>(
     configs: Animation<T> | readonly Animation<T>[],
   ): PureRunnableLike<T>;
@@ -1008,15 +1008,13 @@ export interface ObservableModule
     initialValue: Factory<TAcc>,
   ): Function1<RunnableLike<T>, TAcc>;
 
-  repeat<T>(
-    predicate: Predicate<number>,
-  ): PureDeferredSideEffectsObservableOperator<T, T>;
-  repeat<T>(count: number): PureDeferredSideEffectsObservableOperator<T, T>;
-  repeat<T>(): PureDeferredSideEffectsObservableOperator<T, T>;
+  repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
+  repeat<T>(count: number): DeferredObservableOperator<T, T>;
+  repeat<T>(): DeferredObservableOperator<T, T>;
 
   retry<T>(
     shouldRetry?: (count: number, error: Error) => boolean,
-  ): PureDeferredSideEffectsObservableOperator<T, T>;
+  ): DeferredObservableOperator<T, T>;
 
   run<T>(options?: {
     readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];

@@ -5,7 +5,7 @@ import { EventSourceLike, StoreLike } from "../events.js";
 import { Equality, Factory, Function1, Function2, Optional, Predicate, Reducer, SideEffect, SideEffect1, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9 } from "../functions.js";
 import { DisposableLike, QueueableLike, QueueableLike_backpressureStrategy } from "../utils.js";
 export type PureObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends RunnableLike<TIn> ? RunnableLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : ObservableLike<TOut>;
-export type PureDeferredSideEffectsObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
+export type DeferredObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends PureRunnableLike<TIn> ? PureRunnableLike<TOut> : TObservableIn extends RunnableWithSideEffectsLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : never;
 export type ObservableOperatorWithSideEffects<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends RunnableLike<TIn> ? RunnableWithSideEffectsLike<TOut> : TObservableIn extends DeferredSideEffectsObservableLike<TIn> | MulticastObservableLike<TIn> ? DeferredSideEffectsObservableLike<TOut> : TObservableIn extends DeferredObservableLike<TIn> ? DeferredObservableLike<TOut> : ObservableLike<TOut>;
 export type DeferredSideEffectsObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => DeferredSideEffectsObservableLike<TOut>;
 export type MulticastObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredSideEffectsObservableLike<TOut>;
@@ -105,7 +105,7 @@ export type Animation<T = number> = Animation.Delay | Animation.Loop<T> | (T ext
 /**
  * @noInheritDoc
  */
-export interface ObservableModule extends PureComputationModule<ObservableComputation>, PureComputationModule<PureRunnableComputation> {
+export interface ObservableModule extends PureComputationModule<PureRunnableComputation> {
     animate<T = number>(configs: Animation<T> | readonly Animation<T>[]): PureRunnableLike<T>;
     backpressureStrategy<T>(capacity: number, backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy]): PureObservableOperator<T, T>;
     buffer<T>(options?: {
@@ -293,10 +293,10 @@ export interface ObservableModule extends PureComputationModule<ObservableComput
     onSubscribe<T>(f: SideEffect): ObservableOperatorWithSideEffects<T, T>;
     pairwise<T>(): PureObservableOperator<T, Tuple2<T, T>>;
     reduce<T, TAcc>(reducer: Reducer<T, TAcc>, initialValue: Factory<TAcc>): Function1<RunnableLike<T>, TAcc>;
-    repeat<T>(predicate: Predicate<number>): PureDeferredSideEffectsObservableOperator<T, T>;
-    repeat<T>(count: number): PureDeferredSideEffectsObservableOperator<T, T>;
-    repeat<T>(): PureDeferredSideEffectsObservableOperator<T, T>;
-    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): PureDeferredSideEffectsObservableOperator<T, T>;
+    repeat<T>(predicate: Predicate<number>): DeferredObservableOperator<T, T>;
+    repeat<T>(count: number): DeferredObservableOperator<T, T>;
+    repeat<T>(): DeferredObservableOperator<T, T>;
+    retry<T>(shouldRetry?: (count: number, error: Error) => boolean): DeferredObservableOperator<T, T>;
     run<T>(options?: {
         readonly backpressureStrategy: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
