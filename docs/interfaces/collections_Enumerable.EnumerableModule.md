@@ -43,7 +43,7 @@
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -60,7 +60,7 @@
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
 
 #### Inherited from
 
@@ -181,7 +181,7 @@ ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -192,7 +192,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
 
 #### Inherited from
 
@@ -202,7 +202,7 @@ ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -219,7 +219,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -288,7 +288,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -304,7 +304,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -314,7 +314,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 #### Type parameters
 
@@ -331,7 +331,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
 
 #### Inherited from
 
@@ -341,7 +341,7 @@ ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+▸ **pairwise**<`T`\>(): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -351,7 +351,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Inherited from
 
@@ -455,7 +455,7 @@ ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -473,7 +473,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
 
 #### Inherited from
 
@@ -483,7 +483,7 @@ ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -500,7 +500,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -510,7 +510,7 @@ ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -527,7 +527,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Inherited from
 
@@ -537,7 +537,7 @@ ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Type parameters
 
@@ -555,7 +555,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
 
 #### Inherited from
 

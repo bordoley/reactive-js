@@ -42,7 +42,7 @@
 
 ### buffer
 
-▸ **buffer**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, readonly `T`[]\>
+▸ **buffer**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, readonly `T`[]\>
 
 #### Type parameters
 
@@ -59,13 +59,13 @@
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, readonly `T`[]\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, readonly `T`[]\>
 
 ___
 
 ### decodeWithCharset
 
-▸ **decodeWithCharset**(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `ArrayBuffer`, `string`\>
+▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `ArrayBuffer`, `string`\>
 
 #### Parameters
 
@@ -76,13 +76,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `ArrayBuffer`, `string`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `ArrayBuffer`, `string`\>
 
 ___
 
 ### distinctUntilChanged
 
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+▸ **distinctUntilChanged**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -99,7 +99,7 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`\>(`predicate`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -137,13 +137,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 ___
 
 ### map
 
-▸ **map**<`TA`, `TB`\>(`selector`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `TA`, `TB`\>
+▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -160,13 +160,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `TA`, `TB`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 ___
 
 ### pairwise
 
-▸ **pairwise**<`T`\>(): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+▸ **pairwise**<`T`\>(): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 #### Type parameters
 
@@ -176,13 +176,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
 
 ___
 
 ### scan
 
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `TAcc`\>
+▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `TAcc`\>
 
 #### Type parameters
 
@@ -200,13 +200,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `TAcc`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `TAcc`\>
 
 ___
 
 ### skipFirst
 
-▸ **skipFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+▸ **skipFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -223,13 +223,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 ___
 
 ### takeFirst
 
-▸ **takeFirst**<`T`\>(`options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+▸ **takeFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -246,13 +246,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 ___
 
 ### takeWhile
 
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>
 
 #### Type parameters
 
@@ -270,4 +270,4 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](../modules/computations.md#purecomputationoperator)<`C`, `T`, `T`\>
+[`ComputationOperator`](../modules/computations.md#computationoperator)<`C`, `T`, `T`\>

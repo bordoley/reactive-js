@@ -12,7 +12,7 @@
 ### Type Aliases
 
 - [ComputationOf](computations.md#computationof)
-- [PureComputationOperator](computations.md#purecomputationoperator)
+- [ComputationOperator](computations.md#computationoperator)
 
 ### Variables
 
@@ -40,9 +40,9 @@
 
 ___
 
-### PureComputationOperator
+### ComputationOperator
 
-Ƭ **PureComputationOperator**<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`ComputationOf`](computations.md#computationof)<`C`, `TA`\>, [`ComputationOf`](computations.md#computationof)<`C`, `TB`\>\>
+Ƭ **ComputationOperator**<`C`, `TA`, `TB`\>: [`Function1`](functions.md#function1)<[`ComputationOf`](computations.md#computationof)<`C`, `TA`\>, [`ComputationOf`](computations.md#computationof)<`C`, `TB`\>\>
 
 #### Type parameters
 
@@ -68,7 +68,7 @@ ___
 
 ### keepType
 
-▸ **keepType**<`C`, `TA`, `TB`\>(`m`, `predicate`): [`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `TA`, `TB`\>
+▸ **keepType**<`C`, `TA`, `TB`\>(`m`, `predicate`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 #### Type parameters
 
@@ -87,13 +87,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `TA`, `TB`\>
+[`ComputationOperator`](computations.md#computationoperator)<`C`, `TA`, `TB`\>
 
 ___
 
 ### mapTo
 
-▸ **mapTo**<`C`, `T`\>(`m`, `value`): [`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `unknown`, `T`\>
+▸ **mapTo**<`C`, `T`\>(`m`, `value`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
 
 #### Type parameters
 
@@ -111,13 +111,13 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `unknown`, `T`\>
+[`ComputationOperator`](computations.md#computationoperator)<`C`, `unknown`, `T`\>
 
 ___
 
 ### pick
 
-▸ **pick**<`C`, `T`, `TKeyOfT`\>(`m`, `key`): [`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+▸ **pick**<`C`, `T`, `TKeyOfT`\>(`m`, `key`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
 
 #### Type parameters
 
@@ -136,9 +136,9 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
+[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfT`]\>
 
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`\>(`m`, `keyA`, `keyB`): [`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
+▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`\>(`m`, `keyA`, `keyB`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
 #### Type parameters
 
@@ -159,9 +159,9 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
+[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`]\>
 
-▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`m`, `keyA`, `keyB`, `keyC`): [`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+▸ **pick**<`C`, `T`, `TKeyOfTA`, `TKeyOfTB`, `TKeyOfTC`\>(`m`, `keyA`, `keyB`, `keyC`): [`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
 
 #### Type parameters
 
@@ -184,4 +184,4 @@ ___
 
 #### Returns
 
-[`PureComputationOperator`](computations.md#purecomputationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>
+[`ComputationOperator`](computations.md#computationoperator)<`C`, `T`, `T`[`TKeyOfTA`][`TKeyOfTB`][`TKeyOfTC`]\>

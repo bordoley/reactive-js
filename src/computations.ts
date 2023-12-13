@@ -34,7 +34,7 @@ export type ComputationOf<C extends Computation, T> = C extends {
       readonly _T: () => T;
     };
 
-export type PureComputationOperator<C extends Computation, TA, TB> = Function1<
+export type ComputationOperator<C extends Computation, TA, TB> = Function1<
   ComputationOf<C, TA>,
   ComputationOf<C, TB>
 >;
@@ -45,58 +45,58 @@ export type PureComputationOperator<C extends Computation, TA, TB> = Function1<
 export interface PureComputationModule<C extends Computation> {
   buffer<T>(options?: {
     count?: number;
-  }): PureComputationOperator<C, T, readonly T[]>;
+  }): ComputationOperator<C, T, readonly T[]>;
 
   decodeWithCharset(options?: {
     readonly charset?: string | undefined;
-  }): PureComputationOperator<C, ArrayBuffer, string>;
+  }): ComputationOperator<C, ArrayBuffer, string>;
 
   distinctUntilChanged<T>(options?: {
     readonly equality?: Equality<T>;
-  }): PureComputationOperator<C, T, T>;
+  }): ComputationOperator<C, T, T>;
 
   fromReadonlyArray<T>(): Function1<readonly T[], ComputationOf<C, T>>;
 
-  keep<T>(predicate: Predicate<T>): PureComputationOperator<C, T, T>;
+  keep<T>(predicate: Predicate<T>): ComputationOperator<C, T, T>;
 
-  map<TA, TB>(selector: Function1<TA, TB>): PureComputationOperator<C, TA, TB>;
+  map<TA, TB>(selector: Function1<TA, TB>): ComputationOperator<C, TA, TB>;
 
-  pairwise<T>(): PureComputationOperator<C, T, Tuple2<T, T>>;
+  pairwise<T>(): ComputationOperator<C, T, Tuple2<T, T>>;
 
   scan<T, TAcc>(
     scanner: Reducer<T, TAcc>,
     initialValue: Factory<TAcc>,
-  ): PureComputationOperator<C, T, TAcc>;
+  ): ComputationOperator<C, T, TAcc>;
 
   skipFirst<T>(options?: {
     readonly count?: number;
-  }): PureComputationOperator<C, T, T>;
+  }): ComputationOperator<C, T, T>;
 
   takeFirst<T>(options?: {
     readonly count?: number;
-  }): PureComputationOperator<C, T, T>;
+  }): ComputationOperator<C, T, T>;
 
   takeWhile<T>(
     predicate: Predicate<T>,
     options?: { readonly inclusive?: boolean },
-  ): PureComputationOperator<C, T, T>;
+  ): ComputationOperator<C, T, T>;
 }
 
 interface Signature {
   keepType<C extends Computation, TA, TB extends TA>(
     m: Pick<PureComputationModule<C>, "keep">,
     predicate: TypePredicate<TA, TB>,
-  ): PureComputationOperator<C, TA, TB>;
+  ): ComputationOperator<C, TA, TB>;
 
   mapTo<C extends Computation, T>(
     m: Pick<PureComputationModule<C>, "map">,
     value: T,
-  ): PureComputationOperator<C, unknown, T>;
+  ): ComputationOperator<C, unknown, T>;
 
   pick<C extends Computation, T, TKeyOfT extends keyof T>(
     m: Pick<PureComputationModule<C>, "map">,
     key: TKeyOfT,
-  ): PureComputationOperator<C, T, T[TKeyOfT]>;
+  ): ComputationOperator<C, T, T[TKeyOfT]>;
   pick<
     C extends Computation,
     T,
@@ -106,7 +106,7 @@ interface Signature {
     m: Pick<PureComputationModule<C>, "map">,
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
-  ): PureComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
+  ): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB]>;
   pick<
     C extends Computation,
     T,
@@ -118,7 +118,7 @@ interface Signature {
     keyA: TKeyOfTA,
     keyB: TKeyOfTB,
     keyC: TKeyOfTC,
-  ): PureComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
+  ): ComputationOperator<C, T, T[TKeyOfTA][TKeyOfTB][TKeyOfTC]>;
 }
 
 export const keepType: Signature["keepType"] = (<
