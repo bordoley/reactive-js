@@ -8,7 +8,9 @@ import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as ReadonlyMap from "../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../ReadonlyObjectMap.js";
-testModule("ReadonlyObjectMap", describe("empty", test("returns an empty enumerator", pipeLazy(ReadonlyObjectMap.empty(), ReadonlyObjectMap.values(), Enumerable.toReadonlyArray(), expectArrayEquals([])))), describe("entries", test("enumerates all entries", pipeLazy([tuple("0", "b"), tuple("1", "d")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([tuple("0", "b"), tuple("1", "d")], { valuesEquality: arrayEquality() })))), describe("keySet", test("returns a keyset with all the keys", () => {
+testModule("ReadonlyObjectMap", describe("empty", test("returns an empty enumerator", pipeLazy(ReadonlyObjectMap.empty(), ReadonlyObjectMap.values(), Enumerable.toReadonlyArray(), expectArrayEquals([])))), describe("entries", test("enumerates all entries", pipeLazy([tuple("0", "b"), tuple("1", "d")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([tuple("0", "b"), tuple("1", "d")], {
+    valuesEquality: arrayEquality(),
+})))), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe([tuple("0", "b"), tuple("1", none), tuple("2", "v")], ReadonlyArray.values(), ReadonlyObjectMap.fromEntries(), ReadonlyObjectMap.keySet());
     pipe(keys.size, expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals(["0", "1", "2"]));

@@ -184,13 +184,7 @@ const createCacheStream: <T>(
                     string,
                     Function1<Optional<T>, Optional<T>>
                   >,
-                ): Tuple2<
-                  ReadonlyObjectMapLike<
-                    string,
-                    Function1<Optional<T>, Optional<T>>
-                  >,
-                  ReadonlyObjectMapLike<string, T>
-                > =>
+                ) =>
                   tuple(
                     updaters,
                     pipe(

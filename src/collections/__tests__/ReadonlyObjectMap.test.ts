@@ -43,14 +43,13 @@ testModule(
       "enumerates all entries",
       pipeLazy(
         [tuple("0", "b"), tuple("1", "d")],
-        ReadonlyArray.values<Tuple2<string, string>>(),
+        ReadonlyArray.values(),
         ReadonlyObjectMap.fromEntries(),
-        ReadonlyObjectMap.entries<string, string>(),
+        ReadonlyObjectMap.entries(),
         Enumerable.toReadonlyArray(),
-        expectArrayEquals<Tuple2<string, string>>(
-          [tuple("0", "b"), tuple("1", "d")],
-          { valuesEquality: arrayEquality() },
-        ),
+        expectArrayEquals([tuple("0", "b"), tuple("1", "d")], {
+          valuesEquality: arrayEquality(),
+        }),
       ),
     ),
   ),
@@ -74,7 +73,7 @@ testModule(
       "mapping every value to its key",
       pipeLazy(
         [tuple("0", "b"), tuple("1", "d"), tuple("2", "f")],
-        ReadonlyArray.values<Tuple2<string, string>>(),
+        ReadonlyArray.values(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.map<string, string, string>((_, key: string) => key),
         ReadonlyObjectMap.values(),
@@ -89,7 +88,7 @@ testModule(
       "summing the keys",
       pipeLazy(
         [tuple("0", "a"), tuple("1", "B"), tuple("2", "c")],
-        ReadonlyArray.values<Tuple2<string, string>>(),
+        ReadonlyArray.values(),
         ReadonlyObjectMap.fromEntries<string, string>(),
         ReadonlyObjectMap.reduce(
           (acc: string, value: string, _: string) => acc + value,
@@ -165,7 +164,7 @@ testModule(
     test("from non-empty map", () => {
       const dict = pipe(
         [tuple("0", "b"), tuple("1", "d"), tuple("2", "v")],
-        ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
+        ReadonlyArray.values(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toReadonlyMap(),
       );

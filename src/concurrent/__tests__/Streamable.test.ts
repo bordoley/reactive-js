@@ -129,7 +129,7 @@ testModule(
             cache[QueueableLike_enqueue]({ abc: _ => none });
           }),
         ],
-        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
+        ReadonlyArray.forEach(([time, f]) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
@@ -216,7 +216,7 @@ testModule(
             });
           }),
         ],
-        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
+        ReadonlyArray.forEach(([time, f]) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );

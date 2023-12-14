@@ -15,7 +15,6 @@ import {
 import {
   Function1,
   Optional,
-  Tuple2,
   arrayEquality,
   greaterThan,
   none,
@@ -58,10 +57,9 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           fromReadonlyArray(),
           m.entries<string, number>(),
           Enumerable.toReadonlyArray(),
-          expectArrayEquals<Tuple2<number, string>>(
-            [tuple(0, "b"), tuple(1, "d")],
-            { valuesEquality: arrayEquality() },
-          ),
+          expectArrayEquals([tuple(0, "b"), tuple(1, "d")], {
+            valuesEquality: arrayEquality(),
+          }),
         ),
       ),
     ),

@@ -235,8 +235,8 @@ const PureComputationModuleTests = <C extends Computation>(
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
           m.fromReadonlyArray(),
           m.pairwise<number>(),
-          toReadonlyArray<Tuple2<number, number>>(),
-          expectArrayEquals<Tuple2<number, number>>(
+          toReadonlyArray(),
+          expectArrayEquals(
             [
               tuple(0, 1),
               tuple(1, 2),

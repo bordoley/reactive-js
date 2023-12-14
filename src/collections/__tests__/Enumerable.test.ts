@@ -6,14 +6,7 @@ import {
 } from "../../__internal__/testing.js";
 import { PureComputationModule } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import {
-  Tuple2,
-  Tuple3,
-  arrayEquality,
-  pipe,
-  pipeLazy,
-  tuple,
-} from "../../functions.js";
+import { arrayEquality, pipe, pipeLazy, tuple } from "../../functions.js";
 
 import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
@@ -64,7 +57,7 @@ testModule(
           pipe([5, 4, 3, 2, 1], ReadonlyArray.values()),
         ),
         Enumerable.toReadonlyArray(),
-        expectArrayEquals<Tuple2<number, number>>(
+        expectArrayEquals(
           [tuple(1, 5), tuple(2, 4), tuple(3, 3), tuple(4, 2), tuple(5, 1)],
           { valuesEquality: arrayEquality() },
         ),
@@ -79,10 +72,9 @@ testModule(
           pipe([1, 2, 3, 4], ReadonlyArray.values()),
         ),
         Enumerable.toReadonlyArray(),
-        expectArrayEquals<Tuple3<number, number, number>>(
-          [tuple(1, 5, 1), tuple(2, 4, 2), tuple(3, 3, 3)],
-          { valuesEquality: arrayEquality() },
-        ),
+        expectArrayEquals([tuple(1, 5, 1), tuple(2, 4, 2), tuple(3, 3, 3)], {
+          valuesEquality: arrayEquality(),
+        }),
       ),
     ),
   ),
