@@ -221,7 +221,7 @@ testModule(
     test(
       "combineLatest",
       pipeLazy(
-        Observable.combineLatest(
+        Observable.combineLatest<number, number>(
           pipe(
             Enumerable.generate(incrementBy(2), returns(1)),
             Observable.fromEnumerable({ delay: 2 }),
@@ -233,7 +233,7 @@ testModule(
             Observable.takeFirst({ count: 2 }),
           ),
         ),
-        Observable.toReadonlyArray<Tuple2<number, number>>(),
+        Observable.toReadonlyArray(),
         expectArrayEquals(
           [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
           { valuesEquality: arrayEquality() },

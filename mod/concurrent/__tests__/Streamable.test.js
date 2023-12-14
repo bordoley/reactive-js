@@ -34,7 +34,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         scheduler[SchedulerLike_schedule](f, { delay: time });
     }));
     scheduler[VirtualTimeSchedulerLike_run]();
-    pipe(result, expectArrayEquals([[2, none]], {
+    pipe(result, expectArrayEquals([tuple(2, none)], {
         valuesEquality: arrayEquality(),
     }));
 }), test("explicitly deleting a key", () => {

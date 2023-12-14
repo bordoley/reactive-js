@@ -7,7 +7,6 @@ import { SinkLike_notify } from "../../../events.js";
 import {
   Factory,
   Function2,
-  Tuple2,
   bindMethod,
   invoke,
   pipe,
@@ -34,9 +33,7 @@ const Observable_scanMany: Observable.Signature["scanMany"] =
 
       pipe(
         Observable_zipLatest<TAcc, T>(accFeedbackStream, observable),
-        Observable_switchMap(([acc, next]: Tuple2<TAcc, T>) =>
-          scanner(acc, next),
-        ),
+        Observable_switchMap(([acc, next]) => scanner(acc, next)),
         Observable_forEach(bindMethod(accFeedbackStream, SinkLike_notify)),
         invoke(ObservableLike_observe, observer),
       );

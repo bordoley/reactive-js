@@ -3,7 +3,7 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
 import { pick } from "../../../computations.js";
-import { isNotEqualTo, pipe, returns } from "../../../functions.js";
+import { isNotEqualTo, pipe, returns, tuple, } from "../../../functions.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
 import Observable_scan from "./Observable.scan.js";
@@ -23,8 +23,8 @@ const Observable_spring = (options) => {
         const acceleration = spring - damper;
         const d = (velocity + acceleration) * dt;
         const newValue = abs(d) < precision && abs(delta) < precision ? 1 : value + d;
-        return [now, value, newValue];
-    }, returns([MAX_VALUE, 0, 0])), pick({ map: Observable_map }, 2), Observable_takeWhile(isNotEqualTo(1), {
+        return tuple(now, value, newValue);
+    }, returns(tuple(MAX_VALUE, 0, 0))), pick({ map: Observable_map }, 2), Observable_takeWhile(isNotEqualTo(1), {
         inclusive: true,
     }));
 };

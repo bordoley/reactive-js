@@ -196,48 +196,38 @@ const createCacheStream: <T>(
                   ),
               ),
               isSome(persistentStore)
-                ? Observable.concatMap(
-                    (
-                      next: Tuple2<
-                        ReadonlyObjectMapLike<
-                          string,
-                          Function1<Optional<T>, Optional<T>>
-                        >,
-                        ReadonlyObjectMapLike<string, T>
-                      >,
-                    ) => {
-                      const [updaters, values] = next;
-                      const keys = pipe(
-                        values,
-                        ReadonlyObjectMap.keep<unknown, string>(isNone),
-                        ReadonlyObjectMap.keySet<string>(),
-                      );
+                ? Observable.concatMap(next => {
+                    const [updaters, values] = next;
+                    const keys = pipe(
+                      values,
+                      ReadonlyObjectMap.keep<unknown, string>(isNone),
+                      ReadonlyObjectMap.keySet<string>(),
+                    );
 
-                      return keys.size > 0
-                        ? pipe(
-                            persistentStore.load(keys),
-                            Observable.map(
-                              (
-                                persistedValues: ReadonlyObjectMapLike<
-                                  string,
-                                  Optional<T>
-                                >,
-                              ) =>
-                                tuple(
-                                  updaters,
-                                  pipe(
-                                    values,
-                                    ReadonlyObjectMap.union(persistedValues),
-                                  ),
+                    return keys.size > 0
+                      ? pipe(
+                          persistentStore.load(keys),
+                          Observable.map(
+                            (
+                              persistedValues: ReadonlyObjectMapLike<
+                                string,
+                                Optional<T>
+                              >,
+                            ) =>
+                              tuple(
+                                updaters,
+                                pipe(
+                                  values,
+                                  ReadonlyObjectMap.union(persistedValues),
                                 ),
-                            ),
-                          )
-                        : (pipe(
-                            next,
-                            Observable.fromOptional(),
-                          ) as DeferredObservableLike);
-                    },
-                  )
+                              ),
+                          ),
+                        )
+                      : (pipe(
+                          next,
+                          Observable.fromOptional(),
+                        ) as DeferredObservableLike);
+                  })
                 : (identity as Function1<
                     DeferredObservableLike,
                     DeferredObservableLike

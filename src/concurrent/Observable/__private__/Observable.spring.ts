@@ -1,7 +1,13 @@
 import { MAX_VALUE } from "../../../__internal__/constants.js";
 import { abs, clamp, min } from "../../../__internal__/math.js";
 import { pick } from "../../../computations.js";
-import { Tuple3, isNotEqualTo, pipe, returns } from "../../../functions.js";
+import {
+  Tuple3,
+  isNotEqualTo,
+  pipe,
+  returns,
+  tuple,
+} from "../../../functions.js";
 import type * as Observable from "../../Observable.js";
 import Observable_currentTime from "./Observable.currentTime.js";
 import Observable_map from "./Observable.map.js";
@@ -36,9 +42,9 @@ const Observable_spring: Observable.Signature["spring"] = (options?: {
         const newValue =
           abs(d) < precision && abs(delta) < precision ? 1 : value + d;
 
-        return [now, value, newValue];
+        return tuple(now, value, newValue);
       },
-      returns([MAX_VALUE, 0, 0]),
+      returns(tuple(MAX_VALUE, 0, 0)),
     ),
     pick<Observable.PureRunnableComputation, Tuple3<number, number, number>, 2>(
       { map: Observable_map },

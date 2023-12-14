@@ -98,9 +98,7 @@ testModule(
 
       pipe(
         [obj],
-        ReadonlyArray.values<
-          Tuple6<number, number, number, number, number, number>
-        >(),
+        ReadonlyArray.values(),
         pick<
           Enumerable.Type,
           Tuple6<number, number, number, number, number, number>,

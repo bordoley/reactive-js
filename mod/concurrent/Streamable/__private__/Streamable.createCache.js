@@ -47,7 +47,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
         const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance.store.get(k))))), isSome(persistentStore)
-            ? Observable.concatMap((next) => {
+            ? Observable.concatMap(next => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), ReadonlyObjectMap.keySet());
                 return keys.size > 0

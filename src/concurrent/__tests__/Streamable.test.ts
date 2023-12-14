@@ -79,7 +79,7 @@ testModule(
             );
           }),
         ],
-        ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
+        ReadonlyArray.forEach(([time, f]) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
         }),
       );
@@ -88,7 +88,7 @@ testModule(
 
       pipe(
         result,
-        expectArrayEquals<Tuple2<number, Optional>>([[2, none]], {
+        expectArrayEquals<Tuple2<number, Optional>>([tuple(2, none)], {
           valuesEquality: arrayEquality(),
         }),
       );
