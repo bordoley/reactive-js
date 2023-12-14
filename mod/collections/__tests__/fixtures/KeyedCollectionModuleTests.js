@@ -2,14 +2,11 @@
 
 import { describe, expectArrayEquals, expectEquals, expectIsNone, test, } from "../../../__internal__/testing.js";
 import { CollectionLike_count, KeyedLike_get, } from "../../../collections.js";
-import { arrayEquality, greaterThan, none, pipe, pipeLazy, returns, } from "../../../functions.js";
+import { arrayEquality, greaterThan, none, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
 import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
 import * as ReadonlyMap from "../../ReadonlyMap.js";
-const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedCollectionModule", describe("empty", test("returns an empty enumerator", pipeLazy(m.empty(), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([])))), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], fromReadonlyArray(), m.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([
-    [0, "b"],
-    [1, "d"],
-], { valuesEquality: arrayEquality() })))), describe("forEach", test("summing the keys", () => {
+const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedCollectionModule", describe("empty", test("returns an empty enumerator", pipeLazy(m.empty(), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([])))), describe("entries", test("enumerates all entries", pipeLazy(["b", "d"], fromReadonlyArray(), m.entries(), Enumerable.toReadonlyArray(), expectArrayEquals([tuple(0, "b"), tuple(1, "d")], { valuesEquality: arrayEquality() })))), describe("forEach", test("summing the keys", () => {
     let result = 0;
     pipe(["a", "B", "c"], fromReadonlyArray(), m.forEach((_, key) => {
         result = result + key;

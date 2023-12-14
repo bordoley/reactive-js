@@ -6,7 +6,7 @@ import {
   props,
 } from "../../__internal__/mixins.js";
 import { SinkLike, SinkLike_notify } from "../../events.js";
-import { Tuple2, none, returns } from "../../functions.js";
+import { Tuple2, none, returns, tuple } from "../../functions.js";
 import {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
@@ -56,10 +56,9 @@ const PairwiseSinkMixin: <T>() => Mixin1<
           const prev = this[PairwiseSinkMixin_prev];
 
           if (this[PairwiseSinkMixin_hasPrev]) {
-            this[DelegatingDisposableLike_delegate][SinkLike_notify]([
-              prev,
-              next,
-            ]);
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](
+              tuple(prev, next),
+            );
           }
 
           this[PairwiseSinkMixin_hasPrev] = true;

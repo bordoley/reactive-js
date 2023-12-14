@@ -2,7 +2,7 @@
 
 import { describe, expectArrayEquals, expectEquals, expectToThrowError, test, } from "../../../__internal__/testing.js";
 import * as Observable from "../../../concurrent/Observable.js";
-import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, pipe, pipeLazy, returns, } from "../../../functions.js";
+import { alwaysTrue, arrayEquality, greaterThan, increment, lessThan, pipe, pipeLazy, returns, tuple, } from "../../../functions.js";
 const PureComputationModuleTests = (m, toReadonlyArray) => describe("PureComputationModule", describe("buffer", test("with multiple sub buffers", pipeLazy([1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.buffer({ count: 3 }), toReadonlyArray(), expectArrayEquals([
     [1, 2, 3],
     [4, 5, 6],
@@ -41,15 +41,15 @@ const PureComputationModuleTests = (m, toReadonlyArray) => describe("PureComputa
     };
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.map(selector), toReadonlyArray()), expectToThrowError(err));
 })), describe("pairwise", test("when there are more than one input value", pipeLazy([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], m.fromReadonlyArray(), m.pairwise(), toReadonlyArray(), expectArrayEquals([
-    [0, 1],
-    [1, 2],
-    [2, 3],
-    [3, 4],
-    [4, 5],
-    [5, 6],
-    [6, 7],
-    [7, 8],
-    [8, 9],
+    tuple(0, 1),
+    tuple(1, 2),
+    tuple(2, 3),
+    tuple(3, 4),
+    tuple(4, 5),
+    tuple(5, 6),
+    tuple(6, 7),
+    tuple(7, 8),
+    tuple(8, 9),
 ], { valuesEquality: arrayEquality() }))), test("when the input only provides 1 value", pipeLazy([0], m.fromReadonlyArray(), m.pairwise(), toReadonlyArray(), expectArrayEquals([], {
     valuesEquality: arrayEquality(),
 })))), describe("scan", test("sums all the values in the array emitting intermediate values.", pipeLazy([1, 1, 1], m.fromReadonlyArray(), m.scan((a, b) => a + b, returns(0)), toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("throws when the scan function throws", () => {

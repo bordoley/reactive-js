@@ -234,13 +234,8 @@ testModule(
           ),
         ),
         Observable.toReadonlyArray<Tuple2<number, number>>(),
-        expectArrayEquals<Tuple2<number, number>>(
-          [
-            [3, 2],
-            [5, 2],
-            [5, 4],
-            [7, 4],
-          ],
+        expectArrayEquals(
+          [tuple(3, 2), tuple(5, 2), tuple(5, 4), tuple(7, 4)],
           { valuesEquality: arrayEquality() },
         ),
       ),
@@ -1860,13 +1855,8 @@ testModule(
           tuple<number, number>,
         ),
         Observable.toReadonlyArray(),
-        expectArrayEquals<Tuple2<number, number>>(
-          [
-            [0, 0],
-            [1, 0],
-            [2, 1],
-            [3, 1],
-          ],
+        expectArrayEquals(
+          [tuple(0, 0), tuple(1, 0), tuple(2, 1), tuple(3, 1)],
           { valuesEquality: arrayEquality() },
         ),
       ),

@@ -22,6 +22,7 @@ import {
   pipe,
   pipeLazy,
   returns,
+  tuple,
 } from "../../../functions.js";
 
 const PureComputationModuleTests = <C extends Computation>(
@@ -237,15 +238,15 @@ const PureComputationModuleTests = <C extends Computation>(
           toReadonlyArray<Tuple2<number, number>>(),
           expectArrayEquals<Tuple2<number, number>>(
             [
-              [0, 1],
-              [1, 2],
-              [2, 3],
-              [3, 4],
-              [4, 5],
-              [5, 6],
-              [6, 7],
-              [7, 8],
-              [8, 9],
+              tuple(0, 1),
+              tuple(1, 2),
+              tuple(2, 3),
+              tuple(3, 4),
+              tuple(4, 5),
+              tuple(5, 6),
+              tuple(6, 7),
+              tuple(7, 8),
+              tuple(8, 9),
             ],
             { valuesEquality: arrayEquality() },
           ),

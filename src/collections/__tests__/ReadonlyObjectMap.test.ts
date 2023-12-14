@@ -15,6 +15,7 @@ import {
   pipe,
   pipeLazy,
   returns,
+  tuple,
 } from "../../functions.js";
 import * as Dictionary from "../Dictionary.js";
 import * as Enumerable from "../Enumerable.js";
@@ -41,19 +42,13 @@ testModule(
     test(
       "enumerates all entries",
       pipeLazy(
-        [
-          ["0", "b"],
-          ["1", "d"],
-        ],
+        [tuple("0", "b"), tuple("1", "d")],
         ReadonlyArray.values<Tuple2<string, string>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.entries<string, string>(),
         Enumerable.toReadonlyArray(),
         expectArrayEquals<Tuple2<string, string>>(
-          [
-            ["0", "b"],
-            ["1", "d"],
-          ],
+          [tuple("0", "b"), tuple("1", "d")],
           { valuesEquality: arrayEquality() },
         ),
       ),
@@ -63,11 +58,7 @@ testModule(
     "keySet",
     test("returns a keyset with all the keys", () => {
       const keys: ReadonlySet<string> = pipe(
-        [
-          ["0", "b"],
-          ["1", none],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", none), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.keySet(),
@@ -82,11 +73,7 @@ testModule(
     test(
       "mapping every value to its key",
       pipeLazy(
-        [
-          ["0", "b"],
-          ["1", "d"],
-          ["2", "f"],
-        ],
+        [tuple("0", "b"), tuple("1", "d"), tuple("2", "f")],
         ReadonlyArray.values<Tuple2<string, string>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.map<string, string, string>((_, key: string) => key),
@@ -101,11 +88,7 @@ testModule(
     test(
       "summing the keys",
       pipeLazy(
-        [
-          ["0", "a"],
-          ["1", "B"],
-          ["2", "c"],
-        ],
+        [tuple("0", "a"), tuple("1", "B"), tuple("2", "c")],
         ReadonlyArray.values<Tuple2<string, string>>(),
         ReadonlyObjectMap.fromEntries<string, string>(),
         ReadonlyObjectMap.reduce(
@@ -121,11 +104,7 @@ testModule(
     "toDictionary",
     test("count", () => {
       const dict = pipe(
-        [
-          ["0", "b"],
-          ["1", none],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", none), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary(),
@@ -135,11 +114,7 @@ testModule(
     }),
     test("get values", () => {
       const dict = pipe(
-        [
-          ["0", "b"],
-          ["1", none],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", none), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary(),
@@ -155,11 +130,7 @@ testModule(
     test(
       "keys",
       pipeLazy(
-        [
-          ["0", "b"],
-          ["1", none],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", none), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
@@ -170,11 +141,7 @@ testModule(
     ),
     test("get returns none if a key is missing", () => {
       const dict = pipe(
-        [
-          ["0", "b"],
-          ["1", "c"],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", "c"), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
@@ -184,11 +151,7 @@ testModule(
     }),
     test("get returns value of the key", () => {
       const dict = pipe(
-        [
-          ["0", "b"],
-          ["1", "c"],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", "c"), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toDictionary<Optional<string>, string>(),
@@ -201,11 +164,7 @@ testModule(
     "toReadonlyMap",
     test("from non-empty map", () => {
       const dict = pipe(
-        [
-          ["0", "b"],
-          ["1", "d"],
-          ["2", "v"],
-        ],
+        [tuple("0", "b"), tuple("1", "d"), tuple("2", "v")],
         ReadonlyArray.values<Tuple2<string, Optional<string>>>(),
         ReadonlyObjectMap.fromEntries(),
         ReadonlyObjectMap.toReadonlyMap(),

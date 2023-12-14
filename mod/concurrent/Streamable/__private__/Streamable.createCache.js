@@ -8,7 +8,7 @@ import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import { SchedulerLike_schedule, SchedulerLike_yield, StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
-import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, } from "../../../functions.js";
+import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, tuple, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
 import * as IndexedQueue from "../../../utils/IndexedQueue.js";
@@ -46,18 +46,12 @@ const createCacheStream = /*@__PURE__*/ (() => {
             cleanupJob =
                 cleanupScheduler[SchedulerLike_schedule](cleanupContinuation);
         };
-        const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => [
-            updaters,
-            pipe(updaters, ReadonlyObjectMap.map((_, k) => instance.store.get(k))),
-        ]), isSome(persistentStore)
+        const delegate = pipe(Streamable_create(compose(Observable.map((updaters) => tuple(updaters, pipe(updaters, ReadonlyObjectMap.map((_, k) => instance.store.get(k))))), isSome(persistentStore)
             ? Observable.concatMap((next) => {
                 const [updaters, values] = next;
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), ReadonlyObjectMap.keySet());
                 return keys.size > 0
-                    ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => [
-                        updaters,
-                        pipe(values, ReadonlyObjectMap.union(persistedValues)),
-                    ]))
+                    ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
                     : pipe(next, Observable.fromOptional());
             })
             : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.map((updater, k) => 

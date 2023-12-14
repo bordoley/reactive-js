@@ -70,17 +70,14 @@ testModule(
 
       pipe(
         [
-          [
-            2,
-            () => {
-              pipe(
-                cache[KeyedLike_get]("abc"),
-                Observable.withCurrentTime(tuple<number, number>),
-                Observable.forEach(bindMethod(result, "push")),
-                Observable.subscribe(scheduler),
-              );
-            },
-          ],
+          tuple(2, () => {
+            pipe(
+              cache[KeyedLike_get]("abc"),
+              Observable.withCurrentTime(tuple<number, number>),
+              Observable.forEach(bindMethod(result, "push")),
+              Observable.subscribe(scheduler),
+            );
+          }),
         ],
         ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
@@ -107,45 +104,30 @@ testModule(
 
       pipe(
         [
-          [
-            0,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 1 });
-            },
-          ],
+          tuple(0, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 1 });
+          }),
 
-          [
-            1,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => none });
-            },
-          ],
+          tuple(1, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => none });
+          }),
 
-          [
-            2,
-            () => {
-              pipe(
-                cache[KeyedLike_get]("abc"),
-                Observable.withCurrentTime(tuple<number, number>),
-                Observable.forEach(bindMethod(result, "push")),
-                Observable.subscribe(scheduler),
-              );
-            },
-          ],
+          tuple(2, () => {
+            pipe(
+              cache[KeyedLike_get]("abc"),
+              Observable.withCurrentTime(tuple<number, number>),
+              Observable.forEach(bindMethod(result, "push")),
+              Observable.subscribe(scheduler),
+            );
+          }),
 
-          [
-            3,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 2 });
-            },
-          ],
+          tuple(3, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 2 });
+          }),
 
-          [
-            4,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => none });
-            },
-          ],
+          tuple(4, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => none });
+          }),
         ],
         ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
@@ -157,11 +139,7 @@ testModule(
       pipe(
         result,
         expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [
-            [2, none],
-            [3, 2],
-            [4, none],
-          ],
+          [tuple(2, none), tuple(3, 2), tuple(4, none)],
           { valuesEquality: arrayEquality() },
         ),
       );
@@ -189,91 +167,54 @@ testModule(
 
       pipe(
         [
-          [
-            1,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 1 });
-            },
-          ],
-          [
-            2,
-            () => {
-              abcSubscription2 = pipe(
-                cache[KeyedLike_get]("abc"),
-                Observable.withCurrentTime<number, Tuple2<number, number>>(
-                  tuple,
-                ),
-                Observable.forEach(bindMethod(result2, "push")),
-                Observable.subscribe(scheduler),
-              );
-            },
-          ],
-          [
-            3,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 2 });
-            },
-          ],
-          [
-            4,
-            () => {
-              abcSubscription2[DisposableLike_dispose]();
-            },
-          ],
-          [
-            4,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 2, def: _ => 0 });
-            },
-          ],
-          [
-            5,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 3 });
-            },
-          ],
-          [
-            6,
-            () => {
-              abcSubscription1[DisposableLike_dispose]();
-            },
-          ],
-          [
-            7,
-            () => {
-              cache[QueueableLike_enqueue]({ abc: _ => 3 });
-            },
-          ],
+          tuple(1, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 1 });
+          }),
+          tuple(2, () => {
+            abcSubscription2 = pipe(
+              cache[KeyedLike_get]("abc"),
+              Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
+              Observable.forEach(bindMethod(result2, "push")),
+              Observable.subscribe(scheduler),
+            );
+          }),
+          tuple(3, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 2 });
+          }),
+          tuple(4, () => {
+            abcSubscription2[DisposableLike_dispose]();
+          }),
+          tuple(4, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 2, def: _ => 0 });
+          }),
+          tuple(5, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 3 });
+          }),
+          tuple(6, () => {
+            abcSubscription1[DisposableLike_dispose]();
+          }),
+          tuple(7, () => {
+            cache[QueueableLike_enqueue]({ abc: _ => 3 });
+          }),
 
-          [
-            8,
-            () => {
-              abcSubscription3 = pipe(
-                cache[KeyedLike_get]("abc"),
-                Observable.withCurrentTime<number, Tuple2<number, number>>(
-                  tuple,
-                ),
-                Observable.forEach(bindMethod(result3, "push")),
-                Observable.subscribe(scheduler),
-              );
-            },
-          ],
-          [
-            9,
-            () => {
-              abcSubscription3[DisposableLike_dispose]();
-            },
-          ],
-          [
-            10,
-            () => {
-              cache[QueueableLike_enqueue]({
-                abc: _ => 3,
-                def: _ => 1,
-                ghi: _ => 2,
-              });
-            },
-          ],
+          tuple(8, () => {
+            abcSubscription3 = pipe(
+              cache[KeyedLike_get]("abc"),
+              Observable.withCurrentTime<number, Tuple2<number, number>>(tuple),
+              Observable.forEach(bindMethod(result3, "push")),
+              Observable.subscribe(scheduler),
+            );
+          }),
+          tuple(9, () => {
+            abcSubscription3[DisposableLike_dispose]();
+          }),
+          tuple(10, () => {
+            cache[QueueableLike_enqueue]({
+              abc: _ => 3,
+              def: _ => 1,
+              ghi: _ => 2,
+            });
+          }),
         ],
         ReadonlyArray.forEach(([time, f]: Tuple2<number, SideEffect>) => {
           scheduler[SchedulerLike_schedule](f, { delay: time });
@@ -285,12 +226,7 @@ testModule(
       pipe(
         result1,
         expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [
-            [0, none],
-            [1, 1],
-            [3, 2],
-            [5, 3],
-          ],
+          [tuple(0, none), tuple(1, 1), tuple(3, 2), tuple(5, 3)],
           { valuesEquality: arrayEquality() },
         ),
       );
@@ -298,17 +234,14 @@ testModule(
       pipe(
         result2,
         expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [
-            [2, 1],
-            [3, 2],
-          ],
+          [tuple(2, 1), tuple(3, 2)],
           { valuesEquality: arrayEquality() },
         ),
       );
 
       pipe(
         result3,
-        expectArrayEquals<Tuple2<number, Optional<number>>>([[8, 3]], {
+        expectArrayEquals<Tuple2<number, Optional<number>>>([tuple(8, 3)], {
           valuesEquality: arrayEquality(),
         }),
       );
@@ -372,10 +305,7 @@ testModule(
       pipe(
         result1,
         expectArrayEquals<Tuple2<number, Optional<number>>>(
-          [
-            [0, 1],
-            [2, 4],
-          ],
+          [tuple(0, 1), tuple(2, 4)],
           { valuesEquality: arrayEquality() },
         ),
       );

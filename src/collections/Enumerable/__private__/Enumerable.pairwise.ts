@@ -11,7 +11,7 @@ import {
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../../collections.js";
-import { Tuple2, none, pipe, returns } from "../../../functions.js";
+import { Tuple2, none, pipe, returns, tuple } from "../../../functions.js";
 import type * as Enumerable from "../../Enumerable.js";
 import DelegatingEnumeratorMixin, {
   DelegatingEnumeratorMixinLike,
@@ -69,10 +69,10 @@ const Enumerable_pairwise: Enumerable.Signature["pairwise"] = /*@__PURE__*/ (<
 
           if (delegateHasCurrent && this[PairwiseEnumerator_hasPrev]) {
             const next = delegate[EnumeratorLike_current];
-            this[EnumeratorLike_current] = [
+            this[EnumeratorLike_current] = tuple(
               this[PairwiseEnumerator_prev],
               next,
-            ];
+            );
             this[PairwiseEnumerator_prev] = next;
             return true;
           } else if (delegateHasCurrent) {

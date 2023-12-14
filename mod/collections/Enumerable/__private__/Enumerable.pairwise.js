@@ -2,7 +2,7 @@
 
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_isCompleted, EnumeratorLike_move, } from "../../../collections.js";
-import { none, pipe, returns } from "../../../functions.js";
+import { none, pipe, returns, tuple } from "../../../functions.js";
 import DelegatingEnumeratorMixin, { DelegatingEnumeratorMixinLike_delegate, } from "../../__mixins__/DelegatingEnumeratorMixin.js";
 import MutableEnumeratorMixin, { MutableEnumeratorLike_reset, } from "../../__mixins__/MutableEnumeratorMixin.js";
 import Enumerable_lift from "./Enumerable.lift.js";
@@ -25,10 +25,7 @@ const Enumerable_pairwise = /*@__PURE__*/ (() => {
             const delegateHasCurrent = delegate[EnumeratorLike_move]();
             if (delegateHasCurrent && this[PairwiseEnumerator_hasPrev]) {
                 const next = delegate[EnumeratorLike_current];
-                this[EnumeratorLike_current] = [
-                    this[PairwiseEnumerator_prev],
-                    next,
-                ];
+                this[EnumeratorLike_current] = tuple(this[PairwiseEnumerator_prev], next);
                 this[PairwiseEnumerator_prev] = next;
                 return true;
             }

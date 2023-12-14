@@ -22,6 +22,7 @@ import {
   pipe,
   pipeLazy,
   returns,
+  tuple,
 } from "../../../functions.js";
 import * as Dictionary from "../../Dictionary.js";
 import * as Enumerable from "../../Enumerable.js";
@@ -58,10 +59,7 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
           m.entries<string, number>(),
           Enumerable.toReadonlyArray(),
           expectArrayEquals<Tuple2<number, string>>(
-            [
-              [0, "b"],
-              [1, "d"],
-            ],
+            [tuple(0, "b"), tuple(1, "d")],
             { valuesEquality: arrayEquality() },
           ),
         ),

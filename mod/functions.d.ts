@@ -1,8 +1,35 @@
+/**
+ * Compare two values to determine their relative ordering.
+ *
+ * @returns A signed number indicating the relative order of `a` and `b`:
+ *   - If less than 0, `a` is less `b`.
+ *   - If 0, `a` equals `b`.
+ *   - If greater than 0, `a` is greater than `b`.
+ */
+export type Comparator<T> = Function2<T, T, number>;
+/**
+ * Constructor function with 0 arguments.
+ */
 export type Constructor<T> = new () => T;
+/**
+ * Constructor function with 1 argument.
+ */
 export type Constructor1<TA, T> = new (a: TA) => T;
+/**
+ * Constructor function with 2 arguments.
+ */
 export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
+/**
+ * Constructor function with 3 arguments.
+ */
 export type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
+/**
+ * Constructor function with 4 arguments.
+ */
 export type Constructor4<TA, TB, TC, TD, T> = new (a: TA, b: TB, c: TC, d: TD) => T;
+/**
+ * A function which instantiates new instances of type `T`.
+ */
 export type Factory<T> = () => T;
 export type Function1<TA, T> = (a: TA) => T;
 export type Function2<TA, TB, T> = (a: TA, b: TB) => T;
@@ -13,15 +40,6 @@ export type Function6<TA, TB, TC, TD, TE, TF, T> = (a: TA, b: TB, c: TC, d: TD, 
 export type Function7<TA, TB, TC, TD, TE, TF, TG, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG) => T;
 export type Function8<TA, TB, TC, TD, TE, TF, TG, TH, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH) => T;
 export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (a: TA, b: TB, c: TC, d: TD, e: TE, f: TF, g: TG, h: TH, i: TI) => T;
-/**
- * Compare two values to determine their relative ordering.
- *
- * @returns A signed number indicating the relative order of `a` and `b`:
- *   - If less than 0, `a` is less `b`.
- *   - If 0, `a` equals `b`.
- *   - If greater than 0, `a` is greater than `b`.
- */
-export type Comparator<T> = Function2<T, T, number>;
 /**
  * Compare two values for equality.
  *
@@ -97,31 +115,15 @@ export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
  */
 export type Updater<T> = Function1<T, T>;
 interface FunctionsModule {
-    /**
-     * An alias for undefined.
-     */
     readonly none: undefined;
-    /**
-     * A function that always returns `false`.
-     */
     alwaysFalse(..._args: unknown[]): boolean;
-    /**
-     * A function that always returns `true`.
-     */
     alwaysTrue(..._args: unknown[]): true;
-    /**
-     * Returns an equality function that compares two readonly arrays for equality,
-     * comparing their values using `valuesEquality`.
-     */
     arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
     bind<F extends Function>(f: F, thiz: unknown): F;
     bindMethod<T extends Record<TKey, (...args: any[]) => any>, TKey extends number | string | symbol>(thiz: T, key: TKey): T[TKey];
     call<TInstance, T>(f: () => T, self: TInstance): T;
     call<TInstance, T, TA>(f: (a: TA) => T, self: TInstance, a: TA): T;
     call<TInstance, T, TA, TB>(f: (a: TA, b: TB) => T, self: TInstance, a: TA, b: TB): T;
-    /**
-     * Composes a series of unary functions.
-     */
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
     compose<T, A, B, C>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): Function1<T, C>;
@@ -147,84 +149,37 @@ interface FunctionsModule {
     composeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Function1<T, Factory<K>>;
     composeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Function1<T, Factory<L>>;
     debug<T>(v: T): T;
-    /**
-     * An updater function that returns the result of decrementing `x`.
-     */
     decrement(x: number): number;
-    /**
-     * Returns a function that decrements a number `x` by the value `decr`.
-     */
     decrementBy(decr: number): Updater<number>;
     error(message?: unknown): Error;
     errorWithDebugMessage(message: string): Error;
     greaterThan(v: number): Predicate<number>;
-    /**
-     * The identity function.
-     *
-     * @returns `v`
-     */
     identity<T>(v: T): T;
     identityLazy<T>(): Updater<T>;
-    /**
-     * A function that always returns `undefined`.
-     */
     ignore(..._args: unknown[]): void;
-    /**
-     * An updater function that returns the result of incrementing `x`.
-     */
     increment(x: number): number;
-    /**
-     * Enables invoking a method on an object as a unary function within
-     * a pipeline operation.
-     *
-     * @param method
-     * @param args
-     * @returns
-     */
-    invoke<T extends Record<TKey, (...args: any[]) => any>, TKey extends number | string | symbol>(method: TKey, ...args: Parameters<T[TKey]>): Function1<T, ReturnType<T[TKey]>>;
-    /**
-     * Returns a function that increments a number `x` by the value `incr`.
-     */
     incrementBy(incr: number): Updater<number>;
-    /**
-     * Returns a predicate function comparing its argument to `b` using the
-     * provided `equality` function.
-     */
+    invoke<T extends Record<TKey, (...args: any[]) => any>, TKey extends number | string | symbol>(method: TKey, ...args: Parameters<T[TKey]>): Function1<T, ReturnType<T[TKey]>>;
     isEqualTo<T>(b: T, options?: {
         readonly equality?: Equality<T>;
     }): Predicate<T>;
-    /**
-     * Returns `true` if `x` is an even number, otherwise `false`.
-     */
     readonly isEven: Predicate<number>;
     isFalse(v: boolean): v is false;
     isFunction(f: unknown): f is Function;
-    /**
-     * Returns true if `option` is `none`.
-     */
     isNone<T>(option: Optional<T>): option is undefined;
     isNotEqualTo<T>(b: T, options?: {
         readonly equality?: Equality<T> | undefined;
     }): Predicate<T>;
     isNumber(n: unknown): n is number;
-    /**
-     * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
-     */
-    readonly isOdd: Predicate<number>;
     isObject(o: unknown): o is object;
+    readonly isOdd: Predicate<number>;
     isPromise(v: unknown): v is Promise<unknown>;
     isReadonlyArray<T = unknown>(o: unknown): o is readonly T[];
-    isString(o: unknown): o is string;
-    /**
-     * Returns true if `option` is not `none`.
-     */
     isSome<T>(v: Optional<T>): v is T;
+    isString(o: unknown): o is string;
     isTrue(v: boolean): v is true;
     lessThan(v: number): Predicate<number>;
     log<T>(v: T): T;
-    /**
-     * Applies logical negation to the value `v`.
-     */
     negate(v: boolean): boolean;
     newInstance<T>(Constructor: Constructor<T>): T;
     newInstance<T, TA>(Constructor: Constructor1<TA, T>, a: TA): T;
@@ -239,9 +194,6 @@ interface FunctionsModule {
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC): Function1<T, T[TKeyA][TKeyB][TKeyC]>;
     pick<T, TKeyA extends keyof T, TKeyB extends keyof T[TKeyA], TKeyC extends keyof T[TKeyA][TKeyB], TKeyD extends keyof T[TKeyA][TKeyB][TKeyC]>(keyA: TKeyA, keyB: TKeyB, keyC: TKeyC, keyD: TKeyD): Function1<T, T[TKeyA][TKeyB][TKeyC][TKeyD]>;
     pickUnsafe<T = unknown>(...keys: (string | symbol | number)[]): Function1<{}, T>;
-    /**
-     * Pipes `source` through a series of unary functions.
-     */
     pipe<T, A>(src: T, op1: Function1<T, A>): A;
     pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
     pipe<T, A, B, C>(src: T, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>): C;
@@ -314,71 +266,145 @@ interface FunctionsModule {
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>): Factory<J>;
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>): Factory<K>;
     pipeSomeLazy<T, A, B, C, D, E, F, G, H, I, J, K, L>(src: Optional<T>, op1: Function1<T, A>, op2: Function1<A, B>, op3: Function1<B, C>, op4: Function1<C, D>, op5: Function1<D, E>, op6: Function1<E, F>, op7: Function1<F, G>, op8: Function1<G, H>, op9: Function1<H, I>, op10: Function1<I, J>, op11: Function1<J, K>, op12: Function1<K, L>): Factory<L>;
-    /**
-     * Pipes `source` through a series of unary functions.
-     */
     pipeUnsafe<T = unknown>(source: unknown, ...operators: Function1<any, any>[]): T;
     raise<T>(e?: unknown): T;
     raiseError<T>(e: Error): T;
     raiseIf(condition: boolean, message: string): void;
-    /**
-     * Throws a javascript error using the provided message.
-     */
     raiseWithDebugMessage<T>(message: string): T;
-    /**
-     * Returns a function that takes an arbitrary number of arguments and always returns `v`.
-     */
     returns<T>(v: T): (..._args: unknown[]) => T;
-    /**
-     * The javascript strict equality function.
-     */
     strictEquality<T>(a: T, b: T): boolean;
     tuple<TA>(a: TA): Tuple1<TA>;
     tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
     tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
-    tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
+    tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC, d: TD): Tuple4<TA, TB, TC, TD>;
+    tuple<TA, TB, TC, TD, TE>(a: TA, b: TB, c: TC, d: TD, e: TE): Tuple5<TA, TB, TC, TD, TE>;
+    tuple<TA, TB, TC, TD, TE, TF>(a: TA, b: TB, c: TC, d: TD, e: TE, f: TF): Tuple6<TA, TB, TC, TD, TE, TF>;
 }
 type Signature = FunctionsModule;
+/**
+ * A function that always returns `false`.
+ */
 export declare const alwaysFalse: Signature["alwaysFalse"];
+/**
+ * A function that always returns `true`.
+ */
 export declare const alwaysTrue: Signature["alwaysTrue"];
+/**
+ * Returns an equality function that compares two readonly arrays for equality,
+ * comparing their values using `valuesEquality`.
+ */
 export declare const arrayEquality: Signature["arrayEquality"];
+/**
+ * Creates a new function that, when called, calls `f` with its
+ * this keyword set to the provided value.
+ */
 export declare const bind: Signature["bind"];
+/**
+ * Creates a new function that, when called, invokes the method
+ * `thiz[key]` with the provided arguments.
+ */
 export declare const bindMethod: Signature["bindMethod"];
+/**
+ * Calls the function `f` with a given self value as this and arguments provided individually.
+ */
 export declare const call: Signature["call"];
+/**
+ * Composes a series of unary functions.
+ */
 export declare const compose: Signature["compose"];
 export declare const composeLazy: Signature["composeLazy"];
+/**
+ * Invokes the debugger when compiled in dev mode. In production mode,
+ * is a noop.
+ */
 export declare const debug: Signature["debug"];
+/**
+ * An updater function that returns the result of decrementing `x`.
+ */
 export declare const decrement: Signature["decrement"];
+/**
+ * Returns a function that decrements a number `x` by the value `decr`.
+ */
 export declare const decrementBy: Signature["decrementBy"];
+/**
+ * The identity function.
+ *
+ * @returns `v`
+ */
 export declare const identity: Signature["identity"];
 export declare const identityLazy: Signature["identityLazy"];
+/**
+ * A function that always returns `undefined`.
+ */
 export declare const ignore: Signature["ignore"];
+/**
+ * An updater function that returns the result of incrementing `x`.
+ */
 export declare const increment: Signature["increment"];
+/**
+ * Returns a function that increments a number `x` by the value `incr`.
+ */
 export declare const incrementBy: Signature["incrementBy"];
+/**
+ * Enables invoking a method on an object as a unary function within
+ * a pipeline operation.
+ *
+ * @param method
+ * @param args
+ * @returns
+ */
 export declare const invoke: Signature["invoke"];
 export declare const isReadonlyArray: Signature["isReadonlyArray"];
+/**
+ * Returns a predicate function comparing its argument to `b` using the
+ * provided `equality` function.
+ */
 export declare const isEqualTo: Signature["isEqualTo"];
 export declare const isNotEqualTo: Signature["isNotEqualTo"];
+/**
+ * Returns `true` if `x` is an even number, otherwise `false`.
+ */
 export declare const isEven: Signature["isEven"];
 export declare const isFalse: Signature["isFalse"];
 export declare const isFunction: Signature["isFunction"];
-export declare const isNumber: Signature["isNumber"];
-export declare const isObject: Signature["isObject"];
-export declare const isString: Signature["isString"];
-export declare const isOdd: Signature["isOdd"];
+/**
+ * Returns true if `option` is `none`.
+ */
 export declare const isNone: Signature["isNone"];
+export declare const isNumber: Signature["isNumber"];
+/**
+ * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
+ */
+export declare const isOdd: Signature["isOdd"];
+export declare const isObject: Signature["isObject"];
+/**
+ * Returns true if `option` is not `none`.
+ */
 export declare const isSome: Signature["isSome"];
+export declare const isString: Signature["isString"];
 export declare const isTrue: Signature["isTrue"];
 export declare const greaterThan: Signature["greaterThan"];
 export declare const lessThan: Signature["lessThan"];
 export declare const log: Signature["log"];
+/**
+ * Applies logical negation to the value `v`.
+ */
 export declare const negate: Signature["negate"];
 export declare const newInstance: Signature["newInstance"];
+/**
+ * An alias for undefined.
+ */
 export declare const none: Signature["none"];
 export declare const partial: Signature["partial"];
 export declare const pickUnsafe: Signature["pickUnsafe"];
 export declare const pick: Signature["pick"];
+/**
+ * Pipes `source` through a series of unary functions.
+ */
 export declare const pipeUnsafe: Signature["pipeUnsafe"];
+/**
+ * Pipes `source` through a series of unary functions.
+ */
 export declare const pipe: Signature["pipe"];
 export declare const pipeAsync: Signature["pipeAsync"];
 /**
@@ -397,10 +423,19 @@ export declare const pipeSomeLazy: Signature["pipeSomeLazy"];
 export declare const error: Signature["error"];
 export declare const errorWithDebugMessage: Signature["errorWithDebugMessage"];
 export declare const raiseError: Signature["raiseError"];
-export declare const raiseWithDebugMessage: Signature["raiseWithDebugMessage"];
 export declare const raise: Signature["raise"];
 export declare const raiseIf: Signature["raiseIf"];
+/**
+ * Throws a javascript error using the provided message.
+ */
+export declare const raiseWithDebugMessage: Signature["raiseWithDebugMessage"];
+/**
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+ */
 export declare const returns: Signature["returns"];
+/**
+ * The javascript strict equality function.
+ */
 export declare const strictEquality: Signature["strictEquality"];
 export declare const tuple: Signature["tuple"];
 export {};

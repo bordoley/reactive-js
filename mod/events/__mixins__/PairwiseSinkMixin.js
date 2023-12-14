@@ -2,7 +2,7 @@
 
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../events.js";
-import { none, returns } from "../../functions.js";
+import { none, returns, tuple } from "../../functions.js";
 import { DelegatingDisposableLike_delegate, } from "../../utils.js";
 import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
@@ -17,10 +17,7 @@ const PairwiseSinkMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDis
     [SinkLike_notify](next) {
         const prev = this[PairwiseSinkMixin_prev];
         if (this[PairwiseSinkMixin_hasPrev]) {
-            this[DelegatingDisposableLike_delegate][SinkLike_notify]([
-                prev,
-                next,
-            ]);
+            this[DelegatingDisposableLike_delegate][SinkLike_notify](tuple(prev, next));
         }
         this[PairwiseSinkMixin_hasPrev] = true;
         this[PairwiseSinkMixin_prev] = next;

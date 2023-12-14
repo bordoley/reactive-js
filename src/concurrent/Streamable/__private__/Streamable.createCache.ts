@@ -46,6 +46,7 @@ import {
   isSome,
   none,
   pipe,
+  tuple,
 } from "../../../functions.js";
 import {
   DisposableLike,
@@ -189,15 +190,16 @@ const createCacheStream: <T>(
                     Function1<Optional<T>, Optional<T>>
                   >,
                   ReadonlyObjectMapLike<string, T>
-                > => [
-                  updaters,
-                  pipe(
+                > =>
+                  tuple(
                     updaters,
-                    ReadonlyObjectMap.map(
-                      (_, k: string) => instance.store.get(k) as T,
+                    pipe(
+                      updaters,
+                      ReadonlyObjectMap.map(
+                        (_, k: string) => instance.store.get(k) as T,
+                      ),
                     ),
                   ),
-                ],
               ),
               isSome(persistentStore)
                 ? Observable.concatMap(
@@ -226,13 +228,14 @@ const createCacheStream: <T>(
                                   string,
                                   Optional<T>
                                 >,
-                              ) => [
-                                updaters,
-                                pipe(
-                                  values,
-                                  ReadonlyObjectMap.union(persistedValues),
+                              ) =>
+                                tuple(
+                                  updaters,
+                                  pipe(
+                                    values,
+                                    ReadonlyObjectMap.union(persistedValues),
+                                  ),
                                 ),
-                              ],
                             ),
                           )
                         : (pipe(

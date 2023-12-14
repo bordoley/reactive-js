@@ -14,6 +14,7 @@ import {
   none,
   pipe,
   pipeLazy,
+  tuple,
 } from "../functions.js";
 
 testModule(
@@ -93,9 +94,14 @@ testModule(
       );
     }),
     test("with array", () => {
-      const obj: Tuple6<number, number, number, number, number, number> = [
-        1, 2, 3, 4, 5, 6,
-      ];
+      const obj: Tuple6<number, number, number, number, number, number> = tuple(
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+      );
 
       pipe(
         [obj],

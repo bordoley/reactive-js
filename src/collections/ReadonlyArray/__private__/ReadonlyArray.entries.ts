@@ -4,7 +4,7 @@ import {
   KeyedCollection_T,
   KeyedCollection_type,
 } from "../../../collections.js";
-import { Tuple2, pipe } from "../../../functions.js";
+import { Tuple2, pipe, tuple } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__private__/Enumerable.create.js";
 import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
 import Indexed_toCollection from "../../Indexed/__private__/Indexed.toCollection.js";
@@ -21,13 +21,13 @@ const createEnumerableFromReadonlyArray = <TKey extends number, T>(
   startIndex: number,
   count: number,
 ) => {
-  function* ReadonlyArrayEntries(): Iterator<Tuple2<TKey, T>> {
+  function* ReadonlyArrayEntries() {
     for (
       ;
       count !== 0;
       count > 0 ? (startIndex++, count--) : (startIndex--, count++)
     ) {
-      yield [startIndex as TKey, arr[startIndex]];
+      yield tuple(startIndex as TKey, arr[startIndex]);
     }
   }
   return Enumerable_create(() =>

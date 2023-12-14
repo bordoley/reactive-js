@@ -12,6 +12,7 @@ import {
   arrayEquality,
   pipe,
   pipeLazy,
+  tuple,
 } from "../../functions.js";
 
 import * as Enumerable from "../Enumerable.js";
@@ -64,13 +65,7 @@ testModule(
         ),
         Enumerable.toReadonlyArray(),
         expectArrayEquals<Tuple2<number, number>>(
-          [
-            [1, 5],
-            [2, 4],
-            [3, 3],
-            [4, 2],
-            [5, 1],
-          ],
+          [tuple(1, 5), tuple(2, 4), tuple(3, 3), tuple(4, 2), tuple(5, 1)],
           { valuesEquality: arrayEquality() },
         ),
       ),
@@ -85,11 +80,7 @@ testModule(
         ),
         Enumerable.toReadonlyArray(),
         expectArrayEquals<Tuple3<number, number, number>>(
-          [
-            [1, 5, 1],
-            [2, 4, 2],
-            [3, 3, 3],
-          ],
+          [tuple(1, 5, 1), tuple(2, 4, 2), tuple(3, 3, 3)],
           { valuesEquality: arrayEquality() },
         ),
       ),

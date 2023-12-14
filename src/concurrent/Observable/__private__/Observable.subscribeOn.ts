@@ -22,6 +22,7 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
     },
   ) =>
   (observable: ObservableLike<T>): ObservableLike<T> => {
+    // FIXME: Need to check that the source is also pure to multicast
     const create = Observable_isDeferred(observable)
       ? Observable_create
       : Observable_createMulticast;

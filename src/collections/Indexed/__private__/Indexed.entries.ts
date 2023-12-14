@@ -7,7 +7,7 @@ import {
   KeyedCollection_type,
   KeyedLike_get,
 } from "../../../collections.js";
-import { Tuple2, pick, pipe } from "../../../functions.js";
+import { Tuple2, pick, pipe, tuple } from "../../../functions.js";
 import Enumerable_create from "../../Enumerable/__private__/Enumerable.create.js";
 import Enumerator_fromIterator from "../../Enumerator/__private__/Enumerator.fromIterator.js";
 import type * as Indexed from "../../Indexed.js";
@@ -26,13 +26,13 @@ const Indexed_entries: Indexed.Signature["entries"] =
       startIndex: number,
       count: number,
     ) => {
-      function* Indexed_entries(): Iterator<Tuple2<TKey, T>> {
+      function* Indexed_entries() {
         for (
           ;
           count !== 0;
           count > 0 ? (startIndex++, count--) : (startIndex--, count++)
         ) {
-          yield [startIndex as TKey, indexed[KeyedLike_get](startIndex)];
+          yield tuple(startIndex as TKey, indexed[KeyedLike_get](startIndex));
         }
       }
       return Enumerable_create(() =>

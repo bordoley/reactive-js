@@ -4,7 +4,7 @@ import { describe, expectArrayEquals, test, testModule, } from "../__internal__/
 import * as Enumerable from "../collections/Enumerable.js";
 import * as ReadonlyArray from "../collections/ReadonlyArray.js";
 import { keepType, mapTo, pick } from "../computations.js";
-import { isSome, none, pipe, pipeLazy, } from "../functions.js";
+import { isSome, none, pipe, pipeLazy, tuple, } from "../functions.js";
 testModule("computations", describe("keepType", test("filters null values", pipeLazy(["b", none, "v"], ReadonlyArray.values(), keepType(Enumerable, isSome), Enumerable.toReadonlyArray(), expectArrayEquals(["b", "v"])))), describe("mapTo", test("maps every value in the source to v", pipeLazy([
     ["a", "b"],
     ["c", "d"],
@@ -26,8 +26,6 @@ testModule("computations", describe("keepType", test("filters null values", pipe
     };
     pipe([obj], ReadonlyArray.values(), pick(Enumerable, "keyA", "keyB"), Enumerable.toReadonlyArray(), expectArrayEquals(["value"]));
 }), test("with array", () => {
-    const obj = [
-        1, 2, 3, 4, 5, 6,
-    ];
+    const obj = tuple(1, 2, 3, 4, 5, 6);
     pipe([obj], ReadonlyArray.values(), pick(Enumerable, 3), Enumerable.toReadonlyArray(), expectArrayEquals([4]));
 })));

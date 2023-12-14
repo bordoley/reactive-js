@@ -137,6 +137,8 @@ ___
 
 • ()
 
+Constructor function with 0 arguments.
+
 ___
 
 ### Constructor1
@@ -153,6 +155,8 @@ ___
 #### Type declaration
 
 • (`a`)
+
+Constructor function with 1 argument.
 
 ##### Parameters
 
@@ -177,6 +181,8 @@ ___
 #### Type declaration
 
 • (`a`, `b`)
+
+Constructor function with 2 arguments.
 
 ##### Parameters
 
@@ -203,6 +209,8 @@ ___
 #### Type declaration
 
 • (`a`, `b`, `c`)
+
+Constructor function with 3 arguments.
 
 ##### Parameters
 
@@ -231,6 +239,8 @@ ___
 #### Type declaration
 
 • (`a`, `b`, `c`, `d`)
+
+Constructor function with 4 arguments.
 
 ##### Parameters
 
@@ -270,6 +280,8 @@ ___
 #### Type declaration
 
 ▸ (): `T`
+
+A function which instantiates new instances of type `T`.
 
 ##### Returns
 
@@ -1068,6 +1080,8 @@ Computes a new value of type `T` from the previous value of type `T`.
 
 • `Const` **none**: `Signature`[``"none"``]
 
+An alias for undefined.
+
 ## Functions
 
 ### alwaysFalse
@@ -1135,6 +1149,9 @@ ___
 
 ▸ **bind**<`F`\>(`f`, `thiz`): `F`
 
+Creates a new function that, when called, calls `f` with its
+this keyword set to the provided value.
+
 #### Type parameters
 
 | Name | Type |
@@ -1157,6 +1174,9 @@ ___
 ### bindMethod
 
 ▸ **bindMethod**<`T`, `TKey`\>(`thiz`, `key`): `T`[`TKey`]
+
+Creates a new function that, when called, invokes the method
+`thiz[key]` with the provided arguments.
 
 #### Type parameters
 
@@ -1182,6 +1202,8 @@ ___
 
 ▸ **call**<`TInstance`, `T`\>(`f`, `self`): `T`
 
+Calls the function `f` with a given self value as this and arguments provided individually.
+
 #### Type parameters
 
 | Name |
@@ -1201,6 +1223,8 @@ ___
 `T`
 
 ▸ **call**<`TInstance`, `T`, `TA`\>(`f`, `self`, `a`): `T`
+
+Calls the function `f` with a given self value as this and arguments provided individually.
 
 #### Type parameters
 
@@ -1223,6 +1247,8 @@ ___
 `T`
 
 ▸ **call**<`TInstance`, `T`, `TA`, `TB`\>(`f`, `self`, `a`, `b`): `T`
+
+Calls the function `f` with a given self value as this and arguments provided individually.
 
 #### Type parameters
 
@@ -1275,6 +1301,8 @@ Composes a series of unary functions.
 
 ▸ **compose**<`T`, `A`, `B`\>(`op1`, `op2`): [`Function1`](functions.md#function1)<`T`, `B`\>
 
+Composes a series of unary functions.
+
 #### Type parameters
 
 | Name |
@@ -1295,6 +1323,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `B`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`\>(`op1`, `op2`, `op3`): [`Function1`](functions.md#function1)<`T`, `C`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1318,6 +1348,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `C`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`\>(`op1`, `op2`, `op3`, `op4`): [`Function1`](functions.md#function1)<`T`, `D`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1343,6 +1375,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `D`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`\>(`op1`, `op2`, `op3`, `op4`, `op5`): [`Function1`](functions.md#function1)<`T`, `E`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1370,6 +1404,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `E`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Function1`](functions.md#function1)<`T`, `F`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1399,6 +1435,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `F`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Function1`](functions.md#function1)<`T`, `G`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1430,6 +1468,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `G`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Function1`](functions.md#function1)<`T`, `H`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1463,6 +1503,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `H`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Function1`](functions.md#function1)<`T`, `I`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1498,6 +1540,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `I`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Function1`](functions.md#function1)<`T`, `J`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1535,6 +1579,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `J`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Function1`](functions.md#function1)<`T`, `K`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1574,6 +1620,8 @@ Composes a series of unary functions.
 [`Function1`](functions.md#function1)<`T`, `K`\>
 
 ▸ **compose**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Function1`](functions.md#function1)<`T`, `L`\>
+
+Composes a series of unary functions.
 
 #### Type parameters
 
@@ -1984,6 +2032,9 @@ ___
 
 ▸ **debug**<`T`\>(`v`): `T`
 
+Invokes the debugger when compiled in dev mode. In production mode,
+is a noop.
+
 #### Type parameters
 
 | Name |
@@ -2240,6 +2291,8 @@ ___
 
 ▸ **isEven**(`a`): `boolean`
 
+Returns `true` if `x` is an even number, otherwise `false`.
+
 #### Parameters
 
 | Name | Type |
@@ -2367,6 +2420,8 @@ ___
 ### isOdd
 
 ▸ **isOdd**(`a`): `boolean`
+
+Predicate that returns `true` if `x` is an odd number, otherwise `false`.
 
 #### Parameters
 
@@ -2838,6 +2893,8 @@ Pipes `source` through a series of unary functions.
 
 ▸ **pipe**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `B`
 
+Pipes `source` through a series of unary functions.
+
 #### Type parameters
 
 | Name |
@@ -2859,6 +2916,8 @@ Pipes `source` through a series of unary functions.
 `B`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `C`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2883,6 +2942,8 @@ Pipes `source` through a series of unary functions.
 `C`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `D`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2909,6 +2970,8 @@ Pipes `source` through a series of unary functions.
 `D`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `E`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2937,6 +3000,8 @@ Pipes `source` through a series of unary functions.
 `E`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `F`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2967,6 +3032,8 @@ Pipes `source` through a series of unary functions.
 `F`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `G`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -2999,6 +3066,8 @@ Pipes `source` through a series of unary functions.
 `G`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `H`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3033,6 +3102,8 @@ Pipes `source` through a series of unary functions.
 `H`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `I`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3069,6 +3140,8 @@ Pipes `source` through a series of unary functions.
 `I`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `J`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3107,6 +3180,8 @@ Pipes `source` through a series of unary functions.
 `J`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `K`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -3147,6 +3222,8 @@ Pipes `source` through a series of unary functions.
 `K`
 
 ▸ **pipe**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `L`
+
+Pipes `source` through a series of unary functions.
 
 #### Type parameters
 
@@ -5276,8 +5353,6 @@ Returns a function that takes an arbitrary number of arguments and always return
 
 ▸ (`..._args`): `T`
 
-Returns a function that takes an arbitrary number of arguments and always returns `v`.
-
 ##### Parameters
 
 | Name | Type |
@@ -5377,7 +5452,7 @@ ___
 
 [`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
 
-▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`): [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
 
 #### Type parameters
 
@@ -5395,7 +5470,62 @@ ___
 | `a` | `TA` |
 | `b` | `TB` |
 | `c` | `TC` |
+| `d` | `TD` |
 
 #### Returns
 
 [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+
+#### Returns
+
+[`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
+
+▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `TA` |
+| `TB` |
+| `TC` |
+| `TD` |
+| `TE` |
+| `TF` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `TA` |
+| `b` | `TB` |
+| `c` | `TC` |
+| `d` | `TD` |
+| `e` | `TE` |
+| `f` | `TF` |
+
+#### Returns
+
+[`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>

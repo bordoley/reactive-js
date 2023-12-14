@@ -1,9 +1,38 @@
 import { __DEV__ } from "./__internal__/constants.js";
 
+/**
+ * Compare two values to determine their relative ordering.
+ *
+ * @returns A signed number indicating the relative order of `a` and `b`:
+ *   - If less than 0, `a` is less `b`.
+ *   - If 0, `a` equals `b`.
+ *   - If greater than 0, `a` is greater than `b`.
+ */
+export type Comparator<T> = Function2<T, T, number>;
+
+/**
+ * Constructor function with 0 arguments.
+ */
 export type Constructor<T> = new () => T;
+
+/**
+ * Constructor function with 1 argument.
+ */
 export type Constructor1<TA, T> = new (a: TA) => T;
+
+/**
+ * Constructor function with 2 arguments.
+ */
 export type Constructor2<TA, TB, T> = new (a: TA, b: TB) => T;
+
+/**
+ * Constructor function with 3 arguments.
+ */
 export type Constructor3<TA, TB, TC, T> = new (a: TA, b: TB, c: TC) => T;
+
+/**
+ * Constructor function with 4 arguments.
+ */
 export type Constructor4<TA, TB, TC, TD, T> = new (
   a: TA,
   b: TB,
@@ -11,7 +40,11 @@ export type Constructor4<TA, TB, TC, TD, T> = new (
   d: TD,
 ) => T;
 
+/**
+ * A function which instantiates new instances of type `T`.
+ */
 export type Factory<T> = () => T;
+
 export type Function1<TA, T> = (a: TA) => T;
 export type Function2<TA, TB, T> = (a: TA, b: TB) => T;
 export type Function3<TA, TB, TC, T> = (a: TA, b: TB, c: TC) => T;
@@ -61,16 +94,6 @@ export type Function9<TA, TB, TC, TD, TE, TF, TG, TH, TI, T> = (
   h: TH,
   i: TI,
 ) => T;
-
-/**
- * Compare two values to determine their relative ordering.
- *
- * @returns A signed number indicating the relative order of `a` and `b`:
- *   - If less than 0, `a` is less `b`.
- *   - If 0, `a` equals `b`.
- *   - If greater than 0, `a` is greater than `b`.
- */
-export type Comparator<T> = Function2<T, T, number>;
 
 /**
  * Compare two values for equality.
@@ -176,25 +199,12 @@ export type TypePredicate<TA, TB extends TA> = (v: TA) => v is TB;
 export type Updater<T> = Function1<T, T>;
 
 interface FunctionsModule {
-  /**
-   * An alias for undefined.
-   */
   readonly none: undefined;
 
-  /**
-   * A function that always returns `false`.
-   */
   alwaysFalse(..._args: unknown[]): boolean;
 
-  /**
-   * A function that always returns `true`.
-   */
   alwaysTrue(..._args: unknown[]): true;
 
-  /**
-   * Returns an equality function that compares two readonly arrays for equality,
-   * comparing their values using `valuesEquality`.
-   */
   arrayEquality<T>(valuesEquality?: Equality<T>): Equality<readonly T[]>;
 
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -218,9 +228,6 @@ interface FunctionsModule {
     b: TB,
   ): T;
 
-  /**
-   * Composes a series of unary functions.
-   */
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B>(op1: Function1<T, A>, op2: Function1<A, B>): Function1<T, B>;
   compose<T, A, B, C>(
@@ -422,48 +429,26 @@ interface FunctionsModule {
 
   debug<T>(v: T): T;
 
-  /**
-   * An updater function that returns the result of decrementing `x`.
-   */
   decrement(x: number): number;
 
-  /**
-   * Returns a function that decrements a number `x` by the value `decr`.
-   */
   decrementBy(decr: number): Updater<number>;
 
   error(message?: unknown): Error;
+
   errorWithDebugMessage(message: string): Error;
 
   greaterThan(v: number): Predicate<number>;
 
-  /**
-   * The identity function.
-   *
-   * @returns `v`
-   */
   identity<T>(v: T): T;
 
   identityLazy<T>(): Updater<T>;
 
-  /**
-   * A function that always returns `undefined`.
-   */
   ignore(..._args: unknown[]): void;
 
-  /**
-   * An updater function that returns the result of incrementing `x`.
-   */
   increment(x: number): number;
 
-  /**
-   * Enables invoking a method on an object as a unary function within
-   * a pipeline operation.
-   *
-   * @param method
-   * @param args
-   * @returns
-   */
+  incrementBy(incr: number): Updater<number>;
+
   invoke<
     T extends Record<TKey, (...args: any[]) => any>,
     TKey extends number | string | symbol,
@@ -472,15 +457,6 @@ interface FunctionsModule {
     ...args: Parameters<T[TKey]>
   ): Function1<T, ReturnType<T[TKey]>>;
 
-  /**
-   * Returns a function that increments a number `x` by the value `incr`.
-   */
-  incrementBy(incr: number): Updater<number>;
-
-  /**
-   * Returns a predicate function comparing its argument to `b` using the
-   * provided `equality` function.
-   */
   isEqualTo<T>(
     b: T,
     options?: {
@@ -488,9 +464,6 @@ interface FunctionsModule {
     },
   ): Predicate<T>;
 
-  /**
-   * Returns `true` if `x` is an even number, otherwise `false`.
-   */
   readonly isEven: Predicate<number>;
 
   isFalse(v: boolean): v is false;
@@ -498,9 +471,6 @@ interface FunctionsModule {
   // eslint-disable-next-line @typescript-eslint/ban-types
   isFunction(f: unknown): f is Function;
 
-  /**
-   * Returns true if `option` is `none`.
-   */
   isNone<T>(option: Optional<T>): option is undefined;
 
   isNotEqualTo<T>(
@@ -512,23 +482,17 @@ interface FunctionsModule {
 
   isNumber(n: unknown): n is number;
 
-  /**
-   * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
-   */
-  readonly isOdd: Predicate<number>;
-
   isObject(o: unknown): o is object;
+
+  readonly isOdd: Predicate<number>;
 
   isPromise(v: unknown): v is Promise<unknown>;
 
   isReadonlyArray<T = unknown>(o: unknown): o is readonly T[];
 
-  isString(o: unknown): o is string;
-
-  /**
-   * Returns true if `option` is not `none`.
-   */
   isSome<T>(v: Optional<T>): v is T;
+
+  isString(o: unknown): o is string;
 
   isTrue(v: boolean): v is true;
 
@@ -536,9 +500,6 @@ interface FunctionsModule {
 
   log<T>(v: T): T;
 
-  /**
-   * Applies logical negation to the value `v`.
-   */
   negate(v: boolean): boolean;
 
   newInstance<T>(Constructor: Constructor<T>): T;
@@ -604,9 +565,6 @@ interface FunctionsModule {
   ): // eslint-disable-next-line @typescript-eslint/ban-types
   Function1<{}, T>;
 
-  /**
-   * Pipes `source` through a series of unary functions.
-   */
   pipe<T, A>(src: T, op1: Function1<T, A>): A;
   pipe<T, A, B>(src: T, op1: Function1<T, A>, op2: Function1<A, B>): B;
   pipe<T, A, B, C>(
@@ -1278,9 +1236,6 @@ interface FunctionsModule {
     op12: Function1<K, L>,
   ): Factory<L>;
 
-  /**
-   * Pipes `source` through a series of unary functions.
-   */
   pipeUnsafe<T = unknown>(
     source: unknown,
     ...operators: Function1<any, any>[]
@@ -1292,31 +1247,43 @@ interface FunctionsModule {
 
   raiseIf(condition: boolean, message: string): void;
 
-  /**
-   * Throws a javascript error using the provided message.
-   */
   raiseWithDebugMessage<T>(message: string): T;
 
-  /**
-   * Returns a function that takes an arbitrary number of arguments and always returns `v`.
-   */
   returns<T>(v: T): (..._args: unknown[]) => T;
 
-  /**
-   * The javascript strict equality function.
-   */
   strictEquality<T>(a: T, b: T): boolean;
 
   tuple<TA>(a: TA): Tuple1<TA>;
   tuple<TA, TB>(a: TA, b: TB): Tuple2<TA, TB>;
   tuple<TA, TB, TC>(a: TA, b: TB, c: TC): Tuple3<TA, TB, TC>;
-  tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC): Tuple4<TA, TB, TC, TD>;
+  tuple<TA, TB, TC, TD>(a: TA, b: TB, c: TC, d: TD): Tuple4<TA, TB, TC, TD>;
+  tuple<TA, TB, TC, TD, TE>(
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+  ): Tuple5<TA, TB, TC, TD, TE>;
+  tuple<TA, TB, TC, TD, TE, TF>(
+    a: TA,
+    b: TB,
+    c: TC,
+    d: TD,
+    e: TE,
+    f: TF,
+  ): Tuple6<TA, TB, TC, TD, TE, TF>;
 }
 
 type Signature = FunctionsModule;
 
+/**
+ * A function that always returns `false`.
+ */
 export const alwaysFalse: Signature["alwaysFalse"] = () => false;
 
+/**
+ * A function that always returns `true`.
+ */
 export const alwaysTrue: Signature["alwaysTrue"] = () => true;
 
 const arrayStrictEquality = <T>(a: readonly T[], b: readonly T[]) => {
@@ -1339,6 +1306,10 @@ const arrayStrictEquality = <T>(a: readonly T[], b: readonly T[]) => {
   return true;
 };
 
+/**
+ * Returns an equality function that compares two readonly arrays for equality,
+ * comparing their values using `valuesEquality`.
+ */
 export const arrayEquality: Signature["arrayEquality"] = <T>(
   valuesEquality: Equality<T> = strictEquality,
 ): Equality<readonly T[]> =>
@@ -1348,10 +1319,18 @@ export const arrayEquality: Signature["arrayEquality"] = <T>(
         a === b ||
         (a.length === b.length && a.every((v, i) => valuesEquality(b[i], v)));
 
+/**
+ * Creates a new function that, when called, calls `f` with its
+ * this keyword set to the provided value.
+ */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const bind: Signature["bind"] = (f: Function, thiz: unknown) =>
   f.bind(thiz);
 
+/**
+ * Creates a new function that, when called, invokes the method
+ * `thiz[key]` with the provided arguments.
+ */
 export const bindMethod: Signature["bindMethod"] = <
   // eslint-disable-next-line @typescript-eslint/ban-types
   T extends Record<TKey, (...args: any[]) => any>,
@@ -1361,12 +1340,18 @@ export const bindMethod: Signature["bindMethod"] = <
   key: TKey,
 ) => bind<T[TKey]>(thiz[key], thiz);
 
+/**
+ * Calls the function `f` with a given self value as this and arguments provided individually.
+ */
 export const call: Signature["call"] = <T>(
   f: (...args: readonly unknown[]) => T,
   self: unknown,
   ...args: readonly any[]
 ) => f.call(self, ...args);
 
+/**
+ * Composes a series of unary functions.
+ */
 export const compose: Signature["compose"] = ((
     op1: Function1<any, any>,
     op2: Optional<Function1<any, any>>,
@@ -1414,6 +1399,10 @@ export const composeLazy: Signature["composeLazy"] = ((
       ...operators,
     )) as Signature["composeLazy"];
 
+/**
+ * Invokes the debugger when compiled in dev mode. In production mode,
+ * is a noop.
+ */
 export const debug: Signature["debug"] = <T>(v: T) => {
   if (__DEV__) {
     // eslint-disable-next-line no-debugger
@@ -1423,24 +1412,52 @@ export const debug: Signature["debug"] = <T>(v: T) => {
   return v;
 };
 
+/**
+ * An updater function that returns the result of decrementing `x`.
+ */
 export const decrement: Signature["decrement"] = (x: number) => x - 1;
 
+/**
+ * Returns a function that decrements a number `x` by the value `decr`.
+ */
 export const decrementBy: Signature["decrementBy"] =
   (decr: number) => (x: number) =>
     x - decr;
 
+/**
+ * The identity function.
+ *
+ * @returns `v`
+ */
 export const identity: Signature["identity"] = <T>(v: T) => v;
 
 export const identityLazy: Signature["identityLazy"] = () => identity;
 
+/**
+ * A function that always returns `undefined`.
+ */
 export const ignore: Signature["ignore"] = (..._args: unknown[]): void => {};
 
+/**
+ * An updater function that returns the result of incrementing `x`.
+ */
 export const increment: Signature["increment"] = (x: number) => x + 1;
 
+/**
+ * Returns a function that increments a number `x` by the value `incr`.
+ */
 export const incrementBy: Signature["incrementBy"] =
   (incr: number) => (x: number) =>
     x + incr;
 
+/**
+ * Enables invoking a method on an object as a unary function within
+ * a pipeline operation.
+ *
+ * @param method
+ * @param args
+ * @returns
+ */
 export const invoke: Signature["invoke"] =
   <
     T extends Record<TKey, (...args: any[]) => any>,
@@ -1454,6 +1471,10 @@ export const invoke: Signature["invoke"] =
 
 export const isReadonlyArray: Signature["isReadonlyArray"] = Array.isArray;
 
+/**
+ * Returns a predicate function comparing its argument to `b` using the
+ * provided `equality` function.
+ */
 export const isEqualTo: Signature["isEqualTo"] = /*@__PURE__*/ (() => {
   const isStrictlyEqualTo =
     <T>(b: T): Predicate<T> =>
@@ -1492,6 +1513,9 @@ export const isNotEqualTo: Signature["isNotEqualTo"] = /*@__PURE__*/ (() => {
   };
 })();
 
+/**
+ * Returns `true` if `x` is an even number, otherwise `false`.
+ */
 export const isEven: Signature["isEven"] = (x: number) => x % 2 === 0;
 
 export const isFalse: Signature["isFalse"] = (v: boolean): v is false => !v;
@@ -1501,27 +1525,36 @@ export const isFunction: Signature["isFunction"] = (
 ): // eslint-disable-next-line @typescript-eslint/ban-types
 f is Function => typeof f === "function" || f instanceof Function;
 
-export const isNumber: Signature["isNumber"] = (n: unknown): n is number =>
-  typeof n === "number";
-
-export const isObject: Signature["isObject"] = (o: unknown): o is object =>
-  typeof o === "object";
-
-export const isString: Signature["isString"] = (s: unknown): s is string =>
-  typeof s === "string" || s instanceof String;
-
-export const isOdd: Signature["isOdd"] = (x: number) => x % 2 !== 0;
-
+/**
+ * Returns true if `option` is `none`.
+ */
 export const isNone: Signature["isNone"] = <T>(
   option: Optional<T>,
 ): option is undefined => option === none;
 
+export const isNumber: Signature["isNumber"] = (n: unknown): n is number =>
+  typeof n === "number";
+
+/**
+ * Predicate that returns `true` if `x` is an odd number, otherwise `false`.
+ */
+export const isOdd: Signature["isOdd"] = (x: number) => x % 2 !== 0;
+
+export const isObject: Signature["isObject"] = (o: unknown): o is object =>
+  typeof o === "object";
+
 const isPromise: Signature["isPromise"] = (v: unknown): v is Promise<unknown> =>
   v instanceof Promise || Promise.resolve(v) === v;
 
+/**
+ * Returns true if `option` is not `none`.
+ */
 export const isSome: Signature["isSome"] = <T>(
   option: Optional<T>,
 ): option is T => option !== none;
+
+export const isString: Signature["isString"] = (s: unknown): s is string =>
+  typeof s === "string" || s instanceof String;
 
 export const isTrue: Signature["isTrue"] = (v: boolean): v is true => v;
 
@@ -1540,6 +1573,9 @@ export const log: Signature["log"] = <T>(v: T) => {
   return v;
 };
 
+/**
+ * Applies logical negation to the value `v`.
+ */
 export const negate: Signature["negate"] = (v: boolean) => !v;
 
 export const newInstance: Signature["newInstance"] = (
@@ -1547,6 +1583,9 @@ export const newInstance: Signature["newInstance"] = (
   ...args: readonly unknown[]
 ): unknown => new Constructor(...args);
 
+/**
+ * An alias for undefined.
+ */
 export const none: Signature["none"] = undefined;
 
 export const partial: Signature["partial"] =
@@ -1581,6 +1620,9 @@ export const pickUnsafe: Signature["pickUnsafe"] =
 
 export const pick: Signature["pick"] = pickUnsafe;
 
+/**
+ * Pipes `source` through a series of unary functions.
+ */
 export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   source: unknown,
   op1: Optional<Function1<any, any>>,
@@ -1612,6 +1654,9 @@ export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   return acc;
 }) as Signature["pipeUnsafe"];
 
+/**
+ * Pipes `source` through a series of unary functions.
+ */
 export const pipe: Signature["pipe"] = pipeUnsafe;
 
 export const pipeAsync: Signature["pipeAsync"] = async (
@@ -1709,10 +1754,6 @@ export const raiseError: Signature["raiseError"] = (e: Error) => {
   throw e;
 };
 
-export const raiseWithDebugMessage: Signature["raiseWithDebugMessage"] = (
-  message: string,
-) => raiseError(error(__DEV__ ? message : none));
-
 export const raise: Signature["raise"] = (e?: unknown) => raiseError(error(e));
 
 export const raiseIf: Signature["raiseIf"] = (
@@ -1724,11 +1765,24 @@ export const raiseIf: Signature["raiseIf"] = (
   }
 };
 
+/**
+ * Throws a javascript error using the provided message.
+ */
+export const raiseWithDebugMessage: Signature["raiseWithDebugMessage"] = (
+  message: string,
+) => raiseError(error(__DEV__ ? message : none));
+
+/**
+ * Returns a function that takes an arbitrary number of arguments and always returns `v`.
+ */
 export const returns: Signature["returns"] =
   <T>(v: T) =>
   () =>
     v;
 
+/**
+ * The javascript strict equality function.
+ */
 export const strictEquality: Signature["strictEquality"] = <T>(a: T, b: T) =>
   a === b;
 

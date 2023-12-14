@@ -9,6 +9,7 @@ import Observable_dispatchTo from "./Observable.dispatchTo.js";
 import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 const Observable_subscribeOn = ((schedulerOrFactory, options) => (observable) => {
+    // FIXME: Need to check that the source is also pure to multicast
     const create = Observable_isDeferred(observable)
         ? Observable_create
         : Observable_createMulticast;
