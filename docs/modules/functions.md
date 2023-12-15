@@ -64,7 +64,6 @@
 - [decrement](functions.md#decrement)
 - [decrementBy](functions.md#decrementby)
 - [error](functions.md#error)
-- [errorWithDebugMessage](functions.md#errorwithdebugmessage)
 - [greaterThan](functions.md#greaterthan)
 - [identity](functions.md#identity)
 - [identityLazy](functions.md#identitylazy)
@@ -2093,27 +2092,16 @@ ___
 
 ▸ **error**(`message?`): `Error`
 
+Factory for a javascript Error from an unknown object type.
+
+Returns the provide object if it is an instance of Error,
+otherwise a new Error object is created with the provided object as it's cause.
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `message?` | `unknown` |
-
-#### Returns
-
-`Error`
-
-___
-
-### errorWithDebugMessage
-
-▸ **errorWithDebugMessage**(`message`): `Error`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `message` | `string` |
 
 #### Returns
 
@@ -2757,6 +2745,9 @@ ___
 
 ▸ **pick**<`T`, `TKey`\>(`key`): [`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
 
+Returns a function that can be used to pick deeply nested properties
+from an Object.
+
 #### Type parameters
 
 | Name | Type |
@@ -2775,6 +2766,9 @@ ___
 [`Function1`](functions.md#function1)<`T`, `T`[`TKey`]\>
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`\>(`keyA`, `keyB`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
+
+Returns a function that can be used to pick deeply nested properties
+from an Object.
 
 #### Type parameters
 
@@ -2796,6 +2790,9 @@ ___
 [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`]\>
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`\>(`keyA`, `keyB`, `keyC`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
+
+Returns a function that can be used to pick deeply nested properties
+from an Object.
 
 #### Type parameters
 
@@ -2819,6 +2816,9 @@ ___
 [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`]\>
 
 ▸ **pick**<`T`, `TKeyA`, `TKeyB`, `TKeyC`, `TKeyD`\>(`keyA`, `keyB`, `keyC`, `keyD`): [`Function1`](functions.md#function1)<`T`, `T`[`TKeyA`][`TKeyB`][`TKeyC`][`TKeyD`]\>
+
+Returns a function that can be used to pick deeply nested properties
+from an Object.
 
 #### Type parameters
 
@@ -2848,6 +2848,8 @@ ___
 ### pickUnsafe
 
 ▸ **pickUnsafe**<`T`\>(`...keys`): [`Function1`](functions.md#function1)<{}, `T`\>
+
+Type-unsafe variant of `pick`.
 
 #### Type parameters
 
@@ -3271,6 +3273,8 @@ ___
 
 ▸ **pipeAsync**<`T`, `A`\>(`src`, `op1`): `Promise`<`A`\>
 
+Pipes the source through a series of async operators.
+
 #### Type parameters
 
 | Name |
@@ -3290,6 +3294,8 @@ ___
 `Promise`<`A`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): `Promise`<`B`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3312,6 +3318,8 @@ ___
 `Promise`<`B`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): `Promise`<`C`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3336,6 +3344,8 @@ ___
 `Promise`<`C`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): `Promise`<`D`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3362,6 +3372,8 @@ ___
 `Promise`<`D`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): `Promise`<`E`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3390,6 +3402,8 @@ ___
 `Promise`<`E`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): `Promise`<`F`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3420,6 +3434,8 @@ ___
 `Promise`<`F`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): `Promise`<`G`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3452,6 +3468,8 @@ ___
 `Promise`<`G`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): `Promise`<`H`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3486,6 +3504,8 @@ ___
 `Promise`<`H`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): `Promise`<`I`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3522,6 +3542,8 @@ ___
 `Promise`<`I`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): `Promise`<`J`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3560,6 +3582,8 @@ ___
 `Promise`<`J`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): `Promise`<`K`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -3600,6 +3624,8 @@ ___
 `Promise`<`K`\>
 
 ▸ **pipeAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): `Promise`<`L`\>
+
+Pipes the source through a series of async operators.
 
 #### Type parameters
 
@@ -4047,6 +4073,9 @@ ___
 
 ▸ **pipeLazyAsync**<`T`, `A`\>(`src`, `op1`): [`Factory`](functions.md#factory)<`Promise`<`A`\>\>
 
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
+
 #### Type parameters
 
 | Name |
@@ -4066,6 +4095,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`A`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`\>(`src`, `op1`, `op2`): [`Factory`](functions.md#factory)<`Promise`<`B`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4088,6 +4120,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`B`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`\>(`src`, `op1`, `op2`, `op3`): [`Factory`](functions.md#factory)<`Promise`<`C`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4112,6 +4147,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`C`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`\>(`src`, `op1`, `op2`, `op3`, `op4`): [`Factory`](functions.md#factory)<`Promise`<`D`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4138,6 +4176,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`D`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`): [`Factory`](functions.md#factory)<`Promise`<`E`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4166,6 +4207,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`E`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`): [`Factory`](functions.md#factory)<`Promise`<`F`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4196,6 +4240,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`F`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`): [`Factory`](functions.md#factory)<`Promise`<`G`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4228,6 +4275,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`G`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`): [`Factory`](functions.md#factory)<`Promise`<`H`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4262,6 +4312,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`H`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`): [`Factory`](functions.md#factory)<`Promise`<`I`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4298,6 +4351,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`I`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`): [`Factory`](functions.md#factory)<`Promise`<`J`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4336,6 +4392,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`J`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`): [`Factory`](functions.md#factory)<`Promise`<`K`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -4376,6 +4435,9 @@ ___
 [`Factory`](functions.md#factory)<`Promise`<`K`\>\>
 
 ▸ **pipeLazyAsync**<`T`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`\>(`src`, `op1`, `op2`, `op3`, `op4`, `op5`, `op6`, `op7`, `op8`, `op9`, `op10`, `op11`, `op12`): [`Factory`](functions.md#factory)<`Promise`<`L`\>\>
+
+Returns a `Factory` function that pipes the source through
+ the provided async function operators.
 
 #### Type parameters
 
@@ -5248,6 +5310,8 @@ ___
 
 ▸ **raise**<`T`\>(`e?`): `T`
 
+Throws an error, wrapping the provided object in a Javascript Error.
+
 #### Type parameters
 
 | Name |
@@ -5270,6 +5334,8 @@ ___
 
 ▸ **raiseError**<`T`\>(`e`): `T`
 
+Throws the provided error.
+
 #### Type parameters
 
 | Name |
@@ -5291,6 +5357,8 @@ ___
 ### raiseIf
 
 ▸ **raiseIf**(`condition`, `message`): `void`
+
+Throws an error with the provided message is the condition is true.
 
 #### Parameters
 
@@ -5394,6 +5462,8 @@ ___
 
 ▸ **tuple**<`TA`\>(`a`): [`Tuple1`](functions.md#tuple1)<`TA`\>
 
+Typed function for creating tuple instances.
+
 #### Type parameters
 
 | Name |
@@ -5411,6 +5481,8 @@ ___
 [`Tuple1`](functions.md#tuple1)<`TA`\>
 
 ▸ **tuple**<`TA`, `TB`\>(`a`, `b`): [`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
+
+Typed function for creating tuple instances.
 
 #### Type parameters
 
@@ -5431,6 +5503,8 @@ ___
 [`Tuple2`](functions.md#tuple2)<`TA`, `TB`\>
 
 ▸ **tuple**<`TA`, `TB`, `TC`\>(`a`, `b`, `c`): [`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
+
+Typed function for creating tuple instances.
 
 #### Type parameters
 
@@ -5453,6 +5527,8 @@ ___
 [`Tuple3`](functions.md#tuple3)<`TA`, `TB`, `TC`\>
 
 ▸ **tuple**<`TA`, `TB`, `TC`, `TD`\>(`a`, `b`, `c`, `d`): [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
+
+Typed function for creating tuple instances.
 
 #### Type parameters
 
@@ -5477,6 +5553,8 @@ ___
 [`Tuple4`](functions.md#tuple4)<`TA`, `TB`, `TC`, `TD`\>
 
 ▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`\>(`a`, `b`, `c`, `d`, `e`): [`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
+
+Typed function for creating tuple instances.
 
 #### Type parameters
 
@@ -5503,6 +5581,8 @@ ___
 [`Tuple5`](functions.md#tuple5)<`TA`, `TB`, `TC`, `TD`, `TE`\>
 
 ▸ **tuple**<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>(`a`, `b`, `c`, `d`, `e`, `f`): [`Tuple6`](functions.md#tuple6)<`TA`, `TB`, `TC`, `TD`, `TE`, `TF`\>
+
+Typed function for creating tuple instances.
 
 #### Type parameters
 

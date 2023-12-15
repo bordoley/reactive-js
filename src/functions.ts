@@ -1594,6 +1594,9 @@ export const partial: Signature["partial"] =
   (arg0: unknown) =>
     f(arg0, ...args);
 
+/**
+ * Type-unsafe variant of `pick`.
+ */
 export const pickUnsafe: Signature["pickUnsafe"] =
   (
     k1: string | symbol | number,
@@ -1618,6 +1621,10 @@ export const pickUnsafe: Signature["pickUnsafe"] =
     return result;
   };
 
+/**
+ * Returns a function that can be used to pick deeply nested properties
+ * from an Object.
+ */
 export const pick: Signature["pick"] = pickUnsafe;
 
 /**
@@ -1659,6 +1666,9 @@ export const pipeUnsafe: Signature["pipeUnsafe"] = ((
  */
 export const pipe: Signature["pipe"] = pipeUnsafe;
 
+/**
+ *  Pipes the source through a series of async operators.
+ */
 export const pipeAsync: Signature["pipeAsync"] = async (
   source: unknown,
   ...operators: Function1<unknown, unknown | Promise<unknown>>[]
@@ -1689,6 +1699,10 @@ export const pipeLazy: Signature["pipeLazy"] =
   () =>
     pipeUnsafe(source, ...operators);
 
+/**
+ *  Returns a `Factory` function that pipes the source through
+ *  the provided async function operators.
+ */
 export const pipeLazyAsync: Signature["pipeLazyAsync"] =
   (
     source: unknown,
@@ -1722,14 +1736,18 @@ export const pipeSome: Signature["pipeSome"] = (
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
  */
-export const pipeSomeLazy: Signature["pipeSomeLazy"] =
-  (
-    source: Optional,
-    ...operators: Function1<unknown, unknown>[]
-  ): Factory<unknown> =>
-  () =>
-    isSome(source) ? pipeUnsafe(source, ...operators) : none;
+export const pipeSomeLazy: Signature["pipeSomeLazy"] = (
+  source: Optional,
+  ...operators: Function1<unknown, unknown>[]
+): Factory<unknown> =>
+  isSome(source) ? returns(none) : () => pipeUnsafe(source, ...operators);
 
+/**
+ * Factory for a javascript Error from an unknown object type.
+ *
+ * Returns the provide object if it is an instance of Error,
+ * otherwise a new Error object is created with the provided object as it's cause.
+ */
 export const error: Signature["error"] = (message?: unknown) => {
   const messageIsString = isString(message);
   const messageIsError = message instanceof Error;
@@ -1746,16 +1764,21 @@ export const error: Signature["error"] = (message?: unknown) => {
     : newInstance(Error, errorMessage, errorCause);
 };
 
-export const errorWithDebugMessage: Signature["errorWithDebugMessage"] = (
-  message: string,
-) => error(__DEV__ ? message : none);
-
+/**
+ * Throws the provided error.
+ */
 export const raiseError: Signature["raiseError"] = (e: Error) => {
   throw e;
 };
 
+/**
+ * Throws an error, wrapping the provided object in a Javascript Error.
+ */
 export const raise: Signature["raise"] = (e?: unknown) => raiseError(error(e));
 
+/**
+ * Throws an error with the provided message is the condition is true.
+ */
 export const raiseIf: Signature["raiseIf"] = (
   condition: boolean,
   message: string,
@@ -1786,5 +1809,8 @@ export const returns: Signature["returns"] =
 export const strictEquality: Signature["strictEquality"] = <T>(a: T, b: T) =>
   a === b;
 
+/**
+ * Typed function for creating tuple instances.
+ */
 export const tuple: Signature["tuple"] = ((...v: readonly unknown[]) =>
   v) as Signature["tuple"];

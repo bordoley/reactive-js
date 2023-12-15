@@ -167,6 +167,9 @@ export const newInstance = (Constructor, ...args) => new Constructor(...args);
  */
 export const none = undefined;
 export const partial = (...args) => (f) => (arg0) => f(arg0, ...args);
+/**
+ * Type-unsafe variant of `pick`.
+ */
 export const pickUnsafe = (k1, k2, k3, ...keys) => 
 // eslint-disable-next-line @typescript-eslint/ban-types
 (value) => {
@@ -182,6 +185,10 @@ export const pickUnsafe = (k1, k2, k3, ...keys) =>
     }
     return result;
 };
+/**
+ * Returns a function that can be used to pick deeply nested properties
+ * from an Object.
+ */
 export const pick = pickUnsafe;
 /**
  * Pipes `source` through a series of unary functions.
@@ -207,6 +214,9 @@ export const pipeUnsafe = ((source, op1, op2, op3, op4, op5, op6, op7, ...operat
  * Pipes `source` through a series of unary functions.
  */
 export const pipe = pipeUnsafe;
+/**
+ *  Pipes the source through a series of async operators.
+ */
 export const pipeAsync = async (source, ...operators) => {
     let acc = source;
     const { length } = operators;
@@ -225,6 +235,10 @@ export const pipeAsync = async (source, ...operators) => {
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 export const pipeLazy = (source, ...operators) => () => pipeUnsafe(source, ...operators);
+/**
+ *  Returns a `Factory` function that pipes the source through
+ *  the provided async function operators.
+ */
 export const pipeLazyAsync = (source, ...operators) => async () => {
     let acc = source;
     const { length } = operators;
@@ -246,7 +260,13 @@ export const pipeSome = (source, ...operators) => isSome(source) ? pipeUnsafe(so
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
  */
-export const pipeSomeLazy = (source, ...operators) => () => isSome(source) ? pipeUnsafe(source, ...operators) : none;
+export const pipeSomeLazy = (source, ...operators) => isSome(source) ? returns(none) : () => pipeUnsafe(source, ...operators);
+/**
+ * Factory for a javascript Error from an unknown object type.
+ *
+ * Returns the provide object if it is an instance of Error,
+ * otherwise a new Error object is created with the provided object as it's cause.
+ */
 export const error = (message) => {
     const messageIsString = isString(message);
     const messageIsError = message instanceof Error;
@@ -260,11 +280,19 @@ export const error = (message) => {
         ? message
         : newInstance(Error, errorMessage, errorCause);
 };
-export const errorWithDebugMessage = (message) => error(__DEV__ ? message : none);
+/**
+ * Throws the provided error.
+ */
 export const raiseError = (e) => {
     throw e;
 };
+/**
+ * Throws an error, wrapping the provided object in a Javascript Error.
+ */
 export const raise = (e) => raiseError(error(e));
+/**
+ * Throws an error with the provided message is the condition is true.
+ */
 export const raiseIf = (condition, message) => {
     if (condition) {
         raiseWithDebugMessage(__DEV__ ? message : "");
@@ -282,4 +310,7 @@ export const returns = (v) => () => v;
  * The javascript strict equality function.
  */
 export const strictEquality = (a, b) => a === b;
+/**
+ * Typed function for creating tuple instances.
+ */
 export const tuple = ((...v) => v);

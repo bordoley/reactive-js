@@ -396,7 +396,14 @@ export declare const newInstance: Signature["newInstance"];
  */
 export declare const none: Signature["none"];
 export declare const partial: Signature["partial"];
+/**
+ * Type-unsafe variant of `pick`.
+ */
 export declare const pickUnsafe: Signature["pickUnsafe"];
+/**
+ * Returns a function that can be used to pick deeply nested properties
+ * from an Object.
+ */
 export declare const pick: Signature["pick"];
 /**
  * Pipes `source` through a series of unary functions.
@@ -406,11 +413,18 @@ export declare const pipeUnsafe: Signature["pipeUnsafe"];
  * Pipes `source` through a series of unary functions.
  */
 export declare const pipe: Signature["pipe"];
+/**
+ *  Pipes the source through a series of async operators.
+ */
 export declare const pipeAsync: Signature["pipeAsync"];
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators.
  */
 export declare const pipeLazy: Signature["pipeLazy"];
+/**
+ *  Returns a `Factory` function that pipes the source through
+ *  the provided async function operators.
+ */
 export declare const pipeLazyAsync: Signature["pipeLazyAsync"];
 /**
  * Pipes `source` through a series of unary functions if it is not undefined.
@@ -420,10 +434,24 @@ export declare const pipeSome: Signature["pipeSome"];
  * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
  */
 export declare const pipeSomeLazy: Signature["pipeSomeLazy"];
+/**
+ * Factory for a javascript Error from an unknown object type.
+ *
+ * Returns the provide object if it is an instance of Error,
+ * otherwise a new Error object is created with the provided object as it's cause.
+ */
 export declare const error: Signature["error"];
-export declare const errorWithDebugMessage: Signature["errorWithDebugMessage"];
+/**
+ * Throws the provided error.
+ */
 export declare const raiseError: Signature["raiseError"];
+/**
+ * Throws an error, wrapping the provided object in a Javascript Error.
+ */
 export declare const raise: Signature["raise"];
+/**
+ * Throws an error with the provided message is the condition is true.
+ */
 export declare const raiseIf: Signature["raiseIf"];
 /**
  * Throws a javascript error using the provided message.
@@ -437,5 +465,8 @@ export declare const returns: Signature["returns"];
  * The javascript strict equality function.
  */
 export declare const strictEquality: Signature["strictEquality"];
+/**
+ * Typed function for creating tuple instances.
+ */
 export declare const tuple: Signature["tuple"];
 export {};
