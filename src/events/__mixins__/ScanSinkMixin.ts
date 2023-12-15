@@ -7,12 +7,11 @@ import {
 } from "../../__internal__/mixins.js";
 import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Factory, Reducer, error, none, returns } from "../../functions.js";
-import {
+import { DisposableLike_dispose } from "../../utils.js";
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  DisposableLike_dispose,
-} from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");

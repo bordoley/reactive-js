@@ -3,8 +3,8 @@
 import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
-import { DelegatingDisposableLike_delegate, QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { QueueableLike_backpressureStrategy, QueueableLike_capacity, } from "../../../utils.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createBackpressureObserver = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ObserverMixin(), DelegatingDisposableMixin()), function EnqueueObserver(instance, delegate, config) {

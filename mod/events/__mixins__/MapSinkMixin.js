@@ -3,8 +3,7 @@
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../events.js";
 import { none, returns } from "../../functions.js";
-import { DelegatingDisposableLike_delegate, } from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const MapSinkMixin_selector = Symbol("MapSinkMixin_selector");
 const MapSinkMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin()), function MapSinkMixin(instance, delegate, selector) {
     init(DelegatingDisposableMixin(), instance, delegate);

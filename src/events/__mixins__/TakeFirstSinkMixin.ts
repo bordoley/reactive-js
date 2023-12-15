@@ -8,12 +8,11 @@ import {
 } from "../../__internal__/mixins.js";
 import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Optional, returns } from "../../functions.js";
-import {
+import { DisposableLike_dispose } from "../../utils.js";
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  DisposableLike_dispose,
-} from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 

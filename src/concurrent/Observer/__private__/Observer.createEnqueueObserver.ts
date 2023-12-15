@@ -12,13 +12,11 @@ import {
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none } from "../../../functions.js";
-import {
+import { QueueableLike, QueueableLike_enqueue } from "../../../utils.js";
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  QueueableLike,
-  QueueableLike_enqueue,
-} from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 

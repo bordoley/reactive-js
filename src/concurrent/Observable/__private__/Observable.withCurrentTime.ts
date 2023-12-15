@@ -9,11 +9,10 @@ import {
 import { ObserverLike, SchedulerLike_now } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { Function2, none, partial, pipe } from "../../../functions.js";
-import {
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-} from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";

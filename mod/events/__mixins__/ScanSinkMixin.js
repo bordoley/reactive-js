@@ -3,8 +3,8 @@
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../events.js";
 import { error, none, returns } from "../../functions.js";
-import { DelegatingDisposableLike_delegate, DisposableLike_dispose, } from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike_dispose } from "../../utils.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const ScanSinkMixin_acc = Symbol("ScanSinkMixin_acc");
 const ScanSinkMixin_reducer = Symbol("ScanSinkMixin_reducer");
 const ScanSinkMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin()), function ScanSinkMixin(instance, delegate, reducer, initialValue) {

@@ -4,8 +4,8 @@ import { clampPositiveInteger, max } from "../../__internal__/math.js";
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../events.js";
 import { returns } from "../../functions.js";
-import { DelegatingDisposableLike_delegate, DisposableLike_dispose, } from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike_dispose } from "../../utils.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const TakeFirstSinkMixin_count = Symbol("TakeFirstSinkMixin_count");
 const TakeFirstSinkMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin()), function TakeFirstSinkMixin(instance, delegate, takeCount) {
     init(DelegatingDisposableMixin(), instance, delegate);

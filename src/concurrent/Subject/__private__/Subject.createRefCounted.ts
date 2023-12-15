@@ -17,13 +17,12 @@ import {
   SinkLike_notify,
 } from "../../../events.js";
 import { pipe } from "../../../functions.js";
-import {
+import { DisposableLike_dispose } from "../../../utils.js";
+import * as Disposable from "../../../utils/Disposable.js";
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-  DisposableLike_dispose,
-} from "../../../utils.js";
-import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Subject from "../../Subject.js";
 import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
 import Subject_create from "./Subject.create.js";

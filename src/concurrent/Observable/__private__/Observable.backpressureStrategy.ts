@@ -9,13 +9,14 @@ import { ObserverLike } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { partial, pipe } from "../../../functions.js";
 import {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
 } from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin, {
+  DelegatingDisposableLike,
+  DelegatingDisposableLike_delegate,
+} from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import type * as Observable from "../../Observable.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import Observable_liftPure from "./Observable.liftPure.js";

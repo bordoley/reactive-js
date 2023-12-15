@@ -1,8 +1,6 @@
 import { Mixin1, mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { Optional, SideEffect1, none, pipe, returns } from "../../functions.js";
 import {
-  DelegatingDisposableLike,
-  DelegatingDisposableLike_delegate,
   DisposableLike,
   DisposableLike_add,
   DisposableLike_dispose,
@@ -10,6 +8,16 @@ import {
   DisposableLike_isDisposed,
 } from "../../utils.js";
 import * as Disposable from "../Disposable.js";
+
+export const DelegatingDisposableLike_delegate = Symbol(
+  "DelegatingDisposableLike_delegate",
+);
+
+export interface DelegatingDisposableLike<
+  TDisposable extends DisposableLike = DisposableLike,
+> extends DisposableLike {
+  readonly [DelegatingDisposableLike_delegate]: TDisposable;
+}
 
 const DelegatingDisposableMixin: <
   TDisposable extends DisposableLike = DisposableLike,

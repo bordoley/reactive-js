@@ -3,8 +3,8 @@
 import { include, init, mix, props, } from "../../__internal__/mixins.js";
 import { SinkLike_notify } from "../../events.js";
 import { none, returns } from "../../functions.js";
-import { DelegatingDisposableLike_delegate, DisposableLike_dispose, } from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+import { DisposableLike_dispose } from "../../utils.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 const TakeWhileSinkMixin_inclusive = Symbol("TakeWhileSinkMixin_inclusive");
 const TakeWhileSinkMixin_predicate = Symbol("TakeWhileSinkMixin_predicate");
 const TakeWhileSinkMixin = /*@__PURE__*/ (() => returns(mix(include(DelegatingDisposableMixin()), function TakeWhileSinkMixin(instance, delegate, predicate, inclusive) {

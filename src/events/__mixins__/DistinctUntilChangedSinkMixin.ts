@@ -7,11 +7,10 @@ import {
 } from "../../__internal__/mixins.js";
 import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Equality, none, returns } from "../../functions.js";
-import {
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-} from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const DistinctUntilChangedSinkMixin_equality = Symbol(
   "DistinctUntilChangedSinkMixin_equality",

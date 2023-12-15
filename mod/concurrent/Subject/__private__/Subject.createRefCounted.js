@@ -4,9 +4,9 @@ import { createInstanceFactory, include, init, mix, props, unsafeCast, } from ".
 import { ObservableLike_observe, SubjectLike_observerCount, } from "../../../concurrent.js";
 import { EventListenerLike_isErrorSafe, SinkLike_notify, } from "../../../events.js";
 import { pipe } from "../../../functions.js";
-import { DelegatingDisposableLike_delegate, DisposableLike_dispose, } from "../../../utils.js";
+import { DisposableLike_dispose } from "../../../utils.js";
 import * as Disposable from "../../../utils/Disposable.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
 import Subject_create from "./Subject.create.js";
 const Subject_createRefCounted = 

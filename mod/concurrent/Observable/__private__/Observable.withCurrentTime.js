@@ -4,8 +4,7 @@ import { createInstanceFactory, include, init, mix, props, } from "../../../__in
 import { SchedulerLike_now } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, partial, pipe } from "../../../functions.js";
-import { DelegatingDisposableLike_delegate, } from "../../../utils.js";
-import DelegatingDisposableMixin from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
+import DelegatingDisposableMixin, { DelegatingDisposableLike_delegate, } from "../../../utils/__mixins__/DelegatingDisposableMixin.js";
 import ObserverMixin from "../../__mixins__/ObserverMixin.js";
 import decorateNotifyWithObserverStateAssert from "../../__mixins__/decorateNotifyWithObserverStateAssert.js";
 import Observable_liftPure from "./Observable.liftPure.js";

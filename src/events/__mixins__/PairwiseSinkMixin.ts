@@ -7,11 +7,10 @@ import {
 } from "../../__internal__/mixins.js";
 import { SinkLike, SinkLike_notify } from "../../events.js";
 import { Tuple2, none, returns, tuple } from "../../functions.js";
-import {
+import DelegatingDisposableMixin, {
   DelegatingDisposableLike,
   DelegatingDisposableLike_delegate,
-} from "../../utils.js";
-import DelegatingDisposableMixin from "../../utils/__mixins__/DelegatingDisposableMixin.js";
+} from "../../utils/__mixins__/DelegatingDisposableMixin.js";
 
 const PairwiseSinkMixin_hasPrev = Symbol("PairwiseSinkMixin_hasPrev");
 const PairwiseSinkMixin_prev = Symbol("PairwiseSinkMixin_prev");
