@@ -66,13 +66,6 @@ const Enumerable_keep: Enumerable.Signature["keep"] = /*@__PURE__*/ (<T>() => {
           ];
         },
 
-        get [EnumeratorLike_isCompleted]() {
-          unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-          return this[DelegatingEnumeratorMixinLike_delegate][
-            EnumeratorLike_isCompleted
-          ];
-        },
-
         [EnumeratorLike_move](
           this: TProperties<T> &
             Mutable<EnumeratorLike<T>> &

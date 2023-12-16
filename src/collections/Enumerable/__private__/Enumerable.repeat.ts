@@ -24,7 +24,6 @@ import {
 } from "../../../functions.js";
 import type * as Enumerable from "../../Enumerable.js";
 import Enumerable_create from "./Enumerable.create.js";
-import Enumerable_empty from "./Enumerable.empty.js";
 
 const Enumerable_repeat: Enumerable.Signature["repeat"] = /*@__PURE__*/ (<
   T,
@@ -51,8 +50,7 @@ const Enumerable_repeat: Enumerable.Signature["repeat"] = /*@__PURE__*/ (<
       ): EnumeratorLike<T> {
         instance[RepeatEnumerator_enumerable] = enumerable;
 
-        instance[RepeatEnumerator_inner] =
-          Enumerable_empty<T>()[EnumerableLike_enumerate]();
+        instance[RepeatEnumerator_inner] = none;
         instance[RepeatEnumerator_predicate] = shouldRepeat;
 
         return instance;

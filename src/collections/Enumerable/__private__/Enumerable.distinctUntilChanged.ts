@@ -87,13 +87,6 @@ const Enumerable_distinctUntilChanged: Enumerable.Signature["distinctUntilChange
             ];
           },
 
-          get [EnumeratorLike_isCompleted]() {
-            unsafeCast<DelegatingEnumeratorMixinLike<T>>(this);
-            return this[DelegatingEnumeratorMixinLike_delegate][
-              EnumeratorLike_isCompleted
-            ];
-          },
-
           [EnumeratorLike_move](
             this: Mutable<EnumeratorLike<T>> &
               DelegatingEnumeratorMixinLike<T> &
