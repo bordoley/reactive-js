@@ -1,12 +1,20 @@
 import {
   describe,
   expectArrayEquals,
+  expectEquals,
   test,
   testModule,
 } from "../../__internal__/testing.js";
 import { PureComputationModule } from "../../computations.js";
 import PureComputationModuleTests from "../../computations/__tests__/fixtures/PureComputationModuleTests.js";
-import { arrayEquality, pipe, pipeLazy, tuple } from "../../functions.js";
+import {
+  arrayEquality,
+  increment,
+  pipe,
+  pipeLazy,
+  returns,
+  tuple,
+} from "../../functions.js";
 
 import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
@@ -16,6 +24,20 @@ testModule(
   PureComputationModuleTests(
     Enumerable as PureComputationModule<Enumerable.Type>,
     Enumerable.toReadonlyArray,
+  ),
+  describe(
+    "concat",
+    test(
+      "concats the input containers in order",
+      pipeLazy(
+        Enumerable.concat(
+          pipe([1, 2, 3], ReadonlyArray.values()),
+          pipe([4, 5, 6], ReadonlyArray.values()),
+        ),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
   ),
   describe(
     "concatAll",
@@ -48,6 +70,43 @@ testModule(
     ),
   ),
   describe(
+    "concatWith",
+    test(
+      "concats the input containers in order",
+      pipeLazy(
+        pipe([1, 2, 3], ReadonlyArray.values()),
+        Enumerable.concatWith(pipe([4, 5, 6], ReadonlyArray.values())),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+  ),
+  describe(
+    "reduce",
+    test(
+      "sum up the first 5 numbers",
+      pipeLazy(
+        Enumerable.generate(increment, returns(0)),
+        Enumerable.takeFirst({ count: 5 }),
+        Enumerable.reduce<number, number>((x, y) => x + y, returns(0)),
+        expectEquals(15),
+      ),
+    ),
+  ),
+  describe(
+    "repeat",
+    test(
+      "repeat the source 3 times",
+      pipeLazy(
+        Enumerable.generate(increment, returns(0)),
+        Enumerable.takeFirst({ count: 2 }),
+        Enumerable.repeat(3),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2]),
+      ),
+    ),
+  ),
+  describe(
     "zip",
     test(
       "when all inputs are the same length",
@@ -68,6 +127,37 @@ testModule(
       pipeLazy(
         Enumerable.zip(
           pipe([1, 2, 3], ReadonlyArray.values()),
+          pipe([5, 4, 3, 2, 1], ReadonlyArray.values()),
+          pipe([1, 2, 3, 4], ReadonlyArray.values()),
+        ),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([tuple(1, 5, 1), tuple(2, 4, 2), tuple(3, 3, 3)], {
+          valuesEquality: arrayEquality(),
+        }),
+      ),
+    ),
+  ),
+  describe(
+    "zipWith",
+    test(
+      "when all inputs are the same length",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        ReadonlyArray.values(),
+        Enumerable.zipWith(pipe([5, 4, 3, 2, 1], ReadonlyArray.values())),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals(
+          [tuple(1, 5), tuple(2, 4), tuple(3, 3), tuple(4, 2), tuple(5, 1)],
+          { valuesEquality: arrayEquality() },
+        ),
+      ),
+    ),
+    test(
+      "when inputs are different length",
+      pipeLazy(
+        [1, 2, 3],
+        ReadonlyArray.values(),
+        Enumerable.zipWith(
           pipe([5, 4, 3, 2, 1], ReadonlyArray.values()),
           pipe([1, 2, 3, 4], ReadonlyArray.values()),
         ),

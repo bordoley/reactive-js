@@ -88,8 +88,11 @@ const Enumerable_repeat: Enumerable.Signature["repeat"] = /*@__PURE__*/ (<
 
             if (!this[EnumeratorLike_isCompleted]) {
               this[RepeatEnumerator_count]++;
-              this[RepeatEnumerator_inner] =
+              inner = this[RepeatEnumerator_inner] =
                 this[RepeatEnumerator_enumerable][EnumerableLike_enumerate]();
+            } else {
+              this[RepeatEnumerator_inner] = none;
+              break;
             }
           }
 
