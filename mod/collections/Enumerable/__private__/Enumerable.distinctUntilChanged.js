@@ -29,10 +29,6 @@ const Enumerable_distinctUntilChanged =
             unsafeCast(this);
             return this[DelegatingEnumeratorMixinLike_delegate][EnumeratorLike_hasCurrent];
         },
-        get [EnumeratorLike_isCompleted]() {
-            unsafeCast(this);
-            return this[DelegatingEnumeratorMixinLike_delegate][EnumeratorLike_isCompleted];
-        },
         [EnumeratorLike_move]() {
             if (this[EnumeratorLike_isCompleted]) {
                 return false;
