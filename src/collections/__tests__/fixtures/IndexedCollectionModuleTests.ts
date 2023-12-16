@@ -57,14 +57,25 @@ const IndexedCollectionModuleTests = <C extends KeyedCollection<number>>(
         ),
       ),
       test(
+        "negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          fromReadonlyArray(),
+          m.entries({ count: -2 }),
+          Enumerable.map(([_k, v]) => v),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([4, 3]),
+        ),
+      ),
+      test(
         "starting at index greater than 0 with negative count",
         pipeLazy(
           [1, 2, 3, 4],
           fromReadonlyArray(),
-          m.entries({ start: 3, count: -2 }),
+          m.entries({ start: 2, count: -2 }),
           Enumerable.map(([_k, v]) => v),
           Enumerable.toReadonlyArray(),
-          expectArrayEquals([4, 3]),
+          expectArrayEquals([3, 2]),
         ),
       ),
     ),
@@ -101,13 +112,23 @@ const IndexedCollectionModuleTests = <C extends KeyedCollection<number>>(
         ),
       ),
       test(
+        "negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          fromReadonlyArray(),
+          m.values({ count: -2 }),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([4, 3]),
+        ),
+      ),
+      test(
         "starting at index greater than 0 with negative count",
         pipeLazy(
           [1, 2, 3, 4],
           fromReadonlyArray(),
-          m.values({ start: 3, count: -2 }),
+          m.values({ start: 2, count: -2 }),
           Enumerable.toReadonlyArray(),
-          expectArrayEquals([4, 3]),
+          expectArrayEquals([3, 2]),
         ),
       ),
     ),
@@ -144,13 +165,23 @@ const IndexedCollectionModuleTests = <C extends KeyedCollection<number>>(
         ),
       ),
       test(
+        "negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          fromReadonlyArray(),
+          m.toIndexed({ count: -2 }),
+          Indexed.toReadonlyArray(),
+          expectArrayEquals([4, 3]),
+        ),
+      ),
+      test(
         "starting at index greater than 0 with negative count",
         pipeLazy(
           [1, 2, 3, 4],
           fromReadonlyArray(),
-          m.toIndexed({ start: 3, count: -2 }),
+          m.toIndexed({ start: 2, count: -2 }),
           Indexed.toReadonlyArray(),
-          expectArrayEquals([4, 3]),
+          expectArrayEquals([3, 2]),
         ),
       ),
     ),
@@ -184,12 +215,21 @@ const IndexedCollectionModuleTests = <C extends KeyedCollection<number>>(
         ),
       ),
       test(
+        "negative count",
+        pipeLazy(
+          [1, 2, 3, 4],
+          fromReadonlyArray(),
+          m.toReadonlyArray({ count: -2 }),
+          expectArrayEquals([4, 3]),
+        ),
+      ),
+      test(
         "starting at index greater than 0 with negative count",
         pipeLazy(
           [1, 2, 3, 4],
           fromReadonlyArray(),
-          m.toReadonlyArray({ start: 3, count: -2 }),
-          expectArrayEquals([4, 3]),
+          m.toReadonlyArray({ start: 2, count: -2 }),
+          expectArrayEquals([3, 2]),
         ),
       ),
     ),
