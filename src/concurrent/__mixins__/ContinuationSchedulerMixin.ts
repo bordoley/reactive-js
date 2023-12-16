@@ -13,6 +13,8 @@ import {
 } from "../../__internal__/mixins.js";
 import { CollectionLike, CollectionLike_count } from "../../collections.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   SchedulerLike,
   SchedulerLike_inContinuation,
   SchedulerLike_maxYieldInterval,
@@ -20,7 +22,6 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  Yield,
 } from "../../concurrent.js";
 import {
   Function2,
@@ -125,13 +126,14 @@ const ContinuationSchedulerMixin: Mixin1<
   interface QueueableContinuationLike
     extends ContinuationLike,
       QueueCollectionLike<QueueableContinuationLike>,
-      CollectionLike<QueueableContinuationLike> {
+      CollectionLike<QueueableContinuationLike>,
+      ContinuationContextLike {
     [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
 
     [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
 
     readonly [QueueableContinuationLike_scheduler]: ContinuationSchedulerMixinLike;
-    readonly [QueueableContinuationLike_effect]: SideEffect1<Yield>;
+    readonly [QueueableContinuationLike_effect]: SideEffect1<ContinuationContextLike>;
   }
 
   const createContinuation = (() => {
@@ -143,7 +145,7 @@ const ContinuationSchedulerMixin: Mixin1<
       [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
       [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
       [QueueableContinuationLike_scheduler]: ContinuationSchedulerMixinLike;
-      [QueueableContinuationLike_effect]: SideEffect1<Yield>;
+      [QueueableContinuationLike_effect]: SideEffect1<ContinuationContextLike>;
     };
 
     const indexedQueueProtoype = getPrototype(
@@ -199,17 +201,6 @@ const ContinuationSchedulerMixin: Mixin1<
     const runContinuation = (thiz: QueueableContinuationLike) => {
       const scheduler = thiz[QueueableContinuationLike_scheduler];
 
-      const __yield = (delay = 0) => {
-        const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
-
-        const currentContinuation =
-          scheduler[ContinuationSchedulerMixinLike_currentContinuation];
-
-        if (shouldYield && isSome(currentContinuation)) {
-          throw newInstance(ContinuationYieldError, delay ?? 0);
-        }
-      };
-
       if (thiz[DisposableLike_isDisposed]) {
         rescheduleChildrenOnParentOrScheduler(thiz);
         return;
@@ -238,7 +229,7 @@ const ContinuationSchedulerMixin: Mixin1<
 
       thiz[QueueableContinuationLike_activeChild] = thiz;
       try {
-        thiz[QueueableContinuationLike_effect](__yield);
+        thiz[QueueableContinuationLike_effect](thiz);
       } catch (e) {
         if (e instanceof ContinuationYieldError) {
           yieldError = e;
@@ -270,11 +261,11 @@ const ContinuationSchedulerMixin: Mixin1<
         function Continuation(
           instance: Pick<
             QueueableContinuationLike,
-            typeof ContinuationLike_run
+            typeof ContinuationLike_run | typeof ContinuationContextLike_yield
           > &
             Mutable<TContinuationProperties>,
           scheduler: ContinuationSchedulerMixinLike,
-          effect: SideEffect1<Yield>,
+          effect: SideEffect1<ContinuationContextLike>,
         ): QueueableContinuationLike {
           init(DisposableMixin, instance);
 
@@ -336,6 +327,23 @@ const ContinuationSchedulerMixin: Mixin1<
               this,
               continuation,
             );
+          },
+
+          [ContinuationContextLike_yield](
+            this: QueueableContinuationLike & TContinuationProperties,
+            delay = 0,
+          ): void {
+            const scheduler = this[QueueableContinuationLike_scheduler];
+
+            const shouldYield =
+              delay > 0 || scheduler[SchedulerLike_shouldYield];
+
+            const currentContinuation =
+              scheduler[ContinuationSchedulerMixinLike_currentContinuation];
+
+            if (shouldYield && isSome(currentContinuation)) {
+              throw newInstance(ContinuationYieldError, delay ?? 0);
+            }
           },
         },
       ),
@@ -470,7 +478,7 @@ const ContinuationSchedulerMixin: Mixin1<
 
       [SchedulerLike_schedule](
         this: ContinuationSchedulerMixinLike & TSchedulerProperties,
-        effect: SideEffect1<Yield>,
+        effect: SideEffect1<ContinuationContextLike>,
         options?: { readonly delay?: number },
       ): DisposableLike {
         const continuation = pipe(

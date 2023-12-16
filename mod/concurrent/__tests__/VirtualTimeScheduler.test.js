@@ -1,7 +1,7 @@
 /// <reference types="./VirtualTimeScheduler.test.d.ts" />
 
 import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
-import { SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations", () => {
@@ -24,11 +24,11 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     });
     const result = [];
     let i = 0;
-    scheduler[SchedulerLike_schedule](__yield => {
+    scheduler[SchedulerLike_schedule](ctx => {
         while (i < 10) {
             result.push(i);
             i++;
-            __yield();
+            ctx[ContinuationContextLike_yield]();
         }
     });
     scheduler[VirtualTimeSchedulerLike_run]();
@@ -39,19 +39,19 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     });
     const result = [];
     let i = 0;
-    scheduler[SchedulerLike_schedule]((__yield) => {
+    scheduler[SchedulerLike_schedule]((ctx) => {
         let j = 100;
         while (i <= 4) {
             result.push(i);
             i++;
-            scheduler[SchedulerLike_schedule]((__yield) => {
+            scheduler[SchedulerLike_schedule]((ctx) => {
                 while (j < 102) {
                     result.push(j);
                     j++;
-                    __yield();
+                    ctx[ContinuationContextLike_yield]();
                 }
             });
-            __yield();
+            ctx[ContinuationContextLike_yield]();
         }
     });
     scheduler[VirtualTimeSchedulerLike_run]();
@@ -63,13 +63,13 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
         maxMicroTaskTicks: 1,
     });
     const result = [];
-    scheduler[SchedulerLike_schedule]((__yield) => {
+    scheduler[SchedulerLike_schedule](() => {
         let j = 0;
-        scheduler[SchedulerLike_schedule]((__yield) => {
+        scheduler[SchedulerLike_schedule]((ctx) => {
             while (j < 4) {
                 result.push(j);
                 j++;
-                __yield();
+                ctx[ContinuationContextLike_yield]();
             }
         });
     });
@@ -81,19 +81,19 @@ testModule("VirtualTimeScheduler", test("non-nested, non-delayed continuations",
     });
     const result = [];
     let i = 0;
-    scheduler[SchedulerLike_schedule]((__yield) => {
+    scheduler[SchedulerLike_schedule]((ctx) => {
         let j = 100;
         while (i < 4) {
             result.push(i);
             i++;
-            scheduler[SchedulerLike_schedule]((__yield) => {
+            scheduler[SchedulerLike_schedule]((ctx) => {
                 while (j < 102) {
                     result.push(j);
                     j++;
-                    __yield();
+                    ctx[ContinuationContextLike_yield]();
                 }
             });
-            __yield(1);
+            ctx[ContinuationContextLike_yield]();
         }
     });
     scheduler[VirtualTimeSchedulerLike_run]();

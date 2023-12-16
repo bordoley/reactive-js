@@ -52,7 +52,10 @@ export declare const SchedulerLike_now: unique symbol;
 export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
-export type Yield = (delay?: number) => void;
+export declare const ContinuationContextLike_yield: unique symbol;
+export interface ContinuationContextLike {
+    [ContinuationContextLike_yield](delay?: number): void;
+}
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
@@ -88,7 +91,7 @@ export interface SchedulerLike {
      * @param continuation - The continuation to run on the scheduler.
      * @param options
      */
-    [SchedulerLike_schedule](continuation: SideEffect1<Yield>, options?: {
+    [SchedulerLike_schedule](continuation: SideEffect1<ContinuationContextLike>, options?: {
         /**
          * The amount of time in ms to delay execution of the continuation.
          */

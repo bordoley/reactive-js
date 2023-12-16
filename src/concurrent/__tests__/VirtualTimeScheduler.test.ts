@@ -4,9 +4,10 @@ import {
   testModule,
 } from "../../__internal__/testing.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   SchedulerLike_schedule,
   VirtualTimeSchedulerLike_run,
-  Yield,
 } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -42,11 +43,11 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule](__yield => {
+    scheduler[SchedulerLike_schedule](ctx => {
       while (i < 10) {
         result.push(i);
         i++;
-        __yield();
+        ctx[ContinuationContextLike_yield]();
       }
     });
 
@@ -62,22 +63,22 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+    scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
       let j = 100;
 
       while (i <= 4) {
         result.push(i);
         i++;
 
-        scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+        scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
           while (j < 102) {
             result.push(j);
             j++;
-            __yield();
+            ctx[ContinuationContextLike_yield]();
           }
         });
 
-        __yield();
+        ctx[ContinuationContextLike_yield]();
       }
     });
 
@@ -97,13 +98,13 @@ testModule(
 
     const result: number[] = [];
 
-    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+    scheduler[SchedulerLike_schedule](() => {
       let j = 0;
-      scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+      scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
         while (j < 4) {
           result.push(j);
           j++;
-          __yield();
+          ctx[ContinuationContextLike_yield]();
         }
       });
     });
@@ -120,22 +121,22 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+    scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
       let j = 100;
 
       while (i < 4) {
         result.push(i);
         i++;
 
-        scheduler[SchedulerLike_schedule]((__yield: Yield) => {
+        scheduler[SchedulerLike_schedule]((ctx: ContinuationContextLike) => {
           while (j < 102) {
             result.push(j);
             j++;
-            __yield();
+            ctx[ContinuationContextLike_yield]();
           }
         });
 
-        __yield(1);
+        ctx[ContinuationContextLike_yield]();
       }
     });
 

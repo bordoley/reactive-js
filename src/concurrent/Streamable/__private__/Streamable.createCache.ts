@@ -21,6 +21,8 @@ import Enumerator_fromIterator from "../../../collections/Enumerator/__private__
 import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   DeferredObservableLike,
   ObservableLike,
   SchedulerLike,
@@ -30,7 +32,6 @@ import {
   StreamableLike,
   StreamableLike_stream,
   SubjectLike,
-  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import {
@@ -139,7 +140,7 @@ const createCacheStream: <T>(
           "overflow",
         );
 
-        const cleanupContinuation = (__yield: Yield) => {
+        const cleanupContinuation = (ctx: ContinuationContextLike) => {
           const { store, subscriptions } = instance;
 
           while (store.size > capacity) {
@@ -151,7 +152,7 @@ const createCacheStream: <T>(
             if (!subscriptions.has(key)) {
               store.delete(key);
             }
-            __yield();
+            ctx[ContinuationContextLike_yield]();
           }
         };
 

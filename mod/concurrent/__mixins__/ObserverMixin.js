@@ -2,7 +2,7 @@
 
 import { getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import { ContinuationContextLike_yield, DispatcherLikeEvent_capacityExceeded, DispatcherLikeEvent_completed, DispatcherLikeEvent_ready, DispatcherLike_complete, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, { LazyInitEventSourceMixin_publisher, } from "../../events/__mixins__/LazyInitEventSourceMixin.js";
 import { call, none, pipe, returns, } from "../../functions.js";
@@ -15,13 +15,13 @@ const ObserverMixin = /*@__PURE__*/ (() => {
     const ObserverMixin_scheduler = Symbol("ObserverMixin_scheduler");
     const scheduleDrainQueue = (observer) => {
         if (observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]) {
-            const continuation = (__yield) => {
+            const continuation = (ctx) => {
                 unsafeCast(observer);
                 while (observer[CollectionLike_count] > 0) {
                     const next = observer[QueueLike_dequeue]();
                     observer[SinkLike_notify](next);
                     if (observer[CollectionLike_count] > 0) {
-                        __yield();
+                        ctx[ContinuationContextLike_yield]();
                     }
                 }
                 if (observer[ObserverMixin_isCompleted]) {

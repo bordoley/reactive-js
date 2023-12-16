@@ -19,6 +19,8 @@ import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
 } from "../collections/__mixins__/MutableEnumeratorMixin.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -29,7 +31,6 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  Yield,
 } from "../concurrent.js";
 import {
   SchedulerTaskLike,
@@ -91,7 +92,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     readonly [PauseableScheduler_delayed]: QueueLike<SchedulerTaskLike>;
     [PauseableScheduler_dueTime]: number;
     readonly [PauseableScheduler_hostScheduler]: SchedulerLike;
-    [PauseableScheduler_hostContinuation]: Optional<SideEffect1<Yield>>;
+    [PauseableScheduler_hostContinuation]: Optional<
+      SideEffect1<ContinuationContextLike>
+    >;
     [PauseableLike_isPaused]: WritableStoreLike<boolean>;
     readonly [PauseableScheduler_queue]: QueueLike<SchedulerTaskLike>;
     [PauseableScheduler_taskIDCounter]: number;
@@ -184,7 +187,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
     const continuation =
       instance[PauseableScheduler_hostContinuation] ??
-      ((__yield: Yield) => {
+      ((ctx: ContinuationContextLike) => {
         for (
           let task = peek(instance);
           isSome(task) && !instance[DisposableLike_isDisposed];
@@ -205,7 +208,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             instance[EnumeratorLike_move]();
             continuation[ContinuationLike_run]();
           }
-          __yield(delay);
+          ctx[ContinuationContextLike_yield](delay);
         }
       });
     instance[PauseableScheduler_hostContinuation] = continuation;

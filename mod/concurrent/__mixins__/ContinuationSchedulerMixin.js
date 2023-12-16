@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import { ContinuationContextLike_yield, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -69,13 +69,6 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         };
         const runContinuation = (thiz) => {
             const scheduler = thiz[QueueableContinuationLike_scheduler];
-            const __yield = (delay = 0) => {
-                const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
-                const currentContinuation = scheduler[ContinuationSchedulerMixinLike_currentContinuation];
-                if (shouldYield && isSome(currentContinuation)) {
-                    throw newInstance(ContinuationYieldError, delay ?? 0);
-                }
-            };
             if (thiz[DisposableLike_isDisposed]) {
                 rescheduleChildrenOnParentOrScheduler(thiz);
                 return;
@@ -100,7 +93,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             let yieldError = none;
             thiz[QueueableContinuationLike_activeChild] = thiz;
             try {
-                thiz[QueueableContinuationLike_effect](__yield);
+                thiz[QueueableContinuationLike_effect](thiz);
             }
             catch (e) {
                 if (e instanceof ContinuationYieldError) {
@@ -153,6 +146,14 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             [QueueableLike_enqueue](continuation) {
                 continuation[QueueableContinuationLike_parent] = this;
                 return call(indexedQueueProtoype[QueueableLike_enqueue], this, continuation);
+            },
+            [ContinuationContextLike_yield](delay = 0) {
+                const scheduler = this[QueueableContinuationLike_scheduler];
+                const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
+                const currentContinuation = scheduler[ContinuationSchedulerMixinLike_currentContinuation];
+                if (shouldYield && isSome(currentContinuation)) {
+                    throw newInstance(ContinuationYieldError, delay ?? 0);
+                }
             },
         }));
     })();

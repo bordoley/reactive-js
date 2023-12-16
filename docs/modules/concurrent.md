@@ -6,6 +6,7 @@
 
 ### Interfaces
 
+- [ContinuationContextLike](../interfaces/concurrent.ContinuationContextLike.md)
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
 - [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
 - [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
@@ -31,10 +32,10 @@
 ### Type Aliases
 
 - [StreamOf](concurrent.md#streamof)
-- [Yield](concurrent.md#yield)
 
 ### Variables
 
+- [ContinuationContextLike\_yield](concurrent.md#continuationcontextlike_yield)
 - [DispatcherLikeEvent\_capacityExceeded](concurrent.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](concurrent.md#dispatcherlikeevent_ready)
@@ -71,27 +72,13 @@
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
 
-___
-
-### Yield
-
-Ƭ **Yield**: (`delay?`: `number`) => `void`
-
-#### Type declaration
-
-▸ (`delay?`): `void`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `delay?` | `number` |
-
-##### Returns
-
-`void`
-
 ## Variables
+
+### ContinuationContextLike\_yield
+
+• `Const` **ContinuationContextLike\_yield**: unique `symbol`
+
+___
 
 ### DispatcherLikeEvent\_capacityExceeded
 

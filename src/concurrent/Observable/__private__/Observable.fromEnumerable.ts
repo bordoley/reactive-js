@@ -5,9 +5,10 @@ import {
   EnumeratorLike_move,
 } from "../../../collections.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   ObserverLike,
   SchedulerLike_schedule,
-  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
@@ -27,14 +28,14 @@ const Observable_fromEnumerable: Observable.Signature["fromEnumerable"] =
 
       const enumerator = enumerable[EnumerableLike_enumerate]();
 
-      const continuation = (__yield: Yield) => {
+      const continuation = (ctx: ContinuationContextLike) => {
         while (
           !observer[DisposableLike_isDisposed] &&
           enumerator[EnumeratorLike_move]()
         ) {
           const next = enumerator[EnumeratorLike_current];
           observer[SinkLike_notify](next);
-          __yield(delay);
+          ctx[ContinuationContextLike_yield](delay);
         }
         observer[DisposableLike_dispose]();
       };

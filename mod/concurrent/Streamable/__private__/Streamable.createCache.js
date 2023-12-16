@@ -6,7 +6,7 @@ import { AssociativeLike_keys, CollectionLike_count, EnumerableLike_enumerate, K
 import Enumerator_fromIterator from "../../../collections/Enumerator/__private__/Enumerator.fromIterator.js";
 import * as ReadonlyMap from "../../../collections/ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../../../collections/ReadonlyObjectMap.js";
-import { SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
+import { ContinuationContextLike_yield, SchedulerLike_schedule, StreamableLike_stream, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { bindMethod, compose, identity, invoke, isNone, isSome, none, pipe, tuple, } from "../../../functions.js";
 import { DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../../utils.js";
@@ -21,7 +21,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
         instance.store = new Map();
         instance.subscriptions = new Map();
         const cleanupQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
-        const cleanupContinuation = (__yield) => {
+        const cleanupContinuation = (ctx) => {
             const { store, subscriptions } = instance;
             while (store.size > capacity) {
                 const key = cleanupQueue[QueueLike_dequeue]();
@@ -31,7 +31,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 if (!subscriptions.has(key)) {
                     store.delete(key);
                 }
-                __yield();
+                ctx[ContinuationContextLike_yield]();
             }
         };
         let cleanupJob = Disposable.disposed;

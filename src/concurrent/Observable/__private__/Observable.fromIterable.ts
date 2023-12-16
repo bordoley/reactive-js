@@ -1,7 +1,8 @@
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   ObserverLike,
   SchedulerLike_schedule,
-  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { Optional, error, isSome, none, pipe } from "../../../functions.js";
@@ -21,7 +22,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] =
 
       const iterator = iterable[Symbol.iterator]();
 
-      const continuation = (__yield: Yield) => {
+      const continuation = (ctx: ContinuationContextLike) => {
         while (!observer[DisposableLike_isDisposed]) {
           let next: Optional<IteratorResult<T, any>> = none;
 
@@ -34,7 +35,7 @@ const Observable_fromIterable: Observable.Signature["fromIterable"] =
 
           if (isSome(next) && !next.done) {
             observer[SinkLike_notify](next.value);
-            __yield(delay);
+            ctx[ContinuationContextLike_yield](delay);
           } else {
             observer[DisposableLike_dispose]();
           }

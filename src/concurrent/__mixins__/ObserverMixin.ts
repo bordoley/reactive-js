@@ -9,6 +9,8 @@ import {
 } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import {
+  ContinuationContextLike,
+  ContinuationContextLike_yield,
   DispatcherLikeEventMap,
   DispatcherLikeEvent_capacityExceeded,
   DispatcherLikeEvent_completed,
@@ -22,7 +24,6 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  Yield,
 } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
@@ -83,7 +84,7 @@ const ObserverMixin: <T>() => Mixin2<
     if (
       observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
     ) {
-      const continuation = (__yield: Yield) => {
+      const continuation = (ctx: ContinuationContextLike) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
 
         while (observer[CollectionLike_count] > 0) {
@@ -91,7 +92,7 @@ const ObserverMixin: <T>() => Mixin2<
           observer[SinkLike_notify](next);
 
           if (observer[CollectionLike_count] > 0) {
-            __yield();
+            ctx[ContinuationContextLike_yield]();
           }
         }
 
@@ -206,7 +207,7 @@ const ObserverMixin: <T>() => Mixin2<
 
         [SchedulerLike_schedule](
           this: TProperties & SchedulerLike & DisposableLike,
-          continuation: SideEffect1<Yield>,
+          continuation: SideEffect1<ContinuationContextLike>,
           options?: {
             readonly delay?: number;
           },
