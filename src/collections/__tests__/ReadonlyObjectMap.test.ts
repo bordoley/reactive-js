@@ -22,9 +22,11 @@ import * as Enumerable from "../Enumerable.js";
 import * as ReadonlyArray from "../ReadonlyArray.js";
 import * as ReadonlyMap from "../ReadonlyMap.js";
 import * as ReadonlyObjectMap from "../ReadonlyObjectMap.js";
+import DictionaryCollectionModuleTests from "./fixtures/DictionaryCollectionModuleTests.js";
 
 testModule(
   "ReadonlyObjectMap",
+  DictionaryCollectionModuleTests(ReadonlyObjectMap),
   describe(
     "empty",
     test(
