@@ -122,15 +122,13 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     ]));
 })), describe("concat", test("concats the input containers in order", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray()), pipe([4, 5, 6], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6]))), test("concats the input containers in order, when sources have delay", pipeLazy(Observable.concat(pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 })), pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 1 }))), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 4, 5, 6])))), describe("concatMany", test("concating an empty array returns the empty observable", pipeLazy(Observable.concatMany([]), expectEquals(Observable.empty())))), describe("concatMap", testAsync("maps each value to a container and flattens", pipeLazyAsync([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }))), Observable.toReadonlyArrayAsync(), expectArrayEquals([1, 2, 3, 1, 2, 3]))), test("maps each value to a container and flattens", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatMap(pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })), {
     innerType: Observable.PureRunnableType,
-}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("dispatchTo", test("when backpressure exception is thrown", () => {
-    const vts = VirtualTimeScheduler.create();
+}), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3])))), describe("concatWith", test("concats two containers together", pipeLazy([0, 1], Observable.fromReadonlyArray(), Observable.concatWith(pipe([2, 3, 4], Observable.fromReadonlyArray())), Observable.toReadonlyArray(), expectArrayEquals([0, 1, 2, 3, 4])))), describe("dispatchTo", test("when backpressure exception is thrown", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
         backpressureStrategy: "throw",
         capacity: 1,
     });
     expectToThrow(pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.run()));
-}), test("when completed successfully", () => {
-    const vts = VirtualTimeScheduler.create();
+})), test("when completed successfully", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
         backpressureStrategy: "overflow",
         capacity: 1,
@@ -143,8 +141,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     }));
     pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray(), Observable.dispatchTo(stream), Observable.toReadonlyArray());
     expectTrue(completed);
-}), test("when completed successfully from delayed source", () => {
-    const vts = VirtualTimeScheduler.create();
+})), test("when completed successfully from delayed source", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const stream = Streamable.identity()[StreamableLike_stream](vts, {
         backpressureStrategy: "overflow",
         capacity: 1,
@@ -157,7 +154,7 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     }));
     pipe([1, 2, 2, 2, 2, 3, 3, 3, 4], Observable.fromReadonlyArray({ delay: 1 }), Observable.dispatchTo(stream), Observable.toReadonlyArray());
     expectTrue(completed);
-})), describe("empty", test("with delay", () => {
+}))), describe("empty", test("with delay", () => {
     let disposedTime = -1;
     const scheduler = VirtualTimeScheduler.create();
     pipe(Observable.empty({ delay: 5 }), Observable.subscribe(scheduler), Disposable.onComplete(() => {
@@ -397,11 +394,10 @@ testModule("Observable", PureComputationModuleTests(Observable, Observable.toRea
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(disp, expectToHaveBeenCalledTimes(1));
     pipe(f, expectToHaveBeenCalledTimes(1));
-}), test("when callback function throws", () => {
-    const scheduler = VirtualTimeScheduler.create();
-    const subscription = pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(raise), Observable.subscribe(scheduler));
+}), test("when callback function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+    const subscription = pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(raise), Observable.subscribe(vts));
     pipe(subscription[DisposableLike_error], expectIsSome);
-}), test("when call back returns a disposable", () => {
+})), test("when call back returns a disposable", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = Disposable.create();
     const f = mockFn(disp);

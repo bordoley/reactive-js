@@ -6,6 +6,7 @@ import { ObservableLike_observe, SchedulerLike_schedule, SubjectLike_observerCou
 import { SinkLike_notify } from "../../events.js";
 import { bind, bindMethod, increment, pipe, returns, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_error, DisposableLike_isDisposed, } from "../../utils.js";
+import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -62,10 +63,9 @@ testModule("Subject", describe("create", test("with replay", () => {
     const subscription = pipe(subject, Observable.subscribe(scheduler));
     scheduler[VirtualTimeSchedulerLike_run]();
     pipe(subscription[DisposableLike_error], expectEquals(e));
-}), test("notifing an observer that throws an exception on overflow", () => {
-    const scheduler = VirtualTimeScheduler.create();
+}), test("notifing an observer that throws an exception on overflow", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const subject = Subject.create();
-    const subscription = pipe(subject, Observable.subscribe(scheduler, {
+    const subscription = pipe(subject, Observable.subscribe(vts, {
         backpressureStrategy: "throw",
         capacity: 1,
     }));
@@ -73,5 +73,5 @@ testModule("Subject", describe("create", test("with replay", () => {
     subject[SinkLike_notify](2);
     subject[SinkLike_notify](3);
     expectIsSome(subscription[DisposableLike_error]);
-})));
+}))));
 ((_) => { })(Subject);

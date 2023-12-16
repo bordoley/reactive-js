@@ -29,6 +29,7 @@ import {
   DisposableLike_error,
   DisposableLike_isDisposed,
 } from "../../utils.js";
+import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -138,24 +139,26 @@ testModule(
         expectEquals<Optional<Error>>(e),
       );
     }),
-    test("notifing an observer that throws an exception on overflow", () => {
-      const scheduler = VirtualTimeScheduler.create();
-      const subject = Subject.create<number>();
+    test(
+      "notifing an observer that throws an exception on overflow",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const subject = Subject.create<number>();
 
-      const subscription = pipe(
-        subject,
-        Observable.subscribe(scheduler, {
-          backpressureStrategy: "throw",
-          capacity: 1,
-        }),
-      );
+        const subscription = pipe(
+          subject,
+          Observable.subscribe(vts, {
+            backpressureStrategy: "throw",
+            capacity: 1,
+          }),
+        );
 
-      subject[SinkLike_notify](1);
-      subject[SinkLike_notify](2);
-      subject[SinkLike_notify](3);
+        subject[SinkLike_notify](1);
+        subject[SinkLike_notify](2);
+        subject[SinkLike_notify](3);
 
-      expectIsSome(subscription[DisposableLike_error]);
-    }),
+        expectIsSome(subscription[DisposableLike_error]);
+      }),
+    ),
   ),
 );
 

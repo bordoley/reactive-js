@@ -452,76 +452,82 @@ testModule(
   ),
   describe(
     "dispatchTo",
-    test("when backpressure exception is thrown", () => {
-      const vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "throw",
-        capacity: 1,
-      });
+    test(
+      "when backpressure exception is thrown",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+          backpressureStrategy: "throw",
+          capacity: 1,
+        });
 
-      expectToThrow(
-        pipeLazy(
+        expectToThrow(
+          pipeLazy(
+            [1, 2, 2, 2, 2, 3, 3, 3, 4],
+            Observable.fromReadonlyArray(),
+            Observable.dispatchTo<number>(stream),
+            Observable.run(),
+          ),
+        );
+      }),
+    ),
+    test(
+      "when completed successfully",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+          backpressureStrategy: "overflow",
+          capacity: 1,
+        });
+
+        let completed = false;
+
+        pipe(
+          stream,
+          EventSource.addEventHandler(ev => {
+            if (ev === DispatcherLikeEvent_completed) {
+              completed = true;
+            }
+          }),
+        );
+
+        pipe(
           [1, 2, 2, 2, 2, 3, 3, 3, 4],
           Observable.fromReadonlyArray(),
           Observable.dispatchTo<number>(stream),
-          Observable.run(),
-        ),
-      );
-    }),
-    test("when completed successfully", () => {
-      const vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "overflow",
-        capacity: 1,
-      });
+          Observable.toReadonlyArray(),
+        );
 
-      let completed = false;
+        expectTrue(completed);
+      }),
+    ),
+    test(
+      "when completed successfully from delayed source",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const stream = Streamable.identity()[StreamableLike_stream](vts, {
+          backpressureStrategy: "overflow",
+          capacity: 1,
+        });
 
-      pipe(
-        stream,
-        EventSource.addEventHandler(ev => {
-          if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-          }
-        }),
-      );
+        let completed = false;
 
-      pipe(
-        [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        Observable.fromReadonlyArray(),
-        Observable.dispatchTo<number>(stream),
-        Observable.toReadonlyArray(),
-      );
+        pipe(
+          stream,
+          EventSource.addEventHandler(ev => {
+            if (ev === DispatcherLikeEvent_completed) {
+              completed = true;
+            }
+          }),
+        );
 
-      expectTrue(completed);
-    }),
-    test("when completed successfully from delayed source", () => {
-      const vts = VirtualTimeScheduler.create();
-      const stream = Streamable.identity()[StreamableLike_stream](vts, {
-        backpressureStrategy: "overflow",
-        capacity: 1,
-      });
+        pipe(
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          Observable.fromReadonlyArray({ delay: 1 }),
+          Observable.dispatchTo<number>(stream),
+          Observable.toReadonlyArray(),
+        );
 
-      let completed = false;
-
-      pipe(
-        stream,
-        EventSource.addEventHandler(ev => {
-          if (ev === DispatcherLikeEvent_completed) {
-            completed = true;
-          }
-        }),
-      );
-
-      pipe(
-        [1, 2, 2, 2, 2, 3, 3, 3, 4],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.dispatchTo<number>(stream),
-        Observable.toReadonlyArray(),
-      );
-
-      expectTrue(completed);
-    }),
+        expectTrue(completed);
+      }),
+    ),
   ),
   describe(
     "empty",
@@ -1338,17 +1344,19 @@ testModule(
       pipe(f, expectToHaveBeenCalledTimes(1));
     }),
 
-    test("when callback function throws", () => {
-      const scheduler = VirtualTimeScheduler.create();
-      const subscription = pipe(
-        [1],
-        Observable.fromReadonlyArray(),
-        Observable.onSubscribe(raise),
-        Observable.subscribe(scheduler),
-      );
+    test(
+      "when callback function throws",
+      Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
+        const subscription = pipe(
+          [1],
+          Observable.fromReadonlyArray(),
+          Observable.onSubscribe(raise),
+          Observable.subscribe(vts),
+        );
 
-      pipe(subscription[DisposableLike_error], expectIsSome);
-    }),
+        pipe(subscription[DisposableLike_error], expectIsSome);
+      }),
+    ),
 
     test("when call back returns a disposable", () => {
       const scheduler = VirtualTimeScheduler.create();
