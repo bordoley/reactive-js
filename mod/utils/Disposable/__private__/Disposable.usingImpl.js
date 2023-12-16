@@ -1,12 +1,10 @@
 /// <reference types="./Disposable.usingImpl.d.ts" />
 
 import * as ReadonlyArray from "../../../collections/ReadonlyArray.js";
-import { isFunction, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import { DisposableLike_dispose } from "../../../utils.js";
-const Disposable_usingImpl = (f, factoryOrDisposables) => {
-    const disposables = pipe(factoryOrDisposables, ReadonlyArray.map(factoryOrDisposable => isFunction(factoryOrDisposable)
-        ? factoryOrDisposable()
-        : factoryOrDisposable));
+const Disposable_usingImpl = (f, factories) => {
+    const disposables = pipe(factories, ReadonlyArray.map(factory => factory()));
     try {
         return f(...disposables);
     }

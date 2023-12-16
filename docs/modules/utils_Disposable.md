@@ -245,7 +245,7 @@ ___
 
 ### using
 
-▸ **using**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, `TResult`\>
+▸ **using**<`TDisposable`, `TResult`\>(`factory`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, `TResult`\>
 
 #### Type parameters
 
@@ -258,13 +258,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+| `factory` | [`Factory`](functions.md#factory)<`TDisposable`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, `TResult`\>
 
-▸ **using**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, `TResult`\>
+▸ **using**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryA`, `factoryB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, `TResult`\>
 
 #### Type parameters
 
@@ -278,14 +278,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, `TResult`\>
 
-▸ **using**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, `TResult`\>
+▸ **using**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryA`, `factoryB`, `factoryC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, `TResult`\>
 
 #### Type parameters
 
@@ -300,9 +300,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
-| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryC` | [`Factory`](functions.md#factory)<`TDisposableC`\> |
 
 #### Returns
 
@@ -312,7 +312,7 @@ ___
 
 ### usingAsync
 
-▸ **usingAsync**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
+▸ **usingAsync**<`TDisposable`, `TResult`\>(`factory`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
 #### Type parameters
 
@@ -325,13 +325,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+| `factory` | [`Factory`](functions.md#factory)<`TDisposable`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
-▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
+▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryA`, `factoryB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
 #### Type parameters
 
@@ -345,14 +345,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
-▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
+▸ **usingAsync**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryA`, `factoryB`, `factoryC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, `Promise`<`TResult`\>\>
 
 #### Type parameters
 
@@ -367,9 +367,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
-| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryC` | [`Factory`](functions.md#factory)<`TDisposableC`\> |
 
 #### Returns
 
@@ -379,7 +379,7 @@ ___
 
 ### usingAsyncLazy
 
-▸ **usingAsyncLazy**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+▸ **usingAsyncLazy**<`TDisposable`, `TResult`\>(`factory`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
 
 #### Type parameters
 
@@ -392,13 +392,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+| `factory` | [`Factory`](functions.md#factory)<`TDisposable`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
 
-▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryA`, `factoryB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
 
 #### Type parameters
 
@@ -412,14 +412,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
 
-▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
+▸ **usingAsyncLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryA`, `factoryB`, `factoryC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `Promise`<`TResult`\>\>, [`Factory`](functions.md#factory)<`Promise`<`TResult`\>\>\>
 
 #### Type parameters
 
@@ -434,9 +434,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
-| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryC` | [`Factory`](functions.md#factory)<`TDisposableC`\> |
 
 #### Returns
 
@@ -446,7 +446,7 @@ ___
 
 ### usingLazy
 
-▸ **usingLazy**<`TDisposable`, `TResult`\>(`factoryOrDisposable`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+▸ **usingLazy**<`TDisposable`, `TResult`\>(`factory`): [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
 #### Type parameters
 
@@ -459,13 +459,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposable` | `TDisposable` \| [`Factory`](functions.md#factory)<`TDisposable`\> |
+| `factory` | [`Factory`](functions.md#factory)<`TDisposable`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function1`](functions.md#function1)<`TDisposable`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
-▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TResult`\>(`factoryA`, `factoryB`): [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
 #### Type parameters
 
@@ -479,14 +479,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
 
 #### Returns
 
 [`Function1`](functions.md#function1)<[`Function2`](functions.md#function2)<`TDisposableA`, `TDisposableB`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
-▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryOrDisposableA`, `factoryOrDisposableB`, `factoryOrDisposableC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
+▸ **usingLazy**<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>(`factoryA`, `factoryB`, `factoryC`): [`Function1`](functions.md#function1)<[`Function3`](functions.md#function3)<`TDisposableA`, `TDisposableB`, `TDisposableC`, `TResult`\>, [`Factory`](functions.md#factory)<`TResult`\>\>
 
 #### Type parameters
 
@@ -501,9 +501,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `factoryOrDisposableA` | `TDisposableA` \| [`Factory`](functions.md#factory)<`TDisposableA`\> |
-| `factoryOrDisposableB` | `TDisposableB` \| [`Factory`](functions.md#factory)<`TDisposableB`\> |
-| `factoryOrDisposableC` | `TDisposableC` \| [`Factory`](functions.md#factory)<`TDisposableC`\> |
+| `factoryA` | [`Factory`](functions.md#factory)<`TDisposableA`\> |
+| `factoryB` | [`Factory`](functions.md#factory)<`TDisposableB`\> |
+| `factoryC` | [`Factory`](functions.md#factory)<`TDisposableC`\> |
 
 #### Returns
 

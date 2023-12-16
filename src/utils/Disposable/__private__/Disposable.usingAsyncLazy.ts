@@ -5,16 +5,13 @@ import Disposable_usingAsyncImpl from "./Disposable.usingAsyncImpl.js";
 
 const Disposable_usingAsyncLazy: Disposable.Signature["usingAsyncLazy"] =
   (
-    ...factoryOrDisposables: readonly (
-      | DisposableLike
-      | Factory<DisposableLike>
-    )[]
+    ...factories: readonly Factory<DisposableLike>[]
   ): Function1<
     (...args: DisposableLike[]) => unknown,
     Factory<Promise<unknown>>
   > =>
   f =>
   async () =>
-    Disposable_usingAsyncImpl(f, factoryOrDisposables);
+    Disposable_usingAsyncImpl(f, factories);
 
 export default Disposable_usingAsyncLazy;

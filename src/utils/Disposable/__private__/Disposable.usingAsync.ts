@@ -4,14 +4,11 @@ import type * as Disposable from "../../Disposable.js";
 import Disposable_usingAsyncImpl from "./Disposable.usingAsyncImpl.js";
 
 const Disposable_usingAsync: Disposable.Signature["usingAsync"] = ((
-    ...factoryOrDisposables: readonly (
-      | DisposableLike
-      | Factory<DisposableLike>
-    )[]
+    ...factories: readonly Factory<DisposableLike>[]
   ): Function1<(...args: DisposableLike[]) => unknown, Promise<unknown>> =>
   f =>
     Disposable_usingAsyncImpl(
       f,
-      factoryOrDisposables,
+      factories,
     )) as Disposable.Signature["usingAsync"];
 export default Disposable_usingAsync;

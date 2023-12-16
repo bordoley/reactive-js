@@ -73,15 +73,15 @@ export interface DisposableModule {
   toErrorHandler(disposable: DisposableLike): SideEffect1<unknown>;
 
   using<TDisposable extends DisposableLike, TResult = void>(
-    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+    factory: Factory<TDisposable>,
   ): Function1<Function1<TDisposable, TResult>, TResult>;
   using<
     TDisposableA extends DisposableLike,
     TDisposableB extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
   ): Function1<Function2<TDisposableA, TDisposableB, TResult>, TResult>;
   using<
     TDisposableA extends DisposableLike,
@@ -89,24 +89,24 @@ export interface DisposableModule {
     TDisposableC extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
-    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
+    factoryC: Factory<TDisposableC>,
   ): Function1<
     Function3<TDisposableA, TDisposableB, TDisposableC, TResult>,
     TResult
   >;
 
   usingLazy<TDisposable extends DisposableLike, TResult = void>(
-    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+    factory: Factory<TDisposable>,
   ): Function1<Function1<TDisposable, TResult>, Factory<TResult>>;
   usingLazy<
     TDisposableA extends DisposableLike,
     TDisposableB extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
   ): Function1<
     Function2<TDisposableA, TDisposableB, TResult>,
     Factory<TResult>
@@ -117,24 +117,24 @@ export interface DisposableModule {
     TDisposableC extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
-    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
+    factoryC: Factory<TDisposableC>,
   ): Function1<
     Function3<TDisposableA, TDisposableB, TDisposableC, TResult>,
     Factory<TResult>
   >;
 
   usingAsync<TDisposable extends DisposableLike, TResult = void>(
-    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+    factory: Factory<TDisposable>,
   ): Function1<Function1<TDisposable, Promise<TResult>>, Promise<TResult>>;
   usingAsync<
     TDisposableA extends DisposableLike,
     TDisposableB extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
   ): Function1<
     Function2<TDisposableA, TDisposableB, Promise<TResult>>,
     Promise<TResult>
@@ -145,16 +145,16 @@ export interface DisposableModule {
     TDisposableC extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
-    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
+    factoryC: Factory<TDisposableC>,
   ): Function1<
     Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>,
     Promise<TResult>
   >;
 
   usingAsyncLazy<TDisposable extends DisposableLike, TResult = void>(
-    factoryOrDisposable: TDisposable | Factory<TDisposable>,
+    factory: Factory<TDisposable>,
   ): Function1<
     Function1<TDisposable, Promise<TResult>>,
     Factory<Promise<TResult>>
@@ -164,8 +164,8 @@ export interface DisposableModule {
     TDisposableB extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
   ): Function1<
     Function2<TDisposableA, TDisposableB, Promise<TResult>>,
     Factory<Promise<TResult>>
@@ -176,9 +176,9 @@ export interface DisposableModule {
     TDisposableC extends DisposableLike,
     TResult = void,
   >(
-    factoryOrDisposableA: TDisposableA | Factory<TDisposableA>,
-    factoryOrDisposableB: TDisposableB | Factory<TDisposableB>,
-    factoryOrDisposableC: TDisposableC | Factory<TDisposableC>,
+    factoryA: Factory<TDisposableA>,
+    factoryB: Factory<TDisposableB>,
+    factoryC: Factory<TDisposableC>,
   ): Function1<
     Function3<TDisposableA, TDisposableB, TDisposableC, Promise<TResult>>,
     Factory<Promise<TResult>>

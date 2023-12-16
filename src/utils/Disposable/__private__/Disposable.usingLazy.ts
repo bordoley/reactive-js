@@ -5,13 +5,10 @@ import Disposable_usingImpl from "./Disposable.usingImpl.js";
 
 const Disposable_usingLazy: Disposable.Signature["usingLazy"] =
   (
-    ...factoryOrDisposables: readonly (
-      | DisposableLike
-      | Factory<DisposableLike>
-    )[]
+    ...factories: readonly Factory<DisposableLike>[]
   ): Function1<(...args: DisposableLike[]) => unknown, Factory<unknown>> =>
   f =>
   () =>
-    Disposable_usingImpl(f, factoryOrDisposables);
+    Disposable_usingImpl(f, factories);
 
 export default Disposable_usingLazy;

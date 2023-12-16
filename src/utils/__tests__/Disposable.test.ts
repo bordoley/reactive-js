@@ -2,6 +2,7 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectFalse,
   expectIsNone,
   expectToHaveBeenCalledTimes,
   expectTrue,
@@ -19,6 +20,7 @@ import {
   raise,
 } from "../../functions.js";
 import {
+  DisposableLike,
   DisposableLike_dispose,
   DisposableLike_error,
   DisposableLike_isDisposed,
@@ -198,6 +200,27 @@ testModule(
         disposable2[DisposableLike_error]?.message,
         expectEquals<unknown>("message"),
       );
+    }),
+  ),
+  describe(
+    "using",
+    test("with multiple disposable factories", () => {
+      const disposables: DisposableLike[] = [];
+
+      Disposable.using(
+        Disposable.create,
+        Disposable.create,
+      )((d1, d2) => {
+        disposables.push(d1);
+        disposables.push(d2);
+
+        expectFalse(d1[DisposableLike_isDisposed]);
+        expectFalse(d2[DisposableLike_isDisposed]);
+      });
+
+      const [d1, d2] = disposables;
+      expectTrue(d1[DisposableLike_isDisposed]);
+      expectTrue(d2[DisposableLike_isDisposed]);
     }),
   ),
 );
