@@ -4,9 +4,7 @@ import {
   init,
   mix,
   props,
-  unsafeCast,
 } from "../../../__internal__/mixins.js";
-import { IndexedLike } from "../../../collections.js";
 import {
   DeferredObservableLike,
   DeferredSideEffectsObservableLike,
@@ -52,6 +50,7 @@ import Observable_subscribe from "../../Observable/__private__/Observable.subscr
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
+import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
 
 const PauseableObservable_create: <T>(
   op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
@@ -67,9 +66,12 @@ const PauseableObservable_create: <T>(
 
   return createInstanceFactory(
     mix(
-      include(DelegatingDisposableMixin()),
+      include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()),
       function PauseableObservable(
-        instance: Omit<PauseableObservableLike<T>, keyof DisposableLike> &
+        instance: Omit<
+          PauseableObservableLike<T>,
+          keyof DisposableLike | typeof ReplayObservableLike_buffer
+        > &
           TProperties,
         op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,
         scheduler: SchedulerLike,
@@ -125,11 +127,11 @@ const PauseableObservable_create: <T>(
             );
           });
 
-        const stream = Streamable_create(liftedOp)[StreamableLike_stream](
-          scheduler,
-          multicastOptions,
-        );
+        const stream = Streamable_create<boolean, T>(liftedOp)[
+          StreamableLike_stream
+        ](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);
+        init(DelegatingReplayObservableMixin<T>(), instance, stream);
 
         instance[PauseableLike_isPaused] = WritableStore.create(true);
 
@@ -142,16 +144,6 @@ const PauseableObservable_create: <T>(
         [ObservableLike_isDeferred]: false as const,
         [ObservableLike_isPure]: true as const,
         [ObservableLike_isRunnable]: false as const,
-
-        get [ReplayObservableLike_buffer](): IndexedLike<T> {
-          unsafeCast<
-            DelegatingDisposableLike<StreamLike<boolean, T> & DisposableLike>
-          >(this);
-
-          return this[DelegatingDisposableLike_delegate][
-            ReplayObservableLike_buffer
-          ];
-        },
 
         [ObservableLike_observe](
           this: DelegatingDisposableLike<

@@ -1,7 +1,7 @@
 /// <reference types="./Flowable.create.d.ts" />
 
-import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../../../__internal__/mixins.js";
-import { FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, ReplayObservableLike_buffer, StreamableLike_stream, } from "../../../concurrent.js";
+import { createInstanceFactory, include, init, mix, props, } from "../../../__internal__/mixins.js";
+import { FlowableLike_flow, ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, ObservableLike_observe, PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, StreamableLike_stream, } from "../../../concurrent.js";
 import { StoreLike_value } from "../../../events.js";
 import * as WritableStore from "../../../events/WritableStore.js";
 import { invoke, none, pipe } from "../../../functions.js";
@@ -18,8 +18,9 @@ import Observable_subscribe from "../../Observable/__private__/Observable.subscr
 import Observable_subscribeOn from "../../Observable/__private__/Observable.subscribeOn.js";
 import * as PauseableScheduler from "../../PauseableScheduler.js";
 import Streamable_create from "../../Streamable/__private__/Streamable.create.js";
+import DelegatingReplayObservableMixin from "../../__mixins__/DelegatingReplayObservableMixin.js";
 const PauseableObservable_create = /*@__PURE__*/ (() => {
-    return createInstanceFactory(mix(include(DelegatingDisposableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
+    return createInstanceFactory(mix(include(DelegatingDisposableMixin(), DelegatingReplayObservableMixin()), function PauseableObservable(instance, op, scheduler, multicastOptions) {
         const liftedOp = (mode) => Observable_create(observer => {
             const pauseableScheduler = pipe(observer, PauseableScheduler.create, Disposable.addTo(observer));
             const multicastedMode = pipe(mode, Observable_mergeWith(
@@ -42,6 +43,7 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         });
         const stream = Streamable_create(liftedOp)[StreamableLike_stream](scheduler, multicastOptions);
         init(DelegatingDisposableMixin(), instance, stream);
+        init(DelegatingReplayObservableMixin(), instance, stream);
         instance[PauseableLike_isPaused] = WritableStore.create(true);
         return instance;
     }, props({
@@ -50,10 +52,6 @@ const PauseableObservable_create = /*@__PURE__*/ (() => {
         [ObservableLike_isDeferred]: false,
         [ObservableLike_isPure]: true,
         [ObservableLike_isRunnable]: false,
-        get [ReplayObservableLike_buffer]() {
-            unsafeCast(this);
-            return this[DelegatingDisposableLike_delegate][ReplayObservableLike_buffer];
-        },
         [ObservableLike_observe](observer) {
             this[DelegatingDisposableLike_delegate][ObservableLike_observe](observer);
         },
