@@ -1740,7 +1740,7 @@ export const pipeSomeLazy: Signature["pipeSomeLazy"] = (
   source: Optional,
   ...operators: Function1<unknown, unknown>[]
 ): Factory<unknown> =>
-  isSome(source) ? returns(none) : () => pipeUnsafe(source, ...operators);
+  isSome(source) ? () => pipeUnsafe(source, ...operators) : returns(none);
 
 /**
  * Factory for a javascript Error from an unknown object type.

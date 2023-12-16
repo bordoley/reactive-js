@@ -260,7 +260,7 @@ export const pipeSome = (source, ...operators) => isSome(source) ? pipeUnsafe(so
 /**
  * Returns a `Factory` function that pipes the `source` through the provided operators if not undefined.
  */
-export const pipeSomeLazy = (source, ...operators) => isSome(source) ? returns(none) : () => pipeUnsafe(source, ...operators);
+export const pipeSomeLazy = (source, ...operators) => isSome(source) ? () => pipeUnsafe(source, ...operators) : returns(none);
 /**
  * Factory for a javascript Error from an unknown object type.
  *
