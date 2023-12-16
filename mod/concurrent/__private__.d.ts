@@ -1,4 +1,4 @@
-import { ContinuationLike } from "../concurrent.js";
+import { ContinuationLike } from "./__mixins__/ContinuationSchedulerMixin.js";
 export declare const SchedulerTaskLike_continuation: unique symbol;
 export declare const SchedulerTaskLike_dueTime: unique symbol;
 export declare const SchedulerTaskLike_id: unique symbol;

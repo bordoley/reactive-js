@@ -6,8 +6,6 @@
 
 ### Interfaces
 
-- [ContinuationLike](../interfaces/concurrent.ContinuationLike.md)
-- [ContinuationSchedulerLike](../interfaces/concurrent.ContinuationSchedulerLike.md)
 - [DeferredObservableLike](../interfaces/concurrent.DeferredObservableLike.md)
 - [DeferredSideEffectsObservableLike](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)
 - [DispatcherLike](../interfaces/concurrent.DispatcherLike.md)
@@ -36,12 +34,6 @@
 
 ### Variables
 
-- [ContinuationLike\_activeChild](concurrent.md#continuationlike_activechild)
-- [ContinuationLike\_parent](concurrent.md#continuationlike_parent)
-- [ContinuationLike\_run](concurrent.md#continuationlike_run)
-- [ContinuationLike\_scheduler](concurrent.md#continuationlike_scheduler)
-- [ContinuationLike\_yield](concurrent.md#continuationlike_yield)
-- [ContinuationSchedulerLike\_schedule](concurrent.md#continuationschedulerlike_schedule)
 - [DispatcherLikeEvent\_capacityExceeded](concurrent.md#dispatcherlikeevent_capacityexceeded)
 - [DispatcherLikeEvent\_completed](concurrent.md#dispatcherlikeevent_completed)
 - [DispatcherLikeEvent\_ready](concurrent.md#dispatcherlikeevent_ready)
@@ -80,42 +72,6 @@
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
 
 ## Variables
-
-### ContinuationLike\_activeChild
-
-• `Const` **ContinuationLike\_activeChild**: unique `symbol`
-
-___
-
-### ContinuationLike\_parent
-
-• `Const` **ContinuationLike\_parent**: unique `symbol`
-
-___
-
-### ContinuationLike\_run
-
-• `Const` **ContinuationLike\_run**: unique `symbol`
-
-___
-
-### ContinuationLike\_scheduler
-
-• `Const` **ContinuationLike\_scheduler**: unique `symbol`
-
-___
-
-### ContinuationLike\_yield
-
-• `Const` **ContinuationLike\_yield**: unique `symbol`
-
-___
-
-### ContinuationSchedulerLike\_schedule
-
-• `Const` **ContinuationSchedulerLike\_schedule**: unique `symbol`
-
-___
 
 ### DispatcherLikeEvent\_capacityExceeded
 

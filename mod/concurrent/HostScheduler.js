@@ -2,36 +2,36 @@
 
 import * as CurrentTime from "../__internal__/CurrentTime.js";
 import { createInstanceFactory, include, init, mix, props, } from "../__internal__/mixins.js";
-import { SchedulerLike_now, } from "../concurrent.js";
+import { SchedulerLike_now } from "../concurrent.js";
 import { none, pipe } from "../functions.js";
 import { DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 const supportsSetImmediate = typeof setImmediate === "function";
 const supportsIsInputPending = /*@__PURE__*/ (() => typeof navigator === "object" &&
     navigator.scheduling !== none &&
     navigator.scheduling.isInputPending !== none)();
 const isInputPending = () => supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
-const scheduleImmediateWithSetImmediate = (scheduler, continuation) => {
+const scheduleImmediateWithSetImmediate = (continuation) => {
     const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(() => clearImmediate(immmediate)));
-    const immmediate = setImmediate(runContinuation, scheduler, continuation, disposable);
+    const immmediate = setImmediate(runContinuation, continuation, disposable);
 };
-const scheduleDelayed = (scheduler, continuation, delay) => {
+const scheduleDelayed = (continuation, delay) => {
     const disposable = pipe(Disposable.create(), Disposable.addTo(continuation), Disposable.onDisposed(_ => clearTimeout(timeout)));
-    const timeout = setTimeout(runContinuation, delay, scheduler, continuation, disposable);
+    const timeout = setTimeout(runContinuation, delay, continuation, disposable);
 };
-const scheduleImmediate = (scheduler, continuation) => {
+const scheduleImmediate = (continuation) => {
     if (supportsSetImmediate) {
-        scheduleImmediateWithSetImmediate(scheduler, continuation);
+        scheduleImmediateWithSetImmediate(continuation);
     }
     else {
-        scheduleDelayed(scheduler, continuation, 0);
+        scheduleDelayed(continuation, 0);
     }
 };
-const runContinuation = (scheduler, continuation, immmediateOrTimerDisposable) => {
+const runContinuation = (continuation, immmediateOrTimerDisposable) => {
     // clear the immediateOrTimer disposable
     immmediateOrTimerDisposable[DisposableLike_dispose]();
-    scheduler[ContinuationSchedulerMixinLike_runContinuation](continuation);
+    continuation[ContinuationLike_run]();
 };
 const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(mix(include(ContinuationSchedulerMixin), function HostScheduler(instance, maxYieldInterval) {
     init(ContinuationSchedulerMixin, instance, maxYieldInterval);
@@ -45,10 +45,10 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() => createInstanceFactory(m
     },
     [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
         if (delay > 0) {
-            scheduleDelayed(this, continuation, delay);
+            scheduleDelayed(continuation, delay);
         }
         else {
-            scheduleImmediate(this, continuation);
+            scheduleImmediate(continuation);
         }
     },
 })))();

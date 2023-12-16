@@ -15,7 +15,7 @@ import * as Disposable from "../utils/Disposable.js";
 import * as IndexedQueue from "../utils/IndexedQueue.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "./__mixins__/ContinuationSchedulerMixin.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "./__mixins__/ContinuationSchedulerMixin.js";
 export const create = /*@PURE__*/ (() => {
     const PauseableScheduler_delayed = Symbol("PauseableScheduler_delayed");
     const PauseableScheduler_dueTime = Symbol("PauseableScheduler_dueTime");
@@ -89,7 +89,7 @@ export const create = /*@PURE__*/ (() => {
                     }
                     else {
                         instance[EnumeratorLike_move]();
-                        instance[ContinuationSchedulerMixinLike_runContinuation](continuation);
+                        continuation[ContinuationLike_run]();
                     }
                     scheduler[SchedulerLike_yield](delay);
                 }

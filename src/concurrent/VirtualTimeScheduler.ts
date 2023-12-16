@@ -19,7 +19,6 @@ import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
 } from "../collections/__mixins__/MutableEnumeratorMixin.js";
 import {
-  ContinuationLike,
   SchedulerLike,
   SchedulerLike_now,
   VirtualTimeSchedulerLike,
@@ -42,11 +41,12 @@ import {
 } from "../utils.js";
 import PriorityQueueMixin from "../utils/__mixins__/PriorityQueueMixin.js";
 import ContinuationSchedulerMixin, {
+  ContinuationLike,
+  ContinuationLike_run,
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
-  ContinuationSchedulerMixinLike,
-  ContinuationSchedulerMixinLike_runContinuation,
+  ContinuationSchedulerLike,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 interface Signature {
@@ -128,7 +128,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
         [VirtualTimeSchedulerLike_run](
           this: TProperties &
             EnumeratorLike<SchedulerTaskLike> &
-            ContinuationSchedulerMixinLike,
+            ContinuationSchedulerLike,
         ) {
           while (
             !this[DisposableLike_isDisposed] &&
@@ -143,7 +143,7 @@ const createVirtualTimeSchedulerInstance = /*@__PURE__*/ (() =>
             this[VirtualTimeScheduler_microTaskTicks] = 0;
             this[SchedulerLike_now] = dueTime;
 
-            this[ContinuationSchedulerMixinLike_runContinuation](continuation);
+            continuation[ContinuationLike_run]();
           }
         },
         [ContinuationSchedulerImplementationLike_scheduleContinuation](

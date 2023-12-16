@@ -2,8 +2,8 @@
 
 import { unstable_NormalPriority, unstable_cancelCallback, unstable_now, unstable_scheduleCallback, unstable_shouldYield, } from "scheduler";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
-import { SchedulerLike_now, } from "../../concurrent.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import { SchedulerLike_now } from "../../concurrent.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike_dispose } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -24,7 +24,7 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         [ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay) {
             const callback = () => {
                 callbackNodeDisposable[DisposableLike_dispose]();
-                this[ContinuationSchedulerMixinLike_runContinuation](continuation);
+                continuation[ContinuationLike_run]();
             };
             const callbackNode = unstable_scheduleCallback(this.priority, callback, delay > 0 ? { delay } : none);
             const callbackNodeDisposable = pipe(Disposable.create(), Disposable.onDisposed(pipeLazy(callbackNode, unstable_cancelCallback)), Disposable.addTo(continuation));

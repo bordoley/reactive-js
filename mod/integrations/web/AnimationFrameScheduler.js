@@ -4,9 +4,9 @@ import * as CurrentTime from "../../__internal__/CurrentTime.js";
 import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { ContinuationSchedulerLike_schedule, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
-import ContinuationSchedulerMixin, { ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, ContinuationSchedulerMixinLike_runContinuation, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
-import { invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
+import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
+import ContinuationSchedulerMixin, { ContinuationLike_run, ContinuationSchedulerImplementationLike_scheduleContinuation, ContinuationSchedulerImplementationLike_shouldYield, } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
+import { bindMethod, invoke, isSome, none, pipe, pipeLazy, } from "../../functions.js";
 import { QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
@@ -65,10 +65,10 @@ export const create = /*@__PURE__*/ (() => {
             // The frame time is 16 ms at 60 fps so just ignore the delay
             // if its not more than a frame.
             if (delay > 16) {
-                pipe(this[AnimationFrameScheduler_host], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerLike_schedule, continuation)), { delay }), Disposable.addTo(continuation));
+                pipe(this[AnimationFrameScheduler_host], invoke(SchedulerLike_schedule, pipeLazy(this, invoke(ContinuationSchedulerImplementationLike_scheduleContinuation, continuation, 0)), { delay }), Disposable.addTo(continuation));
             }
             else {
-                rafQueue[QueueableLike_enqueue](() => this[ContinuationSchedulerMixinLike_runContinuation](continuation));
+                rafQueue[QueueableLike_enqueue](bindMethod(continuation, ContinuationLike_run));
                 if (!rafIsRunning) {
                     rafIsRunning = true;
                     requestAnimationFrame(rafCallback);

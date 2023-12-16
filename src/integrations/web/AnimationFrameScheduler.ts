@@ -9,23 +9,23 @@ import {
 } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import {
-  ContinuationLike,
-  ContinuationSchedulerLike_schedule,
   SchedulerLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
 } from "../../concurrent.js";
 import ContinuationSchedulerMixin, {
+  ContinuationLike,
+  ContinuationLike_run,
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
-  ContinuationSchedulerMixinLike,
-  ContinuationSchedulerMixinLike_runContinuation,
+  ContinuationSchedulerLike,
 } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import {
   Optional,
   SideEffect,
+  bindMethod,
   invoke,
   isSome,
   none,
@@ -119,7 +119,7 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
         [SchedulerLike_shouldYield]: true,
 
         [ContinuationSchedulerImplementationLike_scheduleContinuation](
-          this: ContinuationSchedulerMixinLike & TProperties,
+          this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
           delay: number,
         ) {
@@ -132,17 +132,19 @@ export const create: Signature["create"] = /*@__PURE__*/ (() => {
                 SchedulerLike_schedule,
                 pipeLazy(
                   this,
-                  invoke(ContinuationSchedulerLike_schedule, continuation),
+                  invoke(
+                    ContinuationSchedulerImplementationLike_scheduleContinuation,
+                    continuation,
+                    0,
+                  ),
                 ),
                 { delay },
               ),
               Disposable.addTo(continuation),
             );
           } else {
-            rafQueue[QueueableLike_enqueue](() =>
-              this[ContinuationSchedulerMixinLike_runContinuation](
-                continuation,
-              ),
+            rafQueue[QueueableLike_enqueue](
+              bindMethod(continuation, ContinuationLike_run),
             );
 
             if (!rafIsRunning) {

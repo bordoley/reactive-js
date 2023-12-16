@@ -191,6 +191,9 @@ export interface IndexedCollectionModule<C extends KeyedCollection<number>> exte
         readonly start?: number;
     }): Function1<KeyedCollectionOf<C, T>, ReadonlyArray<T>>;
 }
+/**
+ * @noInheritDoc
+ */
 export interface DictionaryCollectionModule<C extends KeyedCollection> extends KeyedCollectionModule<C> {
     fromEntries<T, TKey extends KeyOf<C>>(): Function1<EnumerableLike<Tuple2<TKey, T>>, KeyedCollectionOf<C, T, TKey>>;
     union<TKey extends string | symbol, T>(m2: KeyedCollectionOf<C, T, TKey>): Function1<KeyedCollectionOf<C, T, TKey>, KeyedCollectionOf<C, T, TKey>>;

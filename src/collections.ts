@@ -288,6 +288,9 @@ export interface IndexedCollectionModule<C extends KeyedCollection<number>>
   }): Function1<KeyedCollectionOf<C, T>, ReadonlyArray<T>>;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface DictionaryCollectionModule<C extends KeyedCollection>
   extends KeyedCollectionModule<C> {
   fromEntries<T, TKey extends KeyOf<C>>(): Function1<

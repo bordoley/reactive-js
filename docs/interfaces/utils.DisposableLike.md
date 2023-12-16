@@ -14,8 +14,6 @@
 
   ↳ [`VirtualTimeSchedulerLike`](concurrent.VirtualTimeSchedulerLike.md)
 
-  ↳ [`ContinuationLike`](concurrent.ContinuationLike.md)
-
   ↳ [`SinkLike`](events.SinkLike.md)
 
   ↳ [`SerialDisposableLike`](utils.SerialDisposableLike.md)

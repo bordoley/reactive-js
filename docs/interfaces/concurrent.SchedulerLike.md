@@ -15,8 +15,6 @@ cooperative multi-tasking.
 
   ↳ [`PauseableSchedulerLike`](concurrent.PauseableSchedulerLike.md)
 
-  ↳ [`ContinuationSchedulerLike`](concurrent.ContinuationSchedulerLike.md)
-
   ↳ [`ObserverLike`](concurrent.ObserverLike.md)
 
 ## Table of contents

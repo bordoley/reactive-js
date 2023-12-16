@@ -6,20 +6,17 @@ import {
   mix,
   props,
 } from "../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  SchedulerLike,
-  SchedulerLike_now,
-} from "../concurrent.js";
+import { SchedulerLike, SchedulerLike_now } from "../concurrent.js";
 import { Optional, none, pipe } from "../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../utils.js";
 import * as Disposable from "../utils/Disposable.js";
 import ContinuationSchedulerMixin, {
+  ContinuationLike,
+  ContinuationLike_run,
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
-  ContinuationSchedulerMixinLike,
-  ContinuationSchedulerMixinLike_runContinuation,
+  ContinuationSchedulerLike,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 /**
@@ -47,10 +44,7 @@ const supportsIsInputPending = /*@__PURE__*/ (() =>
 const isInputPending = (): boolean =>
   supportsIsInputPending && (navigator.scheduling?.isInputPending() ?? false);
 
-const scheduleImmediateWithSetImmediate = (
-  scheduler: ContinuationSchedulerMixinLike,
-  continuation: ContinuationLike,
-) => {
+const scheduleImmediateWithSetImmediate = (continuation: ContinuationLike) => {
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
@@ -58,17 +52,12 @@ const scheduleImmediateWithSetImmediate = (
   );
   const immmediate: ReturnType<typeof setImmediate> = setImmediate(
     runContinuation,
-    scheduler,
     continuation,
     disposable,
   );
 };
 
-const scheduleDelayed = (
-  scheduler: ContinuationSchedulerMixinLike,
-  continuation: ContinuationLike,
-  delay: number,
-) => {
+const scheduleDelayed = (continuation: ContinuationLike, delay: number) => {
   const disposable = pipe(
     Disposable.create(),
     Disposable.addTo(continuation),
@@ -78,31 +67,26 @@ const scheduleDelayed = (
   const timeout: ReturnType<typeof setTimeout> = setTimeout(
     runContinuation,
     delay,
-    scheduler,
     continuation,
     disposable,
   );
 };
 
-const scheduleImmediate = (
-  scheduler: ContinuationSchedulerMixinLike,
-  continuation: ContinuationLike,
-) => {
+const scheduleImmediate = (continuation: ContinuationLike) => {
   if (supportsSetImmediate) {
-    scheduleImmediateWithSetImmediate(scheduler, continuation);
+    scheduleImmediateWithSetImmediate(continuation);
   } else {
-    scheduleDelayed(scheduler, continuation, 0);
+    scheduleDelayed(continuation, 0);
   }
 };
 
 const runContinuation = (
-  scheduler: ContinuationSchedulerMixinLike,
   continuation: ContinuationLike,
   immmediateOrTimerDisposable: DisposableLike,
 ) => {
   // clear the immediateOrTimer disposable
   immmediateOrTimerDisposable[DisposableLike_dispose]();
-  scheduler[ContinuationSchedulerMixinLike_runContinuation](continuation);
+  continuation[ContinuationLike_run]();
 };
 
 const createHostSchedulerInstance = /*@__PURE__*/ (() =>
@@ -128,14 +112,14 @@ const createHostSchedulerInstance = /*@__PURE__*/ (() =>
         },
 
         [ContinuationSchedulerImplementationLike_scheduleContinuation](
-          this: ContinuationSchedulerMixinLike,
+          this: ContinuationSchedulerLike,
           continuation: ContinuationLike,
           delay: number,
         ) {
           if (delay > 0) {
-            scheduleDelayed(this, continuation, delay);
+            scheduleDelayed(continuation, delay);
           } else {
-            scheduleImmediate(this, continuation);
+            scheduleImmediate(continuation);
           }
         },
       },

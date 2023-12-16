@@ -12,17 +12,14 @@ import {
   mix,
   props,
 } from "../../__internal__/mixins.js";
-import {
-  ContinuationLike,
-  SchedulerLike,
-  SchedulerLike_now,
-} from "../../concurrent.js";
+import { SchedulerLike, SchedulerLike_now } from "../../concurrent.js";
 import ContinuationSchedulerMixin, {
+  ContinuationLike,
+  ContinuationLike_run,
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
-  ContinuationSchedulerMixinLike,
-  ContinuationSchedulerMixinLike_runContinuation,
+  ContinuationSchedulerLike,
 } from "../../concurrent/__mixins__/ContinuationSchedulerMixin.js";
 import { newInstance, none, pipe, pipeLazy } from "../../functions.js";
 import { DisposableLike, DisposableLike_dispose } from "../../utils.js";
@@ -63,13 +60,13 @@ const createReactScheduler = /*@__PURE__*/ (() => {
         },
 
         [ContinuationSchedulerImplementationLike_scheduleContinuation](
-          this: ContinuationSchedulerMixinLike & TProperties,
+          this: ContinuationSchedulerLike & TProperties,
           continuation: ContinuationLike,
           delay: number,
         ) {
           const callback = () => {
             callbackNodeDisposable[DisposableLike_dispose]();
-            this[ContinuationSchedulerMixinLike_runContinuation](continuation);
+            continuation[ContinuationLike_run]();
           };
 
           const callbackNode = unstable_scheduleCallback(

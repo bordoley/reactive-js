@@ -19,7 +19,6 @@ import MutableEnumeratorMixin, {
   MutableEnumeratorLike,
 } from "../collections/__mixins__/MutableEnumeratorMixin.js";
 import {
-  ContinuationLike,
   PauseableLike_isPaused,
   PauseableLike_pause,
   PauseableLike_resume,
@@ -56,11 +55,12 @@ import * as IndexedQueue from "../utils/IndexedQueue.js";
 import * as PriorityQueue from "../utils/PriorityQueue.js";
 import SerialDisposableMixin from "../utils/__mixins__/SerialDisposableMixin.js";
 import ContinuationSchedulerMixin, {
+  ContinuationLike,
+  ContinuationLike_run,
   ContinuationSchedulerImplementationLike,
   ContinuationSchedulerImplementationLike_scheduleContinuation,
   ContinuationSchedulerImplementationLike_shouldYield,
-  ContinuationSchedulerMixinLike,
-  ContinuationSchedulerMixinLike_runContinuation,
+  ContinuationSchedulerLike,
 } from "./__mixins__/ContinuationSchedulerMixin.js";
 
 interface Signature {
@@ -161,7 +161,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     instance: TProperties &
       SerialDisposableLike &
       EnumeratorLike &
-      ContinuationSchedulerMixinLike,
+      ContinuationSchedulerLike,
   ) => {
     const task = peek(instance);
 
@@ -203,10 +203,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
               instance[SchedulerLike_now] + delay;
           } else {
             instance[EnumeratorLike_move]();
-
-            instance[ContinuationSchedulerMixinLike_runContinuation](
-              continuation,
-            );
+            continuation[ContinuationLike_run]();
           }
           scheduler[SchedulerLike_yield](delay);
         }
@@ -316,7 +313,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike &
-            ContinuationSchedulerMixinLike,
+            ContinuationSchedulerLike,
         ) {
           this[PauseableScheduler_resumedTime] =
             this[PauseableScheduler_hostScheduler][SchedulerLike_now];
@@ -343,7 +340,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
           this: TProperties &
             SerialDisposableLike &
             EnumeratorLike<SchedulerTaskLike> &
-            ContinuationSchedulerMixinLike,
+            ContinuationSchedulerLike,
           continuation: ContinuationLike,
           delay: number,
         ) {

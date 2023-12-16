@@ -1,11 +1,11 @@
-import { CollectionLike, IndexedLike } from "./collections.js";
+import { IndexedLike } from "./collections.js";
 import {
   ErrorSafeEventListenerLike,
   EventSourceLike,
   SinkLike,
   StoreLike,
 } from "./events.js";
-import { Optional, SideEffect1 } from "./functions.js";
+import { SideEffect1 } from "./functions.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -173,45 +173,6 @@ export interface VirtualTimeSchedulerLike
  * @noInheritDoc
  */
 export interface PauseableSchedulerLike extends SchedulerLike, PauseableLike {}
-
-export const ContinuationLike_activeChild = Symbol(
-  "ContinuationLike_activeChild",
-);
-export const ContinuationLike_scheduler = Symbol("ContinuationLike_scheduler");
-export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
-export const ContinuationLike_run = Symbol("ContinuationLike_run");
-export const ContinuationLike_yield = Symbol("ContinuationLike_yield");
-
-/**
- * @noInheritDoc
- */
-export interface ContinuationLike
-  extends DisposableLike,
-    QueueableLike<ContinuationLike>,
-    CollectionLike<ContinuationLike> {
-  readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
-  readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
-
-  [ContinuationLike_parent]: Optional<ContinuationLike>;
-
-  [ContinuationLike_run](): void;
-
-  [ContinuationLike_yield](delay?: number): void;
-}
-
-export const ContinuationSchedulerLike_schedule = Symbol(
-  "ContinuationSchedulerLike_schedule",
-);
-
-/**
- * @noInheritDoc
- */
-export interface ContinuationSchedulerLike extends SchedulerLike {
-  [ContinuationSchedulerLike_schedule](
-    continuation: ContinuationLike,
-    options?: { readonly delay?: number },
-  ): void;
-}
 
 /**
  * A consumer of push-based notifications.

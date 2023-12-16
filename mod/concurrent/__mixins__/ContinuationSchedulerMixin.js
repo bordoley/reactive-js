@@ -1,18 +1,18 @@
 /// <reference types="./ContinuationSchedulerMixin.d.ts" />
 
-import { MAX_SAFE_INTEGER, __DEV__ } from "../../__internal__/constants.js";
+import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { ContinuationLike_activeChild, ContinuationLike_parent, ContinuationLike_run, ContinuationLike_scheduler, ContinuationLike_yield, ContinuationSchedulerLike_schedule, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
-import { call, error, isNone, isSome, newInstance, none, pipe, pipeLazy, raiseIf, } from "../../functions.js";
+import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
+import { call, error, isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import DisposableMixin from "../../utils/__mixins__/DisposableMixin.js";
 import IndexedQueueMixin from "../../utils/__mixins__/IndexedQueueMixin.js";
+export const ContinuationLike_run = Symbol("ContinuationLike_run");
 export const ContinuationSchedulerImplementationLike_shouldYield = Symbol("ContinuationSchedulerImplementationLike_shouldYield");
-export const ContinuationSchedulerImplementationLike_scheduleContinuation = Symbol("ContinContinuationSchedulerImplementationLike_scheduleContinuationuationSchedulerDelegateLike_shouldYield");
-export const ContinuationSchedulerMixinLike_runContinuation = Symbol("ContinuationSchedulerMixinLike_runContinuation");
+export const ContinuationSchedulerImplementationLike_scheduleContinuation = Symbol("ContinuationSchedulerImplementationLike_scheduleContinuation");
 const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
     class ContinuationYieldError {
         delay;
@@ -20,28 +20,36 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             this.delay = delay;
         }
     }
+    const ContinuationSchedulerMixinLike_currentContinuation = Symbol("ContinuationSchedulerMixinLike_currentContinuation");
+    const ContinuationSchedulerMixinLike_yieldRequested = Symbol("ContinuationSchedulerMixinLike_yieldRequested");
+    const ContinuationSchedulerMixinLike_startTime = Symbol("ContinuationSchedulerMixinLike_startTime");
+    const ContinuationSchedulerMixinLike_schedule = Symbol("ContinuationSchedulerMixinLike_schedule");
+    const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
+    const QueueableContinuationLike_yield = Symbol("QueueableContinuationLike_yield");
+    const QueueableContinuationLike_activeChild = Symbol("QueueableContinuationLike_activeChild");
     const createContinuation = (() => {
         const Continuation_effect = Symbol("Continuation_effect");
+        const Continuation_scheduler = Symbol("Continuation_scheduler");
         const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
         const findNearestNonDisposedParent = (continuation) => {
-            let parent = continuation[ContinuationLike_parent];
+            let parent = continuation[QueueableContinuationLike_parent];
             while (isSome(parent) && parent[DisposableLike_isDisposed]) {
-                parent = parent[ContinuationLike_parent];
+                parent = parent[QueueableContinuationLike_parent];
             }
             return parent;
         };
         const rescheduleContinuation = (continuation) => {
-            const scheduler = continuation[ContinuationLike_scheduler];
+            const scheduler = continuation[Continuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
                 parent[QueueableLike_enqueue](continuation);
             }
             else {
-                scheduler[ContinuationSchedulerLike_schedule](continuation);
+                scheduler[ContinuationSchedulerMixinLike_schedule](continuation);
             }
         };
         const rescheduleChildrenOnParentOrScheduler = (continuation) => {
-            const scheduler = continuation[ContinuationLike_scheduler];
+            const scheduler = continuation[Continuation_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
                 let head = none;
@@ -55,92 +63,102 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 let head = none;
                 while (((head = continuation[QueueLike_dequeue]()), isSome(head))) {
                     if (!head[DisposableLike_isDisposed]) {
-                        scheduler[ContinuationSchedulerLike_schedule](head);
+                        scheduler[ContinuationSchedulerMixinLike_schedule](head);
                     }
                 }
+            }
+        };
+        const runContinuation = (thiz) => {
+            const scheduler = thiz[Continuation_scheduler];
+            if (thiz[DisposableLike_isDisposed]) {
+                rescheduleChildrenOnParentOrScheduler(thiz);
+                return;
+            }
+            // Run any inner continuations first.
+            let head = none;
+            while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
+                thiz[QueueableContinuationLike_activeChild] = head;
+                // FIXME
+                runContinuation(head);
+                thiz[QueueableContinuationLike_activeChild] = none;
+                if (thiz[DisposableLike_isDisposed]) {
+                    rescheduleChildrenOnParentOrScheduler(thiz);
+                    return;
+                }
+                else if (scheduler[SchedulerLike_shouldYield]) {
+                    rescheduleContinuation(thiz);
+                    return;
+                }
+            }
+            let err = none;
+            let yieldError = none;
+            thiz[QueueableContinuationLike_activeChild] = thiz;
+            try {
+                thiz[Continuation_effect](scheduler);
+            }
+            catch (e) {
+                if (e instanceof ContinuationYieldError) {
+                    yieldError = e;
+                }
+                else {
+                    err = error(e);
+                }
+            }
+            thiz[QueueableContinuationLike_activeChild] = none;
+            if (isSome(yieldError) && !thiz[DisposableLike_isDisposed]) {
+                if (yieldError.delay > 0) {
+                    rescheduleChildrenOnParentOrScheduler(thiz);
+                    scheduler[ContinuationSchedulerMixinLike_schedule](thiz, yieldError);
+                }
+                else {
+                    rescheduleContinuation(thiz);
+                }
+            }
+            else {
+                thiz[DisposableLike_dispose](err);
+                rescheduleChildrenOnParentOrScheduler(thiz);
             }
         };
         return createInstanceFactory(mix(include(DisposableMixin, IndexedQueueMixin()), function Continuation(instance, scheduler, effect) {
             init(DisposableMixin, instance);
             init(IndexedQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
-            instance[ContinuationLike_scheduler] = scheduler;
+            instance[Continuation_scheduler] = scheduler;
             instance[Continuation_effect] = effect;
             pipe(instance, Disposable.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
             return instance;
         }, props({
-            [ContinuationLike_activeChild]: none,
-            [ContinuationLike_parent]: none,
-            [ContinuationLike_scheduler]: none,
+            [QueueableContinuationLike_activeChild]: none,
+            [QueueableContinuationLike_parent]: none,
+            [Continuation_scheduler]: none,
             [Continuation_effect]: none,
         }), {
             [ContinuationLike_run]() {
-                const scheduler = this[ContinuationLike_scheduler];
-                if (this[DisposableLike_isDisposed]) {
-                    rescheduleChildrenOnParentOrScheduler(this);
-                    return;
-                }
-                // Run any inner continuations first.
-                let head = none;
-                while (((head = this[QueueLike_dequeue]()), isSome(head))) {
-                    this[ContinuationLike_activeChild] = head;
-                    head[ContinuationLike_run]();
-                    this[ContinuationLike_activeChild] = none;
-                    if (this[DisposableLike_isDisposed]) {
-                        rescheduleChildrenOnParentOrScheduler(this);
-                        return;
-                    }
-                    else if (scheduler[SchedulerLike_shouldYield]) {
-                        rescheduleContinuation(this);
-                        return;
-                    }
-                }
-                let err = none;
-                let yieldError = none;
-                this[ContinuationLike_activeChild] = this;
-                try {
-                    this[Continuation_effect](scheduler);
-                }
-                catch (e) {
-                    if (e instanceof ContinuationYieldError) {
-                        yieldError = e;
-                    }
-                    else {
-                        err = error(e);
-                    }
-                }
-                this[ContinuationLike_activeChild] = none;
-                if (isSome(yieldError) && !this[DisposableLike_isDisposed]) {
-                    if (yieldError.delay > 0) {
-                        rescheduleChildrenOnParentOrScheduler(this);
-                        scheduler[ContinuationSchedulerLike_schedule](this, yieldError);
-                    }
-                    else {
-                        rescheduleContinuation(this);
-                    }
-                }
-                else {
-                    this[DisposableLike_dispose](err);
-                    rescheduleChildrenOnParentOrScheduler(this);
-                }
+                const scheduler = this[Continuation_scheduler];
+                scheduler[ContinuationSchedulerMixinLike_startTime] =
+                    this[SchedulerLike_now];
+                scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
+                    this;
+                scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
+                runContinuation(this);
+                scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
+                scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
+                    none;
             },
-            [ContinuationLike_yield](delay) {
+            [QueueableContinuationLike_yield](delay) {
                 throw newInstance(ContinuationYieldError, delay ?? 0);
             },
             [QueueableLike_enqueue](continuation) {
-                continuation[ContinuationLike_parent] = this;
+                continuation[QueueableContinuationLike_parent] = this;
                 return call(indexedQueueProtoype[QueueableLike_enqueue], this, continuation);
             },
         }));
     })();
-    const ContinuationSchedulerMixin_currentContinuation = Symbol("ContinuationSchedulerMixin_currentContinuation");
-    const ContinuationSchedulerMixin_yieldRequested = Symbol("ContinuationSchedulerMixin_yieldRequested");
-    const ContinuationSchedulerMixin_startTime = Symbol("ContinuationSchedulerMixin_startTime");
     const getActiveContinuation = (instance) => {
-        let parent = instance[ContinuationSchedulerMixin_currentContinuation];
-        let activeChild = parent?.[ContinuationLike_activeChild];
+        let parent = instance[ContinuationSchedulerMixinLike_currentContinuation];
+        let activeChild = parent?.[QueueableContinuationLike_activeChild];
         while (isSome(activeChild) && activeChild !== parent) {
             parent = activeChild;
-            activeChild = parent[ContinuationLike_activeChild];
+            activeChild = parent[QueueableContinuationLike_activeChild];
         }
         return parent;
     };
@@ -151,37 +169,34 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         return instance;
     }, props({
         [SchedulerLike_maxYieldInterval]: MAX_SAFE_INTEGER,
-        [ContinuationSchedulerMixin_currentContinuation]: none,
-        [ContinuationSchedulerMixin_yieldRequested]: false,
-        [ContinuationSchedulerMixin_startTime]: 0,
+        [ContinuationSchedulerMixinLike_currentContinuation]: none,
+        [ContinuationSchedulerMixinLike_yieldRequested]: false,
+        [ContinuationSchedulerMixinLike_startTime]: 0,
     }), {
         get [SchedulerLike_inContinuation]() {
             unsafeCast(this);
-            const currentContinuation = this[ContinuationSchedulerMixin_currentContinuation];
+            const currentContinuation = this[ContinuationSchedulerMixinLike_currentContinuation];
             return isSome(currentContinuation);
         },
         get [SchedulerLike_shouldYield]() {
             unsafeCast(this);
             const inContinuation = this[SchedulerLike_inContinuation];
             const isDisposed = this[DisposableLike_isDisposed];
-            const yieldRequested = this[ContinuationSchedulerMixin_yieldRequested];
+            const yieldRequested = this[ContinuationSchedulerMixinLike_yieldRequested];
             return (inContinuation &&
                 (isDisposed ||
                     yieldRequested ||
                     //exceededMaxYieldInterval
                     this[SchedulerLike_now] >
-                        this[ContinuationSchedulerMixin_startTime] +
+                        this[ContinuationSchedulerMixinLike_startTime] +
                             this[SchedulerLike_maxYieldInterval] ||
                     (getActiveContinuation(this)?.[CollectionLike_count] ?? 0) > 0 ||
                     this[ContinuationSchedulerImplementationLike_shouldYield]));
         },
         [SchedulerLike_requestYield]() {
-            this[ContinuationSchedulerMixin_yieldRequested] = true;
+            this[ContinuationSchedulerMixinLike_yieldRequested] = true;
         },
-        [ContinuationSchedulerLike_schedule](continuation, options) {
-            if (__DEV__) {
-                raiseIf(continuation[ContinuationLike_scheduler] !== this, "Attempted to schedule a continuation created on a different scheduler");
-            }
+        [ContinuationSchedulerMixinLike_schedule](continuation, options) {
             const delay = clampPositiveInteger(options?.delay ?? 0);
             if (continuation[DisposableLike_isDisposed]) {
                 return;
@@ -195,8 +210,8 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 activeContinuation === continuation ||
                 // Occurs when an active continuation is rescheduling its
                 // children because it will be disposed.
-                continuation[ContinuationLike_parent] === activeContinuation) {
-                continuation[ContinuationLike_parent] = none;
+                continuation[QueueableContinuationLike_parent] === activeContinuation) {
+                continuation[QueueableContinuationLike_parent] = none;
                 this[ContinuationSchedulerImplementationLike_scheduleContinuation](continuation, delay);
             }
             else {
@@ -205,23 +220,15 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         },
         [SchedulerLike_schedule](effect, options) {
             const continuation = pipe(createContinuation(this, effect), Disposable.addTo(this, { ignoreChildErrors: true }));
-            this[ContinuationSchedulerLike_schedule](continuation, options);
+            this[ContinuationSchedulerMixinLike_schedule](continuation, options);
             return continuation;
         },
         [SchedulerLike_yield](delay = 0) {
             const shouldYield = delay > 0 || this[SchedulerLike_shouldYield];
-            const currentContinuation = this[ContinuationSchedulerMixin_currentContinuation];
+            const currentContinuation = this[ContinuationSchedulerMixinLike_currentContinuation];
             if (shouldYield && isSome(currentContinuation)) {
-                currentContinuation[ContinuationLike_yield](delay);
+                currentContinuation[QueueableContinuationLike_yield](delay);
             }
-        },
-        [ContinuationSchedulerMixinLike_runContinuation](continuation) {
-            this[ContinuationSchedulerMixin_startTime] = this[SchedulerLike_now];
-            this[ContinuationSchedulerMixin_currentContinuation] = continuation;
-            this[ContinuationSchedulerMixin_yieldRequested] = false;
-            continuation[ContinuationLike_run]();
-            this[ContinuationSchedulerMixin_yieldRequested] = false;
-            this[ContinuationSchedulerMixin_currentContinuation] = none;
         },
     });
 })();
