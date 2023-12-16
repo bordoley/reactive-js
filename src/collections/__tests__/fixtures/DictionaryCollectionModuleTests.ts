@@ -34,6 +34,22 @@ const DictionaryCollectionModuleTests = <C extends KeyedCollection>(
           }),
         ),
       ),
+      test(
+        "union of two Dictionaries with overlapping keys",
+        pipeLazy(
+          [tuple("a", "a"), tuple("b", "c")],
+          ReadonlyArray.values(),
+          m.fromEntries(),
+          m.union(
+            pipe([tuple("b", "b")], ReadonlyArray.values(), m.fromEntries()),
+          ),
+          m.entries(),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([tuple("a", "a"), tuple("b", "b")], {
+            valuesEquality: arrayEquality(),
+          }),
+        ),
+      ),
     ),
   );
 

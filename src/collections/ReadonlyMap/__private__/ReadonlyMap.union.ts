@@ -1,4 +1,4 @@
-import { isNone, newInstance } from "../../../functions.js";
+import { newInstance } from "../../../functions.js";
 import type * as ReadonlyMap from "../../ReadonlyMap.js";
 
 const ReadonlyMap_union: ReadonlyMap.Signature["union"] =
@@ -11,9 +11,7 @@ const ReadonlyMap_union: ReadonlyMap.Signature["union"] =
     }
 
     for (let [key, value] of m2) {
-      if (isNone(result.get(key as TKey))) {
-        result.set(key, value);
-      }
+      result.set(key, value);
     }
 
     return result;

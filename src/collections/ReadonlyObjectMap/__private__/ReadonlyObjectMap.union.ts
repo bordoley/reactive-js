@@ -1,6 +1,5 @@
 import * as Obj from "../../../__internal__/Object.js";
 import { ReadonlyObjectMapLike } from "../../../collections.js";
-import { isNone } from "../../../functions.js";
 import type * as ReadonlyObjectMap from "../../ReadonlyObjectMap.js";
 
 const ReadonlyObjectMap_union: ReadonlyObjectMap.Signature["union"] =
@@ -15,7 +14,7 @@ const ReadonlyObjectMap_union: ReadonlyObjectMap.Signature["union"] =
     }
 
     for (const key in m2) {
-      if (Obj.hasOwn(m2, key) && isNone(result[key as TKey])) {
+      if (Obj.hasOwn(m2, key)) {
         result[key as TKey] = m2[key as TKey] as T;
       }
     }
