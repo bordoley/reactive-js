@@ -57,6 +57,17 @@ testModule(
     ),
   ),
   describe(
+    "concatMany",
+    test(
+      "with empty input",
+      pipeLazy(
+        Enumerable.concatMany<number>([]),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals<number>([]),
+      ),
+    ),
+  ),
+  describe(
     "concatMap",
     test(
       "maps each value to a container and flattens",
