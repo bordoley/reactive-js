@@ -14,7 +14,11 @@ const KeyedCollectionModuleTests = (m, fromReadonlyArray) => describe("KeyedColl
         result = result + key;
     }));
     pipe(result, expectEquals(3));
-})), describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], fromReadonlyArray(), m.keep(greaterThan(5)), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([8, 10, 7])))), describe("keySet", test("returns a keyset with all the keys", () => {
+})), describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], fromReadonlyArray(), m.keep(greaterThan(5)), m.values(), Enumerable.toReadonlyArray(), expectArrayEquals([8, 10, 7])))), describe("keys", test("returns a keyset with all the keys", () => {
+    const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keys(), Enumerable.toReadonlyArray());
+    pipe(keys.length, expectEquals(3));
+    pipe(keys, expectArrayEquals([0, 1, 2]));
+})), describe("keySet", test("returns a keyset with all the keys", () => {
     const keys = pipe(["b", none, "v"], fromReadonlyArray(), m.keySet());
     pipe(keys.size, expectEquals(3));
     pipe(Array.from(keys), expectArrayEquals([0, 1, 2]));

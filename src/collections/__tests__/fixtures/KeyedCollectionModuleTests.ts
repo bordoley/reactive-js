@@ -93,6 +93,20 @@ const KeyedCollectionModuleTests = <C extends KeyedCollection>(
       ),
     ),
     describe(
+      "keys",
+      test("returns a keyset with all the keys", () => {
+        const keys = pipe(
+          ["b", none, "v"],
+          fromReadonlyArray<Optional<string>>(),
+          m.keys(),
+          Enumerable.toReadonlyArray(),
+        );
+
+        pipe(keys.length, expectEquals(3));
+        pipe(keys, expectArrayEquals([0, 1, 2]));
+      }),
+    ),
+    describe(
       "keySet",
       test("returns a keyset with all the keys", () => {
         const keys = pipe(
