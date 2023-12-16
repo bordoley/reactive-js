@@ -31,7 +31,7 @@ const Enumerable_repeat = /*@__PURE__*/ (() => {
         },
         [EnumeratorLike_move]() {
             let inner = this[RepeatEnumerator_inner];
-            while (!inner?.[EnumeratorLike_move]() ?? true) {
+            while (!(inner?.[EnumeratorLike_move]() ?? false)) {
                 const cnt = this[RepeatEnumerator_count];
                 this[EnumeratorLike_isCompleted] =
                     cnt !== 0 && !this[RepeatEnumerator_predicate](cnt);
