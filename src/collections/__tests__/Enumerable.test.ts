@@ -26,6 +26,13 @@ testModule(
     Enumerable.toReadonlyArray,
   ),
   describe(
+    "Iterable",
+    PureComputationModuleTests(
+      Enumerable as PureComputationModule<Enumerable.Type>,
+      returns(Array.from),
+    ),
+  ),
+  describe(
     "concat",
     test(
       "concats the input containers in order",

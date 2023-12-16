@@ -7,13 +7,7 @@ import {
   EnumeratorLike_isCompleted,
   EnumeratorLike_move,
 } from "../../collections.js";
-import {
-  none,
-  pipe,
-  raiseIf,
-  raiseWithDebugMessage,
-  returns,
-} from "../../functions.js";
+import { none, pipe, raiseIf, returns } from "../../functions.js";
 
 export const MutableEnumeratorLike_reset = Symbol(
   "MutableEnumeratorLike_reset",
@@ -61,9 +55,13 @@ const MutableEnumeratorMixin: <T>() => Mixin<TEnumeratorMixinReturn<T>> =
         {
           get [EnumeratorLike_current](): T {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);
-            return this[EnumeratorLike_hasCurrent]
-              ? this[MutableEnumeratorMixin_current]
-              : raiseWithDebugMessage("Enumerator does not have current value");
+
+            raiseIf(
+              !this[EnumeratorLike_hasCurrent],
+              "Enumerator does not have current value",
+            );
+
+            return this[MutableEnumeratorMixin_current];
           },
           set [EnumeratorLike_current](v: T) {
             unsafeCast<TProperties & EnumeratorLike<T>>(this);

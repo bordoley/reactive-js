@@ -3,7 +3,7 @@
 import { __DEV__ } from "../../__internal__/constants.js";
 import { mix, props, unsafeCast } from "../../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_isCompleted, } from "../../collections.js";
-import { none, pipe, raiseIf, raiseWithDebugMessage, returns, } from "../../functions.js";
+import { none, pipe, raiseIf, returns } from "../../functions.js";
 export const MutableEnumeratorLike_reset = Symbol("MutableEnumeratorLike_reset");
 const MutableEnumeratorMixin_current = Symbol("MutableEnumeratorMixin_current");
 const MutableEnumeratorMixin = 
@@ -17,9 +17,8 @@ const MutableEnumeratorMixin =
     }), {
         get [EnumeratorLike_current]() {
             unsafeCast(this);
-            return this[EnumeratorLike_hasCurrent]
-                ? this[MutableEnumeratorMixin_current]
-                : raiseWithDebugMessage("Enumerator does not have current value");
+            raiseIf(!this[EnumeratorLike_hasCurrent], "Enumerator does not have current value");
+            return this[MutableEnumeratorMixin_current];
         },
         set [EnumeratorLike_current](v) {
             unsafeCast(this);
