@@ -5,8 +5,8 @@ import {
 } from "../../__internal__/testing.js";
 import {
   SchedulerLike_schedule,
-  SchedulerLike_yield,
   VirtualTimeSchedulerLike_run,
+  Yield,
 } from "../../concurrent.js";
 import { pipe } from "../../functions.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
@@ -42,11 +42,11 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule](scheduler => {
+    scheduler[SchedulerLike_schedule](__yield => {
       while (i < 10) {
         result.push(i);
         i++;
-        scheduler[SchedulerLike_yield]();
+        __yield();
       }
     });
 
@@ -62,22 +62,22 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule](scheduler => {
+    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
       let j = 100;
 
       while (i <= 4) {
         result.push(i);
         i++;
 
-        scheduler[SchedulerLike_schedule](scheduler => {
+        scheduler[SchedulerLike_schedule]((__yield: Yield) => {
           while (j < 102) {
             result.push(j);
             j++;
-            scheduler[SchedulerLike_yield]();
+            __yield();
           }
         });
 
-        scheduler[SchedulerLike_yield]();
+        __yield();
       }
     });
 
@@ -97,13 +97,13 @@ testModule(
 
     const result: number[] = [];
 
-    scheduler[SchedulerLike_schedule](scheduler => {
+    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
       let j = 0;
-      scheduler[SchedulerLike_schedule](scheduler => {
+      scheduler[SchedulerLike_schedule]((__yield: Yield) => {
         while (j < 4) {
           result.push(j);
           j++;
-          scheduler[SchedulerLike_yield]();
+          __yield();
         }
       });
     });
@@ -120,22 +120,22 @@ testModule(
     const result: number[] = [];
 
     let i = 0;
-    scheduler[SchedulerLike_schedule](scheduler => {
+    scheduler[SchedulerLike_schedule]((__yield: Yield) => {
       let j = 100;
 
       while (i < 4) {
         result.push(i);
         i++;
 
-        scheduler[SchedulerLike_schedule](scheduler => {
+        scheduler[SchedulerLike_schedule]((__yield: Yield) => {
           while (j < 102) {
             result.push(j);
             j++;
-            scheduler[SchedulerLike_yield]();
+            __yield();
           }
         });
 
-        scheduler[SchedulerLike_yield](1);
+        __yield(1);
       }
     });
 

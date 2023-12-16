@@ -1,6 +1,6 @@
 /// <reference types="./Observable.fromIterable.d.ts" />
 
-import { SchedulerLike_schedule, SchedulerLike_yield, } from "../../../concurrent.js";
+import { SchedulerLike_schedule, } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { error, isSome, none, pipe } from "../../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, } from "../../../utils.js";
@@ -9,7 +9,7 @@ import Observable_createRunnableWithSideEffects from "./Observable.createRunnabl
 const Observable_fromIterable = (options) => (iterable) => Observable_createRunnableWithSideEffects((observer) => {
     const { delay = 0, delayStart = false } = options ?? {};
     const iterator = iterable[Symbol.iterator]();
-    const continuation = (scheduler) => {
+    const continuation = (__yield) => {
         while (!observer[DisposableLike_isDisposed]) {
             let next = none;
             try {
@@ -21,7 +21,7 @@ const Observable_fromIterable = (options) => (iterable) => Observable_createRunn
             }
             if (isSome(next) && !next.done) {
                 observer[SinkLike_notify](next.value);
-                scheduler[SchedulerLike_yield](delay);
+                __yield(delay);
             }
             else {
                 observer[DisposableLike_dispose]();

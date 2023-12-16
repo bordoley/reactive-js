@@ -25,12 +25,12 @@ import {
   ObservableLike,
   SchedulerLike,
   SchedulerLike_schedule,
-  SchedulerLike_yield,
   StreamLike,
   StreamOf,
   StreamableLike,
   StreamableLike_stream,
   SubjectLike,
+  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import {
@@ -139,7 +139,7 @@ const createCacheStream: <T>(
           "overflow",
         );
 
-        const cleanupContinuation = (scheduler: SchedulerLike) => {
+        const cleanupContinuation = (__yield: Yield) => {
           const { store, subscriptions } = instance;
 
           while (store.size > capacity) {
@@ -151,7 +151,7 @@ const createCacheStream: <T>(
             if (!subscriptions.has(key)) {
               store.delete(key);
             }
-            scheduler[SchedulerLike_yield]();
+            __yield();
           }
         };
 

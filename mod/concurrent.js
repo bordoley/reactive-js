@@ -7,7 +7,6 @@ export const DispatcherLike_complete = Symbol("DispatcherLike_complete");
 export const PauseableLike_isPaused = Symbol("PauseableLike_isPaused");
 export const PauseableLike_pause = Symbol("PauseableLike_pause");
 export const PauseableLike_resume = Symbol("PauseableLike_resume");
-export const SchedulerLike_yield = Symbol("SchedulerLike_yield");
 export const SchedulerLike_inContinuation = Symbol("SchedulerLike_inContinuation");
 export const SchedulerLike_maxYieldInterval = Symbol("SchedulerLike_maxYieldInterval");
 export const SchedulerLike_now = Symbol("SchedulerLike_now");

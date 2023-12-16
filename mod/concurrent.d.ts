@@ -46,13 +46,13 @@ export interface PauseableLike extends DisposableLike {
      */
     [PauseableLike_resume](): void;
 }
-export declare const SchedulerLike_yield: unique symbol;
 export declare const SchedulerLike_inContinuation: unique symbol;
 export declare const SchedulerLike_maxYieldInterval: unique symbol;
 export declare const SchedulerLike_now: unique symbol;
 export declare const SchedulerLike_requestYield: unique symbol;
 export declare const SchedulerLike_schedule: unique symbol;
 export declare const SchedulerLike_shouldYield: unique symbol;
+export type Yield = (delay?: number) => void;
 /**
  * Schedulers are the core unit of concurrency, orchestration and
  * cooperative multi-tasking.
@@ -84,24 +84,11 @@ export interface SchedulerLike {
      */
     [SchedulerLike_requestYield](): void;
     /**
-     * Yields control back to the scheduler.
-     *
-     * If no delay is specified, a scheduler may either allow
-     * the continuation to continue to execute, or it will throw
-     * an internal exception that must not be caught by the continuation
-     * which the scheduler will use to reschedule the continuation for
-     * a future time.
-     *
-     * @param delay - The amount of delay in ms the scheduler
-     * should delay before resuming execution of the continuation.
-     */
-    [SchedulerLike_yield](delay?: number): void;
-    /**
      * Schedule a continuation on the Scheduler.
      * @param continuation - The continuation to run on the scheduler.
      * @param options
      */
-    [SchedulerLike_schedule](continuation: SideEffect1<SchedulerLike>, options?: {
+    [SchedulerLike_schedule](continuation: SideEffect1<Yield>, options?: {
         /**
          * The amount of time in ms to delay execution of the continuation.
          */

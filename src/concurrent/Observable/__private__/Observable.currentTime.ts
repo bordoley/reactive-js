@@ -1,9 +1,8 @@
 import {
   ObserverLike,
-  SchedulerLike,
   SchedulerLike_now,
   SchedulerLike_schedule,
-  SchedulerLike_yield,
+  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { DisposableLike_isDisposed } from "../../../utils.js";
@@ -12,10 +11,10 @@ import Observable_createRunnable from "./Observable.createRunnable.js";
 
 const Observable_currentTime: Observable.Signature["currentTime"] =
   /*@__PURE__*/ Observable_createRunnable((observer: ObserverLike<number>) => {
-    const continuation = (scheduler: SchedulerLike) => {
+    const continuation = (__yield: Yield) => {
       while (!observer[DisposableLike_isDisposed]) {
-        observer[SinkLike_notify](scheduler[SchedulerLike_now]);
-        scheduler[SchedulerLike_yield]();
+        observer[SinkLike_notify](observer[SchedulerLike_now]);
+        __yield();
       }
     };
 

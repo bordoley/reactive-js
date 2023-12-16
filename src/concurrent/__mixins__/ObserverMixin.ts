@@ -22,7 +22,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SchedulerLike_yield,
+  Yield,
 } from "../../concurrent.js";
 import { SinkLike_notify } from "../../events.js";
 import LazyInitEventSourceMixin, {
@@ -83,7 +83,7 @@ const ObserverMixin: <T>() => Mixin2<
     if (
       observer[ObserverMixin_dispatchSubscription][DisposableLike_isDisposed]
     ) {
-      const continuation = (scheduler: SchedulerLike) => {
+      const continuation = (__yield: Yield) => {
         unsafeCast<TProperties & ObserverLike<T>>(observer);
 
         while (observer[CollectionLike_count] > 0) {
@@ -91,7 +91,7 @@ const ObserverMixin: <T>() => Mixin2<
           observer[SinkLike_notify](next);
 
           if (observer[CollectionLike_count] > 0) {
-            scheduler[SchedulerLike_yield]();
+            __yield();
           }
         }
 
@@ -206,7 +206,7 @@ const ObserverMixin: <T>() => Mixin2<
 
         [SchedulerLike_schedule](
           this: TProperties & SchedulerLike & DisposableLike,
-          continuation: SideEffect1<SchedulerLike>,
+          continuation: SideEffect1<Yield>,
           options?: {
             readonly delay?: number;
           },
@@ -218,13 +218,6 @@ const ObserverMixin: <T>() => Mixin2<
             ),
             Disposable.addTo(this, { ignoreChildErrors: true }),
           );
-        },
-
-        [SchedulerLike_yield](
-          this: TProperties & SchedulerLike & DisposableLike,
-          delay?: number,
-        ) {
-          this[ObserverMixin_scheduler][SchedulerLike_yield](delay);
         },
 
         [QueueableLike_enqueue](

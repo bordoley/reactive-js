@@ -20,7 +20,7 @@ import {
   SchedulerLike_requestYield,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SchedulerLike_yield,
+  Yield,
 } from "../../concurrent.js";
 import {
   Function2,
@@ -41,7 +41,6 @@ import {
   DisposableLike_isDisposed,
   QueueCollectionLike,
   QueueLike_dequeue,
-  QueueableLike,
   QueueableLike_enqueue,
 } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -81,10 +80,6 @@ const ContinuationSchedulerMixin: Mixin1<
   number,
   ContinuationSchedulerImplementationLike
 > = /*@__PURE__*/ (() => {
-  class ContinuationYieldError {
-    constructor(readonly delay: number) {}
-  }
-
   const ContinuationSchedulerMixinLike_currentContinuation = Symbol(
     "ContinuationSchedulerMixinLike_currentContinuation",
   );
@@ -114,34 +109,41 @@ const ContinuationSchedulerMixin: Mixin1<
   const QueueableContinuationLike_parent = Symbol(
     "QueueableContinuationLike_parent",
   );
-  const QueueableContinuationLike_yield = Symbol(
-    "QueueableContinuationLike_yield",
-  );
+
   const QueueableContinuationLike_activeChild = Symbol(
     "QueueableContinuationLike_activeChild",
   );
 
+  const QueueableContinuationLike_effect = Symbol(
+    "QueueableContinuationLike_effect",
+  );
+
+  const QueueableContinuationLike_scheduler = Symbol(
+    "QueueableContinuationLike_scheduler",
+  );
+
   interface QueueableContinuationLike
     extends ContinuationLike,
-      QueueableLike<QueueableContinuationLike>,
+      QueueCollectionLike<QueueableContinuationLike>,
       CollectionLike<QueueableContinuationLike> {
-    readonly [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
+    [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
 
     [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
 
-    [QueueableContinuationLike_yield](delay?: number): void;
+    readonly [QueueableContinuationLike_scheduler]: ContinuationSchedulerMixinLike;
+    readonly [QueueableContinuationLike_effect]: SideEffect1<Yield>;
   }
 
   const createContinuation = (() => {
-    const Continuation_effect = Symbol("Continuation_effect");
-
-    const Continuation_scheduler = Symbol("Continuation_scheduler");
+    class ContinuationYieldError {
+      constructor(readonly delay: number) {}
+    }
 
     type TContinuationProperties = {
       [QueueableContinuationLike_activeChild]: Optional<QueueableContinuationLike>;
       [QueueableContinuationLike_parent]: Optional<QueueableContinuationLike>;
-      [Continuation_scheduler]: ContinuationSchedulerMixinLike;
-      [Continuation_effect]: SideEffect1<SchedulerLike>;
+      [QueueableContinuationLike_scheduler]: ContinuationSchedulerMixinLike;
+      [QueueableContinuationLike_effect]: SideEffect1<Yield>;
     };
 
     const indexedQueueProtoype = getPrototype(
@@ -159,9 +161,9 @@ const ContinuationSchedulerMixin: Mixin1<
     };
 
     const rescheduleContinuation = (
-      continuation: QueueableContinuationLike & TContinuationProperties,
+      continuation: QueueableContinuationLike,
     ) => {
-      const scheduler = continuation[Continuation_scheduler];
+      const scheduler = continuation[QueueableContinuationLike_scheduler];
       const parent = findNearestNonDisposedParent(continuation);
 
       if (isSome(parent)) {
@@ -172,11 +174,9 @@ const ContinuationSchedulerMixin: Mixin1<
     };
 
     const rescheduleChildrenOnParentOrScheduler = (
-      continuation: QueueableContinuationLike &
-        QueueCollectionLike<QueueableContinuationLike> &
-        TContinuationProperties,
+      continuation: QueueableContinuationLike,
     ) => {
-      const scheduler = continuation[Continuation_scheduler];
+      const scheduler = continuation[QueueableContinuationLike_scheduler];
       const parent = findNearestNonDisposedParent(continuation);
 
       if (isSome(parent)) {
@@ -196,13 +196,19 @@ const ContinuationSchedulerMixin: Mixin1<
       }
     };
 
-    const runContinuation = (
-      thiz: QueueableContinuationLike &
-        QueueCollectionLike<QueueableContinuationLike> &
-        TContinuationProperties &
-        SchedulerLike,
-    ) => {
-      const scheduler = thiz[Continuation_scheduler];
+    const runContinuation = (thiz: QueueableContinuationLike) => {
+      const scheduler = thiz[QueueableContinuationLike_scheduler];
+
+      const __yield = (delay = 0) => {
+        const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
+
+        const currentContinuation =
+          scheduler[ContinuationSchedulerMixinLike_currentContinuation];
+
+        if (shouldYield && isSome(currentContinuation)) {
+          throw newInstance(ContinuationYieldError, delay ?? 0);
+        }
+      };
 
       if (thiz[DisposableLike_isDisposed]) {
         rescheduleChildrenOnParentOrScheduler(thiz);
@@ -214,7 +220,7 @@ const ContinuationSchedulerMixin: Mixin1<
       while (((head = thiz[QueueLike_dequeue]()), isSome(head))) {
         thiz[QueueableContinuationLike_activeChild] = head;
         // FIXME
-        runContinuation(head as any);
+        runContinuation(head);
 
         thiz[QueueableContinuationLike_activeChild] = none;
 
@@ -232,7 +238,7 @@ const ContinuationSchedulerMixin: Mixin1<
 
       thiz[QueueableContinuationLike_activeChild] = thiz;
       try {
-        thiz[Continuation_effect](scheduler);
+        thiz[QueueableContinuationLike_effect](__yield);
       } catch (e) {
         if (e instanceof ContinuationYieldError) {
           yieldError = e;
@@ -264,11 +270,11 @@ const ContinuationSchedulerMixin: Mixin1<
         function Continuation(
           instance: Pick<
             QueueableContinuationLike,
-            typeof ContinuationLike_run | typeof QueueableContinuationLike_yield
+            typeof ContinuationLike_run
           > &
             Mutable<TContinuationProperties>,
           scheduler: ContinuationSchedulerMixinLike,
-          effect: SideEffect1<SchedulerLike>,
+          effect: SideEffect1<Yield>,
         ): QueueableContinuationLike {
           init(DisposableMixin, instance);
 
@@ -279,8 +285,8 @@ const ContinuationSchedulerMixin: Mixin1<
             "overflow",
           );
 
-          instance[Continuation_scheduler] = scheduler;
-          instance[Continuation_effect] = effect;
+          instance[QueueableContinuationLike_scheduler] = scheduler;
+          instance[QueueableContinuationLike_effect] = effect;
 
           pipe(
             instance,
@@ -294,8 +300,8 @@ const ContinuationSchedulerMixin: Mixin1<
         props<TContinuationProperties>({
           [QueueableContinuationLike_activeChild]: none,
           [QueueableContinuationLike_parent]: none,
-          [Continuation_scheduler]: none,
-          [Continuation_effect]: none,
+          [QueueableContinuationLike_scheduler]: none,
+          [QueueableContinuationLike_effect]: none,
         }),
         {
           [ContinuationLike_run](
@@ -304,7 +310,7 @@ const ContinuationSchedulerMixin: Mixin1<
               TContinuationProperties &
               SchedulerLike,
           ): void {
-            const scheduler = this[Continuation_scheduler];
+            const scheduler = this[QueueableContinuationLike_scheduler];
 
             scheduler[ContinuationSchedulerMixinLike_startTime] =
               this[SchedulerLike_now];
@@ -317,10 +323,6 @@ const ContinuationSchedulerMixin: Mixin1<
             scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
             scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
               none;
-          },
-
-          [QueueableContinuationLike_yield](delay?: number) {
-            throw newInstance(ContinuationYieldError, delay ?? 0);
           },
 
           [QueueableLike_enqueue](
@@ -468,7 +470,7 @@ const ContinuationSchedulerMixin: Mixin1<
 
       [SchedulerLike_schedule](
         this: ContinuationSchedulerMixinLike & TSchedulerProperties,
-        effect: SideEffect1<SchedulerLike>,
+        effect: SideEffect1<Yield>,
         options?: { readonly delay?: number },
       ): DisposableLike {
         const continuation = pipe(
@@ -477,20 +479,6 @@ const ContinuationSchedulerMixin: Mixin1<
         );
         this[ContinuationSchedulerMixinLike_schedule](continuation, options);
         return continuation;
-      },
-
-      [SchedulerLike_yield](
-        this: ContinuationSchedulerLike & TSchedulerProperties,
-        delay = 0,
-      ) {
-        const shouldYield = delay > 0 || this[SchedulerLike_shouldYield];
-
-        const currentContinuation =
-          this[ContinuationSchedulerMixinLike_currentContinuation];
-
-        if (shouldYield && isSome(currentContinuation)) {
-          currentContinuation[QueueableContinuationLike_yield](delay);
-        }
       },
     },
   );

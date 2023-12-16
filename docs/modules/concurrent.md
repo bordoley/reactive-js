@@ -31,6 +31,7 @@
 ### Type Aliases
 
 - [StreamOf](concurrent.md#streamof)
+- [Yield](concurrent.md#yield)
 
 ### Variables
 
@@ -53,7 +54,6 @@
 - [SchedulerLike\_requestYield](concurrent.md#schedulerlike_requestyield)
 - [SchedulerLike\_schedule](concurrent.md#schedulerlike_schedule)
 - [SchedulerLike\_shouldYield](concurrent.md#schedulerlike_shouldyield)
-- [SchedulerLike\_yield](concurrent.md#schedulerlike_yield)
 - [StreamLike\_scheduler](concurrent.md#streamlike_scheduler)
 - [StreamableLike\_stream](concurrent.md#streamablelike_stream)
 - [SubjectLike\_observerCount](concurrent.md#subjectlike_observercount)
@@ -70,6 +70,26 @@
 | Name | Type |
 | :------ | :------ |
 | `TStreamable` | extends [`StreamableLike`](../interfaces/concurrent.StreamableLike.md) |
+
+___
+
+### Yield
+
+Ƭ **Yield**: (`delay?`: `number`) => `void`
+
+#### Type declaration
+
+▸ (`delay?`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `delay?` | `number` |
+
+##### Returns
+
+`void`
 
 ## Variables
 
@@ -184,12 +204,6 @@ ___
 ### SchedulerLike\_shouldYield
 
 • `Const` **SchedulerLike\_shouldYield**: unique `symbol`
-
-___
-
-### SchedulerLike\_yield
-
-• `Const` **SchedulerLike\_yield**: unique `symbol`
 
 ___
 

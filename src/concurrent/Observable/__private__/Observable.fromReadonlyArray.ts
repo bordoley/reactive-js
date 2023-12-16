@@ -1,8 +1,7 @@
 import {
   ObserverLike,
-  SchedulerLike,
   SchedulerLike_schedule,
-  SchedulerLike_yield,
+  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
@@ -23,13 +22,13 @@ const Observable_fromReadonlyArray: Observable.Signature["fromReadonlyArray"] =
       let i = 0;
       const { length } = array;
 
-      const continuation = (scheduler: SchedulerLike) => {
+      const continuation = (__yield: Yield) => {
         while (!observer[DisposableLike_isDisposed] && i < length) {
           const next = array[i];
           observer[SinkLike_notify](next);
           i++;
 
-          scheduler[SchedulerLike_yield](delay);
+          __yield(delay);
         }
         observer[DisposableLike_dispose]();
       };

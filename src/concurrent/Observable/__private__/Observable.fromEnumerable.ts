@@ -6,9 +6,8 @@ import {
 } from "../../../collections.js";
 import {
   ObserverLike,
-  SchedulerLike,
   SchedulerLike_schedule,
-  SchedulerLike_yield,
+  Yield,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
 import { none, pipe } from "../../../functions.js";
@@ -28,14 +27,14 @@ const Observable_fromEnumerable: Observable.Signature["fromEnumerable"] =
 
       const enumerator = enumerable[EnumerableLike_enumerate]();
 
-      const continuation = (scheduler: SchedulerLike) => {
+      const continuation = (__yield: Yield) => {
         while (
           !observer[DisposableLike_isDisposed] &&
           enumerator[EnumeratorLike_move]()
         ) {
           const next = enumerator[EnumeratorLike_current];
           observer[SinkLike_notify](next);
-          scheduler[SchedulerLike_yield](delay);
+          __yield(delay);
         }
         observer[DisposableLike_dispose]();
       };

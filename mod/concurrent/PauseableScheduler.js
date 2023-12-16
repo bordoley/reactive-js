@@ -5,7 +5,7 @@ import { clampPositiveInteger, max } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../collections.js";
 import MutableEnumeratorMixin from "../collections/__mixins__/MutableEnumeratorMixin.js";
-import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../concurrent.js";
+import { PauseableLike_isPaused, PauseableLike_pause, PauseableLike_resume, SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../concurrent.js";
 import { SchedulerTaskLike_continuation, SchedulerTaskLike_dueTime, SchedulerTaskLike_id, } from "../concurrent/__private__.js";
 import { StoreLike_value } from "../events.js";
 import * as WritableStore from "../events/WritableStore.js";
@@ -79,7 +79,7 @@ export const create = /*@PURE__*/ (() => {
         const delay = clampPositiveInteger(dueTime - instance[SchedulerLike_now]);
         instance[PauseableScheduler_dueTime] = dueTime;
         const continuation = instance[PauseableScheduler_hostContinuation] ??
-            ((scheduler) => {
+            ((__yield) => {
                 for (let task = peek(instance); isSome(task) && !instance[DisposableLike_isDisposed]; task = peek(instance)) {
                     const { [SchedulerTaskLike_continuation]: continuation, [SchedulerTaskLike_dueTime]: dueTime, } = task;
                     const delay = clampPositiveInteger(dueTime - instance[SchedulerLike_now]);
@@ -91,7 +91,7 @@ export const create = /*@PURE__*/ (() => {
                         instance[EnumeratorLike_move]();
                         continuation[ContinuationLike_run]();
                     }
-                    scheduler[SchedulerLike_yield](delay);
+                    __yield(delay);
                 }
             });
         instance[PauseableScheduler_hostContinuation] = continuation;

@@ -4,7 +4,7 @@ import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { clampPositiveInteger } from "../../__internal__/math.js";
 import { createInstanceFactory, getPrototype, include, init, mix, props, unsafeCast, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
-import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, SchedulerLike_yield, } from "../../concurrent.js";
+import { SchedulerLike_inContinuation, SchedulerLike_maxYieldInterval, SchedulerLike_now, SchedulerLike_requestYield, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
 import { call, error, isNone, isSome, newInstance, none, pipe, pipeLazy, } from "../../functions.js";
 import { DisposableLike_dispose, DisposableLike_isDisposed, QueueLike_dequeue, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
@@ -14,22 +14,21 @@ export const ContinuationLike_run = Symbol("ContinuationLike_run");
 export const ContinuationSchedulerImplementationLike_shouldYield = Symbol("ContinuationSchedulerImplementationLike_shouldYield");
 export const ContinuationSchedulerImplementationLike_scheduleContinuation = Symbol("ContinuationSchedulerImplementationLike_scheduleContinuation");
 const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
-    class ContinuationYieldError {
-        delay;
-        constructor(delay) {
-            this.delay = delay;
-        }
-    }
     const ContinuationSchedulerMixinLike_currentContinuation = Symbol("ContinuationSchedulerMixinLike_currentContinuation");
     const ContinuationSchedulerMixinLike_yieldRequested = Symbol("ContinuationSchedulerMixinLike_yieldRequested");
     const ContinuationSchedulerMixinLike_startTime = Symbol("ContinuationSchedulerMixinLike_startTime");
     const ContinuationSchedulerMixinLike_schedule = Symbol("ContinuationSchedulerMixinLike_schedule");
     const QueueableContinuationLike_parent = Symbol("QueueableContinuationLike_parent");
-    const QueueableContinuationLike_yield = Symbol("QueueableContinuationLike_yield");
     const QueueableContinuationLike_activeChild = Symbol("QueueableContinuationLike_activeChild");
+    const QueueableContinuationLike_effect = Symbol("QueueableContinuationLike_effect");
+    const QueueableContinuationLike_scheduler = Symbol("QueueableContinuationLike_scheduler");
     const createContinuation = (() => {
-        const Continuation_effect = Symbol("Continuation_effect");
-        const Continuation_scheduler = Symbol("Continuation_scheduler");
+        class ContinuationYieldError {
+            delay;
+            constructor(delay) {
+                this.delay = delay;
+            }
+        }
         const indexedQueueProtoype = getPrototype(IndexedQueueMixin());
         const findNearestNonDisposedParent = (continuation) => {
             let parent = continuation[QueueableContinuationLike_parent];
@@ -39,7 +38,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             return parent;
         };
         const rescheduleContinuation = (continuation) => {
-            const scheduler = continuation[Continuation_scheduler];
+            const scheduler = continuation[QueueableContinuationLike_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
                 parent[QueueableLike_enqueue](continuation);
@@ -49,7 +48,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             }
         };
         const rescheduleChildrenOnParentOrScheduler = (continuation) => {
-            const scheduler = continuation[Continuation_scheduler];
+            const scheduler = continuation[QueueableContinuationLike_scheduler];
             const parent = findNearestNonDisposedParent(continuation);
             if (isSome(parent)) {
                 let head = none;
@@ -69,7 +68,14 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             }
         };
         const runContinuation = (thiz) => {
-            const scheduler = thiz[Continuation_scheduler];
+            const scheduler = thiz[QueueableContinuationLike_scheduler];
+            const __yield = (delay = 0) => {
+                const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
+                const currentContinuation = scheduler[ContinuationSchedulerMixinLike_currentContinuation];
+                if (shouldYield && isSome(currentContinuation)) {
+                    throw newInstance(ContinuationYieldError, delay ?? 0);
+                }
+            };
             if (thiz[DisposableLike_isDisposed]) {
                 rescheduleChildrenOnParentOrScheduler(thiz);
                 return;
@@ -94,7 +100,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             let yieldError = none;
             thiz[QueueableContinuationLike_activeChild] = thiz;
             try {
-                thiz[Continuation_effect](scheduler);
+                thiz[QueueableContinuationLike_effect](__yield);
             }
             catch (e) {
                 if (e instanceof ContinuationYieldError) {
@@ -122,18 +128,18 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
         return createInstanceFactory(mix(include(DisposableMixin, IndexedQueueMixin()), function Continuation(instance, scheduler, effect) {
             init(DisposableMixin, instance);
             init(IndexedQueueMixin(), instance, MAX_SAFE_INTEGER, "overflow");
-            instance[Continuation_scheduler] = scheduler;
-            instance[Continuation_effect] = effect;
+            instance[QueueableContinuationLike_scheduler] = scheduler;
+            instance[QueueableContinuationLike_effect] = effect;
             pipe(instance, Disposable.onDisposed(pipeLazy(instance, rescheduleChildrenOnParentOrScheduler)));
             return instance;
         }, props({
             [QueueableContinuationLike_activeChild]: none,
             [QueueableContinuationLike_parent]: none,
-            [Continuation_scheduler]: none,
-            [Continuation_effect]: none,
+            [QueueableContinuationLike_scheduler]: none,
+            [QueueableContinuationLike_effect]: none,
         }), {
             [ContinuationLike_run]() {
-                const scheduler = this[Continuation_scheduler];
+                const scheduler = this[QueueableContinuationLike_scheduler];
                 scheduler[ContinuationSchedulerMixinLike_startTime] =
                     this[SchedulerLike_now];
                 scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
@@ -143,9 +149,6 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 scheduler[ContinuationSchedulerMixinLike_yieldRequested] = false;
                 scheduler[ContinuationSchedulerMixinLike_currentContinuation] =
                     none;
-            },
-            [QueueableContinuationLike_yield](delay) {
-                throw newInstance(ContinuationYieldError, delay ?? 0);
             },
             [QueueableLike_enqueue](continuation) {
                 continuation[QueueableContinuationLike_parent] = this;
@@ -222,13 +225,6 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
             const continuation = pipe(createContinuation(this, effect), Disposable.addTo(this, { ignoreChildErrors: true }));
             this[ContinuationSchedulerMixinLike_schedule](continuation, options);
             return continuation;
-        },
-        [SchedulerLike_yield](delay = 0) {
-            const shouldYield = delay > 0 || this[SchedulerLike_shouldYield];
-            const currentContinuation = this[ContinuationSchedulerMixinLike_currentContinuation];
-            if (shouldYield && isSome(currentContinuation)) {
-                currentContinuation[QueueableContinuationLike_yield](delay);
-            }
         },
     });
 })();

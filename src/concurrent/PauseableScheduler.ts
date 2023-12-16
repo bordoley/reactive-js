@@ -29,7 +29,7 @@ import {
   SchedulerLike_now,
   SchedulerLike_schedule,
   SchedulerLike_shouldYield,
-  SchedulerLike_yield,
+  Yield,
 } from "../concurrent.js";
 import {
   SchedulerTaskLike,
@@ -91,7 +91,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
     readonly [PauseableScheduler_delayed]: QueueLike<SchedulerTaskLike>;
     [PauseableScheduler_dueTime]: number;
     readonly [PauseableScheduler_hostScheduler]: SchedulerLike;
-    [PauseableScheduler_hostContinuation]: Optional<SideEffect1<SchedulerLike>>;
+    [PauseableScheduler_hostContinuation]: Optional<SideEffect1<Yield>>;
     [PauseableLike_isPaused]: WritableStoreLike<boolean>;
     readonly [PauseableScheduler_queue]: QueueLike<SchedulerTaskLike>;
     [PauseableScheduler_taskIDCounter]: number;
@@ -184,7 +184,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
 
     const continuation =
       instance[PauseableScheduler_hostContinuation] ??
-      ((scheduler: SchedulerLike) => {
+      ((__yield: Yield) => {
         for (
           let task = peek(instance);
           isSome(task) && !instance[DisposableLike_isDisposed];
@@ -205,7 +205,7 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
             instance[EnumeratorLike_move]();
             continuation[ContinuationLike_run]();
           }
-          scheduler[SchedulerLike_yield](delay);
+          __yield(delay);
         }
       });
     instance[PauseableScheduler_hostContinuation] = continuation;
