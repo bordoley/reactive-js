@@ -165,6 +165,18 @@ const PureComputationModuleTests = <C extends Computation>(
           expectToThrowError(err),
         );
       }),
+      test(
+        "with custom equality functions",
+        pipeLazy(
+          [1, 2, 2, 2, 2, 3, 3, 3, 4],
+          m.fromReadonlyArray(),
+          m.distinctUntilChanged({
+            equality: () => true,
+          }),
+          toReadonlyArray(),
+          expectArrayEquals([1]),
+        ),
+      ),
     ),
     describe(
       "keep",

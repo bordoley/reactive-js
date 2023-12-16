@@ -28,7 +28,9 @@ const PureComputationModuleTests = (m, toReadonlyArray) => describe("PureComputa
         throw err;
     };
     pipe(pipeLazy([1, 1], m.fromReadonlyArray(), m.distinctUntilChanged({ equality }), toReadonlyArray()), expectToThrowError(err));
-})), describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), toReadonlyArray(), expectArrayEquals([8, 10, 7]))), test("when predicate throws", () => {
+}), test("with custom equality functions", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged({
+    equality: () => true,
+}), toReadonlyArray(), expectArrayEquals([1])))), describe("keep", test("keeps only values greater than 5", pipeLazy([4, 8, 10, 7], m.fromReadonlyArray(), m.keep(greaterThan(5)), toReadonlyArray(), expectArrayEquals([8, 10, 7]))), test("when predicate throws", () => {
     const err = new Error();
     const predicate = (_a) => {
         throw err;
