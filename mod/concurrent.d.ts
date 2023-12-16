@@ -134,6 +134,9 @@ export declare const ContinuationLike_scheduler: unique symbol;
 export declare const ContinuationLike_parent: unique symbol;
 export declare const ContinuationLike_run: unique symbol;
 export declare const ContinuationLike_yield: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface ContinuationLike extends DisposableLike, QueueableLike<ContinuationLike>, CollectionLike<ContinuationLike> {
     readonly [ContinuationLike_activeChild]: Optional<ContinuationLike>;
     readonly [ContinuationLike_scheduler]: ContinuationSchedulerLike;
@@ -142,6 +145,9 @@ export interface ContinuationLike extends DisposableLike, QueueableLike<Continua
     [ContinuationLike_yield](delay?: number): void;
 }
 export declare const ContinuationSchedulerLike_schedule: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface ContinuationSchedulerLike extends SchedulerLike {
     [ContinuationSchedulerLike_schedule](continuation: ContinuationLike, options?: {
         readonly delay?: number;
@@ -158,6 +164,9 @@ export declare const ObservableLike_isDeferred: unique symbol;
 export declare const ObservableLike_isPure: unique symbol;
 export declare const ObservableLike_isRunnable: unique symbol;
 export declare const ObservableLike_observe: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface ObservableLike<T = unknown> {
     /**
      * Indicates if the `ObservableLike` is deferred, ie. cold.
@@ -191,6 +200,9 @@ export interface DeferredObservableLike<T = unknown> extends ObservableLike<T> {
 export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
     readonly [ObservableLike_isRunnable]: true;
 }
+/**
+ * @noInheritDoc
+ */
 export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
     readonly [ObservableLike_isPure]: true;
 }
@@ -231,12 +243,21 @@ export interface ReplayObservableLike<T = unknown> extends MulticastObservableLi
     readonly [ReplayObservableLike_buffer]: IndexedLike<T>;
 }
 export declare const SubjectLike_observerCount: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface SubjectLike<T = unknown> extends ReplayObservableLike<T>, ErrorSafeEventListenerLike<T> {
     readonly [SubjectLike_observerCount]: number;
 }
+/**
+ * @noInheritDoc
+ */
 export interface PauseableObservableLike<T = unknown> extends ReplayObservableLike<T>, PauseableLike {
 }
 export declare const FlowableLike_flow: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface FlowableLike<T> {
     [FlowableLike_flow](scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];

@@ -26,12 +26,18 @@ import EventSource_takeFirst from "./EventSource/__private__/EventSource.takeFir
 import EventSource_takeWhile from "./EventSource/__private__/EventSource.takeWhile.js";
 import EventSource_toReadonlyArrayAsync from "./EventSource/__private__/EventSource.toReadonlyArrayAsync.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface EventSourceComputation extends Computation {
   readonly [Computation_type]?: EventSourceLike<this[typeof Computation_T]>;
 }
 
 export type Type = EventSourceComputation;
 
+/**
+ * @noInheritDoc
+ */
 export interface EventSourceModule
   extends PureComputationModule<EventSourceComputation> {
   addEventHandler<T>(

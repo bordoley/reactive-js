@@ -31,11 +31,9 @@
 
 • `Readonly` **[ObservableLike\_isDeferred]**: ``false``
 
-Indicates if the `ObservableLike` is deferred, ie. cold.
-
 #### Overrides
 
-[PureObservableLike](concurrent.PureObservableLike.md).[[ObservableLike_isDeferred]](concurrent.PureObservableLike.md#[observablelike_isdeferred])
+PureObservableLike.\_\_@ObservableLike\_isDeferred@24892
 
 ___
 
@@ -43,9 +41,6 @@ ___
 
 • `Readonly` **[ObservableLike\_isRunnable]**: ``false``
 
-Indicates if the `ObservableLike` supports being subscribed to
-on a VirtualTimeScheduler.
-
 #### Overrides
 
-[PureObservableLike](concurrent.PureObservableLike.md).[[ObservableLike_isRunnable]](concurrent.PureObservableLike.md#[observablelike_isrunnable])
+PureObservableLike.\_\_@ObservableLike\_isRunnable@24894

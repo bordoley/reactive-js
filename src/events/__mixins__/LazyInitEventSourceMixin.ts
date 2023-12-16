@@ -14,6 +14,9 @@ export const LazyInitEventSourceMixin_publisher = Symbol(
   "LazyInitEventSourceMixin_publisher",
 );
 
+/**
+ * @noInheritDoc
+ */
 export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
   readonly [LazyInitEventSourceMixin_publisher]: Optional<EventListenerLike<T>>;
 }

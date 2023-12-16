@@ -43,6 +43,9 @@ export interface WindowLocationLike
   ): void;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface CSSStyleMapLike
   extends ReadonlyObjectMapLike<
     keyof Omit<

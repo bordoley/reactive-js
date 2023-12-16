@@ -23,6 +23,9 @@ export interface WindowLocationLike extends ReplayObservableLike<WindowLocationU
     [WindowLocationLike_push](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;
     [WindowLocationLike_replace](stateOrUpdater: Updater<WindowLocationURI> | WindowLocationURI): void;
 }
+/**
+ * @noInheritDoc
+ */
 export interface CSSStyleMapLike extends ReadonlyObjectMapLike<keyof Omit<CSSStyleDeclaration, "item" | "length" | "parentRule" | "getPropertyPriority" | "getPropertyValue" | "removeProperty" | "setProperty" | number | typeof Symbol.iterator>, string> {
 }
 /**

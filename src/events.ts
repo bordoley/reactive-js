@@ -57,6 +57,7 @@ export interface PublisherLike<T = unknown>
 }
 
 export const StoreLike_value = Symbol("StoreLike_value");
+
 /**
  * @noInheritDoc
  */

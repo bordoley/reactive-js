@@ -182,6 +182,9 @@ export const ContinuationLike_parent = Symbol("ContinuationLike_parent");
 export const ContinuationLike_run = Symbol("ContinuationLike_run");
 export const ContinuationLike_yield = Symbol("ContinuationLike_yield");
 
+/**
+ * @noInheritDoc
+ */
 export interface ContinuationLike
   extends DisposableLike,
     QueueableLike<ContinuationLike>,
@@ -200,6 +203,9 @@ export const ContinuationSchedulerLike_schedule = Symbol(
   "ContinuationSchedulerLike_schedule",
 );
 
+/**
+ * @noInheritDoc
+ */
 export interface ContinuationSchedulerLike extends SchedulerLike {
   [ContinuationSchedulerLike_schedule](
     continuation: ContinuationLike,
@@ -222,6 +228,9 @@ export const ObservableLike_isPure = Symbol("ObservableLike_isPure");
 export const ObservableLike_isRunnable = Symbol("ObservableLike_isRunnable");
 export const ObservableLike_observe = Symbol("ObservableLike_observe");
 
+/**
+ * @noInheritDoc
+ */
 export interface ObservableLike<T = unknown> {
   /**
    * Indicates if the `ObservableLike` is deferred, ie. cold.
@@ -261,6 +270,9 @@ export interface RunnableLike<T = unknown> extends DeferredObservableLike<T> {
   readonly [ObservableLike_isRunnable]: true;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface PureObservableLike<T = unknown> extends ObservableLike<T> {
   readonly [ObservableLike_isPure]: true;
 }
@@ -317,18 +329,27 @@ export interface ReplayObservableLike<T = unknown>
 
 export const SubjectLike_observerCount = Symbol("SubjectLike_observerCount");
 
+/**
+ * @noInheritDoc
+ */
 export interface SubjectLike<T = unknown>
   extends ReplayObservableLike<T>,
     ErrorSafeEventListenerLike<T> {
   readonly [SubjectLike_observerCount]: number;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface PauseableObservableLike<T = unknown>
   extends ReplayObservableLike<T>,
     PauseableLike {}
 
 export const FlowableLike_flow = Symbol("FlowableLike_flow");
 
+/**
+ * @noInheritDoc
+ */
 export interface FlowableLike<T> {
   [FlowableLike_flow](
     scheduler: SchedulerLike,

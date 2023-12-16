@@ -106,11 +106,17 @@ export interface IndexedLike<T = unknown> extends KeyedLike<number, T> {}
 
 export const MutableKeyedLike_set = Symbol("MutableKeyedLike_set");
 
+/**
+ * @noInheritDoc
+ */
 export interface MutableKeyedLike<TKey = unknown, T = unknown>
   extends KeyedLike<TKey, T> {
   [MutableKeyedLike_set](key: TKey, value: T): T;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface MutableIndexedLike<T = unknown>
   extends IndexedLike<T>,
     MutableKeyedLike<number, T> {}

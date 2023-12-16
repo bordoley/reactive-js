@@ -7,6 +7,9 @@ import { Function1 } from "../functions.js";
 import Flowable_create from "./Flowable/__private__/Flowable.create.js";
 import Flowable_fromAsyncIterable from "./Flowable/__private__/Flowable.fromAsyncIterable.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface FlowableModule {
   create<T>(
     op: Function1<ObservableLike<boolean>, DeferredObservableLike<T>>,

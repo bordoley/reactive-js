@@ -6,6 +6,9 @@ export const DisposableLike_dispose = Symbol("DisposableLike_dispose");
 export const DisposableLike_error = Symbol("DisposableLike_error");
 export const DisposableLike_isDisposed = Symbol("DisposableLike_isDisposed");
 
+/**
+ * @noInheritDoc
+ */
 export interface DisposableLike {
   /**
    * The error the `Disposable` was disposed with if disposed.
@@ -38,6 +41,9 @@ export const SerialDisposableLike_current = Symbol(
   "SerialDisposableLike_current",
 );
 
+/**
+ * @noInheritDoc
+ */
 export interface SerialDisposableLike<
   TDisposable extends DisposableLike = DisposableLike,
 > extends DisposableLike {
@@ -83,6 +89,9 @@ export interface QueueableLike<T = unknown> {
 export const StackLike_head = Symbol("StackLike_head");
 export const StackLike_pop = Symbol("StackLike_pop");
 
+/**
+ * @noInheritDoc
+ */
 export interface StackLike<T = unknown> extends QueueableLike<T> {
   readonly [StackLike_head]: Optional<T>;
   [StackLike_pop](): Optional<T>;
@@ -91,21 +100,33 @@ export interface StackLike<T = unknown> extends QueueableLike<T> {
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
 
+/**
+ * @noInheritDoc
+ */
 export interface QueueLike<T = unknown> extends QueueableLike<T> {
   readonly [QueueLike_head]: Optional<T>;
 
   [QueueLike_dequeue](): Optional<T>;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface QueueCollectionLike<T = unknown>
   extends QueueLike<T>,
     CollectionLike<T> {}
 
+/**
+ * @noInheritDoc
+ */
 export interface IndexedQueueLike<T = unknown>
   extends QueueLike<T>,
     MutableIndexedLike<T>,
     StackLike<T> {}
 
+/**
+ * @noInheritDoc
+ */
 export class BackPressureError extends Error {
   readonly [QueueableLike_capacity]: number;
   readonly [QueueableLike_backpressureStrategy]: QueueableLike[typeof QueueableLike_backpressureStrategy];

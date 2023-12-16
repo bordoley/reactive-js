@@ -14,20 +14,9 @@
 
 ### Properties
 
-- [[Computation\_T]](concurrent_Observable.RunnableWithSideEffectsComputation.md#[computation_t])
 - [[Computation\_type]](concurrent_Observable.RunnableWithSideEffectsComputation.md#[computation_type])
 
 ## Properties
-
-### [Computation\_T]
-
-• `Optional` `Readonly` **[Computation\_T]**: `unknown`
-
-#### Inherited from
-
-[Computation](computations.Computation.md).[[Computation_T]](computations.Computation.md#[computation_t])
-
-___
 
 ### [Computation\_type]
 

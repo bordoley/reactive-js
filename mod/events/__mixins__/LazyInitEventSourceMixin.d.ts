@@ -3,6 +3,9 @@ import { EventListenerLike, EventSourceLike } from "../../events.js";
 import { Optional } from "../../functions.js";
 import { DisposableLike } from "../../utils.js";
 export declare const LazyInitEventSourceMixin_publisher: unique symbol;
+/**
+ * @noInheritDoc
+ */
 export interface LazyInitEventSourceLike<T> extends EventSourceLike<T> {
     readonly [LazyInitEventSourceMixin_publisher]: Optional<EventListenerLike<T>>;
 }

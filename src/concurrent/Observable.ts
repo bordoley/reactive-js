@@ -268,26 +268,41 @@ interface FlatMap {
   ): Function1<ObservableLike<TA>, DeferredSideEffectsObservableLike<TB>>;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface ObservableComputation extends Computation {
   readonly [Computation_type]?: ObservableLike<this[typeof Computation_T]>;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface PureRunnableComputation extends Computation {
   readonly [Computation_type]?: PureRunnableLike<this[typeof Computation_T]>;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface RunnableWithSideEffectsComputation extends Computation {
   readonly [Computation_type]?: RunnableWithSideEffectsLike<
     this[typeof Computation_T]
   >;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface DeferredSideEffectsObservableComputation extends Computation {
   readonly [Computation_type]?: DeferredSideEffectsObservableLike<
     this[typeof Computation_T]
   >;
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface MulticastObservableComputation extends Computation {
   readonly [Computation_type]?: MulticastObservableLike<
     this[typeof Computation_T]

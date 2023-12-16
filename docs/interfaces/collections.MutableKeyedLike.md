@@ -23,30 +23,9 @@
 
 ### Methods
 
-- [[KeyedLike\_get]](collections.MutableKeyedLike.md#[keyedlike_get])
 - [[MutableKeyedLike\_set]](collections.MutableKeyedLike.md#[mutablekeyedlike_set])
 
 ## Methods
-
-### [KeyedLike\_get]
-
-▸ **[KeyedLike_get]**(`index`): `T`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `index` | `TKey` |
-
-#### Returns
-
-`T`
-
-#### Inherited from
-
-[KeyedLike](collections.KeyedLike.md).[[KeyedLike_get]](collections.KeyedLike.md#[keyedlike_get])
-
-___
 
 ### [MutableKeyedLike\_set]
 

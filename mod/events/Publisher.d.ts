@@ -1,4 +1,7 @@
 import { PublisherLike } from "../events.js";
+/**
+ * @noInheritDoc
+ */
 export interface PublisherModule {
     /**
      */

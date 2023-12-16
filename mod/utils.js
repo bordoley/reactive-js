@@ -12,6 +12,9 @@ export const StackLike_head = Symbol("StackLike_head");
 export const StackLike_pop = Symbol("StackLike_pop");
 export const QueueLike_head = Symbol("QueueLike_head");
 export const QueueLike_dequeue = Symbol("QueueLike_dequeue");
+/**
+ * @noInheritDoc
+ */
 export class BackPressureError extends Error {
     [QueueableLike_capacity];
     [QueueableLike_backpressureStrategy];

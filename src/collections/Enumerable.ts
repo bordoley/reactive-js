@@ -45,12 +45,18 @@ import Enumerable_zip from "./Enumerable/__private__/Enumerable.zip.js";
 import Enumerable_zipWith from "./Enumerable/__private__/Enumerable.zipWith.js";
 import ReadonlyArray_values from "./ReadonlyArray/__private__/ReadonlyArray.values.js";
 
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableComputation extends Computation {
   readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
 }
 
 export type Type = EnumerableComputation;
 
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableModule
   extends PureComputationModule<EnumerableComputation> {
   concat<T>(

@@ -1,10 +1,16 @@
 import { EnumerableLike } from "../collections.js";
 import { Computation, Computation_T, Computation_type, PureComputationModule } from "../computations.js";
 import { Factory, Function1, Predicate, Reducer, Tuple2, Tuple3, Tuple4, Tuple5, Tuple6, Tuple7, Tuple8, Tuple9, Updater } from "../functions.js";
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableComputation extends Computation {
     readonly [Computation_type]?: EnumerableLike<this[typeof Computation_T]>;
 }
 export type Type = EnumerableComputation;
+/**
+ * @noInheritDoc
+ */
 export interface EnumerableModule extends PureComputationModule<EnumerableComputation> {
     concat<T>(fst: EnumerableLike<T>, snd: EnumerableLike<T>, ...tail: readonly EnumerableLike<T>[]): EnumerableLike<T>;
     concatMany<T>(enumerables: readonly EnumerableLike<T>[]): EnumerableLike<T>;

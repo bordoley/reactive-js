@@ -14,59 +14,21 @@
 
 ### Methods
 
-- [buffer](collections_Enumerable.EnumerableModule.md#buffer)
 - [concat](collections_Enumerable.EnumerableModule.md#concat)
 - [concatAll](collections_Enumerable.EnumerableModule.md#concatall)
 - [concatMany](collections_Enumerable.EnumerableModule.md#concatmany)
 - [concatMap](collections_Enumerable.EnumerableModule.md#concatmap)
 - [concatWith](collections_Enumerable.EnumerableModule.md#concatwith)
-- [decodeWithCharset](collections_Enumerable.EnumerableModule.md#decodewithcharset)
-- [distinctUntilChanged](collections_Enumerable.EnumerableModule.md#distinctuntilchanged)
 - [empty](collections_Enumerable.EnumerableModule.md#empty)
-- [fromReadonlyArray](collections_Enumerable.EnumerableModule.md#fromreadonlyarray)
 - [generate](collections_Enumerable.EnumerableModule.md#generate)
-- [keep](collections_Enumerable.EnumerableModule.md#keep)
-- [map](collections_Enumerable.EnumerableModule.md#map)
-- [pairwise](collections_Enumerable.EnumerableModule.md#pairwise)
 - [range](collections_Enumerable.EnumerableModule.md#range)
 - [reduce](collections_Enumerable.EnumerableModule.md#reduce)
 - [repeat](collections_Enumerable.EnumerableModule.md#repeat)
-- [scan](collections_Enumerable.EnumerableModule.md#scan)
-- [skipFirst](collections_Enumerable.EnumerableModule.md#skipfirst)
-- [takeFirst](collections_Enumerable.EnumerableModule.md#takefirst)
-- [takeWhile](collections_Enumerable.EnumerableModule.md#takewhile)
 - [toReadonlyArray](collections_Enumerable.EnumerableModule.md#toreadonlyarray)
 - [zip](collections_Enumerable.EnumerableModule.md#zip)
 - [zipWith](collections_Enumerable.EnumerableModule.md#zipwith)
 
 ## Methods
-
-### buffer
-
-▸ **buffer**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, readonly `T`[]\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[buffer](computations.PureComputationModule.md#buffer)
-
-___
 
 ### concat
 
@@ -179,54 +141,6 @@ ___
 
 ___
 
-### decodeWithCharset
-
-▸ **decodeWithCharset**(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.charset?` | `string` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `ArrayBuffer`, `string`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[decodeWithCharset](computations.PureComputationModule.md#decodewithcharset)
-
-___
-
-### distinctUntilChanged
-
-▸ **distinctUntilChanged**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.equality?` | [`Equality`](../modules/functions.md#equality)<`T`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[distinctUntilChanged](computations.PureComputationModule.md#distinctuntilchanged)
-
-___
-
 ### empty
 
 ▸ **empty**<`T`\>(): [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
@@ -240,26 +154,6 @@ ___
 #### Returns
 
 [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
-
-___
-
-### fromReadonlyArray
-
-▸ **fromReadonlyArray**<`T`\>(): [`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<readonly `T`[], [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[fromReadonlyArray](computations.PureComputationModule.md#fromreadonlyarray)
 
 ___
 
@@ -283,79 +177,6 @@ ___
 #### Returns
 
 [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>
-
-___
-
-### keep
-
-▸ **keep**<`T`\>(`predicate`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[keep](computations.PureComputationModule.md#keep)
-
-___
-
-### map
-
-▸ **map**<`TA`, `TB`\>(`selector`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `TA` |
-| `TB` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `selector` | [`Function1`](../modules/functions.md#function1)<`TA`, `TB`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `TA`, `TB`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[map](computations.PureComputationModule.md#map)
-
-___
-
-### pairwise
-
-▸ **pairwise**<`T`\>(): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, [`Tuple2`](../modules/functions.md#tuple2)<`T`, `T`\>\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[pairwise](computations.PureComputationModule.md#pairwise)
 
 ___
 
@@ -450,116 +271,6 @@ ___
 #### Returns
 
 [`Function1`](../modules/functions.md#function1)<[`EnumerableLike`](collections.EnumerableLike.md)<`T`\>, [`EnumerableLike`](collections.EnumerableLike.md)<`T`\>\>
-
-___
-
-### scan
-
-▸ **scan**<`T`, `TAcc`\>(`scanner`, `initialValue`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-| `TAcc` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scanner` | [`Reducer`](../modules/functions.md#reducer)<`T`, `TAcc`\> |
-| `initialValue` | [`Factory`](../modules/functions.md#factory)<`TAcc`\> |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `TAcc`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[scan](computations.PureComputationModule.md#scan)
-
-___
-
-### skipFirst
-
-▸ **skipFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[skipFirst](computations.PureComputationModule.md#skipfirst)
-
-___
-
-### takeFirst
-
-▸ **takeFirst**<`T`\>(`options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.count?` | `number` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[takeFirst](computations.PureComputationModule.md#takefirst)
-
-___
-
-### takeWhile
-
-▸ **takeWhile**<`T`\>(`predicate`, `options?`): [`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `predicate` | [`Predicate`](../modules/functions.md#predicate)<`T`\> |
-| `options?` | `Object` |
-| `options.inclusive?` | `boolean` |
-
-#### Returns
-
-[`ComputationOperator`](../modules/computations.md#computationoperator)<[`EnumerableComputation`](collections_Enumerable.EnumerableComputation.md), `T`, `T`\>
-
-#### Inherited from
-
-[PureComputationModule](computations.PureComputationModule.md).[takeWhile](computations.PureComputationModule.md#takewhile)
 
 ___
 
