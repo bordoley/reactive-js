@@ -116,6 +116,27 @@ testModule(
         expectArrayEquals([1, 2, 1, 2, 1, 2]),
       ),
     ),
+    test(
+      "with predicate",
+      pipeLazy(
+        Enumerable.generate(increment, returns(0)),
+        Enumerable.takeFirst({ count: 2 }),
+        Enumerable.repeat(x => x < 3),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2]),
+      ),
+    ),
+    test(
+      "repeat forever",
+      pipeLazy(
+        Enumerable.generate(increment, returns(0)),
+        Enumerable.takeFirst({ count: 2 }),
+        Enumerable.repeat(),
+        Enumerable.takeFirst({ count: 6 }),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 2, 1, 2, 1, 2]),
+      ),
+    ),
   ),
   describe(
     "zip",
