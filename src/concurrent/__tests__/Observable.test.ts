@@ -451,6 +451,19 @@ testModule(
     ),
   ),
   describe(
+    "currentTime",
+    test(
+      "publish current time from VTS",
+      pipeLazy(
+        Observable.currentTime,
+        Observable.takeFirst({ count: 5 }),
+        Observable.toReadonlyArray<number>(),
+        // Only delayed scheduled continuations increment the clock
+        expectArrayEquals([0, 0, 0, 0, 0]),
+      ),
+    ),
+  ),
+  describe(
     "dispatchTo",
     test(
       "when backpressure exception is thrown",
