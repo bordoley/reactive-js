@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-- [IndexedCollectionCollection](../interfaces/collections_Indexed.IndexedCollectionCollection.md)
+- [IndexedCollection](../interfaces/collections_Indexed.IndexedCollection.md)
 
 ### Type Aliases
 
@@ -46,7 +46,7 @@ ___
 
 ### Type
 
-Ƭ **Type**: [`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md)
+Ƭ **Type**: [`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md)
 
 ## Functions
 
@@ -119,7 +119,7 @@ ___
 
 ### keep
 
-▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `T`, `T`, `TKey`\>
+▸ **keep**<`T`, `TKey`\>(`predicate`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md), `T`, `T`, `TKey`\>
 
 #### Type parameters
 
@@ -136,7 +136,7 @@ ___
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `T`, `T`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md), `T`, `T`, `TKey`\>
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 ### map
 
-▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
+▸ **map**<`TA`, `TB`, `TKey`\>(`selector`): [`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md), `TA`, `TB`, `TKey`\>
 
 Returns a KeyedCollectionOperator that applies the `selector` function to each
 value emitted by the source.
@@ -203,7 +203,7 @@ TB - The inner type of the mapped container
 
 #### Returns
 
-[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollectionCollection`](../interfaces/collections_Indexed.IndexedCollectionCollection.md), `TA`, `TB`, `TKey`\>
+[`KeyedCollectionOperator`](collections.md#keyedcollectionoperator)<[`IndexedCollection`](../interfaces/collections_Indexed.IndexedCollection.md), `TA`, `TB`, `TKey`\>
 
 ___
 

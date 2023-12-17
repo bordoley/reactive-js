@@ -2,10 +2,10 @@ import { IndexedCollectionModule as IndexedCollectionModuleBase, IndexedLike, Ke
 /**
  * @noInheritDoc
  */
-export interface IndexedCollectionCollection extends KeyedCollection<number> {
+export interface IndexedCollection extends KeyedCollection<number> {
     readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;
 }
-export type Type = IndexedCollectionCollection;
+export type Type = IndexedCollection;
 export type TKeyBase = KeyOf<Type>;
 export type Signature = IndexedCollectionModuleBase<Type>;
 export declare const empty: Signature["empty"];

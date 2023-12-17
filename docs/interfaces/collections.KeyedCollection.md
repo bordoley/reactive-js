@@ -16,7 +16,7 @@
 
   ↳ [`DictionaryCollection`](collections_Dictionary.DictionaryCollection.md)
 
-  ↳ [`IndexedCollectionCollection`](collections_Indexed.IndexedCollectionCollection.md)
+  ↳ [`IndexedCollection`](collections_Indexed.IndexedCollection.md)
 
   ↳ [`ReadonlyArrayCollection`](collections_ReadonlyArray.ReadonlyArrayCollection.md)
 

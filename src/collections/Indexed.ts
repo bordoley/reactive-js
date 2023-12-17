@@ -23,11 +23,11 @@ import Indexed_values from "./Indexed/__private__/Indexed.values.js";
 /**
  * @noInheritDoc
  */
-export interface IndexedCollectionCollection extends KeyedCollection<number> {
+export interface IndexedCollection extends KeyedCollection<number> {
   readonly [KeyedCollection_type]?: IndexedLike<this[typeof KeyedCollection_T]>;
 }
 
-export type Type = IndexedCollectionCollection;
+export type Type = IndexedCollection;
 
 export type TKeyBase = KeyOf<Type>;
 
