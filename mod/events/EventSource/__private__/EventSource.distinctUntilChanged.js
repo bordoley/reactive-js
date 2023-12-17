@@ -14,7 +14,7 @@ const EventSource_distinctUntilChanged =
         [EventListenerLike_isErrorSafe]: false,
     })))();
     return (options = {}) => {
-        const { equality = strictEquality } = options ?? {};
+        const { equality = strictEquality } = options;
         return pipe((createDistinctUntilChangedEventListener), partial(equality), EventSource_lift);
     };
 })();

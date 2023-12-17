@@ -48,7 +48,7 @@ const EventSource_distinctUntilChanged: EventSource.Signature["distinctUntilChan
       ))();
 
     return <T>(options: { equality?: Equality<T> } = {}) => {
-      const { equality = strictEquality } = options ?? {};
+      const { equality = strictEquality } = options;
 
       return pipe(
         createDistinctUntilChangedEventListener<T>,
