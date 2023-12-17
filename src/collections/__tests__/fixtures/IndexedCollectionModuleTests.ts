@@ -184,6 +184,16 @@ const IndexedCollectionModuleTests = <C extends KeyedCollection<number>>(
           expectArrayEquals([3, 2]),
         ),
       ),
+      test(
+        "iterating",
+        pipeLazy(
+          [1, 2, 3, 4],
+          fromReadonlyArray(),
+          m.toIndexed({ start: 2, count: -2 }),
+          Enumerable.toReadonlyArray(),
+          expectArrayEquals([3, 2]),
+        ),
+      ),
     ),
     describe(
       "toReadonlyArray",
