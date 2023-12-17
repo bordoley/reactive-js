@@ -2,10 +2,16 @@ import {
   describe,
   expectArrayEquals,
   expectEquals,
+  expectIsNone,
+  expectToThrow,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { CollectionLike_count, KeyedLike_get } from "../../collections.js";
+import {
+  CollectionLike_count,
+  KeyedLike_get,
+  MutableKeyedLike_set,
+} from "../../collections.js";
 import * as Enumerable from "../../collections/Enumerable.js";
 import { Optional, none, pipe } from "../../functions.js";
 import {
@@ -13,6 +19,7 @@ import {
   QueueLike_head,
   QueueableLike_enqueue,
   StackLike_head,
+  StackLike_pop,
 } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
 
@@ -23,6 +30,12 @@ testModule(
     test("push/pull/count", () => {
       const queue = IndexedQueue.create<number>();
 
+      pipe(queue[StackLike_head], expectIsNone);
+      pipe(queue[StackLike_pop](), expectIsNone);
+      expectToThrow(() => queue[KeyedLike_get](0));
+
+      expectToThrow(() => queue[MutableKeyedLike_set](0, 0));
+
       pipe(queue[QueueLike_head], expectEquals(none as Optional<number>));
       pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
 
@@ -31,6 +44,8 @@ testModule(
         pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
         pipe(queue[StackLike_head], expectEquals<Optional<number>>(i));
       }
+
+      expectToThrow(() => queue[KeyedLike_get](-10));
 
       pipe(
         queue,
