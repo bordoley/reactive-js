@@ -39,7 +39,7 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
     readonly throttleDuration?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-    readonly scheduler: SchedulerLike;
+    readonly scheduler?: SchedulerLike;
   },
 ) => {
   const throttleDuration = options?.throttleDuration ?? 0;

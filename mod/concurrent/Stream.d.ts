@@ -9,7 +9,7 @@ export interface StreamModule {
         readonly throttleDuration?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
-        readonly scheduler: SchedulerLike;
+        readonly scheduler?: SchedulerLike;
     }): Function1<StreamLike<Updater<T>, T>, DisposableLike>;
 }
 export type Signature = StreamModule;

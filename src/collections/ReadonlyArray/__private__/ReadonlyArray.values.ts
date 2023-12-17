@@ -24,14 +24,19 @@ const ReadonlyArray_values: ReadonlyArray.Signature["values"] =
       count: number,
     ) => {
       function* ReadonlyArrayValues(): Iterator<T> {
+        let iterCount = count;
+        let iterStartIndex = startIndex;
         for (
           ;
-          count !== 0;
-          count > 0 ? (startIndex++, count--) : (startIndex--, count++)
+          iterCount !== 0;
+          iterCount > 0
+            ? (iterStartIndex++, iterCount--)
+            : (iterStartIndex--, iterCount++)
         ) {
-          yield arr[startIndex];
+          yield arr[iterStartIndex];
         }
       }
+
       return Enumerable_create(() =>
         pipe(ReadonlyArrayValues(), Enumerator_fromIterator()),
       );

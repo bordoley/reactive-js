@@ -144,6 +144,16 @@ testModule(
         expectArrayEquals([1, 2, 1, 2, 1, 2]),
       ),
     ),
+    test(
+      "with array source",
+      pipeLazy(
+        [1],
+        Enumerable.fromReadonlyArray(),
+        Enumerable.repeat(3),
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([1, 1, 1]),
+      ),
+    ),
   ),
   describe(
     "zip",

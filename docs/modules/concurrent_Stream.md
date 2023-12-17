@@ -43,7 +43,7 @@
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
-| `options.scheduler` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
+| `options.scheduler?` | [`SchedulerLike`](../interfaces/concurrent.SchedulerLike.md) |
 | `options.throttleDuration?` | `number` |
 
 #### Returns
