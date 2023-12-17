@@ -15,7 +15,10 @@ const Subject_create = /*@__PURE__*/ (() => {
     const createSubjectInstance = createInstanceFactory(mix(include(DisposableMixin), function Subject(instance, replay) {
         init(DisposableMixin, instance);
         instance[Subject_observers] = newInstance(Set);
-        instance[ReplayObservableLike_buffer] = IndexedQueue.create(replay, "drop-oldest");
+        instance[ReplayObservableLike_buffer] = IndexedQueue.create({
+            capacity: replay,
+            backpressureStrategy: "drop-oldest",
+        });
         pipe(instance, Disposable.onDisposed(e => {
             for (const observer of instance[Subject_observers]) {
                 if (isSome(e)) {

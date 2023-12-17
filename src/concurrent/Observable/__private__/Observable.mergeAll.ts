@@ -117,10 +117,10 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
           init(DisposableMixin, instance);
           init(DelegatingObserverMixin(), instance, delegate);
 
-          instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(
+          instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
             capacity,
             backpressureStrategy,
-          );
+          });
           instance[MergeAllObserver_concurrency] = concurrency;
           instance[MergeAllObserver_delegate] = delegate;
 

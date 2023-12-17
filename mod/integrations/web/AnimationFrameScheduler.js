@@ -1,7 +1,6 @@
 /// <reference types="./AnimationFrameScheduler.d.ts" />
 
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { createInstanceFactory, include, init, mix, props, } from "../../__internal__/mixins.js";
 import { CollectionLike_count } from "../../collections.js";
 import { SchedulerLike_now, SchedulerLike_schedule, SchedulerLike_shouldYield, } from "../../concurrent.js";
@@ -12,12 +11,12 @@ import * as Disposable from "../../utils/Disposable.js";
 import * as IndexedQueue from "../../utils/IndexedQueue.js";
 const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
 export const create = /*@__PURE__*/ (() => {
-    let rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
+    let rafQueue = IndexedQueue.create();
     let rafIsRunning = false;
     const rafCallback = () => {
         const startTime = CurrentTime.now();
         const workQueue = rafQueue;
-        rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
+        rafQueue = IndexedQueue.create();
         let job = none;
         while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {
             job();

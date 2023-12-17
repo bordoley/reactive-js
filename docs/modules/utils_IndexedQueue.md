@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`capacity`, `backpressureStrategy`): [`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>
+▸ **create**<`T`\>(`options?`): [`IndexedQueueLike`](../interfaces/utils.IndexedQueueLike.md)<`T`\>
 
 #### Type parameters
 
@@ -24,8 +24,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
 
 #### Returns
 

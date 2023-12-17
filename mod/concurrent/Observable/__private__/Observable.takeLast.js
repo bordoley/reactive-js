@@ -17,7 +17,10 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DisposableMixin, DelegatingObserverMixin()), function TakeLastObserver(instance, delegate, takeLastCount) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
-        instance[TakeLastObserver_queue] = IndexedQueue.create(takeLastCount, "drop-oldest");
+        instance[TakeLastObserver_queue] = IndexedQueue.create({
+            capacity: takeLastCount,
+            backpressureStrategy: "drop-oldest",
+        });
         pipe(instance, Disposable.onComplete(() => {
             pipe(instance[TakeLastObserver_queue], Observable_fromIterable(), invoke(ObservableLike_observe, delegate));
         }));

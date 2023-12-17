@@ -1,16 +1,18 @@
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   describe,
+  expectArrayEquals,
   expectEquals,
   test,
   testModule,
 } from "../../__internal__/testing.js";
-import { CollectionLike_count } from "../../collections.js";
+import { CollectionLike_count, KeyedLike_get } from "../../collections.js";
+import * as Enumerable from "../../collections/Enumerable.js";
 import { Optional, none, pipe } from "../../functions.js";
 import {
   QueueLike_dequeue,
   QueueLike_head,
   QueueableLike_enqueue,
+  StackLike_head,
 } from "../../utils.js";
 import * as IndexedQueue from "../IndexedQueue.js";
 
@@ -19,14 +21,25 @@ testModule(
   describe(
     "indexedQueueMixin",
     test("push/pull/count", () => {
-      const queue = IndexedQueue.create<number>(MAX_SAFE_INTEGER, "overflow");
+      const queue = IndexedQueue.create<number>();
 
       pipe(queue[QueueLike_head], expectEquals(none as Optional<number>));
       pipe(queue[QueueLike_dequeue](), expectEquals(none as Optional<number>));
 
       for (let i = 0; i < 8; i++) {
         queue[QueueableLike_enqueue](i);
-        pipe(queue[QueueLike_head], expectEquals(0 as Optional<number>));
+        pipe(queue[QueueLike_head], expectEquals<Optional<number>>(0));
+        pipe(queue[StackLike_head], expectEquals<Optional<number>>(i));
+      }
+
+      pipe(
+        queue,
+        Enumerable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7]),
+      );
+
+      for (let i = 0; i < 8; i++) {
+        pipe(queue[KeyedLike_get](i), expectEquals(i));
       }
 
       pipe(queue[CollectionLike_count], expectEquals(8));
@@ -66,7 +79,7 @@ testModule(
       pipe(queue[QueueLike_head], expectEquals(26 as Optional<number>));
     }),
     test("shrink", () => {
-      const queue = IndexedQueue.create<number>(MAX_SAFE_INTEGER, "overflow");
+      const queue = IndexedQueue.create<number>();
 
       for (let i = 0; i < 300; i++) {
         queue[QueueableLike_enqueue](i);

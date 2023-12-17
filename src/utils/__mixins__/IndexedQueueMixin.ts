@@ -26,7 +26,6 @@ import {
 import {
   BackPressureError,
   IndexedQueueLike,
-  QueueLike,
   QueueLike_dequeue,
   QueueLike_head,
   QueueableLike,
@@ -186,7 +185,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return head === tail ? none : values[index];
         },
 
-        [QueueLike_dequeue](this: TProperties & QueueableLike) {
+        [QueueLike_dequeue](this: TProperties & IndexedQueueLike<T>) {
           const tail = this[IndexedQueueMixin_tail];
           const values = this[IndexedQueueMixin_values] ?? [];
 
@@ -206,7 +205,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return item;
         },
 
-        [StackLike_pop](this: TProperties & QueueableLike): Optional<T> {
+        [StackLike_pop](this: TProperties & IndexedQueueLike<T>): Optional<T> {
           const head = this[IndexedQueueMixin_head];
           const values = this[IndexedQueueMixin_values] ?? [];
           const capacity = values.length;
@@ -229,7 +228,10 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return item;
         },
 
-        [KeyedLike_get](this: TProperties & QueueableLike, index: number): T {
+        [KeyedLike_get](
+          this: TProperties & IndexedQueueLike<T>,
+          index: number,
+        ): T {
           const count = this[CollectionLike_count];
           const capacity = this[IndexedQueueMixin_values]?.length ?? 0;
           const head = this[IndexedQueueMixin_head];
@@ -249,7 +251,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
         },
 
         [MutableKeyedLike_set](
-          this: TProperties & QueueableLike,
+          this: TProperties & IndexedQueueLike<T>,
           index: number,
           value: T,
         ): T {
@@ -276,7 +278,7 @@ const IndexedQueueMixin: <T>() => Mixin2<
         },
 
         [QueueableLike_enqueue](
-          this: TProperties & QueueableLike & QueueLike,
+          this: TProperties & IndexedQueueLike<T>,
           item: T,
         ): boolean {
           const backpressureStrategy = this[QueueableLike_backpressureStrategy];
@@ -328,12 +330,12 @@ const IndexedQueueMixin: <T>() => Mixin2<
           return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
 
-        [EnumerableLike_enumerate]() {
-          return pipe(this[Symbol.iterator], Enumerator_fromIterator<T>());
+        [EnumerableLike_enumerate](this: TProperties & IndexedQueueLike<T>) {
+          return pipe(this[Symbol.iterator](), Enumerator_fromIterator<T>());
         },
 
         *[Symbol.iterator](
-          this: TProperties & QueueableLike & QueueLike,
+          this: TProperties & IndexedQueueLike<T>,
         ): Iterator<T, any, undefined> {
           const head = this[IndexedQueueMixin_head];
           const count = this[CollectionLike_count];

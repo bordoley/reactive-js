@@ -1,5 +1,4 @@
 import * as CurrentTime from "../../__internal__/CurrentTime.js";
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import {
   createInstanceFactory,
   include,
@@ -47,14 +46,14 @@ interface Signature {
 const AnimationFrameScheduler_host = Symbol("AnimationFrameScheduler_host");
 
 export const create: Signature["create"] = /*@__PURE__*/ (() => {
-  let rafQueue = IndexedQueue.create<SideEffect>(MAX_SAFE_INTEGER, "overflow");
+  let rafQueue = IndexedQueue.create<SideEffect>();
   let rafIsRunning = false;
 
   const rafCallback = () => {
     const startTime = CurrentTime.now();
     const workQueue = rafQueue;
 
-    rafQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
+    rafQueue = IndexedQueue.create();
 
     let job: Optional<SideEffect> = none;
     while (((job = workQueue[QueueLike_dequeue]()), isSome(job))) {

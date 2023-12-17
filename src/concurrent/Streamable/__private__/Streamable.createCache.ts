@@ -135,10 +135,7 @@ const createCacheStream: <T>(
         instance.store = new Map();
         instance.subscriptions = new Map();
 
-        const cleanupQueue = IndexedQueue.create<string>(
-          MAX_SAFE_INTEGER,
-          "overflow",
-        );
+        const cleanupQueue = IndexedQueue.create<string>();
 
         const cleanupContinuation = (ctx: ContinuationContextLike) => {
           const { store, subscriptions } = instance;

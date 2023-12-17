@@ -12,7 +12,7 @@
 
 ### create
 
-▸ **create**<`T`\>(`comparator`, `capacity`, `backpressureStrategy`): [`QueueCollectionLike`](../interfaces/utils.QueueCollectionLike.md)<`T`\>
+▸ **create**<`T`\>(`comparator`, `options?`): [`QueueCollectionLike`](../interfaces/utils.QueueCollectionLike.md)<`T`\>
 
 #### Type parameters
 
@@ -25,8 +25,9 @@
 | Name | Type |
 | :------ | :------ |
 | `comparator` | [`Comparator`](functions.md#comparator)<`T`\> |
-| `capacity` | `number` |
-| `backpressureStrategy` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options?` | `Object` |
+| `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
+| `options.capacity?` | `number` |
 
 #### Returns
 

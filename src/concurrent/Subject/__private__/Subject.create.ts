@@ -66,10 +66,10 @@ const Subject_create: Subject.Signature["create"] = /*@__PURE__*/ (<T>() => {
         init(DisposableMixin, instance);
 
         instance[Subject_observers] = newInstance<Set<ObserverLike>>(Set);
-        instance[ReplayObservableLike_buffer] = IndexedQueue.create(
-          replay,
-          "drop-oldest",
-        );
+        instance[ReplayObservableLike_buffer] = IndexedQueue.create({
+          capacity: replay,
+          backpressureStrategy: "drop-oldest",
+        });
 
         pipe(
           instance,

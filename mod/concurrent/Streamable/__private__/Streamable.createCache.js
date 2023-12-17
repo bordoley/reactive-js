@@ -20,7 +20,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(include(DelegatingStreamMixin()), function CacheStream(instance, scheduler, options, capacity, cleanupScheduler, persistentStore) {
         instance.store = new Map();
         instance.subscriptions = new Map();
-        const cleanupQueue = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
+        const cleanupQueue = IndexedQueue.create();
         const cleanupContinuation = (ctx) => {
             const { store, subscriptions } = instance;
             while (store.size > capacity) {

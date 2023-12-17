@@ -1,15 +1,14 @@
 /// <reference types="./PriorityQueue.test.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../../__internal__/constants.js";
 import { floor, random } from "../../__internal__/math.js";
-import { expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
+import { expectArrayEquals, expectEquals, expectToThrow, test, testModule, } from "../../__internal__/testing.js";
 import { CollectionLike_count } from "../../collections.js";
 import { newInstance, pipe } from "../../functions.js";
-import { QueueLike_dequeue, QueueableLike_enqueue } from "../../utils.js";
+import { QueueLike_dequeue, QueueLike_head, QueueableLike_enqueue, } from "../../utils.js";
 import * as PriorityQueue from "../PriorityQueue.js";
 const createPriorityQueue = /*@__PURE__*/ (() => {
     const compare = (a, b) => a - b;
-    return () => PriorityQueue.create(compare, MAX_SAFE_INTEGER, "overflow");
+    return () => PriorityQueue.create(compare);
 })();
 const makeSortedArray = (n) => {
     const result = newInstance(Array, n);
@@ -39,4 +38,36 @@ testModule("PriorityQueue", test("push", () => {
         acc.push(queue[QueueLike_dequeue]());
     }
     pipe(acc, expectArrayEquals(makeSortedArray(100)));
+}), test("drop-latest backpressure", () => {
+    const compare = (a, b) => a - b;
+    const queue = PriorityQueue.create(compare, {
+        capacity: 1,
+        backpressureStrategy: "drop-latest",
+    });
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueLike_head], expectEquals(0));
+}), test("drop-oldest backpressure", () => {
+    const compare = (a, b) => a - b;
+    const queue = PriorityQueue.create(compare, {
+        capacity: 1,
+        backpressureStrategy: "drop-oldest",
+    });
+    queue[QueueableLike_enqueue](0);
+    queue[QueueableLike_enqueue](1);
+    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueLike_head], expectEquals(1));
+}), test("throw backpressure", () => {
+    const compare = (a, b) => a - b;
+    const queue = PriorityQueue.create(compare, {
+        capacity: 1,
+        backpressureStrategy: "throw",
+    });
+    queue[QueueableLike_enqueue](0);
+    expectToThrow(() => {
+        queue[QueueableLike_enqueue](1);
+    });
+    pipe(queue[CollectionLike_count], expectEquals(1));
+    pipe(queue[QueueLike_head], expectEquals(0));
 }));

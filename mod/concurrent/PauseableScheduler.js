@@ -1,6 +1,5 @@
 /// <reference types="./PauseableScheduler.d.ts" />
 
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../__internal__/math.js";
 import { createInstanceFactory, include, init, mix, props, unsafeCast, } from "../__internal__/mixins.js";
 import { EnumeratorLike_current, EnumeratorLike_hasCurrent, EnumeratorLike_move, } from "../collections.js";
@@ -101,8 +100,9 @@ export const create = /*@PURE__*/ (() => {
         init(ContinuationSchedulerMixin, instance, host[SchedulerLike_maxYieldInterval]);
         init(MutableEnumeratorMixin(), instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
-        instance[PauseableScheduler_delayed] = PriorityQueue.create(delayedComparator, MAX_SAFE_INTEGER, "overflow");
-        instance[PauseableScheduler_queue] = IndexedQueue.create(MAX_SAFE_INTEGER, "overflow");
+        instance[PauseableScheduler_delayed] =
+            PriorityQueue.create(delayedComparator);
+        instance[PauseableScheduler_queue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
         instance[PauseableScheduler_initialTime] = host[SchedulerLike_now];
         instance[PauseableScheduler_resumedTime] =

@@ -29,7 +29,10 @@ const Observer_createMergeAllObserverOperator = /*@__PURE__*/ (() => {
     const createMergeAllObserver = createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function MergeAllObserver(instance, delegate, capacity, backpressureStrategy, concurrency) {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
-        instance[MergeAllObserver_observablesQueue] = IndexedQueue.create(capacity, backpressureStrategy);
+        instance[MergeAllObserver_observablesQueue] = IndexedQueue.create({
+            capacity,
+            backpressureStrategy,
+        });
         instance[MergeAllObserver_concurrency] = concurrency;
         instance[MergeAllObserver_delegate] = delegate;
         instance[MergeAllObserver_activeCount] = 0;

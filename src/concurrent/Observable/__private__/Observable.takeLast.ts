@@ -41,10 +41,10 @@ const Observer_createTakeLastObserver = /*@__PURE__*/ (<T>() => {
         init(DisposableMixin, instance);
         init(DelegatingObserverMixin(), instance, delegate);
 
-        instance[TakeLastObserver_queue] = IndexedQueue.create(
-          takeLastCount,
-          "drop-oldest",
-        );
+        instance[TakeLastObserver_queue] = IndexedQueue.create({
+          capacity: takeLastCount,
+          backpressureStrategy: "drop-oldest",
+        });
 
         pipe(
           instance,

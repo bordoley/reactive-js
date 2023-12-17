@@ -194,7 +194,7 @@ const IndexedQueueMixin = /*@PURE*/ (() => {
             return this[CollectionLike_count] < this[QueueableLike_capacity];
         },
         [EnumerableLike_enumerate]() {
-            return pipe(this[Symbol.iterator], Enumerator_fromIterator());
+            return pipe(this[Symbol.iterator](), Enumerator_fromIterator());
         },
         *[Symbol.iterator]() {
             const head = this[IndexedQueueMixin_head];

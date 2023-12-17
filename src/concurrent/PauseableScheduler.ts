@@ -1,4 +1,3 @@
-import { MAX_SAFE_INTEGER } from "../__internal__/constants.js";
 import { clampPositiveInteger, max } from "../__internal__/math.js";
 import {
   Mutable,
@@ -242,15 +241,9 @@ export const create: Signature["create"] = /*@PURE__*/ (() => {
         init(MutableEnumeratorMixin<SchedulerTaskLike>(), instance);
         init(SerialDisposableMixin(), instance, Disposable.disposed);
 
-        instance[PauseableScheduler_delayed] = PriorityQueue.create(
-          delayedComparator,
-          MAX_SAFE_INTEGER,
-          "overflow",
-        );
-        instance[PauseableScheduler_queue] = IndexedQueue.create(
-          MAX_SAFE_INTEGER,
-          "overflow",
-        );
+        instance[PauseableScheduler_delayed] =
+          PriorityQueue.create(delayedComparator);
+        instance[PauseableScheduler_queue] = IndexedQueue.create();
         instance[PauseableScheduler_hostScheduler] = host;
 
         instance[PauseableScheduler_initialTime] = host[SchedulerLike_now];
