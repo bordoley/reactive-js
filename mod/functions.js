@@ -51,7 +51,6 @@ export const call = (f, self, ...args) => f.call(self, ...args);
  * Composes a series of unary functions.
  */
 export const compose = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => source => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
-export const composeLazy = ((op1, op2, op3, op4, op5, op6, op7, ...operators) => (source) => () => pipeUnsafe(source, op1, op2, op3, op4, op5, op6, op7, ...operators));
 /**
  * Invokes the debugger when compiled in dev mode. In production mode,
  * is a noop.

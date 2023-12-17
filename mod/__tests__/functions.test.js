@@ -1,7 +1,7 @@
 /// <reference types="./functions.test.d.ts" />
 
-import { describe, expectArrayEquals, expectArrayNotEquals, expectEquals, expectTrue, test, testModule, testPredicateExpectingFalse, testPredicateExpectingTrue, } from "../__internal__/testing.js";
-import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, call, decrement, decrementBy, greaterThan, identity, increment, incrementBy, invoke, isEqualTo, isEven, isFalse, isFunction, isNone, isNotEqualTo, isNumber, isObject, isOdd, isSome, isString, isTrue, lessThan, negate, newInstance, none, pick, pipe, pipeLazy, returns, tuple, } from "../functions.js";
+import { describe, expectArrayEquals, expectArrayNotEquals, expectEquals, expectIsNone, expectIsSome, expectToThrow, expectTrue, test, testModule, testPredicateExpectingFalse, testPredicateExpectingTrue, } from "../__internal__/testing.js";
+import { alwaysFalse, alwaysTrue, arrayEquality, bind, bindMethod, call, decrement, decrementBy, greaterThan, identity, increment, incrementBy, invoke, isEqualTo, isEven, isFalse, isFunction, isNone, isNotEqualTo, isNumber, isObject, isOdd, isSome, isString, isTrue, lessThan, negate, newInstance, none, pick, pipe, pipeLazy, pipeSome, pipeSomeLazy, raiseIf, returns, tuple, } from "../functions.js";
 testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(false, alwaysFalse), testPredicateExpectingFalse(true, alwaysFalse)), describe("alwaysTrue", testPredicateExpectingTrue(false, alwaysTrue), testPredicateExpectingTrue(true, alwaysTrue)), describe("arrayEquality", describe("strict equality", test("when arrays are empty", pipeLazy([], expectArrayEquals([]))), test("when arrays have identical values", pipeLazy([1, 2, 3], expectArrayEquals([1, 2, 3]))), test("when arrays are the same reference", () => {
     const arr = [1, 2, 3];
     pipe(arr, expectArrayEquals(arr));
@@ -71,6 +71,10 @@ testModule("functions", describe("alwaysFalse", testPredicateExpectingFalse(fals
             },
         },
     }, pick("a", "b", "c", "d"), expectEquals(expected));
+})), describe("pipeSome", test("with some", pipeLazy(pipeSome(1, identity), expectIsSome)), test("with none", pipeLazy(pipeSome(none, identity), expectIsNone))), describe("pipeSomeLazy", test("with some", pipeLazy(pipeSomeLazy(1, identity)(), expectIsSome)), test("with none", pipeLazy(pipeSomeLazy(none, identity)(), expectIsNone))), describe("raiseIf", test("with true", () => {
+    expectToThrow(() => raiseIf(true, ""));
+}), test("with false", () => {
+    raiseIf(false, "");
 })), describe("returns", test("allocated function always returns the input value", () => {
     const result = {};
     const f = returns(result);

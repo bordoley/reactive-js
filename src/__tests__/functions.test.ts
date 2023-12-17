@@ -3,6 +3,9 @@ import {
   expectArrayEquals,
   expectArrayNotEquals,
   expectEquals,
+  expectIsNone,
+  expectIsSome,
+  expectToThrow,
   expectTrue,
   test,
   testModule,
@@ -42,6 +45,9 @@ import {
   pick,
   pipe,
   pipeLazy,
+  pipeSome,
+  pipeSomeLazy,
+  raiseIf,
   returns,
   tuple,
 } from "../functions.js";
@@ -356,6 +362,25 @@ testModule(
         pick("a", "b", "c", "d"),
         expectEquals(expected),
       );
+    }),
+  ),
+  describe(
+    "pipeSome",
+    test("with some", pipeLazy(pipeSome(1, identity), expectIsSome)),
+    test("with none", pipeLazy(pipeSome(none, identity), expectIsNone)),
+  ),
+  describe(
+    "pipeSomeLazy",
+    test("with some", pipeLazy(pipeSomeLazy(1, identity)(), expectIsSome)),
+    test("with none", pipeLazy(pipeSomeLazy(none, identity)(), expectIsNone)),
+  ),
+  describe(
+    "raiseIf",
+    test("with true", () => {
+      expectToThrow(() => raiseIf(true, ""));
+    }),
+    test("with false", () => {
+      raiseIf(false, "");
     }),
   ),
   describe(
