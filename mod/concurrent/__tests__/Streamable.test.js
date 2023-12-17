@@ -1,12 +1,12 @@
 /// <reference types="./Streamable.test.d.ts" />
 
-import { describe, expectArrayEquals, test, testModule, } from "../../__internal__/testing.js";
+import { describe, expectArrayEquals, expectEquals, test, testModule, } from "../../__internal__/testing.js";
 import { KeyedLike_get } from "../../collections.js";
 import * as ReadonlyArray from "../../collections/ReadonlyArray.js";
 import * as ReadonlyObjectMap from "../../collections/ReadonlyObjectMap.js";
 import { DispatcherLike_complete, SchedulerLike_schedule, StreamableLike_stream, VirtualTimeSchedulerLike_run, } from "../../concurrent.js";
 import { arrayEquality, bind, bindMethod, none, pipe, returns, tuple, } from "../../functions.js";
-import { DisposableLike_dispose, QueueableLike_enqueue } from "../../utils.js";
+import { DisposableLike_dispose, QueueableLike_backpressureStrategy, QueueableLike_capacity, QueueableLike_enqueue, } from "../../utils.js";
 import * as Disposable from "../../utils/Disposable.js";
 import * as Observable from "../Observable.js";
 import * as Streamable from "../Streamable.js";
@@ -14,7 +14,12 @@ import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
 testModule("Streamable", describe("stateStore", test("createStateStore", () => {
     const scheduler = VirtualTimeScheduler.create();
     const streamable = Streamable.createStateStore(returns(1));
-    const stateStream = streamable[StreamableLike_stream](scheduler);
+    const stateStream = streamable[StreamableLike_stream](scheduler, {
+        capacity: 20,
+        backpressureStrategy: "drop-latest",
+    });
+    pipe(stateStream[QueueableLike_capacity], expectEquals(20));
+    pipe(stateStream[QueueableLike_backpressureStrategy], expectEquals("drop-latest"));
     stateStream[QueueableLike_enqueue](returns(2));
     stateStream[QueueableLike_enqueue](returns(3));
     stateStream[DispatcherLike_complete]();

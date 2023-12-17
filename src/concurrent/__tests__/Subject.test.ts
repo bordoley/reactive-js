@@ -7,10 +7,11 @@ import {
   test,
   testModule,
 } from "../../__internal__/testing.js";
-
 import * as Enumerable from "../../collections/Enumerable.js";
+import * as Indexed from "../../collections/Indexed.js";
 import {
   ObservableLike_observe,
+  ReplayObservableLike_buffer,
   SchedulerLike_schedule,
   SubjectLike_observerCount,
   VirtualTimeSchedulerLike_run,
@@ -45,6 +46,12 @@ testModule(
       for (const v of [1, 2, 3, 4]) {
         subject[SinkLike_notify](v);
       }
+
+      pipe(
+        subject[ReplayObservableLike_buffer],
+        Indexed.toReadonlyArray(),
+        expectArrayEquals([3, 4]),
+      );
 
       subject[DisposableLike_dispose]();
 
@@ -159,6 +166,21 @@ testModule(
         expectIsSome(subscription[DisposableLike_error]);
       }),
     ),
+  ),
+  describe(
+    "createRefCounted",
+    test("with replay", () => {
+      const subject = Subject.createRefCounted<number>({ replay: 2 });
+      for (const v of [1, 2, 3, 4]) {
+        subject[SinkLike_notify](v);
+      }
+
+      pipe(
+        subject[ReplayObservableLike_buffer],
+        Indexed.toReadonlyArray(),
+        expectArrayEquals([3, 4]),
+      );
+    }),
   ),
 );
 
