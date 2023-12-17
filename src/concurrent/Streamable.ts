@@ -130,15 +130,15 @@ export interface StreamableModule {
   >;
 
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableLike>,
     options: { readonly mode: "switching" },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableLike>,
     options: { readonly mode: "blocking" },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableLike>,
     options: {
       readonly mode: "queueing";
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -146,7 +146,7 @@ export interface StreamableModule {
     },
   ): StreamableLike<TEventType, boolean>;
   createEventHandler<TEventType>(
-    op: Function1<TEventType, DeferredObservableLike<unknown>>,
+    op: Function1<TEventType, DeferredObservableLike>,
   ): StreamableLike<TEventType, boolean>;
 
   createInMemoryCache<T>(options?: {

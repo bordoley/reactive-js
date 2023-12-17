@@ -402,7 +402,7 @@ expectArrayEquals([0, 0, 0, 0, 0])))), describe("dispatchTo", test("when backpre
 }), test("when callback function throws", Disposable.usingLazy(VirtualTimeScheduler.create)(vts => {
     const subscription = pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(raise), Observable.subscribe(vts));
     pipe(subscription[DisposableLike_error], expectIsSome);
-})), test("when call back returns a disposable", () => {
+})), test("when callback returns a disposable", () => {
     const scheduler = VirtualTimeScheduler.create();
     const disp = Disposable.create();
     const f = mockFn(disp);
@@ -413,6 +413,14 @@ expectArrayEquals([0, 0, 0, 0, 0])))), describe("dispatchTo", test("when backpre
     expectTrue(disp[DisposableLike_isDisposed]);
     expectIsNone(disp[DisposableLike_error]);
     pipe(f, expectToHaveBeenCalledTimes(1));
+}), test("when callback only performs sideeffects", () => {
+    const scheduler = VirtualTimeScheduler.create();
+    let called = false;
+    pipe([1], Observable.fromReadonlyArray(), Observable.onSubscribe(() => {
+        called = true;
+    }), Observable.subscribe(scheduler));
+    scheduler[VirtualTimeSchedulerLike_run]();
+    expectTrue(called);
 })), describe("reduce", test("summing all values from delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 3 }), Observable.reduce((acc, next) => acc + next, returns(0)), expectEquals(6)))), describe("repeat", test("when repeating forever.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(), Observable.takeFirst({ count: 8 }), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2]))), test("when repeating a finite amount of times.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating a finite amount of times, with delayed source.", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 1 }), Observable.repeat(3), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]))), test("when repeating with a predicate", pipeLazy([1, 2, 3], Observable.fromReadonlyArray(), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when repeating with a predicate with delayed source", pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 }), Observable.repeat(lessThan(1)), Observable.toReadonlyArray(), expectArrayEquals([1, 2, 3]))), test("when the repeat function throws", () => {
     const err = new Error();
     pipe(pipeLazy([1, 1], Observable.fromReadonlyArray(), Observable.repeat(_ => {

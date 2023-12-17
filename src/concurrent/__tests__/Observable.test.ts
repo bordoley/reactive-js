@@ -1387,7 +1387,7 @@ testModule(
       }),
     ),
 
-    test("when call back returns a disposable", () => {
+    test("when callback returns a disposable", () => {
       const scheduler = VirtualTimeScheduler.create();
 
       const disp = Disposable.create();
@@ -1408,6 +1408,25 @@ testModule(
       expectTrue(disp[DisposableLike_isDisposed]);
       expectIsNone(disp[DisposableLike_error]);
       pipe(f, expectToHaveBeenCalledTimes(1));
+    }),
+
+    test("when callback only performs sideeffects", () => {
+      const scheduler = VirtualTimeScheduler.create();
+
+      let called = false;
+
+      pipe(
+        [1],
+        Observable.fromReadonlyArray(),
+        Observable.onSubscribe(() => {
+          called = true;
+        }),
+        Observable.subscribe(scheduler),
+      );
+
+      scheduler[VirtualTimeSchedulerLike_run]();
+
+      expectTrue(called);
     }),
   ),
   describe(

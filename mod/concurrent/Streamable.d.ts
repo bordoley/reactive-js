@@ -39,18 +39,18 @@ export interface StreamableModule {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): StreamableLike<void, boolean, ReturnType<typeof Streamable_createAnimationGroupEventHandlerStream<void, TKey, T>>>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "switching";
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "blocking";
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>, options: {
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>, options: {
         readonly mode: "queueing";
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): StreamableLike<TEventType, boolean>;
-    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike<unknown>>): StreamableLike<TEventType, boolean>;
+    createEventHandler<TEventType>(op: Function1<TEventType, DeferredObservableLike>): StreamableLike<TEventType, boolean>;
     createInMemoryCache<T>(options?: {
         readonly capacity?: number;
         readonly cleanupScheduler?: SchedulerLike;
