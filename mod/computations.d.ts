@@ -25,7 +25,9 @@ export interface PureComputationModule<C extends Computation> {
         count?: number;
     }): ComputationOperator<C, T, readonly T[]>;
     decodeWithCharset(options?: {
-        readonly charset?: string | undefined;
+        readonly charset?: string;
+        readonly fatal?: boolean;
+        readonly ignoreBOM?: boolean;
     }): ComputationOperator<C, ArrayBuffer, string>;
     distinctUntilChanged<T>(options?: {
         readonly equality?: Equality<T>;

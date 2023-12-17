@@ -13,16 +13,16 @@ import Observable_liftPure from "./Observable.liftPure.js";
 const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
     const DecodeWithCharsetObserver_delegate = Symbol("DecodeWithCharsetObserver_delegate");
     const DecodeWithCharsetObserver_textDecoder = Symbol("DecodeWithCharsetObserver_textDecoder");
-    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function DecodeWithCharsetObserver(instance, delegate, charset) {
+    return createInstanceFactory(decorateNotifyWithObserverStateAssert(mix(include(DisposableMixin, DelegatingObserverMixin()), function DecodeWithCharsetObserver(instance, delegate, charset, options) {
         init(DisposableMixin, instance);
         instance[DecodeWithCharsetObserver_delegate] = delegate;
         init(DelegatingObserverMixin(), instance, delegate);
-        const textDecoder = newInstance(TextDecoder, charset, {
-            fatal: true,
-        });
+        const textDecoder = newInstance(TextDecoder, charset, options);
         instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
         pipe(instance, Disposable.onComplete(() => {
-            const data = textDecoder.decode();
+            const data = textDecoder.decode(new Uint8Array([]), {
+                stream: false,
+            });
             if (data.length > 0) {
                 delegate[QueueableLike_enqueue](data);
                 delegate[DispatcherLike_complete]();
@@ -46,5 +46,5 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_decodeWithCharset = options => pipe(Observer_createDecodeWithCharsetObserver, partial(options?.charset ?? "utf-8"), Observable_liftPure);
+const Observable_decodeWithCharset = options => pipe(Observer_createDecodeWithCharsetObserver, partial(options?.charset ?? "utf-8", options), Observable_liftPure);
 export default Observable_decodeWithCharset;

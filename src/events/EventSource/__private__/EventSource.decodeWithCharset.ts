@@ -34,6 +34,10 @@ const EventSource_decodeWithCharset: EventSource.Signature["decodeWithCharset"] 
     const createDecodeWithCharsetEventListener: (
       delegate: EventListenerLike<string>,
       charset: string,
+      options?: {
+        fatal?: boolean;
+        ignoreBOM?: boolean;
+      },
     ) => EventListenerLike<ArrayBuffer> = (() =>
       createInstanceFactory(
         mix(
@@ -46,21 +50,25 @@ const EventSource_decodeWithCharset: EventSource.Signature["decodeWithCharset"] 
               TProperties,
             delegate: EventListenerLike<string>,
             charset: string,
+            options?: {
+              fatal?: boolean;
+              ignoreBOM?: boolean;
+            },
           ): EventListenerLike<ArrayBuffer> {
             init(DisposableMixin, instance);
 
             instance[DecodeWithCharsetEventListener_delegate] = delegate;
 
-            const textDecoder = newInstance(TextDecoder, charset, {
-              fatal: true,
-            });
+            const textDecoder = newInstance(TextDecoder, charset, options);
 
             instance[DecodeWithCharsetEventListener_textDecoder] = textDecoder;
 
             pipe(
               instance,
               Disposable.onComplete(() => {
-                const data = textDecoder.decode();
+                const data = textDecoder.decode(new Uint8Array([]), {
+                  stream: false,
+                });
 
                 if (data.length > 0) {
                   delegate[SinkLike_notify](data);
@@ -96,10 +104,10 @@ const EventSource_decodeWithCharset: EventSource.Signature["decodeWithCharset"] 
         ),
       ))();
 
-    return (options?: { readonly charset?: string | undefined }) =>
+    return options =>
       pipe(
         createDecodeWithCharsetEventListener,
-        partial(options?.charset ?? "utf-8"),
+        partial(options?.charset ?? "utf-8", options),
         EventSource_lift,
       );
   })();

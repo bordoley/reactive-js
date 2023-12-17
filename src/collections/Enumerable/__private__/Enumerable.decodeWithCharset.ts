@@ -48,12 +48,18 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
             TProperties,
           delegate: EnumeratorLike<ArrayBuffer>,
           charset: Optional<string>,
+          options?: {
+            fatal?: boolean;
+            ignoreBOM?: boolean;
+          },
         ): EnumeratorLike<string> {
           init(MutableEnumeratorMixin<string>(), instance);
 
-          const textDecoder = newInstance(TextDecoder, charset ?? "utf-8", {
-            fatal: true,
-          });
+          const textDecoder = newInstance(
+            TextDecoder,
+            charset ?? "utf-8",
+            options,
+          );
           instance[DecodeWithCharsetEnumerator_textDecoder] = textDecoder;
           instance[DecodeWithCharsetEnumerator_delegate] = delegate;
 
@@ -86,7 +92,9 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
             }
 
             if (!this[EnumeratorLike_hasCurrent]) {
-              const data = decoder.decode();
+              const data = decoder.decode(new Uint8Array([]), {
+                stream: false,
+              });
 
               if (data.length > 0) {
                 this[EnumeratorLike_current] = data;
@@ -104,7 +112,7 @@ const Enumerable_decodeWithCharset: Enumerable.Signature["decodeWithCharset"] =
     return options =>
       pipe(
         createDecodeWithCharsetEnumerator,
-        partial(options?.charset),
+        partial(options?.charset, options),
         Enumerable_lift,
       );
   })();

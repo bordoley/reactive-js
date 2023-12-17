@@ -41,21 +41,25 @@ const Observer_createDecodeWithCharsetObserver = /*@__PURE__*/ (() => {
             TProperties,
           delegate: ObserverLike<string>,
           charset: string,
+          options?: {
+            fatal?: boolean;
+            ignoreBOM?: boolean;
+          },
         ): ObserverLike<ArrayBuffer> {
           init(DisposableMixin, instance);
           instance[DecodeWithCharsetObserver_delegate] = delegate;
 
           init(DelegatingObserverMixin<ArrayBuffer>(), instance, delegate);
 
-          const textDecoder = newInstance(TextDecoder, charset, {
-            fatal: true,
-          });
+          const textDecoder = newInstance(TextDecoder, charset, options);
           instance[DecodeWithCharsetObserver_textDecoder] = textDecoder;
 
           pipe(
             instance,
             Disposable.onComplete(() => {
-              const data = textDecoder.decode();
+              const data = textDecoder.decode(new Uint8Array([]), {
+                stream: false,
+              });
 
               if (data.length > 0) {
                 delegate[QueueableLike_enqueue](data);
@@ -97,7 +101,7 @@ const Observable_decodeWithCharset: Observable.Signature["decodeWithCharset"] =
   options =>
     pipe(
       Observer_createDecodeWithCharsetObserver,
-      partial(options?.charset ?? "utf-8"),
+      partial(options?.charset ?? "utf-8", options),
       Observable_liftPure,
     );
 

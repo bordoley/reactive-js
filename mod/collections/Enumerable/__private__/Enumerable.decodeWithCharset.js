@@ -9,11 +9,9 @@ const Enumerable_decodeWithCharset =
 /*@__PURE__*/ (() => {
     const DecodeWithCharsetEnumerator_delegate = Symbol("DecodeWithCharsetEnumerator_delegate");
     const DecodeWithCharsetEnumerator_textDecoder = Symbol("DecodeWithCharsetEnumerator_textDecoder");
-    const createDecodeWithCharsetEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin()), function DecodeWithCharsetEnumerator(instance, delegate, charset) {
+    const createDecodeWithCharsetEnumerator = createInstanceFactory(mix(include(MutableEnumeratorMixin()), function DecodeWithCharsetEnumerator(instance, delegate, charset, options) {
         init(MutableEnumeratorMixin(), instance);
-        const textDecoder = newInstance(TextDecoder, charset ?? "utf-8", {
-            fatal: true,
-        });
+        const textDecoder = newInstance(TextDecoder, charset ?? "utf-8", options);
         instance[DecodeWithCharsetEnumerator_textDecoder] = textDecoder;
         instance[DecodeWithCharsetEnumerator_delegate] = delegate;
         return instance;
@@ -37,7 +35,9 @@ const Enumerable_decodeWithCharset =
                 }
             }
             if (!this[EnumeratorLike_hasCurrent]) {
-                const data = decoder.decode();
+                const data = decoder.decode(new Uint8Array([]), {
+                    stream: false,
+                });
                 if (data.length > 0) {
                     this[EnumeratorLike_current] = data;
                 }
@@ -46,6 +46,6 @@ const Enumerable_decodeWithCharset =
             return this[EnumeratorLike_hasCurrent];
         },
     }));
-    return options => pipe(createDecodeWithCharsetEnumerator, partial(options?.charset), Enumerable_lift);
+    return options => pipe(createDecodeWithCharsetEnumerator, partial(options?.charset, options), Enumerable_lift);
 })();
 export default Enumerable_decodeWithCharset;

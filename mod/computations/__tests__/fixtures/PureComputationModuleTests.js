@@ -22,6 +22,10 @@ const PureComputationModuleTests = (m, toReadonlyArray) => describe("PureComputa
 }), test("decoding multi-byte code points", () => {
     const str = String.fromCodePoint(8364);
     pipe([str], Observable.fromReadonlyArray(), Observable.encodeUtf8(), Observable.toReadonlyArray(), m.fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals(str));
+}), test("multi-byte decoding divided between multiple buffers", () => {
+    pipe([new Uint8Array([226, 153]), new Uint8Array([165])], m.fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals("♥"));
+}), test("multi-byte decoding with missing tail", () => {
+    pipe([new Uint8Array([226])], m.fromReadonlyArray(), m.decodeWithCharset(), toReadonlyArray(), x => x.join(), expectEquals("�"));
 })), describe("distinctUntilChanged", test("when source has duplicates in order", pipeLazy([1, 2, 2, 2, 2, 3, 3, 3, 4], m.fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([1, 2, 3, 4]))), test("when source is empty", pipeLazy([], m.fromReadonlyArray(), m.distinctUntilChanged(), toReadonlyArray(), expectArrayEquals([]))), test("when equality operator throws", () => {
     const err = new Error();
     const equality = (_a, _b) => {

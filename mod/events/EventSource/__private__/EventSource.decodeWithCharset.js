@@ -11,15 +11,15 @@ const EventSource_decodeWithCharset =
 /*@__PURE__*/ (() => {
     const DecodeWithCharsetEventListener_delegate = Symbol("DecodeWithCharsetEventListener_delegate");
     const DecodeWithCharsetEventListener_textDecoder = Symbol("DecodeWithCharsetEventListener_textDecoder");
-    const createDecodeWithCharsetEventListener = (() => createInstanceFactory(mix(include(DisposableMixin), function DecodeWithCharsetEventListener(instance, delegate, charset) {
+    const createDecodeWithCharsetEventListener = (() => createInstanceFactory(mix(include(DisposableMixin), function DecodeWithCharsetEventListener(instance, delegate, charset, options) {
         init(DisposableMixin, instance);
         instance[DecodeWithCharsetEventListener_delegate] = delegate;
-        const textDecoder = newInstance(TextDecoder, charset, {
-            fatal: true,
-        });
+        const textDecoder = newInstance(TextDecoder, charset, options);
         instance[DecodeWithCharsetEventListener_textDecoder] = textDecoder;
         pipe(instance, Disposable.onComplete(() => {
-            const data = textDecoder.decode();
+            const data = textDecoder.decode(new Uint8Array([]), {
+                stream: false,
+            });
             if (data.length > 0) {
                 delegate[SinkLike_notify](data);
             }
@@ -40,6 +40,6 @@ const EventSource_decodeWithCharset =
             }
         },
     })))();
-    return (options) => pipe(createDecodeWithCharsetEventListener, partial(options?.charset ?? "utf-8"), EventSource_lift);
+    return options => pipe(createDecodeWithCharsetEventListener, partial(options?.charset ?? "utf-8", options), EventSource_lift);
 })();
 export default EventSource_decodeWithCharset;

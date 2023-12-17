@@ -126,6 +126,26 @@ const PureComputationModuleTests = <C extends Computation>(
           expectEquals(str),
         );
       }),
+      test("multi-byte decoding divided between multiple buffers", () => {
+        pipe(
+          [new Uint8Array([226, 153]), new Uint8Array([165])],
+          m.fromReadonlyArray(),
+          m.decodeWithCharset(),
+          toReadonlyArray(),
+          x => x.join(),
+          expectEquals("♥"),
+        );
+      }),
+      test("multi-byte decoding with missing tail", () => {
+        pipe(
+          [new Uint8Array([226])],
+          m.fromReadonlyArray(),
+          m.decodeWithCharset(),
+          toReadonlyArray(),
+          x => x.join(),
+          expectEquals("�"),
+        );
+      }),
     ),
     describe(
       "distinctUntilChanged",
