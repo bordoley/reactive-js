@@ -101,9 +101,7 @@ export const RunnableWithSideEffectsType = {
 export const DeferredSideEffectsObservableType = {
     [ObservableLike_isDeferred]: true,
     [ObservableLike_isPure]: false,
-};
-export const DeferredObservableType = {
-    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isRunnable]: false,
 };
 export const animate = Observable_animate;
 export const backpressureStrategy = Observable_backpressureStrategy;

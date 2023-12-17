@@ -194,38 +194,41 @@ const createCacheStream: <T>(
                   ),
               ),
               isSome(persistentStore)
-                ? Observable.concatMap(next => {
-                    const [updaters, values] = next;
-                    const keys = pipe(
-                      values,
-                      ReadonlyObjectMap.keep<unknown, string>(isNone),
-                      ReadonlyObjectMap.keySet<string>(),
-                    );
+                ? Observable.concatMap(
+                    next => {
+                      const [updaters, values] = next;
+                      const keys = pipe(
+                        values,
+                        ReadonlyObjectMap.keep<unknown, string>(isNone),
+                        ReadonlyObjectMap.keySet<string>(),
+                      );
 
-                    return keys.size > 0
-                      ? pipe(
-                          persistentStore.load(keys),
-                          Observable.map(
-                            (
-                              persistedValues: ReadonlyObjectMapLike<
-                                string,
-                                Optional<T>
-                              >,
-                            ) =>
-                              tuple(
-                                updaters,
-                                pipe(
-                                  values,
-                                  ReadonlyObjectMap.union(persistedValues),
+                      return keys.size > 0
+                        ? pipe(
+                            persistentStore.load(keys),
+                            Observable.map(
+                              (
+                                persistedValues: ReadonlyObjectMapLike<
+                                  string,
+                                  Optional<T>
+                                >,
+                              ) =>
+                                tuple(
+                                  updaters,
+                                  pipe(
+                                    values,
+                                    ReadonlyObjectMap.union(persistedValues),
+                                  ),
                                 ),
-                              ),
-                          ),
-                        )
-                      : (pipe(
-                          next,
-                          Observable.fromValue(),
-                        ) as DeferredObservableLike);
-                  })
+                            ),
+                          )
+                        : (pipe(
+                            next,
+                            Observable.fromValue(),
+                          ) as DeferredObservableLike);
+                    },
+                    { innerType: Observable.DeferredSideEffectsObservableType },
+                  )
                 : (identity as Function1<
                     DeferredObservableLike,
                     DeferredObservableLike
@@ -276,7 +279,9 @@ const createCacheStream: <T>(
                 }),
               ),
               isSome(persistentStore)
-                ? Observable.concatMap(bindMethod(persistentStore, "store"))
+                ? Observable.concatMap(bindMethod(persistentStore, "store"), {
+                    innerType: Observable.DeferredSideEffectsObservableType,
+                  })
                 : Observable.ignoreElements(),
             ),
           ),

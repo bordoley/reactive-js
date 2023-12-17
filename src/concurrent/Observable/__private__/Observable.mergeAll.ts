@@ -214,9 +214,9 @@ const Observer_createMergeAllObserverOperator: <T>(options?: {
 
 const Observable_mergeAll: Observable.Signature["mergeAll"] = ((options?: {
   readonly innerType?: {
-    readonly [ObservableLike_isDeferred]?: boolean;
-    readonly [ObservableLike_isPure]?: boolean;
-    readonly [ObservableLike_isRunnable]?: boolean;
+    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isPure]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
   };
   readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   readonly capacity?: number;

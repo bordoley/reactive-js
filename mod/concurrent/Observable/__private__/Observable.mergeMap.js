@@ -1,5 +1,6 @@
 /// <reference types="./Observable.mergeMap.d.ts" />
 
+import { ObservableLike_isDeferred, ObservableLike_isPure, ObservableLike_isRunnable, } from "../../../concurrent.js";
 import { pipe } from "../../../functions.js";
 import Observable_map from "./Observable.map.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";

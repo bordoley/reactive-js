@@ -50,7 +50,12 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
     return pipe(
       stateStore,
       Observable.forkMerge(
-        compose(Observable.takeFirst(), Observable.concatMap(onInit)),
+        compose(
+          Observable.takeFirst(),
+          Observable.concatMap(onInit, {
+            innerType: Observable.DeferredSideEffectsObservableType,
+          }),
+        ),
         compose(
           throttleDuration > 0
             ? Observable.throttle(throttleDuration)
@@ -58,6 +63,7 @@ const Stream_syncState: Stream.Signature["syncState"] = <T>(
           Observable.pairwise(),
           Observable.concatMap<Tuple2<T, T>, Updater<T>>(
             ([oldValue, newValue]) => onChange(oldValue, newValue),
+            { innerType: Observable.DeferredSideEffectsObservableType },
           ),
         ),
       ),
