@@ -8,9 +8,11 @@ import type * as Observable from "../../Observable.js";
 import Observable_mergeAll from "./Observable.mergeAll.js";
 
 const Observable_concatAll: Observable.Signature["concatAll"] = ((options?: {
-  readonly [ObservableLike_isDeferred]?: boolean;
-  readonly [ObservableLike_isPure]?: boolean;
-  readonly [ObservableLike_isRunnable]?: boolean;
+  innerType: {
+    readonly [ObservableLike_isDeferred]?: boolean;
+    readonly [ObservableLike_isPure]?: boolean;
+    readonly [ObservableLike_isRunnable]?: boolean;
+  };
 }) =>
   Observable_mergeAll({
     ...(options ?? {}),

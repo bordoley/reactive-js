@@ -11,6 +11,7 @@ export type DeferredSideEffectsObservableOperator<TIn, TOut> = <TObservableIn ex
 export type MulticastObservableOperator<TIn, TOut> = <TObservableIn extends ObservableLike<TIn>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike<TIn> ? MulticastObservableLike<TOut> : DeferredSideEffectsObservableLike<TOut>;
 export declare const PureRunnableType: Pick<PureRunnableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
 export declare const RunnableWithSideEffectsType: Pick<RunnableWithSideEffectsLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure | typeof ObservableLike_isRunnable>;
+export declare const DeferredSideEffectsObservableType: Pick<DeferredSideEffectsObservableLike, typeof ObservableLike_isDeferred | typeof ObservableLike_isPure>;
 export declare const DeferredObservableType: Pick<DeferredObservableLike, typeof ObservableLike_isDeferred>;
 interface Flatten {
     flatten<T>(options: {
@@ -171,7 +172,16 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     concat<T>(fst: RunnableLike<T>, snd: RunnableLike<T>, ...tail: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
     concat<T>(fst: DeferredObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike<T>[]): DeferredSideEffectsObservableLike<T>;
     concat<T>(fst: MulticastObservableLike<T>, snd: DeferredObservableLike<T>, ...tail: readonly DeferredObservableLike[]): MulticastObservableLike<T>;
-    concatAll: Flatten["flatten"];
+    concatAll<T>(): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
+    concatAll<T>(options: {
+        innerType: typeof PureRunnableType;
+    }): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
+    concatAll<T>(options: {
+        innerType: typeof RunnableWithSideEffectsType;
+    }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+    concatAll<T>(options: {
+        innerType: typeof DeferredSideEffectsObservableType;
+    }): Function1<ObservableLike<DeferredObservableLike<T>>, DeferredSideEffectsObservableLike<T>>;
     concatMany<T>(observables: readonly PureRunnableLike<T>[]): PureRunnableLike<T>;
     concatMany<T>(observables: readonly RunnableLike<T>[]): RunnableWithSideEffectsLike<T>;
     concatMany<T>(observables: readonly DeferredObservableLike[]): DeferredSideEffectsObservableLike<T>;

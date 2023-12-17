@@ -218,6 +218,14 @@ export const RunnableWithSideEffectsType: Pick<
   [ObservableLike_isRunnable]: true,
 };
 
+export const DeferredSideEffectsObservableType: Pick<
+  DeferredSideEffectsObservableLike,
+  typeof ObservableLike_isDeferred | typeof ObservableLike_isPure
+> = {
+  [ObservableLike_isDeferred]: true,
+  [ObservableLike_isPure]: false,
+};
+
 export const DeferredObservableType: Pick<
   DeferredObservableLike,
   typeof ObservableLike_isDeferred
@@ -676,7 +684,22 @@ export interface ObservableModule
     ...tail: readonly DeferredObservableLike[]
   ): MulticastObservableLike<T>;
 
-  concatAll: Flatten["flatten"];
+  concatAll<T>(): Function1<
+    PureRunnableLike<PureRunnableLike<T>>,
+    PureRunnableLike<T>
+  >;
+  concatAll<T>(options: {
+    innerType: typeof PureRunnableType;
+  }): Function1<PureRunnableLike<PureRunnableLike<T>>, PureRunnableLike<T>>;
+  concatAll<T>(options: {
+    innerType: typeof RunnableWithSideEffectsType;
+  }): Function1<RunnableLike<RunnableLike<T>>, RunnableWithSideEffectsLike<T>>;
+  concatAll<T>(options: {
+    innerType: typeof DeferredSideEffectsObservableType;
+  }): Function1<
+    ObservableLike<DeferredObservableLike<T>>,
+    DeferredSideEffectsObservableLike<T>
+  >;
 
   concatMany<T>(
     observables: readonly PureRunnableLike<T>[],

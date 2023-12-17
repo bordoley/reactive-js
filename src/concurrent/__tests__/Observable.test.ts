@@ -401,6 +401,22 @@ testModule(
     ),
   ),
   describe(
+    "concatAll",
+    test(
+      "concating pure Runnables",
+      pipeLazy(
+        [
+          pipe([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+          pipe([4, 5, 6], Observable.fromReadonlyArray({ delay: 2 })),
+        ],
+        Observable.fromReadonlyArray<PureRunnableLike<number>>(),
+        Observable.concatAll<number>(),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3, 4, 5, 6]),
+      ),
+    ),
+  ),
+  describe(
     "concatMany",
     test(
       "concating an empty array returns the empty observable",

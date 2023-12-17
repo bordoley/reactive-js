@@ -31,6 +31,7 @@
 ### Variables
 
 - [DeferredObservableType](concurrent_Observable.md#deferredobservabletype)
+- [DeferredSideEffectsObservableType](concurrent_Observable.md#deferredsideeffectsobservabletype)
 - [PureRunnableType](concurrent_Observable.md#purerunnabletype)
 - [RunnableWithSideEffectsType](concurrent_Observable.md#runnablewithsideeffectstype)
 - [currentTime](concurrent_Observable.md#currenttime)
@@ -318,6 +319,12 @@ ___
 ### DeferredObservableType
 
 • `Const` **DeferredObservableType**: `Pick`<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred)\>
+
+___
+
+### DeferredSideEffectsObservableType
+
+• `Const` **DeferredSideEffectsObservableType**: `Pick`<[`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md), typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure)\>
 
 ___
 
@@ -1431,6 +1438,18 @@ ___
 
 ### concatAll
 
+▸ **concatAll**<`T`\>(): [`Function1`](functions.md#function1)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+[`Function1`](functions.md#function1)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
+
 ▸ **concatAll**<`T`\>(`options`): [`Function1`](functions.md#function1)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<[`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>, [`PureRunnableLike`](../interfaces/concurrent.PureRunnableLike.md)<`T`\>\>
 
 #### Type parameters
@@ -1482,19 +1501,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `options` | `Object` |
-| `options.innerType` | `Pick`<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred)\> |
-
-#### Returns
-
-[`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
-
-▸ **concatAll**<`T`\>(): [`Function1`](functions.md#function1)<[`ObservableLike`](../interfaces/concurrent.ObservableLike.md)<[`DeferredObservableLike`](../interfaces/concurrent.DeferredObservableLike.md)<`T`\>\>, [`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+| `options.innerType` | `Pick`<[`DeferredSideEffectsObservableLike`](../interfaces/concurrent.DeferredSideEffectsObservableLike.md)<`unknown`\>, typeof [`ObservableLike_isDeferred`](concurrent.md#observablelike_isdeferred) \| typeof [`ObservableLike_isPure`](concurrent.md#observablelike_ispure)\> |
 
 #### Returns
 
