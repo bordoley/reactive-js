@@ -342,7 +342,7 @@ const ContinuationSchedulerMixin: Mixin1<
               scheduler[ContinuationSchedulerMixinLike_currentContinuation];
 
             if (shouldYield && isSome(currentContinuation)) {
-              throw newInstance(ContinuationYieldError, delay ?? 0);
+              throw newInstance(ContinuationYieldError, delay);
             }
           },
         },

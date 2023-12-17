@@ -152,7 +152,7 @@ const ContinuationSchedulerMixin = /*@__PURE__*/ (() => {
                 const shouldYield = delay > 0 || scheduler[SchedulerLike_shouldYield];
                 const currentContinuation = scheduler[ContinuationSchedulerMixinLike_currentContinuation];
                 if (shouldYield && isSome(currentContinuation)) {
-                    throw newInstance(ContinuationYieldError, delay ?? 0);
+                    throw newInstance(ContinuationYieldError, delay);
                 }
             },
         }));
