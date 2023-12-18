@@ -375,7 +375,7 @@ interface FunctionsModule {
   isNotEqualTo<T>(
     b: T,
     options?: {
-      readonly equality?: Equality<T> | undefined;
+      readonly equality?: Equality<T>;
     },
   ): Predicate<T>;
 
@@ -1358,11 +1358,9 @@ export const isEqualTo: Signature["isEqualTo"] = /*@__PURE__*/ (() => {
 
   return <T>(
     b: T,
-    options: { readonly equality?: Equality<T> } = {
-      equality: strictEquality,
-    },
+    options?: { readonly equality?: Equality<T> },
   ): Predicate<T> => {
-    const equality = options.equality ?? strictEquality;
+    const equality = options?.equality ?? strictEquality;
     return equality === strictEquality
       ? isStrictlyEqualTo(b)
       : (a: T) => equality(a, b);
@@ -1377,11 +1375,9 @@ export const isNotEqualTo: Signature["isNotEqualTo"] = /*@__PURE__*/ (() => {
 
   return <T>(
     b: T,
-    options: { readonly equality?: Equality<T> } = {
-      equality: strictEquality,
-    },
+    options?: { readonly equality?: Equality<T> },
   ): Predicate<T> => {
-    const equality = options.equality ?? strictEquality;
+    const equality = options?.equality ?? strictEquality;
     return equality === strictEquality
       ? isStrictlyNotEqualTo(b)
       : (a: T) => !equality(a, b);

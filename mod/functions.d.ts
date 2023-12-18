@@ -156,7 +156,7 @@ interface FunctionsModule {
     isFunction(f: unknown): f is Function;
     isNone<T>(option: Optional<T>): option is undefined;
     isNotEqualTo<T>(b: T, options?: {
-        readonly equality?: Equality<T> | undefined;
+        readonly equality?: Equality<T>;
     }): Predicate<T>;
     isNumber(n: unknown): n is number;
     isObject(o: unknown): o is object;

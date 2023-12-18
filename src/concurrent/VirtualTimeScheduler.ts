@@ -51,7 +51,7 @@ import ContinuationSchedulerMixin, {
 
 interface Signature {
   create(options?: {
-    readonly maxMicroTaskTicks?: number | undefined;
+    readonly maxMicroTaskTicks?: number;
   }): VirtualTimeSchedulerLike;
 }
 
