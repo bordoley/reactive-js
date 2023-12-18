@@ -191,7 +191,7 @@ export const pick = pickUnsafe;
 export const pipeUnsafe = ((source, op1, op2, op3, op4, op5, op6, op7, ...operators) => {
     let acc = source;
     const { length } = operators;
-    acc = op1 !== none ? op1(acc) : acc;
+    acc = op1(acc);
     acc = op2 !== none ? op2(acc) : acc;
     acc = op3 !== none ? op3(acc) : acc;
     acc = op4 !== none ? op4(acc) : acc;

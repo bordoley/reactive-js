@@ -1503,7 +1503,7 @@ export const pick: Signature["pick"] = pickUnsafe;
  */
 export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   source: unknown,
-  op1: Optional<Function1<any, any>>,
+  op1: Function1<any, any>,
   op2: Optional<Function1<any, any>>,
   op3: Optional<Function1<any, any>>,
   op4: Optional<Function1<any, any>>,
@@ -1515,7 +1515,7 @@ export const pipeUnsafe: Signature["pipeUnsafe"] = ((
   let acc = source;
   const { length } = operators;
 
-  acc = op1 !== none ? op1(acc) : acc;
+  acc = op1(acc);
   acc = op2 !== none ? op2(acc) : acc;
   acc = op3 !== none ? op3(acc) : acc;
   acc = op4 !== none ? op4(acc) : acc;
