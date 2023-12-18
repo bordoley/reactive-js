@@ -310,7 +310,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
                     replace: true,
                     uri: state.uri,
                   },
-                  Observable.fromOptional(),
+                  Observable.fromValue(),
                 ),
               ),
               Observable.map<TState, Updater<TState>>(returns),
@@ -326,7 +326,7 @@ export const subscribe: Signature["subscribe"] = /*@__PURE__*/ (() => {
 
           return pipe(
             state,
-            Observable.fromOptional(),
+            Observable.fromValue(),
             replace
               ? Observable.enqueue(replaceState)
               : push

@@ -6,14 +6,7 @@ import {
   SubjectLike,
 } from "../../../concurrent.js";
 import { SinkLike_notify } from "../../../events.js";
-import {
-  Factory,
-  Function1,
-  Optional,
-  bindMethod,
-  isFunction,
-  pipe,
-} from "../../../functions.js";
+import { Function1, Optional, bindMethod, pipe } from "../../../functions.js";
 import {
   DisposableLike,
   QueueableLike,
@@ -32,7 +25,7 @@ const Observable_multicastImpl =
       }>,
       SubjectLike<T>
     >,
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options: {
       readonly replay?: number;
       readonly capacity?: number;
@@ -49,10 +42,6 @@ const Observable_multicastImpl =
       replay = 0,
     } = options;
     const subject = subjectFactory({ replay });
-
-    const scheduler = isFunction(schedulerOrFactory)
-      ? pipe(schedulerOrFactory(), Disposable.addTo(subject))
-      : schedulerOrFactory;
 
     pipe(
       observable,

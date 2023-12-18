@@ -12,7 +12,8 @@ const Observable_toReadonlyArrayAsync = (schedulerOrNone, options) => async (obs
         return pipe(observable, Observable_toReadonlyArray());
     }
     else {
-        return await pipeAsync(observable, Observable_buffer(), Observable_firstAsync(schedulerOrNone, options), x => x ?? []);
+        const result = await pipeAsync(observable, Observable_buffer(), Observable_firstAsync(schedulerOrNone, options));
+        return result ?? [];
     }
 };
 export default Observable_toReadonlyArrayAsync;

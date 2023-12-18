@@ -8,11 +8,11 @@ import Observable_multicastImpl from "./Observable.multicastImpl.js";
 const createLazyMulticastObservable = (factory) => Observable_createMulticast(observer => {
     factory()[ObservableLike_observe](observer);
 });
-const Observable_share = (schedulerOrFactory, options) => (source) => {
+const Observable_share = (scheduler, options) => (source) => {
     let multicasted = none;
     return createLazyMulticastObservable(() => multicasted ??
         (() => {
-            multicasted = pipe(source, Observable_multicastImpl(Subject.createRefCounted, schedulerOrFactory, options));
+            multicasted = pipe(source, Observable_multicastImpl(Subject.createRefCounted, scheduler, options));
             return multicasted;
         })());
 };

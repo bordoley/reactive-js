@@ -1,7 +1,5 @@
 import { SchedulerLike } from "../../../concurrent.js";
-import { Factory } from "../../../functions.js";
 import {
-  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
@@ -10,12 +8,12 @@ import * as Subject from "../../Subject.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
 
 const Observable_multicast: Observable.Signature["multicast"] = <T>(
-  schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+  scheduler: SchedulerLike,
   options: {
     readonly replay?: number;
     readonly capacity?: number;
     readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
   } = {},
-) => Observable_multicastImpl<T>(Subject.create, schedulerOrFactory, options);
+) => Observable_multicastImpl<T>(Subject.create, scheduler, options);
 
 export default Observable_multicast;

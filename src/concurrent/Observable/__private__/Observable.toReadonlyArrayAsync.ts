@@ -25,12 +25,13 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
         await Promise.resolve();
         return pipe(observable, Observable_toReadonlyArray());
       } else {
-        return await pipeAsync(
+        const result = await pipeAsync(
           observable,
           Observable_buffer<T>(),
           Observable_firstAsync(schedulerOrNone as SchedulerLike, options),
-          x => x ?? [],
         );
+
+        return result ?? [];
       }
     };
 export default Observable_toReadonlyArrayAsync;

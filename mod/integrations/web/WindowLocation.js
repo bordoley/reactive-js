@@ -112,13 +112,13 @@ export const subscribe = /*@__PURE__*/ (() => {
             counter: 0,
             replace: true,
             uri: state.uri,
-        }, Observable.fromOptional())), Observable.map(returns))), (oldState, state) => {
+        }, Observable.fromValue())), Observable.map(returns))), (oldState, state) => {
             const locationChanged = !areURIsEqual(state.uri, oldState.uri);
             const titleChanged = oldState.uri.title !== state.uri.title;
             let { replace } = state;
             const push = !replace && locationChanged;
             replace = replace || (titleChanged && !locationChanged);
-            return pipe(state, Observable.fromOptional(), replace
+            return pipe(state, Observable.fromValue(), replace
                 ? Observable.enqueue(replaceState)
                 : push
                     ? Observable.enqueue(pushState)

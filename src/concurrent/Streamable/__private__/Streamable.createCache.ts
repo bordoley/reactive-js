@@ -223,7 +223,7 @@ const createCacheStream: <T>(
                         )
                       : (pipe(
                           next,
-                          Observable.fromOptional(),
+                          Observable.fromValue(),
                         ) as DeferredObservableLike);
                   })
                 : (identity as Function1<

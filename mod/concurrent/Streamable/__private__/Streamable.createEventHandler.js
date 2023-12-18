@@ -9,6 +9,6 @@ const Streamable_createEventHandler = ((op, options = {}) => {
         ? Observable.switchMap(compose(op, Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)))
         : mode === "blocking"
             ? Observable.exhaustMap(compose(op, Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)))
-            : Observable.mergeMap(compose(op, Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)), { ...options, concurrency: 1 }), Observable.mergeWith(pipe(false, Observable.fromOptional()))));
+            : Observable.mergeMap(compose(op, Observable.ignoreElements(), Observable.startWith(true), Observable.endWith(false)), { ...options, concurrency: 1 }), Observable.mergeWith(pipe(false, Observable.fromValue()))));
 });
 export default Streamable_createEventHandler;

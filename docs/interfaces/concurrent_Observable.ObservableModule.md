@@ -56,7 +56,6 @@
 - [fromEventSource](concurrent_Observable.ObservableModule.md#fromeventsource)
 - [fromFactory](concurrent_Observable.ObservableModule.md#fromfactory)
 - [fromIterable](concurrent_Observable.ObservableModule.md#fromiterable)
-- [fromOptional](concurrent_Observable.ObservableModule.md#fromoptional)
 - [fromPromise](concurrent_Observable.ObservableModule.md#frompromise)
 - [fromReadonlyArray](concurrent_Observable.ObservableModule.md#fromreadonlyarray)
 - [fromStore](concurrent_Observable.ObservableModule.md#fromstore)
@@ -2362,29 +2361,6 @@ ___
 
 ___
 
-### fromOptional
-
-▸ **fromOptional**<`T`\>(`options?`): [`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.delay` | `number` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`Optional`](../modules/functions.md#optional)<`T`\>, [`PureRunnableLike`](concurrent.PureRunnableLike.md)<`T`\>\>
-
-___
-
 ### fromPromise
 
 ▸ **fromPromise**<`T`\>(): [`Function1`](../modules/functions.md#function1)<`Promise`<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
@@ -3082,7 +3058,7 @@ ___
 
 ### multicast
 
-▸ **multicast**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
+▸ **multicast**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`ReplayObservableLike`](concurrent.ReplayObservableLike.md)<`T`\> & [`DisposableLike`](utils.DisposableLike.md)\>
 
 #### Type parameters
 
@@ -3094,7 +3070,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3376,7 +3352,7 @@ ___
 
 ### share
 
-▸ **share**<`T`\>(`schedulerOrFactory`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
+▸ **share**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`DeferredObservableLike`](concurrent.DeferredObservableLike.md)<`T`\>, [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\>\>
 
 #### Type parameters
 
@@ -3388,7 +3364,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3496,7 +3472,7 @@ ___
 
 ### subscribeOn
 
-▸ **subscribeOn**<`T`\>(`schedulerOrFactory`, `options?`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
+▸ **subscribeOn**<`T`\>(`scheduler`, `options?`): <TObservableIn\>(`observable`: `TObservableIn`) => `TObservableIn` extends [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`unknown`\> ? [`MulticastObservableLike`](concurrent.MulticastObservableLike.md)<`T`\> : [`DeferredSideEffectsObservableLike`](concurrent.DeferredSideEffectsObservableLike.md)<`T`\>
 
 #### Type parameters
 
@@ -3508,7 +3484,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `schedulerOrFactory` | [`SchedulerLike`](concurrent.SchedulerLike.md) \| [`Factory`](../modules/functions.md#factory)<[`SchedulerLike`](concurrent.SchedulerLike.md) & [`DisposableLike`](utils.DisposableLike.md)\> |
+| `scheduler` | [`SchedulerLike`](concurrent.SchedulerLike.md) |
 | `options?` | `Object` |
 | `options.backpressureStrategy?` | ``"overflow"`` \| ``"drop-latest"`` \| ``"drop-oldest"`` \| ``"throw"`` |
 | `options.capacity?` | `number` |
@@ -3782,18 +3758,6 @@ ___
 ___
 
 ### toEventSource
-
-▸ **toEventSource**<`T`\>(): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Returns
-
-[`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 
 ▸ **toEventSource**<`T`\>(`scheduler`, `options?`): [`Function1`](../modules/functions.md#function1)<[`ObservableLike`](concurrent.ObservableLike.md)<`T`\>, [`EventSourceLike`](events.EventSourceLike.md)<`T`\>\>
 

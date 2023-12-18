@@ -11,9 +11,9 @@ const createLiftedObservable = /*@__PURE__*/ (() => {
     return createInstanceFactory(mix(function LiftedObservable(instance, source, ops, config) {
         instance[LiftedObservableLike_source] = source;
         instance[LiftedObservableLike_operators] = ops;
-        const configRunnable = config[ObservableLike_isRunnable] ?? false;
-        const configDeferred = config[ObservableLike_isDeferred] ?? false;
-        const configPure = config[ObservableLike_isPure] ?? false;
+        const configRunnable = config[ObservableLike_isRunnable];
+        const configDeferred = config[ObservableLike_isDeferred];
+        const configPure = config[ObservableLike_isPure];
         if (__DEV__) {
             raiseIf(configRunnable && !configDeferred, "Attempting to create a non-deferred, runnable observable, which is an illegal state");
             raiseIf(!configDeferred && !configPure, "Attempting to create a non-deferred, not-pure observable which is an illegal state");

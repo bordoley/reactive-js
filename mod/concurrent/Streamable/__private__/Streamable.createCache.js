@@ -52,7 +52,7 @@ const createCacheStream = /*@__PURE__*/ (() => {
                 const keys = pipe(values, ReadonlyObjectMap.keep(isNone), ReadonlyObjectMap.keySet());
                 return keys.size > 0
                     ? pipe(persistentStore.load(keys), Observable.map((persistedValues) => tuple(updaters, pipe(values, ReadonlyObjectMap.union(persistedValues)))))
-                    : pipe(next, Observable.fromOptional());
+                    : pipe(next, Observable.fromValue());
             })
             : identity, Observable.map(([updaters, values]) => pipe(updaters, ReadonlyObjectMap.map((updater, k) => 
         // This could be the cached value or the value

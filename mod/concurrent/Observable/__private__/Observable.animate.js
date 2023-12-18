@@ -3,7 +3,7 @@
 import { identity, isReadonlyArray, isSome, pipe } from "../../../functions.js";
 import Observable_concatMany from "./Observable.concatMany.js";
 import Observable_empty from "./Observable.empty.js";
-import Observable_fromOptional from "./Observable.fromOptional.js";
+import Observable_fromValue from "./Observable.fromValue.js";
 import Observable_keyFrame from "./Observable.keyFrame.js";
 import Observable_map from "./Observable.map.js";
 import Observable_repeat from "./Observable.repeat.js";
@@ -17,11 +17,11 @@ const parseAnimationConfig = (config) => config.type === "loop"
     : config.type === "delay"
         ? Observable_empty({ delay: config.duration })
         : config.type === "frame" && isSome(config.selector)
-            ? pipe(config.value, Observable_fromOptional(), isSome(config.selector)
+            ? pipe(config.value, Observable_fromValue(), isSome(config.selector)
                 ? Observable_map(config.selector)
                 : identity)
             : config.type === "frame"
-                ? pipe(config.value, Observable_fromOptional(), isSome(config.selector)
+                ? pipe(config.value, Observable_fromValue(), isSome(config.selector)
                     ? Observable_map(config.selector)
                     : identity)
                 : pipe(config.type === "keyframe"

@@ -85,7 +85,6 @@ import Observable_fromEnumerable from "./Observable/__private__/Observable.fromE
 import Observable_fromEventSource from "./Observable/__private__/Observable.fromEventSource.js";
 import Observable_fromFactory from "./Observable/__private__/Observable.fromFactory.js";
 import Observable_fromIterable from "./Observable/__private__/Observable.fromIterable.js";
-import Observable_fromOptional from "./Observable/__private__/Observable.fromOptional.js";
 import Observable_fromPromise from "./Observable/__private__/Observable.fromPromise.js";
 import Observable_fromReadonlyArray from "./Observable/__private__/Observable.fromReadonlyArray.js";
 import Observable_fromStore from "./Observable/__private__/Observable.fromStore.js";
@@ -866,10 +865,6 @@ export interface ObservableModule
     readonly delayStart?: boolean;
   }): Function1<Iterable<T>, RunnableWithSideEffectsLike<T>>;
 
-  fromOptional<T>(options?: {
-    readonly delay: number;
-  }): Function1<Optional<T>, PureRunnableLike<T>>;
-
   fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
 
   fromReadonlyArray<T>(options?: {
@@ -1018,7 +1013,7 @@ export interface ObservableModule
   /**
    */
   multicast<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options?: {
       readonly replay?: number;
       readonly capacity?: number;
@@ -1073,7 +1068,7 @@ export interface ObservableModule
   /**
    */
   share<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options?: {
       readonly replay?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -1106,7 +1101,7 @@ export interface ObservableModule
   ): Function1<ObservableLike<T>, DisposableLike>;
 
   subscribeOn<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -1159,7 +1154,6 @@ export interface ObservableModule
     readonly delay?: number;
   }): RunnableWithSideEffectsLike<T>;
 
-  toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
   toEventSource<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1500,7 +1494,6 @@ export const fromEventSource: Signature["fromEventSource"] =
   Observable_fromEventSource;
 export const fromFactory: Signature["fromFactory"] = Observable_fromFactory;
 export const fromIterable: Signature["fromIterable"] = Observable_fromIterable;
-export const fromOptional: Signature["fromOptional"] = Observable_fromOptional;
 export const fromPromise: Signature["fromPromise"] = Observable_fromPromise;
 export const fromReadonlyArray: Signature["fromReadonlyArray"] =
   Observable_fromReadonlyArray;

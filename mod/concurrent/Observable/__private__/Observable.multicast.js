@@ -2,5 +2,5 @@
 
 import * as Subject from "../../Subject.js";
 import Observable_multicastImpl from "./Observable.multicastImpl.js";
-const Observable_multicast = (schedulerOrFactory, options = {}) => Observable_multicastImpl(Subject.create, schedulerOrFactory, options);
+const Observable_multicast = (scheduler, options = {}) => Observable_multicastImpl(Subject.create, scheduler, options);
 export default Observable_multicast;

@@ -129,7 +129,7 @@ testModule("Streamable", describe("stateStore", test("createStateStore", () => {
         def: 2,
     };
     const persistentStore = {
-        load: (_) => pipe({ ...store }, Observable.fromOptional()),
+        load: (_) => pipe({ ...store }, Observable.fromValue()),
         store: (updates) => pipe(() => {
             pipe(updates, ReadonlyObjectMap.forEach((v, k) => {
                 store[k] = v;

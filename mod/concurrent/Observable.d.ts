@@ -234,9 +234,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
         readonly delay: number;
         readonly delayStart?: boolean;
     }): Function1<Iterable<T>, RunnableWithSideEffectsLike<T>>;
-    fromOptional<T>(options?: {
-        readonly delay: number;
-    }): Function1<Optional<T>, PureRunnableLike<T>>;
     fromPromise<T>(): Function1<Promise<T>, MulticastObservableLike<T>>;
     fromReadonlyArray<T>(options?: {
         readonly delay: number;
@@ -307,7 +304,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     mergeWith<T>(snd: ObservableLike<T>, ...tail: readonly ObservableLike<T>[]): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<T>>;
     /**
      */
-    multicast<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+    multicast<T>(scheduler: SchedulerLike, options?: {
         readonly replay?: number;
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -330,7 +327,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     scanMany<T, TAcc>(scanner: Function2<TAcc, T, DeferredObservableLike<TAcc>>, initialValue: Factory<TAcc>): Function1<ObservableLike<T>, DeferredSideEffectsObservableLike<TAcc>>;
     /**
      */
-    share<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+    share<T>(scheduler: SchedulerLike, options?: {
         readonly replay?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -350,7 +347,7 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, DisposableLike>;
-    subscribeOn<T>(schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>, options?: {
+    subscribeOn<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
     }): <TObservableIn extends ObservableLike<T>>(observable: TObservableIn) => TObservableIn extends MulticastObservableLike ? MulticastObservableLike<T> : DeferredSideEffectsObservableLike<T>;
@@ -378,7 +375,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
         readonly raise: Factory<unknown>;
         readonly delay?: number;
     }): RunnableWithSideEffectsLike<T>;
-    toEventSource<T>(): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toEventSource<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;
@@ -465,7 +461,6 @@ export declare const fromEnumerable: Signature["fromEnumerable"];
 export declare const fromEventSource: Signature["fromEventSource"];
 export declare const fromFactory: Signature["fromFactory"];
 export declare const fromIterable: Signature["fromIterable"];
-export declare const fromOptional: Signature["fromOptional"];
 export declare const fromPromise: Signature["fromPromise"];
 export declare const fromReadonlyArray: Signature["fromReadonlyArray"];
 export declare const fromStore: Signature["fromStore"];

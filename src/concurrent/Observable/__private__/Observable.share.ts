@@ -7,7 +7,6 @@ import {
 } from "../../../concurrent.js";
 import { Factory, Optional, none, pipe } from "../../../functions.js";
 import {
-  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
 } from "../../../utils.js";
@@ -25,7 +24,7 @@ const createLazyMulticastObservable = <T>(
 
 const Observable_share: Observable.Signature["share"] =
   <T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options?: {
       readonly replay?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -43,7 +42,7 @@ const Observable_share: Observable.Signature["share"] =
             source,
             Observable_multicastImpl<T>(
               Subject.createRefCounted,
-              schedulerOrFactory,
+              scheduler,
               options,
             ),
           );

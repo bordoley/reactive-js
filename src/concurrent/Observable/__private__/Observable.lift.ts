@@ -79,9 +79,9 @@ const createLiftedObservable: <TA, TB>(
         instance[LiftedObservableLike_source] = source;
         instance[LiftedObservableLike_operators] = ops;
 
-        const configRunnable = config[ObservableLike_isRunnable] ?? false;
-        const configDeferred = config[ObservableLike_isDeferred] ?? false;
-        const configPure = config[ObservableLike_isPure] ?? false;
+        const configRunnable = config[ObservableLike_isRunnable];
+        const configDeferred = config[ObservableLike_isDeferred];
+        const configPure = config[ObservableLike_isPure];
 
         if (__DEV__) {
           raiseIf(

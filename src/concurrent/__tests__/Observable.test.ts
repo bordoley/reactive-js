@@ -480,6 +480,19 @@ testModule(
     ),
   ),
   describe(
+    "defer",
+    testAsync(
+      "defering a promise converted to an Observable",
+      pipeLazyAsync(
+        Observable.defer(() =>
+          pipe(Promise.resolve(1), Observable.fromPromise()),
+        ),
+        Observable.toReadonlyArrayAsync(),
+        expectArrayEquals([1]),
+      ),
+    ),
+  ),
+  describe(
     "dispatchTo",
     test(
       "when backpressure exception is thrown",
@@ -1562,6 +1575,17 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
+    test(
+      "when source and the retry predicate throw",
+      pipeLazy(
+        pipeLazy(
+          Observable.throws(),
+          Observable.retry(raise),
+          Observable.toReadonlyArray(),
+        ),
+        expectToThrow,
+      ),
+    ),
   ),
   describe(
     "share",
@@ -1896,6 +1920,15 @@ testModule(
         Observable.fromReadonlyArray({ delay: 3 }),
         Observable.toReadonlyArrayAsync<number>(),
         expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+    testAsync(
+      "with empty non-runnable source",
+      pipeLazyAsync(
+        EventSource.create(l => l[DisposableLike_dispose]()),
+        Observable.fromEventSource(),
+        Observable.toReadonlyArrayAsync<number>(),
+        expectArrayEquals<number>([]),
       ),
     ),
   ),

@@ -47,7 +47,7 @@ const Streamable_createEventHandler: Streamable.Signature["createEventHandler"] 
               ),
               { ...options, concurrency: 1 },
             ),
-        Observable.mergeWith<boolean>(pipe(false, Observable.fromOptional())),
+        Observable.mergeWith<boolean>(pipe(false, Observable.fromValue())),
       ),
     );
   }) as Streamable.Signature["createEventHandler"];

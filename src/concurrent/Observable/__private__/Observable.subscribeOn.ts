@@ -1,7 +1,6 @@
 import { ObservableLike, SchedulerLike } from "../../../concurrent.js";
-import { Factory, isFunction, pipe } from "../../../functions.js";
+import { pipe } from "../../../functions.js";
 import {
-  DisposableLike,
   QueueableLike,
   QueueableLike_backpressureStrategy,
   QueueableLike_capacity,
@@ -15,7 +14,7 @@ import Observable_isDeferred from "./Observable.isDeferred.js";
 import Observable_subscribeWithConfig from "./Observable.subscribeWithConfig.js";
 
 const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
-    schedulerOrFactory: SchedulerLike | Factory<SchedulerLike & DisposableLike>,
+    scheduler: SchedulerLike,
     options?: {
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
       readonly capacity?: number;
@@ -28,10 +27,6 @@ const Observable_subscribeOn: Observable.Signature["subscribeOn"] = (<T>(
       : Observable_createMulticast;
 
     return create<T>(observer => {
-      const scheduler = isFunction(schedulerOrFactory)
-        ? pipe(schedulerOrFactory(), Disposable.addTo(observer))
-        : schedulerOrFactory;
-
       pipe(
         observable,
         Observable_dispatchTo(observer),
