@@ -202,7 +202,7 @@ const Observable_lift: ObservableLift["lift"] = ((
       [ObservableLike_isRunnable]: isRunnable,
     };
 
-    return !isDeferred && !isPure && !isRunnable
+    return !isDeferred && !isPure
       ? Observable_create(observer => {
           pipeUnsafe(
             observer,

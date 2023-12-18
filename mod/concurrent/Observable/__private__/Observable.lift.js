@@ -48,7 +48,7 @@ const Observable_lift = ((config) => (operator) => (source) => {
         [ObservableLike_isPure]: isPure,
         [ObservableLike_isRunnable]: isRunnable,
     };
-    return !isDeferred && !isPure && !isRunnable
+    return !isDeferred && !isPure
         ? Observable_create(observer => {
             pipeUnsafe(observer, ...allFunctions, bindMethod(sourceSource, ObservableLike_observe));
         })

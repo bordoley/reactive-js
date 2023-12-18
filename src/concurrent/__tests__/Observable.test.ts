@@ -76,6 +76,7 @@ import {
 import * as Disposable from "../../utils/Disposable.js";
 import * as HostScheduler from "../HostScheduler.js";
 import * as Observable from "../Observable.js";
+import { PureObservableOperator } from "../Observable.js";
 import {
   __await,
   __bindMethod,
@@ -89,6 +90,70 @@ import {
 import * as Streamable from "../Streamable.js";
 import * as Subject from "../Subject.js";
 import * as VirtualTimeScheduler from "../VirtualTimeScheduler.js";
+
+const expectIsPureRunnable = (obs: ObservableLike) => {
+  expectTrue(obs[ObservableLike_isRunnable]);
+  expectTrue(obs[ObservableLike_isPure]);
+  expectTrue(obs[ObservableLike_isDeferred]);
+};
+
+const expectIsRunnableWithSideEffects = (obs: ObservableLike) => {
+  expectTrue(obs[ObservableLike_isRunnable]);
+  expectFalse(obs[ObservableLike_isPure]);
+  expectTrue(obs[ObservableLike_isDeferred]);
+};
+
+const expectIsDeferredSideEffectsObservable = (obs: ObservableLike) => {
+  expectFalse(obs[ObservableLike_isRunnable]);
+  expectFalse(obs[ObservableLike_isPure]);
+  expectTrue(obs[ObservableLike_isDeferred]);
+};
+
+const expectIsMulticastObservable = (obs: ObservableLike) => {
+  expectFalse(obs[ObservableLike_isRunnable]);
+  expectTrue(obs[ObservableLike_isPure]);
+  expectFalse(obs[ObservableLike_isDeferred]);
+};
+
+const PureObservableOperatorTests = (
+  op: PureObservableOperator<unknown, unknown>,
+) =>
+  describe(
+    "PureObservableOperator",
+    test(
+      "with PureRunnableLike",
+      pipeLazy(Observable.empty(), op, expectIsPureRunnable),
+    ),
+    test(
+      "with RunnableWithSideEffectsLike",
+      pipeLazy(
+        Observable.empty(),
+        Observable.forEach(ignore),
+        op,
+        expectIsRunnableWithSideEffects,
+      ),
+    ),
+    test(
+      "with DeferredSideEffectsObservableLike",
+      pipeLazy(
+        async () => {
+          throw new Error();
+        },
+        Observable.fromAsyncFactory(),
+        op,
+        expectIsDeferredSideEffectsObservable,
+      ),
+    ),
+    test(
+      "with MulticastObservableLike",
+      pipeLazy(
+        new Promise(ignore),
+        Observable.fromPromise(),
+        op,
+        expectIsMulticastObservable,
+      ),
+    ),
+  );
 
 testModule(
   "Observable",
@@ -156,7 +221,11 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
+    PureObservableOperatorTests(
+      Observable.backpressureStrategy(10, "drop-latest"),
+    ),
   ),
+  describe("buffer", PureObservableOperatorTests(Observable.buffer())),
   describe(
     "catchError",
     test("when the source throws", () => {
@@ -426,6 +495,8 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6]),
       ),
     ),
+    // FIXME
+    //PureObservableOperatorTests(Observable.concatAll())
   ),
   describe(
     "concatMany",
@@ -465,6 +536,8 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
+    // FIXME
+    //PureObservableOperatorTests(Observable.concatMap())
   ),
   describe(
     "concatWith",
@@ -478,6 +551,8 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
+    // FIXME
+    //PureObservableOperatorTests(Observable.concatWith())
   ),
   describe(
     "currentTime",
@@ -491,6 +566,10 @@ testModule(
         expectArrayEquals([0, 0, 0, 0, 0]),
       ),
     ),
+  ),
+  describe(
+    "decodeWithCharset",
+    PureObservableOperatorTests(Observable.decodeWithCharset()),
   ),
   describe(
     "defer",
@@ -587,6 +666,10 @@ testModule(
     ),
   ),
   describe(
+    "distinctUntilChanged",
+    PureObservableOperatorTests(Observable.distinctUntilChanged()),
+  ),
+  describe(
     "empty",
     test("with delay", () => {
       let disposedTime = -1;
@@ -604,6 +687,7 @@ testModule(
       pipe(disposedTime, expectEquals(5));
     }),
   ),
+  describe("encodeUtf8", PureObservableOperatorTests(Observable.encodeUtf8())),
   describe(
     "endWith",
     test(
@@ -616,6 +700,8 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.endWith(1)),
   ),
   describe(
     "exhaust",
@@ -635,6 +721,8 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.exhaust()),
   ),
   describe(
     "exhaustMap",
@@ -654,6 +742,8 @@ testModule(
         expectArrayEquals([1, 2, 3]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.exhaustMap()),
   ),
   describe(
     "firstAsync",
@@ -1225,7 +1315,9 @@ testModule(
         expectArrayEquals([] as number[]),
       ),
     ),
+    PureObservableOperatorTests(Observable.ignoreElements()),
   ),
+  describe("keep", PureObservableOperatorTests(Observable.keep(alwaysTrue))),
   describe(
     "lastAsync",
     testAsync(
@@ -1251,6 +1343,7 @@ testModule(
       ),
     ),
   ),
+  describe("map", PureObservableOperatorTests(Observable.map(returns(none)))),
   describe(
     "merge",
     test("validate output runtime type", () => {
@@ -1393,6 +1486,8 @@ testModule(
         expectArrayEquals([1, 2, 3, 4, 5, 6, 9, 10]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.mergeAll()),
   ),
   describe(
     "mergeMap",
@@ -1425,6 +1520,13 @@ testModule(
         expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.mergeMap()),
+  ),
+  describe(
+    "mergeWith",
+    // FIXME
+    // PureObservableOperatorTests(Observable.mergeWith()),
   ),
   describe(
     "onSubscribe",
@@ -1506,6 +1608,7 @@ testModule(
       expectTrue(called);
     }),
   ),
+  describe("pairwise", PureObservableOperatorTests(Observable.pairwise())),
   describe(
     "reduce",
     test(
@@ -1652,6 +1755,12 @@ testModule(
     ),
   ),
   describe(
+    "scan",
+    PureObservableOperatorTests(
+      Observable.scan((acc, _) => acc, returns(none)),
+    ),
+  ),
+  describe(
     "scanMany",
     test(
       "slow source, fast scan function",
@@ -1668,6 +1777,8 @@ testModule(
         expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
       ),
     ),
+    // FIXME
+    //PureObservableOperatorTests(Observable.scanMany(() => Observable.empty(), returns(none))),
   ),
   describe(
     "share",
@@ -1692,7 +1803,7 @@ testModule(
       pipe(result, expectArrayEquals([2, 4, 6]));
     }),
   ),
-
+  describe("skipFirst", PureObservableOperatorTests(Observable.skipFirst())),
   describe(
     "startWith",
     test(
@@ -1705,6 +1816,8 @@ testModule(
         expectArrayEquals([2, 3, 4, 0, 1]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.startWith()),
   ),
   describe(
     "switchAll",
@@ -1719,6 +1832,8 @@ testModule(
         expectArrayEquals([] as readonly number[]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.switchAll()),
   ),
   describe(
     "switchMap",
@@ -1790,62 +1905,10 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
+    // FIXME
+    // PureObservableOperatorTests(Observable.switchMap()),
   ),
-  describe(
-    "takeUntil",
-    test(
-      "takes until the notifier notifies its first notification",
-      pipeLazy(
-        [1, 2, 3, 4, 5],
-        Observable.fromReadonlyArray({ delay: 1 }),
-        Observable.takeUntil(
-          pipe(
-            [1],
-            Observable.fromReadonlyArray({ delay: 3, delayStart: true }),
-          ),
-        ),
-        Observable.toReadonlyArray<number>(),
-        expectArrayEquals([1, 2, 3]),
-      ),
-    ),
-  ),
-  describe(
-    "throttle",
-    test(
-      "first",
-      pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.takeFirst({ count: 100 }),
-        Observable.throttle<number>(50, { mode: "first" }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([0, 49, 99]),
-      ),
-    ),
-
-    test(
-      "last",
-      pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.takeFirst({ count: 200 }),
-        Observable.throttle<number>(50, { mode: "last" }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([49, 99, 149, 199]),
-      ),
-    ),
-    test(
-      "interval",
-      pipeLazy(
-        Enumerable.generate(increment, returns<number>(-1)),
-        Observable.fromEnumerable({ delay: 1, delayStart: true }),
-        Observable.takeFirst({ count: 200 }),
-        Observable.throttle<number>(75, { mode: "interval" }),
-        Observable.toReadonlyArray(),
-        expectArrayEquals([0, 74, 149, 199]),
-      ),
-    ),
-  ),
+  describe("takeFirst", PureObservableOperatorTests(Observable.takeFirst())),
   describe(
     "takeLast",
     test(
@@ -1898,6 +1961,67 @@ testModule(
         Observable.takeLast(),
         Observable.toReadonlyArray<number>(),
         expectArrayEquals([5]),
+      ),
+    ),
+    PureObservableOperatorTests(Observable.takeLast()),
+  ),
+  describe(
+    "takeUntil",
+    test(
+      "takes until the notifier notifies its first notification",
+      pipeLazy(
+        [1, 2, 3, 4, 5],
+        Observable.fromReadonlyArray({ delay: 1 }),
+        Observable.takeUntil(
+          pipe(
+            [1],
+            Observable.fromReadonlyArray({ delay: 3, delayStart: true }),
+          ),
+        ),
+        Observable.toReadonlyArray<number>(),
+        expectArrayEquals([1, 2, 3]),
+      ),
+    ),
+    PureObservableOperatorTests(Observable.takeUntil(Observable.empty())),
+  ),
+  describe(
+    "takeWhile",
+    PureObservableOperatorTests(Observable.takeWhile(alwaysTrue)),
+  ),
+  describe(
+    "throttle",
+    test(
+      "first",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 100 }),
+        Observable.throttle<number>(50, { mode: "first" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 49, 99]),
+      ),
+    ),
+
+    test(
+      "last",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(50, { mode: "last" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([49, 99, 149, 199]),
+      ),
+    ),
+    test(
+      "interval",
+      pipeLazy(
+        Enumerable.generate(increment, returns<number>(-1)),
+        Observable.fromEnumerable({ delay: 1, delayStart: true }),
+        Observable.takeFirst({ count: 200 }),
+        Observable.throttle<number>(75, { mode: "interval" }),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 74, 149, 199]),
       ),
     ),
   ),
@@ -1975,6 +2099,9 @@ testModule(
         expectArrayEquals([1]),
       ),
     ),
+    PureObservableOperatorTests(
+      Observable.throwIfEmpty(() => newInstance(Error)),
+    ),
   ),
   describe(
     "toEventSource",
@@ -2017,6 +2144,10 @@ testModule(
         ),
       ),
     ),
+  ),
+  describe(
+    "withCurrentTime",
+    PureObservableOperatorTests(Observable.withCurrentTime(returns)),
   ),
   describe(
     "withLatestFrom",
@@ -2062,6 +2193,9 @@ testModule(
         expectToThrowError(error),
       );
     }),
+    PureObservableOperatorTests(
+      Observable.withLatestFrom(Observable.empty(), returns),
+    ),
   ),
   describe(
     "zipLatest",

@@ -717,6 +717,8 @@ export interface ObservableModule
 
   decodeWithCharset(options?: {
     readonly charset?: string;
+    readonly fatal?: boolean;
+    readonly ignoreBOM?: boolean;
   }): PureObservableOperator<ArrayBuffer, string>;
 
   defer<T>(

@@ -1808,6 +1808,8 @@ ___
 | :------ | :------ |
 | `options?` | `Object` |
 | `options.charset?` | `string` |
+| `options.fatal?` | `boolean` |
+| `options.ignoreBOM?` | `boolean` |
 
 #### Returns
 

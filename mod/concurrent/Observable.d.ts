@@ -182,6 +182,8 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     debug<T>(): ObservableOperatorWithSideEffects<T, T>;
     decodeWithCharset(options?: {
         readonly charset?: string;
+        readonly fatal?: boolean;
+        readonly ignoreBOM?: boolean;
     }): PureObservableOperator<ArrayBuffer, string>;
     defer<T>(f: Factory<MulticastObservableLike<T>>): DeferredSideEffectsObservableLike<T>;
     dispatchTo<T>(dispatcher: DispatcherLike<T>): ObservableOperatorWithSideEffects<T, T>;
