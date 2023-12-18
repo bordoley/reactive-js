@@ -5,10 +5,12 @@ import { subscribe } from "@reactive-js/core/integrations/svelte";
 import {
   bindMethod,
   increment,
+  invoke,
   pipe,
   returns,
 } from "@reactive-js/core/functions";
 import {
+  FlowableLike_flow,
   PauseableLike_isPaused,
   PauseableLike_pause, 
   PauseableLike_resume
@@ -20,7 +22,8 @@ import * as Enumerable from "@reactive-js/core/collections/Enumerable";
   const counter = pipe(
     Enumerable.generate(increment, returns(-1)),
     Observable.fromEnumerable({delay: 500}),
-    Observable.flow(scheduler),
+    Observable.flow(),
+    invoke(FlowableLike_flow, scheduler)
   );
 
   const pause = bindMethod(counter, PauseableLike_pause);
