@@ -1832,8 +1832,7 @@ testModule(
         expectArrayEquals([] as readonly number[]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.switchAll()),
+    PureObservableOperatorTests(Observable.switchAll()),
   ),
   describe(
     "switchMap",
@@ -1905,8 +1904,7 @@ testModule(
         expectArrayEquals([1, 2, 3, 1, 2, 3, 1, 2, 3]),
       ),
     ),
-    // FIXME
-    // PureObservableOperatorTests(Observable.switchMap()),
+    PureObservableOperatorTests(Observable.switchMap(_ => Observable.empty())),
   ),
   describe("takeFirst", PureObservableOperatorTests(Observable.takeFirst())),
   describe(

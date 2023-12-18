@@ -115,15 +115,19 @@ const Observer_createSwitchAllObserver: <T>(
 })();
 
 const Observable_switchAll: Observable.Signature["switchAll"] = ((options?: {
-  readonly [ObservableLike_isDeferred]?: boolean;
-  readonly [ObservableLike_isPure]?: boolean;
-  readonly [ObservableLike_isRunnable]?: boolean;
+  readonly innerType?: {
+    readonly [ObservableLike_isDeferred]: boolean;
+    readonly [ObservableLike_isPure]: boolean;
+    readonly [ObservableLike_isRunnable]: boolean;
+  };
 }) =>
-  Observable_lift({
-    [ObservableLike_isDeferred]: false,
-    [ObservableLike_isPure]: false,
-    [ObservableLike_isRunnable]: false,
-    ...(options ?? {}),
-  })(Observer_createSwitchAllObserver)) as Observable.Signature["switchAll"];
+  Observable_lift(
+    options?.innerType ?? {
+      [ObservableLike_isDeferred]: true,
+      [ObservableLike_isPure]: true,
+      [ObservableLike_isRunnable]: true,
+      ...(options ?? {}),
+    },
+  )(Observer_createSwitchAllObserver)) as Observable.Signature["switchAll"];
 
 export default Observable_switchAll;

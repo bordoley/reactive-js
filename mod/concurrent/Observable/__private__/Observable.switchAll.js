@@ -42,10 +42,10 @@ const Observer_createSwitchAllObserver = /*@__PURE__*/ (() => {
         },
     })));
 })();
-const Observable_switchAll = ((options) => Observable_lift({
-    [ObservableLike_isDeferred]: false,
-    [ObservableLike_isPure]: false,
-    [ObservableLike_isRunnable]: false,
+const Observable_switchAll = ((options) => Observable_lift(options?.innerType ?? {
+    [ObservableLike_isDeferred]: true,
+    [ObservableLike_isPure]: true,
+    [ObservableLike_isRunnable]: true,
     ...(options ?? {}),
 })(Observer_createSwitchAllObserver));
 export default Observable_switchAll;

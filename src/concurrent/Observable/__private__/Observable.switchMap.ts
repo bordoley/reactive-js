@@ -14,9 +14,9 @@ const Observable_switchMap: Observable.Signature["switchMap"] = (<TA, TB>(
     selector: Function1<TA, DeferredObservableLike<TB>>,
     options?: {
       readonly innerType?: {
-        readonly [ObservableLike_isDeferred]?: boolean;
-        readonly [ObservableLike_isPure]?: boolean;
-        readonly [ObservableLike_isRunnable]?: boolean;
+        readonly [ObservableLike_isDeferred]: boolean;
+        readonly [ObservableLike_isPure]: boolean;
+        readonly [ObservableLike_isRunnable]: boolean;
       };
     },
   ) =>
