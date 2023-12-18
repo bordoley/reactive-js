@@ -1652,6 +1652,24 @@ testModule(
     ),
   ),
   describe(
+    "scanMany",
+    test(
+      "slow source, fast scan function",
+      pipeLazy(
+        Enumerable.generate(increment, returns(-1)),
+        Enumerable.takeFirst({ count: 10 }),
+        Observable.fromEnumerable({ delay: 10 }),
+        Observable.scanMany(
+          (_acc: number, next: number) =>
+            pipe(next, Observable.fromValue({ delay: 2 })),
+          returns(0),
+        ),
+        Observable.toReadonlyArray(),
+        expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
+      ),
+    ),
+  ),
+  describe(
     "share",
     test("shared observable zipped with itself", () => {
       const scheduler = VirtualTimeScheduler.create();
