@@ -116,30 +116,34 @@ testModule(
     ),
     testAsync(
       "with a drop latest backpressure strategy",
-      pipeLazyAsync(
-        Observable.create(observer => {
-          for (let i = 0; i < 10; i++) {
-            observer[QueueableLike_enqueue](i);
-          }
-          observer[DispatcherLike_complete]();
-        }),
-        Observable.backpressureStrategy(1, "drop-latest"),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([0]),
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler =>
+        pipeAsync(
+          Observable.create(observer => {
+            for (let i = 0; i < 10; i++) {
+              observer[QueueableLike_enqueue](i);
+            }
+            observer[DispatcherLike_complete]();
+          }),
+          Observable.backpressureStrategy(1, "drop-latest"),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([0]),
+        ),
       ),
     ),
     testAsync(
       "with a drop-oldest latest backpressure strategy",
-      pipeLazyAsync(
-        Observable.create(observer => {
-          for (let i = 0; i < 10; i++) {
-            observer[QueueableLike_enqueue](i);
-          }
-          observer[DispatcherLike_complete]();
-        }),
-        Observable.backpressureStrategy(1, "drop-oldest"),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([9]),
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler =>
+        pipeAsync(
+          Observable.create(observer => {
+            for (let i = 0; i < 10; i++) {
+              observer[QueueableLike_enqueue](i);
+            }
+            observer[DispatcherLike_complete]();
+          }),
+          Observable.backpressureStrategy(1, "drop-oldest"),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([9]),
+        ),
       ),
     ),
     test(
@@ -243,45 +247,52 @@ testModule(
   ),
   describe(
     "computeDeferred",
-    testAsync("__stream", async () => {
-      const result = await pipe(
-        Observable.computeDeferred(() => {
-          const stream = __stream(Streamable.identity<number>());
-          const push = __bindMethod(stream, QueueableLike_enqueue);
+    testAsync(
+      "__stream",
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler =>
+        pipeAsync(
+          Observable.computeDeferred(() => {
+            const stream = __stream(Streamable.identity<number>());
+            const push = __bindMethod(stream, QueueableLike_enqueue);
 
-          const result = __observe(stream) ?? 0;
-          __do(push, result + 1);
+            const result = __observe(stream) ?? 0;
+            __do(push, result + 1);
 
-          return result;
-        }),
-        Observable.takeFirst({ count: 10 }),
-        Observable.buffer(),
-        Observable.lastAsync<readonly number[]>(),
-      );
+            return result;
+          }),
+          Observable.takeFirst<number>({ count: 10 }),
+          x => x,
+          Observable.buffer<number>(),
+          Observable.lastAsync(scheduler),
+          x => x ?? [],
+          expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]),
+        ),
+      ),
+    ),
+    testAsync(
+      "__state",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          Observable.computeDeferred(() => {
+            const initialState = __constant((): number => 0);
+            const state = __state(initialState);
+            const push = __bindMethod(state, QueueableLike_enqueue);
+            const result = __observe(state) ?? -1;
 
-      pipe(result ?? [], expectArrayEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-    }),
-    testAsync("__state", async () => {
-      const result = await pipe(
-        Observable.computeDeferred(() => {
-          const initialState = __constant((): number => 0);
-          const state = __state(initialState);
-          const push = __bindMethod(state, QueueableLike_enqueue);
-          const result = __observe(state) ?? -1;
+            if (result > -1) {
+              __do(push, () => result + 1);
+            }
 
-          if (result > -1) {
-            __do(push, () => result + 1);
-          }
-
-          return result;
-        }),
-        Observable.takeFirst({ count: 10 }),
-        Observable.buffer(),
-        Observable.lastAsync<readonly number[]>(),
-      );
-
-      pipe(result ?? [], expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]));
-    }),
+            return result;
+          }),
+          Observable.takeFirst({ count: 10 }),
+          Observable.buffer(),
+          Observable.lastAsync<readonly number[]>(scheduler),
+          x => x ?? [],
+          expectArrayEquals([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]),
+        ),
+      ),
+    ),
   ),
   describe(
     "computeRunnable",
@@ -427,14 +438,16 @@ testModule(
     "concatMap",
     testAsync(
       "maps each value to a container and flattens",
-      pipeLazyAsync(
-        [0, 1],
-        Observable.fromReadonlyArray(),
-        Observable.concatMap(
-          pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [0, 1],
+          Observable.fromReadonlyArray(),
+          Observable.concatMap(
+            pipeLazy([1, 2, 3], Observable.fromReadonlyArray({ delay: 2 })),
+          ),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([1, 2, 3, 1, 2, 3]),
         ),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([1, 2, 3, 1, 2, 3]),
       ),
     ),
     test(
@@ -483,12 +496,14 @@ testModule(
     "defer",
     testAsync(
       "defering a promise converted to an Observable",
-      pipeLazyAsync(
-        Observable.defer(() =>
-          pipe(Promise.resolve(1), Observable.fromPromise()),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          Observable.defer(() =>
+            pipe(Promise.resolve(1), Observable.fromPromise()),
+          ),
+          Observable.toReadonlyArrayAsync(scheduler),
+          expectArrayEquals([1]),
         ),
-        Observable.toReadonlyArrayAsync(),
-        expectArrayEquals([1]),
       ),
     ),
   ),
@@ -642,33 +657,41 @@ testModule(
   ),
   describe(
     "firstAsync",
-    testAsync("empty source", async () => {
-      const result = await pipe(
-        [],
-        Observable.fromReadonlyArray(),
-        Observable.firstAsync(),
-      );
-      pipe(result, expectIsNone);
-    }),
-    testAsync("it returns the first value", async () => {
-      const result = await pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.firstAsync(),
-      );
-      pipe(result, expectEquals<Optional<number>>(1));
-    }),
+    testAsync(
+      "empty source",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.firstAsync(scheduler),
+          expectIsNone,
+        ),
+      ),
+    ),
+    testAsync(
+      "it returns the first value",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          Observable.firstAsync(scheduler),
+          expectEquals<Optional<number>>(1),
+        ),
+      ),
+    ),
   ),
   describe(
     "flatMapAsync",
     testAsync(
       "mapping a number to a promise",
-      pipeLazyAsync(
-        1,
-        Observable.fromValue(),
-        Observable.flatMapAsync(async x => await Promise.resolve(x)),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([1]),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          1,
+          Observable.fromValue(),
+          Observable.flatMapAsync(async x => await Promise.resolve(x)),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([1]),
+        ),
       ),
     ),
   ),
@@ -969,62 +992,77 @@ testModule(
       expectFalse(forked[ObservableLike_isRunnable]);
       expectFalse(forked[ObservableLike_isPure]);
     }),
-    testAsync("src with side-effects is only subscribed to once", async () => {
-      const sideEffect = mockFn();
-      const src = pipe(
-        0,
-        Observable.fromValue(),
-        Observable.forEach(sideEffect),
-      );
+    testAsync(
+      "src with side-effects is only subscribed to once",
+      Disposable.usingAsyncLazy(HostScheduler.create)(async scheduler => {
+        const sideEffect = mockFn();
+        const src = pipe(
+          0,
+          Observable.fromValue(),
+          Observable.forEach(sideEffect),
+        );
 
-      await pipeAsync(
-        src,
-        Observable.forkMerge(
-          Observable.flatMapIterable(_ => [1, 2, 3]),
-          Observable.flatMapIterable(_ => [4, 5, 6]),
-        ),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([1, 2, 3, 4, 5, 6]),
-      );
+        await pipeAsync(
+          src,
+          Observable.forkMerge(
+            Observable.flatMapIterable(_ => [1, 2, 3]),
+            Observable.flatMapIterable(_ => [4, 5, 6]),
+          ),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([1, 2, 3, 4, 5, 6]),
+        );
 
-      pipe(sideEffect, expectToHaveBeenCalledTimes(1));
-    }),
+        pipe(sideEffect, expectToHaveBeenCalledTimes(1));
+      }),
+    ),
   ),
   describe(
     "fromAsyncFactory",
-    testAsync("when promise resolves", async () => {
-      const result = await pipe(
-        async () => {
-          await Promise.resolve(1);
-          return 2;
-        },
-        Observable.fromAsyncFactory(),
-        Observable.lastAsync(),
-      );
-      pipe(result, expectEquals(2 as Optional<number>));
-    }),
-
-    testAsync("when promise fails with an exception", async () => {
-      await pipe(
-        async () => {
-          await Promise.resolve(1);
-          raise();
-        },
-        Observable.fromAsyncFactory(),
-        Observable.lastAsync(),
-        expectPromiseToThrow,
-      );
-    }),
-    testAsync("when factory throws an exception", async () => {
-      await pipe(
-        async () => {
-          raise();
-        },
-        Observable.fromAsyncFactory(),
-        Observable.lastAsync(),
-        expectPromiseToThrow,
-      );
-    }),
+    testAsync(
+      "when promise resolves",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          async () => {
+            await Promise.resolve(1);
+            return 2;
+          },
+          Observable.fromAsyncFactory(),
+          Observable.lastAsync(scheduler),
+          expectEquals<Optional<number>>(2),
+        ),
+      ),
+    ),
+    testAsync(
+      "when promise fails with an exception",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipe(
+          pipe(
+            async () => {
+              await Promise.resolve(1);
+              raise();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.lastAsync(scheduler),
+          ),
+          expectPromiseToThrow,
+        ),
+      ),
+    ),
+    testAsync(
+      "when factory throws an exception",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipe(
+          pipe(
+            async () => {
+              raise();
+            },
+            Observable.fromAsyncFactory(),
+            Observable.lastAsync(scheduler),
+          ),
+          expectPromiseToThrow,
+        ),
+      ),
+    ),
   ),
   describe(
     "fromAsyncIterable",
@@ -1107,25 +1145,30 @@ testModule(
   ),
   describe(
     "fromPromise",
-    testAsync("when the promise resolves", async () => {
-      const promise = Promise.resolve(1);
-
-      const result = await pipe(
-        promise,
-        Observable.fromPromise(),
-        Observable.lastAsync(),
-      );
-      pipe(result, expectEquals<Optional<number>>(1));
-    }),
-    testAsync("when the promise reject", async () => {
-      const error = newInstance(Error);
-      const promise = Promise.reject(error);
-
-      await pipe(
-        pipe(promise, Observable.fromPromise(), Observable.lastAsync()),
-        expectPromiseToThrow,
-      );
-    }),
+    testAsync(
+      "when the promise resolves",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          Promise.resolve(1),
+          Observable.fromPromise(),
+          Observable.lastAsync(scheduler),
+          expectEquals<Optional<number>>(1),
+        ),
+      ),
+    ),
+    testAsync(
+      "when the promise reject",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          pipeAsync(
+            Promise.reject(newInstance(Error)),
+            Observable.fromPromise(),
+            Observable.lastAsync(scheduler),
+          ),
+          expectPromiseToThrow,
+        ),
+      ),
+    ),
   ),
   describe(
     "fromStore",
@@ -1172,22 +1215,28 @@ testModule(
   ),
   describe(
     "lastAsync",
-    testAsync("empty source", async () => {
-      const result = await pipe(
-        [],
-        Observable.fromReadonlyArray(),
-        Observable.lastAsync(),
-      );
-      pipe(result, expectIsNone);
-    }),
-    testAsync("it returns the last value", async () => {
-      const result = await pipe(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.lastAsync(),
-      );
-      pipe(result, expectEquals<Optional<number>>(3));
-    }),
+    testAsync(
+      "empty source",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [],
+          Observable.fromReadonlyArray(),
+          Observable.lastAsync(scheduler),
+          expectIsNone,
+        ),
+      ),
+    ),
+    testAsync(
+      "it returns the last value",
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          Observable.lastAsync(scheduler),
+          expectEquals<Optional<number>>(3),
+        ),
+      ),
+    ),
   ),
   describe(
     "merge",
@@ -1336,14 +1385,16 @@ testModule(
     "mergeMap",
     testAsync(
       "without delay, merge all observables as they are produced",
-      pipeLazyAsync(
-        [1, 2, 3],
-        Observable.fromReadonlyArray(),
-        Observable.mergeMap<number, number>(x =>
-          pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray(),
+          Observable.mergeMap<number, number>(x =>
+            pipe([x, x, x], Observable.fromReadonlyArray<number>()),
+          ),
+          Observable.toReadonlyArrayAsync(scheduler),
+          expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
         ),
-        Observable.toReadonlyArrayAsync(),
-        expectArrayEquals([1, 1, 1, 2, 2, 2, 3, 3, 3]),
       ),
     ),
     test(
@@ -1915,20 +1966,24 @@ testModule(
     "toReadonlyArrayAsync",
     testAsync(
       "with pure delayed source",
-      pipeLazyAsync(
-        [1, 2, 3],
-        Observable.fromReadonlyArray({ delay: 3 }),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals([1, 2, 3]),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          [1, 2, 3],
+          Observable.fromReadonlyArray({ delay: 3 }),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals([1, 2, 3]),
+        ),
       ),
     ),
     testAsync(
       "with empty non-runnable source",
-      pipeLazyAsync(
-        EventSource.create(l => l[DisposableLike_dispose]()),
-        Observable.fromEventSource(),
-        Observable.toReadonlyArrayAsync<number>(),
-        expectArrayEquals<number>([]),
+      Disposable.usingAsyncLazy(HostScheduler.create)(scheduler =>
+        pipeAsync(
+          EventSource.create(l => l[DisposableLike_dispose]()),
+          Observable.fromEventSource(),
+          Observable.toReadonlyArrayAsync<number>(scheduler),
+          expectArrayEquals<number>([]),
+        ),
       ),
     ),
   ),

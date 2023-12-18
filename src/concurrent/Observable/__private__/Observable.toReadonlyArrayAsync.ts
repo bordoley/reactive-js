@@ -13,7 +13,7 @@ import Observable_toReadonlyArray from "./Observable.toReadonlyArray.js";
 const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsync"] =
 
     <T>(
-      schedulerOrNone?: SchedulerLike,
+      scheduler: SchedulerLike,
       options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -28,7 +28,7 @@ const Observable_toReadonlyArrayAsync: Observable.Signature["toReadonlyArrayAsyn
         const result = await pipeAsync(
           observable,
           Observable_buffer<T>(),
-          Observable_firstAsync(schedulerOrNone as SchedulerLike, options),
+          Observable_firstAsync(scheduler, options),
         );
 
         return result ?? [];

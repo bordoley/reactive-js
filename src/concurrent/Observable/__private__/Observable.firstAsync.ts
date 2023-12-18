@@ -10,7 +10,7 @@ import Observable_takeFirst from "./Observable.takeFirst.js";
 
 const Observable_firstAsync: Observable.Signature["firstAsync"] =
   <T>(
-    scheduler?: SchedulerLike,
+    scheduler: SchedulerLike,
     options?: {
       readonly capacity?: number;
       readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -20,7 +20,7 @@ const Observable_firstAsync: Observable.Signature["firstAsync"] =
     pipe(
       observable,
       Observable_takeFirst(),
-      Observable_lastAsync(scheduler as SchedulerLike, options),
+      Observable_lastAsync(scheduler, options),
     );
 
 export default Observable_firstAsync;

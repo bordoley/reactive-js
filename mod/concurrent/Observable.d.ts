@@ -212,7 +212,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     enqueue<T>(queue: QueueableLike<T>): ObservableOperatorWithSideEffects<T, T>;
     exhaust: Flatten["flatten"];
     exhaustMap: FlatMap["flatMap"];
-    firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     firstAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -249,7 +248,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
     isReplayObservable<T = unknown>(o: ObservableLike<T>): o is ReplayObservableLike<T>;
     isRunnable<T = unknown>(obs: ObservableLike<T>): obs is RunnableLike<T>;
     keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
-    lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
     lastAsync<T>(scheduler: SchedulerLike, options?: {
         readonly capacity?: number;
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
@@ -380,7 +378,6 @@ export interface ObservableModule extends PureComputationModule<PureRunnableComp
         readonly capacity?: number;
     }): Function1<ObservableLike<T>, EventSourceLike<T>>;
     toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
-    toReadonlyArrayAsync<T>(): Function1<ObservableLike<T>, Promise<ReadonlyArray<T>>>;
     toReadonlyArrayAsync<T>(scheduler: SchedulerLike, options?: {
         readonly backpressureStrategy?: QueueableLike[typeof QueueableLike_backpressureStrategy];
         readonly capacity?: number;

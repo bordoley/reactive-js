@@ -781,7 +781,6 @@ export interface ObservableModule
 
   exhaustMap: FlatMap["flatMap"];
 
-  firstAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
   firstAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -894,7 +893,6 @@ export interface ObservableModule
 
   keep<T>(predicate: Predicate<T>): PureObservableOperator<T, T>;
 
-  lastAsync<T>(): Function1<ObservableLike<T>, Promise<Optional<T>>>;
   lastAsync<T>(
     scheduler: SchedulerLike,
     options?: {
@@ -1164,10 +1162,6 @@ export interface ObservableModule
 
   toReadonlyArray<T>(): Function1<RunnableLike<T>, ReadonlyArray<T>>;
 
-  toReadonlyArrayAsync<T>(): Function1<
-    ObservableLike<T>,
-    Promise<ReadonlyArray<T>>
-  >;
   toReadonlyArrayAsync<T>(
     scheduler: SchedulerLike,
     options?: {
