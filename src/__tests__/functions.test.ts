@@ -8,6 +8,7 @@ import {
   expectToThrow,
   expectTrue,
   test,
+  testAsync,
   testModule,
   testPredicateExpectingFalse,
   testPredicateExpectingTrue,
@@ -45,6 +46,7 @@ import {
   pick,
   pipe,
   pipeLazy,
+  pipeLazyAsync,
   pipeSome,
   pipeSomeLazy,
   raiseIf,
@@ -363,6 +365,13 @@ testModule(
         expectEquals(expected),
       );
     }),
+  ),
+  describe(
+    "pipeLazyAsync",
+    testAsync(
+      "with pipeline that returns a value",
+      pipeLazyAsync(1, bindMethod(Promise, "resolve"), expectEquals(1)),
+    ),
   ),
   describe(
     "pipeSome",
