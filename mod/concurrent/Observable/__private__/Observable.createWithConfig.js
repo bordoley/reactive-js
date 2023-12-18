@@ -10,9 +10,9 @@ const Observable_createWithConfig =
     const CreateObservable_effect = Symbol("CreateObservable_effect");
     return createInstanceFactory(mix(function CreateObservable(instance, effect, config) {
         instance[CreateObservable_effect] = effect;
-        const configRunnable = config[ObservableLike_isRunnable] ?? false;
-        const configDeferred = config[ObservableLike_isDeferred] ?? false;
-        const configPure = config[ObservableLike_isPure] ?? false;
+        const configRunnable = config[ObservableLike_isRunnable];
+        const configDeferred = config[ObservableLike_isDeferred];
+        const configPure = config[ObservableLike_isPure];
         if (__DEV__) {
             raiseIf(configRunnable && !configDeferred, "Attempting to create a non-deferred, runnable observable, which is an illegal state");
             raiseIf(!configDeferred && !configPure, "Attempting to create a non-deferred, not-pure observable which is an illegal state");
