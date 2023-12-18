@@ -1131,7 +1131,7 @@ testModule(
   ),
   describe(
     "fromIterable",
-    test("fromIterable with delay", () => {
+    test("with delay", () => {
       const result: number[] = [];
       pipe(
         [9, 9, 9, 9],
@@ -1142,6 +1142,19 @@ testModule(
       );
       pipe(result, expectArrayEquals([0, 2, 4, 6]));
     }),
+    test(
+      "when the iterable throws",
+      pipeLazy(
+        pipeLazy(
+          (function* Generator() {
+            throw newInstance(Error);
+          })(),
+          Observable.fromIterable(),
+          Observable.run(),
+        ),
+        expectToThrow,
+      ),
+    ),
   ),
   describe(
     "fromPromise",

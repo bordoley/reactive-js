@@ -298,11 +298,13 @@ expectArrayEquals([0, 0, 0, 0, 0])))), describe("defer", testAsync("defering a p
         throw e;
     })(), Observable.fromAsyncIterable(), Observable.lastAsync(scheduler, { capacity: 1 }));
     pipe(result, expectEquals(e));
-}), expectToThrowAsync))), describe("fromIterable", test("fromIterable with delay", () => {
+}), expectToThrowAsync))), describe("fromIterable", test("with delay", () => {
     const result = [];
     pipe([9, 9, 9, 9], Observable.fromIterable({ delay: 2 }), Observable.withCurrentTime(t => t), Observable.forEach(bind(Array.prototype.push, result)), Observable.run());
     pipe(result, expectArrayEquals([0, 2, 4, 6]));
-})), describe("fromPromise", testAsync("when the promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Promise.resolve(1), Observable.fromPromise(), Observable.lastAsync(scheduler), expectEquals(1)))), testAsync("when the promise reject", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(pipeAsync(Promise.reject(newInstance(Error)), Observable.fromPromise(), Observable.lastAsync(scheduler)), expectPromiseToThrow)))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
+}), test("when the iterable throws", pipeLazy(pipeLazy((function* Generator() {
+    throw newInstance(Error);
+})(), Observable.fromIterable(), Observable.run()), expectToThrow))), describe("fromPromise", testAsync("when the promise resolves", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(Promise.resolve(1), Observable.fromPromise(), Observable.lastAsync(scheduler), expectEquals(1)))), testAsync("when the promise reject", Disposable.usingAsyncLazy(HostScheduler.create)(scheduler => pipeAsync(pipeAsync(Promise.reject(newInstance(Error)), Observable.fromPromise(), Observable.lastAsync(scheduler)), expectPromiseToThrow)))), describe("fromStore", test("it publishes the current value and all subsequent values", () => {
     const store = WritableStotre.create(-1);
     const scheduler = VirtualTimeScheduler.create();
     const result = [];
